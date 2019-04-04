@@ -1,0 +1,21 @@
+{
+  "name": "@primitives/background",
+  "version": "0.0.0",
+  "main": "src/index.web.tsx",
+  "browser": "src/index.web.tsx",
+  "react-native": "src/index.native.tsx",
+  "files": [
+    "build/"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "@primitives/animation": "^0.0.0",
+    "@primitives/block": "^0.0.0",
+    "@babel/runtime": "^7.1.2",
+    "colorido": "^0.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.4",
+    "react": "^16.8.6"
+  }
+}

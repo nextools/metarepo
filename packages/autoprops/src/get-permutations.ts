@@ -1,0 +1,56 @@
+import { Keys, MutexGroup, Permutation, PropsWithValues, TProps } from './types'
+import { arrayIntersect } from './array-intersect'
+import {
+  bumpPermutation,
+  getInitialPermutation,
+  getLengthPermutation,
+  getTotalPermutations,
+} from './permutation-utils'
+
+export const getPermutations = <Props extends TProps> (
+  props: PropsWithValues<Props>,
+  keys: Keys<Props>,
+  mutexGroups: MutexGroup<Props>[] = []
+): Permutation<Props>[] => {
+
+  /* length permutation and total possible permutations */
+  const lengthPerm = getLengthPermutation(props, keys)
+  const totalPerms = getTotalPermutations(lengthPerm)
+
+  /* bump function */
+  const bump = bumpPermutation(lengthPerm)
+
+  /* initial permutation */
+  let currentPerm = getInitialPermutation(lengthPerm)
+
+  /* iterate over all possible permutations */
+  const perms = [] as Permutation<Props>[]
+
+  for (let pi = 0; pi < totalPerms; ++pi) {
+    /* get next permutation, skip first */
+    if (pi > 0) {
+      currentPerm = bump(currentPerm)
+    }
+
+    /* check mutex groups */
+    let validPerm = true
+
+    if (mutexGroups.length > 0) {
+      const keysWithState = keys.filter((k, i) => props[k][currentPerm[i]] !== undefined && currentPerm[i] > 0)
+
+      for (const mutexGroup of mutexGroups) {
+        if (arrayIntersect(keysWithState, mutexGroup).length > 1) {
+          validPerm = false
+          break
+        }
+      }
+    }
+
+    /* push valid permutation */
+    if (validPerm) {
+      perms.push(currentPerm)
+    }
+  }
+
+  return perms
+}

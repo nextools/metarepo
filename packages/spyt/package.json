@@ -1,0 +1,22 @@
+{
+  "name": "spyt",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "repository": "batata-frita/spyt",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
+  "contributors": [
+    "Alex Feinstein <psxcode@gmail.com> (https://github.com/psxcode)"
+  ],
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/batata-frita/spyt/blob/master/license.md"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

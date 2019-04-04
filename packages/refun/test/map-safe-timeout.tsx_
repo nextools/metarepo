@@ -1,0 +1,165 @@
+import React from 'react'
+import TestRenderer from 'react-test-renderer'
+import test from 'blue-tape'
+import { createSpy, getSpyCalls } from 'spyfn'
+import { createTimeoutSpy } from 'spyt'
+import { component, mapSafeTimeoutFactory, startWithType } from '../src'
+
+test('mapSafeTimeout', async (t) => {
+  const spy1 = createSpy(() => null)
+  const spy2 = createSpy(() => null)
+  const timeout = createTimeoutSpy()
+  const mapSafeTimeout = mapSafeTimeoutFactory(timeout.setTimeout, timeout.clearTimeout)
+
+  const MyComp = component(
+    startWithType<{ foo: string }>(),
+    mapSafeTimeout('setSafeTimeout')
+  )('Name', (props) => <span {...props}/>)
+
+  const testRenderer = TestRenderer.create(<MyComp foo="foo" />)
+
+  const props = testRenderer.root.findByType('span').props
+  const setSafeTimeoutFn = props.setSafeTimeout
+
+  t.deepEquals(
+    props,
+    {
+      foo: 'foo',
+      setSafeTimeout: setSafeTimeoutFn,
+    },
+    'should pass props'
+  )
+
+  const unsub1 = setSafeTimeoutFn(spy1, 100)
+
+  t.deepEquals(
+    timeout.getSetTimeoutCalls(),
+    [
+      [100],
+    ],
+    'should call setTimeout'
+  )
+
+  t.deepEquals(
+    timeout.getClearTimeoutCalls(),
+    [],
+    'should not call clearTimeout'
+  )
+
+  t.deepEquals(
+    getSpyCalls(spy1),
+    [],
+    'should not call spy1'
+  )
+
+  const unsub2 = setSafeTimeoutFn(spy2, 50)
+
+  t.deepEquals(
+    timeout.getSetTimeoutCalls(),
+    [
+      [100],
+      [50],
+    ],
+    'should call setTimeout'
+  )
+
+  t.deepEquals(
+    timeout.getClearTimeoutCalls(),
+    [],
+    'should not call clearTimeout'
+  )
+
+  t.deepEquals(
+    getSpyCalls(spy1),
+    [],
+    'should not call spy1'
+  )
+
+  t.deepEquals(
+    getSpyCalls(spy2),
+    [],
+    'should not call spy2'
+  )
+
+  unsub2()
+
+  t.deepEquals(
+    timeout.getClearTimeoutCalls(),
+    [
+      [1],
+    ],
+    'should call clearTimeout'
+  )
+
+  timeout.tick()
+
+  t.deepEquals(
+    timeout.getSetTimeoutCalls(),
+    [
+      [100],
+      [50],
+    ],
+    'should not call setTimeout'
+  )
+
+  t.deepEquals(
+    timeout.getClearTimeoutCalls(),
+    [
+      [1],
+    ],
+    'should not call clearTimeout'
+  )
+
+  t.deepEquals(
+    getSpyCalls(spy1),
+    [
+      [],
+    ],
+    'should call spy'
+  )
+
+  t.deepEquals(
+    getSpyCalls(spy2),
+    [],
+    'should not call spy2'
+  )
+
+  setSafeTimeoutFn(spy1, 30)
+
+  t.deepEquals(
+    timeout.getSetTimeoutCalls(),
+    [
+      [100],
+      [50],
+      [30],
+    ],
+    'should call setTimeout'
+  )
+
+  t.deepEquals(
+    timeout.getClearTimeoutCalls(),
+    [
+      [1],
+    ],
+    'should not call clearTimeout'
+  )
+
+  t.deepEquals(
+    getSpyCalls(spy1),
+    [
+      [],
+    ],
+    'should not call spy1'
+  )
+
+  testRenderer.unmount()
+
+  t.deepEquals(
+    timeout.getClearTimeoutCalls(),
+    [
+      [1],
+      [2],
+    ],
+    'should call clearTimeout'
+  )
+})

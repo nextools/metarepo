@@ -1,0 +1,28 @@
+import React, { createContext } from 'react'
+import TestRenderer from 'react-test-renderer'
+import test from 'blue-tape'
+import { createSpy, getSpyCalls } from 'spyfn'
+import { component, mapContext, startWithType } from '../src'
+
+test('mapContext', async (t) => {
+  const spy = createSpy(() => null)
+  const Context = createContext({ ctx: 1 })
+  const MyComp = component(
+    startWithType<{ foo: string }>(),
+    mapContext(Context)
+  )('Name', spy)
+
+  TestRenderer.create(
+    <Context.Provider value={{ ctx: 1 }}>
+      <MyComp foo="bar"/>
+    </Context.Provider>
+  )
+
+  t.deepEquals(
+    getSpyCalls(spy),
+    [
+      [{ ctx: 1, foo: 'bar' }],
+    ],
+    'should pass context as props'
+  )
+})

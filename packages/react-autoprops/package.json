@@ -1,0 +1,31 @@
+{
+  "name": "react-autoprops",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "repository": "batata-frita/react-autoprops",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
+  "contributors": [
+    "Alex Feinstein <psxcode@gmail.com> (https://github.com/psxcode)"
+  ],
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/batata-frita/react-autoprops/blob/master/license.md"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "autoprops": "^0.0.0",
+    "refun": "^0.0.0",
+    "tsfn": "^0.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.4",
+    "react": "^16.8.6"
+  }
+}

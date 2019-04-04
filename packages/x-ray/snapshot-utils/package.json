@@ -1,0 +1,27 @@
+{
+  "name": "@x-ray/snapshot-utils",
+  "version": "0.0.3",
+  "description": "",
+  "repository": "deepsweet/x-ray",
+  "homepage": "https://github.com/deepsweet/x-ray/tree/master/packages/snapshot-utils",
+  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "@x-ray/common-utils": "^0.0.3",
+    "graceful-fs": "^4.1.11"
+  },
+  "devDependencies": {
+    "@types/graceful-fs": "^4.1.2"
+  }
+}

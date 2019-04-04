@@ -1,0 +1,20 @@
+{
+  "name": "@primitives/svg",
+  "version": "0.0.0",
+  "main": "src/index.web.tsx",
+  "browser": "src/index.web.tsx",
+  "react-native": "src/index.native.tsx",
+  "files": [
+    "build/"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "react-native-svg": "^9.3.7"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.12",
+    "@types/react-native": "^0.57.37",
+    "react": "^16.8.6",
+    "react-native": "^0.59.3"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "@x-ray/firefox-screenshots",
+  "version": "0.0.2",
+  "description": "",
+  "repository": "deepsweet/x-ray",
+  "homepage": "https://github.com/deepsweet/x-ray/tree/master/packages/firefox-screenshots",
+  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "@x-ray/common-utils": "^0.0.3",
+    "@x-ray/screenshot-utils": "^0.0.5",
+    "execa": "^1.0.0",
+    "foxr": "^0.8.1",
+    "graceful-fs": "^4.1.11",
+    "make-dir": "^3.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.6.0"
+  },
+  "devDependencies": {
+    "@types/execa": "^0.9.0",
+    "@types/graceful-fs": "^4.1.2",
+    "@types/make-dir": "^2.1.0",
+    "@types/react": "^16.4.18",
+    "@types/react-dom": "^16.0.9"
+  }
+}

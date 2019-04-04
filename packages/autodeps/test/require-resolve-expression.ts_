@@ -1,0 +1,61 @@
+import test from 'blue-tape'
+import { getDependenciesInContent } from '../src/get-dependencies-in-content'
+
+test('require resolve expression: package dependency', async (t) => {
+  const content = `
+  const path = require.resolve('path')
+  const fs = require.resolve('fs')
+  `
+  const deps = getDependenciesInContent(content)
+
+  t.deepEquals(
+    deps,
+    ['path', 'fs'],
+    'should find required packages'
+  )
+})
+
+test('require resolve expression: package with path', async (t) => {
+  const content = `
+  const { func } = require.resolve('pkg/path/to/file')
+  `
+  const deps = getDependenciesInContent(content)
+
+  t.deepEquals(
+    deps,
+    ['pkg'],
+    'should find package name'
+  )
+})
+
+test('require resolve expression: scoped package', async (t) => {
+  const content = `
+  const { func1 } = require.resolve('@scope/pkg')
+  const { func2 } = require.resolve('@ns/my-package/path/to/file')
+  `
+  const deps = getDependenciesInContent(content)
+
+  t.deepEquals(
+    deps,
+    [
+      '@scope/pkg',
+      '@ns/my-package',
+    ],
+    'should find scoped packages'
+  )
+})
+
+test('require resolve expression: relative paths', async (t) => {
+  const content = `
+  const { func1 } = require.resolve('../src/path/to/file')
+  const { func2 } = require.resolve('./file')
+  const { func3 } = require.resolve('pkg')
+  `
+  const deps = getDependenciesInContent(content)
+
+  t.deepEquals(
+    deps,
+    ['pkg'],
+    'should skip relative paths'
+  )
+})

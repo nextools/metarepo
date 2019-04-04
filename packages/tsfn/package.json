@@ -1,0 +1,24 @@
+{
+  "name": "tsfn",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "repository": "batata-frita/tsfn",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
+  "contributors": [
+    "Alex Feinstein <psxcode@gmail.com> (https://github.com/psxcode)"
+  ],
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/batata-frita/tsfn/blob/master/license.md"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "private": true,
+  "description": "_",
+  "workspaces": [
+    "packages/auto/*",
+    "packages/autodeps",
+    "packages/autoprops",
+    "packages/colorido",
+    "packages/elegir",
+    "packages/lada/*",
+    "packages/primitives/*",
+    "packages/react-autoprops",
+    "packages/refun",
+    "packages/spyt",
+    "packages/tsfn",
+    "packages/x-ray/*"
+  ],
+  "devDependencies": {
+    "@auto/bump": "^0.0.22",
+    "@auto/git": "^0.0.29",
+    "@auto/npm": "^0.0.28",
+    "@auto/start-plugin": "^0.0.8",
+    "@auto/utils": "^0.0.15",
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-syntax-typescript": "^7.3.3",
+    "@babel/plugin-transform-runtime": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@babel/register": "^7.4.0",
+    "@start/cli": "^0.5.0",
+    "@start/plugin": "^0.3.1",
+    "@start/plugin-copy": "^0.3.1",
+    "@start/plugin-env": "^0.5.1",
+    "@start/plugin-find": "^0.3.1",
+    "@start/plugin-lib-babel": "^0.3.1",
+    "@start/plugin-lib-eslint": "^0.4.1",
+    "@start/plugin-lib-istanbul": "^0.5.1",
+    "@start/plugin-lib-tape": "^0.3.2",
+    "@start/plugin-lib-typescript-check": "^0.3.1",
+    "@start/plugin-lib-typescript-generate": "^0.4.1",
+    "@start/plugin-overwrite": "^0.3.1",
+    "@start/plugin-parallel": "^0.3.1",
+    "@start/plugin-read": "^0.3.1",
+    "@start/plugin-remove": "^0.3.1",
+    "@start/plugin-rename": "^0.3.1",
+    "@start/plugin-sequence": "^0.3.2",
+    "@start/plugin-write": "^0.3.1",
+    "@start/reporter-verbose": "^0.2.1",
+    "@types/babel-core": "^6.25.6",
+    "@types/blue-tape": "^0.1.32",
+    "@types/graceful-fs": "^4.1.3",
+    "@types/make-dir": "^2.1.0",
+    "@types/node": "^11.12.2",
+    "@types/prompts": "^1.2.0",
+    "@types/react": "^16.8.12",
+    "@typescript-eslint/eslint-plugin": "^1.4.2",
+    "@typescript-eslint/parser": "^1.5.0",
+    "babel-plugin-dynamic-import-node": "^2.2.0",
+    "blue-tape": "^1.0.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-react": "^7.12.4",
+    "globby": "^9.2.0",
+    "graceful-fs": "^4.1.15",
+    "make-dir": "^3.0.0",
+    "metro-react-native-babel-preset": "^0.53.1",
+    "mocku": "^0.5.0",
+    "spyfn": "^0.2.0",
+    "tap-diff": "^0.1.1",
+    "typescript": "3.4.1"
+  },
+  "scripts": {
+    "postinstall": "sh scripts/typescript.sh && rm node_modules/@types/node/console.d.ts > /dev/null 2>&1 || true"
+  },
+  "start": {
+    "require": [
+      [
+        "@babel/register",
+        {
+          "presets": [
+            [
+              "@babel/preset-env",
+              {
+                "targets": {
+                  "node": "current"
+                }
+              }
+            ],
+            "@babel/preset-typescript",
+            "@babel/preset-react"
+          ],
+          "plugins": [
+            "@babel/plugin-syntax-dynamic-import",
+            "babel-plugin-dynamic-import-node"
+          ],
+          "extensions": [
+            ".tsx",
+            ".ts"
+          ]
+        }
+      ]
+    ],
+    "reporter": "@start/reporter-verbose"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 9,
+      "sourceType": "module",
+      "jsx": true,
+      "useJSXTextNode": true
+    },
+    "plugins": [
+      "import",
+      "react",
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:import/errors",
+      "./tasks/config/eslint.json"
+    ],
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [
+            ".js",
+            ".ts",
+            ".tsx",
+            ".web.js",
+            ".web.ts",
+            ".web.tsx",
+            ".native.js",
+            ".native.ts",
+            ".native.tsx",
+            ".ios.js",
+            ".ios.ts",
+            ".ios.tsx",
+            ".android.js",
+            ".android.ts",
+            ".android.tsx"
+          ]
+        }
+      },
+      "react": {
+        "pragma": "React",
+        "version": "16"
+      }
+    },
+    "env": {
+      "es6": true,
+      "browser": true,
+      "node": true,
+      "jest": true
+    }
+  },
+  "eslintIgnore": [
+    "build/",
+    "coverage/",
+    "static/",
+    "node_modules/"
+  ],
+  "engines": {
+    "node": ">=8.6.0"
+  }
+}

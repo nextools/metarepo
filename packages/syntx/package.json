@@ -1,0 +1,28 @@
+{
+  "name": "syntx",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "repository": "batata-frita/syntx",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
+  "contributors": [
+    "Alex Feinstein <psxcode@gmail.com> (https://github.com/psxcode)"
+  ],
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/batata-frita/syntx/blob/master/license.md"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.12",
+    "react": "^16.8.6"
+  }
+}

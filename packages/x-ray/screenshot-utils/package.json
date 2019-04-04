@@ -1,0 +1,31 @@
+{
+  "name": "@x-ray/screenshot-utils",
+  "version": "0.0.5",
+  "description": "",
+  "repository": "deepsweet/x-ray",
+  "homepage": "https://github.com/deepsweet/x-ray/tree/master/packages/screenshot-utils",
+  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "@x-ray/common-utils": "^0.0.3",
+    "graceful-fs": "^4.1.11",
+    "imagemin-pngout": "^4.0.0",
+    "pixelmatch": "^4.0.2",
+    "upng-js": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/graceful-fs": "^4.1.2",
+    "@types/pixelmatch": "^4.0.0"
+  }
+}

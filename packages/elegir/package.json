@@ -1,0 +1,23 @@
+{
+  "name": "elegir",
+  "version": "0.2.1",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "repository": "batata-frita/react-autoprops",
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/batata-frita/react-autoprops/blob/master/license.md"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.3"
+  }
+}

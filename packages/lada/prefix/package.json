@@ -1,0 +1,28 @@
+{
+  "name": "@lada/prefix",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.node.ts",
+  "browser": "src/index.web.ts",
+  "react-native": "src/index.native.ts",
+  "files": [
+    "build/"
+  ],
+  "repository": "batata-frita/lada",
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/batata-frita/lada/blob/master/license"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "tsfn": "^0.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.7.8",
+    "@types/react-native": "^0.57.42",
+    "react": "^16.8.6"
+  }
+}

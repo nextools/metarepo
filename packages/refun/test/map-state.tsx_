@@ -1,0 +1,30 @@
+import React from 'react'
+import TestRenderer from 'react-test-renderer'
+import test from 'blue-tape'
+import { component, mapState, startWithType } from '../src'
+
+test('mapState', async (t) => {
+  const MyComp = component(
+    startWithType<{ foo: number }>(),
+    mapState('state', 'setState', ({ foo }) => foo, [])
+  )('Name', (props) => <span {...props}/>)
+
+  const testRenderer = TestRenderer.create(<MyComp foo={1}/>)
+  const initialProps = testRenderer.root.findByType('span').props
+
+  t.deepEquals(
+    initialProps,
+    { state: 1, setState: initialProps.setState, foo: 1 },
+    'should pass state and state setter'
+  )
+
+  initialProps.setState(2)
+
+  const nextProps = testRenderer.root.findByType('span').props
+
+  t.deepEquals(
+    nextProps,
+    { state: 2, setState: initialProps.setState, foo: 1 },
+    'should update state'
+  )
+})

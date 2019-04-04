@@ -1,0 +1,466 @@
+import test from 'tape'
+import { createElement } from 'react'
+import serialize from '../src/index'
+
+test('serialize-react-tree', (t) => {
+  t.deepEquals(
+    serialize(
+      createElement('div')
+    ),
+    {
+      component: '<div/>',
+      primitives: ['div'],
+    },
+    'single element'
+  )
+
+  t.deepEquals(
+    serialize(
+      createElement('div', {
+        a: 'string',
+        b: 123,
+        c: true,
+        d: false,
+        e: null,
+        f: undefined,
+        g: (a: any) => a + 1,
+        h: {
+          a: {},
+          b: ['string', 123, true, false, null, undefined, () => {
+          }, [], {}],
+          c: 'string',
+          d: 123,
+          e: true,
+          f: null,
+          g: undefined,
+        },
+        i: [
+          {
+            a: [],
+            b: (a: any) => a + 1,
+          },
+          'string',
+          123,
+        ],
+      })
+    ),
+    {
+      component:
+        `<div
+  a="string"
+  b={123}
+  c={true}
+  d={false}
+  e={null}
+  f={undefined}
+  g={() => {}}
+  h={{
+    a: {},
+    b: [
+      'string',
+      123,
+      true,
+      false,
+      null,
+      undefined,
+      () => {},
+      [],
+      {}
+    ],
+    c: 'string',
+    d: 123,
+    e: true,
+    f: null,
+    g: undefined
+  }}
+  i={[
+    {
+      a: [],
+      b: () => {}
+    },
+    'string',
+    123
+  ]}
+/>`,
+      primitives: ['div'],
+    },
+    'props combinations'
+  )
+
+  t.deepEquals(
+    serialize(
+      createElement(
+        'div',
+        {},
+        createElement('span')
+      )
+    ),
+    {
+      component:
+        `<div>
+  <span/>
+</div>`,
+      primitives: ['div', 'span'],
+    },
+    'children arg single'
+  )
+
+  t.deepEquals(
+    serialize(
+      createElement(
+        'div',
+        {},
+        createElement(
+          'div',
+          {},
+          createElement('span')
+        )
+      )
+    ),
+    {
+      component:
+        `<div>
+  <div>
+    <span/>
+  </div>
+</div>`,
+      primitives: ['div', 'span'],
+    },
+    'children arg tree'
+  )
+
+  t.deepEquals(
+    serialize(
+      createElement(
+        'div',
+        {},
+        [
+          createElement(
+            'div',
+            { key: '1' },
+            createElement('span')
+          ),
+          createElement(
+            'div',
+            { key: '2' },
+            createElement('span')
+          ),
+        ]
+      )
+    ),
+    {
+      component:
+        `<div>
+  <div>
+    <span/>
+  </div>
+  <div>
+    <span/>
+  </div>
+</div>`,
+      primitives: ['div', 'span'],
+    },
+    'children arg array'
+  )
+
+  t.deepEquals(
+    serialize(
+      createElement(
+        'div',
+        {},
+        createElement(
+          'div',
+          {},
+          createElement('span')
+        ),
+        createElement(
+          'div',
+          {},
+          createElement('span')
+        )
+      )
+    ),
+    {
+      component:
+        `<div>
+  <div>
+    <span/>
+  </div>
+  <div>
+    <span/>
+  </div>
+</div>`,
+      primitives: ['div', 'span'],
+    },
+    'children arg 3rd 4th'
+  )
+
+  t.deepEquals(
+    serialize(
+      createElement(
+        'div',
+        {},
+        createElement(
+          'div',
+          {
+            a: {
+              title: createElement('span'),
+              items: [
+                createElement('span'),
+              ],
+            },
+          },
+          'string',
+          123
+        ),
+        createElement(
+          'div',
+          {},
+          createElement('span'),
+          true,
+          false
+        ),
+        createElement(
+          'div',
+          {},
+          null,
+          undefined
+        )
+      )
+    ),
+    {
+      component:
+        `<div>
+  <div
+    a={{
+      title: (
+        <span/>
+      ),
+      items: [
+        (
+          <span/>
+        )
+      ]
+    }}
+  >
+    string
+    123
+  </div>
+  <div>
+    <span/>
+  </div>
+  <div/>
+</div>`,
+      primitives: ['div', 'span'],
+    },
+    'children arg mixed types'
+  )
+
+  t.deepEquals(
+    serialize(
+      createElement(
+        'div',
+        {
+          a: createElement(
+            'div',
+            {},
+            createElement('span')
+          ),
+        }
+      )
+    ),
+    {
+      component:
+        `<div
+  a={
+    <div>
+      <span/>
+    </div>
+  }
+/>`,
+      primitives: ['div', 'span'],
+    },
+    'children named prop'
+  )
+
+  t.deepEquals(
+    serialize(
+      createElement(
+        'div',
+        {
+          a: [
+            createElement(
+              'div',
+              { key: '1' },
+              createElement('span')
+            ),
+            createElement(
+              'div',
+              { key: '2' },
+              createElement('span')
+            ),
+          ],
+        }
+      )
+    ),
+    {
+      component:
+        `<div
+  a={[
+    (
+      <div>
+        <span/>
+      </div>
+    ),
+    (
+      <div>
+        <span/>
+      </div>
+    )
+  ]}
+/>`,
+      primitives: ['div', 'span'],
+    },
+    'children named prop array'
+  )
+
+  t.deepEquals(
+    serialize(
+      createElement(
+        'div',
+        {
+          a: [
+            createElement(
+              'div',
+              { key: '1' },
+              createElement('span')
+            ),
+            'string',
+            123,
+            true,
+            false,
+            null,
+            undefined,
+          ],
+        }
+      )
+    ),
+    {
+      component:
+        `<div
+  a={[
+    (
+      <div>
+        <span/>
+      </div>
+    ),
+    'string',
+    123,
+    true,
+    false,
+    null,
+    undefined
+  ]}
+/>`,
+      primitives: ['div', 'span'],
+    },
+    'children named prop array with mixed types'
+  )
+
+  t.deepEquals(
+    serialize(
+      createElement(
+        'div',
+        {
+          children: createElement(
+            'div',
+            {},
+            createElement('span')
+          ),
+        }
+      )
+    ),
+    {
+      component:
+        `<div>
+  <div>
+    <span/>
+  </div>
+</div>`,
+      primitives: ['div', 'span'],
+    },
+    '\'children\' named prop'
+  )
+
+  t.deepEquals(
+    serialize(
+      createElement(
+        'div',
+        {
+          children: [
+            createElement(
+              'div',
+              { key: '1' },
+              createElement('span')
+            ),
+            createElement(
+              'div',
+              { key: '2' },
+              createElement('span')
+            ),
+          ],
+        }
+      )
+    ),
+    {
+      component:
+        `<div>
+  <div>
+    <span/>
+  </div>
+  <div>
+    <span/>
+  </div>
+</div>`,
+      primitives: ['div', 'span'],
+    },
+    '\'children\' prop array'
+  )
+
+  t.deepEquals(
+    serialize(
+      createElement(
+        'div',
+        {
+          children: [
+            createElement(
+              'div',
+              { key: '1' },
+              createElement('span')
+            ),
+            'string',
+            123,
+            true,
+            false,
+            null,
+            undefined,
+          ],
+        }
+      )
+    ),
+    {
+      component:
+        `<div>
+  <div>
+    <span/>
+  </div>
+  string
+  123
+</div>`,
+      primitives: ['div', 'span'],
+    },
+    '\'children\' prop array with mixed types'
+  )
+
+  t.end()
+})

@@ -1,0 +1,43 @@
+{
+  "name": "@x-ray/chrome-screenshots",
+  "version": "0.0.12",
+  "description": "",
+  "repository": "deepsweet/x-ray",
+  "homepage": "https://github.com/deepsweet/x-ray/tree/master/packages/chrome-screenshots",
+  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "@x-ray/common-utils": "^0.0.3",
+    "@x-ray/screenshot-utils": "^0.0.5",
+    "execa": "^1.0.0",
+    "graceful-fs": "^4.1.11",
+    "make-dir": "^3.0.0",
+    "p-all": "^2.0.0",
+    "puppeteer-core": "~1.9.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.6.0",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5"
+  },
+  "devDependencies": {
+    "@types/execa": "^0.9.0",
+    "@types/graceful-fs": "^4.1.2",
+    "@types/make-dir": "^2.1.0",
+    "@types/p-all": "^1.0.0",
+    "@types/puppeteer": "^1.9.0",
+    "@types/react": "^16.4.18",
+    "@types/react-dom": "^16.0.9",
+    "@types/request-promise-native": "^1.0.15"
+  }
+}

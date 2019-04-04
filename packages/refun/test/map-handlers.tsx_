@@ -1,0 +1,111 @@
+import React from 'react'
+import TestRenderer from 'react-test-renderer'
+import test from 'blue-tape'
+import { createSpy, getSpyCalls } from 'spyfn'
+import { component, mapHandlers, startWithType } from '../src'
+
+test('mapHandlers', async (t) => {
+  const eSpy = createSpy(() => null)
+  const propsSpy = createSpy(() => eSpy)
+  const factorySpy = createSpy(() => ({
+    onClick: propsSpy,
+  }))
+
+  const MyComp = component(
+    startWithType<{ foo: string, bar: string }>(),
+    mapHandlers(factorySpy)
+  )('Name', (props) => <span {...props}/>)
+
+  const testRenderer = TestRenderer.create(<MyComp foo="foo" bar="bar"/>)
+  const props1 = testRenderer.root.findByType('span').props
+  const onClick = props1.onClick
+
+  t.deepEquals(
+    props1,
+    {
+      foo: 'foo',
+      bar: 'bar',
+      onClick,
+    },
+    'should pass props'
+  )
+
+  t.deepEquals(
+    getSpyCalls(factorySpy),
+    [
+      [{ foo: 'foo', bar: 'bar' }],
+    ],
+    'should call factory with props'
+  )
+
+  t.deepEquals(
+    getSpyCalls(propsSpy),
+    [],
+    'should not call internal handler'
+  )
+
+  t.deepEquals(
+    getSpyCalls(eSpy),
+    [],
+    'should not call external handler'
+  )
+
+  onClick(1, 2)
+
+  t.deepEquals(
+    getSpyCalls(propsSpy),
+    [
+      [{ foo: 'foo', bar: 'bar' }],
+    ],
+    'should call internal handler'
+  )
+
+  t.deepEquals(
+    getSpyCalls(eSpy),
+    [
+      [1, 2],
+    ],
+    'should call external handler'
+  )
+
+  testRenderer.update(<MyComp foo="nextFoo" bar="bar"/>)
+  const props2 = testRenderer.root.findByType('span').props
+
+  t.deepEquals(
+    props2,
+    {
+      foo: 'nextFoo',
+      bar: 'bar',
+      onClick,
+    },
+    'should pass new props'
+  )
+
+  t.deepEquals(
+    getSpyCalls(factorySpy),
+    [
+      [{ foo: 'foo', bar: 'bar' }],
+    ],
+    'should not call factory'
+  )
+
+  onClick(3, 4)
+
+  t.deepEquals(
+    getSpyCalls(propsSpy),
+    [
+      [{ foo: 'foo', bar: 'bar' }],
+      [{ foo: 'nextFoo', bar: 'bar' }],
+    ],
+    'should call internal handler'
+  )
+
+  t.deepEquals(
+    getSpyCalls(eSpy),
+    [
+      [1, 2],
+      [3, 4],
+    ],
+    'should call external handler'
+  )
+})

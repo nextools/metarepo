@@ -1,0 +1,33 @@
+{
+  "name": "@primitives/pointer",
+  "version": "0.0.0",
+  "description": "Universal View primitive for React and React Native",
+  "keywords": [
+    "react",
+    "react-native",
+    "primitives",
+    "view"
+  ],
+  "main": "src/index.web.tsx",
+  "browser": "src/index.web.tsx",
+  "files": [
+    "build/"
+  ],
+  "repository": "batata-frita/primitives",
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/batata-frita/primitives/blob/master/license"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@lada/prefix": "^0.0.0",
+    "refun": "^0.0.0",
+    "tsfn": "^0.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.12",
+    "react": "^16.8.6"
+  }
+}

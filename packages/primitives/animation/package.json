@@ -1,0 +1,19 @@
+{
+  "name": "@primitives/animation",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "tsfn": "^0.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.4",
+    "react": "^16.8.6"
+  }
+}

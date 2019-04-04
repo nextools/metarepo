@@ -1,0 +1,34 @@
+{
+  "name": "autoprops",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "repository": "batata-frita/autoprops",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
+  "contributors": [
+    "Alex Feinstein <psxcode@gmail.com> (https://github.com/psxcode)"
+  ],
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/batata-frita/autoprops/blob/master/license.md"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.3",
+    "refun": "^0.0.0",
+    "sanitize-filename": "^1.6.1"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "@types/react": "^16.8.4",
+    "@types/sanitize-filename": "^1.1.28",
+    "blue-tape": "^1.0.0",
+    "react": "^16.8.6"
+  }
+}

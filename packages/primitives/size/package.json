@@ -1,0 +1,38 @@
+{
+  "name": "@primitives/size",
+  "version": "0.0.0",
+  "description": "Universal Size primitive for React and React Native",
+  "keywords": [
+    "react",
+    "react-native",
+    "primitives",
+    "layout",
+    "resize",
+    "resizeobserver"
+  ],
+  "main": "src/index.web.tsx",
+  "browser": "src/index.web.tsx",
+  "react-native": "src/index.native.tsx",
+  "files": [
+    "build/"
+  ],
+  "repository": "batata-frita/primitives",
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/batata-frita/primitives/blob/master/license"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@lada/prefix": "^0.0.0",
+    "refun": "^0.0.0",
+    "tsfn": "^0.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.12",
+    "@types/react-native": "^0.57.37",
+    "react": "^16.8.6",
+    "react-native": "^0.59.3"
+  }
+}

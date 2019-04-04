@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "pretty": true,
+    "lib": ["esnext", "dom"],
+    "jsx": "react",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "typeRoots": ["types/", "node_modules/@types/"]
+  },
+  "exclude": [
+    "node_modules/",
+    "coverage/",
+    "packages/**/build/",
+    "tmp/"
+  ]
+}

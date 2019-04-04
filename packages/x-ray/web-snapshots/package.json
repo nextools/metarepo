@@ -1,0 +1,36 @@
+{
+  "name": "@x-ray/web-snapshots",
+  "version": "0.0.8",
+  "description": "",
+  "repository": "deepsweet/x-ray",
+  "homepage": "https://github.com/deepsweet/x-ray/tree/master/packages/web-snapshots",
+  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@x-ray/common-utils": "^0.0.3",
+    "@x-ray/serialize-react-tree": "^0.1.3",
+    "@x-ray/snapshot-utils": "^0.0.3",
+    "execa": "^1.0.0",
+    "graceful-fs": "^4.1.11",
+    "make-dir": "^3.0.0",
+    "p-all": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/execa": "^0.9.0",
+    "@types/graceful-fs": "^4.1.2",
+    "@types/make-dir": "^2.1.0",
+    "@types/p-all": "^1.0.0",
+    "@types/react": "^16.4.18",
+    "react": "^16.8.6"
+  }
+}

@@ -1,0 +1,8 @@
+node_modules/
+build/
+coverage/
+tmp/
+.npmrc
+.DS_Store
+*.log
+.idea/

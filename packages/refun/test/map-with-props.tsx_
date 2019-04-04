@@ -1,0 +1,25 @@
+import React from 'react'
+import TestRenderer from 'react-test-renderer'
+import test from 'blue-tape'
+import { component, startWithType, mapWithPropsMemo } from '../src'
+
+test('mapWithProps', async (t) => {
+  const MyComp = component(
+    startWithType<{ foo: string }>(),
+    mapWithPropsMemo(({ foo }) => ({
+      bar: foo,
+    }), ['foo'])
+  )('Name', (props) => <span {...props}/>)
+
+  const testRenderer = TestRenderer.create(<MyComp foo="foo"/>)
+  const props = testRenderer.root.findByType('span').props
+
+  t.deepEquals(
+    props,
+    {
+      foo: 'foo',
+      bar: 'foo',
+    },
+    'should pass props'
+  )
+})
