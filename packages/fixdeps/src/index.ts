@@ -12,7 +12,7 @@ import { getLocalPackageVersionYarn } from './get-local-package-version-yarn'
 const pReadFile = promisify(readFile)
 const pWriteFile = promisify(writeFile)
 
-export const autodeps = async (options: TOptions) => {
+export const fixdeps = async (options: TOptions) => {
   const logPath = options.logPath || (() => {})
   const logMessage = options.logMessage || (() => {})
 
