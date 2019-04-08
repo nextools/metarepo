@@ -1,11 +1,11 @@
 {
   "name": "@primitives/text",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "keywords": [],
-  "main": "src/index.ts",
-  "browser": "src/index.ts",
-  "react-native": "src/index.ts",
+  "main": "src/index.web.ts",
+  "browser": "src/index.web.ts",
+  "react-native": "src/index.native.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
@@ -16,7 +16,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@lada/prefix": "^0.0.0",
+    "@lada/prefix": "^0.3.0",
     "elegir": "^0.1.2",
     "refun": "^0.0.0",
     "tsfn": "^0.0.0"
