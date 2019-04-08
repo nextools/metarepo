@@ -2,16 +2,16 @@ import test from 'blue-tape'
 import { mock, unmock } from 'mocku'
 import { createSpy, getSpyCalls } from 'spyfn'
 
-test('git:writeWorkspacesPublishTag: single package', async (t) => {
+test('git:writeWorkspacesPublishTag: multiple tags', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
   mock('../src/write-workspaces-publish-tag', {
     execa: { default: execaSpy },
   })
 
-  const { writeWorkspacesPublishTag } = await import('../src/write-workspaces-publish-tag')
+  const { writeWorkspacesPublishTags } = await import('../src/write-workspaces-publish-tags')
 
-  await writeWorkspacesPublishTag(
+  await writeWorkspacesPublishTags([
     {
       name: 'a',
       dir: 'fakes/a',
@@ -19,46 +19,61 @@ test('git:writeWorkspacesPublishTag: single package', async (t) => {
       version: '0.1.1',
       deps: null,
       devDeps: null,
-    }
-  )
+    },
+    {
+      name: 'b',
+      dir: 'fakes/b',
+      type: 'minor',
+      version: '0.2.0',
+      deps: null,
+      devDeps: null,
+    },
+  ])
 
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
     [
       ['git', ['tag', '-m', 'a@0.1.1', 'a@0.1.1']],
+      ['git', ['tag', '-m', 'b@0.2.0', 'b@0.2.0']],
     ],
-    'single package'
+    'multiple tags'
   )
 
   unmock('../src/write-workspaces-publish-tag')
 })
 
-test('git:writeWorkspacesPublishTag: no packages to publish', async (t) => {
+test('git:writeWorkspacesPublishTag: no tags', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
   mock('../src/write-workspaces-publish-tag', {
     execa: { default: execaSpy },
   })
 
-  const { writeWorkspacesPublishTag } = await import('../src/write-workspaces-publish-tag')
+  const { writeWorkspacesPublishTags } = await import('../src/write-workspaces-publish-tags')
 
-  await writeWorkspacesPublishTag(
+  await writeWorkspacesPublishTags([
     {
       name: 'a',
       dir: 'fakes/a',
       type: null,
-      version: null,
-      deps: {
-        b: '~0.2.0',
-      },
+      version: '0.1.1',
+      deps: null,
       devDeps: null,
-    }
-  )
+    },
+    {
+      name: 'b',
+      dir: 'fakes/b',
+      type: 'minor',
+      version: null,
+      deps: null,
+      devDeps: null,
+    },
+  ])
 
   t.deepEquals(
     getSpyCalls(execaSpy),
     [],
-    'no packages to publish'
+    'no tags'
   )
 
   unmock('../src/write-workspaces-publish-tag')
