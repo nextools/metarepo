@@ -23,6 +23,9 @@ import {
   writeWorkspacesDependenciesCommit,
   writeWorkspacesPackageVersions,
   writeWorkspacesPublishCommit,
+  publishWorkspacesPackagesBumps,
+  pushCommitsAndTags,
+  writeWorkspacesPublishTags,
 } from '@auto/start-plugin'
 import tape from '@start/plugin-lib-tape'
 import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
@@ -188,9 +191,10 @@ export const publish = async () => {
     writeWorkspacesDependenciesCommit(prefixes),
     writeWorkspacesPackageVersions,
     writeWorkspacesPublishCommit(prefixes),
-    buildBumpedPackages(preparePackage)
-    // publishWorkspacesPackagesBumps(npmOptions),
-    // pushCommitsAndTags
+    writeWorkspacesPublishTags,
+    buildBumpedPackages(preparePackage),
+    publishWorkspacesPackagesBumps(npmOptions),
+    pushCommitsAndTags
   )
 }
 

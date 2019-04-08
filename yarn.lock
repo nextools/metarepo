@@ -906,15 +906,15 @@
   dependencies:
     "@babel/runtime" "^7.4.2"
 
-"@start/plugin-copy@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@start/plugin-copy/-/plugin-copy-0.3.1.tgz#39e46e06bb7496ca447a97e66f70005dfd24126b"
-  integrity sha512-IPU+b/Wd31WOf7LKQ+cOooo0uoLI0N8NysxjSA0rj9BXK7phX4GQWft27rNccLDvpQZ17CfESYWeHy7pcnL/OA==
+"@start/plugin-copy@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@start/plugin-copy/-/plugin-copy-0.3.2.tgz#e8c6109cb5f8e9dbb9fc6609d908f8ce7a18fa21"
+  integrity sha512-QH+SaVfy5kGeUyF7bLUVsoOoqk/r7d47OxrmzVxysWz0+ix5flg/W2wVOYUwTyGxVb6tU16LAX4KQaaAQvvaeQ==
   dependencies:
     "@babel/runtime" "^7.4.2"
     "@start/plugin" "^0.3.1"
     copie "^0.3.0"
-    make-dir "^2.0.0"
+    make-dir "^3.0.0"
     move-path "^0.2.0"
 
 "@start/plugin-env@^0.5.1":
@@ -1038,23 +1038,23 @@
     "@babel/runtime" "^7.4.2"
     "@start/plugin" "^0.3.1"
 
-"@start/plugin-sequence@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@start/plugin-sequence/-/plugin-sequence-0.3.2.tgz#88ed081f8f34c0fb2cc86e7eb0facb93c86caf4c"
-  integrity sha512-+dW/FdmGT4FbY7KrlMJvSrTfGofRnq2WTThcK1zSfFm4zyJCvm886t7Wq2Z4RiBsuFzivH5HR0dWVJgZTzZNmQ==
+"@start/plugin-sequence@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@start/plugin-sequence/-/plugin-sequence-0.3.3.tgz#4d0219ecc54b2babc8fa6cfb33d6bb3529a0b014"
+  integrity sha512-Kwra6gcyLFe4wwRhDAE/kt0M5x03Z8blvUxbUzh7f5IKlvgl52PITWx6z9UlAztqAhvq5cLW623xrHUTt5OCAQ==
   dependencies:
     "@babel/runtime" "^7.4.2"
     "@start/plugin" "^0.3.1"
 
-"@start/plugin-write@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@start/plugin-write/-/plugin-write-0.3.1.tgz#9cfa21625aa0029a75f2b71f79ade464cadf13fd"
-  integrity sha512-p1sTaBTE61qAPdxbeMfvDMlb2qlgR6ouC6bYAjXStbItCSgH9xpC9aebGQhvMAyy6cNP1VSQ5lalTr0TOAriJw==
+"@start/plugin-write@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@start/plugin-write/-/plugin-write-0.3.2.tgz#e5e3ae59b81bceeda9013231507852dd62091091"
+  integrity sha512-/1u4ci9aGij4oeKqHtVrMxX/YW1pxnNIyLJZjVU1asKQtZCwzkcASdN1/nFm+feDlqQdASAAhY99kuljzwI92A==
   dependencies:
     "@babel/runtime" "^7.4.2"
     "@start/plugin" "^0.3.1"
     graceful-fs "^4.1.15"
-    make-dir "^2.0.0"
+    make-dir "^3.0.0"
     move-path "^0.2.0"
 
 "@start/plugin@^0.3.0", "@start/plugin@^0.3.1":
