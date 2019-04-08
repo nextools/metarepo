@@ -1,7 +1,7 @@
-import { TPrefixes, makeRegExp } from '@auto/utils'
+import { TPrefixes, makeRegExp, TWorkspacesOptions, removeAutoNamePrefix } from '@auto/utils'
 import { TParsedMessageType, TWorkspacesParsedMessage } from './types'
 
-export const parseWorkspacesCommitMessage = (commitText: string, packageNames: string[], prefixes: TPrefixes): TWorkspacesParsedMessage | null => {
+export const parseWorkspacesCommitMessage = (commitText: string, packageNames: string[], prefixes: TPrefixes, { autoNamePrefix }: TWorkspacesOptions): TWorkspacesParsedMessage | null => {
   const matchResult = commitText.match(/^(.+?)\s(.+?):\s*([\s\S]*)$/)
 
   if (matchResult === null) {
@@ -44,7 +44,7 @@ export const parseWorkspacesCommitMessage = (commitText: string, packageNames: s
     .reduce((result, name) => {
       if (name.includes('*')) {
         const regExp = makeRegExp(name)
-        const matchedNames = packageNames.filter((name) => regExp.test(name))
+        const matchedNames = packageNames.filter((name) => regExp.test(name) || regExp.test(removeAutoNamePrefix(name, autoNamePrefix)))
 
         for (const matchedName of matchedNames) {
           if (!result.includes(matchedName)) {
@@ -57,6 +57,12 @@ export const parseWorkspacesCommitMessage = (commitText: string, packageNames: s
 
       if (packageNames.includes(name)) {
         result.push(name)
+      } else {
+        const fullName = `${autoNamePrefix}${name}`
+
+        if (packageNames.includes(fullName)) {
+          result.push(fullName)
+        }
       }
 
       return result

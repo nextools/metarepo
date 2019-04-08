@@ -47,7 +47,7 @@ test('git:getWorkspacesBumps single package', async (t) => {
   const { getWorkspacesBumps } = await import('../src/get-workspaces-bumps')
 
   t.deepEquals(
-    await getWorkspacesBumps(packages, prefixes, gitOptions),
+    await getWorkspacesBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
     [{
       name: 'foo',
       type: 'patch',
@@ -80,7 +80,7 @@ test('git:getWorkspacesBumps single package', async (t) => {
   const { getWorkspacesBumps } = await import('../src/get-workspaces-bumps')
 
   t.deepEquals(
-    await getWorkspacesBumps(packages, prefixes, gitOptions),
+    await getWorkspacesBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
     [{
       name: 'foo',
       type: 'minor',
@@ -113,7 +113,7 @@ test('git:getWorkspacesBumps single package', async (t) => {
   const { getWorkspacesBumps } = await import('../src/get-workspaces-bumps')
 
   t.deepEquals(
-    await getWorkspacesBumps(packages, prefixes, gitOptions),
+    await getWorkspacesBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
     [{
       name: 'foo',
       type: 'minor',
@@ -147,7 +147,7 @@ test('git:getWorkspacesBumps single package', async (t) => {
   const { getWorkspacesBumps } = await import('../src/get-workspaces-bumps')
 
   t.deepEquals(
-    await getWorkspacesBumps(packages, prefixes, gitOptions),
+    await getWorkspacesBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
     [{
       name: 'foo',
       type: 'major',
@@ -184,7 +184,7 @@ test('git:getWorkspacesBumps single package', async (t) => {
   const { getWorkspacesBumps } = await import('../src/get-workspaces-bumps')
 
   t.deepEquals(
-    await getWorkspacesBumps(packages, prefixes, gitOptions),
+    await getWorkspacesBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
     [{
       name: 'foo',
       type: 'major',
@@ -222,7 +222,7 @@ test('git:getWorkspacesBumps single package', async (t) => {
   const { getWorkspacesBumps } = await import('../src/get-workspaces-bumps')
 
   t.deepEquals(
-    await getWorkspacesBumps(packages, prefixes, gitOptions),
+    await getWorkspacesBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
     [{
       name: 'foo',
       type: 'major',
@@ -262,7 +262,7 @@ test('git:getWorkspacesBumps multiple packages', async (t) => {
   const { getWorkspacesBumps } = await import('../src/get-workspaces-bumps')
 
   t.deepEquals(
-    await getWorkspacesBumps(packages, prefixes, gitOptions),
+    await getWorkspacesBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
     [{
       name: 'foo',
       type: 'patch',
@@ -302,7 +302,7 @@ test('git:getWorkspacesBumps multiple packages in one commit', async (t) => {
   const { getWorkspacesBumps } = await import('../src/get-workspaces-bumps')
 
   t.deepEquals(
-    await getWorkspacesBumps(packages, prefixes, gitOptions),
+    await getWorkspacesBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
     [{
       name: 'foo',
       type: 'major',
@@ -341,7 +341,7 @@ test('git:getWorkspacesBumps star symbol', async (t) => {
   const { getWorkspacesBumps } = await import('../src/get-workspaces-bumps')
 
   t.deepEquals(
-    await getWorkspacesBumps(packages, prefixes, gitOptions),
+    await getWorkspacesBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
     [{
       name: 'foo',
       type: 'minor',
@@ -397,7 +397,7 @@ test('git:getWorkspacesBumps string + star symbol', async (t) => {
   const { getWorkspacesBumps } = await import('../src/get-workspaces-bumps')
 
   t.deepEquals(
-    await getWorkspacesBumps(packages, prefixes, gitOptions),
+    await getWorkspacesBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
     [{
       name: 'bar',
       type: 'minor',
@@ -451,7 +451,7 @@ test('git:getWorkspacesBumps skipped commits', async (t) => {
   const { getWorkspacesBumps } = await import('../src/get-workspaces-bumps')
 
   t.deepEquals(
-    await getWorkspacesBumps(packages, prefixes, gitOptions),
+    await getWorkspacesBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
     [{
       name: 'foo',
       type: 'minor',
@@ -489,7 +489,7 @@ test('git:getWorkspacesBumps multiple packages initial', async (t) => {
   const { getWorkspacesBumps } = await import('../src/get-workspaces-bumps')
 
   t.deepEquals(
-    await getWorkspacesBumps(packages, prefixes, gitOptions),
+    await getWorkspacesBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
     [{
       name: 'foo',
       type: 'minor',
