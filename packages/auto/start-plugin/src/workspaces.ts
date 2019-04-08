@@ -34,7 +34,7 @@ export const getWorkspacesPackagesBumps = (prefixes: TPrefixes, gitOptions: TGit
       throw new Error('No bumps')
     }
 
-    const packagesBumps = await getWorkspacesPackagesBumps(packages, gitBumps, bumpOptions, workspacesOptions)
+    const packagesBumps = await getWorkspacesPackagesBumps(packages, gitBumps, bumpOptions)
 
     return {
       packagesBumps,

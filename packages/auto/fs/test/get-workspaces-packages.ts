@@ -4,7 +4,7 @@ import { createFsFromVolume, Volume } from 'memfs'
 import { TWorkspacesOptions } from '@auto/utils'
 
 const options: TWorkspacesOptions = {
-  autoNamePrefix: '@ns/',
+  autoNamePrefix: '@',
 }
 const rootDir = process.cwd()
 
@@ -18,7 +18,7 @@ test('fs:getWorkspacesPackages workspaces[]', async (t) => {
       version: '1.0.0',
     }),
     [`${rootDir}/fakes/b/package.json`]: JSON.stringify({
-      name: '@ns/b',
+      name: 'b',
       version: '2.0.0',
     }),
     [`${rootDir}/fakes/c/package.json`]: JSON.stringify({
@@ -38,7 +38,7 @@ test('fs:getWorkspacesPackages workspaces[]', async (t) => {
   t.deepEquals(
     await getWorkspacesPackages(options),
     {
-      a: {
+      'ns/a': {
         dir: `${rootDir}/fakes/a`,
         json: {
           name: '@ns/a',
@@ -48,11 +48,11 @@ test('fs:getWorkspacesPackages workspaces[]', async (t) => {
       b: {
         dir: `${rootDir}/fakes/b`,
         json: {
-          name: '@ns/b',
+          name: 'b',
           version: '2.0.0',
         },
       },
-      c: {
+      'ns/c': {
         dir: `${rootDir}/fakes/c`,
         json: {
           name: '@ns/c',
