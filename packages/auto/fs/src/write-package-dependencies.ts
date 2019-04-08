@@ -1,12 +1,12 @@
 import path from 'path'
 import { promisify } from 'util'
 import { writeFile } from 'graceful-fs'
-import { isDependencyObject, TWorkspacesOptions, TWorkspacesPackageBump } from '@auto/utils'
+import { isDependencyObject, TWorkspacesPackageBump } from '@auto/utils'
 import { getPackage } from './get-package'
 
 const pWriteFile = promisify(writeFile)
 
-export const writePackageDependencies = async (packageBumps: TWorkspacesPackageBump[], options: TWorkspacesOptions) => {
+export const writePackageDependencies = async (packageBumps: TWorkspacesPackageBump[]) => {
   for (const bump of packageBumps) {
     if (bump.deps === null && bump.devDeps === null) {
       continue
@@ -17,17 +17,13 @@ export const writePackageDependencies = async (packageBumps: TWorkspacesPackageB
 
     if (bump.deps !== null && isDependencyObject(packageJson.dependencies)) {
       for (const [depName, depRange] of Object.entries(bump.deps)) {
-        const fullDepName = `${options.autoNamePrefix}${depName}`
-
-        packageJson.dependencies[fullDepName] = depRange
+        packageJson.dependencies[depName] = depRange
       }
     }
 
     if (bump.devDeps !== null && isDependencyObject(packageJson.devDependencies)) {
       for (const [depName, depRange] of Object.entries(bump.devDeps)) {
-        const fullDepName = `${options.autoNamePrefix}${depName}`
-
-        packageJson.devDependencies[fullDepName] = depRange
+        packageJson.devDependencies[depName] = depRange
       }
     }
 

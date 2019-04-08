@@ -1,11 +1,7 @@
 import test from 'blue-tape'
 import { mock, unmock, deleteFromCache } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
-import { TWorkspacesOptions } from '@auto/utils'
 
-const options: TWorkspacesOptions = {
-  autoNamePrefix: '@',
-}
 const rootDir = process.cwd()
 
 test('fs:getWorkspacesPackages workspaces[]', async (t) => {
@@ -36,9 +32,9 @@ test('fs:getWorkspacesPackages workspaces[]', async (t) => {
 
   const { getWorkspacesPackages } = await import('../src/get-workspaces-packages')
   t.deepEquals(
-    await getWorkspacesPackages(options),
+    await getWorkspacesPackages(),
     {
-      'ns/a': {
+      '@ns/a': {
         dir: `${rootDir}/fakes/a`,
         json: {
           name: '@ns/a',
@@ -52,7 +48,7 @@ test('fs:getWorkspacesPackages workspaces[]', async (t) => {
           version: '2.0.0',
         },
       },
-      'ns/c': {
+      '@ns/c': {
         dir: `${rootDir}/fakes/c`,
         json: {
           name: '@ns/c',
