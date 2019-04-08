@@ -5,7 +5,7 @@ import { createSpy, getSpyCalls } from 'spyfn'
 test('git:writeWorkspacesPublishTag: multiple tags', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/write-workspaces-publish-tag', {
+  mock('../src/write-workspaces-publish-tags', {
     execa: { default: execaSpy },
   })
 
@@ -39,13 +39,13 @@ test('git:writeWorkspacesPublishTag: multiple tags', async (t) => {
     'multiple tags'
   )
 
-  unmock('../src/write-workspaces-publish-tag')
+  unmock('../src/write-workspaces-publish-tags')
 })
 
 test('git:writeWorkspacesPublishTag: no tags', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/write-workspaces-publish-tag', {
+  mock('../src/write-workspaces-publish-tags', {
     execa: { default: execaSpy },
   })
 
@@ -76,5 +76,5 @@ test('git:writeWorkspacesPublishTag: no tags', async (t) => {
     'no tags'
   )
 
-  unmock('../src/write-workspaces-publish-tag')
+  unmock('../src/write-workspaces-publish-tags')
 })
