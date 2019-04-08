@@ -25,10 +25,10 @@ const getDevDependencyRange = ({ devDependencies }: TPackageJson, name: string) 
     ? devDependencies[name]
     : null)
 
-export const getCrossDependents = (packages: TPackages, options: TWorkspacesOptions): TCrossDependents =>
+export const getCrossDependents = (packages: TPackages): TCrossDependents =>
   Object.keys(packages).reduce(
     (pkgs, name) => {
-      const fullName = `${options.autoNamePrefix}${name}`
+      const fullName = packages[name].json.name
       const dependentNames = Object.keys(packages)
         .filter((depName) => isDependent(packages[depName].json, fullName))
 

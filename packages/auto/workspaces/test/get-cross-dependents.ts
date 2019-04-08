@@ -1,10 +1,5 @@
 import test from 'blue-tape'
-import { TWorkspacesOptions } from '@auto/utils'
 import { getCrossDependents } from '../src/get-cross-dependents'
-
-const options: TWorkspacesOptions = {
-  autoNamePrefix: '@ns/',
-}
 
 test('workspaces:getCrossDependents no cross dependencies', async (t) => {
   const packages = {
@@ -38,7 +33,7 @@ test('workspaces:getCrossDependents no cross dependencies', async (t) => {
   }
 
   t.deepEquals(
-    await getCrossDependents(packages, options),
+    await getCrossDependents(packages),
     {},
     'empty object when there is no cross dependencies'
   )
@@ -46,7 +41,7 @@ test('workspaces:getCrossDependents no cross dependencies', async (t) => {
 
 test('workspaces:getCrossDependents one cross dependency', async (t) => {
   const packages = {
-    a: {
+    'ns/a': {
       dir: '/fakes/a',
       json: {
         name: '@ns/a',
@@ -54,7 +49,7 @@ test('workspaces:getCrossDependents one cross dependency', async (t) => {
         devDependencies: {},
       },
     },
-    b: {
+    'ns/b': {
       dir: '/fakes/b',
       json: {
         name: '@ns/b',
@@ -62,7 +57,7 @@ test('workspaces:getCrossDependents one cross dependency', async (t) => {
         dependencies: { '@ns/a': '^0.1.0' },
       },
     },
-    c: {
+    'ns/c': {
       dir: '/fakes/c',
       json: {
         name: '@ns/c',
@@ -74,9 +69,9 @@ test('workspaces:getCrossDependents one cross dependency', async (t) => {
   }
 
   t.deepEquals(
-    await getCrossDependents(packages, options),
+    await getCrossDependents(packages),
     {
-      a: [{ name: 'b', range: '^0.1.0', devRange: null }],
+      'ns/a': [{ name: 'ns/b', range: '^0.1.0', devRange: null }],
     },
     'single cross dependency'
   )
@@ -84,7 +79,7 @@ test('workspaces:getCrossDependents one cross dependency', async (t) => {
 
 test('workspaces:getCrossDependents multiple cross dependencies', async (t) => {
   const packages = {
-    a: {
+    'ns/a': {
       dir: '/fakes/a',
       json: {
         name: '@ns/a',
@@ -93,7 +88,7 @@ test('workspaces:getCrossDependents multiple cross dependencies', async (t) => {
         devDependencies: {},
       },
     },
-    b: {
+    'ns/b': {
       dir: '/fakes/b',
       json: {
         name: '@ns/b',
@@ -102,7 +97,7 @@ test('workspaces:getCrossDependents multiple cross dependencies', async (t) => {
         devDependencies: {},
       },
     },
-    c: {
+    'ns/c': {
       dir: '/fakes/c',
       json: {
         name: '@ns/c',
@@ -114,11 +109,11 @@ test('workspaces:getCrossDependents multiple cross dependencies', async (t) => {
   }
 
   t.deepEquals(
-    await getCrossDependents(packages, options),
+    await getCrossDependents(packages),
     {
-      a: [
-        { name: 'b', range: '^0.1.0', devRange: null },
-        { name: 'c', range: null, devRange: '^0.3.0' },
+      'ns/a': [
+        { name: 'ns/b', range: '^0.1.0', devRange: null },
+        { name: 'ns/c', range: null, devRange: '^0.3.0' },
       ],
     },
     'multiple cross dependencies'
@@ -127,7 +122,7 @@ test('workspaces:getCrossDependents multiple cross dependencies', async (t) => {
 
 test('workspaces:getCrossDependents circular dependencies', async (t) => {
   const packages = {
-    a: {
+    'ns/a': {
       dir: '/fakes/a',
       json: {
         name: '@ns/a',
@@ -136,7 +131,7 @@ test('workspaces:getCrossDependents circular dependencies', async (t) => {
         devDependencies: {},
       },
     },
-    b: {
+    'ns/b': {
       dir: '/fakes/b',
       json: {
         name: '@ns/b',
@@ -145,7 +140,7 @@ test('workspaces:getCrossDependents circular dependencies', async (t) => {
         devDependencies: {},
       },
     },
-    c: {
+    'ns/c': {
       dir: '/fakes/c',
       json: {
         name: '@ns/c',
@@ -157,12 +152,55 @@ test('workspaces:getCrossDependents circular dependencies', async (t) => {
   }
 
   t.deepEquals(
-    await getCrossDependents(packages, options),
+    await getCrossDependents(packages),
     {
-      a: [{ name: 'b', range: '^0.1.0', devRange: null }],
-      b: [{ name: 'c', range: '^0.2.0', devRange: null }],
-      c: [{ name: 'a', range: '^0.3.0', devRange: null }],
+      'ns/a': [{ name: 'ns/b', range: '^0.1.0', devRange: null }],
+      'ns/b': [{ name: 'ns/c', range: '^0.2.0', devRange: null }],
+      'ns/c': [{ name: 'ns/a', range: '^0.3.0', devRange: null }],
     },
     'circular cross dependencies'
+  )
+})
+
+test('workspaces:getCrossDependents multiple cross dependencies', async (t) => {
+  const packages = {
+    a: {
+      dir: '/fakes/a',
+      json: {
+        name: 'a',
+        version: '0.1.0',
+        dependencies: {},
+        devDependencies: {},
+      },
+    },
+    'ns/b': {
+      dir: '/fakes/b',
+      json: {
+        name: '@ns/b',
+        version: '0.2.0',
+        dependencies: { a: '^0.1.0' },
+        devDependencies: {},
+      },
+    },
+    c: {
+      dir: '/fakes/c',
+      json: {
+        name: 'c',
+        version: '0.3.0',
+        dependencies: {},
+        devDependencies: { a: '^0.3.0' },
+      },
+    },
+  }
+
+  t.deepEquals(
+    await getCrossDependents(packages),
+    {
+      a: [
+        { name: 'ns/b', range: '^0.1.0', devRange: null },
+        { name: 'c', range: null, devRange: '^0.3.0' },
+      ],
+    },
+    'multiple cross dependencies'
   )
 })
