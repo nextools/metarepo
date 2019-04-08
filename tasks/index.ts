@@ -175,9 +175,9 @@ export const build = async (packageDir: string) => {
 }
 
 export const commit = async () => {
-  const { prefixes, workspacesOptions } = await import('./config/auto')
+  const { prefixes } = await import('./config/auto')
 
-  return makeWorkspacesCommit(prefixes, workspacesOptions)
+  return makeWorkspacesCommit(prefixes)
 }
 
 export const publish = async () => {
@@ -187,7 +187,7 @@ export const publish = async () => {
     getWorkspacesPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
     publishWorkspacesPrompt(prefixes),
     buildBumpedPackages(build),
-    writeWorkspacesPackagesDependencies(workspacesOptions),
+    writeWorkspacesPackagesDependencies,
     writeWorkspacesDependenciesCommit(prefixes),
     writeWorkspacesPackageVersions,
     writeWorkspacesPublishCommit(prefixes),

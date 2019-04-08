@@ -11,12 +11,12 @@ export type TWorkspacesPluginData = {
   gitBumps: TWorkspacesGitBump[]
 }
 
-export const makeWorkspacesCommit = (prefixes: TPrefixes, workspacesOptions: TWorkspacesOptions) =>
+export const makeWorkspacesCommit = (prefixes: TPrefixes) =>
   plugin('makeWorkspacesCommit', () => async () => {
     const { getWorkspacesPackages } = await import('@auto/fs')
     const { makeWorkspacesCommit } = await import('@auto/git')
 
-    const packages = await getWorkspacesPackages(workspacesOptions)
+    const packages = await getWorkspacesPackages()
 
     await makeWorkspacesCommit(packages, prefixes)
   })
@@ -27,8 +27,8 @@ export const getWorkspacesPackagesBumps = (prefixes: TPrefixes, gitOptions: TGit
     const { getWorkspacesBumps } = await import('@auto/git')
     const { getWorkspacesPackagesBumps } = await import('@auto/bump')
 
-    const packages = await getWorkspacesPackages(workspacesOptions)
-    const gitBumps = await getWorkspacesBumps(packages, prefixes, gitOptions)
+    const packages = await getWorkspacesPackages()
+    const gitBumps = await getWorkspacesBumps(packages, prefixes, gitOptions, workspacesOptions)
 
     if (gitBumps.length === 0) {
       throw new Error('No bumps')
@@ -87,13 +87,12 @@ export const buildBumpedPackages = (task: (...args: any[]) => StartPlugin<{}, an
     }
   })
 
-export const writeWorkspacesPackagesDependencies = (workspacesOptions: TWorkspacesOptions) =>
-  plugin<TWorkspacesPluginData, any>('writePackagesDependencies', ({ logMessage }) => async ({ packagesBumps }) => {
-    const { writePackageDependencies } = await import('@auto/fs/src')
+export const writeWorkspacesPackagesDependencies = plugin<TWorkspacesPluginData, any>('writePackagesDependencies', ({ logMessage }) => async ({ packagesBumps }) => {
+  const { writePackageDependencies } = await import('@auto/fs/src')
 
-    await writePackageDependencies(packagesBumps, workspacesOptions)
-    logMessage('write packages dependencies')
-  })
+  await writePackageDependencies(packagesBumps)
+  logMessage('write packages dependencies')
+})
 
 export const writeWorkspacesDependenciesCommit = (prefixes: TPrefixes) =>
   plugin<TWorkspacesPluginData, any>('writeWorkspacesDependenciesCommit', ({ logMessage }) => async ({ packagesBumps }) => {
