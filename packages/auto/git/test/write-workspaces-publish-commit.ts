@@ -21,7 +21,8 @@ test('git:writeWorkspacesPublishCommit: single package', async (t) => {
       deps: null,
       devDeps: null,
     }],
-    prefixes
+    prefixes,
+    { autoNamePrefix: '@' }
   )
 
   t.deepEquals(
@@ -54,7 +55,7 @@ test('git:writeWorkspacesPublishCommit: multiple packages', async (t) => {
 
   await writeWorkspacesPublishCommit(
     [{
-      name: 'a',
+      name: '@ns/a',
       dir: 'fakes/a',
       type: 'patch',
       version: '0.1.1',
@@ -68,7 +69,8 @@ test('git:writeWorkspacesPublishCommit: multiple packages', async (t) => {
       deps: null,
       devDeps: null,
     }],
-    prefixes
+    prefixes,
+    { autoNamePrefix: '@' }
   )
 
   t.deepEquals(
@@ -79,7 +81,7 @@ test('git:writeWorkspacesPublishCommit: multiple packages', async (t) => {
         [
           'commit',
           '-m',
-          `${prefixes.required.publish.value} a, b: release`,
+          `${prefixes.required.publish.value} ns/a, b: release`,
           'fakes/a/package.json',
           'fakes/b/package.json',
         ],
@@ -111,7 +113,8 @@ test('git:writeWorkspacesPublishCommit: no packages to publish', async (t) => {
       },
       devDeps: null,
     }],
-    prefixes
+    prefixes,
+    { autoNamePrefix: '@' }
   )
 
   t.deepEquals(

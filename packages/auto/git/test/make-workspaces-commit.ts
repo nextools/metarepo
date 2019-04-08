@@ -28,15 +28,19 @@ test('git:makeWorkspacesCommit single package', async (t) => {
 
   const { makeWorkspacesCommit } = await import('../src/make-workspaces-commit')
 
-  await makeWorkspacesCommit({
-    foo: {
-      dir: 'fakes/foo',
-      json: {
-        name: '@ns/foo',
-        version: '1.2.3',
+  await makeWorkspacesCommit(
+    {
+      foo: {
+        dir: 'fakes/foo',
+        json: {
+          name: '@ns/foo',
+          version: '1.2.3',
+        },
       },
     },
-  }, prefixes)
+    prefixes,
+    { autoNamePrefix: '@' }
+  )
 
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
@@ -78,15 +82,19 @@ test('git:makeWorkspacesCommit multiple packages', async (t) => {
 
   const { makeWorkspacesCommit } = await import('../src/make-workspaces-commit')
 
-  await makeWorkspacesCommit({
-    foo: {
-      dir: 'fakes/foo',
-      json: {
-        name: '@ns/foo',
-        version: '1.2.3',
+  await makeWorkspacesCommit(
+    {
+      foo: {
+        dir: 'fakes/foo',
+        json: {
+          name: '@ns/foo',
+          version: '1.2.3',
+        },
       },
     },
-  }, prefixes)
+    prefixes,
+    { autoNamePrefix: '@' }
+  )
 
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
@@ -124,15 +132,19 @@ test('git:makeWorkspacesCommit: no auto name prefix in prefixes', async (t) => {
 
   const { makeWorkspacesCommit } = await import('../src/make-workspaces-commit')
 
-  await makeWorkspacesCommit({
-    foo: {
-      dir: 'fakes/foo',
-      json: {
-        name: '@ns/foo',
-        version: '1.2.3',
+  await makeWorkspacesCommit(
+    {
+      foo: {
+        dir: 'fakes/foo',
+        json: {
+          name: '@ns/foo',
+          version: '1.2.3',
+        },
       },
     },
-  }, prefixes)
+    prefixes,
+    { autoNamePrefix: '@' }
+  )
 
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
@@ -166,15 +178,19 @@ test('git:makeWorkspacesCommit: no package name', async (t) => {
 
   const { makeWorkspacesCommit } = await import('../src/make-workspaces-commit')
 
-  await makeWorkspacesCommit({
-    foo: {
-      dir: 'fakes/foo',
-      json: {
-        name: '@ns/foo',
-        version: '1.2.3',
+  await makeWorkspacesCommit(
+    {
+      foo: {
+        dir: 'fakes/foo',
+        json: {
+          name: '@ns/foo',
+          version: '1.2.3',
+        },
       },
     },
-  }, prefixes)
+    prefixes,
+    { autoNamePrefix: '@' }
+  )
 
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
@@ -208,15 +224,19 @@ test('git:makeWorkspacesCommit: all packages `*`', async (t) => {
 
   const { makeWorkspacesCommit } = await import('../src/make-workspaces-commit')
 
-  await makeWorkspacesCommit({
-    foo: {
-      dir: 'fakes/foo',
-      json: {
-        name: '@ns/foo',
-        version: '1.2.3',
+  await makeWorkspacesCommit(
+    {
+      foo: {
+        dir: 'fakes/foo',
+        json: {
+          name: '@ns/foo',
+          version: '1.2.3',
+        },
       },
     },
-  }, prefixes)
+    prefixes,
+    { autoNamePrefix: '@' }
+  )
 
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
@@ -241,15 +261,19 @@ test('git:makeWorkspacesCommit: should throw on prefix undefined', async (t) => 
   const { makeWorkspacesCommit } = await import('../src/make-workspaces-commit')
 
   try {
-    await makeWorkspacesCommit({
-      foo: {
-        dir: 'fakes/foo',
-        json: {
-          name: '@ns/foo',
-          version: '1.2.3',
+    await makeWorkspacesCommit(
+      {
+        foo: {
+          dir: 'fakes/foo',
+          json: {
+            name: '@ns/foo',
+            version: '1.2.3',
+          },
         },
       },
-    }, prefixes)
+      prefixes,
+      { autoNamePrefix: '@' }
+    )
 
     t.fail('should not get here')
   } catch (e) {
@@ -277,15 +301,19 @@ test('git:makeWorkspacesCommit: should throw on packageName undefined', async (t
   const { makeWorkspacesCommit } = await import('../src/make-workspaces-commit')
 
   try {
-    await makeWorkspacesCommit({
-      foo: {
-        dir: 'fakes/foo',
-        json: {
-          name: '@ns/foo',
-          version: '1.2.3',
+    await makeWorkspacesCommit(
+      {
+        foo: {
+          dir: 'fakes/foo',
+          json: {
+            name: '@ns/foo',
+            version: '1.2.3',
+          },
         },
       },
-    }, prefixes)
+      prefixes,
+      { autoNamePrefix: '@' }
+    )
 
     t.fail('should not get here')
   } catch (e) {
@@ -321,15 +349,19 @@ test('git:makeWorkspacesCommit: should throw on message undefined', async (t) =>
   const { makeWorkspacesCommit } = await import('../src/make-workspaces-commit')
 
   try {
-    await makeWorkspacesCommit({
-      foo: {
-        dir: 'fakes/foo',
-        json: {
-          name: '@ns/foo',
-          version: '1.2.3',
+    await makeWorkspacesCommit(
+      {
+        foo: {
+          dir: 'fakes/foo',
+          json: {
+            name: '@ns/foo',
+            version: '1.2.3',
+          },
         },
       },
-    }, prefixes)
+      prefixes,
+      { autoNamePrefix: '@' }
+    )
 
     t.fail('should not get here')
   } catch (e) {
@@ -364,15 +396,19 @@ test('git:makeWorkspacesCommit lowercase first message letter', async (t) => {
 
   const { makeWorkspacesCommit } = await import('../src/make-workspaces-commit')
 
-  await makeWorkspacesCommit({
-    foo: {
-      dir: 'fakes/foo',
-      json: {
-        name: '@ns/foo',
-        version: '1.2.3',
+  await makeWorkspacesCommit(
+    {
+      foo: {
+        dir: 'fakes/foo',
+        json: {
+          name: '@ns/foo',
+          version: '1.2.3',
+        },
       },
     },
-  }, prefixes)
+    prefixes,
+    { autoNamePrefix: '@' }
+  )
 
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),

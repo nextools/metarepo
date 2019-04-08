@@ -1,10 +1,10 @@
 import path from 'path'
 import execa from 'execa'
-import { TPrefixes, TWorkspacesPackageBump } from '@auto/utils'
+import { TPrefixes, TWorkspacesPackageBump, TWorkspacesOptions, removeAutoNamePrefix } from '@auto/utils'
 
-export const writeWorkspacesPublishCommit = async (packageBumps: TWorkspacesPackageBump[], prefixes: TPrefixes) => {
+export const writeWorkspacesPublishCommit = async (packageBumps: TWorkspacesPackageBump[], prefixes: TPrefixes, workspacesOptions: TWorkspacesOptions) => {
   const bumps = packageBumps.filter((bump) => bump.type !== null && bump.version !== null)
-  const names = bumps.map((bump) => bump.name).join(', ')
+  const names = bumps.map((bump) => removeAutoNamePrefix(bump.name, workspacesOptions.autoNamePrefix)).join(', ')
   const packageJsonPaths = bumps.map((bump) => path.join(bump.dir, 'package.json'))
 
   if (bumps.length > 0) {

@@ -3,10 +3,10 @@
 // @ts-ignore
 import prompts from 'prompts'
 import execa from 'execa'
-import { TPackages, TPrefixes, suggestFilter } from '@auto/utils'
+import { TPackages, TPrefixes, suggestFilter, TWorkspacesOptions, removeAutoNamePrefix } from '@auto/utils'
 import { toLowerCase } from './utils'
 
-export const makeWorkspacesCommit = async (packages: TPackages, prefixes: TPrefixes) => {
+export const makeWorkspacesCommit = async (packages: TPackages, prefixes: TPrefixes, workspaceOptions: TWorkspacesOptions) => {
   const { prefix } = await prompts({
     type: 'select',
     name: 'prefix',
@@ -33,6 +33,7 @@ export const makeWorkspacesCommit = async (packages: TPackages, prefixes: TPrefi
       message: 'Type package name',
       limit: 20,
       choices: Object.keys(packages)
+        .map((name) => removeAutoNamePrefix(name, workspaceOptions.autoNamePrefix))
         .filter((name) => !packageNames.includes(name))
         .map((name) => ({ title: name, value: name })),
       suggest: suggestFilter(packageNames.length > 0 ? '(done)' : '(no package)'),

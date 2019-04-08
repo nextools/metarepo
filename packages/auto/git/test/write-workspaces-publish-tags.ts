@@ -13,7 +13,7 @@ test('git:writeWorkspacesPublishTag: multiple tags', async (t) => {
 
   await writeWorkspacesPublishTags([
     {
-      name: 'a',
+      name: '@ns/a',
       dir: 'fakes/a',
       type: 'patch',
       version: '0.1.1',
@@ -28,12 +28,12 @@ test('git:writeWorkspacesPublishTag: multiple tags', async (t) => {
       deps: null,
       devDeps: null,
     },
-  ])
+  ], { autoNamePrefix: '@' })
 
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
     [
-      ['git', ['tag', '-m', 'a@0.1.1', 'a@0.1.1']],
+      ['git', ['tag', '-m', 'ns/a@0.1.1', 'ns/a@0.1.1']],
       ['git', ['tag', '-m', 'b@0.2.0', 'b@0.2.0']],
     ],
     'multiple tags'
@@ -68,7 +68,7 @@ test('git:writeWorkspacesPublishTag: no tags', async (t) => {
       deps: null,
       devDeps: null,
     },
-  ])
+  ], { autoNamePrefix: '@' })
 
   t.deepEquals(
     getSpyCalls(execaSpy),
