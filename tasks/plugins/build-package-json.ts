@@ -4,12 +4,13 @@ export default (dir: string) =>
   plugin('buildPackageJson', ({ logPath }) => async () => {
     const { resolve } = await import('path')
     const { promisify } = await import('util')
-    const { writeFile } = await import('graceful-fs')
+    const { readFile, writeFile } = await import('graceful-fs')
 
+    const pReadFile = promisify(readFile)
     const pWriteFile = promisify(writeFile)
     const packageJsonPath = resolve(dir, 'package.json')
-    const { default: packageJson } = await import(packageJsonPath)
 
+    const packageJson = JSON.parse(await pReadFile(packageJsonPath, 'utf8'))
     const newPackageJsonPath = resolve(dir, 'build/package.json')
     const newPackageJson = Object.entries(packageJson).reduce((result, [key, value]) => {
       if (key === 'devDependencies' || key === 'files') {
