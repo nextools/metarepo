@@ -13,13 +13,13 @@ test('fs:writeWorkspacesPackageVersion: single version bump', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/write-workspaces-package-version', {
+  mock('../src/write-workspaces-package-versions', {
     'graceful-fs': fs,
   })
 
-  const { writeWorkspacesPackageVersion } = await import('../src/write-workspaces-package-version')
+  const { writeWorkspacesPackageVersions } = await import('../src/write-workspaces-package-versions')
 
-  await writeWorkspacesPackageVersion([{
+  await writeWorkspacesPackageVersions([{
     name: 'a',
     dir: `${rootDir}/fakes/a`,
     version: '1.0.1',
@@ -40,7 +40,7 @@ test('fs:writeWorkspacesPackageVersion: single version bump', async (t) => {
     'should write bumps'
   )
 
-  unmock('../src/write-workspaces-package-version')
+  unmock('../src/write-workspaces-package-versions')
 })
 
 test('fs:writeWorkspacesPackageVersion: ignore dependencies', async (t) => {
@@ -56,13 +56,13 @@ test('fs:writeWorkspacesPackageVersion: ignore dependencies', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/write-workspaces-package-version', {
+  mock('../src/write-workspaces-package-versions', {
     'graceful-fs': fs,
   })
 
-  const { writeWorkspacesPackageVersion } = await import('../src/write-workspaces-package-version')
+  const { writeWorkspacesPackageVersions } = await import('../src/write-workspaces-package-versions')
 
-  await writeWorkspacesPackageVersion([{
+  await writeWorkspacesPackageVersions([{
     name: 'a',
     dir: `${rootDir}/fakes/a`,
     version: '1.0.1',
@@ -90,7 +90,7 @@ test('fs:writeWorkspacesPackageVersion: ignore dependencies', async (t) => {
     'should write version, and skip dependencies'
   )
 
-  unmock('../src/write-workspaces-package-version')
+  unmock('../src/write-workspaces-package-versions')
 })
 
 test('fs:writeWorkspacesPackageVersion: ignore devDependencies', async (t) => {
@@ -106,13 +106,13 @@ test('fs:writeWorkspacesPackageVersion: ignore devDependencies', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/write-workspaces-package-version', {
+  mock('../src/write-workspaces-package-versions', {
     'graceful-fs': fs,
   })
 
-  const { writeWorkspacesPackageVersion } = await import('../src/write-workspaces-package-version')
+  const { writeWorkspacesPackageVersions } = await import('../src/write-workspaces-package-versions')
 
-  await writeWorkspacesPackageVersion([{
+  await writeWorkspacesPackageVersions([{
     name: 'a',
     dir: `${rootDir}/fakes/a`,
     version: '1.0.1',
@@ -140,7 +140,7 @@ test('fs:writeWorkspacesPackageVersion: ignore devDependencies', async (t) => {
     'should write version, and skip devDependencies'
   )
 
-  unmock('../src/write-workspaces-package-version')
+  unmock('../src/write-workspaces-package-versions')
 })
 
 test('fs:writeWorkspacesPackageVersion: no version bump', async (t) => {
@@ -152,13 +152,13 @@ test('fs:writeWorkspacesPackageVersion: no version bump', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/write-workspaces-package-version', {
+  mock('../src/write-workspaces-package-versions', {
     'graceful-fs': fs,
   })
 
-  const { writeWorkspacesPackageVersion } = await import('../src/write-workspaces-package-version')
+  const { writeWorkspacesPackageVersions } = await import('../src/write-workspaces-package-versions')
 
-  await writeWorkspacesPackageVersion([{
+  await writeWorkspacesPackageVersions([{
     name: 'a',
     dir: `${rootDir}/fakes/a`,
     version: null,
@@ -179,5 +179,5 @@ test('fs:writeWorkspacesPackageVersion: no version bump', async (t) => {
     'should not write version'
   )
 
-  unmock('../src/write-workspaces-package-version')
+  unmock('../src/write-workspaces-package-versions')
 })

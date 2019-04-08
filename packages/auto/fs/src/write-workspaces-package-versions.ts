@@ -6,7 +6,7 @@ import { getPackage } from './get-package'
 
 const pWriteFile = promisify(writeFile)
 
-export const writeWorkspacesPackageVersion = async (packageBumps: TWorkspacesPackageBump[]) => {
+export const writeWorkspacesPackageVersions = async (packageBumps: TWorkspacesPackageBump[]) => {
   for (const bump of packageBumps) {
     if (bump.version === null) {
       continue
