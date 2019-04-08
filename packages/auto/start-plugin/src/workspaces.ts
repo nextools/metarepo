@@ -87,30 +87,43 @@ export const buildBumpedPackages = (task: (...args: any[]) => StartPlugin<{}, an
     }
   })
 
-export const writeWorkspacesPackagesBumps = (prefixes: TPrefixes, workspacesOptions: TWorkspacesOptions) =>
-  plugin<TWorkspacesPluginData, any>('writeWorkspacesPackagesBumps', ({ logMessage }) => async ({ packagesBumps }) => {
-    const { writePackageDependencies, writeWorkspacesPackageVersion } = await import('@auto/fs')
-    const {
-      writeWorkspacesDependenciesCommit,
-      writeWorkspacesPublishCommit,
-      // writeWorkspacesPublishTag
-    } = await import('@auto/git')
+export const writeWorkspacesPackagesDependencies = (workspacesOptions: TWorkspacesOptions) =>
+  plugin<TWorkspacesPluginData, any>('writePackagesDependencies', ({ logMessage }) => async ({ packagesBumps }) => {
+    const { writePackageDependencies } = await import('@auto/fs/src')
 
     await writePackageDependencies(packagesBumps, workspacesOptions)
-    logMessage('write package dependencies')
+    logMessage('write packages dependencies')
+  })
+
+export const writeWorkspacesDependenciesCommit = (prefixes: TPrefixes) =>
+  plugin<TWorkspacesPluginData, any>('writeWorkspacesDependenciesCommit', ({ logMessage }) => async ({ packagesBumps }) => {
+    const { writeWorkspacesDependenciesCommit } = await import('@auto/git/src')
 
     await writeWorkspacesDependenciesCommit(packagesBumps, prefixes)
     logMessage('write dependencies commit')
+  })
 
-    await writeWorkspacesPackageVersion(packagesBumps)
-    logMessage('write packages versions')
+export const writeWorkspacesPackageVersions = plugin<TWorkspacesPluginData, any>('writeWorkspacesPackageVersion', ({ logMessage }) => async ({ packagesBumps }) => {
+  const { writeWorkspacesPackageVersions } = await import('@auto/fs/src')
+
+  await writeWorkspacesPackageVersions(packagesBumps)
+  logMessage('write packages versions')
+})
+
+export const writeWorkspacesPublishCommit = (prefixes: TPrefixes) =>
+  plugin<TWorkspacesPluginData, any>('writeWorkspacesPublishCommit', ({ logMessage }) => async ({ packagesBumps }) => {
+    const { writeWorkspacesPublishCommit } = await import('@auto/git/src')
 
     await writeWorkspacesPublishCommit(packagesBumps, prefixes)
     logMessage('write publish commit')
-
-    // await writeWorkspacesPublishTag(bump)
-    // logMessage('write publish tag')
   })
+
+export const writeWorkspacesPublishTags = plugin<TWorkspacesPluginData, any>('writeWorkspacesPublishTag', ({ logMessage }) => async ({ packagesBumps }) => {
+  const { writeWorkspacesPublishTags } = await import('@auto/git/src')
+
+  await writeWorkspacesPublishTags(packagesBumps)
+  logMessage('write publish tag')
+})
 
 export const publishWorkspacesPackagesBumps = (npmOptions?: TNpmOptions) =>
   plugin<TWorkspacesPluginData, any>('publishWorkspacesPackagesBumps', () => async ({ packagesBumps }) => {

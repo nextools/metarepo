@@ -70,23 +70,27 @@ export const publishRepoPrompt = (prefixes: TPrefixes) =>
     }
   })
 
-export const writeRepoPackageBump = (prefixes: TPrefixes) =>
-  plugin<TRepoPluginData, any>('writeRepoPackageBump', ({ logMessage }) => async ({ packageBump }) => {
-    const { writeRepoPackageVersion } = await import('@auto/fs')
-    const {
-      writeRepoPublishCommit,
-      writeRepoPublishTag,
-    } = await import('@auto/git')
+export const writeRepoPackageVersion = plugin<TRepoPluginData, any>('writeRepoPackageVersion', ({ logMessage }) => async ({ packageBump }) => {
+  const { writeRepoPackageVersion } = await import('@auto/fs')
 
-    await writeRepoPackageVersion(packageBump)
-    logMessage('write package version')
+  await writeRepoPackageVersion(packageBump)
+  logMessage('write package version')
+})
+
+export const writeRepoPublishCommit = (prefixes: TPrefixes) =>
+  plugin<TRepoPluginData, any>('writeRepoPublishCommit', ({ logMessage }) => async ({ packageBump }) => {
+    const { writeRepoPublishCommit } = await import('@auto/git')
 
     await writeRepoPublishCommit(packageBump, prefixes)
     logMessage('write publish commit')
-
-    logMessage('write publish tag')
-    await writeRepoPublishTag(packageBump)
   })
+
+export const writeRepoPublishTag = plugin<TRepoPluginData, any>('writeRepoPublishTag', ({ logMessage }) => async ({ packageBump }) => {
+  const { writeRepoPublishTag } = await import('@auto/git')
+
+  logMessage('write publish tag')
+  await writeRepoPublishTag(packageBump)
+})
 
 export const publishRepoPackageBump = (npmOptions?: TNpmOptions) =>
   plugin('publishRepoPackageBump', () => async () => {

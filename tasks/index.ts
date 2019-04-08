@@ -18,10 +18,11 @@ import {
   makeWorkspacesCommit,
   buildBumpedPackages,
   getWorkspacesPackagesBumps,
-  publishWorkspacesPackagesBumps,
   publishWorkspacesPrompt,
-  writeWorkspacesPackagesBumps,
-  pushCommitsAndTags,
+  writeWorkspacesPackagesDependencies,
+  writeWorkspacesDependenciesCommit,
+  writeWorkspacesPackageVersions,
+  writeWorkspacesPublishCommit,
 } from '@auto/start-plugin'
 import tape from '@start/plugin-lib-tape'
 import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
@@ -183,7 +184,10 @@ export const publish = async () => {
     getWorkspacesPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
     publishWorkspacesPrompt(prefixes),
     buildBumpedPackages(build),
-    writeWorkspacesPackagesBumps(prefixes, workspacesOptions),
+    writeWorkspacesPackagesDependencies(workspacesOptions),
+    writeWorkspacesDependenciesCommit(prefixes),
+    writeWorkspacesPackageVersions,
+    writeWorkspacesPublishCommit(prefixes),
     buildBumpedPackages(preparePackage)
     // publishWorkspacesPackagesBumps(npmOptions),
     // pushCommitsAndTags
@@ -229,9 +233,15 @@ export const test = (packageDir: string = '**') =>
     env({ NODE_ENV: 'test' }),
     find(`coverage/`),
     remove,
-    find(`packages/${packageDir}/src/**/*.{ts,tsx}`),
+    find([
+      `packages/${packageDir}/src/**/*.{ts,tsx}`,
+      `packages/${packageDir}/*/src/**/*.{ts,tsx}`,
+    ]),
     istanbulInstrument({ esModules: true, extensions: ['.ts', '.tsx'] }),
-    find(`packages/${packageDir}/test/**/*.{ts,tsx}`),
+    find([
+      `packages/${packageDir}/test/**/*.{ts,tsx}`,
+      `packages/${packageDir}/*/test/**/*.{ts,tsx}`,
+    ]),
     tape(tapDiff),
     istanbulReport(['lcovonly', 'html', 'text-summary'])
   )
