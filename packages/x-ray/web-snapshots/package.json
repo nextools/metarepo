@@ -2,19 +2,15 @@
   "name": "@x-ray/web-snapshots",
   "version": "0.0.8",
   "description": "",
-  "repository": "deepsweet/x-ray",
-  "homepage": "https://github.com/deepsweet/x-ray/tree/master/packages/web-snapshots",
-  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
-  "license": "MIT",
+  "keywords": [],
   "main": "src/index.ts",
-  "files": [
-    "build/"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
+  "repository": "bubble-dev/_",
+  "license": "MIT",
   "engines": {
     "node": ">=8.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@x-ray/common-utils": "^0.0.3",

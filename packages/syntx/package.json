@@ -6,21 +6,15 @@
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
-  "files": [
-    "build/"
-  ],
-  "repository": "batata-frita/syntx",
-  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
-  "contributors": [
-    "Alex Feinstein <psxcode@gmail.com> (https://github.com/psxcode)"
-  ],
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/batata-frita/syntx/blob/master/license.md"
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
   },
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": false,
   "devDependencies": {
     "@types/react": "^16.8.12",
     "react": "^16.8.6"

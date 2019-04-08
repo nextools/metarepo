@@ -1,12 +1,19 @@
 {
   "name": "@primitives/link",
   "version": "0.0.0",
-  "main": "src/index.web.tsx",
-  "browser": "src/index.web.tsx",
-  "react-native": "src/index.native.tsx",
-  "files": [
-    "build/"
-  ],
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2"

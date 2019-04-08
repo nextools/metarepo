@@ -2,23 +2,15 @@
   "name": "@auto/workspaces",
   "version": "0.0.20",
   "description": "",
-  "keywords": "",
-  "repository": "deepsweet/auto",
-  "homepage": "https://github.com/deepsweet/auto/tree/master/packages/workspaces",
-  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
-  "contributors": [
-    "Alex Feinstein <psxcode@gmail.com> (https://github.com/psxcode)"
-  ],
-  "license": "MIT",
+  "keywords": [],
   "main": "src/index.ts",
-  "files": [
-    "build/"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
+  "repository": "bubble-dev/_",
+  "license": "MIT",
   "engines": {
     "node": ">=8.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@auto/utils": "^0.0.15"

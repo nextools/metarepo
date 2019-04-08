@@ -1,12 +1,19 @@
 {
   "name": "@primitives/animation",
   "version": "0.0.0",
+  "description": "",
+  "keywords": [],
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
-  "files": [
-    "build/"
-  ],
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",

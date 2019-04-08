@@ -3,22 +3,14 @@
   "version": "0.0.8",
   "description": "🤖 Auto Tools",
   "keywords": "tasks, runner, start, start-plugin, auto",
-  "repository": "deepsweet/auto",
-  "homepage": "https://github.com/deepsweet/auto/tree/master/packages/fs",
-  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
-  "contributors": [
-    "Alex Feinstein <psxcode@gmail.com> (https://github.com/psxcode)"
-  ],
-  "license": "MIT",
   "main": "src/index.ts",
-  "files": [
-    "build/"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
+  "repository": "bubble-dev/_",
+  "license": "MIT",
   "engines": {
     "node": ">=8.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@auto/bump": "^0.0.22",

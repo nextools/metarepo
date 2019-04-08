@@ -6,17 +6,15 @@
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
-  "files": [
-    "build/"
-  ],
-  "repository": "batata-frita/react-autoprops",
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/batata-frita/react-autoprops/blob/master/license.md"
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
   },
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.4.3"
   }

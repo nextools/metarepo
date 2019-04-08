@@ -6,19 +6,17 @@
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
-  "files": [
-    "build/"
-  ],
-  "repository": "batata-frita/tsfn",
-  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
+  "repository": "bubble-dev/_",
   "contributors": [
+    "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
     "Alex Feinstein <psxcode@gmail.com> (https://github.com/psxcode)"
   ],
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/batata-frita/tsfn/blob/master/license.md"
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "sideEffects": false
 }
