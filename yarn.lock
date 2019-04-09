@@ -2,6 +2,24 @@
 # yarn lockfile v1
 
 
+"@auto/fs@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@auto/fs/-/fs-0.0.17.tgz#d44d8dfbcdb2040ccc5aa4a3810f24321d9aade1"
+  integrity sha512-k5jcetjL4GsGCGo+vHRqji5zfOaWDYPvIYFzI5Mkxw31EuTv0Dyo9eRjg6dU0oeSJTHeJmi7rUf0bIDC9cJkxg==
+  dependencies:
+    "@auto/utils" "^0.0.15"
+    esm "^3.0.82"
+    fast-glob "^2.2.2"
+    graceful-fs "^4.1.11"
+    p-all "^1.0.0"
+
+"@auto/utils@^0.0.15":
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/@auto/utils/-/utils-0.0.15.tgz#58643f2960f6df5222866923bf91cea223bf7f9d"
+  integrity sha512-dylrX6rj4wwG5SJssU3HeG+5DXDxLPfQCLHqOlshz3d7dLa4EuB8IiVD3uV6FSnLAq1Gbu0cvWjfTq6yzVd7Wg==
+  dependencies:
+    esm "^3.0.82"
+
 "@babel/code-frame@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
@@ -233,7 +251,7 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.0.0", "@babel/parser@^7.4.0", "@babel/parser@^7.4.3":
+"@babel/parser@^7.0.0", "@babel/parser@^7.3.1", "@babel/parser@^7.4.0", "@babel/parser@^7.4.3":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.4.3.tgz#eb3ac80f64aa101c907d4ce5406360fe75b7895b"
   integrity sha512-gxpEUhTS1sGA63EGQGuA+WESPR/6tz6ng7tSHFCmaTJK/cGK8y37cBTspX+U2xCAue2IQVvF6Z0oigmjwD8YGQ==
@@ -812,7 +830,7 @@
     "@babel/parser" "^7.4.0"
     "@babel/types" "^7.4.0"
 
-"@babel/traverse@^7.0.0", "@babel/traverse@^7.1.0", "@babel/traverse@^7.4.0", "@babel/traverse@^7.4.3":
+"@babel/traverse@^7.0.0", "@babel/traverse@^7.1.0", "@babel/traverse@^7.2.3", "@babel/traverse@^7.4.0", "@babel/traverse@^7.4.3":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.4.3.tgz#1a01f078fc575d589ff30c0f71bf3c3d9ccbad84"
   integrity sha512-HmA01qrtaCwwJWpSKpA948cBvU5BrmviAief/b3AVw936DtcdsTexlbyzNuDnthwhOQ37xshn7hvQaEQk7ISYQ==
@@ -1161,6 +1179,13 @@
     "@types/events" "*"
     "@types/minimatch" "*"
     "@types/node" "*"
+
+"@types/globby@^9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@types/globby/-/globby-9.1.0.tgz#08e2cf99c64f8e45c6cfbe05e9d8ac763aca6482"
+  integrity sha512-9du/HCA71EBz7syHRnM4Q/u4Fbx3SyN/Uu+4Of9lyPX4A6Xi+A8VMxvx8j5/CMTfrae2Zwdwg0fAaKvKXfRbAw==
+  dependencies:
+    globby "*"
 
 "@types/graceful-fs@^4.1.2", "@types/graceful-fs@^4.1.3":
   version "4.1.3"
@@ -2598,11 +2623,6 @@ electron-to-chromium@^1.3.122:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.122.tgz#b32a0805f48557bd3c3b8104eadc7fa511b14a9a"
   integrity sha512-3RKoIyCN4DhP2dsmleuFvpJAIDOseWH88wFYBzb22CSwoFDSWRc4UAMfrtc9h8nBdJjTNIN3rogChgOy6eFInw==
 
-elegir@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/elegir/-/elegir-0.1.2.tgz#f2dee74d6b57ff7a4df24ad77a849ef048059c58"
-  integrity sha512-QEdc/JRq201zBOIA4m5aVT0G1+Exv2ilfixCKt4LvZEe5vWMsh5cSS6U9AwnbRDSymCyX79+RGt6RtDIHIrnuA==
-
 emoji-regex@^7.0.1:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
@@ -2795,7 +2815,7 @@ eslint@^5.16.0:
     table "^5.2.3"
     text-table "^0.2.0"
 
-esm@^3.0.84:
+esm@^3.0.82, esm@^3.0.84:
   version "3.2.22"
   resolved "https://registry.yarnpkg.com/esm/-/esm-3.2.22.tgz#5062c2e22fee3ccfee4e8f20da768330da90d6e3"
   integrity sha512-z8YG7U44L82j1XrdEJcqZOLUnjxco8pO453gKOlaMD1/md1n/5QrscAmYG+oKUspsmDLuBFZrpbxI6aQ67yRxA==
@@ -3551,7 +3571,7 @@ globals@^11.1.0, globals@^11.7.0:
   resolved "https://registry.yarnpkg.com/globals/-/globals-11.11.0.tgz#dcf93757fa2de5486fbeed7118538adf789e9c2e"
   integrity sha512-WHq43gS+6ufNOEqlrDBxVEbb8ntfXrfAUU2ZOpCxrBdGKW3gyv8mCxAfIBD0DroPKGrJ2eSsXsLtY9MPntsyTw==
 
-globby@^9.1.0, globby@^9.2.0:
+globby@*, globby@^9.0.0, globby@^9.1.0, globby@^9.2.0:
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/globby/-/globby-9.2.0.tgz#fd029a706c703d29bdd170f4b6db3a3f7a7cb63d"
   integrity sha512-ollPHROa5mcxDEkwg6bPt3QbEf4pDQSNtd6JPL1YvOvAo/7/0VAm9TccUeoTmarjPw4pfUthSCqcyfNB1I3ZSg==
