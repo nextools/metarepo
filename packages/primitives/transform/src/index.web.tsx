@@ -1,6 +1,6 @@
 import React from 'react'
 import { prefixStyle, TStyle } from '@lada/prefix'
-import { component, startWithType, mapWithProps, mapDefaultProps } from 'refun/src'
+import { component, startWithType, mapWithProps, mapDefaultProps } from 'refun'
 import { TTransformProps } from './types'
 
 export * from './types'
