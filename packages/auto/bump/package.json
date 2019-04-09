@@ -1,6 +1,6 @@
 {
   "name": "@auto/bump",
-  "version": "0.0.22",
+  "version": "0.1.0",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",

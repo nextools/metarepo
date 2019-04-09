@@ -1,6 +1,6 @@
 {
   "name": "@auto/utils",
-  "version": "0.0.15",
+  "version": "0.1.0",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
