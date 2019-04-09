@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@x-ray/common-utils": "^0.0.3",
+    "@x-ray/common-utils": "^0.1.0",
     "graceful-fs": "^4.1.11"
   },
   "devDependencies": {

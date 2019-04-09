@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@x-ray/common-utils": "^0.0.3",
-    "@x-ray/screenshot-utils": "^0.0.5",
+    "@x-ray/common-utils": "^0.1.0",
+    "@x-ray/screenshot-utils": "^0.1.0",
     "graceful-fs": "^4.1.11",
     "make-dir": "^3.0.0",
     "p-all": "^2.0.0",

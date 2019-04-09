@@ -16,7 +16,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "tsfn": "^0.0.0"
+    "tsfn": "^0.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.7.8",

@@ -16,9 +16,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "autoprops": "^0.0.0",
-    "refun": "^0.0.0",
-    "tsfn": "^0.0.0"
+    "autoprops": "^0.1.0",
+    "refun": "^0.1.0",
+    "tsfn": "^0.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.4",

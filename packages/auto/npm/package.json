@@ -13,8 +13,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@auto/fs": "^0.0.17",
-    "@auto/utils": "^0.0.15",
+    "@auto/fs": "^0.1.0",
+    "@auto/utils": "^0.1.0",
     "execa": "^1.0.0"
   },
   "devDependencies": {

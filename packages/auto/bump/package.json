@@ -13,8 +13,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@auto/utils": "^0.0.15",
-    "@auto/workspaces": "^0.0.20",
+    "@auto/utils": "^0.1.0",
+    "@auto/workspaces": "^0.1.0",
     "semver": "^5.5.1"
   },
   "devDependencies": {

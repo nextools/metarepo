@@ -18,7 +18,7 @@
   "dependencies": {
     "react-is": "^16.8.3",
     "shallowequal": "^1.1.0",
-    "tsfn": "^0.0.0"
+    "tsfn": "^0.1.0"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
@@ -31,6 +31,6 @@
     "react-test-renderer": "^16.8.2",
     "redux": "4.0.1",
     "spyfn": "^0.2.0",
-    "spyt": "^0.0.0"
+    "spyt": "^0.1.0"
   }
 }
