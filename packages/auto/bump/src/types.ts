@@ -1,5 +1,6 @@
 import { TBumpType } from '@auto/utils'
 
 export type TBumpOptions = {
-  zeroBreakingChangeType: TBumpType
+  zeroBreakingChangeType: TBumpType,
+  shouldAlwaysBumpDependents: boolean
 }

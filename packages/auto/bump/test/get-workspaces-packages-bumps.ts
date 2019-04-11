@@ -2,7 +2,10 @@ import test from 'blue-tape'
 import { getWorkspacesPackagesBumps } from '../src/get-workspaces-packages-bumps'
 import { TBumpOptions } from '../src/types'
 
-const bumpOptions: TBumpOptions = { zeroBreakingChangeType: 'major' }
+const bumpOptions: TBumpOptions = {
+  zeroBreakingChangeType: 'major',
+  shouldAlwaysBumpDependents: true,
+}
 
 test('bump:getPackageBumps: single package', (t) => {
   t.deepEquals(
@@ -160,7 +163,7 @@ test('bump:getPackageBumps: multiple independent packages', (t) => {
   t.end()
 })
 
-test('bump:getPackageBumps: b -> a', (t) => {
+test('bump:getPackageBumps: b -> a (should always bump dependents)', (t) => {
   t.deepEquals(
     getWorkspacesPackagesBumps(
       {
@@ -431,6 +434,302 @@ test('bump:getPackageBumps: b -> a', (t) => {
         { name: 'a', type: 'major', messages: [] },
       ],
       bumpOptions
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '2.0.0',
+        type: 'major',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: '2.0.0',
+        type: 'major',
+        deps: {
+          a: '^2.0.0',
+        },
+        devDeps: null,
+      },
+    ],
+    '^ major'
+  )
+
+  t.end()
+})
+
+test('bump:getPackageBumps: b -> a (should not always bump dependents)', (t) => {
+  t.deepEquals(
+    getWorkspacesPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            dependencies: {
+              '@ns/a': '0.1.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'patch', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.1.1',
+        type: 'patch',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: '1.2.4',
+        type: 'patch',
+        deps: {
+          a: '0.1.1',
+        },
+        devDeps: null,
+      },
+    ],
+    'exact version patch'
+  )
+
+  t.deepEquals(
+    getWorkspacesPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.2',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            dependencies: {
+              '@ns/a': '~0.1.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'patch', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.1.3',
+        type: 'patch',
+        deps: null,
+        devDeps: null,
+      },
+    ],
+    '~ patch'
+  )
+
+  t.deepEquals(
+    getWorkspacesPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.2',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            dependencies: {
+              '@ns/a': '~0.1.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'minor', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.2.0',
+        type: 'minor',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: '1.3.0',
+        type: 'minor',
+        deps: {
+          a: '^0.2.0',
+        },
+        devDeps: null,
+      },
+    ],
+    '~ minor'
+  )
+
+  t.deepEquals(
+    getWorkspacesPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            dependencies: {
+              '@ns/a': '^0.1.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'minor', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.2.0',
+        type: 'minor',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: '1.3.0',
+        type: 'minor',
+        deps: {
+          a: '^0.2.0',
+        },
+        devDeps: null,
+      },
+    ],
+    '^ minor (major 0)'
+  )
+
+  t.deepEquals(
+    getWorkspacesPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '1.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            dependencies: {
+              '@ns/a': '^1.0.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'minor', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '1.2.0',
+        type: 'minor',
+        deps: null,
+        devDeps: null,
+      },
+    ],
+    '^ minor (major 1)'
+  )
+
+  t.deepEquals(
+    getWorkspacesPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '1.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            dependencies: {
+              '@ns/a': '^1.0.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'major', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
     ),
     [
       {

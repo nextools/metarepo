@@ -4,6 +4,7 @@ import { TBumpOptions } from '..'
 
 const options: TBumpOptions = {
   zeroBreakingChangeType: 'minor',
+  shouldAlwaysBumpDependents: true,
 }
 
 test('bump:getRepoPackageBump', (t) => {

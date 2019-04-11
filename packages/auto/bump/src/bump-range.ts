@@ -28,6 +28,10 @@ export const bumpRange = (range: string, version: string, type: TBumpType, optio
   }
 
   if (semver.satisfies(newVersion, range)) {
+    if (!options.shouldAlwaysBumpDependents) {
+      return range
+    }
+
     return `${symb}${newVersion}`
   }
 

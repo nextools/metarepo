@@ -40,6 +40,12 @@ export const getWorkspacesPackagesBumps = (packages: TPackages, bumps: TWorkspac
       if (dependent.range !== null) {
         // if bumped range is different from the range from stack (existing or not) then bump
         bumpedRange = bumpRange(dependent.range, version, type, bumpOptions)
+
+        //  skip dependent if we shouldn't always bump a version and it satisfies the bump
+        if (bumpedRange === dependent.range) {
+          continue
+        }
+
         bumpedVersion = bumpVersion(dependentPackage.json.version, type, bumpOptions)
       }
 
