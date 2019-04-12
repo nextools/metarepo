@@ -3,9 +3,8 @@ import {
   filterProps,
   hasKeys,
   INITIAL_CHILD_DEPTH,
-  isNull,
-  isUndefined,
   getDisplayName,
+  isValidChildren,
 } from './utils'
 import { TConfig, TSerializedElement } from './types'
 import { serializeProps } from './serialize-props'
@@ -14,7 +13,7 @@ import { serializeChildren } from './serialize-children'
 export const serializeComponent = (Component: ComponentClass<any> | FC<any>, { children, ...props }: any, config: TConfig): TSerializedElement => {
   const { indent, components: { ComponentBracket, ComponentName, Line } } = config
   const name = getDisplayName(Component)
-  const hasChildren = !isUndefined(children) && !isNull(children)
+  const hasChildren = isValidChildren(children)
   const filteredProps = filterProps(props)
   const hasProps = hasKeys(filteredProps)
 

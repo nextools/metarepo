@@ -1,4 +1,4 @@
-import { ReactElement, ComponentClass, FC } from 'react'
+import { ReactElement, ComponentClass, FC, isValidElement } from 'react'
 
 export const hasKeys = (obj: any) => Object.keys(obj).length > 0
 
@@ -55,4 +55,10 @@ export const filterProps = (props: any): any => (
 
       return result
     }, {} as any)
+)
+
+export const isValidChildren = (children: any): boolean => (
+  (Array.isArray(children) && children.length > 0) ||
+  isValidElement(children) ||
+  isString(children)
 )
