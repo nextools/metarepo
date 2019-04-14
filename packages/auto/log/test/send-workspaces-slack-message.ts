@@ -2,6 +2,7 @@ import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { mock, unmock } from 'mocku'
 import { prefixes } from '@auto/utils/test/prefixes'
+import { TWorkspacesOptions } from '@auto/utils'
 import { TSlackOptions } from '../src/types'
 
 const slackOptions: TSlackOptions = {
@@ -14,6 +15,9 @@ const slackOptions: TSlackOptions = {
     minor: 'minor',
     patch: 'patch',
   },
+}
+const workspacesOptions: TWorkspacesOptions = {
+  autoNamePrefix: '@ns/',
 }
 
 test('sendWorkspacesSlackMessage', async (t) => {
@@ -30,7 +34,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
   await sendWorkspacesSlackMessage(
     [
       {
-        name: 'a',
+        name: '@ns/a',
         version: '0.1.2',
         type: 'minor',
         messages: [
@@ -65,6 +69,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
       },
     ],
     prefixes,
+    workspacesOptions,
     slackOptions
   )
 
@@ -151,6 +156,7 @@ test('sendWorkspacesSlackMessage: throws if there is no token', async (t) => {
         },
       ],
       prefixes,
+      workspacesOptions,
       // @ts-ignore
       { ...slackOptions, token: undefined }
     )
@@ -181,7 +187,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
   await sendWorkspacesSlackMessage(
     [
       {
-        name: 'a',
+        name: '@ns/a',
         version: '0.1.2',
         type: 'minor',
         messages: [
@@ -203,7 +209,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
         ],
       },
       {
-        name: 'c',
+        name: '@ns/c',
         version: '1.2.3',
         type: 'minor',
         messages: [
@@ -225,7 +231,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
         ],
       },
       {
-        name: 'e',
+        name: '@ns/e',
         version: '1.2.3',
         type: 'minor',
         messages: [
@@ -237,6 +243,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
       },
     ],
     prefixes,
+    workspacesOptions,
     slackOptions
   )
 
