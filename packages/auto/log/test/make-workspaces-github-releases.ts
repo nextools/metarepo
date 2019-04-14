@@ -2,12 +2,16 @@ import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { mock, unmock } from 'mocku'
 import { prefixes } from '@auto/utils/test/prefixes'
+import { TWorkspacesOptions } from '@auto/utils'
 import { TGithubOptions } from '../src/types'
 
 const githubOptions: TGithubOptions = {
   token: 'token',
   username: 'username',
   repo: 'repo',
+}
+const workspacesOptions: TWorkspacesOptions = {
+  autoNamePrefix: '@ns/',
 }
 
 test('makeWorkspacesGithubReleases', async (t) => {
@@ -24,7 +28,7 @@ test('makeWorkspacesGithubReleases', async (t) => {
   await makeWorkspacesGithubReleases(
     [
       {
-        name: 'a',
+        name: '@ns/a',
         version: '0.1.2',
         type: 'minor',
         messages: [
@@ -55,6 +59,7 @@ test('makeWorkspacesGithubReleases', async (t) => {
       },
     ],
     prefixes,
+    workspacesOptions,
     githubOptions
   )
 
@@ -140,6 +145,7 @@ test('makeWorkspacesGithubReleases: throws if there is no token', async (t) => {
         },
       ],
       prefixes,
+      workspacesOptions,
       // @ts-ignore
       { ...githubOptions, token: undefined }
     )
