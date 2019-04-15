@@ -49,7 +49,7 @@
     "@start/plugin-sequence": "^0.3.3",
     "@start/plugin-write": "^0.3.2",
     "@start/reporter-verbose": "^0.2.1",
-    "@types/babel-core": "^6.25.6",
+    "@types/babel__core": "^7.1.1",
     "@types/blue-tape": "^0.1.32",
     "@types/graceful-fs": "^4.1.3",
     "@types/make-dir": "^2.1.0",

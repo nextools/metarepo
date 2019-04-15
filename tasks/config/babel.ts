@@ -1,5 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import { TransformOptions as BabelConfig } from 'babel-core'
+import { TransformOptions as BabelConfig } from '@babel/core'
 // @ts-ignore
 import babelPresetReactNative from 'metro-react-native-babel-preset'
 
