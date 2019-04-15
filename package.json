@@ -3,6 +3,7 @@
   "description": "_",
   "workspaces": [
     "packages/auto/*",
+    "packages/bubble-dev/*",
     "packages/fixdeps",
     "packages/autoprops",
     "packages/colorido",
@@ -53,16 +54,12 @@
     "@types/blue-tape": "^0.1.32",
     "@types/graceful-fs": "^4.1.3",
     "@types/make-dir": "^2.1.0",
-    "@types/node": "^11.12.2",
+    "@types/node": "^11.13.4",
     "@types/prompts": "^1.2.0",
     "@types/react": "^16.8.12",
-    "@typescript-eslint/eslint-plugin": "^1.4.2",
-    "@typescript-eslint/parser": "^1.5.0",
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "blue-tape": "^1.0.0",
     "eslint": "^5.16.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-react": "^7.12.4",
     "globby": "^9.2.0",
     "graceful-fs": "^4.1.15",
     "make-dir": "^3.0.0",
@@ -106,57 +103,7 @@
     "reporter": "@start/reporter-verbose"
   },
   "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaVersion": 9,
-      "sourceType": "module",
-      "jsx": true,
-      "useJSXTextNode": true
-    },
-    "plugins": [
-      "import",
-      "react",
-      "@typescript-eslint"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "plugin:import/errors",
-      "./tasks/config/eslint.json"
-    ],
-    "settings": {
-      "import/resolver": {
-        "node": {
-          "extensions": [
-            ".js",
-            ".ts",
-            ".tsx",
-            ".web.js",
-            ".web.ts",
-            ".web.tsx",
-            ".native.js",
-            ".native.ts",
-            ".native.tsx",
-            ".ios.js",
-            ".ios.ts",
-            ".ios.tsx",
-            ".android.js",
-            ".android.ts",
-            ".android.tsx"
-          ]
-        }
-      },
-      "react": {
-        "pragma": "React",
-        "version": "16"
-      }
-    },
-    "env": {
-      "es6": true,
-      "browser": true,
-      "node": true,
-      "jest": true
-    }
+    "extends": "@bubble-dev/eslint-config"
   },
   "eslintIgnore": [
     "build/",
