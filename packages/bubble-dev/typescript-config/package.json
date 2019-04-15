@@ -1,0 +1,17 @@
+{
+  "name": "@bubble-dev/typescript-config",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "typescript": "3.4.1"
+  }
+}
