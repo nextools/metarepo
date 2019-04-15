@@ -241,7 +241,7 @@ export const test = (packageDir: string = '**') =>
       `packages/${packageDir}/src/**/*.{ts,tsx}`,
       `packages/${packageDir}/*/src/**/*.{ts,tsx}`,
     ]),
-    istanbulInstrument({ esModules: true, extensions: ['.ts', '.tsx'] }),
+    istanbulInstrument({ esModules: true }, ['.ts', '.tsx']),
     find([
       `packages/${packageDir}/test/**/*.{ts,tsx}`,
       `packages/${packageDir}/*/test/**/*.{ts,tsx}`,
