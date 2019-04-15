@@ -6,23 +6,14 @@ import {
 } from 'refun'
 import { TStyle } from '@lada/prefix'
 import { isFunction } from 'tsfn'
-import { TDimensions } from './types'
-
-export type TWebSizeProps = {
-  valuesToWatch?: any[],
-  width?: number,
-  onWidthChange?: (width: number) => void,
-  height?: number,
-  onHeightChange?: (height: number) => void,
-  onChange?: (dimensions: TDimensions) => void,
-}
+import { TSize } from './types'
 
 const defaultStyles: TStyle = {
   alignSelf: 'flex-start',
 }
 
 export const Size = component(
-  startWithType<TWebSizeProps>(),
+  startWithType<TSize>(),
   mapDefaultProps({
     valuesToWatch: [],
   }),
