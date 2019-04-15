@@ -49,8 +49,8 @@ export const buildWeb = async (dir: string) => {
 
   return sequence(
     find([
-      `${dir}/src/**/*.{ts,tsx}`,
-      `!${dir}/src/**/*.{node,native,ios,android}.{ts,tsx}`,
+      `${dir}/src/**/*.{js,ts,tsx}`,
+      `!${dir}/src/**/*.{node,native,ios,android}.{js,ts,tsx}`,
     ]),
     read,
     babel(babelConfigWeb),
@@ -73,8 +73,8 @@ export const buildReactNative = async (dir: string) => {
 
   return sequence(
     find([
-      `${dir}/src/**/*.{ts,tsx}`,
-      `!${dir}/src/**/*.{node,web}.{ts,tsx}`,
+      `${dir}/src/**/*.{js,ts,tsx}`,
+      `!${dir}/src/**/*.{node,web}.{js,ts,tsx}`,
     ]),
     read,
     babel(babelConfigReactNative),
@@ -97,8 +97,8 @@ export const buildNode = async (dir: string) => {
 
   return sequence(
     find([
-      `${dir}/src/**/*.{ts,tsx}`,
-      `!${dir}/src/**/*.{web,native,ios,android}.{ts,tsx}`,
+      `${dir}/src/**/*.{js,ts,tsx}`,
+      `!${dir}/src/**/*.{web,native,ios,android}.{js,ts,tsx}`,
     ]),
     read,
     babel(babelConfigNode),
@@ -121,8 +121,8 @@ export const buildWebNode = async (dir: string) => {
 
   return sequence(
     find([
-      `${dir}/src/**/*.{ts,tsx}`,
-      `!${dir}/src/**/*.{native,ios,android}.{ts,tsx}`,
+      `${dir}/src/**/*.{js,ts,tsx}`,
+      `!${dir}/src/**/*.{native,ios,android}.{js,ts,tsx}`,
     ]),
     read,
     babel(babelConfigNode),
@@ -139,6 +139,12 @@ export const buildWebNode = async (dir: string) => {
     move((file) => file.replace(/\.web\.d\.ts$/, '.d.ts'))
   )
 }
+
+export const buildCopy = (dir: string) =>
+  sequence(
+    find(`${dir}/src/**/*`),
+    copy(`${dir}/build/`)
+  )
 
 export const build = async (packageDir: string) => {
   const dir = path.join('packages', packageDir)
@@ -164,6 +170,10 @@ export const build = async (packageDir: string) => {
 
   if (Reflect.has(packageJson, 'react-native')) {
     tasks.push('buildReactNative')
+  }
+
+  if (tasks.length === 0) {
+    tasks.push('buildCopy')
   }
 
   return sequence(
