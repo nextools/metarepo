@@ -16,7 +16,7 @@ const runServer = (options: TOptions) => new Promise<() => Promise<void>>((serve
     const logger = makeLogger()
     const existingDirs: string[] = []
     const server = http
-      .createServer(async (req, res) => {
+      .createServer((req, res) => {
         if (req.method === 'POST' && req.url === '/upload') {
           let body = ''
 

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle, no-use-before-define */
 import { isValidElement } from 'react'
 import is from '@sindresorhus/is'
 import serializeReactTree from './serialize-react-tree'

@@ -6,5 +6,5 @@ export type TDimensions = {
 }
 
 export type TRoot = {
-  children: (dimensions: TDimensions) => ReactNode
+  children: (dimensions: TDimensions) => ReactNode,
 }

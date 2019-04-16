@@ -5,7 +5,7 @@ import { shallowEqualByKeys } from './utils'
 
 export type TStoreContextValue<S> = {
   state: S,
-  dispatch: Dispatch
+  dispatch: Dispatch,
 }
 
 export const mapReduxState = <S>(context: Context<TStoreContextValue<S>>) => <P extends {}, SP extends {}>(mapStateToProps: (state: S) => SP, stateKeysToWatch: (keyof S)[]) =>
@@ -27,10 +27,10 @@ export const mapReduxState = <S>(context: Context<TStoreContextValue<S>>) => <P 
   }
 
 export const mapReduxDispatch = (context: Context<TStoreContextValue<any>>) => <P extends {}>(props: P): TExtend<P, { dispatch: Dispatch }> => {
-    const { dispatch } = useContext(context)
+  const { dispatch } = useContext(context)
 
-    return {
-      ...props,
-      dispatch,
-    }
+  return {
+    ...props,
+    dispatch,
   }
+}

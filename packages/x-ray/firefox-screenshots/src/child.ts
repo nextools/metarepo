@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 import path from 'path'
 import { promisify } from 'util'
 import foxr from 'foxr'

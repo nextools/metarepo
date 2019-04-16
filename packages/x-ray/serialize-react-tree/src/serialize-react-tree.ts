@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { ReactElement } from 'react'
 import renderer, { ReactTestRendererJSON } from 'react-test-renderer'
 import is from '@sindresorhus/is'
@@ -7,7 +8,7 @@ import { makeIndent, nextIndent } from './make-indent'
 export type ReactElementJson = {
   type: string,
   props: { [k: string]: any },
-  children: ReactElementJson[] | null
+  children: ReactElementJson[] | null,
 } | string | number | boolean
 
 const hasKeys = (obj: any) => Object.keys(obj).length > 0

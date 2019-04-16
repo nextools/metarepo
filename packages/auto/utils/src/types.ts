@@ -1,14 +1,14 @@
 import { TJsonMap } from 'typeon'
 
 export type TWorkspacesOptions = {
-  autoNamePrefix: string
+  autoNamePrefix: string,
 }
 
 export type TBumpType = 'major' | 'minor' | 'patch'
 
 export type TPrefix = {
   title: string,
-  value: string
+  value: string,
 }
 
 export type TPrefixes = {
@@ -18,7 +18,7 @@ export type TPrefixes = {
     patch: TPrefix,
     publish: TPrefix,
     dependencies: TPrefix,
-    initial: TPrefix
+    initial: TPrefix,
   },
   custom: TPrefix[],
 }
@@ -27,36 +27,36 @@ export type TPackageJson = {
   name: string,
   version: string,
   dependencies?: {
-    [k: string]: string
+    [k: string]: string,
   },
   devDependencies?: {
-    [k: string]: string
+    [k: string]: string,
   },
   workspaces?: string[] | {
     packages: string[],
   },
   publishConfig?: {
-    registry?: string
-  }
+    registry?: string,
+  },
 } & TJsonMap
 
 export type TPackages = {
   [name: string]: {
     dir: string,
-    json: TPackageJson
-  }
+    json: TPackageJson,
+  },
 }
 
 export type TGitMessageType = TBumpType | 'initial'
 
 export type TGitMessage = {
   type: TGitMessageType,
-  value: string
+  value: string,
 }
 
 export type TRepoGitBump = {
   type: TBumpType,
-  messages: TGitMessage[]
+  messages: TGitMessage[],
 }
 
 export type TWorkspacesGitBump = {
@@ -74,14 +74,14 @@ export type TWorkspacesPackageBump = {
   version: string | null,
   dir: string,
   deps: {
-    [name: string]: string
+    [name: string]: string,
   } | null,
   devDeps: {
-    [name: string]: string
-  } | null
+    [name: string]: string,
+  } | null,
 }
 
 export type TPrompt = {
   title: string,
-  value: string
+  value: string,
 }

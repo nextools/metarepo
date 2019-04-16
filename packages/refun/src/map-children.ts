@@ -8,8 +8,8 @@ export type TChildrenMap = {
   [key: string]: {
     names: string[],
     multiple?: boolean,
-    required?: boolean
-  }
+    required?: boolean,
+  },
 }
 
 const flattenChildren = (children: ReactNode) => {

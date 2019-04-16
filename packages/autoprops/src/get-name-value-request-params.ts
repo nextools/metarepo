@@ -10,7 +10,6 @@ import {
 } from './guards'
 
 export const getNameValueRequestParamsRaw = (name: string, value: any, index: number): string => {
-
   const i = `_${index}`
   const n = name
     ? `${name}=`

@@ -21,15 +21,15 @@ export const isString = (value: any): value is string => {
 }
 
 export const isFunction = (value: any): value is Function => {
-  return Object.prototype.toString.call(value) == '[object Function]'
+  return Object.prototype.toString.call(value) === '[object Function]'
 }
 
 export const isDate = (value: any): value is Date => {
-  return Object.prototype.toString.call(value) == '[object Date]'
+  return Object.prototype.toString.call(value) === '[object Date]'
 }
 
 export const isRegexp = (value: any): value is RegExp => {
-  return Object.prototype.toString.call(value) == '[object RegExp]'
+  return Object.prototype.toString.call(value) === '[object RegExp]'
 }
 
 export const isArray = (value: any): value is any[] => {
@@ -41,7 +41,7 @@ export const isObject = (value: any): value is Object => {
 }
 
 export const isReactComponent = (value: any): value is ComponentType => {
-  return isString(value['displayName'])
+  return isString(value.displayName)
 }
 
 export const isReactElement = isValidElement

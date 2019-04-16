@@ -127,34 +127,34 @@ export const fixdeps = async (options: TOptions) => {
     if (removedDeps.length > 0 || addedDeps.length > 0) {
       packageJson.dependencies = objectFromEntries(
         packageDepEntries
-        .filter(([name]) => !removedDeps.includes(name))
-        .concat(addedDeps)
+          .filter(([name]) => !removedDeps.includes(name))
+          .concat(addedDeps)
       )
     }
 
     if (removedDevDeps.length > 0) {
       packageJson.devDependencies = objectFromEntries(
         packageDevDepEntries
-        .filter(([name]) => {
-          if (name.startsWith('@types/')) {
-            const baseName = name.substr(7)
+          .filter(([name]) => {
+            if (name.startsWith('@types/')) {
+              const baseName = name.substr(7)
 
-            if (removedDeps.includes(baseName) || removedDevDeps.includes(baseName)) {
-              return true
-            }
+              if (removedDeps.includes(baseName) || removedDevDeps.includes(baseName)) {
+                return true
+              }
 
-            if (
-              entriesIncludes(packageDepEntries, baseName) ||
+              if (
+                entriesIncludes(packageDepEntries, baseName) ||
               entriesIncludes(packageDevDepEntries, baseName) ||
               entriesIncludes(packagePeerEntries, baseName) ||
               entriesIncludes(addedDeps, baseName)
-            ) {
-              return false
+              ) {
+                return false
+              }
             }
-          }
 
-          return !removedDevDeps.includes(name)
-        })
+            return !removedDevDeps.includes(name)
+          })
       )
     }
 

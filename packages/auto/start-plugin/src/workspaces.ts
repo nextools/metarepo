@@ -8,7 +8,7 @@ import { TSlackOptions, TGithubOptions, TWorkspacesLog } from '@auto/log'
 
 export type TWorkspacesPluginData = {
   packagesBumps: TWorkspacesPackageBump[],
-  gitBumps: TWorkspacesGitBump[]
+  gitBumps: TWorkspacesGitBump[],
 }
 
 export const makeWorkspacesCommit = (prefixes: TPrefixes, workspacesOptions: TWorkspacesOptions) =>

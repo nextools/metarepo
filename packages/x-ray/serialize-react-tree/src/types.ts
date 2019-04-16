@@ -1,4 +1,4 @@
 export type TSerializedResult = {
   component: string,
-  primitives: string[]
+  primitives: string[],
 }

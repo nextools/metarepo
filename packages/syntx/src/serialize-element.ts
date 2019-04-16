@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { ReactElement } from 'react'
 import { TConfig, TSerializedElement } from './types'
 import {

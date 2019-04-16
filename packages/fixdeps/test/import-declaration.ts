@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import { getDependenciesInContent } from '../src/get-dependencies-in-content'
 
-test('import declaration: package dependency', async (t) => {
+test('import declaration: package dependency', (t) => {
   const content = `
   import path from 'path'
   import fs from 'fs'
@@ -13,9 +13,11 @@ test('import declaration: package dependency', async (t) => {
     ['path', 'fs'],
     'should find import'
   )
+
+  t.end()
 })
 
-test('import declaration: package with path', async (t) => {
+test('import declaration: package with path', (t) => {
   const content = `
   import { func } from 'pkg/path/to/file'
   `
@@ -26,9 +28,11 @@ test('import declaration: package with path', async (t) => {
     ['pkg'],
     'should find package name'
   )
+
+  t.end()
 })
 
-test('import declaration: scoped package', async (t) => {
+test('import declaration: scoped package', (t) => {
   const content = `
   import { func1 } from '@scope/pkg'
   import { func2 } from '@ns/my-package/path/to/file'
@@ -43,9 +47,11 @@ test('import declaration: scoped package', async (t) => {
     ],
     'should find scoped packages'
   )
+
+  t.end()
 })
 
-test('import declaration: relative path', async (t) => {
+test('import declaration: relative path', (t) => {
   const content = `
   import { func1 } from '../src/path/to/file'
   import { func2 } from './file'
@@ -58,4 +64,6 @@ test('import declaration: relative path', async (t) => {
     ['pkg'],
     'should skip relative paths'
   )
+
+  t.end()
 })

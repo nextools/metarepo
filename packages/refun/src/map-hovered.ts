@@ -2,9 +2,9 @@ import { useState, useRef } from 'react'
 import { isUndefined, isFunction, TExtend } from 'tsfn'
 
 export type TMapHovered = {
-  isHovered?: boolean
+  isHovered?: boolean,
   onPointerEnter?: () => void,
-  onPointerLeave?: () => void
+  onPointerLeave?: () => void,
 }
 
 export const mapHovered = <P extends TMapHovered>(props: P): TExtend<P, Required<TMapHovered>> => {

@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import { arrayIntersect } from '../src/array-intersect'
 
-test('ArrayIntersect: simple intersect', async (t) => {
+test('ArrayIntersect: simple intersect', (t) => {
   const a0 = [1, 2, 3]
   const a1 = [2]
 
@@ -12,9 +12,11 @@ test('ArrayIntersect: simple intersect', async (t) => {
     [2],
     'should return intersect values'
   )
+
+  t.end()
 })
 
-test('ArrayIntersect: intersect equal length arrays', async (t) => {
+test('ArrayIntersect: intersect equal length arrays', (t) => {
   const a0 = [1, 2, 3]
   const a1 = [2, 3, 4]
 
@@ -25,9 +27,11 @@ test('ArrayIntersect: intersect equal length arrays', async (t) => {
     [2, 3],
     'should return intersect values'
   )
+
+  t.end()
 })
 
-test('ArrayIntersect: no intersection', async (t) => {
+test('ArrayIntersect: no intersection', (t) => {
   const a0 = [1, 2, 3]
   const a1 = [4, 5]
 
@@ -38,9 +42,11 @@ test('ArrayIntersect: no intersection', async (t) => {
     [],
     'no intersect values'
   )
+
+  t.end()
 })
 
-test('ArrayIntersect: duplicate values', async (t) => {
+test('ArrayIntersect: duplicate values', (t) => {
   const a0 = [1, 1, 1]
   const a1 = [1, 1]
 
@@ -51,4 +57,6 @@ test('ArrayIntersect: duplicate values', async (t) => {
     [1, 1],
     'same values in arrays'
   )
+
+  t.end()
 })

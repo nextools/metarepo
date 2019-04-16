@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { isValidElement } from 'react'
 import { TConfig, TSerializedElement } from './types'
 import { serializeObject } from './serialize-object'

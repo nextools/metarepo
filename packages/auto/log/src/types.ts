@@ -8,26 +8,26 @@ export type TSlackOptions = {
   colors: {
     major: string,
     minor: string,
-    patch: string
-  }
+    patch: string,
+  },
 }
 
 export type TGithubOptions = {
   token: string,
   username: string,
-  repo: string
+  repo: string,
 }
 
 export type TWorkspacesLogMessage = {
   type: TBumpType | 'dependencies' | 'initial',
-  value: string
+  value: string,
 }
 
 export type TWorkspacesLog = {
   name: string,
   version: string,
   type: TBumpType,
-  messages: TWorkspacesLogMessage[]
+  messages: TWorkspacesLogMessage[],
 }
 
 export type TRepoLogMessage = TGitMessage
@@ -35,5 +35,5 @@ export type TRepoLogMessage = TGitMessage
 export type TRepoLog = {
   version: string,
   type: TBumpType,
-  messages: TRepoLogMessage[]
+  messages: TRepoLogMessage[],
 }

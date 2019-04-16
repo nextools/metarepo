@@ -24,4 +24,4 @@ export default (renamer: (oldPath: string) => string) =>
         })
       ),
     }
-})
+  })

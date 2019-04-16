@@ -3,10 +3,10 @@ import { getFilenames } from '../src/get-filenames'
 import { getKeys } from '../src/get-keys'
 import { getPermutations } from '../src/get-permutations'
 
-test('Get Filename: boolean and string', async (t) => {
+test('Get Filename: boolean and string', (t) => {
   type Props = {
-    success?: boolean
-    title: string
+    success?: boolean,
+    title: string,
   }
   const props = {
     success: [undefined, true],
@@ -15,6 +15,7 @@ test('Get Filename: boolean and string', async (t) => {
   const keys = getKeys<Props>(props)
   const perms = getPermutations<Props>(props, keys)
   const res = getFilenames(props, keys, perms)
+
   t.deepEquals(
     res,
     [
@@ -24,11 +25,13 @@ test('Get Filename: boolean and string', async (t) => {
       'success_title=Title2',
     ]
   )
+
+  t.end()
 })
 
-test('Get Filename: idle case', async (t) => {
+test('Get Filename: idle case', (t) => {
   type Props = {
-    success?: boolean
+    success?: boolean,
   }
   const props = {
     success: [undefined, true],
@@ -36,6 +39,7 @@ test('Get Filename: idle case', async (t) => {
   const keys = getKeys<Props>(props)
   const perms = getPermutations<Props>(props, keys)
   const res = getFilenames(props, keys, perms)
+
   t.deepEquals(
     res,
     [
@@ -43,4 +47,6 @@ test('Get Filename: idle case', async (t) => {
       'success',
     ]
   )
+
+  t.end()
 })

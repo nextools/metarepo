@@ -1,3 +1,3 @@
 export type TOptions = {
-  platform: 'android' | 'ios'
+  platform: 'android' | 'ios',
 }

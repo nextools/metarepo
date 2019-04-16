@@ -6,7 +6,7 @@ export type TAnimation<T> = {
   time: number,
   values: T,
   children: (args: T) => ReactElement,
-  easing: TEasingFn
+  easing: TEasingFn,
 }
 
 const REFRESH_RATE = 1000 / 60

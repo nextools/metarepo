@@ -22,5 +22,5 @@ export type TBlockCommon = {
   onPointerLeave?: () => void,
   onPointerDown?: () => void,
   onPointerUp?: () => void,
-  onPointerMove?: () => void
+  onPointerMove?: () => void,
 }

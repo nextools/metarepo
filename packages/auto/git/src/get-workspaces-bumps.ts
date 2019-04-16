@@ -4,7 +4,7 @@ import { parseWorkspacesCommitMessage } from './parse-workspaces-commit-message'
 import { TGitOptions } from './types'
 
 type TGitBumps = {
-  [key: string]: TWorkspacesGitBump
+  [key: string]: TWorkspacesGitBump,
 }
 
 export const getWorkspacesBumps = async (packages: TPackages, prefixes: TPrefixes, gitOptions: TGitOptions, workspacesOptions: TWorkspacesOptions): Promise<TWorkspacesGitBump[]> => {

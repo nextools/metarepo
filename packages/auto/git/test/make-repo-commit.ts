@@ -35,7 +35,7 @@ test('git:makeRepoCommit', async (t) => {
 
 test('git:makeRepoCommit: should throw on prefix undefined', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
-  const promptsSpy = createSpy(({ index }) => {
+  const promptsSpy = createSpy(() => {
     return Promise.resolve({})
   })
 

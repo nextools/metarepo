@@ -4,7 +4,7 @@ import { TExtend, isUndefined, isFunction } from 'tsfn'
 export type TMapFocused = {
   isFocused?: boolean,
   onFocus?: () => void,
-  onBlur?: () => void
+  onBlur?: () => void,
 }
 
 export const mapFocused = <P extends TMapFocused>(props: P): TExtend<P, Required<TMapFocused>> => {

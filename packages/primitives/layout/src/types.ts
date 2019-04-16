@@ -19,7 +19,7 @@ export type TLayoutProps = {
   direction: TLayoutDirection,
   vAlign?: TVAlign,
   hAlign?: THAlign,
-  children: ReactNode
+  children: ReactNode,
 }
 
 export type TLayoutItemProps = {
@@ -32,5 +32,5 @@ export type TLayoutItemProps = {
 }
 
 export type TLayoutSpacerProps = {
-  size?: number
+  size?: number,
 }

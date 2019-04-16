@@ -41,5 +41,5 @@ export const mapThrottledHandlerFactory = (setFn: Function, clearFn: Function) =
       }
     }
 
-  export const mapThrottledHandlerTimeout = mapThrottledHandlerFactory(setTimeout, clearTimeout)
-  export const mapThrottledHandlerAnimationFrame = mapThrottledHandlerFactory(requestAnimationFrame, cancelAnimationFrame)
+export const mapThrottledHandlerTimeout = mapThrottledHandlerFactory(setTimeout, clearTimeout)
+export const mapThrottledHandlerAnimationFrame = mapThrottledHandlerFactory(requestAnimationFrame, cancelAnimationFrame)

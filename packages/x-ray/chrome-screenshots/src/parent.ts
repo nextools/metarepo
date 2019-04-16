@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 import execa from 'execa'
 import { makeLogger, TTotalResult } from '@x-ray/common-utils'
 import { TOptions } from './types'

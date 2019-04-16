@@ -39,7 +39,6 @@ export const bumpPermutation = <Props extends TProps> (
 
   /* bump function */
   return (currentPerm: Permutation<Props>): Permutation<Props> => {
-
     /* check permutation overflow */
     if (arePermutationsEqual(maxPerm, currentPerm)) {
       throw new Error('Permutation overflow')

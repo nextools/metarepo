@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 import { Keys, MutexGroup, Permutation, PropsWithValues, TProps } from './types'
 import { arrayIntersect } from './array-intersect'
 import {
@@ -12,7 +13,6 @@ export const getPermutations = <Props extends TProps> (
   keys: Keys<Props>,
   mutexGroups: MutexGroup<Props>[] = []
 ): Permutation<Props>[] => {
-
   /* length permutation and total possible permutations */
   const lengthPerm = getLengthPermutation(props, keys)
   const totalPerms = getTotalPermutations(lengthPerm)

@@ -6,5 +6,5 @@ export type TOptions = {
   workspacePackagesFilter: (path: string) => boolean,
   ignoredPackages?: string[],
   logMessage?: (message: string) => void,
-  logPath?: (message: string) => void
+  logPath?: (message: string) => void,
 }

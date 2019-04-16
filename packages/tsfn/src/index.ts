@@ -1,5 +1,5 @@
 export type TAnyObject = {
-  [key: string]: any
+  [key: string]: any,
 }
 export type TKeyOf<T> = Exclude<keyof T, number | symbol>
 export type TIntersect <T1 extends {}, T2 extends {}> = { [K in Extract<keyof T1, keyof T2>]: T1[K] }

@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import { getDependenciesInContent } from '../src/get-dependencies-in-content'
 
-test('require-expression: package dependency', async (t) => {
+test('require-expression: package dependency', (t) => {
   const content = `
   const path = require('path')
   const fs = require('fs')
@@ -13,9 +13,11 @@ test('require-expression: package dependency', async (t) => {
     ['path', 'fs'],
     'should find required packages'
   )
+
+  t.end()
 })
 
-test('require-expression: package with path', async (t) => {
+test('require-expression: package with path', (t) => {
   const content = `
   const { func } = require('pkg/path/to/file')
   `
@@ -26,9 +28,11 @@ test('require-expression: package with path', async (t) => {
     ['pkg'],
     'should find package name'
   )
+
+  t.end()
 })
 
-test('require-expression: scoped package', async (t) => {
+test('require-expression: scoped package', (t) => {
   const content = `
   const { func1 } = require('@scope/pkg')
   const { func2 } = require('@ns/my-package/path/to/file')
@@ -43,9 +47,11 @@ test('require-expression: scoped package', async (t) => {
     ],
     'should find scoped packages'
   )
+
+  t.end()
 })
 
-test('require-expression: relative paths', async (t) => {
+test('require-expression: relative paths', (t) => {
   const content = `
   const { func1 } = require('../src/path/to/file')
   const { func2 } = require('./file')
@@ -58,4 +64,6 @@ test('require-expression: relative paths', async (t) => {
     ['pkg'],
     'should skip relative paths'
   )
+
+  t.end()
 })

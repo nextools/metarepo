@@ -1,262 +1,326 @@
 import test from 'blue-tape'
 import { isArray, isBoolean, isNull, isNumber, isString } from '../src/guards'
 
-test('Guards: isNull for number', async (t) => {
+test('Guards: isNull for number', (t) => {
   t.equals(
     isNull(42),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isNull for undefined', async (t) => {
+test('Guards: isNull for undefined', (t) => {
   t.equals(
     isNull(undefined),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isNull for object', async (t) => {
+test('Guards: isNull for object', (t) => {
   t.equals(
     isNull({}),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isNull for null', async (t) => {
+test('Guards: isNull for null', (t) => {
   t.equals(
     isNull(null),
     true,
     'should return true'
   )
+
+  t.end()
 })
 
 
-test('Guards: isBoolean for null', async (t) => {
+test('Guards: isBoolean for null', (t) => {
   t.equals(
     isBoolean(null),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isBoolean for undefined', async (t) => {
+test('Guards: isBoolean for undefined', (t) => {
   t.equals(
     isBoolean(undefined),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isBoolean for number', async (t) => {
+test('Guards: isBoolean for number', (t) => {
   t.equals(
     isBoolean(42),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isBoolean for object', async (t) => {
+test('Guards: isBoolean for object', (t) => {
   t.equals(
     isBoolean({}),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isBoolean for true', async (t) => {
+test('Guards: isBoolean for true', (t) => {
   t.equals(
     isBoolean(true),
     true,
     'should return true'
   )
+
+  t.end()
 })
 
-test('Guards: isBoolean for false', async (t) => {
+test('Guards: isBoolean for false', (t) => {
   t.equals(
     isBoolean(false),
     true,
     'should return true'
   )
+
+  t.end()
 })
 
-test('Guards: isBoolean for Boolean(0)', async (t) => {
+test('Guards: isBoolean for Boolean(0)', (t) => {
   t.equals(
-    isBoolean(new Boolean(0)),
+    isBoolean(Boolean(0)),
     true,
     'should return true'
   )
+
+  t.end()
 })
 
-test('Guards: isBoolean for Boolean(1)', async (t) => {
+test('Guards: isBoolean for Boolean(1)', (t) => {
   t.equals(
-    isBoolean(new Boolean(1)),
+    isBoolean(Boolean(1)),
     true,
     'should return true'
   )
+
+  t.end()
 })
 
 
-test('Guards: isNumber for null', async (t) => {
+test('Guards: isNumber for null', (t) => {
   t.equals(
     isNumber(null),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isNumber for undefined', async (t) => {
+test('Guards: isNumber for undefined', (t) => {
   t.equals(
     isNumber(undefined),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isNumber for empty string', async (t) => {
+test('Guards: isNumber for empty string', (t) => {
   t.equals(
     isNumber(''),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isNumber for object', async (t) => {
+test('Guards: isNumber for object', (t) => {
   t.equals(
     isNumber({}),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: ', async (t) => {
+test('Guards: ', (t) => {
   t.equals(
     isNumber(42),
     true,
     'should return true'
   )
+
+  t.end()
 })
 
-test('Guards: isNumber for float', async (t) => {
+test('Guards: isNumber for float', (t) => {
   t.equals(
-    isNumber(.01),
+    isNumber(0.01),
     true,
     'should return true'
   )
+
+  t.end()
 })
 
-test('Guards: isNumber for Number', async (t) => {
+test('Guards: isNumber for Number', (t) => {
   t.equals(
-    isNumber(new Number('42')),
+    isNumber(Number('42')),
     true,
     'should return true'
   )
+
+  t.end()
 })
 
 
-test('Guards: isString for null', async (t) => {
+test('Guards: isString for null', (t) => {
   t.equals(
     isString(null),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isString for undefined', async (t) => {
+test('Guards: isString for undefined', (t) => {
   t.equals(
     isString(undefined),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isString for number', async (t) => {
+test('Guards: isString for number', (t) => {
   t.equals(
     isString(0),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isString for object', async (t) => {
+test('Guards: isString for object', (t) => {
   t.equals(
     isString({}),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isString for empty string', async (t) => {
+test('Guards: isString for empty string', (t) => {
   t.equals(
     isString(''),
     true,
     'should return true'
   )
+
+  t.end()
 })
 
-test('Guards: isString for String(number)', async (t) => {
+test('Guards: isString for String(number)', (t) => {
   t.equals(
-    isString(new String(42)),
+    isString(String(42)),
     true,
     'should return true'
   )
+
+  t.end()
 })
 
 
-test('Guards: isArray for null', async (t) => {
+test('Guards: isArray for null', (t) => {
   t.equals(
     isArray(null),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isArray for undefined', async (t) => {
+test('Guards: isArray for undefined', (t) => {
   t.equals(
     isArray(undefined),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isArray for string', async (t) => {
+test('Guards: isArray for string', (t) => {
   t.equals(
     isArray(''),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isArray for number', async (t) => {
+test('Guards: isArray for number', (t) => {
   t.equals(
     isArray(42),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isArray for object', async (t) => {
+test('Guards: isArray for object', (t) => {
   t.equals(
     isArray({}),
     false,
     'should return false'
   )
+
+  t.end()
 })
 
-test('Guards: isArray for array', async (t) => {
+test('Guards: isArray for array', (t) => {
   t.equals(
     isArray([]),
     true,
     'should return true'
   )
+
+  t.end()
 })
 
-test('Guards: isArray for Array', async (t) => {
+test('Guards: isArray for Array', (t) => {
   t.equals(
     isArray(new Array(1)),
     true,
     'should return true'
   )
+
+  t.end()
 })

@@ -4,24 +4,24 @@ export type TMessageStatus = 'ok' | 'diff' | 'new' | 'unknown'
 
 export type TMessage = {
   status: TMessageStatus,
-  path: string
+  path: string,
 }
 
 export type TItem = {
   meta: {
     name: string,
-    hasOwnWidth: boolean
+    hasOwnWidth: boolean,
   },
-  element: ReactElement<any>
+  element: ReactElement<any>,
 }
 
 export type TCheckResult = {
   status: TMessageStatus,
-  path: string
+  path: string,
 }
 
 export type TTotalResult = {
   ok: number,
   diff: number,
-  new: number
+  new: number,
 }

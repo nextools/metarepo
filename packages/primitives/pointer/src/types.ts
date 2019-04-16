@@ -16,5 +16,5 @@ export type TPointerCommon = {
   onDown?: (e: TPointerEvent) => void,
   onUp?: (e: TPointerEvent) => void,
   onMove?: (e: TPointerEvent) => void,
-  onWheel?: (e: TPointerEvent) => void
+  onWheel?: (e: TPointerEvent) => void,
 }

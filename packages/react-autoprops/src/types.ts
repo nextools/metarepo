@@ -13,7 +13,7 @@ export type TChildrenConfig = {
   },
   children: string[],
   mutex?: string[][],
-  required?: string[]
+  required?: string[],
 }
 
 export type TComponentConfig = {

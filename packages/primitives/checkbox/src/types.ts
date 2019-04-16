@@ -1,14 +1,14 @@
 export type TIsHoveredHandlers = {
   onPointerEnter?: () => void,
-  onPointerLeave?: () => void
+  onPointerLeave?: () => void,
 }
 export type TIsPressedHandlers = {
   onPressIn?: () => void,
-  onPressOut?: () => void
+  onPressOut?: () => void,
 }
 export type TIsFocusedHandlers = {
-  onFocus?: () => void
-  onBlur?: () => void
+  onFocus?: () => void,
+  onBlur?: () => void,
 }
 
 export type TCheckboxProps = {
@@ -16,5 +16,5 @@ export type TCheckboxProps = {
   accessibilityLabel?: string,
   isDisabled?: boolean,
   isChecked: boolean,
-  onToggle: () => void
+  onToggle: () => void,
 } & TIsHoveredHandlers & TIsPressedHandlers & TIsFocusedHandlers

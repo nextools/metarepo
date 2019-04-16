@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { TConfig, TSerializedElement } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'
@@ -28,27 +29,27 @@ export const serializeObject = (obj: any, currentIndent: number, config: TConfig
   return {
     head: ObjectBrace('{'),
     body: Object.entries(obj)
-            .filter(([_, value]) => !isUndefined(value))
-            .map(([key, value], i, entries) => {
-              const { head, body, tail } = serializeValue(value, currentIndent + indent, config)
+      .filter(([_, value]) => !isUndefined(value))
+      .map(([key, value], i, entries) => {
+        const { head, body, tail } = serializeValue(value, currentIndent + indent, config)
 
-              return [
-                  Line([
-                    serializeIndent(currentIndent, config),
-                    ObjectKey(key),
-                    ObjectColon(':'),
-                    Whitespace(whitespaceChar),
-                    head,
-                    isNull(body) && i < entries.length - 1 && ObjectComma(','),
-                  ]),
-                  body,
-                  !isNull(tail) && Line([
-                    serializeIndent(currentIndent, config),
-                    tail,
-                    i < entries.length - 1 && ObjectComma(','),
-                  ]),
-                ]
-            }),
+        return [
+          Line([
+            serializeIndent(currentIndent, config),
+            ObjectKey(key),
+            ObjectColon(':'),
+            Whitespace(whitespaceChar),
+            head,
+            isNull(body) && i < entries.length - 1 && ObjectComma(','),
+          ]),
+          body,
+          !isNull(tail) && Line([
+            serializeIndent(currentIndent, config),
+            tail,
+            i < entries.length - 1 && ObjectComma(','),
+          ]),
+        ]
+      }),
     tail: ObjectBrace('}'),
   }
 }

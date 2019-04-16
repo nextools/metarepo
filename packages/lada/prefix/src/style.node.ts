@@ -3,6 +3,6 @@ import { TKeyOf } from 'tsfn'
 
 export type TStyle = {
   fontSmoothing?: string,
-  tapHighlightColor?: string
+  tapHighlightColor?: string,
 } & CSSProperties
 export type TStyleKey = TKeyOf<TStyle>

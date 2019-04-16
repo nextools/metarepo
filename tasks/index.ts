@@ -59,7 +59,7 @@ export const buildWeb = async (dir: string) => {
     find(`${dir}/src/index.{web.tsx,web.ts,tsx,ts}`),
     typescriptGenerate(`${dir}/build/web/`, {
       strict: true,
-      jsx: JsxEmit['React'],
+      jsx: JsxEmit.React,
       preserveSymlinks: true,
       skipLibCheck: true,
     }),
@@ -83,7 +83,7 @@ export const buildReactNative = async (dir: string) => {
     find(`${dir}/src/index.{native.tsx,native.ts,ios.tsx,ios.ts,android.tsx,android.ts,tsx,ts}`),
     typescriptGenerate(`${dir}/build/native/`, {
       strict: true,
-      jsx: JsxEmit['React'],
+      jsx: JsxEmit.React,
       preserveSymlinks: true,
       skipLibCheck: true,
     }),
@@ -107,7 +107,7 @@ export const buildNode = async (dir: string) => {
     find(`${dir}/src/index.{node.tsx,node.ts,tsx,ts}`),
     typescriptGenerate(`${dir}/build/node/`, {
       strict: true,
-      jsx: JsxEmit['React'],
+      jsx: JsxEmit.React,
       preserveSymlinks: true,
       skipLibCheck: true,
     }),
@@ -131,7 +131,7 @@ export const buildWebNode = async (dir: string) => {
     find(`${dir}/src/index.{web.tsx,web.ts,tsx,ts}`),
     typescriptGenerate(`${dir}/build/node/`, {
       strict: true,
-      jsx: JsxEmit['React'],
+      jsx: JsxEmit.React,
       preserveSymlinks: true,
       skipLibCheck: true,
     }),
@@ -264,4 +264,4 @@ export const ci = () =>
   sequence(
     lint(),
     test()
-)
+  )

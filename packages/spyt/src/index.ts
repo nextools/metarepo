@@ -4,10 +4,10 @@ export const createTimeoutSpy = () => {
     id: number,
     cb: () => void,
     delay: number,
-    isCleared: boolean
+    isCleared: boolean,
   }[] = []
   const clearedIds: {
-    id: number
+    id: number,
   }[] = []
 
   return {

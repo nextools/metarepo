@@ -9,7 +9,7 @@ import {
 } from '../src/permutation-utils'
 import { getKeys } from '../src/get-keys'
 
-test('Initial Permutation', async (t) => {
+test('Initial Permutation', (t) => {
   const props = {
     a: [true],
     b: [true],
@@ -25,9 +25,11 @@ test('Initial Permutation', async (t) => {
     [0, 0, 0, 0],
     'should return initial permutation'
   )
+
+  t.end()
 })
 
-test('Permutation Length: simple case', async (t) => {
+test('Permutation Length: simple case', (t) => {
   const props = {
     a: [1, 2, 3],
   }
@@ -39,9 +41,11 @@ test('Permutation Length: simple case', async (t) => {
     [3],
     'should return permutation length'
   )
+
+  t.end()
 })
 
-test('Permutation Length: multiple props with different length', async (t) => {
+test('Permutation Length: multiple props with different length', (t) => {
   const props = {
     a: [1, 2, 3],
     b: [true, false],
@@ -55,9 +59,11 @@ test('Permutation Length: multiple props with different length', async (t) => {
     [3, 2, 1],
     'should return permutation lengths'
   )
+
+  t.end()
 })
 
-test('Max Permutation: simple case', async (t) => {
+test('Max Permutation: simple case', (t) => {
   const props = {
     a: [1, 2, 3],
   }
@@ -70,9 +76,11 @@ test('Max Permutation: simple case', async (t) => {
     [2],
     'should return max permutation value'
   )
+
+  t.end()
 })
 
-test('Max Permutation: multiple props with different length', async (t) => {
+test('Max Permutation: multiple props with different length', (t) => {
   const props = {
     a: [1, 2, 3],
     b: [true, false],
@@ -87,9 +95,11 @@ test('Max Permutation: multiple props with different length', async (t) => {
     [2, 1, 0],
     'should return max permutation values'
   )
+
+  t.end()
 })
 
-test('Total Permutations: simple case', async (t) => {
+test('Total Permutations: simple case', (t) => {
   const props = {
     a: [true, false],
   }
@@ -101,9 +111,11 @@ test('Total Permutations: simple case', async (t) => {
     totalPerms,
     2
   )
+
+  t.end()
 })
 
-test('Total Permutations: complex case', async (t) => {
+test('Total Permutations: complex case', (t) => {
   const props = {
     a: [true, false],
     b: ['', '', ''],
@@ -119,11 +131,13 @@ test('Total Permutations: complex case', async (t) => {
     12,
     'should return total permutations value'
   )
+
+  t.end()
 })
 
-test('Permutations: single prop', async (t) => {
+test('Permutations: single prop', (t) => {
   type Props = {
-    a: string
+    a: string,
   }
   const props = {
     a: ['', 'true', 'false'],
@@ -150,12 +164,14 @@ test('Permutations: single prop', async (t) => {
     ],
     'should return all permutations'
   )
+
+  t.end()
 })
 
-test('Permutations: two booleans', async (t) => {
+test('Permutations: two booleans', (t) => {
   type Props = {
-    a?: boolean
-    b?: boolean
+    a?: boolean,
+    b?: boolean,
   }
   const props = {
     a: [undefined, true],
@@ -184,13 +200,15 @@ test('Permutations: two booleans', async (t) => {
     ],
     'should return all permutations'
   )
+
+  t.end()
 })
 
-test('Permutations: multiple props with different length', async (t) => {
+test('Permutations: multiple props with different length', (t) => {
   type Props = {
-    a: boolean
-    b: string
-    c: number
+    a: boolean,
+    b: string,
+    c: number,
   }
   const props = {
     a: [false, true],
@@ -224,9 +242,11 @@ test('Permutations: multiple props with different length', async (t) => {
     ],
     'should return all permutations'
   )
+
+  t.end()
 })
 
-test('Permutations: should throw on permutation overflow', async (t) => {
+test('Permutations: should throw on permutation overflow', (t) => {
   const props = {
     a: [false, true],
   }
@@ -245,4 +265,6 @@ test('Permutations: should throw on permutation overflow', async (t) => {
     bump.bind(null, currentPerm),
     'should throw when no more bumps available'
   )
+
+  t.end()
 })

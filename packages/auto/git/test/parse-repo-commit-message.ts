@@ -2,7 +2,7 @@ import test from 'blue-tape'
 import { prefixes } from '@auto/utils/test/prefixes'
 import { parseRepoCommitMessage } from '../src/parse-repo-commit-message'
 
-test('git:parseWorkspacesCommitMessage', async (t) => {
+test('git:parseWorkspacesCommitMessage', (t) => {
   t.equals(
     parseRepoCommitMessage(
       '🚨 breaking change',
@@ -80,4 +80,6 @@ test('git:parseWorkspacesCommitMessage', async (t) => {
     },
     'return initial object'
   )
+
+  t.end()
 })

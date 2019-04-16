@@ -1,3 +1,3 @@
 export type TComponentMeta = {
-  displayName: string
+  displayName: string,
 }

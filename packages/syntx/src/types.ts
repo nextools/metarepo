@@ -35,6 +35,6 @@ export type TConfig = {
     ValueNull: TElementFactory,
     ValueNumber: TElementFactory,
     ValueString: TElementFactory,
-    Whitespace: TElementFactory
-  }
+    Whitespace: TElementFactory,
+  },
 }

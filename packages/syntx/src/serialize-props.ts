@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { TConfig, TSerializedElement } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'
@@ -29,13 +30,13 @@ const serializePropertyValue = (value: any, currentIndent: number, config: TConf
     body: isNull(body)
       ? null
       : [
-          body,
-          Line([
-            serializeIndent(currentIndent, config),
-            tail,
-            PropsBrace('}'),
-          ]),
-       ],
+        body,
+        Line([
+          serializeIndent(currentIndent, config),
+          tail,
+          PropsBrace('}'),
+        ]),
+      ],
     tail: null,
   }
 }
@@ -46,19 +47,19 @@ export const serializeProps = (props: any, currentIndent: number, config: TConfi
   return {
     head: null,
     body: Object.entries(props)
-            .map(([key, value]) => {
-              const { head, body } = serializePropertyValue(value, currentIndent, config)
+      .map(([key, value]) => {
+        const { head, body } = serializePropertyValue(value, currentIndent, config)
 
-              return [
-                Line([
-                  serializeIndent(currentIndent, config),
-                  PropsKey(key),
-                  PropsEquals('='),
-                  head,
-                ]),
-                body,
-              ]
-            }),
+        return [
+          Line([
+            serializeIndent(currentIndent, config),
+            PropsKey(key),
+            PropsEquals('='),
+            head,
+          ]),
+          body,
+        ]
+      }),
     tail: null,
   }
 }

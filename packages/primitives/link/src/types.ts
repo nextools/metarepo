@@ -1,14 +1,14 @@
 export type TIsHoveredHandlers = {
   onPointerEnter?: () => void,
-  onPointerLeave?: () => void
+  onPointerLeave?: () => void,
 }
 export type TIsPressedHandlers = {
   onPressIn?: () => void,
-  onPressOut?: () => void
+  onPressOut?: () => void,
 }
 export type TIsFocusedHandlers = {
   onFocus?: () => void,
-  onBlur?: () => void
+  onBlur?: () => void,
 }
 
 export type TLinkProps = {
@@ -16,5 +16,5 @@ export type TLinkProps = {
   href?: string,
   target?: string,
   tabIndex?: number,
-  onPress?: () => void
+  onPress?: () => void,
 } & TIsHoveredHandlers & TIsPressedHandlers & TIsFocusedHandlers

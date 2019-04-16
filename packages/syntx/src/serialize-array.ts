@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { TConfig, TSerializedElement } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'

@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import { FC } from 'react'
 import { PropsWithValues, AutoConfig, Keys, getPermutations, getProps, getKeys, getFilenames, Permutation } from 'autoprops'
 import { getObjectKeys, isUndefined, TAnyObject } from 'tsfn'
@@ -32,7 +33,7 @@ const makeAutopropsConfig = (config: TComponentConfig): AutoConfig<any> => {
 type TAutopropsConfigCache<T> = {
   props: PropsWithValues<T>,
   keys: Keys<T>,
-  perms: Permutation<T>[]
+  perms: Permutation<T>[],
 }
 
 const autopropsConfigCache = new Map<string, TAutopropsConfigCache<any>>()
@@ -74,7 +75,7 @@ export const createAutopropsConfig = ({ Component, config, childrenConfig }: TMe
     }, { props: {}, mutex: childrenMutex, keys: [] as any } as {
       props: PropsWithValues<TAnyObject>,
       mutex: string[][],
-      keys: Keys<TAnyObject>
+      keys: Keys<TAnyObject>,
     })
 
     const childrenPerms = getPermutations(childrenPropsWithValues, childrenKeys, childrenMutexGroups)

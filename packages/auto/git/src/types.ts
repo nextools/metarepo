@@ -1,16 +1,16 @@
 import { TBumpType } from '@auto/utils'
 
 export type TGitOptions = {
-  initialType: TBumpType
+  initialType: TBumpType,
 }
 
 export type TParsedMessageType = TBumpType | 'publish' | 'initial'
 
 export type TRepoParsedMessage = {
   type: TParsedMessageType,
-  message: string
+  message: string,
 }
 
 export type TWorkspacesParsedMessage = {
-  names: string[]
+  names: string[],
 } & TRepoParsedMessage

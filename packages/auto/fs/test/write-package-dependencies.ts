@@ -1,3 +1,4 @@
+/* eslint-disable no-sync */
 import test from 'blue-tape'
 import { mock, unmock } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'

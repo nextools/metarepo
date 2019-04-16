@@ -6,14 +6,6 @@ export const getDisplayName = (component: ComponentClass<any> | FC<any>) => {
   return component.displayName || component.name
 }
 
-export const getElementName = (element: ReactElement<any>) => {
-  if (isString(element.type)) {
-    return element.type
-  }
-
-  return getDisplayName(element.type)
-}
-
 export const INITIAL_CHILD_DEPTH = 0
 
 export const isUndefined = (value: any): value is undefined => typeof value === 'undefined'
@@ -33,7 +25,7 @@ export const isString = (value: any): value is string => (
 )
 
 export const isFunction = (value: any): value is Function => (
-  Object.prototype.toString.call(value) == '[object Function]'
+  Object.prototype.toString.call(value) === '[object Function]'
 )
 
 export const isArray = (value: any): value is any[] => Array.isArray(value)
@@ -62,3 +54,11 @@ export const isValidChildren = (children: any): boolean => (
   isValidElement(children) ||
   isString(children)
 )
+
+export const getElementName = (element: ReactElement<any>) => {
+  if (isString(element.type)) {
+    return element.type
+  }
+
+  return getDisplayName(element.type)
+}

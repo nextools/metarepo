@@ -1,3 +1,3 @@
 export type TOptions = {
-  setupFile: string
+  setupFile: string,
 }

@@ -6,7 +6,7 @@ export type TActualHandlers <T> = {
 }
 
 export type THandlers <P> = {
-  [key: string]: (props: P) => (...args: any[]) => void
+  [key: string]: (props: P) => (...args: any[]) => void,
 }
 
 export const mapHandlers = <P extends {}, R extends THandlers<P>> (handlers: R) => (props: P): TExtend<P, TActualHandlers<R>> => {

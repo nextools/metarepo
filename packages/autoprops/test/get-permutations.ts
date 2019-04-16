@@ -3,10 +3,10 @@ import { getPermutations } from '../src/get-permutations'
 import { getKeys } from '../src/get-keys'
 import { MutexGroup, PropsWithValues } from '../src/types'
 
-test('Get Permutations: simple boolean mutual exclusion', async (t) => {
+test('Get Permutations: simple boolean mutual exclusion', (t) => {
   type Props = {
-    a?: boolean
-    b?: boolean
+    a?: boolean,
+    b?: boolean,
   }
   const props: PropsWithValues<Props> = {
     a: [undefined, true],
@@ -27,13 +27,15 @@ test('Get Permutations: simple boolean mutual exclusion', async (t) => {
       [0, 1],
     ]
   )
+
+  t.end()
 })
 
 // This test is disabled due to change of the mutex group logic
-test.skip('Get Permutations: boolean single possible state', async (t) => {
+test.skip('Get Permutations: boolean single possible state', (t) => {
   type Props = {
-    a: boolean
-    b?: boolean
+    a: boolean,
+    b?: boolean,
   }
   const props: PropsWithValues<Props> = {
     a: [true],
@@ -52,13 +54,15 @@ test.skip('Get Permutations: boolean single possible state', async (t) => {
       [0, 1],
     ]
   )
+
+  t.end()
 })
 
 // This test is disabled due to change of the mutex group logic
-test.skip('Get Permutations: boolean total exclusion', async (t) => {
+test.skip('Get Permutations: boolean total exclusion', (t) => {
   type Props = {
-    a: boolean
-    b: boolean
+    a: boolean,
+    b: boolean,
   }
   const props: PropsWithValues<Props> = {
     a: [true],
@@ -75,14 +79,16 @@ test.skip('Get Permutations: boolean total exclusion', async (t) => {
     res,
     []
   )
+
+  t.end()
 })
 
-test('Get Permutations: booleans 2 independent groups', async (t) => {
+test('Get Permutations: booleans 2 independent groups', (t) => {
   type Props = {
-    a?: boolean
-    b?: boolean
-    c?: boolean
-    d?: boolean
+    a?: boolean,
+    b?: boolean,
+    c?: boolean,
+    d?: boolean,
   }
   const props: PropsWithValues<Props> = {
     a: [undefined, true],
@@ -112,13 +118,15 @@ test('Get Permutations: booleans 2 independent groups', async (t) => {
       [0, 1, 0, 1],
     ]
   )
+
+  t.end()
 })
 
-test('Get Permutations: multiple props with different length', async (t) => {
+test('Get Permutations: multiple props with different length', (t) => {
   type Props = {
-    a: boolean
-    b: string
-    c: number
+    a: boolean,
+    b: string,
+    c: number,
   }
   const props: PropsWithValues<Props> = {
     a: [false, true],
@@ -141,17 +149,19 @@ test('Get Permutations: multiple props with different length', async (t) => {
       [1, 0, 3],
     ]
   )
+
+  t.end()
 })
 
-test('Get Permutations: complex case', async (t) => {
+test('Get Permutations: complex case', (t) => {
   type Props = {
-    success?: boolean
-    warning?: boolean
-    error?: boolean
+    success?: boolean,
+    warning?: boolean,
+    error?: boolean,
 
-    title: string
-    content?: string[]
-    minimal?: boolean
+    title: string,
+    content?: string[],
+    minimal?: boolean,
   }
   const props: PropsWithValues<Props> = {
     success: [undefined, true],
@@ -211,13 +221,15 @@ test('Get Permutations: complex case', async (t) => {
       [0, 0, 1, 1, 0, 1],
     ]
   )
+
+  t.end()
 })
 
-test('Get Permutations: exclude all but first', async (t) => {
+test('Get Permutations: exclude all but first', (t) => {
   type Props = {
-    a?: boolean
+    a?: boolean,
     b?: boolean,
-    c: string
+    c: string,
   }
   const props: PropsWithValues<Props> = {
     a: [undefined, true],
@@ -241,12 +253,14 @@ test('Get Permutations: exclude all but first', async (t) => {
       [0, 0, 2],
     ]
   )
+
+  t.end()
 })
 
-test('Get Permutations: consider \'undefined\' as valid exclusion', async (t) => {
+test('Get Permutations: consider \'undefined\' as valid exclusion', (t) => {
   type Props = {
-    a?: boolean
-    b: string
+    a?: boolean,
+    b: string,
   }
   const props: PropsWithValues<Props> = {
     a: [false, undefined, true],
@@ -271,4 +285,6 @@ test('Get Permutations: consider \'undefined\' as valid exclusion', async (t) =>
       [1, 2],
     ]
   )
+
+  t.end()
 })

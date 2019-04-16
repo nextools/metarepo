@@ -8,7 +8,7 @@ import { TSlackOptions, TGithubOptions, TRepoLog } from '@auto/log'
 
 export type TRepoPluginData = {
   packageBump: TRepoPackageBump,
-  gitBump: TRepoGitBump
+  gitBump: TRepoGitBump,
 }
 
 export const makeRepoCommit = (prefixes: TPrefixes) =>

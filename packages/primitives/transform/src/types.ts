@@ -3,7 +3,7 @@ export type TTransformProps = {
   y?: number,
   rotate?: number,
   scale?: number,
-  hOrigin?: 'left' | 'center' | 'right'
+  hOrigin?: 'left' | 'center' | 'right',
   vOrigin?: 'top' | 'center' | 'bottom',
   shouldUse3d?: boolean,
   shouldStretch?: boolean,
