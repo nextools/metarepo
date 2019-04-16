@@ -3,10 +3,10 @@ import { getDependenciesInContent } from '../src/get-dependencies-in-content'
 
 test('import expression: package dependency', (t) => {
   const content = `
-  () => {
+  (async () => {
     const { default: path } = await import('path')
     const { default: fs } = await import('fs')
-  }
+  })()
   `
   const deps = getDependenciesInContent(content)
 
@@ -21,9 +21,9 @@ test('import expression: package dependency', (t) => {
 
 test('import expression: package with path', (t) => {
   const content = `
-  () => {
+  (async () => {
     const { func } = await import('pkg/path/to/file')
-  }
+  })()
   `
   const deps = getDependenciesInContent(content)
 
@@ -38,10 +38,10 @@ test('import expression: package with path', (t) => {
 
 test('import expression: scoped package', (t) => {
   const content = `
-  () => {
+  (async () => {
     const { func1 } = await import('@scope/pkg')
     const { func2 } = await import('@ns/my-package/path/to/file')
-  }
+  })()
   `
   const deps = getDependenciesInContent(content)
 
@@ -59,11 +59,11 @@ test('import expression: scoped package', (t) => {
 
 test('import expression: relative path', (t) => {
   const content = `
-  () => {
+  (async () => {
     const { func1 } = await import('../src/path/to/file')
     const { func2 } = awaitimport('./file')
     const { func3 } = await import('pkg')
-  }
+  })()
   `
   const deps = getDependenciesInContent(content)
 
