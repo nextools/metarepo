@@ -17,6 +17,9 @@ module.exports = {
         '.android.tsx',
       ],
     },
+    'import/ignore': [
+      'typescript',
+    ],
     'import/extensions': [
       '.js',
       '.ts',
