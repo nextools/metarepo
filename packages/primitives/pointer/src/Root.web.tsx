@@ -2,11 +2,7 @@ import React, { HTMLProps, MouseEvent } from 'react'
 import { prefixStyle } from '@lada/prefix'
 import { component, startWithType, mapProps, mapHandlers, mapRefLayout } from 'refun'
 import { isFunction } from 'tsfn'
-import { TPointerCommon } from './types'
-
-export * from './types'
-
-export type TPointer = TPointerCommon
+import { TPointer } from './types'
 
 const defaultStyles = prefixStyle({
   display: 'flex',

@@ -9,7 +9,7 @@ export type TPointerEvent = {
   shiftKey: boolean,
 }
 
-export type TPointerCommon = {
+export type TPointer = {
   children?: ReactNode,
   onEnter?: () => void,
   onLeave?: () => void,

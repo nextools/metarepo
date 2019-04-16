@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "description": "",
   "keywords": [],
-  "main": "src/index.web.tsx",
+  "main": "src/index.web.ts",
   "browser": "src/index.web.ts",
-  "react-native": "src/index.native.tsx",
+  "react-native": "src/index.native.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@types/react": "^16.8.12",
-    "react": "^16.8.6"
+    "react": "^16.8.6",
+    "react-native": "^0.59.3"
   }
 }
