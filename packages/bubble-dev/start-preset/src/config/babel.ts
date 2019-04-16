@@ -16,18 +16,18 @@ const babelConfigCommon: BabelConfig = {
   shouldPrintComment: (val: string) => val.startsWith('#'),
 }
 const presets = [
-  '@babel/preset-react',
-  '@babel/preset-typescript',
+  require.resolve('@babel/preset-react'),
+  require.resolve('@babel/preset-typescript'),
 ]
 const plugins = [
   [
-    '@babel/plugin-transform-runtime',
+    require.resolve('@babel/plugin-transform-runtime'),
     {
       regenerator: false,
     },
   ],
-  '@babel/plugin-syntax-dynamic-import',
-  'babel-plugin-dynamic-import-node',
+  require.resolve('@babel/plugin-syntax-dynamic-import'),
+  require.resolve('babel-plugin-dynamic-import-node'),
 ]
 
 export const babelConfigWeb: BabelConfig = {
@@ -35,7 +35,7 @@ export const babelConfigWeb: BabelConfig = {
   sourceMaps: true,
   presets: [
     [
-      '@babel/preset-env',
+      require.resolve('@babel/preset-env'),
       {
         targets: { browsers },
         modules: false,
@@ -58,7 +58,7 @@ export const babelConfigNode: BabelConfig = {
   sourceMaps: false,
   presets: [
     [
-      '@babel/preset-env',
+      require.resolve('@babel/preset-env'),
       {
         targets: { node },
       },

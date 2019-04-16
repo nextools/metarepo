@@ -1,8 +1,8 @@
-/* eslint-disable import/named */
 import { TGitOptions } from '@auto/git'
 import { TPrefixes, TWorkspacesOptions } from '@auto/utils'
 import { TBumpOptions } from '@auto/bump'
 import { TNpmOptions } from '@auto/npm'
+import { TGithubOptions, TSlackOptions } from '@auto/log'
 
 export const prefixes: TPrefixes = {
   required: {
@@ -71,7 +71,9 @@ export const prefixes: TPrefixes = {
   ],
 }
 
-export const gitOptions: TGitOptions = { initialType: 'minor' }
+export const gitOptions: TGitOptions = {
+  initialType: 'minor',
+}
 
 export const bumpOptions: TBumpOptions = {
   zeroBreakingChangeType: 'minor',
@@ -82,4 +84,10 @@ export const npmOptions: TNpmOptions = {
   publishSubDirectory: 'build/',
 }
 
-export const workspacesOptions: TWorkspacesOptions = { autoNamePrefix: '@' }
+export const workspacesOptions: TWorkspacesOptions = {
+  autoNamePrefix: '@',
+}
+
+export const githubOptions = {} as TGithubOptions
+
+export const slackOptions = {} as TSlackOptions

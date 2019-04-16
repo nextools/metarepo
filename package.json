@@ -18,87 +18,26 @@
     "packages/x-ray/*"
   ],
   "devDependencies": {
-    "@auto/bump": "^0.2.0",
-    "@auto/git": "^0.1.0",
-    "@auto/npm": "^0.1.0",
-    "@auto/start-plugin": "^0.3.0",
-    "@auto/utils": "^0.1.0",
     "@babel/core": "^7.4.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/plugin-syntax-typescript": "^7.3.3",
-    "@babel/plugin-transform-runtime": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/preset-typescript": "^7.3.3",
-    "@babel/register": "^7.4.0",
-    "@start/cli": "^0.5.0",
-    "@start/plugin": "^0.3.1",
-    "@start/plugin-copy": "^0.3.2",
-    "@start/plugin-env": "^0.5.2",
-    "@start/plugin-find": "^0.3.1",
-    "@start/plugin-lib-babel": "^0.4.0",
-    "@start/plugin-lib-codecov": "^0.4.0",
-    "@start/plugin-lib-eslint": "^0.4.3",
-    "@start/plugin-lib-istanbul": "^0.6.0",
-    "@start/plugin-lib-tape": "^0.3.2",
-    "@start/plugin-lib-typescript-check": "^0.3.1",
-    "@start/plugin-lib-typescript-generate": "^0.4.1",
-    "@start/plugin-overwrite": "^0.3.1",
-    "@start/plugin-parallel": "^0.3.1",
-    "@start/plugin-read": "^0.3.1",
-    "@start/plugin-remove": "^0.3.1",
-    "@start/plugin-rename": "^0.3.2",
+    "@bubble-dev/start-preset": "^0.1.0",
     "@start/plugin-sequence": "^0.3.3",
-    "@start/plugin-write": "^0.3.2",
-    "@start/reporter-verbose": "^0.2.1",
-    "@types/babel__core": "^7.1.1",
     "@types/blue-tape": "^0.1.32",
-    "@types/graceful-fs": "^4.1.3",
-    "@types/make-dir": "^2.1.0",
     "@types/node": "^11.13.4",
     "@types/prompts": "^1.2.0",
     "@types/react": "^16.8.12",
-    "babel-plugin-dynamic-import-node": "^2.2.0",
     "blue-tape": "^1.0.0",
     "eslint": "^5.16.0",
-    "globby": "^9.2.0",
-    "graceful-fs": "^4.1.15",
-    "make-dir": "^3.0.0",
-    "metro-react-native-babel-preset": "^0.53.1",
     "mocku": "^0.5.0",
     "spyfn": "^0.2.0",
-    "tap-diff": "^0.1.1",
     "typescript": "bubble-dev/TypeScript#ext-3.4.1"
   },
   "start": {
-    "require": [
-      [
-        "@babel/register",
-        {
-          "presets": [
-            [
-              "@babel/preset-env",
-              {
-                "targets": {
-                  "node": "current"
-                }
-              }
-            ],
-            "@babel/preset-typescript",
-            "@babel/preset-react"
-          ],
-          "plugins": [
-            "@babel/plugin-syntax-dynamic-import",
-            "babel-plugin-dynamic-import-node"
-          ],
-          "extensions": [
-            ".tsx",
-            ".ts"
-          ]
-        }
-      ]
-    ],
-    "reporter": "@start/reporter-verbose"
+    "file": "tasks/",
+    "auto": {
+      "shouldMakeGitTags": true,
+      "shouldMakeGitHubReleases": false,
+      "shouldSendSlackMessage": false
+    }
   },
   "eslintConfig": {
     "extends": "@bubble-dev/eslint-config"
@@ -106,7 +45,6 @@
   "eslintIgnore": [
     "build/",
     "coverage/",
-    "static/",
     "node_modules/"
   ],
   "engines": {
