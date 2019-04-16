@@ -8,7 +8,7 @@ export * from './types'
 
 export type TBlock = TBlockCommon & {
   style?: TStyle,
-  ref?: Ref<View>
+  ref?: Ref<View>,
 }
 
 export const Block = component(

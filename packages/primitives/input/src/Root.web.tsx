@@ -1,7 +1,6 @@
 import React, { KeyboardEvent } from 'react'
-import { prefixStyle } from '@lada/prefix'
+import { prefixStyle, TStyle } from '@lada/prefix'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
-import { TStyle } from '@lada/prefix'
 import { isNumber } from 'tsfn'
 import { TInputProps } from './types'
 

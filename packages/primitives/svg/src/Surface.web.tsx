@@ -1,3 +1,3 @@
 import React, { FC, SVGProps } from 'react'
 
-export const Surface: FC<SVGProps<SVGSVGElement>> = (props) => <svg {...props} />
+export const Surface: FC<SVGProps<SVGSVGElement>> = (props) => <svg {...props}/>

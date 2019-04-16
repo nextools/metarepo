@@ -1,6 +1,5 @@
 /* eslint-disable import/export */
-import { useRef } from 'react'
-import { ReactElement, WeakValidationMap, ValidationMap } from 'react'
+import { useRef, ReactElement, WeakValidationMap, ValidationMap } from 'react'
 import { EMPTY_OBJECT, TOmitKey } from 'tsfn'
 import shallowEqual from 'shallowequal'
 import { TComponentMeta } from './types'

@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Block } from '@primitives/block'
 
 export type TLayoutFill = {
-  floatinIndex?: number
+  floatinIndex?: number,
 }
 
 export const LayoutFill: FC<TLayoutFill> = ({ children, floatinIndex }) => (
