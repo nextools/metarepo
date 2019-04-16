@@ -1,3 +1,10 @@
 {
-  "extends": "@bubble-dev/typescript-config/src/index.json"
+  "extends": "@bubble-dev/typescript-config/src/index.json",
+  "exclude": [
+    "node_modules/",
+    "coverage/",
+    "packages/*/build/",
+    "packages/*/*/build/",
+    "tmp/"
+  ]
 }

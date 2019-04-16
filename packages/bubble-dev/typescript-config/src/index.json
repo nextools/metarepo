@@ -9,12 +9,5 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "typeRoots": ["types/", "node_modules/@types/"]
-  },
-  "exclude": [
-    "node_modules/",
-    "coverage/",
-    "packages/*/build/",
-    "packages/*/*/build/",
-    "tmp/"
-  ]
+  }
 }
