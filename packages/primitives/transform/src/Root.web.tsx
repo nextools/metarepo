@@ -3,8 +3,6 @@ import { prefixStyle, TStyle } from '@lada/prefix'
 import { component, startWithType, mapWithProps, mapDefaultProps } from 'refun'
 import { TTransformProps } from './types'
 
-export * from './types'
-
 export const Transform = component(
   startWithType<TTransformProps>(),
   mapDefaultProps({

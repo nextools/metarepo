@@ -3,8 +3,6 @@ import { View, ViewStyle } from 'react-native'
 import { component, startWithType, mapWithProps } from 'refun'
 import { TTransformProps } from './types'
 
-export * from './types'
-
 const defaultStyles: ViewStyle = {
   display: 'flex',
   position: 'relative',
