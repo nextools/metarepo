@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 import { promisify } from 'util'
 import path from 'path'
 import pAll from 'p-all'

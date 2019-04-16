@@ -5,7 +5,6 @@ import {
   isCallExpression,
   isIdentifier,
   isImport,
-  isMemberExpression,
   isImportDeclaration,
   isStringLiteral,
 } from '@babel/types'

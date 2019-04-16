@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { TEasingFn } from '../types'
 
 export const easeInOutCubic: TEasingFn = (from, range, time) => {

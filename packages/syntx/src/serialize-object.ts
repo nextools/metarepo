@@ -29,7 +29,7 @@ export const serializeObject = (obj: any, currentIndent: number, config: TConfig
   return {
     head: ObjectBrace('{'),
     body: Object.entries(obj)
-      .filter(([_, value]) => !isUndefined(value))
+      .filter((entry) => !isUndefined(entry[1]))
       .map(([key, value], i, entries) => {
         const { head, body, tail } = serializeValue(value, currentIndent + indent, config)
 

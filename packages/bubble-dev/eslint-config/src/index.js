@@ -1,3 +1,5 @@
+/* eslint-disable import/no-commonjs */
+
 module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: [
