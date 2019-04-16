@@ -11,8 +11,6 @@ import {
 } from 'refun'
 import { TRoot } from './types'
 
-export * from './types'
-
 const globalObject = global as any as Window
 
 const defaultStyle: TStyle = {
