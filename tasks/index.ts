@@ -33,6 +33,7 @@ import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
 // @ts-ignore
 import tapDiff from 'tap-diff'
 import move from './plugins/move'
+import transformDts from './plugins/transform-dts'
 import buildPackageJson from './plugins/build-package-json'
 
 export const preparePackage = (packageDir: string) => {
@@ -65,7 +66,11 @@ export const buildWeb = async (dir: string) => {
       skipLibCheck: true,
     }),
     find(`${dir}/build/web/*.web.d.ts`),
-    move((file) => file.replace(/\.web\.d\.ts$/, '.d.ts'))
+    move((file) => file.replace(/\.web\.d\.ts$/, '.d.ts')),
+    find(`${dir}/build/web/*.d.ts`),
+    read,
+    transformDts('web'),
+    overwrite
   )
 }
 
@@ -89,7 +94,11 @@ export const buildReactNative = async (dir: string) => {
       skipLibCheck: true,
     }),
     find(`${dir}/build/native/*.native.d.ts`),
-    move((file) => file.replace(/\.native\.d\.ts$/, '.d.ts'))
+    move((file) => file.replace(/\.native\.d\.ts$/, '.d.ts')),
+    find(`${dir}/build/native/*.d.ts`),
+    read,
+    transformDts('native'),
+    overwrite
   )
 }
 
@@ -113,7 +122,11 @@ export const buildNode = async (dir: string) => {
       skipLibCheck: true,
     }),
     find(`${dir}/build/node/*.node.d.ts`),
-    move((file) => file.replace(/\.node\.d\.ts$/, '.d.ts'))
+    move((file) => file.replace(/\.node\.d\.ts$/, '.d.ts')),
+    find(`${dir}/build/node/*.d.ts`),
+    read,
+    transformDts('node'),
+    overwrite
   )
 }
 
@@ -137,7 +150,11 @@ export const buildWebNode = async (dir: string) => {
       skipLibCheck: true,
     }),
     find(`${dir}/build/node/*.web.d.ts`),
-    move((file) => file.replace(/\.web\.d\.ts$/, '.d.ts'))
+    move((file) => file.replace(/\.web\.d\.ts$/, '.d.ts')),
+    find(`${dir}/build/node/*.d.ts`),
+    read,
+    transformDts('node'),
+    overwrite
   )
 }
 
