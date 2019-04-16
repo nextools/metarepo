@@ -296,9 +296,8 @@ export const publish = async () => {
     gitOptions,
     bumpOptions,
     npmOptions,
-    githubOptions,
-    slackOptions,
   } = await import('./config/auto')
+  const { githubOptions, slackOptions } = await import(path.resolve('.env.ts'))
 
   return sequence(
     getWorkspacesPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
