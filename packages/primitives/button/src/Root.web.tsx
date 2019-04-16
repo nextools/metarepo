@@ -3,8 +3,6 @@ import { prefixStyle } from '@lada/prefix'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { TButtonProps } from './types'
 
-export * from './types'
-
 export const Button = component(
   startWithType<TButtonProps>(),
   mapWithPropsMemo(({ isDisabled }) => ({

@@ -2,8 +2,6 @@ import React, { FC } from 'react'
 import { TouchableWithoutFeedback, View } from 'react-native'
 import { TButtonProps } from './types'
 
-export * from './types'
-
 const hitSlop = {
   bottom: 5,
   left: 5,
