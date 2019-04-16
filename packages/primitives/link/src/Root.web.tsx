@@ -1,8 +1,6 @@
 import React, { FC } from 'react'
 import { TLinkProps } from './types'
 
-export * from './types'
-
 const Link: FC<TLinkProps> = ({
   children,
   href,
