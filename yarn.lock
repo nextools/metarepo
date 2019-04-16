@@ -943,6 +943,15 @@
     "@start/plugin" "^0.3.1"
     "@types/babel__core" "^7.1.1"
 
+"@start/plugin-lib-codecov@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@start/plugin-lib-codecov/-/plugin-lib-codecov-0.4.0.tgz#1a9e5d2046b6db241132ec1addf454447ddfa2ad"
+  integrity sha512-iPsegVgitkhX4qYYIfTkcQlRFoGaLdNQUOVhjW3m9HFyrRMzfFWFWsglR1QkvGiLCO2eRLNEsJCmUHJS+SnI2A==
+  dependencies:
+    "@babel/runtime" "^7.4.2"
+    "@start/plugin" "^0.3.1"
+    codecov-lite "^0.2.1"
+
 "@start/plugin-lib-eslint@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@start/plugin-lib-eslint/-/plugin-lib-eslint-0.4.3.tgz#b79951a6c051ea88c3df7027519e4bd55051f7cf"
@@ -2096,6 +2105,16 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
+
+codecov-lite@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/codecov-lite/-/codecov-lite-0.2.1.tgz#b6528f8eacefe88600149e4e3343be2e97399dbb"
+  integrity sha512-KVmWs5HC0dvQrLBW1lek2eJ/DCQunPyrH3rMWjidWhr9riXmgomqAIgz/lfpImi1Hw/ZVkmlpzE8ppKELCn2UQ==
+  dependencies:
+    "@babel/runtime" "^7.4.2"
+    execa "^1.0.0"
+    request "^2.88.0"
+    request-promise-native "^1.0.7"
 
 collection-visit@^1.0.0:
   version "1.0.0"
@@ -6353,7 +6372,7 @@ request-promise-core@1.1.2:
   dependencies:
     lodash "^4.17.11"
 
-request-promise-native@^1.0.5:
+request-promise-native@^1.0.5, request-promise-native@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/request-promise-native/-/request-promise-native-1.0.7.tgz#a49868a624bdea5069f1251d0a836e0d89aa2c59"
   integrity sha512-rIMnbBdgNViL37nZ1b3L/VfPOpSi0TqVDQPAvO6U14lMzOLrt5nilxCQqtDKhZeDiW0/hkCXGoQjhgJd/tCh6w==

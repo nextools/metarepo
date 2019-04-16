@@ -14,6 +14,7 @@ import parallel from '@start/plugin-parallel'
 import eslint from '@start/plugin-lib-eslint'
 import typescriptGenerate from '@start/plugin-lib-typescript-generate'
 import typescriptCheck from '@start/plugin-lib-typescript-check'
+import codecov from '@start/plugin-lib-codecov'
 import {
   makeWorkspacesCommit,
   buildBumpedPackages,
@@ -263,5 +264,8 @@ export const test = (packageDir: string = '**') =>
 export const ci = () =>
   sequence(
     lint(),
-    test()
+    test(),
+    find('coverage/lcov.info'),
+    read,
+    codecov
   )
