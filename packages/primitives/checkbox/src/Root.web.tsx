@@ -3,8 +3,6 @@ import { prefixStyle } from '@lada/prefix'
 import { component, mapWithProps, startWithType } from 'refun'
 import { TCheckboxProps } from './types'
 
-export * from './types'
-
 export const Checkbox = component(
   startWithType<TCheckboxProps>(),
   mapWithProps(({ isDisabled }) => ({
