@@ -7331,10 +7331,9 @@ typeon@^0.3.0:
   resolved "https://registry.yarnpkg.com/typeon/-/typeon-0.3.0.tgz#124d18d2bc7e656f894daeb2c3e277a3ecd5b7b6"
   integrity sha512-XRgnZdagk44NXl85NGStv+AEgkyICCF7qeDgGzT8b2DpMaF87joJT0+c+Bfdl6SAuBgqchDtYZbCGXE1EmKnxw==
 
-typescript@3.4.1:
+typescript@bubble-dev/TypeScript#ext-3.4.1:
   version "3.4.1"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.1.tgz#b6691be11a881ffa9a05765a205cb7383f3b63c6"
-  integrity sha512-3NSMb2VzDQm8oBTLH6Nj55VVtUEpe/rgkIzMir0qVoLyjDZlnMBva0U6vDiV3IH+sl/Yu6oP5QwsAQtHPmDd2Q==
+  resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/7267ea85c7e8f477b5db3de9f2ab5c6251e089b0"
 
 ua-parser-js@^0.7.18:
   version "0.7.19"

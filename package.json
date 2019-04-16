@@ -68,10 +68,7 @@
     "mocku": "^0.5.0",
     "spyfn": "^0.2.0",
     "tap-diff": "^0.1.1",
-    "typescript": "3.4.1"
-  },
-  "scripts": {
-    "postinstall": "sh scripts/typescript.sh && rm node_modules/@types/node/console.d.ts > /dev/null 2>&1 || true"
+    "typescript": "bubble-dev/TypeScript#ext-3.4.1"
   },
   "start": {
     "require": [
