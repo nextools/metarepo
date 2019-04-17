@@ -1,4 +1,3 @@
-// @ts-ignore
 import traverse from '@babel/traverse'
 import { parse, getPackageName, detect, isString } from './utils'
 
