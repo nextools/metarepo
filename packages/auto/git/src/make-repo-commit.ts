@@ -1,5 +1,3 @@
-/* eslint-disable no-use-before-define */
-// @ts-ignore
 import prompts from 'prompts'
 import execa from 'execa'
 import { TPrefixes } from '@auto/utils'

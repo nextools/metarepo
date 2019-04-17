@@ -1,6 +1,3 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-constant-condition */
-// @ts-ignore
 import prompts from 'prompts'
 import execa from 'execa'
 import { TPackages, TPrefixes, suggestFilter, TWorkspacesOptions, removeAutoNamePrefix } from '@auto/utils'

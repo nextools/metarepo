@@ -22,7 +22,6 @@
     "@bubble-dev/start-preset": "*",
     "@types/blue-tape": "^0.1.32",
     "@types/node": "^11.13.4",
-    "@types/prompts": "^1.2.0",
     "@types/react": "^16.8.12",
     "blue-tape": "^1.0.0",
     "eslint": "^5.16.0",
