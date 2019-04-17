@@ -2,16 +2,13 @@ import React from 'react'
 import { Switch, TouchableWithoutFeedback } from 'react-native'
 import { prefixStyle } from '@lada/prefix'
 import { component, mapWithProps, startWithType } from 'refun'
+import { Block } from '@primitives/block'
 import { TCheckboxProps } from './types'
 
 export const Checkbox = component(
   startWithType<TCheckboxProps>(),
   mapWithProps(() => ({
-    wrapperStyle: prefixStyle({
-      position: 'relative',
-      flexGrow: 1,
-    }),
-    switchStyle: prefixStyle({
+    style: prefixStyle({
       position: 'absolute',
       top: 0,
       left: 0,
@@ -27,28 +24,28 @@ export const Checkbox = component(
     accessibilityLabel,
     isDisabled,
     isChecked,
-    wrapperStyle,
-    switchStyle,
+    style,
     onToggle,
     onPressIn,
     onPressOut,
     children,
   }) => (
     <TouchableWithoutFeedback
-      style={wrapperStyle}
       accessibilityLabel={accessibilityLabel}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       disabled={isDisabled}
     >
-      {children}
-      <Switch
-        value={isChecked}
-        disabled={isDisabled}
-        testID={id}
-        style={switchStyle}
-        onValueChange={onToggle}
-      />
+      <Block shouldStretch>
+        {children}
+        <Switch
+          value={isChecked}
+          disabled={isDisabled}
+          testID={id}
+          style={style}
+          onValueChange={onToggle}
+        />
+      </Block>
     </TouchableWithoutFeedback>
   )
 )

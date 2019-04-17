@@ -1,16 +1,13 @@
 import React from 'react'
 import { prefixStyle } from '@lada/prefix'
-import { component, mapWithProps, startWithType } from 'refun'
+import { component, startWithType, mapWithProps } from 'refun'
+import { Block } from '@primitives/block'
 import { TCheckboxProps } from './types'
 
 export const Checkbox = component(
   startWithType<TCheckboxProps>(),
   mapWithProps(({ isDisabled }) => ({
-    wrapperStyle: prefixStyle({
-      position: 'relative',
-      flexGrow: 1,
-    }),
-    checkboxStyle: prefixStyle({
+    style: prefixStyle({
       position: 'absolute',
       appearance: 'none',
       width: '100%',
@@ -31,8 +28,7 @@ export const Checkbox = component(
     accessibilityLabel,
     isDisabled,
     isChecked,
-    wrapperStyle,
-    checkboxStyle,
+    style,
     onToggle,
     onPointerEnter,
     onPointerLeave,
@@ -42,11 +38,11 @@ export const Checkbox = component(
     onBlur,
     children,
   }) => (
-    <div style={wrapperStyle}>
+    <Block shouldStretch>
       {children}
       <input
         type="checkbox"
-        style={checkboxStyle}
+        style={style}
         checked={isChecked}
         aria-label={accessibilityLabel}
         disabled={isDisabled}
@@ -59,6 +55,6 @@ export const Checkbox = component(
         onFocus={onFocus}
         onBlur={onBlur}
       />
-    </div>
+    </Block>
   )
 )

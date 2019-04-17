@@ -18,6 +18,7 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@lada/prefix": "^0.4.0",
+    "@primitives/block": "^0.1.1",
     "refun": "^0.1.0"
   },
   "devDependencies": {
