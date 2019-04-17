@@ -12,9 +12,12 @@ export const Transform = component(
   mapWithProps(({ x, y, rotate, scale, hOrigin, vOrigin, shouldUse3d, shouldStretch }) => {
     const styles: TStyle = {
       display: 'flex',
+      flexDirection: 'row',
       position: 'relative',
+      flexGrow: 0,
+      flexShrink: 0,
+      flexBasis: 'auto',
       alignSelf: 'flex-start',
-      /* flexbox hack */
       minWidth: 0,
     }
 
@@ -59,6 +62,7 @@ export const Transform = component(
 
     if (shouldStretch) {
       styles.flexGrow = 1
+      styles.flexShrink = 1
       styles.alignSelf = 'stretch'
     }
 

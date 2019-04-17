@@ -1,11 +1,15 @@
 import React from 'react'
-import { View, ViewStyle } from 'react-native'
+import { View } from 'react-native'
 import { component, startWithType, mapWithProps } from 'refun'
+import { TStyle } from '@lada/prefix'
 import { TTransformProps } from './types'
 
-const defaultStyles: ViewStyle = {
-  display: 'flex',
-  position: 'relative',
+const defaultStyles: TStyle = {
+  flexDirection: 'row',
+  flexGrow: 0,
+  flexShrink: 0,
+  flexBasis: 'auto',
+  alignSelf: 'flex-start',
 }
 
 export const Transform = component(
