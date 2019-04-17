@@ -1,4 +1,9 @@
 {
+  "editor.formatOnSave": false,
+  "editor.formatOnType": false,
+  "editor.formatOnPaste": false,
+  "typescript.format.enable": false,
+  "javascript.format.enable": false,
   "eslint.enable": true,
   "eslint.autoFixOnSave": true,
   "eslint.validate": [
