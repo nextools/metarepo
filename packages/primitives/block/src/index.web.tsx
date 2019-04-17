@@ -48,12 +48,15 @@ export const Block = component(
     }) => {
       const styles: TStyle = {
         display: 'flex',
+        flexDirection: 'row',
         boxSizing: 'border-box',
         borderStyle: 'solid',
         borderWidth: 0,
         position: 'relative',
         alignSelf: 'flex-start',
-        /* flexbox hack */
+        flexGrow: 0,
+        flexShrink: 0,
+        flexBasis: 'auto',
         minWidth: 0,
         ...style,
       }
@@ -71,12 +74,12 @@ export const Block = component(
         styles.width = width
         styles.flexGrow = 0
         styles.flexShrink = 0
+        styles.flexBasis = 'auto'
       }
 
       if (!isUndefined(height)) {
         styles.height = height
-        styles.flexGrow = 0
-        styles.flexShrink = 0
+        styles.alignSelf = 'flex-start'
       }
 
       if (!isUndefined(minWidth)) {
@@ -105,6 +108,8 @@ export const Block = component(
 
       if (shouldStretch) {
         styles.flexGrow = 1
+        styles.flexShrink = 1
+        styles.flexBasis = 0
         styles.alignSelf = 'stretch'
       }
 

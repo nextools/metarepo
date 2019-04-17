@@ -4,8 +4,6 @@ import { TStyle } from '@lada/prefix'
 import { startWithType, component, mapDefaultProps, mapProps } from 'refun'
 import { TBlockCommon } from './types'
 
-export * from './types'
-
 export type TBlock = TBlockCommon & {
   style?: TStyle,
   ref?: Ref<View>,
@@ -46,6 +44,12 @@ export const Block = component(
         borderStyle: 'solid',
         borderWidth: 0,
         position: 'relative',
+        flexDirection: 'row',
+        flexGrow: 0,
+        flexShrink: 0,
+        flexBasis: 'auto',
+        alignSelf: 'flex-start',
+        minWidth: 0,
         ...style,
       }
 
@@ -53,12 +57,12 @@ export const Block = component(
         styles.width = width
         styles.flexGrow = 0
         styles.flexShrink = 0
+        styles.flexBasis = 'auto'
       }
 
       if (typeof height !== 'undefined') {
         styles.height = height
-        styles.flexGrow = 0
-        styles.flexShrink = 0
+        styles.alignSelf = 'flex-start'
       }
 
       if (typeof minWidth !== 'undefined') {
@@ -87,6 +91,8 @@ export const Block = component(
 
       if (shouldStretch) {
         styles.flexGrow = 1
+        styles.flexShrink = 1
+        styles.flexBasis = 0
         styles.alignSelf = 'stretch'
       }
 
