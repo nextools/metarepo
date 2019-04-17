@@ -16,7 +16,6 @@ export type TSelect = {
   paddingLeft?: number,
   paddingRight?: number,
   paddingTop?: number,
-  shouldStretch?: boolean,
   value: string,
   onChange: (newValue: string) => void,
   onFocus?: () => void,
@@ -43,7 +42,6 @@ export const Select = component(
       paddingLeft,
       paddingRight,
       paddingTop,
-      shouldStretch,
       weight,
     }) => ({
       style: prefixStyle({
@@ -55,26 +53,23 @@ export const Select = component(
           lineHeight: `${lineHeight}px`,
         }),
         backgroundColor: 'rgba(0, 0, 0, 0)',
-        border: 'none',
+        border: 0,
         color,
         fontWeight: weight,
         fontSize: size,
         fontFamily: family,
         fontSmoothing: 'antialiased',
-        flexGrow: shouldStretch ? 1 : 0,
+        flexGrow: 1,
+        flexShrink: 1,
+        flexBasis: 0,
+        alignSelf: 'stretch',
         textRendering: 'geometricPrecision',
         textSizeAdjust: 'none',
-
         paddingBottom,
         paddingLeft,
         paddingRight,
         paddingTop,
-
-        height: '100%',
-        width: '100%',
-        // IE 11 + flexbox fix
-        maxWidth: '100%',
-
+        minWidth: 0,
         cursor: isDisabled ? 'auto' : 'pointer',
         opacity: isHidden ? 0 : 1,
         appearance: 'none',
