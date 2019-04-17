@@ -1,5 +1,4 @@
 import pixelmatch from 'pixelmatch'
-// @ts-ignore
 import upng from 'upng-js'
 
 const hasPngDiff = (a: Buffer, b: Buffer) => {
