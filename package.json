@@ -19,8 +19,7 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.4.0",
-    "@bubble-dev/start-preset": "^0.1.0",
-    "@start/plugin-sequence": "^0.3.3",
+    "@bubble-dev/start-preset": "*",
     "@types/blue-tape": "^0.1.32",
     "@types/node": "^11.13.4",
     "@types/prompts": "^1.2.0",
