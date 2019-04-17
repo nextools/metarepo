@@ -289,10 +289,6 @@ export const commit = async () => {
 }
 
 export const publish = async () => {
-  const dotenv = await import('dotenv')
-
-  dotenv.config()
-
   const { shouldMakeGitTags, shouldMakeGitHubReleases, shouldSendSlackMessage } = await getAutoOptions() as TAutoOptions
   const {
     prefixes,

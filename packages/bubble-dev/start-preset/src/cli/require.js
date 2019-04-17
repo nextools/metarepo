@@ -3,6 +3,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable import/no-commonjs */
 
+require('dotenv/config')
+
 require('@babel/register')({
   presets: [
     [
