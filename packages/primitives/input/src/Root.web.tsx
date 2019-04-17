@@ -25,32 +25,30 @@ export const Input = component(
       paddingLeft,
       paddingRight,
       paddingTop,
-      shouldStretch,
-      minWidth,
       weight,
     }) => {
       const style: TStyle = {
         backgroundColor: 'rgba(0, 0, 0, 0)',
-        border: 'none',
+        border: 0,
         color,
         fontWeight: weight,
         fontSize: size,
         fontFamily: family,
         fontSmoothing: 'antialiased',
-        flexGrow: shouldStretch ? 1 : 0,
+        flexGrow: 1,
+        flexShrink: 1,
+        flexBasis: 0,
+        alignSelf: 'stretch',
         textRendering: 'geometricPrecision',
         textSizeAdjust: 'none',
         appearance: 'none',
-
         boxSizing: 'border-box',
-
         paddingBottom,
         paddingLeft,
         paddingRight,
         paddingTop,
-
-        // IE 11 + flexbox fix
         maxWidth: '100%',
+        minWidth: 0,
       }
 
       if (isNumber(letterSpacing)) {
@@ -59,10 +57,6 @@ export const Input = component(
 
       if (isNumber(lineHeight)) {
         style.lineHeight = `${lineHeight}px`
-      }
-
-      if (isNumber(minWidth)) {
-        style.minWidth = minWidth
       }
 
       return {
