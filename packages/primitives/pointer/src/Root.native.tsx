@@ -6,7 +6,10 @@ import { isFunction } from 'tsfn'
 import { TPointer } from './types'
 
 const defaultStyles = prefixStyle({
+  flexDirection: 'row',
   flexGrow: 1,
+  flexShrink: 1,
+  flexBasis: 0,
   alignSelf: 'stretch',
 })
 

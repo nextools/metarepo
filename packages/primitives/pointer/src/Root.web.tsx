@@ -6,14 +6,16 @@ import { TPointer } from './types'
 
 const defaultStyles = prefixStyle({
   display: 'flex',
+  flexDirection: 'row',
   boxSizing: 'border-box',
   borderStyle: 'solid',
   borderWidth: 0,
   position: 'relative',
   flexGrow: 1,
+  flexShrink: 1,
+  flexBasis: 0,
   alignSelf: 'stretch',
-  width: '100%',
-  height: '100%',
+  minWidth: 0,
 })
 
 export const Pointer = component(
