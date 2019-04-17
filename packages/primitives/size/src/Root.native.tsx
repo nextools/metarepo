@@ -2,7 +2,16 @@ import React from 'react'
 import { View, LayoutChangeEvent } from 'react-native'
 import { component, mapHandlers, startWithType } from 'refun'
 import { isFunction } from 'tsfn'
+import { TStyle } from '@lada/prefix'
 import { TSize } from './types'
+
+const defaultStyles: TStyle = {
+  flexDirection: 'row',
+  flexGrow: 0,
+  flexShrink: 0,
+  flexBasis: 'auto',
+  alignSelf: 'flex-start',
+}
 
 export const Size = component(
   startWithType<TSize>(),
@@ -27,5 +36,5 @@ export const Size = component(
     },
   })
 )('Size', ({ children, onLayout }) => (
-  <View onLayout={onLayout}>{children}</View>
+  <View style={defaultStyles} onLayout={onLayout}>{children}</View>
 ))

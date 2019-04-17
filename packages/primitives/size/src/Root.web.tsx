@@ -9,6 +9,11 @@ import { isFunction } from 'tsfn'
 import { TSize } from './types'
 
 const defaultStyles: TStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+  flexGrow: 0,
+  flexShrink: 0,
+  flexBasis: 'auto',
   alignSelf: 'flex-start',
 }
 
