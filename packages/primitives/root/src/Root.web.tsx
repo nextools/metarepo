@@ -14,7 +14,9 @@ import { TRoot } from './types'
 const globalObject = global as any as Window
 
 const defaultStyle: TStyle = {
+  display: 'flex',
   position: 'absolute',
+  flexDirection: 'row',
   left: 0,
   top: 0,
 }

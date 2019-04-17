@@ -13,6 +13,7 @@ import { TRoot } from './types'
 
 const defaultStyle: TStyle = {
   position: 'absolute',
+  flexDirection: 'row',
   top: 0,
   bottom: 0,
   left: 0,
