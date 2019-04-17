@@ -34,9 +34,15 @@ import {
 } from '@auto/start-plugin'
 // @ts-ignore
 import tapDiff from 'tap-diff'
+import { TGithubOptions, TSlackOptions } from '@auto/log'
+import { TGitOptions } from '@auto/git'
+import { TWorkspacesOptions } from '@auto/utils'
+import { TBumpOptions } from '@auto/bump'
+import { TNpmOptions } from '@auto/npm'
 import move from './plugins/move'
 import transformDts from './plugins/transform-dts'
 import buildPackageJson from './plugins/build-package-json'
+import { getStartOptions } from './get-options'
 
 export const preparePackage = (packageDir: string) => {
   const dir = path.join('packages', packageDir)
@@ -265,41 +271,56 @@ export const ci = () =>
     codecov
   )
 
-type TAutoOptions = {
-  shouldMakeGitTags: boolean,
-  shouldMakeGitHubReleases: boolean,
-  shouldSendSlackMessage: boolean,
-}
-
-const getAutoOptions = async () => {
-  const path = await import('path')
-  const { start: { auto } } = await import(path.resolve('./package.json'))
-
-  return auto
-}
-
-const getAutoConfig = () => {
-  return import('./config/auto')
-}
-
 export const commit = async () => {
-  const { prefixes, workspacesOptions } = await getAutoConfig()
+  const { auto: { autoNamePrefix } } = await getStartOptions()
+  const { prefixes } = await import('./config/auto')
+
+  const workspacesOptions: TWorkspacesOptions = {
+    autoNamePrefix,
+  }
 
   return makeWorkspacesCommit(prefixes, workspacesOptions)
 }
 
 export const publish = async () => {
-  const { shouldMakeGitTags, shouldMakeGitHubReleases, shouldSendSlackMessage } = await getAutoOptions() as TAutoOptions
   const {
-    prefixes,
-    workspacesOptions,
-    gitOptions,
-    bumpOptions,
-    npmOptions,
-    githubOptions,
-    slackOptions,
-  } = await import('./config/auto')
+    auto: {
+      initialType,
+      autoNamePrefix,
+      zeroBreakingChangeType,
+      github,
+      slack,
+      shouldAlwaysBumpDependents,
+      shouldMakeGitTags,
+      shouldMakeGitHubReleases,
+      shouldSendSlackMessage,
+    },
+  } = await getStartOptions()
+  const { prefixes } = await import('./config/auto')
 
+  const npmOptions: TNpmOptions = {
+    publishSubDirectory: 'build/',
+  }
+  const workspacesOptions: TWorkspacesOptions = {
+    autoNamePrefix,
+  }
+  const bumpOptions: TBumpOptions = {
+    zeroBreakingChangeType,
+    shouldAlwaysBumpDependents,
+  }
+  const gitOptions: TGitOptions = {
+    initialType,
+  }
+  const githubOptions: TGithubOptions = {
+    ...github,
+    token: process.env.AUTO_GITHUB_TOKEN as string,
+  }
+  const slackOptions: TSlackOptions = {
+    ...slack,
+    token: process.env.AUTO_SLACK_TOKEN as string,
+  }
+
+  // TODO: refactor Auto options into one config
   return sequence(
     getWorkspacesPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
     publishWorkspacesPrompt(prefixes),

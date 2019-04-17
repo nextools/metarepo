@@ -1,10 +1,11 @@
 import path from 'path'
 import Reporter from '@start/reporter-verbose'
 import { StartPlugin } from '@start/plugin'
+import { getStartOptions } from '../get-options'
 
 (async () => {
   try {
-    const { start: options } = await import(path.resolve('./package.json'))
+    const options = await getStartOptions()
     const tasksFile = options && options.file ? path.resolve(options.file) : require.resolve('..')
     const tasks = await import(tasksFile)
     const taskName = process.argv[2]

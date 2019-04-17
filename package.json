@@ -33,6 +33,14 @@
   "start": {
     "file": "tasks/",
     "auto": {
+      "initialType": "minor",
+      "autoNamePrefix": "@",
+      "zeroBreakingChangeType": "minor",
+      "github": {
+        "username": "bubble-dev",
+        "repo": "_"
+      },
+      "shouldAlwaysBumpDependents": false,
       "shouldMakeGitTags": true,
       "shouldMakeGitHubReleases": true,
       "shouldSendSlackMessage": false
