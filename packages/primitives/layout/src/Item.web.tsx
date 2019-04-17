@@ -9,12 +9,14 @@ import { TLayoutItemProps } from './types'
 export const LayoutItem = component(
   startWithType<TLayoutItemProps>(),
   mapContext(Context),
-  mapProps(({ direction, width, height, hAlign, vAlign, shouldScroll, children }) => {
+  mapProps(({ direction, width, height, shouldScroll, children }) => {
     const style: TStyle = {
       display: 'flex',
       flexDirection: 'row',
       position: 'relative',
-      /* flexbox hack */
+      flexGrow: 0,
+      flexShrink: 0,
+      flexBasis: 'auto',
       minWidth: 0,
     }
 
@@ -53,36 +55,6 @@ export const LayoutItem = component(
         style.flexShrink = 0
       } else {
         style.flexShrink = 0
-      }
-    }
-
-    switch (hAlign) {
-      case 'left': {
-        style.justifyContent = 'flex-start'
-        break
-      }
-      case 'center': {
-        style.justifyContent = 'center'
-        break
-      }
-      case 'right': {
-        style.justifyContent = 'flex-end'
-        break
-      }
-    }
-
-    switch (vAlign) {
-      case 'top': {
-        style.alignItems = 'flex-start'
-        break
-      }
-      case 'center': {
-        style.alignItems = 'center'
-        break
-      }
-      case 'bottom': {
-        style.alignItems = 'flex-end'
-        break
       }
     }
 

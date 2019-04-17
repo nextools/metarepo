@@ -25,8 +25,6 @@ export type TLayoutProps = {
 export type TLayoutItemProps = {
   width?: number | 'stretch',
   height?: number | 'stretch',
-  vAlign?: TVAlign,
-  hAlign?: THAlign,
   children?: ReactNode,
   shouldScroll?: boolean,
 }

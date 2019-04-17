@@ -17,9 +17,12 @@ export const Layout = component(
   mapProps(({ direction, width, height, minWidth, maxWidth, minHeight, maxHeight, hAlign, vAlign, children }) => {
     const style: TStyle = {
       display: 'flex',
+      flexDirection: 'row',
       flexGrow: 1,
+      flexShrink: 1,
       flexBasis: 0,
       alignSelf: 'stretch',
+      minWidth: 0,
       position: 'relative',
     }
 
