@@ -19,7 +19,9 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.4.0",
+    "@bubble-dev/eslint-config": "*",
     "@bubble-dev/start-preset": "*",
+    "@bubble-dev/typescript-config": "*",
     "@types/blue-tape": "^0.1.32",
     "@types/node": "^11.13.4",
     "@types/react": "^16.8.12",
