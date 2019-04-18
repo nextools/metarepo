@@ -2,7 +2,7 @@ import React from 'react'
 import { component, startWithType, mapProps, mapContext } from 'refun'
 import { prefixStyle, TStyle } from '@lada/prefix'
 import { View } from '@primitives/view'
-import { isUndefined } from 'tsfn'
+import { isNumber } from 'tsfn'
 import { Context } from './context'
 import { TLayoutItemProps } from './types'
 
@@ -16,7 +16,7 @@ export const LayoutItem = component(
       position: 'relative',
       flexGrow: 0,
       flexShrink: 0,
-      flexBasis: 'auto',
+      alignSelf: 'auto',
       minWidth: 0,
     }
 
@@ -24,37 +24,27 @@ export const LayoutItem = component(
       if (width === 'stretch') {
         style.flexGrow = 1
         style.flexShrink = 1
-        style.flexBasis = 0
-      } else if (!isUndefined(width)) {
+      } else if (isNumber(width)) {
         style.width = width
-        style.flexGrow = 0
-        style.flexShrink = 0
-      } else {
-        style.flexShrink = 0
       }
 
       if (height === 'stretch') {
         style.alignSelf = 'stretch'
-      } else if (!isUndefined(height)) {
+      } else if (isNumber(height)) {
         style.height = height
       }
     } else if (direction === 'vertical') {
       if (width === 'stretch') {
         style.alignSelf = 'stretch'
-      } else if (!isUndefined(width)) {
+      } else if (isNumber(width)) {
         style.width = width
       }
 
       if (height === 'stretch') {
         style.flexGrow = 1
         style.flexShrink = 1
-        style.flexBasis = 0
-      } else if (!isUndefined(height)) {
+      } else if (isNumber(height)) {
         style.height = height
-        style.flexGrow = 0
-        style.flexShrink = 0
-      } else {
-        style.flexShrink = 0
       }
     }
 

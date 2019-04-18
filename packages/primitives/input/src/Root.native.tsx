@@ -42,9 +42,8 @@ export const Input = component(
         paddingTop,
         flexGrow: 1,
         flexShrink: 1,
-        flexBasis: 0,
         alignSelf: 'stretch',
-        minWidth: 0,
+        minWidth: 150,
       }
 
       return {

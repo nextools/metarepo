@@ -18,7 +18,6 @@ export const Button = component(
       alignSelf: 'stretch',
       flexGrow: 1,
       flexShrink: 1,
-      flexBasis: 0,
       minWidth: 0,
       margin: 0,
       outline: 0,

@@ -1,81 +1,63 @@
 import React from 'react'
-import { prefixStyle } from '@lada/prefix'
+import { prefixStyle, TStyle } from '@lada/prefix'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
+import { isNumber } from 'tsfn'
+import { TSelect } from './types'
 
-export type TSelect = {
-  id?: string,
-  isDisabled?: boolean,
-  isHidden?: boolean,
-  color?: string,
-  family?: string,
-  weight?: number,
-  size?: number,
-  lineHeight?: number,
-  letterSpacing?: number,
-  paddingBottom?: number,
-  paddingLeft?: number,
-  paddingRight?: number,
-  paddingTop?: number,
-  value: string,
-  onChange: (newValue: string) => void,
-  onFocus?: () => void,
-  onBlur?: () => void,
-  onPressIn?: () => void,
-  onPressOut?: () => void,
-}
 
 export const Select = component(
   startWithType<TSelect>(),
   mapHandlers({
     onChange: ({ onChange }) => (event: any) => onChange(event.target.value),
   }),
-  mapWithProps(
-    ({
+  mapWithProps(({
+    color,
+    letterSpacing,
+    lineHeight,
+    size,
+    family,
+    paddingBottom,
+    paddingLeft,
+    paddingRight,
+    paddingTop,
+    weight,
+  }) => {
+    const style: TStyle = {
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      border: 0,
       color,
-      isDisabled,
-      isHidden,
-      letterSpacing,
-      lineHeight,
-      size,
-      family,
+      boxSizing: 'border-box',
+      fontWeight: weight,
+      fontSize: size,
+      fontFamily: family,
+      fontSmoothing: 'antialiased',
+      flexGrow: 1,
+      flexShrink: 1,
+      alignSelf: 'stretch',
+      textRendering: 'geometricPrecision',
+      textSizeAdjust: 'none',
       paddingBottom,
       paddingLeft,
       paddingRight,
       paddingTop,
-      weight,
-    }) => ({
-      style: prefixStyle({
-        // TODO: move to lada
-        ...(letterSpacing && {
-          letterSpacing: `${letterSpacing}px`,
-        }),
-        ...(lineHeight && {
-          lineHeight: `${lineHeight}px`,
-        }),
-        backgroundColor: 'rgba(0, 0, 0, 0)',
-        border: 0,
-        color,
-        fontWeight: weight,
-        fontSize: size,
-        fontFamily: family,
-        fontSmoothing: 'antialiased',
-        flexGrow: 1,
-        flexShrink: 1,
-        flexBasis: 0,
-        alignSelf: 'stretch',
-        textRendering: 'geometricPrecision',
-        textSizeAdjust: 'none',
-        paddingBottom,
-        paddingLeft,
-        paddingRight,
-        paddingTop,
-        minWidth: 0,
-        cursor: isDisabled ? 'auto' : 'pointer',
-        opacity: isHidden ? 0 : 1,
-        appearance: 'none',
-      }),
+      minWidth: 0,
+      maxWidth: '100%',
+      opacity: 0,
+      appearance: 'none',
+    }
+
+    if (isNumber(letterSpacing)) {
+      style.letterSpacing = `${letterSpacing}px`
+    }
+
+    if (isNumber(lineHeight)) {
+      style.lineHeight = `${lineHeight}px`
+    }
+
+    return ({
+      style: prefixStyle(style),
     })
-  )
+  })
 )(
   'Select',
   ({

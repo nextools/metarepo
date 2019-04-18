@@ -17,10 +17,12 @@
   "sideEffects": false,
   "dependencies": {
     "@lada/prefix": "^0.4.0",
-    "refun": "^0.1.0"
+    "refun": "^0.1.0",
+    "tsfn": "^0.1.1"
   },
   "devDependencies": {
     "@types/react": "^16.8.12",
-    "react": "^16.8.6"
+    "react": "^16.8.6",
+    "react-native": "^0.59.3"
   }
 }

@@ -47,7 +47,6 @@ export const Block = component(
         flexDirection: 'row',
         flexGrow: 0,
         flexShrink: 0,
-        flexBasis: 'auto',
         alignSelf: 'flex-start',
         minWidth: 0,
         ...style,
@@ -57,7 +56,6 @@ export const Block = component(
         styles.width = width
         styles.flexGrow = 0
         styles.flexShrink = 0
-        styles.flexBasis = 'auto'
       }
 
       if (typeof height !== 'undefined') {
@@ -92,7 +90,6 @@ export const Block = component(
       if (shouldStretch) {
         styles.flexGrow = 1
         styles.flexShrink = 1
-        styles.flexBasis = 0
         styles.alignSelf = 'stretch'
       }
 

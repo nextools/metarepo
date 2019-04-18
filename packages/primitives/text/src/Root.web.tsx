@@ -49,7 +49,7 @@ export const Text = component(
       true,
       'span'
     )
-    const style: TStyle = {
+    const styles: TStyle = {
       color,
       fontWeight: weight,
       fontSize: size,
@@ -57,33 +57,32 @@ export const Text = component(
       fontSmoothing: 'antialiased',
       textRendering: 'geometricPrecision',
       textSizeAdjust: 'none',
-      // IE 11 + flexbox fix
       minWidth: 0,
       maxWidth: '100%',
     }
 
     if (shouldPreserveWhitespace) {
-      style.whiteSpace = 'pre'
+      styles.whiteSpace = 'pre'
     }
 
     if (shouldPreventWrap) {
-      style.whiteSpace = 'nowrap'
+      styles.whiteSpace = 'nowrap'
     }
 
     if (shouldPreventSelection) {
-      style.userSelect = 'none'
+      styles.userSelect = 'none'
     }
 
     if (isNumber(letterSpacing)) {
-      style.letterSpacing = `${letterSpacing}px`
+      styles.letterSpacing = `${letterSpacing}px`
     }
 
     if (isNumber(lineHeight)) {
-      style.lineHeight = `${lineHeight}px`
+      styles.lineHeight = `${lineHeight}px`
     }
 
     return {
-      style: prefixStyle(style),
+      style: prefixStyle(styles),
       tag,
     }
   })

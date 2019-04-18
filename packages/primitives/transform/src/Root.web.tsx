@@ -16,7 +16,6 @@ export const Transform = component(
       position: 'relative',
       flexGrow: 0,
       flexShrink: 0,
-      flexBasis: 'auto',
       alignSelf: 'flex-start',
       minWidth: 0,
     }

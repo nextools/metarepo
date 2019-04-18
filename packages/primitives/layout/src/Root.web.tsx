@@ -20,7 +20,6 @@ export const Layout = component(
       flexDirection: 'row',
       flexGrow: 1,
       flexShrink: 1,
-      flexBasis: 0,
       alignSelf: 'stretch',
       minWidth: 0,
       position: 'relative',
@@ -110,10 +109,13 @@ export const Layout = component(
 
     if (isNumber(width)) {
       style.width = width
+      style.flexGrow = 0
+      style.flexShrink = 0
     }
 
     if (isNumber(height)) {
       style.height = height
+      style.alignSelf = 'auto'
     }
 
     return {

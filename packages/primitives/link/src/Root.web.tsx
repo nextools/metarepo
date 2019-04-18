@@ -1,7 +1,11 @@
 import React, { FC } from 'react'
-import { TLinkProps } from './types'
+import { TLink } from './types'
 
-const Link: FC<TLinkProps> = ({
+const defaultStyles = {
+  textDecoration: 'none',
+}
+
+export const Link: FC<TLink> = ({
   children,
   href,
   id,
@@ -25,14 +29,10 @@ const Link: FC<TLinkProps> = ({
     onMouseEnter={onPointerEnter}
     onMouseLeave={onPointerLeave}
     onMouseUp={onPressOut}
-    style={{ textDecoration: 'none' }} // TODO 👀
+    style={defaultStyles}
     tabIndex={tabIndex}
     target={target}
   >
     {children}
   </a>
 )
-
-Link.displayName = 'Link'
-
-export { Link }

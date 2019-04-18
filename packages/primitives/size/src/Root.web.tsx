@@ -13,7 +13,6 @@ const defaultStyles: TStyle = {
   flexDirection: 'row',
   flexGrow: 0,
   flexShrink: 0,
-  flexBasis: 'auto',
   alignSelf: 'flex-start',
 }
 

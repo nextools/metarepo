@@ -37,7 +37,6 @@ export const Input = component(
         fontSmoothing: 'antialiased',
         flexGrow: 1,
         flexShrink: 1,
-        flexBasis: 0,
         alignSelf: 'stretch',
         textRendering: 'geometricPrecision',
         textSizeAdjust: 'none',
@@ -48,7 +47,7 @@ export const Input = component(
         paddingRight,
         paddingTop,
         maxWidth: '100%',
-        minWidth: 0,
+        minWidth: 150,
       }
 
       if (isNumber(letterSpacing)) {

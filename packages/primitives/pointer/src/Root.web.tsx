@@ -13,7 +13,6 @@ const defaultStyles = prefixStyle({
   position: 'relative',
   flexGrow: 1,
   flexShrink: 1,
-  flexBasis: 0,
   alignSelf: 'stretch',
   minWidth: 0,
 })
