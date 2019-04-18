@@ -29,4 +29,4 @@ require('@babel/register')({
   ],
 })
 
-require('.')
+require('./cli')

@@ -1,4 +1,5 @@
 import plugin from '@start/plugin'
+import { TJsonMap } from 'typeon'
 
 export default (dir: string) =>
   plugin('buildPackageJson', ({ logPath }) => async () => {
@@ -10,7 +11,7 @@ export default (dir: string) =>
     const pWriteFile = promisify(writeFile)
     const packageJsonPath = resolve(dir, 'package.json')
 
-    const packageJson = JSON.parse(await pReadFile(packageJsonPath, 'utf8'))
+    const packageJson = JSON.parse(await pReadFile(packageJsonPath, 'utf8')) as TJsonMap
     const newPackageJsonPath = resolve(dir, 'build/package.json')
     const newPackageJson = Object.entries(packageJson).reduce((result, [key, value]) => {
       if (key === 'devDependencies' || key === 'files') {
@@ -27,8 +28,18 @@ export default (dir: string) =>
         result[key] = value
       }
 
+      if (key === 'bin') {
+        result[key] = Object.entries(value as TJsonMap).reduce((bins, [binKey, binValue]) => {
+          if (typeof binValue === 'string') {
+            bins[binKey] = binValue.replace('src/', 'node/').replace('.ts', '.js')
+          }
+
+          return bins
+        }, {} as TJsonMap)
+      }
+
       return result
-    }, {} as { [key: string]: any })
+    }, {} as TJsonMap)
 
     await pWriteFile(newPackageJsonPath, JSON.stringify(newPackageJson, null, 2))
 
