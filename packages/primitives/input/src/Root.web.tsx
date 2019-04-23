@@ -2,10 +2,10 @@ import React, { KeyboardEvent } from 'react'
 import { prefixStyle, TStyle } from '@lada/prefix'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { isNumber } from 'tsfn'
-import { TInputProps } from './types'
+import { TInput } from './types'
 
 export const Input = component(
-  startWithType<TInputProps>(),
+  startWithType<TInput>(),
   mapHandlers({
     onChange: ({ onChange }) => (event: any) => onChange(event.target.value),
     onKeyPress: ({ onSubmit }) => (e: KeyboardEvent<HTMLInputElement>) => {

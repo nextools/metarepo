@@ -2,12 +2,12 @@ import React from 'react'
 import { TextInput } from 'react-native'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { TStyle } from '@lada/prefix'
-import { TInputProps } from './types'
+import { TInput } from './types'
 
 export type TFontWeight = '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
 
 export const Input = component(
-  startWithType<TInputProps>(),
+  startWithType<TInput>(),
   mapHandlers({
     onChangeText: ({ onChange }) => (newValue: string) => onChange(newValue),
     onSubmitEditing: ({ onSubmit }) => () => {
@@ -51,7 +51,7 @@ export const Input = component(
       }
     }
   )
-)('Input', ({ id, isDisabled, style, value, onChangeText, onSubmitEditing }) => (
+)('Input', ({ id, isDisabled, style, value, onChangeText, onSubmitEditing, onFocus, onBlur }) => (
   <TextInput
     testID={id}
     underlineColorAndroid="rgba(0,0,0,0)"
@@ -59,6 +59,8 @@ export const Input = component(
     editable={!isDisabled}
     style={style}
     value={value}
+    onFocus={onFocus}
+    onBlur={onBlur}
     onChangeText={onChangeText}
     onSubmitEditing={onSubmitEditing}
   />

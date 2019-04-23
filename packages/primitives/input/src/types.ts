@@ -1,4 +1,4 @@
-export type TInputProps = {
+export type TInput = {
   id?: string,
   isDisabled?: boolean,
   color?: string,
