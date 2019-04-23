@@ -2,6 +2,7 @@ import React, { Ref } from 'react'
 import { View, ViewProps } from 'react-native'
 import { TStyle } from '@lada/prefix'
 import { startWithType, component, mapDefaultProps, mapProps } from 'refun'
+import { isNumber } from 'tsfn'
 import { TBlockCommon } from './types'
 
 export type TBlock = TBlockCommon & {
@@ -13,7 +14,7 @@ export const Block = component(
   startWithType<TBlock>(),
   mapDefaultProps({
     shouldStretch: false,
-    shouldIgnorePointerEvents: true,
+    shouldIgnorePointerEvents: false,
     shouldScroll: false,
     shouldHideOverflow: false,
     style: {} as TStyle,
@@ -52,38 +53,38 @@ export const Block = component(
         ...style,
       }
 
-      if (typeof width !== 'undefined') {
+      if (isNumber(width)) {
         styles.width = width
         styles.flexGrow = 0
         styles.flexShrink = 0
       }
 
-      if (typeof height !== 'undefined') {
+      if (isNumber(height)) {
         styles.height = height
         styles.alignSelf = 'flex-start'
       }
 
-      if (typeof minWidth !== 'undefined') {
+      if (isNumber(minWidth)) {
         styles.minWidth = minWidth
       }
 
-      if (typeof minHeight !== 'undefined') {
+      if (isNumber(minHeight)) {
         styles.minHeight = minHeight
       }
 
-      if (typeof top !== 'undefined') {
+      if (isNumber(top)) {
         styles.top = top
       }
 
-      if (typeof right !== 'undefined') {
+      if (isNumber(right)) {
         styles.right = right
       }
 
-      if (typeof bottom !== 'undefined') {
+      if (isNumber(bottom)) {
         styles.bottom = bottom
       }
 
-      if (typeof left !== 'undefined') {
+      if (isNumber(left)) {
         styles.left = left
       }
 
@@ -97,11 +98,11 @@ export const Block = component(
         styles.position = 'absolute'
       }
 
-      if (isFloating && typeof floatingIndex !== 'undefined') {
+      if (isFloating && isNumber(floatingIndex)) {
         styles.zIndex = floatingIndex
       }
 
-      if (typeof opacity !== 'undefined') {
+      if (isNumber(opacity)) {
         styles.opacity = opacity
       }
 

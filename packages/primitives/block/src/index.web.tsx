@@ -1,7 +1,7 @@
 import React, { Ref, HTMLProps } from 'react'
 import { prefixStyle, TStyle } from '@lada/prefix'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
-import { isUndefined } from 'tsfn'
+import { isUndefined, isNumber } from 'tsfn'
 import { styleTransformArrayToText } from './styleTransformArrayToText'
 import { TBlockCommon } from './types'
 
@@ -60,7 +60,7 @@ export const Block = component(
         ...style,
       }
 
-      if (!isUndefined(style.lineHeight)) {
+      if (isNumber(style.lineHeight)) {
         styles.lineHeight = `${style.lineHeight}px`
       }
 
@@ -69,38 +69,38 @@ export const Block = component(
         styles.transform = styleTransformArrayToText(style.transform)
       }
 
-      if (!isUndefined(width)) {
+      if (isNumber(width)) {
         styles.width = width
         styles.flexGrow = 0
         styles.flexShrink = 0
       }
 
-      if (!isUndefined(height)) {
+      if (isNumber(height)) {
         styles.height = height
         styles.alignSelf = 'flex-start'
       }
 
-      if (!isUndefined(minWidth)) {
+      if (isNumber(minWidth)) {
         styles.minWidth = minWidth
       }
 
-      if (!isUndefined(minHeight)) {
+      if (isNumber(minHeight)) {
         styles.minHeight = minHeight
       }
 
-      if (!isUndefined(top)) {
+      if (isNumber(top)) {
         styles.top = top
       }
 
-      if (!isUndefined(right)) {
+      if (isNumber(right)) {
         styles.right = right
       }
 
-      if (!isUndefined(bottom)) {
+      if (isNumber(bottom)) {
         styles.bottom = bottom
       }
 
-      if (!isUndefined(left)) {
+      if (isNumber(left)) {
         styles.left = left
       }
 
@@ -114,7 +114,7 @@ export const Block = component(
         styles.position = 'absolute'
       }
 
-      if (isFloating && typeof floatingIndex !== 'undefined') {
+      if (isFloating && isNumber(floatingIndex)) {
         styles.zIndex = floatingIndex
       }
 
@@ -130,7 +130,7 @@ export const Block = component(
         styles.overflow = 'hidden'
       }
 
-      if (!isUndefined(opacity)) {
+      if (isNumber(opacity)) {
         styles.opacity = opacity
       }
 
