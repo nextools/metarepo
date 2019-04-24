@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import { TouchableWithoutFeedback } from 'react-native'
-import { Block } from '@primitives/block'
+import { TouchableWithoutFeedback, View } from 'react-native'
+import { TStyle } from '@lada/prefix'
 import { TButtonProps } from './types'
 
 const hitSlop = {
@@ -8,6 +8,13 @@ const hitSlop = {
   left: 5,
   right: 5,
   top: 5,
+}
+
+const defaultStyle: TStyle = {
+  flexDirection: 'row',
+  flexGrow: 1,
+  flexShrink: 1,
+  alignSelf: 'stretch',
 }
 
 export const Button: FC<TButtonProps> = ({
@@ -28,8 +35,8 @@ export const Button: FC<TButtonProps> = ({
     onPressIn={onPressIn}
     onPressOut={onPressOut}
   >
-    <Block shouldStretch>
+    <View style={defaultStyle}>
       {children}
-    </Block>
+    </View>
   </TouchableWithoutFeedback>
 )
