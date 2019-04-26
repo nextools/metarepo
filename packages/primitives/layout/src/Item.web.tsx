@@ -1,15 +1,19 @@
 import React from 'react'
-import { component, startWithType, mapProps, mapContext } from 'refun'
+import { component, startWithType, mapProps, mapContext, mapDefaultProps } from 'refun'
 import { prefixStyle, TStyle } from '@lada/prefix'
 import { View } from '@primitives/view'
 import { isNumber } from 'tsfn'
 import { Context } from './context'
-import { TLayoutItemProps } from './types'
+import { TLayoutItem } from './types'
 
 export const LayoutItem = component(
-  startWithType<TLayoutItemProps>(),
+  startWithType<TLayoutItem>(),
+  mapDefaultProps({
+    shouldIgnorePointerEvents: false,
+    shouldScroll: false,
+  }),
   mapContext(Context),
-  mapProps(({ direction, width, height, shouldScroll, children }) => {
+  mapProps(({ direction, width, height, shouldScroll, shouldIgnorePointerEvents, children }) => {
     const style: TStyle = {
       display: 'flex',
       flexDirection: 'row',
@@ -50,6 +54,10 @@ export const LayoutItem = component(
 
     if (shouldScroll) {
       style.overflow = 'scroll'
+    }
+
+    if (shouldIgnorePointerEvents) {
+      style.pointerEvents = 'none'
     }
 
     return {

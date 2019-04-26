@@ -3,26 +3,36 @@ import { component, startWithType, mapDefaultProps, mapChildren, mapProps } from
 import { prefixStyle, TStyle } from '@lada/prefix'
 import { View } from '@primitives/view'
 import { isNumber } from 'tsfn'
-import { TLayoutProps } from './types'
+import { TLayout } from './types'
 import { Context } from './context'
 
 export const Layout = component(
-  startWithType<TLayoutProps>(),
+  startWithType<TLayout>(),
   mapDefaultProps({
     minWidth: 0,
     minHeight: 0,
     hAlign: 'left',
     vAlign: 'top',
   }),
-  mapProps(({ direction, width, height, minWidth, maxWidth, minHeight, maxHeight, hAlign, vAlign, children }) => {
+  mapProps(({
+    direction,
+    width,
+    height,
+    minWidth,
+    maxWidth,
+    minHeight,
+    maxHeight,
+    hAlign,
+    vAlign,
+    children,
+  }) => {
     const style: TStyle = {
+      position: 'relative',
       display: 'flex',
       flexDirection: 'row',
       flexGrow: 1,
       flexShrink: 1,
       alignSelf: 'stretch',
-      minWidth: 0,
-      position: 'relative',
     }
 
     if (direction === 'horizontal') {

@@ -9,7 +9,7 @@ export type TContextData = {
 export type TVAlign = 'top' | 'center' | 'bottom'
 export type THAlign = 'left' | 'center' | 'right'
 
-export type TLayoutProps = {
+export type TLayout = {
   width?: number,
   height?: number,
   minWidth?: number,
@@ -22,13 +22,10 @@ export type TLayoutProps = {
   children: ReactNode,
 }
 
-export type TLayoutItemProps = {
+export type TLayoutItem = {
   width?: number | 'stretch',
   height?: number | 'stretch',
   children?: ReactNode,
   shouldScroll?: boolean,
-}
-
-export type TLayoutSpacerProps = {
-  size?: number,
+  shouldIgnorePointerEvents?: boolean,
 }
