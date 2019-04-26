@@ -140,7 +140,7 @@ export const Layout = component(
       multiple: true,
     },
     children: {
-      names: ['LayoutItem', 'LayoutSpacer'],
+      names: ['LayoutItem'],
       multiple: true,
     },
   })
