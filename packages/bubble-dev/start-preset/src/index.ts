@@ -213,8 +213,7 @@ export const build = async (packageDir: string) => {
 export const lint = () =>
   sequence(
     find([
-      'packages/*/{src,test}/**/*.{ts,tsx}',
-      'packages/*/*/{src,test}/**/*.{ts,tsx}',
+      'packages/**/{src,test}/**/*.{ts,tsx}',
       'tasks/**/*.ts',
     ]),
     read,
@@ -231,8 +230,7 @@ export const lint = () =>
 export const fix = () =>
   sequence(
     find([
-      'packages/*/{src,test}/**/*.{ts,tsx}',
-      'packages/*/*/{src,test}/**/*.{ts,tsx}',
+      'packages/**/{src,test}/**/*.{ts,tsx}',
       'tasks/**/*.ts',
     ]),
     read,
@@ -249,15 +247,9 @@ export const test = (packageDir: string = '**') =>
     env({ NODE_ENV: 'test' }),
     find(`coverage/`),
     remove,
-    find([
-      `packages/${packageDir}/src/**/*.{ts,tsx}`,
-      `packages/${packageDir}/*/src/**/*.{ts,tsx}`,
-    ]),
+    find(`packages/${packageDir}/src/**/*.{ts,tsx}`),
     istanbulInstrument({ esModules: true }, ['.ts', '.tsx']),
-    find([
-      `packages/${packageDir}/test/**/*.{ts,tsx}`,
-      `packages/${packageDir}/*/test/**/*.{ts,tsx}`,
-    ]),
+    find(`packages/${packageDir}/test/**/*.{ts,tsx}`),
     tape(tapDiff),
     istanbulReport(['lcovonly', 'html', 'text-summary'])
   )
