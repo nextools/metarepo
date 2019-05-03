@@ -27,3 +27,5 @@ export const Background: FC<TBackground> = ({ topLeftRadius, topRightRadius, bot
     }}
   />
 )
+
+Background.displayName = 'Background'

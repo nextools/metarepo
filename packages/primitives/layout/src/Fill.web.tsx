@@ -21,3 +21,5 @@ export const LayoutFill: FC<TLayoutFill> = ({ children, floatinIndex, shouldScro
     {children}
   </Block>
 )
+
+LayoutFill.displayName = 'LayoutFill'

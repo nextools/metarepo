@@ -40,3 +40,5 @@ export const Button: FC<TButtonProps> = ({
     </View>
   </TouchableWithoutFeedback>
 )
+
+Button.displayName = 'Button'
