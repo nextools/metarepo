@@ -16,7 +16,7 @@
   },
   "sideEffects": false,
   "devDependencies": {
-    "@types/react": "^16.8.12",
+    "@types/react": "^16.8.6",
     "react": "^16.8.6"
   }
 }

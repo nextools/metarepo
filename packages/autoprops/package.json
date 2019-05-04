@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
-    "@types/react": "^16.8.4",
+    "@types/react": "^16.8.6",
     "@types/sanitize-filename": "^1.1.28",
     "blue-tape": "^1.0.0",
     "react": "^16.8.6"

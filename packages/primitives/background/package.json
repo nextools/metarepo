@@ -22,7 +22,7 @@
     "colorido": "^0.1.0"
   },
   "devDependencies": {
-    "@types/react": "^16.8.4",
+    "@types/react": "^16.8.6",
     "react": "^16.8.6"
   }
 }

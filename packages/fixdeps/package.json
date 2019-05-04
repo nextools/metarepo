@@ -24,7 +24,6 @@
   },
   "devDependencies": {
     "@types/execa": "^0.9.0",
-    "@types/globby": "^9.1.0",
     "@types/graceful-fs": "^4.1.2",
     "blue-tape": "^1.0.0"
   }
