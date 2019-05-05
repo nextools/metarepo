@@ -13,7 +13,7 @@
     "access": "public"
   },
   "dependencies": {
-    "escape-string-regexp": "^1.0.5"
+    "escape-string-regexp": "^2.0.0"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",

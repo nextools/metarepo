@@ -18,7 +18,6 @@
     "prompts": "^1.1.0"
   },
   "devDependencies": {
-    "@types/escape-string-regexp": "^1.0.0",
     "@types/execa": "^0.9.0",
     "@types/blue-tape": "^0.1.32",
     "@types/prompts": "^1.2.0",
