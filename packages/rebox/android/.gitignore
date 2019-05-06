@@ -1,0 +1,12 @@
+*.log
+build/
+.idea
+.gradle
+local.properties
+*.iml
+buck-out/
+\.buckd/
+*.keystore
+*/fastlane/report.xml
+*/fastlane/Preview.html
+*/fastlane/screenshots
