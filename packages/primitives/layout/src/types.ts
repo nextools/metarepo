@@ -22,7 +22,7 @@ export type TLayout = {
   children: ReactNode,
 }
 
-export type TLayoutItem = {
+export type TLayoutInFlow = {
   width?: number | 'stretch',
   height?: number | 'stretch',
   children?: ReactNode,

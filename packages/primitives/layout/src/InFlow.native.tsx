@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { component, startWithType, mapProps, mapContext, mapDefaultProps } from 'refun'
-import { prefixStyle, TStyle } from '@lada/prefix'
+import { TStyle } from '@lada/prefix'
 import { View } from '@primitives/view'
 import { isNumber } from 'tsfn'
+import { ViewProps } from 'react-native'
 import { Context } from './context'
-import { TLayoutItem } from './types'
+import { TLayoutInFlow } from './types'
 
-export const LayoutItem = component(
-  startWithType<TLayoutItem>(),
+export const LayoutInFlow = component(
+  startWithType<TLayoutInFlow>(),
   mapDefaultProps({
     shouldIgnorePointerEvents: false,
     shouldScroll: false,
@@ -56,15 +57,17 @@ export const LayoutItem = component(
       style.overflow = 'scroll'
     }
 
-    if (shouldIgnorePointerEvents) {
-      style.pointerEvents = 'none'
-    }
-
-    return {
-      style: prefixStyle(style),
+    const props: ViewProps & {children: ReactNode} = {
+      style,
       children,
     }
+
+    if (shouldIgnorePointerEvents) {
+      props.pointerEvents = 'none'
+    }
+
+    return props
   })
-)('LayoutItem', ({ style, children }) => (
-  <View style={style}>{children}</View>
+)('LayoutInFlow', ({ children, pointerEvents, style }) => (
+  <View style={style} pointerEvents={pointerEvents}>{children}</View>
 ))

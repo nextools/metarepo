@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
 import { Block } from '@primitives/block'
 
-export type TLayoutFill = {
+export type TLayoutOutOfFlow = {
   floatinIndex?: number,
   shouldScroll?: boolean,
   shouldIgnorePointerEvents?: boolean,
 }
 
-export const LayoutFill: FC<TLayoutFill> = ({ children, floatinIndex, shouldScroll, shouldIgnorePointerEvents }) => (
+export const LayoutOutOfFlow: FC<TLayoutOutOfFlow> = ({ children, floatinIndex, shouldScroll, shouldIgnorePointerEvents }) => (
   <Block
     isFloating
     floatingIndex={floatinIndex}
@@ -22,4 +22,4 @@ export const LayoutFill: FC<TLayoutFill> = ({ children, floatinIndex, shouldScro
   </Block>
 )
 
-LayoutFill.displayName = 'LayoutFill'
+LayoutOutOfFlow.displayName = 'LayoutOutOfFlow'
