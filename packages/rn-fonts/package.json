@@ -12,5 +12,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "dependencies": {
+    "@types/graceful-fs": "^4.1.3",
+    "@types/plist": "^3.0.2",
+    "copie": "^0.3.0",
+    "graceful-fs": "^4.1.15",
+    "make-dir": "^3.0.0",
+    "plist": "^3.0.1",
+    "xcode": "^2.0.0"
+  }
 }
