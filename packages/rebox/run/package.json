@@ -15,9 +15,14 @@
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.0"
   },
+  "devDependencies": {
+    "react": "^16.8.0",
+    "react-native": "0.59.4",
+    "react-native-svg": "9.3.6"
+  },
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-native": "0.59.2",
+    "react-native": "0.59.4",
     "react-native-svg": "9.3.6"
   }
 }
