@@ -4,7 +4,7 @@ import { createWebpackConfig } from 'haul'
 export default {
   webpack: (env) => {
     const config = createWebpackConfig({
-      entry: require.resolve('./App.jsx'),
+      entry: require.resolve('./App.js'),
     })(env)
 
     config.resolve.alias = {
