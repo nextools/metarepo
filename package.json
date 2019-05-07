@@ -12,6 +12,7 @@
     "packages/primitives/*",
     "packages/react-autoprops",
     "packages/refun",
+    "packages/rn-fonts",
     "packages/spyt",
     "packages/syntx",
     "packages/tsfn",
