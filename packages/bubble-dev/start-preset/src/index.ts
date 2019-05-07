@@ -175,11 +175,12 @@ export const buildCopy = (dir: string) =>
 export const build = async (packageDir: string) => {
   const dir = path.join('packages', packageDir)
   const packageJsonPath = path.resolve(dir, 'package.json')
-  const { default: globby } = await import('globby')
   const { default: packageJson } = await import(packageJsonPath)
+
   const tasks = []
 
   if (Reflect.has(packageJson, 'main')) {
+    const { default: globby } = await import('globby')
     const nodeFiles = await globby(`${dir}/src/**/*.node.{ts,tsx}`, {
       ignore: ['node_modules/**'],
       deep: true,
