@@ -168,7 +168,7 @@ export const buildWebNode = async (dir: string) => {
 
 export const buildCopy = (dir: string) =>
   sequence(
-    find(`${dir}/src/**/*`),
+    find(`${dir}/src/**/*`, { onlyFiles: true }),
     copy(`${dir}/build/`)
   )
 
