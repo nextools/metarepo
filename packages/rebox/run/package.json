@@ -1,15 +1,24 @@
 {
   "name": "@rebox/run",
   "version": "0.0.0",
-  "files": [
-    "index.jsx",
-    "haul.config.js"
-  ],
+  "description": "",
+  "keywords": [],
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "main": "src/index.ts",
   "dependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-typescript": "^7.3.3",
     "@babel/runtime": "^7.4.3",
+    "@types/execa": "^0.9.0",
     "babel-loader": "^8.0.5",
+    "execa": "^1.0.0",
     "haul": "^1.0.0-rc.15",
     "metro-react-native-babel-preset": "^0.51.0",
     "react-dom": "^16.8.6",

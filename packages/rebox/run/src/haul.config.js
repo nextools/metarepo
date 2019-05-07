@@ -1,18 +1,15 @@
 import path from 'path'
 import { createWebpackConfig } from 'haul'
 
-const rootPkg = require(path.resolve('package.json'))
-const entryPoint = path.resolve(rootPkg.rebox.entryPoint)
-
 export default {
   webpack: (env) => {
     const config = createWebpackConfig({
-      entry: require.resolve('./index.jsx'),
+      entry: require.resolve('./App.jsx'),
     })(env)
 
     config.resolve.alias = {
       ...config.resolve.alias,
-      __REBOX_ENTRY_POINT__: entryPoint,
+      __REBOX_ENTRY_POINT__: path.resolve(process.env.REBOX_ENTRY_POINT),
     }
 
     config.module.rules = [

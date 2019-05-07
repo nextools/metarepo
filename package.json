@@ -11,6 +11,7 @@
     "packages/lada/*",
     "packages/primitives/*",
     "packages/react-autoprops",
+    "packages/rebox/*",
     "packages/refun",
     "packages/rn-fonts",
     "packages/spyt",

@@ -1,9 +1,16 @@
 {
   "name": "@rebox/android",
   "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-native": "0.59.2",
+    "react-native": "0.59.4",
     "react-native-svg": "9.3.6"
   }
 }
