@@ -6284,7 +6284,7 @@ move-concurrently@^1.0.1:
     rimraf "^2.5.4"
     run-queue "^1.0.3"
 
-move-path@^0.2.0:
+move-path@^0.2.0, move-path@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/move-path/-/move-path-0.2.1.tgz#2a7dbc5c1fe9b13267144838bd012fdbb011fcf9"
   integrity sha512-c+Dy3neZMh7xhZI+1qzgO8IAkBhf57FxZJEnzxuyLWZBcilVSM2bZ++w9NYEPC8rvVPuFw3zZfl/Ry5LnIWEcg==

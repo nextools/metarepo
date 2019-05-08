@@ -50,11 +50,13 @@
     "@start/plugin-write": "^0.3.2",
     "@start/reporter-verbose": "^0.2.1",
     "babel-plugin-dynamic-import-node": "^2.2.0",
+    "copie": "^0.3.0",
     "dotenv": "^8.0.0",
     "globby": "^9.2.0",
     "graceful-fs": "^4.1.15",
     "make-dir": "^3.0.0",
     "metro-react-native-babel-preset": "^0.53.1",
+    "move-path": "^0.2.1",
     "tap-diff": "^0.1.1",
     "typeon": "^0.3.0"
   },

@@ -14,7 +14,7 @@ export default (dir: string) =>
     const packageJson = JSON.parse(await pReadFile(packageJsonPath, 'utf8')) as TJsonMap
     const newPackageJsonPath = resolve(dir, 'build/package.json')
     const newPackageJson = Object.entries(packageJson).reduce((result, [key, value]) => {
-      if (key === 'devDependencies' || key === 'files') {
+      if (key === 'devDependencies' || key === 'files' || key === 'buildAssets') {
         return result
       }
 

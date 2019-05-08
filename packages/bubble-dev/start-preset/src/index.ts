@@ -42,6 +42,7 @@ import { TNpmOptions } from '@auto/npm'
 import move from './plugins/move'
 import transformDts from './plugins/transform-dts'
 import buildPackageJson from './plugins/build-package-json'
+import buildAssets from './plugins/build-assets'
 import { getStartOptions } from './get-options'
 
 export const preparePackage = (packageDir: string) => {
@@ -207,7 +208,8 @@ export const build = async (packageDir: string) => {
     env({ NODE_ENV: 'production' }),
     find(`${dir}/build/`),
     remove,
-    parallel(tasks)(dir)
+    parallel(tasks)(dir),
+    Reflect.has(packageJson, 'buildAssets') && buildAssets(dir, packageJson.buildAssets)
   )
 }
 
