@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "react": "^16.8.0",
-    "react-native": "0.59.5",
+    "react-native": "0.59.8",
     "react-native-svg": "^9.3.6"
   },
   "peerDependencies": {
