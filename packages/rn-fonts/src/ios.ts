@@ -20,7 +20,7 @@ export const addFontsIos = async (projectPath: string, fontsPath: string) => {
   }
 
   const projectName = path.basename(xcodeProjectPath, '.xcodeproj')
-  const plistPath = path.join(projectPath, projectName, 'info.plist')
+  const plistPath = path.join(projectPath, projectName, 'Info.plist')
   const pbxprojPath = path.join(projectPath, xcodeProjectPath, 'project.pbxproj')
   const project = xcode.project(pbxprojPath).parseSync()
   const projectTargetUuid = project.getFirstTarget().uuid
