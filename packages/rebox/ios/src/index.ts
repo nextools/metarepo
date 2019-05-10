@@ -4,7 +4,11 @@ import execa from 'execa'
 // https://github.com/facebook/react-native/pull/23616
 const PORT = '8082'
 
-export const runIos = (entryPoint: string) => Promise.all([
+export type TOptions = {
+  entryPointPath: string,
+}
+
+export const runIos = (options: TOptions) => Promise.all([
   execa(
     'haul',
     [
@@ -20,7 +24,7 @@ export const runIos = (entryPoint: string) => Promise.all([
       stderr: process.stderr,
       env: {
         FORCE_COLOR: '1',
-        REBOX_ENTRY_POINT: entryPoint,
+        REBOX_ENTRY_POINT: options.entryPointPath,
       },
     }
   ),
