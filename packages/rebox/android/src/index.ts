@@ -4,7 +4,11 @@ import execa from 'execa'
 // https://github.com/facebook/react-native/pull/23616
 const PORT = '8081'
 
-export const runAndroid = async (entryPoint: string) => {
+export type TOptions = {
+  entryPointPath: string,
+}
+
+export const runAndroid = async (options: TOptions) => {
   await execa('bash', [require.resolve('@rebox/android/android/run-android-emulator.sh')], {
     stdout: process.stdout,
     stderr: process.stderr,
@@ -29,7 +33,7 @@ export const runAndroid = async (entryPoint: string) => {
         stderr: process.stderr,
         env: {
           FORCE_COLOR: '1',
-          REBOX_ENTRY_POINT: entryPoint,
+          REBOX_ENTRY_POINT: options.entryPointPath,
         },
       }
     ),
