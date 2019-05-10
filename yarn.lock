@@ -8117,7 +8117,7 @@ react-native-svg@^9.3.6, react-native-svg@^9.3.7:
   version "0.1.1"
   resolved "https://codeload.github.com/batata-frita/react-native-view-shot/tar.gz/05e23cb0d36a128f8c4397f4286b83dd07d3828d"
 
-react-native@^0.59.0:
+react-native@0.59.8, react-native@^0.59.0:
   version "0.59.8"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.59.8.tgz#ade4141c777c60f5ec4889d9811d0f80a9d56547"
   integrity sha512-x1T+/pEXrjgdH9uDzd5doJy5aFlBqW04j7ljDKIGALchhnvdFbtXXrUZ/1PfWHMrIdZxtaDt4tkSttp662GSQA==

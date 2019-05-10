@@ -6,7 +6,7 @@
   "bin": {
     "start": "src/cli/index.js"
   },
-  "main": "src/",
+  "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {

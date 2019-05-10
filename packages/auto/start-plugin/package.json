@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "description": "🤖 Auto Tools",
   "keywords": "tasks, runner, start, start-plugin, auto",
-  "main": "src/",
+  "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
