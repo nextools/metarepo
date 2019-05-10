@@ -3,9 +3,9 @@
   "version": "0.6.0",
   "description": "",
   "keywords": [],
-  "main": "src/index.web.ts",
-  "browser": "src/index.web.ts",
-  "react-native": "src/index.native.ts",
+  "main": "src/",
+  "browser": "src/",
+  "react-native": "src/",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {

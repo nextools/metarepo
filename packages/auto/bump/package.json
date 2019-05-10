@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "",
   "keywords": [],
-  "main": "src/index.ts",
+  "main": "src/",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
