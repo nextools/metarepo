@@ -1,6 +1,6 @@
 import React from 'react'
 import { TextInput } from 'react-native'
-import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
+import { component, mapWithProps, startWithType, mapHandlers, mapDefaultProps } from 'refun'
 import { TStyle } from '@lada/prefix'
 import { TInput } from './types'
 
@@ -8,6 +8,10 @@ export type TFontWeight = '100' | '200' | '300' | '400' | '500' | '600' | '700' 
 
 export const Input = component(
   startWithType<TInput>(),
+  mapDefaultProps({
+    paddingTop: 0,
+    paddingBottom: 0,
+  }),
   mapHandlers({
     onChangeText: ({ onChange }) => (newValue: string) => onChange(newValue),
     onSubmitEditing: ({ onSubmit }) => () => {
@@ -55,6 +59,7 @@ export const Input = component(
   <TextInput
     testID={id}
     underlineColorAndroid="rgba(0,0,0,0)"
+    textAlignVertical="center"
     caretHidden={isDisabled}
     editable={!isDisabled}
     style={style}
