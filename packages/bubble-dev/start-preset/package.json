@@ -55,7 +55,7 @@
     "globby": "^9.2.0",
     "graceful-fs": "^4.1.15",
     "make-dir": "^3.0.0",
-    "metro-react-native-babel-preset": "^0.53.1",
+    "metro-react-native-babel-preset": "^0.54.0",
     "move-path": "^0.2.1",
     "tap-diff": "^0.1.1",
     "typeon": "^0.3.0"
