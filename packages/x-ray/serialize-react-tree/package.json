@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@sindresorhus/is": "^0.16.0",
+    "@sindresorhus/is": "^0.17.0",
     "react": "^16.8.6",
     "react-test-renderer": "^16.6.0"
   },

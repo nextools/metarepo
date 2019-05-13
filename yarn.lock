@@ -930,10 +930,10 @@
   dependencies:
     mkdirp "^0.5.1"
 
-"@sindresorhus/is@^0.16.0":
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.16.0.tgz#355a7801472ad3810365c1e8aecabcaf45227c54"
-  integrity sha512-QjJQRRsPoIBbvI0IFiY1NehCRgyw7BNobGVO9FSuMoX7OocwUMbsjXYFneoYT8XJbiXAEJvPvrj9eEb4ZMa84A==
+"@sindresorhus/is@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.17.0.tgz#37d16c3df3a8b4dcc930210ff68ff3ace35f5ab4"
+  integrity sha512-hGqdhem3E9L+BBPpkRZQ9RtSg+MpbGfoDXNxuPFgJtM7/CiZHU+Jit0DywctJOsWV0jAPp9RpO8QB7GSaVZq8A==
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
