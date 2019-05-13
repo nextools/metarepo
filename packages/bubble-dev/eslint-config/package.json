@@ -13,10 +13,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^1.4.2",
-    "@typescript-eslint/parser": "^1.5.0",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
     "eslint-plugin-import": "^2.17.1",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "typescript": "bubble-dev/TypeScript#ext-3.4.1"
   },
   "peerDependencies": {
     "eslint": "^5.16.0",
