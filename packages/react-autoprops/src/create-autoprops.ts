@@ -10,7 +10,7 @@ const getComponentName = (fc: FC<any>): string => fc.displayName || fc.name
 const createPropsWithValues = (config: TComponentConfig): PropsWithValues<any> => {
   if (Array.isArray(config.required)) {
     return getObjectKeys(config.props).reduce((result, key) => {
-      if ((Array.isArray(config.required) && config.required.includes(key)) || key === 'children') {
+      if (Array.isArray(config.required) && config.required.includes(key)) {
         result[key] = config.props[key]
       } else {
         result[key] = [undefined, ...config.props[key]]
