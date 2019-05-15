@@ -4,23 +4,22 @@ import { PropsWithValues, AutoConfig, Keys, getPermutations, getProps, getKeys, 
 import { getObjectKeys, isUndefined, TAnyObject } from 'tsfn'
 import { TComponentConfig, TMetaFile } from './types'
 import { getIndexedName } from './get-indexed-name'
+import { isChildrenMap } from './is-children-map'
 
 const getComponentName = (fc: FC<any>): string => fc.displayName || fc.name
 
 const createPropsWithValues = (config: TComponentConfig): PropsWithValues<any> => {
-  if (Array.isArray(config.required)) {
-    return getObjectKeys(config.props).reduce((result, key) => {
-      if (Array.isArray(config.required) && config.required.includes(key)) {
-        result[key] = config.props[key]
-      } else {
-        result[key] = [undefined, ...config.props[key]]
-      }
+  return getObjectKeys(config.props).reduce((result, key) => {
+    if (Array.isArray(config.required) && config.required.includes(key)) {
+      result[key] = config.props[key]
+    } else if (key === 'children' && isChildrenMap(config.props[key][0])) {
+      result[key] = config.props[key]
+    } else {
+      result[key] = [undefined, ...config.props[key]]
+    }
 
-      return result
-    }, {} as PropsWithValues<any>)
-  }
-
-  return config.props
+    return result
+  }, {} as PropsWithValues<any>)
 }
 
 const makeAutopropsConfig = (config: TComponentConfig): AutoConfig<any> => {
