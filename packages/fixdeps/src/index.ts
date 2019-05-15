@@ -145,9 +145,9 @@ export const fixdeps = async (options: TOptions) => {
 
               if (
                 entriesIncludes(packageDepEntries, baseName) ||
-              entriesIncludes(packageDevDepEntries, baseName) ||
-              entriesIncludes(packagePeerEntries, baseName) ||
-              entriesIncludes(addedDeps, baseName)
+                entriesIncludes(packageDevDepEntries, baseName) ||
+                entriesIncludes(packagePeerEntries, baseName) ||
+                entriesIncludes(addedDeps, baseName)
               ) {
                 return false
               }
