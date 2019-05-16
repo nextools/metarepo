@@ -5,6 +5,9 @@
   "keywords": [],
   "repository": "bubble-dev/_",
   "license": "MIT",
+  "buildAssets": {
+    "index.json": "."
+  },
   "engines": {
     "node": ">=8.6.0"
   },

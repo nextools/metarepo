@@ -167,12 +167,6 @@ export const buildWebNode = async (dir: string) => {
   )
 }
 
-export const buildCopy = (dir: string) =>
-  sequence(
-    find(`${dir}/src/**/*`, { onlyFiles: true }),
-    copy(`${dir}/build/`)
-  )
-
 export const build = async (packageDir: string) => {
   const dir = path.join('packages', packageDir)
   const packageJsonPath = path.resolve(dir, 'package.json')
@@ -198,10 +192,6 @@ export const build = async (packageDir: string) => {
 
   if (Reflect.has(packageJson, 'react-native')) {
     tasks.push('buildReactNative')
-  }
-
-  if (tasks.length === 0) {
-    tasks.push('buildCopy')
   }
 
   return sequence(

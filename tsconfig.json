@@ -1,5 +1,5 @@
 {
-  "extends": "@bubble-dev/typescript-config/src/index.json",
+  "extends": "@bubble-dev/typescript-config/index.json",
   "exclude": [
     "node_modules/",
     "coverage/",
