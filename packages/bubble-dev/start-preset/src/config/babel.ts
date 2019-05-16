@@ -1,14 +1,13 @@
 import { TransformOptions as BabelConfig } from '@babel/core'
 // @ts-ignore
 import babelPresetReactNative from 'metro-react-native-babel-preset'
+import { browsersList } from '@bubble-dev/browsers-list'
 
 const babelPresetReactNativeNoCompact = (...args: any[]) => ({
   ...babelPresetReactNative(...args),
   compact: false,
 })
 
-// TODO: change me
-const browsers = ['last 2 versions', 'not ie <= 10']
 const node = '8.6.0'
 
 const babelConfigCommon: BabelConfig = {
@@ -37,7 +36,7 @@ export const babelConfigWeb: BabelConfig = {
     [
       require.resolve('@babel/preset-env'),
       {
-        targets: { browsers },
+        targets: { browsers: browsersList },
         modules: false,
       },
     ],
