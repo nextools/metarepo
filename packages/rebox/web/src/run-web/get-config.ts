@@ -45,6 +45,8 @@ export const getConfig = (entryPointPath: string, htmlTemplatePath: string): TWe
                   require.resolve('@babel/preset-env'),
                   {
                     targets: { browsers: browsersList },
+                    exclude: ['@babel/plugin-transform-regenerator'],
+                    ignoreBrowserslistConfig: true,
                     modules: false,
                   },
                 ],

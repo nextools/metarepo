@@ -50,6 +50,7 @@ export const getConfig = (entryPointPath: string, htmlTemplatePath: string): Web
                     useBuiltIns: 'usage',
                     corejs: 3,
                     ignoreBrowserslistConfig: true,
+                    exclude: ['@babel/plugin-transform-regenerator'],
                   },
                 ],
                 require.resolve('@babel/preset-react'),
