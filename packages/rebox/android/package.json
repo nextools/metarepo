@@ -24,6 +24,7 @@
     "execa": "^1.0.0",
     "haul": "^1.0.0-rc.15",
     "metro-react-native-babel-preset": "^0.54.0",
+    "move-file": "^1.2.0",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.0"
   },

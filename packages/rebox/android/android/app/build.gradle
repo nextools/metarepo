@@ -77,7 +77,7 @@ project.ext.react = [
 ]
 
 project.ext.react = [
-  cliPath: "node_modules/haul/bin/cli.js"
+  cliPath: "node/build-android/empty.js"
 ]
 
 apply from: "../../../../react-native/react.gradle"
