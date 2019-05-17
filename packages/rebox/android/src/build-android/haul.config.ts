@@ -1,18 +1,21 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import path from 'path'
+import { Configuration as TWebpackConfig } from 'webpack'
+// @ts-ignore
 import { createWebpackConfig } from 'haul'
 
 export default {
-  webpack: (env) => {
-    const config = createWebpackConfig({
+  webpack: (env: any) => {
+    const config: TWebpackConfig = createWebpackConfig({
       entry: require.resolve('./App.js'),
     })(env)
 
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      __REBOX_ENTRY_POINT__: path.resolve(process.env.REBOX_ENTRY_POINT),
+    config.resolve!.alias = {
+      ...config.resolve!.alias,
+      __REBOX_ENTRY_POINT__: path.resolve(process.env.REBOX_ENTRY_POINT as string),
     }
 
-    config.module.rules = [
+    config.module!.rules = [
       {
         test: /\.js$/,
         include: [
@@ -52,11 +55,24 @@ export default {
           },
         ],
       },
-      ...config.module.rules,
+      ...config.module!.rules,
     ]
 
-    config.resolve.extensions = [
-      ...config.resolve.extensions,
+    config.performance = {
+      ...config.performance,
+      hints: false,
+    }
+
+    config.plugins = config.plugins!.filter((plugin) => {
+      if (!plugin.constructor) {
+        return true
+      }
+
+      return plugin.constructor.name !== 'SourceMapDevToolPlugin'
+    })
+
+    config.resolve!.extensions = [
+      ...config.resolve!.extensions!,
       `.${env.platform}.js`,
       `.${env.platform}.ts`,
       `.${env.platform}.tsx`,
