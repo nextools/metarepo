@@ -1,6 +1,6 @@
 import path from 'path'
 import { promisify } from 'util'
-import { writeFile } from 'fs'
+import { writeFile } from 'graceful-fs'
 import execa from 'execa'
 import moveFile from 'move-file'
 
