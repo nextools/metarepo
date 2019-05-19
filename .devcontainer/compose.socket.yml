@@ -9,10 +9,14 @@ services:
       dockerfile: Dockerfile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.gitconfig:/root/.gitconfig
       - workspace:/workspace
     command: sleep infinity
 
 # https://github.com/IFSight/d4m-nfs/issues/55
+# https://medium.com/@sean.handley/how-to-set-up-docker-for-mac-with-native-nfs-145151458adc
+
+# echo "nfs.server.mount.require_resv_port = 0" | sudo tee -a /etc/nfs.conf
 # echo "$(PWD) localhost -alldirs -mapall=501:20" | sudo tee -a /etc/exports
 
 volumes:
