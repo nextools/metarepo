@@ -9,5 +9,16 @@ services:
       dockerfile: Dockerfile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ..:/workspace:delegated
+      - workspace:/workspace
     command: sleep infinity
+
+# https://github.com/IFSight/d4m-nfs/issues/55
+# echo "$(PWD) localhost -alldirs -mapall=501:20" | sudo tee -a /etc/exports
+
+volumes:
+  workspace:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,lock,hard,nointr,noacl,nocto,nfsvers=3
+      device: ":${PWD}"
