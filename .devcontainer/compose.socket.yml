@@ -1,0 +1,13 @@
+version: "3"
+
+# https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
+
+services:
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ..:/workspace:delegated
+    command: sleep infinity

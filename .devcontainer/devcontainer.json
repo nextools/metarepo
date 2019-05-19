@@ -1,0 +1,12 @@
+{
+  "name": "Node.js",
+  "dockerComposeFile": "compose.socket.yml",
+  "service": "nodejs",
+  "shutdownAction": "stopCompose",
+  "workspaceFolder": "/workspace",
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig"
+  ],
+  "postCreateCommand": "yarn install"
+}
