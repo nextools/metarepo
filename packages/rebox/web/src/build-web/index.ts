@@ -4,6 +4,7 @@ import { getConfig } from './get-config'
 
 export type TBuildWebOptions = {
   entryPointPath: string,
+  outputPath: string,
   htmlTemplatePath: string,
 }
 
@@ -28,6 +29,7 @@ const statsOptions: Stats.ToStringOptionsObject = {
 export const buildWeb = (options: TBuildWebOptions) => {
   const config = getConfig(
     path.resolve(options.entryPointPath),
+    path.resolve(options.outputPath),
     path.resolve(options.htmlTemplatePath)
   )
 

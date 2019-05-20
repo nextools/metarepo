@@ -7,11 +7,11 @@ import TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import { browsersList } from '@bubble-dev/browsers-list'
 
-export const getConfig = (entryPointPath: string, htmlTemplatePath: string): WebpackConfig => ({
+export const getConfig = (entryPointPath: string, outputPath: string, htmlTemplatePath: string): WebpackConfig => ({
   mode: 'production',
   entry: require.resolve('./App.js'),
   output: {
-    path: path.resolve('static/'),
+    path: outputPath,
     filename: 'js/[name].[chunkhash].js',
     chunkFilename: 'js/[name].[chunkhash].js',
     pathinfo: true,
