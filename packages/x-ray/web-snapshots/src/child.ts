@@ -4,8 +4,8 @@ import path from 'path'
 import pAll from 'p-all'
 import fs from 'graceful-fs'
 import makeDir from 'make-dir'
-import { TItem, TMessage } from '@x-ray/common-utils'
-import { checkSnapshot } from '@x-ray/snapshot-utils'
+import { TMessage } from '@x-ray/common-utils'
+import { checkSnapshot, TMeta } from '@x-ray/snapshot-utils'
 import getSnapshot from './get'
 
 const options = process.argv[2]
@@ -24,7 +24,7 @@ const CONCURRENCY = 4
     await import(setupFile)
 
     for (const targetPath of targetFiles) {
-      const { default: items } = await import(targetPath) as { default: TItem[] }
+      const { default: items } = await import(targetPath) as { default: TMeta[] }
       const snapshotsDir = path.join(path.dirname(targetPath), '__x-ray__', 'web-snapshots')
 
       if (!shouldBailout) {
@@ -38,7 +38,7 @@ const CONCURRENCY = 4
       await pAll(
         items.map((item) => async () => {
           const snapshot = await getSnapshot(item.element)
-          const snapshotPath = path.join(snapshotsDir, `${item.meta.name}.js`)
+          const snapshotPath = path.join(snapshotsDir, `${item.options.name}.js`)
           const message = await checkSnapshot(snapshot, snapshotPath, shouldBailout)
 
           await processSend(message)
