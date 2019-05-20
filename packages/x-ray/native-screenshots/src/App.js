@@ -5,50 +5,50 @@ import files from './files' // eslint-disable-line
 
 const defaultStyles = {}
 const hasOwnWidthStyles = {
-  alignItems: 'flex-start'
+  alignItems: 'flex-start',
 }
 
 class App extends Component {
-  constructor (...args) {
+  constructor(...args) {
     super(...args)
 
     this.state = {
       fileIndex: 0,
       elementIndex: 0,
       path: null,
-      fixture: null
+      fixture: null,
     }
 
     this.onCapture = this.onCapture.bind(this)
   }
 
-  async componentDidMount () {
+  async componentDidMount() {
     try {
       const { path, content } = files[0]()
       const { default: { default: fixture } } = await content
 
       this.setState(() => ({
         path,
-        fixture
+        fixture,
       }))
     } catch (e) {
       console.log(e)
     }
   }
 
-  async onCapture (data) {
+  async onCapture(data) {
     const res = await fetch('http://localhost:3002/upload', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         data,
-        name: this.state.fixture[this.state.elementIndex].meta.name.replace('–', '-'),
-        path: this.state.path
+        name: this.state.fixture[this.state.elementIndex].options.name,
+        path: this.state.path,
       }),
-      keepalive: true
+      keepalive: true,
     })
 
     if (!res.ok) {
@@ -57,7 +57,7 @@ class App extends Component {
 
     if (this.state.elementIndex < this.state.fixture.length - 1) {
       this.setState((prev) => ({
-        elementIndex: prev.elementIndex + 1
+        elementIndex: prev.elementIndex + 1,
       }))
     } else if (this.state.fileIndex < files.length - 1) {
       const nextFileIndex = this.state.fileIndex + 1
@@ -68,7 +68,7 @@ class App extends Component {
         elementIndex: 0,
         fileIndex: nextFileIndex,
         path,
-        fixture
+        fixture,
       }))
     } else {
       // finish
@@ -76,19 +76,20 @@ class App extends Component {
     }
   }
 
-  onCaptureFailure (err) {
+  onCaptureFailure(err) {
     console.log(err)
   }
 
-  render () {
+  render() {
     const { fixture, elementIndex, fileIndex } = this.state
+    const { options } = fixture[elementIndex]
 
     if (fixture === null) {
       return null
     }
 
     return (
-      <View style={fixture[elementIndex].meta.hasOwnWidth ? hasOwnWidthStyles : defaultStyles}>
+      <View style={options.hasOwnWidth ? hasOwnWidthStyles : defaultStyles}>
         <ViewShot
           captureMode="mount"
           options={{ result: 'base64' }}
@@ -96,7 +97,15 @@ class App extends Component {
           onCapture={this.onCapture}
           onCaptureFailure={this.onCaptureFailure}
         >
-          {fixture[elementIndex].element}
+          <View
+            style={{
+              padding: options.negativeOverflow,
+              maxWidth: options.maxWidth,
+              backgroundColor: options.backgroundColor || '#fff',
+            }}
+          >
+            {fixture[elementIndex].element}
+          </View>
         </ViewShot>
       </View>
     )

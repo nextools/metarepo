@@ -4,8 +4,8 @@ import { promisify } from 'util'
 import foxr from 'foxr'
 import fs from 'graceful-fs'
 import makeDir from 'make-dir'
-import { TItem, TMessage } from '@x-ray/common-utils'
-import { checkScreenshot } from '@x-ray/screenshot-utils'
+import { TMessage } from '@x-ray/common-utils'
+import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
 import getScreenshot from './get'
 
 const options = process.argv[2]
@@ -33,7 +33,7 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
     const page = await browser.newPage()
 
     for (const targetPath of targetFiles) {
-      const { default: items } = await import(targetPath) as { default: TItem[] }
+      const { default: items } = await import(targetPath) as { default: TMeta[] }
       const screenshotsDir = path.join(path.dirname(targetPath), '__x-ray__', 'firefox-screenshots')
 
       if (!shouldBailout) {
@@ -46,7 +46,7 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
 
       for (const item of items) {
         const screenshot = await getScreenshot(page, item)
-        const screenshotPath = path.join(screenshotsDir, `${item.meta.name}.png`)
+        const screenshotPath = path.join(screenshotsDir, `${item.options.name}.png`)
         const message = await checkScreenshot(screenshot, screenshotPath, shouldBailout)
 
         await processSend(message)

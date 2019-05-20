@@ -1,23 +1,24 @@
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { TItem } from '@x-ray/common-utils'
+import { TMeta } from '@x-ray/screenshot-utils'
 import { TPage, TElementHandle } from 'foxr'
 
-const SELECTOR = '[data-x-ray] > *:first-child'
-const defaultStyles = {}
-const hasOwnWidthStyles = {
-  display: 'inline-block',
-}
+const SELECTOR = '[data-x-ray]'
 
-const getWebScreenshot = async (page: TPage, item: TItem): Promise<Buffer> => {
+const getWebScreenshot = async (page: TPage, { element, options }: TMeta): Promise<Buffer> => {
   const html = renderToStaticMarkup(
     createElement(
       'div',
       {
         'data-x-ray': true,
-        style: item.meta.hasOwnWidth ? hasOwnWidthStyles : defaultStyles,
+        style: {
+          display: options.hasOwnWidth ? 'inline-block' : 'block',
+          padding: options.negativeOverflow ? `${options.negativeOverflow}px` : 0,
+          maxWidth: options.maxWidth ? `${options.maxWidth}px` : 'initial',
+          backgroundColor: options.backgroundColor || '#fff',
+        },
       },
-      item.element
+      element
     )
   )
 

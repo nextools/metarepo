@@ -5,8 +5,8 @@ import puppeteer, { Page } from 'puppeteer-core'
 import pAll from 'p-all'
 import fs from 'graceful-fs'
 import makeDir from 'make-dir'
-import { TItem, TMessage } from '@x-ray/common-utils'
-import { checkScreenshot } from '@x-ray/screenshot-utils'
+import { TMessage } from '@x-ray/common-utils'
+import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
 import getScreenshot from './get'
 
 const webSocketDebuggerUrl = process.argv[2]
@@ -44,7 +44,7 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
     const pages: Page[] = await Promise.all(pagesPromises)
 
     for (const targetPath of targetFiles) {
-      const { default: items } = await import(targetPath) as { default: TItem[] }
+      const { default: items } = await import(targetPath) as { default: TMeta[] }
       const screenshotsDir = path.join(path.dirname(targetPath), '__x-ray__', 'chrome-screenshots')
 
       if (!shouldBailout) {
@@ -59,7 +59,7 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
         items.map((item) => async () => {
           const page = pages.shift() as Page
           const screenshot = await getScreenshot(page, item)
-          const screenshotPath = path.join(screenshotsDir, `${item.meta.name}.png`)
+          const screenshotPath = path.join(screenshotsDir, `${item.options.name}.png`)
 
           pages.push(page)
 
