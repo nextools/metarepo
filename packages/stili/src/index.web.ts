@@ -36,5 +36,7 @@ export const normalizeStyle = (style: TStyle): TCssProps =>
       result.appearance = value as TCssProps['appearance']
     }
 
+    result[key as keyof TCssProps] = value
+
     return result
   }, {} as TCssProps)
