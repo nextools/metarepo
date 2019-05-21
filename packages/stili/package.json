@@ -1,0 +1,23 @@
+{
+  "name": "stili",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.web.ts",
+  "browser": "src/index.web.ts",
+  "react-native": "src/index.native.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@types/react": "^16.8.6",
+    "@types/react-native": "^0.57.51",
+    "tsfn": "^0.1.1"
+  }
+}
