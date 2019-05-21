@@ -1,9 +1,11 @@
+import { TStyle } from 'stili'
+
 export type TInput = {
   id?: string,
   isDisabled?: boolean,
   color?: string,
   family?: string,
-  weight?: number,
+  weight?: TStyle['fontWeight'],
   size?: number,
   lineHeight?: number,
   letterSpacing?: number,

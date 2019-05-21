@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Dimensions } from 'react-native'
-import { TStyle } from '@lada/prefix'
+import { normalizeStyle } from 'stili'
 import {
   component,
   mapState,
@@ -10,15 +10,6 @@ import {
   mapWithProps,
 } from 'refun'
 import { TRoot } from './types'
-
-const defaultStyle: TStyle = {
-  position: 'absolute',
-  flexDirection: 'row',
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0,
-}
 
 export const Root = component(
   startWithType<TRoot>(),
@@ -44,11 +35,16 @@ export const Root = component(
     }
   }),
   mapWithProps(({ dimensions }) => ({
-    styles: {
-      ...defaultStyle,
+    styles: normalizeStyle({
+      position: 'absolute',
+      flexDirection: 'row',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
       width: dimensions.width,
       height: dimensions.height,
-    },
+    }),
   }))
 )('Root', ({ children, dimensions, styles }) => (
   <View style={styles}>{children(dimensions)}</View>

@@ -1,3 +1,5 @@
+import { TStyle } from 'stili'
+
 export type TTextRoles = 'NONE'
 | 'HEADING1'
 | 'HEADING2'
@@ -6,14 +8,12 @@ export type TTextRoles = 'NONE'
 | 'HEADING5'
 | 'HEADING6'
 
-export type TFontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
-
 export type TTextProps = {
   id?: string,
   color?: string,
   role?: TTextRoles,
   family?: string,
-  weight?: TFontWeight,
+  weight?: TStyle['fontWeight'],
   size?: number,
   lineHeight?: number,
   letterSpacing?: number,

@@ -1,6 +1,6 @@
 import React from 'react'
 import { component, startWithType, mapDefaultProps, mapChildren, mapProps } from 'refun'
-import { prefixStyle, TStyle } from '@lada/prefix'
+import { normalizeStyle, TStyle } from 'stili'
 import { View } from '@primitives/view'
 import { isNumber } from 'tsfn'
 import { TLayout } from './types'
@@ -129,7 +129,7 @@ export const Layout = component(
     }
 
     return {
-      style: prefixStyle(style),
+      style: normalizeStyle(style),
       direction,
       children,
     }

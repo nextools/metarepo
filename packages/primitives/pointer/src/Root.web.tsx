@@ -1,10 +1,10 @@
 import React, { HTMLProps, MouseEvent } from 'react'
-import { prefixStyle } from '@lada/prefix'
+import { normalizeStyle } from 'stili'
 import { component, startWithType, mapProps, mapHandlers, mapRefLayout } from 'refun'
 import { isFunction } from 'tsfn'
 import { TPointer } from './types'
 
-const defaultStyles = prefixStyle({
+const style = normalizeStyle({
   display: 'flex',
   flexDirection: 'row',
   boxSizing: 'border-box',
@@ -69,7 +69,7 @@ export const Pointer = component(
       onMove,
     }) => {
       const props: HTMLProps<HTMLDivElement> = {
-        style: defaultStyles,
+        style,
         ref,
         children,
         onMouseEnter: onEnter,

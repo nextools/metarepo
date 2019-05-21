@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import { component, startWithType, mapProps, mapContext, mapDefaultProps } from 'refun'
-import { TStyle } from '@lada/prefix'
+import { normalizeStyle, TStyle } from 'stili'
 import { View } from '@primitives/view'
 import { isNumber } from 'tsfn'
 import { ViewProps } from 'react-native'
@@ -58,7 +58,7 @@ export const LayoutInFlow = component(
     }
 
     const props: ViewProps & {children: ReactNode} = {
-      style,
+      style: normalizeStyle(style),
       children,
     }
 

@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, TouchableWithoutFeedback, GestureResponderEvent, TouchableWithoutFeedbackProps } from 'react-native'
-import { prefixStyle } from '@lada/prefix'
+import { normalizeStyle } from 'stili'
 import { component, startWithType, mapHandlers, mapWithProps } from 'refun'
 import { isFunction } from 'tsfn'
 import { TPointer } from './types'
 
-const defaultStyles = prefixStyle({
+const style = normalizeStyle({
   flexDirection: 'row',
   flexGrow: 1,
   flexShrink: 1,
@@ -45,6 +45,6 @@ export const Pointer = component(
   })
 )('Pointer', ({ children, onPressIn, onPressOut }) => (
   <TouchableWithoutFeedback onPressIn={onPressIn} onPressOut={onPressOut}>
-    <View style={defaultStyles}>{children}</View>
+    <View style={style}>{children}</View>
   </TouchableWithoutFeedback>
 ))

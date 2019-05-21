@@ -1,6 +1,6 @@
 import React from 'react'
 import { Picker } from 'react-native'
-import { prefixStyle, TStyle } from '@lada/prefix'
+import { normalizeStyle } from 'stili'
 import { component, mapWithProps, startWithType } from 'refun'
 import { TSelect } from './types'
 
@@ -15,8 +15,8 @@ export const Select = component(
     paddingRight,
     paddingTop,
     weight,
-  }) => {
-    const style: TStyle = {
+  }) => ({
+    style: normalizeStyle({
       backgroundColor: 'rgba(0, 0, 0, 0)',
       color,
       fontWeight: weight,
@@ -30,12 +30,8 @@ export const Select = component(
       paddingRight,
       paddingTop,
       minWidth: 150,
-    }
-
-    return ({
-      style: prefixStyle(style),
-    })
-  })
+    }),
+  }))
 )(
   'Select',
   ({

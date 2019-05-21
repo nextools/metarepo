@@ -1,5 +1,5 @@
 import React from 'react'
-import { prefixStyle } from '@lada/prefix'
+import { normalizeStyle } from 'stili'
 import { component, startWithType, mapWithProps } from 'refun'
 import { Block } from '@primitives/block'
 import { TCheckboxProps } from './types'
@@ -7,7 +7,7 @@ import { TCheckboxProps } from './types'
 export const Checkbox = component(
   startWithType<TCheckboxProps>(),
   mapWithProps(({ isDisabled }) => ({
-    style: prefixStyle({
+    style: normalizeStyle({
       position: 'absolute',
       appearance: 'none',
       width: '100%',

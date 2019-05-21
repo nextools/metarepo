@@ -1,15 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
 import { component, startWithType, mapWithProps } from 'refun'
-import { TStyle } from '@lada/prefix'
+import { normalizeStyle } from 'stili'
 import { TTransformProps } from './types'
-
-const defaultStyles: TStyle = {
-  flexDirection: 'row',
-  flexGrow: 0,
-  flexShrink: 0,
-  alignSelf: 'flex-start',
-}
 
 export const Transform = component(
   startWithType<TTransformProps>(),
@@ -33,10 +26,13 @@ export const Transform = component(
     }
 
     return {
-      style: {
-        ...defaultStyles,
+      style: normalizeStyle({
+        flexDirection: 'row',
+        flexGrow: 0,
+        flexShrink: 0,
+        alignSelf: 'flex-start',
         transform,
-      },
+      }),
     }
   })
 )('Transform', ({ style, children }) => (

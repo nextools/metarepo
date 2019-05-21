@@ -4,17 +4,17 @@ import {
   startWithType,
   mapDefaultProps,
 } from 'refun'
-import { TStyle } from '@lada/prefix'
+import { normalizeStyle } from 'stili'
 import { isFunction } from 'tsfn'
 import { TSize } from './types'
 
-const defaultStyles: TStyle = {
+const style = normalizeStyle({
   display: 'flex',
   flexDirection: 'row',
   flexGrow: 0,
   flexShrink: 0,
   alignSelf: 'flex-start',
-}
+})
 
 export const Size = component(
   startWithType<TSize>(),
@@ -52,5 +52,5 @@ export const Size = component(
     }
   }
 )('Size', ({ ref, children }) => (
-  <div style={defaultStyles} ref={ref}>{children}</div>
+  <div style={style} ref={ref}>{children}</div>
 ))

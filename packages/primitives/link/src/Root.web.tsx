@@ -1,9 +1,10 @@
 import React, { FC } from 'react'
+import { normalizeStyle } from 'stili'
 import { TLink } from './types'
 
-const defaultStyles = {
+const style = normalizeStyle({
   textDecoration: 'none',
-}
+})
 
 export const Link: FC<TLink> = ({
   children,
@@ -29,7 +30,7 @@ export const Link: FC<TLink> = ({
     onMouseEnter={onPointerEnter}
     onMouseLeave={onPointerLeave}
     onMouseUp={onPressOut}
-    style={defaultStyles}
+    style={style}
     tabIndex={tabIndex}
     target={target}
   >

@@ -1,6 +1,6 @@
 import React, { Ref } from 'react'
 import { View, ViewProps } from 'react-native'
-import { TStyle } from '@lada/prefix'
+import { TStyle, normalizeStyle } from 'stili'
 import { startWithType, component, mapDefaultProps, mapProps } from 'refun'
 import { isNumber } from 'tsfn'
 import { TBlockCommon } from './types'
@@ -17,7 +17,6 @@ export const Block = component(
     shouldIgnorePointerEvents: false,
     shouldScroll: false,
     shouldHideOverflow: false,
-    style: {} as TStyle,
   }),
   mapProps(
     ({
@@ -126,7 +125,7 @@ export const Block = component(
 
       return {
         ...props,
-        style: styles,
+        style: normalizeStyle(styles),
         children,
         ref,
       }

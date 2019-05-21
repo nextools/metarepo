@@ -1,5 +1,5 @@
 import React from 'react'
-import { prefixStyle, TStyle } from '@lada/prefix'
+import { normalizeStyle, TStyle } from 'stili'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { isNumber } from 'tsfn'
 import { TSelect } from './types'
@@ -55,7 +55,7 @@ export const Select = component(
     }
 
     return ({
-      style: prefixStyle(style),
+      style: normalizeStyle(style),
     })
   })
 )(

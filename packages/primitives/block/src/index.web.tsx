@@ -1,5 +1,5 @@
 import React, { Ref, HTMLProps } from 'react'
-import { prefixStyle, TStyle } from '@lada/prefix'
+import { normalizeStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isUndefined, isNumber } from 'tsfn'
 import { styleTransformArrayToText } from './styleTransformArrayToText'
@@ -17,7 +17,6 @@ export const Block = component(
     shouldIgnorePointerEvents: false,
     shouldScroll: false,
     shouldHideOverflow: false,
-    style: {} as TStyle,
   }),
   mapProps(
     ({
@@ -60,12 +59,12 @@ export const Block = component(
         ...style,
       }
 
-      if (isNumber(style.lineHeight)) {
+      if (!isUndefined(style) && isNumber(style.lineHeight)) {
         styles.lineHeight = `${style.lineHeight}px`
       }
 
       // TODO: handle only arrays
-      if (style.transform) {
+      if (!isUndefined(style) && style.transform) {
         styles.transform = styleTransformArrayToText(style.transform)
       }
 
@@ -135,7 +134,7 @@ export const Block = component(
       }
 
       const props: HTMLProps<HTMLDivElement> = {
-        style: prefixStyle(styles),
+        style: normalizeStyle(styles),
         children,
         onMouseEnter: onPointerEnter,
         onMouseLeave: onPointerLeave,

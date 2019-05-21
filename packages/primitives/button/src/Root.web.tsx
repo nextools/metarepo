@@ -1,12 +1,12 @@
 import React from 'react'
-import { prefixStyle } from '@lada/prefix'
+import { normalizeStyle } from 'stili'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { TButtonProps } from './types'
 
 export const Button = component(
   startWithType<TButtonProps>(),
   mapWithPropsMemo(({ isDisabled }) => ({
-    styles: prefixStyle({
+    styles: normalizeStyle({
       appearance: 'none',
       background: 'none',
       border: 0,

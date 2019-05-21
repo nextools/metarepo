@@ -1,5 +1,5 @@
 import React from 'react'
-import { prefixStyle, TStyle } from '@lada/prefix'
+import { normalizeStyle, TStyle } from 'stili'
 import { component, startWithType, mapWithProps, mapDefaultProps } from 'refun'
 import { TTransformProps } from './types'
 
@@ -10,7 +10,7 @@ export const Transform = component(
     shouldUse3d: false,
   }),
   mapWithProps(({ x, y, rotate, scale, hOrigin, vOrigin, shouldUse3d, shouldStretch }) => {
-    const styles: TStyle = {
+    const style: TStyle = {
       display: 'flex',
       flexDirection: 'row',
       position: 'relative',
@@ -52,21 +52,21 @@ export const Transform = component(
     }
 
     if (transform.length > 0) {
-      styles.transform = transform
+      style.transform = transform
     }
 
     if (transformOrigin.length > 0) {
-      styles.transformOrigin = transformOrigin
+      style.transformOrigin = transformOrigin
     }
 
     if (shouldStretch) {
-      styles.flexGrow = 1
-      styles.flexShrink = 1
-      styles.alignSelf = 'stretch'
+      style.flexGrow = 1
+      style.flexShrink = 1
+      style.alignSelf = 'stretch'
     }
 
     return {
-      style: prefixStyle(styles),
+      style: normalizeStyle(style),
     }
   })
 )('Transform', ({ style, children }) => (

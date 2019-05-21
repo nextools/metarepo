@@ -1,5 +1,4 @@
 import React from 'react'
-import { TStyle } from '@lada/prefix'
 import {
   component,
   mapState,
@@ -9,17 +8,10 @@ import {
   mapWithProps,
   mapThrottledHandlerAnimationFrame,
 } from 'refun'
+import { normalizeStyle } from 'stili'
 import { TRoot } from './types'
 
 const globalObject = global as any as Window
-
-const defaultStyle: TStyle = {
-  display: 'flex',
-  position: 'absolute',
-  flexDirection: 'row',
-  left: 0,
-  top: 0,
-}
 
 export const Root = component(
   startWithType<TRoot>(),
@@ -38,16 +30,19 @@ export const Root = component(
     globalObject.addEventListener('resize', setDimensions)
 
     return () => {
-      globalObject.removeEventListener('resize', setDimensions)
     }
   }),
   mapWithProps(({ dimensions }) => ({
-    styles: {
-      ...defaultStyle,
+    style: normalizeStyle({
+      display: 'flex',
+      position: 'absolute',
+      flexDirection: 'row',
+      left: 0,
+      top: 0,
       width: dimensions.width,
       height: dimensions.height,
-    },
+    }),
   }))
-)('Root', ({ children, dimensions, styles }) => (
-  <div style={styles}>{children(dimensions)}</div>
+)('Root', ({ children, dimensions, style }) => (
+  <div style={style}>{children(dimensions)}</div>
 ))

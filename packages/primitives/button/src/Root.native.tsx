@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { TouchableWithoutFeedback, View } from 'react-native'
-import { TStyle } from '@lada/prefix'
+import { TStyle } from 'stili'
 import { TButtonProps } from './types'
 
 const hitSlop = {
@@ -10,7 +10,7 @@ const hitSlop = {
   top: 5,
 }
 
-const defaultStyle: TStyle = {
+const style: TStyle = {
   flexDirection: 'row',
   flexGrow: 1,
   flexShrink: 1,
@@ -35,7 +35,7 @@ export const Button: FC<TButtonProps> = ({
     onPressIn={onPressIn}
     onPressOut={onPressOut}
   >
-    <View style={defaultStyle}>
+    <View style={style}>
       {children}
     </View>
   </TouchableWithoutFeedback>

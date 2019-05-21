@@ -1,10 +1,12 @@
+import { TStyle } from 'stili'
+
 export type TSelect = {
   id?: string,
   isDisabled?: boolean,
   isHidden?: boolean,
   color?: string,
   family?: string,
-  weight?: number,
+  weight?: TStyle['fontWeight'],
   size?: number,
   lineHeight?: number,
   letterSpacing?: number,

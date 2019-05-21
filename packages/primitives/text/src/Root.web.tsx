@@ -1,5 +1,5 @@
 import { createElement } from 'react'
-import { prefixStyle, TStyle } from '@lada/prefix'
+import { normalizeStyle, TStyle } from 'stili'
 import {
   component,
   mapDefaultProps,
@@ -49,7 +49,7 @@ export const Text = component(
       true,
       'span'
     )
-    const styles: TStyle = {
+    const style: TStyle = {
       color,
       fontWeight: weight,
       fontSize: size,
@@ -62,27 +62,27 @@ export const Text = component(
     }
 
     if (shouldPreserveWhitespace) {
-      styles.whiteSpace = 'pre'
+      style.whiteSpace = 'pre'
     }
 
     if (shouldPreventWrap) {
-      styles.whiteSpace = 'nowrap'
+      style.whiteSpace = 'nowrap'
     }
 
     if (shouldPreventSelection) {
-      styles.userSelect = 'none'
+      style.userSelect = 'none'
     }
 
     if (isNumber(letterSpacing)) {
-      styles.letterSpacing = `${letterSpacing}px`
+      style.letterSpacing = `${letterSpacing}px`
     }
 
     if (isNumber(lineHeight)) {
-      styles.lineHeight = `${lineHeight}px`
+      style.lineHeight = `${lineHeight}px`
     }
 
     return {
-      style: prefixStyle(styles),
+      style: normalizeStyle(style),
       tag,
     }
   })

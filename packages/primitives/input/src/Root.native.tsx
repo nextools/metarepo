@@ -1,10 +1,8 @@
 import React from 'react'
 import { TextInput } from 'react-native'
 import { component, mapWithProps, startWithType, mapHandlers, mapDefaultProps } from 'refun'
-import { TStyle } from '@lada/prefix'
+import { normalizeStyle } from 'stili'
 import { TInput } from './types'
-
-export type TFontWeight = '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
 
 export const Input = component(
   startWithType<TInput>(),
@@ -32,12 +30,12 @@ export const Input = component(
       paddingRight,
       paddingTop,
       weight,
-    }) => {
-      const style: TStyle = {
+    }) => ({
+      style: normalizeStyle({
         letterSpacing,
         lineHeight,
         color,
-        fontWeight: typeof weight !== 'undefined' ? String(weight) as TFontWeight : undefined,
+        fontWeight: weight,
         fontSize: size,
         fontFamily: family,
         paddingBottom,
@@ -48,12 +46,8 @@ export const Input = component(
         flexShrink: 1,
         alignSelf: 'stretch',
         minWidth: 150,
-      }
-
-      return {
-        style,
-      }
-    }
+      }),
+    })
   )
 )('Input', ({ id, isDisabled, style, value, onChangeText, onSubmitEditing, onFocus, onBlur }) => (
   <TextInput

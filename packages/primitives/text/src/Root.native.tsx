@@ -5,9 +5,9 @@ import {
   startWithType,
   mapDefaultProps,
 } from 'refun'
-import { Text as NativeText, TextProps, TextStyle } from 'react-native'
+import { Text as NativeText, TextProps } from 'react-native'
 import { isNumber } from 'tsfn'
-import { TStyle } from '@lada/prefix'
+import { TStyle, normalizeStyle } from 'stili'
 import { TTextProps } from './types'
 
 export const Text = component(
@@ -27,7 +27,7 @@ export const Text = component(
     shouldPreventSelection,
     shouldPreventWrap,
   }) => {
-    const styles: TStyle = {
+    const style: TStyle = {
       backgroundColor: 'transparent',
       color,
       lineHeight,
@@ -37,11 +37,11 @@ export const Text = component(
     }
 
     if (isNumber(weight)) {
-      styles.fontWeight = String(weight) as TextStyle['fontWeight']
+      style.fontWeight = weight
     }
 
     const props: TextProps = {
-      style: styles,
+      style: normalizeStyle(style),
       selectable: !shouldPreventSelection,
     }
 

@@ -17,7 +17,7 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@lada/prefix": "^0.4.0",
+    "stili": "^0.0.0",
     "refun": "^0.1.0"
   },
   "devDependencies": {
