@@ -16,8 +16,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "stili": "^0.0.0",
-    "@primitives/block": "^0.1.0",
+    "stili": "^0.1.0",
+    "@primitives/block": "^0.2.0",
     "@primitives/view": "^0.3.0",
     "refun": "^0.1.0",
     "tsfn": "^0.1.0"

@@ -17,7 +17,7 @@
   "sideEffects": false,
   "dependencies": {
     "@primitives/animation": "^0.1.0",
-    "@primitives/block": "^0.1.0",
+    "@primitives/block": "^0.2.0",
     "@babel/runtime": "^7.1.2",
     "colorido": "^0.1.0",
     "refun": "^0.1.0"

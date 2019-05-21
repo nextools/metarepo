@@ -16,7 +16,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "stili": "^0.0.0",
+    "stili": "^0.1.0",
     "elegir": "^0.3.1",
     "refun": "^0.1.0",
     "tsfn": "^0.1.0"

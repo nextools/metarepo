@@ -19,7 +19,7 @@
     "refun": "^0.1.0"
   },
   "devDependencies": {
-    "stili": "^0.0.0",
+    "stili": "^0.1.0",
     "@types/react": "^16.8.6",
     "@types/react-native": "^0.57.51",
     "react": "^16.8.6",
