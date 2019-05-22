@@ -18,6 +18,7 @@ export const Text = component(
     shouldPreserveWhitespace: false,
     shouldPreventSelection: false,
     shouldPreventWrap: false,
+    sholdHideOverflow: false,
   }),
   mapWithProps(({
     color,
@@ -30,6 +31,7 @@ export const Text = component(
     shouldPreserveWhitespace,
     shouldPreventSelection,
     shouldPreventWrap,
+    shouldHideOverflow,
   }) => {
     const tag = elegir(
       role === TextRoles.HEADING1,
@@ -71,6 +73,12 @@ export const Text = component(
 
     if (shouldPreventSelection) {
       style.userSelect = 'none'
+    }
+
+    if (shouldHideOverflow) {
+      style.whiteSpace = 'nowrap'
+      style.textOverflow = 'ellipsis'
+      style.overflow = 'hidden'
     }
 
     if (isNumber(letterSpacing)) {

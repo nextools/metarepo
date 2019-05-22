@@ -16,6 +16,7 @@ export const Text = component(
     shouldPreserveWhitespace: false,
     shouldPreventSelection: false,
     shouldPreventWrap: false,
+    shouldHideOverflow: false,
   }),
   mapWithProps(({
     color,
@@ -26,6 +27,7 @@ export const Text = component(
     weight,
     shouldPreventSelection,
     shouldPreventWrap,
+    shouldHideOverflow,
   }) => {
     const style: TStyle = {
       backgroundColor: 'transparent',
@@ -47,7 +49,11 @@ export const Text = component(
 
     if (shouldPreventWrap) {
       props.numberOfLines = 1
-      props.ellipsizeMode = 'clip'
+    }
+
+    if (shouldHideOverflow) {
+      props.numberOfLines = 1
+      props.ellipsizeMode = 'tail'
     }
 
     return props

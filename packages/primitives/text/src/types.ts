@@ -20,4 +20,5 @@ export type TTextProps = {
   shouldPreserveWhitespace?: boolean,
   shouldPreventWrap?: boolean,
   shouldPreventSelection?: boolean,
+  shouldHideOverflow?: boolean,
 }
