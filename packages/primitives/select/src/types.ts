@@ -4,7 +4,6 @@ export type TSelect = {
   id?: string,
   isDisabled?: boolean,
   isHidden?: boolean,
-  color?: string,
   family?: string,
   weight?: TStyle['fontWeight'],
   size?: number,

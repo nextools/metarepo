@@ -4,14 +4,12 @@ import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { isNumber } from 'tsfn'
 import { TSelect } from './types'
 
-
 export const Select = component(
   startWithType<TSelect>(),
   mapHandlers({
     onChange: ({ onChange }) => (event: any) => onChange(event.target.value),
   }),
   mapWithProps(({
-    color,
     letterSpacing,
     lineHeight,
     size,
@@ -25,7 +23,6 @@ export const Select = component(
     const style: TStyle = {
       backgroundColor: 'rgba(0, 0, 0, 0)',
       border: 0,
-      color,
       boxSizing: 'border-box',
       fontWeight: weight,
       fontSize: size,
