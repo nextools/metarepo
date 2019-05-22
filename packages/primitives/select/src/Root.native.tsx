@@ -7,7 +7,6 @@ import { TSelect } from './types'
 export const Select = component(
   startWithType<TSelect>(),
   mapWithProps(({
-    color,
     size,
     family,
     paddingBottom,
@@ -18,7 +17,6 @@ export const Select = component(
   }) => ({
     style: normalizeStyle({
       backgroundColor: 'rgba(0, 0, 0, 0)',
-      color,
       fontWeight: weight,
       fontSize: size,
       fontFamily: family,
