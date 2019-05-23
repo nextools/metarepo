@@ -12,21 +12,15 @@ export const Select = component(
   mapWithProps(({
     letterSpacing,
     lineHeight,
-    size,
-    family,
     paddingBottom,
     paddingLeft,
     paddingRight,
     paddingTop,
-    weight,
   }) => {
     const style: TStyle = {
       backgroundColor: 'rgba(0, 0, 0, 0)',
       border: 0,
       boxSizing: 'border-box',
-      fontWeight: weight,
-      fontSize: size,
-      fontFamily: family,
       fontSmoothing: 'antialiased',
       flexGrow: 1,
       flexShrink: 1,
