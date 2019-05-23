@@ -13,6 +13,7 @@ export type TChildrenConfig = {
   },
   children: string[],
   mutex?: string[][],
+  mutin?: string[][],
   required?: string[],
 }
 
@@ -22,6 +23,7 @@ export type TComponentConfig = {
   },
   required?: string[],
   mutex?: string[][],
+  mutin?: string[][],
 }
 
 export type TChildrenMap = {

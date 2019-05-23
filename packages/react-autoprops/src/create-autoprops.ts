@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { PropsWithValues, AutoConfig, Keys, getPermutations, getProps, getKeys, getFilenames, Permutation } from 'autoprops'
 import { getObjectKeys, isUndefined, TAnyObject } from 'tsfn'
 import { TComponentConfig, TMetaFile } from './types'
-import { getIndexedName } from './get-indexed-name'
+import { getIndexedName, getBaseName } from './get-indexed-name'
 import { isChildrenMap } from './is-children-map'
 
 const getComponentName = (fc: FC<any>): string => fc.displayName || fc.name
@@ -26,6 +26,7 @@ const makeAutopropsConfig = (config: TComponentConfig): AutoConfig<any> => {
   return {
     props: createPropsWithValues(config),
     mutex: config.mutex,
+    mutin: config.mutin,
   }
 }
 
@@ -48,7 +49,8 @@ export const createAutopropsConfig = ({ Component, config, childrenConfig }: TMe
 
   if (!isUndefined(childrenConfig)) {
     const childrenMutex = Array.isArray(childrenConfig.mutex) ? [...childrenConfig.mutex] : []
-    const { props: childrenPropsWithValues, mutex: childrenMutexGroups, keys: childrenKeys } = childrenConfig.children.reduce((result, childKey) => {
+    const childrenMutin = Array.isArray(childrenConfig.mutin) ? [...childrenConfig.mutin] : []
+    const { props: childrenPropsWithValues, mutex: childrenMutexGroups, mutin: childrenMutinGroups, keys: childrenKeys } = childrenConfig.children.reduce((result, childKey) => {
       const childMeta = childrenConfig.meta[childKey]
       const childAutoprops = createAutoprops(childMeta)
       const currentKeys = Object.keys(result.props)
@@ -62,6 +64,7 @@ export const createAutopropsConfig = ({ Component, config, childrenConfig }: TMe
 
       result.keys.push(childIndexedKey)
 
+      // add indexed names to mutex groups
       result.mutex.push(...result.mutex.reduce((result, mutex) => {
         if (mutex.includes(childKey)) {
           result.push(mutex.map((key) => (key === childKey ? childIndexedKey : key)))
@@ -70,14 +73,34 @@ export const createAutopropsConfig = ({ Component, config, childrenConfig }: TMe
         return result
       }, [] as string[][]))
 
+      // add indexed names to mutin groups
+      result.mutin = result.mutin.map((mutinGroup) => {
+        return mutinGroup.reduce((result, key) => {
+          const baseKey = getBaseName(key)
+
+          if (baseKey === childKey) {
+            result.push(childIndexedKey)
+
+            if (baseKey !== key) {
+              result.push(key)
+            }
+          } else {
+            result.push(key)
+          }
+
+          return result
+        }, [] as string[])
+      })
+
       return result
-    }, { props: {}, mutex: childrenMutex, keys: [] as any } as {
+    }, { props: {}, mutex: childrenMutex, mutin: childrenMutin, keys: [] as any } as {
       props: PropsWithValues<TAnyObject>,
       mutex: string[][],
+      mutin: string[][],
       keys: Keys<TAnyObject>,
     })
 
-    const childrenPerms = getPermutations(childrenPropsWithValues, childrenKeys, childrenMutexGroups)
+    const childrenPerms = getPermutations(childrenPropsWithValues, childrenKeys, childrenMutexGroups, childrenMutinGroups)
     const childrenGeneratedProps = getProps(childrenPropsWithValues, childrenKeys, childrenPerms)
 
     const componentConfig = {
@@ -90,7 +113,7 @@ export const createAutopropsConfig = ({ Component, config, childrenConfig }: TMe
 
     const autopropsConfig = makeAutopropsConfig(componentConfig)
     const autopropsKeys = getKeys(autopropsConfig.props)
-    const autopropsPerms = getPermutations(autopropsConfig.props, autopropsKeys, autopropsConfig.mutex)
+    const autopropsPerms = getPermutations(autopropsConfig.props, autopropsKeys, autopropsConfig.mutex, autopropsConfig.mutin)
     const result: TAutopropsConfigCache<any> = {
       props: autopropsConfig.props,
       keys: autopropsKeys,
@@ -104,7 +127,7 @@ export const createAutopropsConfig = ({ Component, config, childrenConfig }: TMe
 
   const autopropsConfig = makeAutopropsConfig(config)
   const autopropsKeys = getKeys(autopropsConfig.props)
-  const autopropsPerms = getPermutations(autopropsConfig.props, autopropsKeys, autopropsConfig.mutex)
+  const autopropsPerms = getPermutations(autopropsConfig.props, autopropsKeys, autopropsConfig.mutex, autopropsConfig.mutin)
   const result: TAutopropsConfigCache<any> = {
     props: autopropsConfig.props,
     keys: autopropsKeys,

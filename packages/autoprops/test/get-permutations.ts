@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import { getPermutations } from '../src/get-permutations'
 import { getKeys } from '../src/get-keys'
-import { MutexGroup, PropsWithValues } from '../src/types'
+import { MutexGroup, PropsWithValues, MutinGroup } from '../src/types'
 
 test('Get Permutations: simple boolean mutual exclusion', (t) => {
   type Props = {
@@ -26,58 +26,6 @@ test('Get Permutations: simple boolean mutual exclusion', (t) => {
       [1, 0],
       [0, 1],
     ]
-  )
-
-  t.end()
-})
-
-// This test is disabled due to change of the mutex group logic
-test.skip('Get Permutations: boolean single possible state', (t) => {
-  type Props = {
-    a: boolean,
-    b?: boolean,
-  }
-  const props: PropsWithValues<Props> = {
-    a: [true],
-    b: [true, undefined],
-  }
-  const mutex: MutexGroup<Props>[] = [
-    ['a', 'b'],
-  ]
-  const keys = getKeys(props)
-  const res = getPermutations(props, keys, mutex)
-
-  /* values */
-  t.deepEquals(
-    res,
-    [
-      [0, 1],
-    ]
-  )
-
-  t.end()
-})
-
-// This test is disabled due to change of the mutex group logic
-test.skip('Get Permutations: boolean total exclusion', (t) => {
-  type Props = {
-    a: boolean,
-    b: boolean,
-  }
-  const props: PropsWithValues<Props> = {
-    a: [true],
-    b: [true],
-  }
-  const mutex: MutexGroup<Props>[] = [
-    ['a', 'b'],
-  ]
-  const keys = getKeys(props)
-  const res = getPermutations(props, keys, mutex)
-
-  // values
-  t.deepEquals(
-    res,
-    []
   )
 
   t.end()
@@ -283,6 +231,67 @@ test('Get Permutations: consider \'undefined\' as valid exclusion', (t) => {
       [1, 1],
       [0, 2],
       [1, 2],
+    ]
+  )
+
+  t.end()
+})
+
+test('Get Permutations: simple boolean mutual inclusion', (t) => {
+  type Props = {
+    a?: boolean,
+    b?: boolean,
+  }
+  const props: PropsWithValues<Props> = {
+    a: [undefined, true],
+    b: [undefined, true],
+  }
+  const mutin: MutinGroup<Props>[] = [
+    ['a', 'b'],
+  ]
+  const keys = getKeys(props)
+  const res = getPermutations(props, keys, [], mutin)
+
+  /* values */
+  t.deepEquals(
+    res,
+    [
+      [0, 0],
+      [1, 1],
+    ]
+  )
+
+  t.end()
+})
+
+test('Get Permutations: booleans mutual inclusion 2 independent groups', (t) => {
+  type Props = {
+    a?: boolean,
+    b?: boolean,
+    c?: boolean,
+    d?: boolean,
+  }
+  const props: PropsWithValues<Props> = {
+    a: [undefined, true],
+    b: [undefined, true],
+    c: [undefined, true],
+    d: [undefined, true],
+  }
+  const mutin: MutinGroup<Props>[] = [
+    ['a', 'b'],
+    ['c', 'd'],
+  ]
+  const keys = getKeys(props)
+  const res = getPermutations(props, keys, [], mutin)
+
+  /* values */
+  t.deepEquals(
+    res,
+    [
+      [0, 0, 0, 0],
+      [1, 1, 0, 0],
+      [0, 0, 1, 1],
+      [1, 1, 1, 1],
     ]
   )
 

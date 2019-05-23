@@ -5,10 +5,12 @@ export type PropsWithValues<P extends TProps> = {
 }
 
 export type MutexGroup<T extends TProps> = (keyof T)[]
+export type MutinGroup<T extends TProps> = (keyof T)[]
 
 export interface AutoConfig<T extends TProps> {
   props: PropsWithValues<T>,
   mutex?: MutexGroup<T>[],
+  mutin?: MutinGroup<T>[],
 }
 
 export interface AutoResult<T extends TProps> {
