@@ -1,7 +1,6 @@
 import React from 'react'
-import { normalizeStyle, TStyle } from 'stili'
+import { normalizeStyle } from 'stili'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
-import { isNumber } from 'tsfn'
 import { TSelect } from './types'
 
 export const Select = component(
@@ -10,14 +9,12 @@ export const Select = component(
     onChange: ({ onChange }) => (event: any) => onChange(event.target.value),
   }),
   mapWithProps(({
-    letterSpacing,
-    lineHeight,
     paddingBottom,
     paddingLeft,
     paddingRight,
     paddingTop,
-  }) => {
-    const style: TStyle = {
+  }) => ({
+    style: normalizeStyle({
       backgroundColor: 'rgba(0, 0, 0, 0)',
       border: 0,
       boxSizing: 'border-box',
@@ -35,20 +32,8 @@ export const Select = component(
       maxWidth: '100%',
       opacity: 0,
       appearance: 'none',
-    }
-
-    if (isNumber(letterSpacing)) {
-      style.letterSpacing = `${letterSpacing}px`
-    }
-
-    if (isNumber(lineHeight)) {
-      style.lineHeight = `${lineHeight}px`
-    }
-
-    return ({
-      style: normalizeStyle(style),
-    })
-  })
+    }),
+  }))
 )(
   'Select',
   ({
