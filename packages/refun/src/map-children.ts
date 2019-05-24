@@ -1,5 +1,5 @@
 import { Children, ReactElement, ReactNode, isValidElement } from 'react'
-import { TExtend } from 'tsfn'
+import { TExtend, isUndefined } from 'tsfn'
 import { isFragment } from 'react-is'
 import { getElementName } from './utils'
 import { TComponentMeta } from './types'
@@ -7,8 +7,8 @@ import { TComponentMeta } from './types'
 export type TChildrenMap = {
   [key: string]: {
     names: string[],
-    multiple?: boolean,
-    required?: boolean,
+    isMultiple?: boolean,
+    isRequired?: boolean,
   },
 }
 
@@ -46,10 +46,10 @@ export const mapChildren = <C extends TChildrenMap> (propsToNames: C) =>
 
           if (componentNames.includes(displayName)) {
             if (Array.isArray(result[key])) {
-              if (propsToNames[key].multiple === true) {
+              if (propsToNames[key].isMultiple === true) {
                 result[key].push(child)
               } else if (process.env.NODE_ENV === 'development') {
-                console.error(`Element '${displayName}' is only allowed once as a child of '${meta.displayName}'`)
+                console.error(`Element "${displayName}" is only allowed once as a child of "${meta.displayName}"`)
               }
             } else {
               result[key] = [child]
@@ -58,11 +58,11 @@ export const mapChildren = <C extends TChildrenMap> (propsToNames: C) =>
 
           if (process.env.NODE_ENV === 'development') {
             if (!propsToNamesValues.includes(displayName)) {
-              console.error(`Element '${displayName}' is not allowed as a child of '${meta.displayName}'`)
+              console.error(`Element "${displayName}" is not allowed as a child of "${meta.displayName}"`)
             }
           }
         } else if (process.env.NODE_ENV === 'development' && child !== null) {
-          console.error(`Text elements ("${child}") are not allowed as a child of '${meta.displayName}'`)
+          console.error(`Text elements ("${child}") are not allowed as a child of "${meta.displayName}"`)
         }
       })
 
@@ -70,9 +70,11 @@ export const mapChildren = <C extends TChildrenMap> (propsToNames: C) =>
     }, {} as { [K in keyof C]: ReactElement<any>[] })
 
     if (process.env.NODE_ENV === 'development') {
-      Object.entries(propsToNames).forEach(([key, { names, required }]) => {
-        if (required === true && typeof childrenProps[key] === 'undefined') {
-          console.error(`Elements "${names.join(', ')}" are required as a children of '${meta.displayName}'`)
+      Object.entries(propsToNames).forEach(([key, { names, isRequired, dependsOn }]) => {
+        if (isRequired === true && isUndefined(childrenProps[key])) {
+          console.error(`Elements "${names.join(', ')}" are required as a children of "${meta.displayName}"`)
+        }
+
         }
       })
     }
