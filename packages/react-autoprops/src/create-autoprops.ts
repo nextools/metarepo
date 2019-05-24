@@ -50,7 +50,12 @@ export const createAutopropsConfig = ({ Component, config, childrenConfig }: TMe
   if (!isUndefined(childrenConfig)) {
     const childrenMutex = Array.isArray(childrenConfig.mutex) ? [...childrenConfig.mutex] : []
     const childrenMutin = Array.isArray(childrenConfig.mutin) ? [...childrenConfig.mutin] : []
-    const { props: childrenPropsWithValues, mutex: childrenMutexGroups, mutin: childrenMutinGroups, keys: childrenKeys } = childrenConfig.children.reduce((result, childKey) => {
+    const {
+      props: childrenPropsWithValues,
+      mutex: childrenMutexGroups,
+      mutin: childrenMutinGroups,
+      keys: childrenKeys,
+    } = childrenConfig.children.reduce((result, childKey) => {
       const childMeta = childrenConfig.meta[childKey]
       const childAutoprops = createAutoprops(childMeta)
       const currentKeys = Object.keys(result.props)
