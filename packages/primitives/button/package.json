@@ -18,7 +18,7 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "stili": "^0.1.0",
-    "refun": "^0.1.0"
+    "refun": "^0.2.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

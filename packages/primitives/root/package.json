@@ -16,7 +16,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "refun": "^0.1.0",
+    "refun": "^0.2.0",
     "stili": "^0.1.0"
   },
   "devDependencies": {
