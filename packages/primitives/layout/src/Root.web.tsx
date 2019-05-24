@@ -137,11 +137,11 @@ export const Layout = component(
   mapChildren({
     fills: {
       names: ['LayoutOutOfFlow'],
-      multiple: true,
+      isMultiple: true,
     },
     children: {
       names: ['LayoutInFlow'],
-      multiple: true,
+      isMultiple: true,
     },
   })
 )('Layout', ({ children, fills, direction, style }) => (
