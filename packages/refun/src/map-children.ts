@@ -9,6 +9,7 @@ export type TChildrenMap = {
     names: string[],
     isMultiple?: boolean,
     isRequired?: boolean,
+    dependsOn?: string[],
   },
 }
 
@@ -75,6 +76,12 @@ export const mapChildren = <C extends TChildrenMap> (propsToNames: C) =>
           console.error(`Elements "${names.join(', ')}" are required as a children of "${meta.displayName}"`)
         }
 
+        if (!isUndefined(childrenProps[key]) && Array.isArray(dependsOn)) {
+          dependsOn.forEach((dep) => {
+            if (isUndefined(childrenProps[dep])) {
+              console.error(`Elements "${names.join(', ')}" depends on "${propsToNames[dep].names.join(', ')}"`)
+            }
+          })
         }
       })
     }
