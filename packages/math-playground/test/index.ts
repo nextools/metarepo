@@ -4,6 +4,7 @@ import {
   costDerivative,
   polynomial,
   polynomialDerivative,
+  powerRuleDerivative,
 } from '../src'
 
 test('math-playground:polynomial: constant', (t) => {
@@ -161,6 +162,35 @@ test('math-playground:costDerivative', (t) => {
     costDerivative(0.5)(0.25),
     -0.5,
     'should be -0.5'
+  )
+
+  t.end()
+})
+
+
+test('math-playground:powerRuleDerivative', (t) => {
+  t.deepEquals(
+    powerRuleDerivative(0)(5),
+    0,
+    'should be 0'
+  )
+
+  t.deepEquals(
+    powerRuleDerivative(1)(3),
+    1,
+    'should be 1'
+  )
+
+  t.deepEquals(
+    powerRuleDerivative(2)(3),
+    6,
+    'should be 6'
+  )
+
+  t.deepEquals(
+    powerRuleDerivative(5)(3),
+    405,
+    'should be 405'
   )
 
   t.end()
