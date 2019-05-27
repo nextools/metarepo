@@ -25,7 +25,17 @@ export type TLayout = {
 export type TLayoutInFlow = {
   width?: number | 'stretch',
   height?: number | 'stretch',
+  minWidth?: number,
+  maxWidth?: number,
+  minHeight?: number,
+  maxHeight?: number,
   children?: ReactNode,
+  shouldScroll?: boolean,
+  shouldIgnorePointerEvents?: boolean,
+}
+
+export type TLayoutOutOfFlow = {
+  floatinIndex?: number,
   shouldScroll?: boolean,
   shouldIgnorePointerEvents?: boolean,
 }

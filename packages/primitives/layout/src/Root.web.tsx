@@ -33,6 +33,8 @@ export const Layout = component(
       flexGrow: 1,
       flexShrink: 1,
       alignSelf: 'stretch',
+      minWidth,
+      minHeight,
     }
 
     if (direction === 'horizontal') {
@@ -101,16 +103,8 @@ export const Layout = component(
       }
     }
 
-    if (isNumber(minWidth)) {
-      style.minWidth = minWidth
-    }
-
     if (isNumber(maxWidth)) {
       style.maxWidth = maxWidth
-    }
-
-    if (isNumber(minHeight)) {
-      style.minHeight = minHeight
     }
 
     if (isNumber(maxHeight)) {

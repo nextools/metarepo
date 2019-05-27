@@ -1,11 +1,6 @@
 import React, { FC } from 'react'
 import { Block } from '@primitives/block'
-
-export type TLayoutOutOfFlow = {
-  floatinIndex?: number,
-  shouldScroll?: boolean,
-  shouldIgnorePointerEvents?: boolean,
-}
+import { TLayoutOutOfFlow } from './types'
 
 export const LayoutOutOfFlow: FC<TLayoutOutOfFlow> = ({ children, floatinIndex, shouldScroll, shouldIgnorePointerEvents }) => (
   <Block
