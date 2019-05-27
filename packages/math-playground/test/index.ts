@@ -1,5 +1,9 @@
 import test from 'blue-tape'
-import { polynomial, polynomialDerivative } from '../src'
+import {
+  cost,
+  polynomial,
+  polynomialDerivative,
+} from '../src'
 
 test('math-playground:polynomial: constant', (t) => {
   t.deepEquals(
@@ -128,3 +132,20 @@ test('math-playground:polynomialDerivative: cubic', (t) => {
 
   t.end()
 })
+
+test('math-playground:cost', (t) => {
+  t.deepEquals(
+    cost(1)(0.5),
+    0.25,
+    'should be 0.25'
+  )
+
+  t.deepEquals(
+    cost(0.5)(0.25),
+    0.0625,
+    'should be 0.0625'
+  )
+
+  t.end()
+})
+
