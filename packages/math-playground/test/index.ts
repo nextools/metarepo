@@ -1,6 +1,7 @@
 import test from 'blue-tape'
 import {
   cost,
+  costDerivative,
   polynomial,
   polynomialDerivative,
 } from '../src'
@@ -144,6 +145,22 @@ test('math-playground:cost', (t) => {
     cost(0.5)(0.25),
     0.0625,
     'should be 0.0625'
+  )
+
+  t.end()
+})
+
+test('math-playground:costDerivative', (t) => {
+  t.deepEquals(
+    costDerivative(1)(0.5),
+    -1,
+    'should be -1'
+  )
+
+  t.deepEquals(
+    costDerivative(0.5)(0.25),
+    -0.5,
+    'should be -0.5'
   )
 
   t.end()
