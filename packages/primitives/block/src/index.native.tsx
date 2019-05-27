@@ -17,6 +17,8 @@ export const Block = component(
     shouldIgnorePointerEvents: false,
     shouldScroll: false,
     shouldHideOverflow: false,
+    minWidth: 0,
+    minHeight: 0,
   }),
   mapProps(
     ({
@@ -26,6 +28,8 @@ export const Block = component(
       height,
       minWidth,
       minHeight,
+      maxWidth,
+      maxHeight,
       top,
       right,
       bottom,
@@ -48,7 +52,8 @@ export const Block = component(
         flexGrow: 0,
         flexShrink: 0,
         alignSelf: 'flex-start',
-        minWidth: 0,
+        minWidth,
+        minHeight,
         ...style,
       }
 
@@ -63,12 +68,12 @@ export const Block = component(
         styles.alignSelf = 'flex-start'
       }
 
-      if (isNumber(minWidth)) {
-        styles.minWidth = minWidth
+      if (isNumber(maxWidth)) {
+        styles.maxWidth = maxWidth
       }
 
-      if (isNumber(minHeight)) {
-        styles.minHeight = minHeight
+      if (isNumber(maxHeight)) {
+        styles.maxHeight = maxHeight
       }
 
       if (isNumber(top)) {

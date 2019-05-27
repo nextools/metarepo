@@ -6,6 +6,8 @@ export type TBlockCommon = {
   height?: number,
   minWidth?: number,
   minHeight?: number,
+  maxWidth?: number,
+  maxHeight?: number,
   top?: number,
   right?: number,
   bottom?: number,
