@@ -26,9 +26,8 @@ export const Size = component(
 
     useLayoutEffect(() => {
       if (ref.current !== null) {
-        const rect = ref.current.getBoundingClientRect()
-        const width = Math.round(rect.width * 1000) / 1000
-        const height = Math.round(rect.height * 1000) / 1000
+        const width = Math.round(ref.current.offsetWidth * 1000) / 1000
+        const height = Math.round(ref.current.offsetHeight * 1000) / 1000
         const hasWidthChanged = props.width !== width
         const hasHeightChanged = props.height !== height
 
