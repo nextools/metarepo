@@ -2,6 +2,11 @@ import test from 'blue-tape'
 import {
   cost,
   costDerivative,
+  denormalizeLinear,
+  denormalizeMatrix,
+  descentStep,
+  normalizeLinear,
+  normalizeMatrix,
   polynomial,
   polynomialDerivative,
   powerRuleDerivative,
@@ -167,7 +172,6 @@ test('math-playground:costDerivative', (t) => {
   t.end()
 })
 
-
 test('math-playground:powerRuleDerivative', (t) => {
   t.deepEquals(
     powerRuleDerivative(0)(5),
@@ -191,6 +195,86 @@ test('math-playground:powerRuleDerivative', (t) => {
     powerRuleDerivative(5)(3),
     405,
     'should be 405'
+  )
+
+  t.end()
+})
+
+test('math-playground:normalizeLinear', (t) => {
+  t.deepEquals(
+    normalizeLinear(100)(50),
+    0.5,
+    'should be 0.5'
+  )
+
+  t.deepEquals(
+    normalizeLinear(30)(15),
+    0.5,
+    'should be 0.5'
+  )
+
+  t.end()
+})
+
+test('math-playground:denormalizeLinear', (t) => {
+  t.deepEquals(
+    denormalizeLinear(100)(0.75),
+    75,
+    'should be 75'
+  )
+
+  t.deepEquals(
+    denormalizeLinear(30)(0.3),
+    9,
+    'should be 9'
+  )
+
+  t.end()
+})
+
+test('math-playground:descentStep', (t) => {
+  t.deepEquals(
+    descentStep(0.3)(40),
+    -12,
+    'should be -12'
+  )
+
+  t.deepEquals(
+    descentStep(0.03)(0.3),
+    -0.009,
+    'should be -0.009'
+  )
+
+  t.end()
+})
+
+test('math-playground:normalizeMatrix', (t) => {
+  t.deepEquals(
+    normalizeMatrix(400)([[40, 80], [160, 200]]),
+    [[0.1, 0.2], [0.4, 0.5]],
+    'should be [[0.1, 0.2], [0.4, 0.5]]'
+  )
+
+  t.deepEquals(
+    normalizeMatrix(150)([[15, 30], [90, 105]]),
+    [[0.1, 0.2], [0.6, 0.7]],
+    'should be [[0.1, 0.2], [0.6, 0.7]]'
+  )
+
+  t.end()
+})
+
+test('math-playground:denormalizeMatrix', (t) => {
+  t.deepEquals(
+    denormalizeMatrix(400)([[0.1, 0.2], [0.4, 0.5]]),
+    [[40, 80], [160, 200]],
+    'should be [[40, 80], [160, 200]]'
+  )
+
+  t.deepEquals(
+    denormalizeMatrix(150)([[0.1, 0.2], [0.6, 0.7]]),
+    [[15, 30], [90, 105]],
+    'should be [[15, 30], [90, 105]]'
   )
 
   t.end()
