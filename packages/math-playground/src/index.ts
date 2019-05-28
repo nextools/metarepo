@@ -7,6 +7,9 @@ export const costDerivative = (expectation: number) => (result: number): number 
 export const denormalizeLinear = (topValue: number) => (value: number): number =>
   topValue * value
 
+export const denormalizeMatrix = (topValue: number) => (matrix: number[][]): number[][] =>
+  matrix.map((row) => row.map(denormalizeLinear(topValue)))
+
 export const descentStep = (learningSpeed: number) => (slope: number): number =>
   -slope * learningSpeed
 

@@ -3,6 +3,7 @@ import {
   cost,
   costDerivative,
   denormalizeLinear,
+  denormalizeMatrix,
   descentStep,
   normalizeLinear,
   normalizeMatrix,
@@ -258,6 +259,22 @@ test('math-playground:normalizeMatrix', (t) => {
     normalizeMatrix(150)([[15, 30], [90, 105]]),
     [[0.1, 0.2], [0.6, 0.7]],
     'should be [[0.1, 0.2], [0.6, 0.7]]'
+  )
+
+  t.end()
+})
+
+test('math-playground:denormalizeMatrix', (t) => {
+  t.deepEquals(
+    denormalizeMatrix(400)([[0.1, 0.2], [0.4, 0.5]]),
+    [[40, 80], [160, 200]],
+    'should be [[40, 80], [160, 200]]'
+  )
+
+  t.deepEquals(
+    denormalizeMatrix(150)([[0.1, 0.2], [0.6, 0.7]]),
+    [[15, 30], [90, 105]],
+    'should be [[15, 30], [90, 105]]'
   )
 
   t.end()
