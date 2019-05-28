@@ -47,7 +47,7 @@ export const Input = component(
         paddingRight,
         paddingTop,
         maxWidth: '100%',
-        minWidth: 150,
+        minWidth: 0,
       }
 
       if (isNumber(letterSpacing)) {

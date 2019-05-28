@@ -21,7 +21,7 @@ export const Select = component(
       paddingLeft,
       paddingRight,
       paddingTop,
-      minWidth: 150,
+      minWidth: 0,
     }),
   }))
 )(

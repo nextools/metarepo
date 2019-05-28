@@ -45,7 +45,7 @@ export const Input = component(
         flexGrow: 1,
         flexShrink: 1,
         alignSelf: 'stretch',
-        minWidth: 150,
+        minWidth: 0,
       }),
     })
   )
