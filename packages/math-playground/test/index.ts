@@ -2,6 +2,7 @@ import test from 'blue-tape'
 import {
   cost,
   costDerivative,
+  denormalizeLinear,
   normalizeLinear,
   polynomial,
   polynomialDerivative,
@@ -207,6 +208,22 @@ test('math-playground:normalizeLinear', (t) => {
     normalizeLinear(30)(15),
     0.5,
     'should be 0.5'
+  )
+
+  t.end()
+})
+
+test('math-playground:denormalizeLinear', (t) => {
+  t.deepEquals(
+    denormalizeLinear(100)(0.75),
+    75,
+    'should be 75'
+  )
+
+  t.deepEquals(
+    denormalizeLinear(30)(0.3),
+    9,
+    'should be 9'
   )
 
   t.end()

@@ -4,6 +4,9 @@ export const cost = (expectation: number) => (result: number): number =>
 export const costDerivative = (expectation: number) => (result: number): number =>
   2 * (result - expectation)
 
+export const denormalizeLinear = (topValue: number) => (value: number): number =>
+  topValue * value
+
 export const normalizeLinear = (topValue: number) => (value: number): number =>
   value / topValue
 
