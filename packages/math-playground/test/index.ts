@@ -3,6 +3,7 @@ import {
   cost,
   costDerivative,
   denormalizeLinear,
+  descentStep,
   normalizeLinear,
   polynomial,
   polynomialDerivative,
@@ -224,6 +225,22 @@ test('math-playground:denormalizeLinear', (t) => {
     denormalizeLinear(30)(0.3),
     9,
     'should be 9'
+  )
+
+  t.end()
+})
+
+test('math-playground:descentStep', (t) => {
+  t.deepEquals(
+    descentStep(0.3)(40),
+    -12,
+    'should be -12'
+  )
+
+  t.deepEquals(
+    descentStep(0.03)(0.3),
+    -0.009,
+    'should be -0.009'
   )
 
   t.end()

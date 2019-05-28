@@ -7,6 +7,9 @@ export const costDerivative = (expectation: number) => (result: number): number 
 export const denormalizeLinear = (topValue: number) => (value: number): number =>
   topValue * value
 
+export const descentStep = (learningSpeed: number) => (slope: number): number =>
+  -slope * learningSpeed
+
 export const normalizeLinear = (topValue: number) => (value: number): number =>
   value / topValue
 
