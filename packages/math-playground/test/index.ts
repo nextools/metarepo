@@ -2,6 +2,7 @@ import test from 'blue-tape'
 import {
   cost,
   costDerivative,
+  normalizeLinear,
   polynomial,
   polynomialDerivative,
   powerRuleDerivative,
@@ -167,7 +168,6 @@ test('math-playground:costDerivative', (t) => {
   t.end()
 })
 
-
 test('math-playground:powerRuleDerivative', (t) => {
   t.deepEquals(
     powerRuleDerivative(0)(5),
@@ -191,6 +191,22 @@ test('math-playground:powerRuleDerivative', (t) => {
     powerRuleDerivative(5)(3),
     405,
     'should be 405'
+  )
+
+  t.end()
+})
+
+test('math-playground:normalizeLinear', (t) => {
+  t.deepEquals(
+    normalizeLinear(100)(50),
+    0.5,
+    'should be 0.5'
+  )
+
+  t.deepEquals(
+    normalizeLinear(30)(15),
+    0.5,
+    'should be 0.5'
   )
 
   t.end()
