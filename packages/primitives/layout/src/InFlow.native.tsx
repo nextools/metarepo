@@ -25,12 +25,18 @@ export const LayoutInFlow = component(
       minWidth: 0,
     }
 
+    let wrappedChildren = children
+
     if (direction === 'horizontal') {
       if (width === 'stretch') {
         style.flexGrow = 1
         style.flexShrink = 1
       } else if (isNumber(width)) {
         style.width = width
+      } else {
+        wrappedChildren = (
+          <View>{children}</View>
+        )
       }
 
       if (height === 'stretch') {
@@ -50,6 +56,10 @@ export const LayoutInFlow = component(
         style.flexShrink = 1
       } else if (isNumber(height)) {
         style.height = height
+      } else {
+        wrappedChildren = (
+          <View>{children}</View>
+        )
       }
     }
 
@@ -59,7 +69,7 @@ export const LayoutInFlow = component(
 
     const props: ViewProps & {children: ReactNode} = {
       style: normalizeStyle(style),
-      children,
+      children: wrappedChildren,
     }
 
     if (shouldIgnorePointerEvents) {
