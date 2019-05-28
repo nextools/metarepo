@@ -13,6 +13,9 @@ export const descentStep = (learningSpeed: number) => (slope: number): number =>
 export const normalizeLinear = (topValue: number) => (value: number): number =>
   value / topValue
 
+export const normalizeMatrix = (topValue: number) => (matrix: number[][]): number[][] =>
+  matrix.map((row) => row.map(normalizeLinear(topValue)))
+
 export const powerRuleDerivative = (exponent: number) => (value: number): number =>
   exponent * Math.pow(value, exponent - 1)
 

@@ -5,6 +5,7 @@ import {
   denormalizeLinear,
   descentStep,
   normalizeLinear,
+  normalizeMatrix,
   polynomial,
   polynomialDerivative,
   powerRuleDerivative,
@@ -241,6 +242,22 @@ test('math-playground:descentStep', (t) => {
     descentStep(0.03)(0.3),
     -0.009,
     'should be -0.009'
+  )
+
+  t.end()
+})
+
+test('math-playground:normalizeMatrix', (t) => {
+  t.deepEquals(
+    normalizeMatrix(400)([[40, 80], [160, 200]]),
+    [[0.1, 0.2], [0.4, 0.5]],
+    'should be [[0.1, 0.2], [0.4, 0.5]]'
+  )
+
+  t.deepEquals(
+    normalizeMatrix(150)([[15, 30], [90, 105]]),
+    [[0.1, 0.2], [0.6, 0.7]],
+    'should be [[0.1, 0.2], [0.6, 0.7]]'
   )
 
   t.end()
