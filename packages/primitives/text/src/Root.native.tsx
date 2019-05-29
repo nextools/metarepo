@@ -6,7 +6,6 @@ import {
   mapDefaultProps,
 } from 'refun'
 import { Text as NativeText, TextProps } from 'react-native'
-import { isNumber } from 'tsfn'
 import { TStyle, normalizeStyle } from 'stili'
 import { TTextProps } from './types'
 
