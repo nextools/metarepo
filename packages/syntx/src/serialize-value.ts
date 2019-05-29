@@ -74,7 +74,7 @@ export const serializeValue = (value: any, indent: number, config: TConfig): TSe
 
   if (isSymbol(value)) {
     return {
-      head: ValueSymbol(value),
+      head: ValueSymbol(value.description),
       body: null,
       tail: null,
     }
