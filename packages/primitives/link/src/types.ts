@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export type TIsHoveredHandlers = {
   onPointerEnter?: () => void,
   onPointerLeave?: () => void,
@@ -16,5 +18,10 @@ export type TLink = {
   href?: string,
   target?: string,
   tabIndex?: number,
+  underlineWidth?: number,
+  underlineColor?: string,
+  children?: ReactNode,
   onPress?: () => void,
-} & TIsHoveredHandlers & TIsPressedHandlers & TIsFocusedHandlers
+} & TIsHoveredHandlers
+  & TIsPressedHandlers
+  & TIsFocusedHandlers
