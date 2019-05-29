@@ -22,9 +22,9 @@ export const Text = component(
     color,
     letterSpacing,
     lineHeight,
-    size,
-    family,
-    weight,
+    fontFamily,
+    fontWeight,
+    fontSize,
     shouldPreventSelection,
     shouldPreventWrap,
     shouldHideOverflow,
@@ -33,13 +33,10 @@ export const Text = component(
       backgroundColor: 'transparent',
       color,
       lineHeight,
-      fontSize: size,
+      fontFamily,
+      fontWeight,
+      fontSize,
       letterSpacing,
-      fontFamily: family,
-    }
-
-    if (isNumber(weight)) {
-      style.fontWeight = weight
     }
 
     const props: TextProps = {
