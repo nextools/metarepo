@@ -39,6 +39,8 @@ export const isObject = (value: any): value is Object => (
   )
 )
 
+export const isSymbol = (value: any): value is symbol => typeof value === 'symbol'
+
 export const filterProps = (props: any): any => (
   Object.keys(props)
     .filter((key) => !isUndefined(props[key]))

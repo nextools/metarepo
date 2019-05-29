@@ -12,6 +12,7 @@ import {
   isNull,
   isNumber,
   isObject,
+  isSymbol,
 } from './utils'
 
 export const serializeValue = (value: any, indent: number, config: TConfig): TSerializedElement => {
@@ -23,6 +24,7 @@ export const serializeValue = (value: any, indent: number, config: TConfig): TSe
       ValueNull,
       ValueNumber,
       ValueString,
+      ValueSymbol,
     },
   } = config
 
@@ -65,6 +67,14 @@ export const serializeValue = (value: any, indent: number, config: TConfig): TSe
   if (isBoolean(value)) {
     return {
       head: ValueBoolean(String(value)),
+      body: null,
+      tail: null,
+    }
+  }
+
+  if (isSymbol(value)) {
+    return {
+      head: ValueSymbol(value),
       body: null,
       tail: null,
     }
