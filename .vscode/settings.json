@@ -9,6 +9,7 @@
   "typescript.surveys.enabled": false,
   "typescript.suggest.autoImports": false,
   "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsc.autoDetect": "off",
   "javascript.format.enable": false,
   "javascript.suggest.autoImports": false,
   "eslint.enable": true,

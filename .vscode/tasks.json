@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "lint",
+      "type": "shell",
+      "command": "./node_modules/.bin/start lint",
+      "problemMatcher": []
+    },
+    {
+      "label": "test",
+      "type": "shell",
+      "command": "./node_modules/.bin/start test",
+      "problemMatcher": []
+    },
+    {
+      "label": "commit",
+      "type": "shell",
+      "command": "./node_modules/.bin/start commit",
+      "problemMatcher": []
+    },
+    {
+      "label": "publish",
+      "type": "shell",
+      "command": "./node_modules/.bin/start publish",
+      "problemMatcher": []
+    }
+  ]
+}
