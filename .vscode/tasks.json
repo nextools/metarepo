@@ -17,12 +17,18 @@
       "label": "commit",
       "type": "shell",
       "command": "./node_modules/.bin/start commit",
+      "presentation": {
+        "focus": true
+      },
       "problemMatcher": []
     },
     {
       "label": "publish",
       "type": "shell",
       "command": "./node_modules/.bin/start publish",
+      "presentation": {
+        "focus": true
+      },
       "problemMatcher": []
     }
   ]
