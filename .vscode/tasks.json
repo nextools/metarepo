@@ -2,15 +2,30 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "install",
+      "type": "shell",
+      "command": "yarn install",
+      "presentation": {
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "lint",
       "type": "shell",
       "command": "./node_modules/.bin/start lint",
+      "presentation": {
+        "focus": true
+      },
       "problemMatcher": []
     },
     {
       "label": "test",
       "type": "shell",
       "command": "./node_modules/.bin/start test",
+      "presentation": {
+        "focus": true
+      },
       "problemMatcher": []
     },
     {
