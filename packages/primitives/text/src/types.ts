@@ -17,6 +17,7 @@ export type TTextProps = {
   fontSize?: number,
   lineHeight?: number,
   letterSpacing?: number,
+  isUnderlined?: boolean,
   shouldPreserveWhitespace?: boolean,
   shouldPreventWrap?: boolean,
   shouldPreventSelection?: boolean,

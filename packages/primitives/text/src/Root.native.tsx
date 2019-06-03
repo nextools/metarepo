@@ -24,6 +24,7 @@ export const Text = component(
     fontFamily,
     fontWeight,
     fontSize,
+    isUnderlined,
     shouldPreventSelection,
     shouldPreventWrap,
     shouldHideOverflow,
@@ -36,6 +37,10 @@ export const Text = component(
       fontWeight,
       fontSize,
       letterSpacing,
+    }
+
+    if (isUnderlined) {
+      style.textDecorationLine = 'underline'
     }
 
     const props: TextProps = {

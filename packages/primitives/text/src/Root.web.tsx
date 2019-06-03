@@ -28,6 +28,7 @@ export const Text = component(
     fontFamily,
     fontWeight,
     fontSize,
+    isUnderlined,
     shouldPreserveWhitespace,
     shouldPreventSelection,
     shouldPreventWrap,
@@ -87,6 +88,10 @@ export const Text = component(
 
     if (isNumber(lineHeight)) {
       style.lineHeight = `${lineHeight}px`
+    }
+
+    if (isUnderlined) {
+      style.textDecoration = 'underline'
     }
 
     return {
