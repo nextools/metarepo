@@ -18,8 +18,6 @@ export type TLink = {
   href?: string,
   target?: string,
   tabIndex?: number,
-  underlineWidth?: number,
-  underlineColor?: string,
   children?: ReactNode,
   onPress?: () => void,
 } & TIsHoveredHandlers
