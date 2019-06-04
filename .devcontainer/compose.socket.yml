@@ -11,6 +11,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ~/.gitconfig:/root/.gitconfig
       - workspace:/workspace
+      - /workspace/node_modules
     command: sleep infinity
 
 # https://github.com/IFSight/d4m-nfs/issues/55
