@@ -9825,7 +9825,7 @@ typeon@^0.3.0:
 
 typescript@bubble-dev/TypeScript#ext-3.4.1:
   version "3.4.1"
-  resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/7267ea85c7e8f477b5db3de9f2ab5c6251e089b0"
+  resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/5215f519169e01742e1cc6ac187f16f35932a7dc"
 
 ua-parser-js@^0.7.18:
   version "0.7.19"
