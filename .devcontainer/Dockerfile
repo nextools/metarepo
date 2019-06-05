@@ -34,3 +34,4 @@ RUN apt-get update && apt-get --no-install-recommends --yes install \
 # RUN apt-get autoremove --yes && apt-get clean --yes
 
 ENV DEBIAN_FRONTEND=dialog
+ENV SHELL /bin/bash

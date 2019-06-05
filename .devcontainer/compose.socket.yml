@@ -18,12 +18,13 @@ services:
 # https://medium.com/@sean.handley/how-to-set-up-docker-for-mac-with-native-nfs-145151458adc
 
 # echo "nfs.server.mount.require_resv_port = 0" | sudo tee -a /etc/nfs.conf
-# echo "$(PWD) localhost -alldirs -mapall=501:20" | sudo tee -a /etc/exports
+# echo "$(PWD) localhost -alldirs -mapall=$(id -u):$(id -g)" | sudo tee -a /etc/exports
+# sudo nfsd restart
 
 volumes:
   workspace:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=host.docker.internal,rw,lock,hard,nointr,noacl,nocto,nfsvers=3
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,noacl,nfsvers=3
       device: ":${PWD}"
