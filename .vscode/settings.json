@@ -30,5 +30,6 @@
     "packages/*/*/build/": true,
     "tmp/": true
   },
+  "search.followSymlinks": false,
   "npm.autoDetect": "off"
 }
