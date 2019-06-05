@@ -6,7 +6,8 @@
   "workspaceFolder": "/workspace",
   "extensions": [
     "dbaeumer.vscode-eslint",
-    "editorconfig.editorconfig"
+    "editorconfig.editorconfig",
+    "sanaajani.taskrunnercode"
   ],
   "postCreateCommand": ""
 }
