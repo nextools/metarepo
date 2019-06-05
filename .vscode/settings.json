@@ -29,5 +29,6 @@
     "packages/*/build/": true,
     "packages/*/*/build/": true,
     "tmp/": true
-  }
+  },
+  "npm.autoDetect": "off"
 }
