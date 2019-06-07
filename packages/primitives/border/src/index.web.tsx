@@ -29,7 +29,7 @@ export const Border = component(
     leftWidth: 0,
     overflow: 0,
   })
-)('Border', ({
+)(({
   topLeftRadius,
   topRightRadius,
   bottomRightRadius,

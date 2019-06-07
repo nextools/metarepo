@@ -34,32 +34,29 @@ export const Select = component(
       appearance: 'none',
     }),
   }))
-)(
-  'Select',
-  ({
-    children,
-    id,
-    isDisabled,
-    style,
-    value,
-    onChange,
-    onFocus,
-    onBlur,
-    onPressIn,
-    onPressOut,
-  }) => (
-    <select
-      id={id}
-      disabled={isDisabled}
-      style={style}
-      value={value}
-      onChange={onChange}
-      onFocus={onFocus}
-      onBlur={onBlur}
-      onMouseDown={onPressIn}
-      onMouseUp={onPressOut}
-    >
-      {children}
-    </select>
-  )
-)
+)(({
+  children,
+  id,
+  isDisabled,
+  style,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+  onPressIn,
+  onPressOut,
+}) => (
+  <select
+    id={id}
+    disabled={isDisabled}
+    style={style}
+    value={value}
+    onChange={onChange}
+    onFocus={onFocus}
+    onBlur={onBlur}
+    onMouseDown={onPressIn}
+    onMouseUp={onPressOut}
+  >
+    {children}
+  </select>
+))

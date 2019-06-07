@@ -9,5 +9,3 @@ export type TGroup = {
 export const Group: FC<TGroup> = ({ x = 0, y = 0, scale = 1, ...props }) => (
   <g {...props} transform={`translate(${x}, ${y}) scale(${scale})`}/>
 )
-
-Group.displayName = 'Group'

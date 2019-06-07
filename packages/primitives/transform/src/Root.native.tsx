@@ -35,6 +35,6 @@ export const Transform = component(
       }),
     }
   })
-)('Transform', ({ style, children }) => (
+)(({ style, children }) => (
   <View style={style}>{children}</View>
 ))

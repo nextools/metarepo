@@ -99,6 +99,6 @@ export const Text = component(
       tag,
     }
   })
-)('Text', ({ tag, children, style, id }) => (
+)(({ tag, children, style, id }) => (
   createElement(tag, { style, id }, children)
 ))

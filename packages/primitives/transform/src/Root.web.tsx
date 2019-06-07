@@ -69,6 +69,6 @@ export const Transform = component(
       style: normalizeStyle(style),
     }
   })
-)('Transform', ({ style, children }) => (
+)(({ style, children }) => (
   <div style={style}>{children}</div>
 ))

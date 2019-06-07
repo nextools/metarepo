@@ -46,6 +46,6 @@ export const Root = component(
       height: dimensions.height,
     }),
   }))
-)('Root', ({ children, dimensions, styles }) => (
+)(({ children, dimensions, styles }) => (
   <View style={styles}>{children(dimensions)}</View>
 ))

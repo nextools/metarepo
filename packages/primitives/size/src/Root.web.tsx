@@ -1,9 +1,5 @@
 import React, { useRef, useLayoutEffect } from 'react'
-import {
-  component,
-  startWithType,
-  mapDefaultProps,
-} from 'refun'
+import { component, startWithType, mapDefaultProps } from 'refun'
 import { normalizeStyle } from 'stili'
 import { isFunction } from 'tsfn'
 import { TSize } from './types'
@@ -50,6 +46,6 @@ export const Size = component(
       ref,
     }
   }
-)('Size', ({ ref, children }) => (
+)(({ ref, children }) => (
   <div style={style} ref={ref}>{children}</div>
 ))

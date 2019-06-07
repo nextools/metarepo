@@ -63,32 +63,29 @@ export const Input = component(
       }
     }
   )
-)(
-  'Input',
-  ({
-    id,
-    style,
-    value,
-    isDisabled,
-    onChange,
-    onKeyPress,
-    onFocus,
-    onBlur,
-    onPressIn,
-    onPressOut,
-  }) => (
-    <input
-      id={id}
-      disabled={isDisabled}
-      style={style}
-      size={1}
-      value={value}
-      onChange={onChange}
-      onKeyPress={onKeyPress}
-      onFocus={onFocus}
-      onBlur={onBlur}
-      onMouseDown={onPressIn}
-      onMouseUp={onPressOut}
-    />
-  )
-)
+)(({
+  id,
+  style,
+  value,
+  isDisabled,
+  onChange,
+  onKeyPress,
+  onFocus,
+  onBlur,
+  onPressIn,
+  onPressOut,
+}) => (
+  <input
+    id={id}
+    disabled={isDisabled}
+    style={style}
+    size={1}
+    value={value}
+    onChange={onChange}
+    onKeyPress={onKeyPress}
+    onFocus={onFocus}
+    onBlur={onBlur}
+    onMouseDown={onPressIn}
+    onMouseUp={onPressOut}
+  />
+))

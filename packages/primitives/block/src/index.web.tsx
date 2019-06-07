@@ -159,6 +159,6 @@ export const Block = component(
       return props
     }
   )
-)('Block', (props) => (
+)((props) => (
   <div {...props}/>
 ))

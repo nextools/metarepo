@@ -24,24 +24,21 @@ export const Select = component(
       minWidth: 0,
     }),
   }))
-)(
-  'Select',
-  ({
-    children,
-    id,
-    isDisabled,
-    style,
-    value,
-    onChange,
-  }) => (
-    <Picker
-      testID={id}
-      enabled={!isDisabled}
-      style={style}
-      selectedValue={value}
-      onValueChange={onChange}
-    >
-      {children}
-    </Picker>
-  )
-)
+)(({
+  children,
+  id,
+  isDisabled,
+  style,
+  value,
+  onChange,
+}) => (
+  <Picker
+    testID={id}
+    enabled={!isDisabled}
+    style={style}
+    selectedValue={value}
+    onValueChange={onChange}
+  >
+    {children}
+  </Picker>
+))

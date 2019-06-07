@@ -1,5 +1,5 @@
 import React from 'react'
-import { component, startWithType, mapDefaultProps, mapChildren, mapProps } from 'refun'
+import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { normalizeStyle, TStyle } from 'stili'
 import { View } from '@primitives/view'
 import { isNumber } from 'tsfn'
@@ -127,21 +127,10 @@ export const Layout = component(
       direction,
       children,
     }
-  }),
-  mapChildren({
-    fills: {
-      names: ['LayoutOutOfFlow'],
-      isMultiple: true,
-    },
-    children: {
-      names: ['LayoutInFlow'],
-      isMultiple: true,
-    },
   })
-)('Layout', ({ children, fills, direction, style }) => (
+)(({ children, direction, style }) => (
   <View style={style}>
     <Context.Provider value={{ direction }}>
-      {fills}
       {children}
     </Context.Provider>
   </View>

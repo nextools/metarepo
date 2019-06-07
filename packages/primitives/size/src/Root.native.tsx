@@ -34,6 +34,6 @@ export const Size = component(
       }
     },
   })
-)('Size', ({ children, onLayout }) => (
+)(({ children, onLayout }) => (
   <View style={style} onLayout={onLayout}>{children}</View>
 ))

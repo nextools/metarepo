@@ -91,6 +91,6 @@ export const Pointer = component(
       return props
     }
   )
-)('Pointer', (props) => (
+)((props) => (
   <div {...props}/>
 ))

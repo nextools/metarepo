@@ -43,7 +43,7 @@ export const Pointer = component(
 
     return props
   })
-)('Pointer', ({ children, onPressIn, onPressOut }) => (
+)(({ children, onPressIn, onPressOut }) => (
   <TouchableWithoutFeedback onPressIn={onPressIn} onPressOut={onPressOut}>
     <View style={style}>{children}</View>
   </TouchableWithoutFeedback>

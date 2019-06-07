@@ -59,7 +59,7 @@ export const Text = component(
 
     return props
   })
-)('Text', ({ id, children, style, numberOfLines, ellipsizeMode, selectable }) => (
+)(({ id, children, style, numberOfLines, ellipsizeMode, selectable }) => (
   <NativeText
     testID={id}
     selectable={selectable}

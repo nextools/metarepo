@@ -26,36 +26,33 @@ export const Button = component(
       userSelect: 'none',
     }),
   }), ['isDisabled'])
-)(
-  'Button',
-  ({
-    id,
-    accessibilityLabel,
-    isDisabled,
-    styles,
-    onPointerEnter,
-    onPointerLeave,
-    onPress,
-    onPressIn,
-    onPressOut,
-    onFocus,
-    onBlur,
-    children,
-  }) => (
-    <button
-      aria-label={accessibilityLabel}
-      disabled={isDisabled}
-      id={id}
-      onClick={onPress}
-      onMouseEnter={onPointerEnter}
-      onMouseLeave={onPointerLeave}
-      onMouseDown={onPressIn}
-      onMouseUp={onPressOut}
-      onFocus={onFocus}
-      onBlur={onBlur}
-      style={styles}
-    >
-      {children}
-    </button>
-  )
-)
+)(({
+  id,
+  accessibilityLabel,
+  isDisabled,
+  styles,
+  onPointerEnter,
+  onPointerLeave,
+  onPress,
+  onPressIn,
+  onPressOut,
+  onFocus,
+  onBlur,
+  children,
+}) => (
+  <button
+    aria-label={accessibilityLabel}
+    disabled={isDisabled}
+    id={id}
+    onClick={onPress}
+    onMouseEnter={onPointerEnter}
+    onMouseLeave={onPointerLeave}
+    onMouseDown={onPressIn}
+    onMouseUp={onPressOut}
+    onFocus={onFocus}
+    onBlur={onBlur}
+    style={styles}
+  >
+    {children}
+  </button>
+))

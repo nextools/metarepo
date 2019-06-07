@@ -136,6 +136,6 @@ export const Block = component(
       }
     }
   )
-)('Block', (props) => (
+)((props) => (
   <View {...props}/>
 ))

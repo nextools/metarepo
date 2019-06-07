@@ -76,6 +76,6 @@ export const LayoutInFlow = component(
       children,
     }
   })
-)('LayoutInFlow', ({ style, children }) => (
+)(({ style, children }) => (
   <View style={style}>{children}</View>
 ))

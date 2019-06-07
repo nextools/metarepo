@@ -21,40 +21,37 @@ export const Checkbox = component(
       tapHighlightColor: 'rgba(255, 255, 255, 0)',
     }),
   }))
-)(
-  'Checkbox',
-  ({
-    id,
-    accessibilityLabel,
-    isDisabled,
-    isChecked,
-    style,
-    onToggle,
-    onPointerEnter,
-    onPointerLeave,
-    onPressIn,
-    onPressOut,
-    onFocus,
-    onBlur,
-    children,
-  }) => (
-    <Block shouldStretch>
-      {children}
-      <input
-        type="checkbox"
-        style={style}
-        checked={isChecked}
-        aria-label={accessibilityLabel}
-        disabled={isDisabled}
-        id={id}
-        onChange={onToggle}
-        onMouseEnter={onPointerEnter}
-        onMouseLeave={onPointerLeave}
-        onMouseDown={onPressIn}
-        onMouseUp={onPressOut}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      />
-    </Block>
-  )
-)
+)(({
+  id,
+  accessibilityLabel,
+  isDisabled,
+  isChecked,
+  style,
+  onToggle,
+  onPointerEnter,
+  onPointerLeave,
+  onPressIn,
+  onPressOut,
+  onFocus,
+  onBlur,
+  children,
+}) => (
+  <Block shouldStretch>
+    {children}
+    <input
+      type="checkbox"
+      style={style}
+      checked={isChecked}
+      aria-label={accessibilityLabel}
+      disabled={isDisabled}
+      id={id}
+      onChange={onToggle}
+      onMouseEnter={onPointerEnter}
+      onMouseLeave={onPointerLeave}
+      onMouseDown={onPressIn}
+      onMouseUp={onPressOut}
+      onFocus={onFocus}
+      onBlur={onBlur}
+    />
+  </Block>
+))

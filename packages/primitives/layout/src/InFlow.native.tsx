@@ -78,6 +78,6 @@ export const LayoutInFlow = component(
 
     return props
   })
-)('LayoutInFlow', ({ children, pointerEvents, style }) => (
+)(({ children, pointerEvents, style }) => (
   <View style={style} pointerEvents={pointerEvents}>{children}</View>
 ))
