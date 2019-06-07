@@ -18,13 +18,6 @@ export const useEffectFn = process.env.NODE_ENV === 'test'
   /* istanbul ignore next */
   : useEffect
 
-export const setDisplayName = <T extends {}>(displayName: string, component: FC<T>) => {
-  const wrappedComponent = (x: T) => component(x)
-  wrappedComponent.displayName = displayName
-
-  return wrappedComponent
-}
-
 export const shallowEqualByKeys = <T extends {}>(a: T, b: T, keys: (keyof T)[]) => {
   if (a === b) {
     return true
