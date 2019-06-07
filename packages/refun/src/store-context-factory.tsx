@@ -33,7 +33,7 @@ export const StoreContextFactory = <T extends {}> (store: Store<T>) => {
         })
       })
     })
-  )('StoreProvider', ({ value, children }) => (
+  )(({ value, children }) => (
     <Context.Provider value={value}>
       {value.state === null ? null : children}
     </Context.Provider>
