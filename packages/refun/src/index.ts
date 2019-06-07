@@ -1,6 +1,5 @@
 export * from './component'
 export * from './pure-component'
-export * from './map-children'
 export * from './map-context'
 export * from './map-debounced-handler'
 export * from './map-default-props'
