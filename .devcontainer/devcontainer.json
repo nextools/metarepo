@@ -1,5 +1,5 @@
 {
-  "name": "Node.js",
+  "name": "Bubble Dev",
   "dockerComposeFile": "compose.socket.yml",
   "service": "nodejs",
   "shutdownAction": "stopCompose",
