@@ -56,3 +56,5 @@ export const Button = component(
     {children}
   </button>
 ))
+
+Button.displayName = 'Button'

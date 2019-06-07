@@ -55,3 +55,5 @@ export const Checkbox = component(
     />
   </Block>
 ))
+
+Checkbox.displayName = 'Checkbox'

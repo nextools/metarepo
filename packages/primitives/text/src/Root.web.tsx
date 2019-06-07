@@ -102,3 +102,5 @@ export const Text = component(
 )(({ tag, children, style, id }) => (
   createElement(tag, { style, id }, children)
 ))
+
+Text.displayName = 'Text'

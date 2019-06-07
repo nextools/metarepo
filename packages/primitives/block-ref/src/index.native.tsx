@@ -7,3 +7,5 @@ export type TBlockRef = TBlock
 export const BlockRef: ForwardRefExoticComponent<TBlockRef> = forwardRef<View>((props, ref) => (
   Block({ ...props, ref })
 ))
+
+BlockRef.displayName = 'BlockRef'

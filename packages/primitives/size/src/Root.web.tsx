@@ -49,3 +49,5 @@ export const Size = component(
 )(({ ref, children }) => (
   <div style={style} ref={ref}>{children}</div>
 ))
+
+Size.displayName = 'Size'

@@ -49,3 +49,5 @@ export const Root = component(
 )(({ children, dimensions, styles }) => (
   <View style={styles}>{children(dimensions)}</View>
 ))
+
+Root.displayName = 'Root'

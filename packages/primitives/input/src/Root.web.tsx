@@ -89,3 +89,5 @@ export const Input = component(
     onMouseUp={onPressOut}
   />
 ))
+
+Input.displayName = 'Input'

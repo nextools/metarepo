@@ -37,3 +37,5 @@ export const Link: FC<TLink> = ({
     {children}
   </a>
 )
+
+Link.displayName = 'Link'

@@ -42,3 +42,5 @@ export const Select = component(
     {children}
   </Picker>
 ))
+
+Select.displayName = 'Select'

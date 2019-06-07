@@ -70,3 +70,5 @@ export const Text = component(
     {children}
   </NativeText>
 ))
+
+Text.displayName = 'Text'

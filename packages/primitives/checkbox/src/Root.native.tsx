@@ -17,35 +17,34 @@ export const Checkbox = component(
       opacity: 0,
     }),
   }))
-)(
-  'Checkbox',
-  ({
-    id,
-    accessibilityLabel,
-    isDisabled,
-    isChecked,
-    style,
-    onToggle,
-    onPressIn,
-    onPressOut,
-    children,
-  }) => (
-    <TouchableWithoutFeedback
-      accessibilityLabel={accessibilityLabel}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      disabled={isDisabled}
-    >
-      <Block shouldStretch>
-        {children}
-        <Switch
-          value={isChecked}
-          disabled={isDisabled}
-          testID={id}
-          style={style}
-          onValueChange={onToggle}
-        />
-      </Block>
-    </TouchableWithoutFeedback>
-  )
-)
+)(({
+  id,
+  accessibilityLabel,
+  isDisabled,
+  isChecked,
+  style,
+  onToggle,
+  onPressIn,
+  onPressOut,
+  children,
+}) => (
+  <TouchableWithoutFeedback
+    accessibilityLabel={accessibilityLabel}
+    onPressIn={onPressIn}
+    onPressOut={onPressOut}
+    disabled={isDisabled}
+  >
+    <Block shouldStretch>
+      {children}
+      <Switch
+        value={isChecked}
+        disabled={isDisabled}
+        testID={id}
+        style={style}
+        onValueChange={onToggle}
+      />
+    </Block>
+  </TouchableWithoutFeedback>
+))
+
+Checkbox.displayName = 'Checkbox'

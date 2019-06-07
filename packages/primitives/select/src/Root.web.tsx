@@ -60,3 +60,5 @@ export const Select = component(
     {children}
   </select>
 ))
+
+Select.displayName = 'Select'

@@ -46,3 +46,5 @@ export const Root = component(
 )(({ children, dimensions, style }) => (
   <div style={style}>{children(dimensions)}</div>
 ))
+
+Root.displayName = 'Root'

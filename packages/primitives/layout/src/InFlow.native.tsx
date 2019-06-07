@@ -81,3 +81,5 @@ export const LayoutInFlow = component(
 )(({ children, pointerEvents, style }) => (
   <View style={style} pointerEvents={pointerEvents}>{children}</View>
 ))
+
+LayoutInFlow.displayName = 'LayoutInFlow'

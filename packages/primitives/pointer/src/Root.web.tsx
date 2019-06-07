@@ -94,3 +94,5 @@ export const Pointer = component(
 )((props) => (
   <div {...props}/>
 ))
+
+Pointer.displayName = 'Pointer'

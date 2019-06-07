@@ -48,3 +48,5 @@ export const Pointer = component(
     <View style={style}>{children}</View>
   </TouchableWithoutFeedback>
 ))
+
+Pointer.displayName = 'Pointer'

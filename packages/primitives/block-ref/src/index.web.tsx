@@ -6,3 +6,5 @@ export type TBlockRef = TBlock
 export const BlockRef: ForwardRefExoticComponent<TBlockRef> = forwardRef<HTMLDivElement>((props, ref) => (
   Block({ ...props, ref })
 ))
+
+BlockRef.displayName = 'BlockRef'

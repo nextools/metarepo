@@ -162,3 +162,5 @@ export const Block = component(
 )((props) => (
   <div {...props}/>
 ))
+
+Block.displayName = 'Block'

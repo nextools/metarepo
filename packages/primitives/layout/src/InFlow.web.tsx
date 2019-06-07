@@ -79,3 +79,5 @@ export const LayoutInFlow = component(
 )(({ style, children }) => (
   <View style={style}>{children}</View>
 ))
+
+LayoutInFlow.displayName = 'LayoutInFlow'

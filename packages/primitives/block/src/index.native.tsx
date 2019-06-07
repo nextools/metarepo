@@ -139,3 +139,5 @@ export const Block = component(
 )((props) => (
   <View {...props}/>
 ))
+
+Block.displayName = 'Block'

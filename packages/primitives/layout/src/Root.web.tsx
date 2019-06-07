@@ -135,3 +135,5 @@ export const Layout = component(
     </Context.Provider>
   </View>
 ))
+
+Layout.displayName = 'Layout'

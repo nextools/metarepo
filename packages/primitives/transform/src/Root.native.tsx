@@ -38,3 +38,5 @@ export const Transform = component(
 )(({ style, children }) => (
   <View style={style}>{children}</View>
 ))
+
+Transform.displayName = 'Transform'

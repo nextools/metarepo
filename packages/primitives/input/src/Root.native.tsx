@@ -49,7 +49,7 @@ export const Input = component(
       }),
     })
   )
-)('Input', ({ id, isDisabled, style, value, onChangeText, onSubmitEditing, onFocus, onBlur }) => (
+)(({ id, isDisabled, style, value, onChangeText, onSubmitEditing, onFocus, onBlur }) => (
   <TextInput
     testID={id}
     underlineColorAndroid="rgba(0,0,0,0)"
@@ -64,3 +64,5 @@ export const Input = component(
     onSubmitEditing={onSubmitEditing}
   />
 ))
+
+Input.displayName = 'Input'

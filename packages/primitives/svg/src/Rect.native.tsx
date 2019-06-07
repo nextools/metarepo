@@ -1,3 +1,5 @@
-import { Rect } from 'react-native-svg'
+import { Rect as NativeRect } from 'react-native-svg'
 
-export const PrimitiveRect = Rect
+export const Rect = NativeRect
+
+Rect.displayName = 'Rect'

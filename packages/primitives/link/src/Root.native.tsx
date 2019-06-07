@@ -21,8 +21,10 @@ export const Link = component(
       }
     },
   })
-)('Link', ({ children, id, onPress }) => (
+)(({ children, id, onPress }) => (
   <Text testID={id} onPress={onPress}>
     {children}
   </Text>
 ))
+
+Link.displayName = 'Link'

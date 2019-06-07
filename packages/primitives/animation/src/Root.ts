@@ -81,3 +81,5 @@ export const Animation = <T extends number[]>({ time, children, values, easing }
 
   return children(result)
 }
+
+Animation.displayName = 'Animation'

@@ -16,3 +16,5 @@ export const LayoutOutOfFlow: FC<TLayoutOutOfFlow> = ({ children, floatinIndex, 
     {children}
   </Block>
 )
+
+LayoutOutOfFlow.displayName = 'LayoutOutOfFlow'

@@ -61,3 +61,5 @@ export const Border = component(
     }}
   />
 ))
+
+Border.displayName = 'Border'

@@ -37,3 +37,5 @@ export const Size = component(
 )(({ children, onLayout }) => (
   <View style={style} onLayout={onLayout}>{children}</View>
 ))
+
+Size.displayName = 'Size'
