@@ -18,7 +18,7 @@
   "dependencies": {
     "stili": "^0.1.0",
     "elegir": "^0.3.1",
-    "refun": "^0.2.0",
+    "refun": "^0.3.0",
     "tsfn": "^0.1.0"
   },
   "devDependencies": {

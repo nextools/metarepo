@@ -16,7 +16,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "autoprops": "^0.3.0",
+    "autoprops": "^0.4.0",
     "tsfn": "^0.1.0"
   },
   "devDependencies": {
