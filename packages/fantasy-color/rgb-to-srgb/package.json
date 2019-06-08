@@ -1,6 +1,6 @@
 {
   "name": "@fantasy-color/rgb-to-srgb",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Transform RGB objects to sRGB objects (coded in the RGB type)",
   "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/rgb-to-srgb",
   "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",

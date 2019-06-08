@@ -1,6 +1,6 @@
 {
   "name": "@fantasy-color/rgba-to-rgb",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Transform RGBA objects to RGB objects",
   "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/rgba-to-rgb",
   "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",

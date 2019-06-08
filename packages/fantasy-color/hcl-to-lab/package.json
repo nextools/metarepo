@@ -1,6 +1,6 @@
 {
   "name": "@fantasy-color/hcl-to-lab",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Transform HCL objects to LAB objects",
   "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/hcl-to-lab",
   "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",
