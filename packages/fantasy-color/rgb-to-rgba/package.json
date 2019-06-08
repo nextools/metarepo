@@ -1,0 +1,26 @@
+{
+  "name": "@fantasy-color/rgb-to-rgba",
+  "version": "0.0.0",
+  "description": "Transform RGB objects to RGBA objects",
+  "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/rgb-to-rgba",
+  "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@fantasy-color/types": "^0.0.0"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "blue-tape": "^1.0.0"
+  }
+}

@@ -8,6 +8,7 @@
     "packages/autoprops",
     "packages/colorido",
     "packages/elegir",
+    "packages/fantasy-color/*",
     "packages/lada/*",
     "packages/primitives/*",
     "packages/react-autoprops",
