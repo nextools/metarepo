@@ -17,8 +17,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@fantasy-color/types": "^0.0.0",
-    "@fantasy-color/normalize-rgba": "^0.0.0"
+    "@fantasy-color/types": "^0.1.0",
+    "@fantasy-color/normalize-rgba": "^0.1.0"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
