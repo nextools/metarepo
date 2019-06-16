@@ -17,7 +17,7 @@
     "@x-ray/common-utils": "^0.1.0",
     "@x-ray/screenshot-utils": "^0.1.0",
     "execa": "^1.0.0",
-    "foxr": "^0.8.1",
+    "foxr": "^0.9.0",
     "graceful-fs": "^4.1.11",
     "make-dir": "^3.0.0",
     "react": "^16.8.6",

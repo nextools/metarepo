@@ -804,7 +804,7 @@
     pirates "^4.0.0"
     source-map-support "^0.5.9"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.4.2", "@babel/runtime@^7.4.3":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.4.2", "@babel/runtime@^7.4.3", "@babel/runtime@^7.4.5":
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.5.tgz#582bb531f5f9dc67d2fcb682979894f75e253f12"
   integrity sha512-TuI4qpWZP6lGOGIuGWtp9sPluqYICmbk8T/1vpSysqJxRPkudh/ofFWyqdcMsDf2s7KvDL4/YHgKyvcS3g9CJQ==
@@ -3927,11 +3927,6 @@ eslint@^5.16.0:
     table "^5.2.3"
     text-table "^0.2.0"
 
-esm@^3.0.84:
-  version "3.2.25"
-  resolved "https://registry.yarnpkg.com/esm/-/esm-3.2.25.tgz#342c18c29d56157688ba5ce31f8431fbb795cc10"
-  integrity sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==
-
 espree@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/espree/-/espree-5.0.1.tgz#5d6526fa4fc7f0788a5cf75b15f30323e2f81f7a"
@@ -4585,15 +4580,15 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
-foxr@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/foxr/-/foxr-0.8.1.tgz#119e50c8705ba884ef443c25336daa87e9e56ce4"
-  integrity sha512-LonBAJbZ0aDAF+zy/PrlAEFCY2xQeUyWd/Nbpgm3CygjiZhjmkIa6S88uJaMTPtJ0LlBmUUV8gtTr1eSP1tXqw==
+foxr@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/foxr/-/foxr-0.9.0.tgz#e952daff52f2858734bec6fe0b22f41b2718b783"
+  integrity sha512-P1TKWJwxrcnFKOt453LU4ffI0DAWbsbjZtyW4PLhk7yPCdbawi7CbmETZYPLh994xeWNhaDgcN9JSfqLGTV9gQ==
   dependencies:
-    esm "^3.0.84"
+    "@babel/runtime" "^7.4.5"
     execa "^1.0.0"
     signal-exit "^3.0.2"
-    typeon "^0.2.0"
+    typeon "^0.3.0"
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -9816,13 +9811,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-
-typeon@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/typeon/-/typeon-0.2.0.tgz#6336ad0857bf4189a9d2694ecbf2c6e6edbfdd9a"
-  integrity sha512-rflP8d6c1+vrXB2Or2BLOLXeojn4Jogzt4xYlQYoSQJefXrXlPGWZLnTBng1NyjeMA1ictlBBkeE9HgIZB1BNg==
-  dependencies:
-    esm "^3.0.84"
 
 typeon@^0.3.0:
   version "0.3.0"
