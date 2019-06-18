@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 
 // no body - no tail
 export type TSerializedElement = {
@@ -7,35 +7,44 @@ export type TSerializedElement = {
   tail: ReactNode, // shared new line
 }
 
-export type TElementFactory = (children: ReactNode) => ReactNode
+export type TPathSegment = {
+  name: string,
+  index: number,
+}
+
+export type TPath = TPathSegment[]
+
+export type TLine = {
+  path: TPath,
+  index?: number,
+}
 
 export type TConfig = {
   indent: number,
-  maxChildrenDepth: number,
   whitespaceChar: string,
   components: {
-    Root: TElementFactory,
-    Line: TElementFactory,
-    ArrayComma: TElementFactory,
-    ArrayBracket: TElementFactory,
-    Comment: TElementFactory,
-    CommentBrace: TElementFactory,
-    ComponentBracket: TElementFactory,
-    ComponentName: TElementFactory,
-    ObjectBrace: TElementFactory,
-    ObjectColon: TElementFactory,
-    ObjectKey: TElementFactory,
-    ObjectComma: TElementFactory,
-    PropsBrace: TElementFactory,
-    PropsEquals: TElementFactory,
-    PropsKey: TElementFactory,
-    Quote: TElementFactory,
-    ValueBoolean: TElementFactory,
-    ValueFunction: TElementFactory,
-    ValueNull: TElementFactory,
-    ValueNumber: TElementFactory,
-    ValueString: TElementFactory,
-    ValueSymbol: TElementFactory,
-    Whitespace: TElementFactory,
+    Root: FC<{}>,
+    Line: FC<TLine>,
+    ArrayComma: FC<{}>,
+    ArrayBracket: FC<{}>,
+    Comment: FC<{}>,
+    CommentBrace: FC<{}>,
+    ComponentBracket: FC<{}>,
+    ComponentName: FC<{}>,
+    ObjectBrace: FC<{}>,
+    ObjectColon: FC<{}>,
+    ObjectKey: FC<{}>,
+    ObjectComma: FC<{}>,
+    PropsBrace: FC<{}>,
+    PropsEquals: FC<{}>,
+    PropsKey: FC<{}>,
+    Quote: FC<{}>,
+    ValueBoolean: FC<{}>,
+    ValueFunction: FC<{}>,
+    ValueNull: FC<{}>,
+    ValueNumber: FC<{}>,
+    ValueString: FC<{}>,
+    ValueSymbol: FC<{}>,
+    Whitespace: FC<{}>,
   },
 }

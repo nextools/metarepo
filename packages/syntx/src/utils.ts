@@ -1,12 +1,11 @@
-import { ReactElement, ComponentClass, FC, isValidElement } from 'react'
+import { ReactElement, ComponentClass, FC, isValidElement, ReactNode, cloneElement } from 'react'
+import { TLine } from './types'
 
 export const hasKeys = (obj: any) => Object.keys(obj).length > 0
 
 export const getDisplayName = (component: ComponentClass<any> | FC<any>) => {
   return component.displayName || component.name
 }
-
-export const INITIAL_CHILD_DEPTH = 0
 
 export const isUndefined = (value: any): value is undefined => typeof value === 'undefined'
 
@@ -63,4 +62,41 @@ export const getElementName = (element: ReactElement<any>) => {
   }
 
   return getDisplayName(element.type)
+}
+
+export const flatten = (array: any[]) => {
+  const flattened: any[] = []
+
+  const flat = (array: any[]) => {
+    array.forEach((el) => {
+      if (Array.isArray(el)) {
+        flat(el)
+      } else {
+        flattened.push(el)
+      }
+    })
+  }
+
+  flat(array)
+
+  return flattened
+}
+
+export const isLine = (obj: ReactNode): obj is ReactElement<TLine> => {
+  return isValidElement(obj)
+}
+
+export const sanitizeArray = (array: ReactNode): ReactNode => {
+  if (!Array.isArray(array)) {
+    return array
+  }
+
+  return flatten(array)
+    .reduce((result, child, i) => {
+      if (isLine(child)) {
+        result.push(cloneElement(child, { key: i, index: i + 1 }))
+      }
+
+      return result
+    }, [])
 }
