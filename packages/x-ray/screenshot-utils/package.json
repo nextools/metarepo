@@ -18,7 +18,7 @@
     "@x-ray/common-utils": "^0.1.0",
     "graceful-fs": "^4.1.11",
     "imagemin-pngout": "^4.0.0",
-    "pixelmatch": "^4.0.2",
+    "pixelmatch": "^5.0.0",
     "upng-js": "^2.1.0"
   },
   "devDependencies": {
