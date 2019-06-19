@@ -9917,6 +9917,10 @@ typescript@bubble-dev/TypeScript#ext-3.4.1:
   version "3.4.1"
   resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/5215f519169e01742e1cc6ac187f16f35932a7dc"
 
+typescript@bubble-dev/TypeScript#ext-3.5.2:
+  version "3.5.2"
+  resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/61fb99afc5db8a5c04c7fe58c63ddfddc00b5558"
+
 ua-parser-js@^0.7.18:
   version "0.7.20"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.20.tgz#7527178b82f6a62a0f243d1f94fd30e3e3c21098"

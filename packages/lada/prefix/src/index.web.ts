@@ -38,6 +38,8 @@ export const prefixStyle = (styles: TStyle): TStyle =>
   getObjectKeys(styles).reduce((result, key) => {
     const prefixedKey = prefixStyleKey(key)
 
+    // FIXME
+    // @ts-ignore
     result[prefixedKey] = styles[key]
 
     return result

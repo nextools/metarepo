@@ -21,6 +21,8 @@ export const mapRefLayout = <P extends {}, R extends {}, RN extends string> (ref
     }
   }, prevValues.current)
 
+  // FIXME https://github.com/microsoft/TypeScript/issues/13948
+  // @ts-ignore
   return {
     ...props,
     ...state,
