@@ -33,7 +33,7 @@
     "eslint": "^5.16.0",
     "mocku": "^0.5.0",
     "spyfn": "^0.2.0",
-    "typescript": "bubble-dev/TypeScript#ext-3.4.1"
+    "typescript": "bubble-dev/TypeScript#ext-3.5.2"
   },
   "start": {
     "file": "tasks/",
