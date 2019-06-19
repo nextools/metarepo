@@ -27,7 +27,7 @@ export const mapSafeTimeoutFactory = (setTimeoutFn: Function, clearTimeoutFn: Fu
         timerIds.current.clear()
       }, [])
 
-      // FIXME
+      // FIXME https://github.com/microsoft/TypeScript/issues/13948
       // @ts-ignore
       return {
         ...props,

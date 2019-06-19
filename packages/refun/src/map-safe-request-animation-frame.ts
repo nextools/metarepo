@@ -38,7 +38,7 @@ export const mapSafeRequestAnimationFrameFactory = (requestAnimationFrameFn: Fun
 
       useEffectFn(unmountFn.current, EMPTY_ARRAY)
 
-      // FIXME
+      // FIXME https://github.com/microsoft/TypeScript/issues/13948
       // @ts-ignore
       return {
         ...props,
