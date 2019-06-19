@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@auto/utils": "^0.1.0",
-    "fast-glob": "^2.2.2",
+    "fast-glob": "^3.0.0",
     "graceful-fs": "^4.1.11",
     "p-all": "^2.0.0"
   },
