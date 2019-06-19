@@ -1,7 +1,7 @@
 {
   "name": "Bubble Dev",
   "dockerComposeFile": "docker-compose.yml",
-  "service": "nodejs",
+  "service": "bubble-dev",
   "shutdownAction": "stopCompose",
   "workspaceFolder": "/workspace",
   "extensions": [

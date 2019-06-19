@@ -43,7 +43,7 @@ gpg -K
 If something went wrong or just didn't work with first try – cleanup things before you try again:
 
 ```sh
-docker rm --force bubble-dev_devcontainer_nodejs_1 ssh-agent-forward
+docker rm --force vscode-bubble-dev ssh-agent-forward
 docker volume rm ssh-agent-forward
 ```
 
