@@ -258,7 +258,7 @@ export const build = async () => {
 
   return sequence(
     // @ts-ignore
-    ...packages.map(buildPackage)
+    ...packageNames.map(buildPackage)
   )
 }
 
