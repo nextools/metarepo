@@ -11,6 +11,7 @@ RUN apt-get update && apt-get --no-install-recommends --yes install \
     git \
     procps \
     ca-certificates \
+    openssh-client \
     gnupg-agent \
     software-properties-common \
     locales
@@ -32,6 +33,11 @@ RUN apt-get update && apt-get --no-install-recommends --yes install \
     yarn
 
 # RUN apt-get autoremove --yes && apt-get clean --yes
+
+# https://wiki.gnupg.org/NFS
+RUN mkdir --mode 700 /root/.ssh /root/.gnupg && \
+    printf '%%Assuan%%\nsocket=/ssh-agent-forward/S.gpg-agent\n' > /root/.gnupg/S.gpg-agent && \
+    ssh-keyscan github.com >> /root/.ssh/known_hosts 2> /dev/null
 
 ENV DEBIAN_FRONTEND=dialog
 ENV SHELL /bin/bash
