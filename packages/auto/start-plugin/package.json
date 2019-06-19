@@ -20,9 +20,9 @@
     "@auto/npm": "^0.1.0",
     "@auto/utils": "^0.1.0",
     "@start/plugin": "^0.3.0",
-    "prompts": "^1.1.1"
+    "prompts": "^2.0.0"
   },
   "devDependencies": {
-    "@types/prompts": "^1.2.0"
+    "@types/prompts": "^2.0.0"
   }
 }
