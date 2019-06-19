@@ -53,6 +53,7 @@
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "copie": "^0.3.0",
     "dotenv": "^8.0.0",
+    "escape-string-regexp": "^2.0.0",
     "globby": "^9.2.0",
     "graceful-fs": "^4.1.15",
     "make-dir": "^3.0.0",
