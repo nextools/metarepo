@@ -21,6 +21,8 @@ export const mapRefLayout = <P extends {}, R extends {}, RN extends string> (ref
     }
   }, prevValues.current)
 
+  // FIXME
+  // @ts-ignore
   return {
     ...props,
     ...state,

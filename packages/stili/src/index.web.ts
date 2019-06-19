@@ -36,6 +36,8 @@ export const normalizeStyle = (style: TStyle): TCssProps =>
       result.appearance = value as TCssProps['appearance']
     }
 
+    // FIXME
+    // @ts-ignore
     result[key as keyof TCssProps] = value
 
     return result

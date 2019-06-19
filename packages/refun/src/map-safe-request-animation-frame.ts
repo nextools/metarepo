@@ -38,6 +38,8 @@ export const mapSafeRequestAnimationFrameFactory = (requestAnimationFrameFn: Fun
 
       useEffectFn(unmountFn.current, EMPTY_ARRAY)
 
+      // FIXME
+      // @ts-ignore
       return {
         ...props,
         [propName]: setSafeRAF.current,

@@ -15,6 +15,8 @@ export const normalizeStyle = (style: TStyle): TCssProps =>
       result.fontWeight = String(value) as TCssProps['fontWeight']
     }
 
+    // FIXME
+    // @ts-ignore
     result[key] = value
 
     return result
