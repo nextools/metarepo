@@ -1,11 +1,11 @@
-import { TextStyle } from 'react-native' // eslint-disable-line
+import { TextStyle, ImageStyle } from 'react-native' // eslint-disable-line
 import { TExtend, getObjectKeys, isUndefined } from 'tsfn'
 
-export type TStyle = TExtend<TextStyle, {
+type TCssProps = TExtend<ImageStyle, TextStyle>
+
+export type TStyle = TExtend<TCssProps, {
   fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900,
 }>
-
-type TCssProps = TextStyle
 
 export const normalizeStyle = (style: TStyle): TCssProps =>
   getObjectKeys(style).reduce((result, key) => {
