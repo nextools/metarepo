@@ -203,7 +203,14 @@ const buildPackage = async (packageDir: string) => {
   )
 }
 
-export const build = async () => {
+export const build = async (...packageDirs: string[]) => {
+  if (packageDirs.length > 0) {
+    return sequence(
+      // @ts-ignore
+      ...packageDirs.map(buildPackage)
+    )
+  }
+
   const { default: prompts } = await import('prompts')
   const { getWorkspacesPackages } = await import('@auto/fs')
   const { suggestFilter, makeRegExp } = await import('./utils')
