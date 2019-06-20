@@ -1,4 +1,4 @@
-import { createElement } from 'react'
+import React from 'react'
 import { normalizeStyle, TStyle } from 'stili'
 import {
   component,
@@ -6,23 +6,20 @@ import {
   mapWithProps,
   startWithType,
 } from 'refun'
-import { elegir } from 'elegir'
 import { isNumber } from 'tsfn'
 import { TTextProps } from './types'
-import { TextRoles } from './roles'
 
 export const Text = component(
   startWithType<TTextProps>(),
   mapDefaultProps({
-    role: TextRoles.NONE,
     shouldPreserveWhitespace: false,
     shouldPreventSelection: false,
     shouldPreventWrap: false,
     sholdHideOverflow: false,
+    isUnderlined: false,
   }),
   mapWithProps(({
     color,
-    role,
     letterSpacing,
     lineHeight,
     fontFamily,
@@ -34,24 +31,6 @@ export const Text = component(
     shouldPreventWrap,
     shouldHideOverflow,
   }) => {
-    const tag = elegir(
-      role === TextRoles.HEADING1,
-      'h1',
-      role === TextRoles.HEADING2,
-      'h2',
-      role === TextRoles.HEADING3,
-      'h3',
-      role === TextRoles.HEADING4,
-      'h4',
-      role === TextRoles.HEADING5,
-      'h5',
-      role === TextRoles.HEADING6,
-      'h6',
-      role === TextRoles.NONE,
-      'span',
-      true,
-      'span'
-    )
     const style: TStyle = {
       color,
       fontFamily,
@@ -96,11 +75,10 @@ export const Text = component(
 
     return {
       style: normalizeStyle(style),
-      tag,
     }
   })
-)(({ tag, children, style, id }) => (
-  createElement(tag, { style, id }, children)
+)(({ children, style, id }) => (
+  <span id={id} style={style}>{children}</span>
 ))
 
 Text.displayName = 'Text'

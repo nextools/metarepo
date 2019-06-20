@@ -16,6 +16,7 @@ export const Text = component(
     shouldPreventSelection: false,
     shouldPreventWrap: false,
     shouldHideOverflow: false,
+    isUnderlined: false,
   }),
   mapWithProps(({
     color,
