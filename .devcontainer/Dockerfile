@@ -39,5 +39,7 @@ RUN mkdir --mode 700 /root/.ssh /root/.gnupg && \
     printf '%%Assuan%%\nsocket=/ssh-agent-forward/S.gpg-agent\n' > /root/.gnupg/S.gpg-agent && \
     ssh-keyscan github.com >> /root/.ssh/known_hosts 2> /dev/null
 
+COPY .bashrc /root/.bashrc
+
 ENV DEBIAN_FRONTEND=dialog
 ENV SHELL /bin/bash
