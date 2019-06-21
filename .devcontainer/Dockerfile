@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM bitnami/minideb:stretch
 
 # fix "debconf: unable to initialize frontend: Dialog"
 ENV DEBIAN_FRONTEND=noninteractive
@@ -7,13 +7,13 @@ ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
 
 RUN apt-get update && apt-get --no-install-recommends --yes install \
     apt-utils \
+    apt-transport-https \
     curl \
     git \
     procps \
     ca-certificates \
+    gnupg2 \
     openssh-client \
-    gnupg-agent \
-    software-properties-common \
     locales && \
   # fix "perl: warning: Setting locale failed"
   locale-gen en_US.UTF-8 && \
@@ -22,9 +22,9 @@ RUN apt-get update && apt-get --no-install-recommends --yes install \
   curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
   curl -fsSL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
   #
-  add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
-  add-apt-repository "deb [arch=amd64] https://deb.nodesource.com/node_10.x $(lsb_release -cs) main" && \
-  add-apt-repository "deb [arch=amd64] https://dl.yarnpkg.com/debian/ stable main" && \
+  echo "deb https://download.docker.com/linux/debian stretch stable" | tee /etc/apt/sources.list.d/docker.list && \
+  echo "deb https://deb.nodesource.com/node_10.x stretch main" | tee /etc/apt/sources.list.d/nodejs.list && \
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
   #
   apt-get update && apt-get --no-install-recommends --yes install \
     docker-ce \
