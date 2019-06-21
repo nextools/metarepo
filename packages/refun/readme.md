@@ -119,3 +119,29 @@ component(
   </p>
 ))
 ```
+
+## `mapDebouncedHandlers`
+
+**TODO** (no clue)
+
+## `mapDefaultProps`
+
+This function sets some default prop values based on the object that is passed into it. Alternative to using the static `defaultProps` component property. The advantage of using it is that the props passed in will be type checked.
+
+```ts
+import React from 'react'
+import { component, mapDefaultProps, startWithType } from 'refun'
+
+type TMessage = {
+  label: string
+}
+
+export default component(
+  startWithType<TMessage>(),
+  mapDefaultProps({
+    label: 'Hello World!'
+  })
+)(({ label }) => (
+  <p>{label}</p>
+))
+```
