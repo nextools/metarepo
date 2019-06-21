@@ -145,3 +145,27 @@ export default component(
   <p>{label}</p>
 ))
 ```
+
+## `mapFocused`
+
+This function sets properties when the `onFocus` handler is called and removes them when `onBlur` is called.
+
+```ts
+import React from 'react'
+import { component, mapFocused, startWithType } from 'refun'
+
+type TButton = {
+  label: string,
+}
+
+export default component(
+  startWithType<TButton>(),
+  mapFocused({
+    isFocused: true,
+  })
+)(({ label, onBlur, onFocus }) = (
+  <button onBlur={onBlur} onFocus={onFocus}>
+    {label}
+  </button>
+))
+```
