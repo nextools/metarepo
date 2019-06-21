@@ -6,6 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
 
 RUN apt-get update && apt-get --no-install-recommends --yes install \
+    dialog \
     apt-utils \
     apt-transport-https \
     curl \
@@ -16,7 +17,7 @@ RUN apt-get update && apt-get --no-install-recommends --yes install \
     openssh-client \
     locales && \
   # fix "perl: warning: Setting locale failed"
-  locale-gen en_US.UTF-8 && \
+  localedef --inputfile en_US --charmap UTF-8 en_US.UTF-8 && \
   #
   curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
   curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
@@ -42,4 +43,5 @@ RUN apt-get update && apt-get --no-install-recommends --yes install \
 COPY .bashrc /root/.bashrc
 
 ENV DEBIAN_FRONTEND=dialog
-ENV SHELL /bin/bash
+ENV LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8
+ENV SHELL=/bin/bash
