@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "install",
+      "label": "⏬ install",
       "type": "shell",
       "command": "yarn install",
       "presentation": {
@@ -11,7 +11,7 @@
       "problemMatcher": []
     },
     {
-      "label": "lint",
+      "label": "🚷 lint",
       "type": "shell",
       "command": "./node_modules/.bin/start lint",
       "presentation": {
@@ -20,7 +20,7 @@
       "problemMatcher": []
     },
     {
-      "label": "test",
+      "label": "✅ test",
       "type": "shell",
       "command": "./node_modules/.bin/start test",
       "presentation": {
@@ -29,7 +29,7 @@
       "problemMatcher": []
     },
     {
-      "label": "commit",
+      "label": "➕ commit",
       "type": "shell",
       "command": "./node_modules/.bin/start commit",
       "presentation": {
@@ -38,7 +38,7 @@
       "problemMatcher": []
     },
     {
-      "label": "publish",
+      "label": "📦 publish",
       "type": "shell",
       "command": "./node_modules/.bin/start publish",
       "presentation": {
