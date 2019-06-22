@@ -8,4 +8,4 @@ coverage:
 comment:
   layout: diff
   behavior: once
-require_changes: yes
+  require_changes: yes
