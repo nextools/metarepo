@@ -176,3 +176,41 @@ export default component(
   </button>
 ))
 ```
+
+## `mapHovered`
+
+This function sets properties when the `onPointerEnter` handler is called and removes them when `onPointerLeave` is called.
+
+Note that `onPointerEnter` and `onPointerLeave` are synthetic event names meant to abstract from platform specific hover states. In web, they will be typically mapped:
+
+- `onPointerEnter` -> `onMouseEnter`
+- `onPointerLeave` -> `onMouseLeave`
+
+…and each platform will have their own corresponding mapping.
+
+```ts
+import React from 'react'
+import { component, mapHovered, startWithType } from 'refun'
+
+type TButton = {
+  label: string,
+}
+
+export default component(
+  startWithType<TButton>(),
+  mapHovered({
+    isHovered: true,
+  })
+)(({ isHovered, label, onPointerEnter, onPointerLeave }) = (
+  <button
+    onMouseEnter={onPointerEnter}
+    onMouseLeave={onPointerLeave}
+    style={{
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: isHovered ? 'black' : 'grey'
+    }}>
+    {label}
+  </button>
+))
+```
