@@ -163,8 +163,15 @@ export default component(
   mapFocused({
     isFocused: true,
   })
-)(({ label, onBlur, onFocus }) = (
-  <button onBlur={onBlur} onFocus={onFocus}>
+)(({ isFocused, label, onBlur, onFocus }) = (
+  <button
+    onBlur={onBlur}
+    onFocus={onFocus}
+    style={{
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: isFocused ? 'black' : 'grey'
+    }}>
     {label}
   </button>
 ))
