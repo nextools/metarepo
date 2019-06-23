@@ -6,6 +6,7 @@
     "packages/autoprops",
     "packages/bubble-dev/*",
     "packages/colorido",
+    "packages/copie",
     "packages/elegir",
     "packages/fantasy-color/*",
     "packages/fixdeps",
