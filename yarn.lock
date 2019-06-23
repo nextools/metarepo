@@ -9288,11 +9288,6 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
-spyfn@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/spyfn/-/spyfn-0.2.0.tgz#9e767270181ad86454ff1189c291123d26e45609"
-  integrity sha512-Tf72nQ3QWKmUj07LCbOQ4nMmTQ8mouY9RpS5FZmjPw/rmKZYhqGsy973NozivZMF3nDEuQ0WbBhPd9ePqEAFEQ==
-
 squeak@^1.0.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/squeak/-/squeak-1.3.0.tgz#33045037b64388b567674b84322a6521073916c3"
