@@ -13,6 +13,7 @@
     "packages/fixdeps",
     "packages/lada/*",
     "packages/math-playground",
+    "packages/mocku",
     "packages/primitives/*",
     "packages/react-autoprops",
     "packages/rebox/*",
