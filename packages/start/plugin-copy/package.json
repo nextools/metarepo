@@ -1,0 +1,31 @@
+{
+  "name": "@start/plugin-copy",
+  "version": "0.3.2",
+  "description": "👯 Copy files to relative destination using streams and keeping folders structure",
+  "keywords": "tasks, runner, start, start-plugin",
+  "repository": "deepsweet/start",
+  "homepage": "https://github.com/deepsweet/start/tree/master/packages/plugin-copy",
+  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.2",
+    "@start/plugin": "^0.3.1",
+    "copie": "^0.3.0",
+    "make-dir": "^3.0.0",
+    "move-path": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "blue-tape": "^1.0.0"
+  }
+}

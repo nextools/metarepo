@@ -1,0 +1,30 @@
+{
+  "name": "@start/plugin-lib-jest",
+  "version": "0.5.0",
+  "description": "✅ Run tests using Jest",
+  "keywords": "tasks, runner, start, start-plugin, jest",
+  "repository": "deepsweet/start",
+  "homepage": "https://github.com/deepsweet/start/tree/master/packages/plugin-lib-jest",
+  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.2",
+    "@jest/types": "^24.7.0",
+    "@start/plugin": "^0.3.1",
+    "jest-cli": "^24.7.1"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "blue-tape": "^1.0.0"
+  }
+}

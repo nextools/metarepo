@@ -1,0 +1,42 @@
+{
+  "name": "@start/plugin-lib-istanbul",
+  "version": "0.6.0",
+  "description": "💯 Collect, report and check code coverage using Istanbul",
+  "keywords": "tasks, runner, start, start-plugin, coverage, istanbul",
+  "repository": "deepsweet/start",
+  "homepage": "https://github.com/deepsweet/start/tree/master/packages/plugin-lib-istanbul",
+  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.2",
+    "@start/plugin": "^0.3.1",
+    "@types/istanbul-lib-instrument": "^1.7.2",
+    "convert-source-map": "^1.6.0",
+    "istanbul-api": "^2.1.1",
+    "istanbul-lib-coverage": "^2.0.3",
+    "istanbul-lib-hook": "^2.0.3",
+    "istanbul-lib-instrument": "^3.1.0",
+    "istanbul-lib-report": "^2.0.4",
+    "istanbul-lib-source-maps": "^3.0.2",
+    "tsfn": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "@types/convert-source-map": "^1.5.1",
+    "@types/istanbul-lib-coverage": "^2.0.0",
+    "@types/istanbul-lib-hook": "^1.0.0",
+    "@types/istanbul-lib-report": "^1.1.0",
+    "@types/istanbul-lib-source-maps": "^1.2.1",
+    "blue-tape": "^1.0.0"
+  }
+}

@@ -24,6 +24,7 @@
     "packages/rn-fonts",
     "packages/spyfn",
     "packages/spyt",
+    "packages/start/*",
     "packages/stili",
     "packages/syntx",
     "packages/tsfn",

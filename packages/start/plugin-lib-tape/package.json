@@ -1,0 +1,32 @@
+{
+  "name": "@start/plugin-lib-tape",
+  "version": "0.3.2",
+  "description": "✅ Run tests using Tape",
+  "keywords": "tasks, runner, start, start-plugin, tap",
+  "repository": "deepsweet/start",
+  "homepage": "https://github.com/deepsweet/start/tree/master/packages/plugin-lib-tape",
+  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.2",
+    "@start/plugin": "^0.3.1",
+    "tape": "^4.10.1",
+    "through": "^2.3.8"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "@types/tape": "^4.2.33",
+    "@types/through": "^0.0.29",
+    "blue-tape": "^1.0.0"
+  }
+}

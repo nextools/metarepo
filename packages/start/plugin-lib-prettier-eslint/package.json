@@ -1,0 +1,29 @@
+{
+  "name": "@start/plugin-lib-prettier-eslint",
+  "version": "0.3.1",
+  "description": "🚷 Fix code(style) using Prettier + ESLint",
+  "keywords": "tasks, runner, start, start-plugin, prettier, eslint",
+  "repository": "deepsweet/start",
+  "homepage": "https://github.com/deepsweet/start/tree/master/packages/plugin-lib-prettier-eslint",
+  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.2",
+    "@start/plugin": "^0.3.1",
+    "prettier-eslint": "^8.8.1"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "blue-tape": "^1.0.0"
+  }
+}
