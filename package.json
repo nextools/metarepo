@@ -14,6 +14,7 @@
     "packages/lada/*",
     "packages/math-playground",
     "packages/mocku",
+    "packages/move-path",
     "packages/primitives/*",
     "packages/react-autoprops",
     "packages/rebox/*",

@@ -7015,13 +7015,6 @@ move-file@^1.2.0:
     make-dir "^3.0.0"
     path-exists "^3.0.0"
 
-move-path@^0.2.0, move-path@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/move-path/-/move-path-0.2.1.tgz#2a7dbc5c1fe9b13267144838bd012fdbb011fcf9"
-  integrity sha512-c+Dy3neZMh7xhZI+1qzgO8IAkBhf57FxZJEnzxuyLWZBcilVSM2bZ++w9NYEPC8rvVPuFw3zZfl/Ry5LnIWEcg==
-  dependencies:
-    "@babel/runtime" "^7.4.3"
-
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"

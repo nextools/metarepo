@@ -1,0 +1,24 @@
+{
+  "name": "move-path",
+  "version": "0.2.1",
+  "description": "Move path to destination folder",
+  "keywords": ["fs", "path", "move", "destination"],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@babel/runtime": "^7.4.2"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "blue-tape": "^1.0.0"
+  }
+}
