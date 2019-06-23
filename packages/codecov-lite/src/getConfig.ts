@@ -3,14 +3,10 @@ import { TServiceConfig } from './types'
 
 export type TConfig = TServiceConfig & {
   package: string,
-  token: string,
+  token?: string,
 }
 
 export default (): TConfig => {
-  if (typeof process.env.CODECOV_TOKEN === 'undefined') {
-    throw new Error('CODECOV_TOKEN env variable is not set')
-  }
-
   let config = null
 
   for (const service of services) {

@@ -2,18 +2,9 @@ import test from 'blue-tape'
 import getConfig from '../src/getConfig'
 
 test('getConfig', (t) => {
-  try {
-    getConfig()
-    t.fail('should not get here')
-  } catch (error) {
-    t.equal(
-      error.message,
-      'CODECOV_TOKEN env variable is not set',
-      'must fail if CODECOV_TOKEN env variable is not set'
-    )
-  }
+  const origTravisEnv = process.env.TRAVIS
 
-  process.env.CODECOV_TOKEN = 'TEST'
+  Reflect.deleteProperty(process.env, 'TRAVIS')
 
   try {
     getConfig()
@@ -26,7 +17,7 @@ test('getConfig', (t) => {
     )
   }
 
-  process.env.TRAVIS = 'TEST'
+  process.env.TRAVIS = origTravisEnv
 
   const config = getConfig()
 
@@ -35,9 +26,6 @@ test('getConfig', (t) => {
     'travis',
     'must be resolved with config if CI service was found'
   )
-
-  Reflect.deleteProperty(process.env, 'TRAVIS')
-  Reflect.deleteProperty(process.env, 'CODECOV_TOKEN')
 
   t.end()
 })
