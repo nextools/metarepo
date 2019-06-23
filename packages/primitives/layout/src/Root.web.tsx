@@ -43,14 +43,17 @@ export const Layout = component(
       switch (hAlign) {
         case 'left': {
           style.justifyContent = 'flex-start'
+
           break
         }
         case 'center': {
           style.justifyContent = 'center'
+
           break
         }
         case 'right': {
           style.justifyContent = 'flex-end'
+
           break
         }
       }
@@ -58,14 +61,17 @@ export const Layout = component(
       switch (vAlign) {
         case 'top': {
           style.alignItems = 'flex-start'
+
           break
         }
         case 'center': {
           style.alignItems = 'center'
+
           break
         }
         case 'bottom': {
           style.alignItems = 'flex-end'
+
           break
         }
       }
@@ -75,14 +81,17 @@ export const Layout = component(
       switch (hAlign) {
         case 'left': {
           style.alignItems = 'flex-start'
+
           break
         }
         case 'center': {
           style.alignItems = 'center'
+
           break
         }
         case 'right': {
           style.alignItems = 'flex-end'
+
           break
         }
       }
@@ -90,14 +99,17 @@ export const Layout = component(
       switch (vAlign) {
         case 'top': {
           style.justifyContent = 'flex-start'
+
           break
         }
         case 'center': {
           style.justifyContent = 'center'
+
           break
         }
         case 'bottom': {
           style.justifyContent = 'flex-end'
+
           break
         }
       }

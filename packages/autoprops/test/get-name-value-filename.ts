@@ -20,7 +20,6 @@ test('FileName: undefined', (t) => {
   t.end()
 })
 
-
 test('FileName: null', (t) => {
   t.equals(
     getNameValueFilenameRaw('name', null, 0),
@@ -29,7 +28,6 @@ test('FileName: null', (t) => {
 
   t.end()
 })
-
 
 test('FileName: true', (t) => {
   t.equals(
@@ -49,7 +47,6 @@ test('FileName: false', (t) => {
   t.end()
 })
 
-
 test('FileName: int', (t) => {
   t.equals(
     getNameValueFilenameRaw('name', 42, 0),
@@ -67,7 +64,6 @@ test('FileName: float', (t) => {
 
   t.end()
 })
-
 
 test('FileName: empty string', (t) => {
   t.equals(

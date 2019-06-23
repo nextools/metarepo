@@ -19,31 +19,37 @@ export default ({ hue, saturation, value }: THsv): TRgb => {
       red = normalizedValue
       green = t
       blue = p
+
       break
     case 1:
       red = q
       green = normalizedValue
       blue = p
+
       break
     case 2:
       red = p
       green = normalizedValue
       blue = t
+
       break
     case 3:
       red = p
       green = q
       blue = normalizedValue
+
       break
     case 4:
       red = t
       green = p
       blue = normalizedValue
+
       break
     default:
       red = normalizedValue
       green = p
       blue = q
+
       break
   }
 

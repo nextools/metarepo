@@ -41,7 +41,6 @@ test('Guards: isNull for null', (t) => {
   t.end()
 })
 
-
 test('Guards: isBoolean for null', (t) => {
   t.equals(
     isBoolean(null),
@@ -122,7 +121,6 @@ test('Guards: isBoolean for Boolean(1)', (t) => {
   t.end()
 })
 
-
 test('Guards: isNumber for null', (t) => {
   t.equals(
     isNumber(null),
@@ -193,7 +191,6 @@ test('Guards: isNumber for Number', (t) => {
   t.end()
 })
 
-
 test('Guards: isString for null', (t) => {
   t.equals(
     isString(null),
@@ -253,7 +250,6 @@ test('Guards: isString for String(number)', (t) => {
 
   t.end()
 })
-
 
 test('Guards: isArray for null', (t) => {
   t.equals(

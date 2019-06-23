@@ -14,22 +14,27 @@ export const parseWorkspacesCommitMessage = (commitText: string, packageNames: s
   switch (prefix) {
     case prefixes.required.major.value: {
       type = 'major'
+
       break
     }
     case prefixes.required.minor.value: {
       type = 'minor'
+
       break
     }
     case prefixes.required.patch.value: {
       type = 'patch'
+
       break
     }
     case prefixes.required.publish.value: {
       type = 'publish'
+
       break
     }
     case prefixes.required.initial.value: {
       type = 'initial'
+
       break
     }
     default: {

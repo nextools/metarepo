@@ -21,6 +21,7 @@ export default (color: TRgb): THsv => {
 
   // Hue
   let hue
+
   if (max === red) {
     hue = (60 * ((green - blue) / (max - min))) % 360
   } else if (max === green) {

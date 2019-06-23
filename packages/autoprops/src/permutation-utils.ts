@@ -49,9 +49,11 @@ export const bumpPermutation = <Props extends TProps> (
 
     /* increment next digit */
     let i = 0
+
     for (; i < nextPerm.length; ++i) {
       if (nextPerm[i] < maxPerm[i]) {
         ++nextPerm[i]
+
         break
       }
     }

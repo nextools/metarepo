@@ -10,8 +10,8 @@ export const getFilenames = <Props extends TProps> (
 
   for (let pi = 0; pi < permutations.length; ++pi) {
     const perm = permutations[pi]
-
     const permNameChunks = [] as string[]
+
     for (let ki = 0; ki < keys.length; ++ki) {
       const key = keys[ki]
       const value = props[key][perm[ki]]

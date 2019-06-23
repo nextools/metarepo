@@ -24,6 +24,7 @@ const wrapComponent = (data: TSerializedResult, exportsMap: TExportsMap) => {
         createExportsEntry(pkgName)
         outputExportsMap[pkgName].exports.push(primitive)
         primitiveWasAdded = true
+
         break
       }
 
@@ -31,6 +32,7 @@ const wrapComponent = (data: TSerializedResult, exportsMap: TExportsMap) => {
         createExportsEntry(pkgName)
         outputExportsMap[pkgName].default = primitive
         primitiveWasAdded = true
+
         break
       }
     }

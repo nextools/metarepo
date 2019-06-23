@@ -4,6 +4,7 @@ const rgbaRegex = /^\s*rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d?\.?\d+)\
 
 export default (rgba: string): TRgba | null => {
   const matches = rgba.match(rgbaRegex)
+
   if (matches === null) {
     return null
   }

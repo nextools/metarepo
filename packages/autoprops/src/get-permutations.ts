@@ -43,6 +43,7 @@ export const getPermutations = <Props extends TProps> (
         for (const mutexGroup of mutexGroups) {
           if (arrayIntersect(keysWithState, mutexGroup).length > 1) {
             validPerm = false
+
             break
           }
         }
@@ -54,6 +55,7 @@ export const getPermutations = <Props extends TProps> (
 
           if (intersect.length !== 0 && intersect.length !== mutinGroup.length) {
             validPerm = false
+
             break
           }
         }

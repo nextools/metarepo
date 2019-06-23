@@ -22,6 +22,7 @@ export default (color: TRgba): THsva => {
 
   // Hue
   let hue
+
   if (max === red) {
     hue = (60 * ((green - blue) / (max - min))) % 360
   } else if (max === green) {
