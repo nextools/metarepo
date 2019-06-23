@@ -25,6 +25,7 @@
     "packages/stili",
     "packages/syntx",
     "packages/tsfn",
+    "packages/typeon",
     "packages/x-ray/*"
   ],
   "devDependencies": {

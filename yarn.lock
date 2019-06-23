@@ -9881,11 +9881,6 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typeon@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/typeon/-/typeon-0.3.0.tgz#124d18d2bc7e656f894daeb2c3e277a3ecd5b7b6"
-  integrity sha512-XRgnZdagk44NXl85NGStv+AEgkyICCF7qeDgGzT8b2DpMaF87joJT0+c+Bfdl6SAuBgqchDtYZbCGXE1EmKnxw==
-
 typescript@bubble-dev/TypeScript#ext-3.5.2:
   version "3.5.2"
   resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/61fb99afc5db8a5c04c7fe58c63ddfddc00b5558"
