@@ -5,6 +5,7 @@
     "packages/auto/*",
     "packages/autoprops",
     "packages/bubble-dev/*",
+    "packages/codecov-lite",
     "packages/colorido",
     "packages/copie",
     "packages/dleet",
