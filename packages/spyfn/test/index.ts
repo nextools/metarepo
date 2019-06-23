@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from '../src'
 
-test('return result', (t) => {
+test('spyfn: return result', (t) => {
   const spy = createSpy((props) => props)
 
   t.deepEqual(
@@ -19,7 +19,7 @@ test('return result', (t) => {
   t.end()
 })
 
-test('get calls', (t) => {
+test('spyfn: get calls', (t) => {
   const spy = createSpy(() => {})
 
   spy()
@@ -43,7 +43,7 @@ test('get calls', (t) => {
   t.end()
 })
 
-test('throw an error', (t) => {
+test('spyfn: throw an error', (t) => {
   const spy = createSpy(({ index }) => {
     if (index === 1) {
       throw new Error()

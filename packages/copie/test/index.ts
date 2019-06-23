@@ -3,7 +3,7 @@ import test from 'blue-tape'
 import { createFsFromVolume, Volume } from 'memfs'
 import { mock, unmock } from 'mocku'
 
-test('copy: core', async (t) => {
+test('copie: core', async (t) => {
   const vol = Volume.fromJSON({
     '/test/1.md': 'foo',
   })
@@ -28,7 +28,7 @@ test('copy: core', async (t) => {
   vol.reset()
 })
 
-test('copy: preserve stats', async (t) => {
+test('copie: preserve stats', async (t) => {
   const vol = Volume.fromJSON({
     '/test/1.md': 'foo',
   })
@@ -77,7 +77,7 @@ test('copy: preserve stats', async (t) => {
   vol.reset()
 })
 
-test('copy: read error', async (t) => {
+test('copie: read error', async (t) => {
   const vol = Volume.fromJSON({
     '/test/1.md': 'foo',
     '/test/dir/2.md': 'bar',
@@ -102,7 +102,7 @@ test('copy: read error', async (t) => {
   vol.reset()
 })
 
-test('copy: write error', async (t) => {
+test('copie: write error', async (t) => {
   const vol = Volume.fromJSON({
     '/test/1.md': 'foo',
     '/test/dir/2.md': 'bar',

@@ -16,7 +16,7 @@ class CustomError extends Error {
   }
 }
 
-test('delete directory with subdirectories, files and symlinks', async (t) => {
+test('dleet: delete directory with subdirectories, files and symlinks', async (t) => {
   const vol = Volume.fromJSON({
     '/test/1.md': '',
     '/test/foo/2.md': '',
@@ -42,7 +42,7 @@ test('delete directory with subdirectories, files and symlinks', async (t) => {
   vol.reset()
 })
 
-test('error: ENOENT + win32', async (t) => {
+test('dleet: error: ENOENT + win32', async (t) => {
   const vol = Volume.fromJSON({})
   const fs = createFsFromVolume(vol)
 
@@ -62,7 +62,7 @@ test('error: ENOENT + win32', async (t) => {
   vol.reset()
 })
 
-test('error: ENOENT + not win32', async (t) => {
+test('dleet: error: ENOENT + not win32', async (t) => {
   const originalPlatform = process.platform
   const vol = Volume.fromJSON({})
   const fs = createFsFromVolume(vol)
@@ -91,7 +91,7 @@ test('error: ENOENT + not win32', async (t) => {
   vol.reset()
 })
 
-test('error: EBUSY + win32 + 1 retry', async (t) => {
+test('dleet: error: EBUSY + win32 + 1 retry', async (t) => {
   const originalPlatform = process.platform
   const vol = Volume.fromJSON({
     '/test/1.md': '',
@@ -150,7 +150,7 @@ test('error: EBUSY + win32 + 1 retry', async (t) => {
   vol.reset()
 })
 
-test('error: EBUSY + win32 + 2 retries', async (t) => {
+test('dleet: error: EBUSY + win32 + 2 retries', async (t) => {
   const originalPlatform = process.platform
   const vol = Volume.fromJSON({
     '/test/1.md': '',
@@ -209,7 +209,7 @@ test('error: EBUSY + win32 + 2 retries', async (t) => {
   vol.reset()
 })
 
-test('error: EBUSY + win32 + 3 retries', async (t) => {
+test('dleet: error: EBUSY + win32 + 3 retries', async (t) => {
   const originalPlatform = process.platform
   const vol = Volume.fromJSON({
     '/test/1.md': '',
@@ -256,7 +256,7 @@ test('error: EBUSY + win32 + 3 retries', async (t) => {
   vol.reset()
 })
 
-test('error: EBUSY + not win32', async (t) => {
+test('dleet: error: EBUSY + not win32', async (t) => {
   const vol = Volume.fromJSON({
     '/test/1.md': '',
   })
@@ -294,7 +294,7 @@ test('error: EBUSY + not win32', async (t) => {
   vol.reset()
 })
 
-test('error: EPERM + win32 + fix + fixed', async (t) => {
+test('dleet: error: EPERM + win32 + fix + fixed', async (t) => {
   const originalPlatform = process.platform
   const vol = Volume.fromJSON({
     '/test/1.md': '',
@@ -353,7 +353,7 @@ test('error: EPERM + win32 + fix + fixed', async (t) => {
   vol.reset()
 })
 
-test('error: EPERM + win32 + fix + not fixed', async (t) => {
+test('dleet: error: EPERM + win32 + fix + not fixed', async (t) => {
   const originalPlatform = process.platform
   const vol = Volume.fromJSON({
     '/test/1.md': '',
@@ -400,7 +400,7 @@ test('error: EPERM + win32 + fix + not fixed', async (t) => {
   vol.reset()
 })
 
-test('error: EPERM + not win32', async (t) => {
+test('dleet: error: EPERM + not win32', async (t) => {
   const vol = Volume.fromJSON({
     '/test/1.md': '',
   })
@@ -438,7 +438,7 @@ test('error: EPERM + not win32', async (t) => {
   vol.reset()
 })
 
-test('error: any other + not win32', async (t) => {
+test('dleet: error: any other + not win32', async (t) => {
   const vol = Volume.fromJSON({
     '/test/1.md': '',
   })
@@ -476,7 +476,7 @@ test('error: any other + not win32', async (t) => {
   vol.reset()
 })
 
-test('error: any other + win32', async (t) => {
+test('dleet: error: any other + win32', async (t) => {
   const originalPlatform = process.platform
   const vol = Volume.fromJSON({
     '/test/1.md': '',

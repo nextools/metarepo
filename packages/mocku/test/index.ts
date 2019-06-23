@@ -5,7 +5,7 @@ import { mock, unmock, deleteFromCache } from '../src'
 const _Module: any = Module
 const originalLoad = _Module._load
 
-test('Module: hook', (t) => {
+test('mocku: Module: hook', (t) => {
   mock('./fixtures/scoped/file', {
     './file2': {
       default: 'mock1',
@@ -35,7 +35,7 @@ test('Module: hook', (t) => {
   t.end()
 })
 
-test('Module: unhook', (t) => {
+test('mocku: Module: unhook', (t) => {
   unmock('./fixtures/scoped/file')
 
   t.notEqual(
@@ -55,7 +55,7 @@ test('Module: unhook', (t) => {
   t.end()
 })
 
-test('scoped file: mock', async (t) => {
+test('mocku: scoped file: mock', async (t) => {
   mock('./fixtures/scoped/file', {
     './file2': {
       default: 'mock',
@@ -71,7 +71,7 @@ test('scoped file: mock', async (t) => {
   )
 })
 
-test('scoped file: unmock', async (t) => {
+test('mocku: scoped file: unmock', async (t) => {
   unmock('./fixtures/scoped/file')
 
   const { default: result } = await import('./fixtures/scoped/file')
@@ -83,7 +83,7 @@ test('scoped file: unmock', async (t) => {
   )
 })
 
-test('not scoped file: mock', async (t) => {
+test('mocku: not scoped file: mock', async (t) => {
   mock('./fixtures/scoped/file', {
     './file2': {
       default: 'mock',
@@ -101,7 +101,7 @@ test('not scoped file: mock', async (t) => {
   unmock('./fixtures/scoped/file')
 })
 
-test('modules: mock', async (t) => {
+test('mocku: modules: mock', async (t) => {
   mock('./fixtures/modules/file', {
     fs: {
       readFile: 'readFile',
@@ -126,7 +126,7 @@ test('modules: mock', async (t) => {
   )
 })
 
-test('modules: unmock', async (t) => {
+test('mocku: modules: unmock', async (t) => {
   unmock('./fixtures/modules/file')
 
   const { readFile, transform } = await import('./fixtures/modules/file')
@@ -144,7 +144,7 @@ test('modules: unmock', async (t) => {
   )
 })
 
-test('modules: deleteFromCache', (t) => {
+test('mocku: modules: deleteFromCache', (t) => {
   t.true(
     Reflect.has(_Module._cache, require.resolve('blue-tape')),
     'check for cache'
