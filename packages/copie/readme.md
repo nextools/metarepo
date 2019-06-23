@@ -13,8 +13,6 @@ Copy a file.
 
 ```sh
 $ yarn add copie
-# or
-$ npm install copie
 ```
 
 ## Usage
