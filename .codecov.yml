@@ -6,6 +6,6 @@ coverage:
     project: no
     patch: no
 comment:
-  layout: diff
+  layout: files
   behavior: once
   require_changes: yes
