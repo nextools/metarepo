@@ -83,7 +83,6 @@ module.exports = {
     'no-useless-escape': 2,
     'no-useless-return': 2,
     'no-with': 2,
-    'prefer-promise-reject-errors': 2,
     'require-await': 2,
     'wrap-iife': [2, 'inside'],
     yoda: 2,
