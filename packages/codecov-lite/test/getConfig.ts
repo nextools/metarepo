@@ -4,7 +4,9 @@ import getConfig from '../src/getConfig'
 test('getConfig', (t) => {
   const origTravisEnv = process.env.TRAVIS
 
-  Reflect.deleteProperty(process.env, 'TRAVIS')
+  if (origTravisEnv) {
+    Reflect.deleteProperty(process.env, 'TRAVIS')
+  }
 
   try {
     getConfig()
@@ -17,7 +19,7 @@ test('getConfig', (t) => {
     )
   }
 
-  process.env.TRAVIS = origTravisEnv
+  process.env.TRAVIS = origTravisEnv || 'TRAVIS'
 
   const config = getConfig()
 
@@ -26,6 +28,10 @@ test('getConfig', (t) => {
     'travis',
     'must be resolved with config if CI service was found'
   )
+
+  if (!origTravisEnv) {
+    Reflect.deleteProperty(process.env, 'TRAVIS')
+  }
 
   t.end()
 })
