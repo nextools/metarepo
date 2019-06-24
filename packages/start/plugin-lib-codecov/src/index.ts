@@ -5,7 +5,7 @@ export default plugin('codecov', ({ logMessage }) => async ({ files }: StartData
 
   await Promise.all(
     files.map(async (file) => {
-      const { reportURL } = await codecovLite(process.env, file.data)
+      const { reportURL } = await codecovLite(file.data)
 
       logMessage(reportURL)
     })
