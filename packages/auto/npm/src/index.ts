@@ -1,3 +1,2 @@
-export { publishRepoPackage } from './publish-repo-package'
-export { publishWorkspacesPackage } from './publish-workspaces-package'
+export { publishPackage } from './publish-package'
 export * from './types'

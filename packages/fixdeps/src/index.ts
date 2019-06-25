@@ -1,6 +1,6 @@
 import path from 'path'
 import { promisify } from 'util'
-import { getWorkspacesPackageDirs, getPackage } from '@auto/fs'
+import { getPackageDirs, getPackage } from '@auto/fs'
 import { readFile, writeFile } from 'graceful-fs'
 import globby from 'globby'
 import { TDepsEntries, TOptions } from './types'
@@ -16,7 +16,7 @@ export const fixdeps = async (options: TOptions) => {
   const logPath = options.logPath || (() => {})
   const logMessage = options.logMessage || (() => {})
 
-  const allPackagesDirs = await getWorkspacesPackageDirs()
+  const allPackagesDirs = await getPackageDirs()
   const packagesDirs = allPackagesDirs.filter(options.workspacePackagesFilter)
   const globbyOptions = {
     ignore: ['node_modules/**'],

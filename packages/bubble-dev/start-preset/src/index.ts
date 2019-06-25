@@ -18,19 +18,19 @@ import codecov from '@start/plugin-lib-codecov'
 import tape from '@start/plugin-lib-tape'
 import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
 import {
-  makeWorkspacesCommit,
+  makeCommit,
   buildBumpedPackages,
-  getWorkspacesPackagesBumps,
-  publishWorkspacesPrompt,
-  writeWorkspacesPackagesDependencies,
-  writeWorkspacesDependenciesCommit,
-  writeWorkspacesPackageVersions,
-  writeWorkspacesPublishCommit,
-  publishWorkspacesPackagesBumps,
+  getPackagesBumps,
+  publishPrompt,
+  writePackagesDependencies,
+  writeDependenciesCommit,
+  writePackageVersions,
+  writePublishCommit,
+  publishPackagesBumps,
   pushCommitsAndTags,
-  writeWorkspacesPublishTags,
-  makeWorkspacesGithubReleases,
-  sendWorkspacesSlackMessage,
+  writePublishTags,
+  makeGithubReleases,
+  sendSlackMessage,
 } from '@auto/start-plugin'
 // @ts-ignore
 import tapDiff from 'tap-diff'
@@ -212,11 +212,11 @@ export const build = async (...packageDirs: string[]) => {
   }
 
   const { default: prompts } = await import('prompts')
-  const { getWorkspacesPackages } = await import('@auto/fs')
+  const { getPackages } = await import('@auto/fs')
   const { suggestFilter, makeRegExp } = await import('./utils')
 
   const baseDir = path.resolve('packages')
-  const packages = await getWorkspacesPackages()
+  const packages = await getPackages()
   const choices = Object.keys(packages)
     .map((name) => ({
       title: name.replace(/^@/, ''),
@@ -330,7 +330,7 @@ export const commit = async () => {
     autoNamePrefix,
   }
 
-  return makeWorkspacesCommit(prefixes, workspacesOptions)
+  return makeCommit(prefixes, workspacesOptions)
 }
 
 export const publish = async () => {
@@ -373,18 +373,18 @@ export const publish = async () => {
 
   // TODO: refactor Auto options into one config
   return sequence(
-    getWorkspacesPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
-    publishWorkspacesPrompt(prefixes),
+    getPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
+    publishPrompt(prefixes),
     buildBumpedPackages(buildPackage),
-    writeWorkspacesPackagesDependencies,
-    writeWorkspacesDependenciesCommit(prefixes),
-    writeWorkspacesPackageVersions,
-    writeWorkspacesPublishCommit(prefixes, workspacesOptions),
-    shouldMakeGitTags && writeWorkspacesPublishTags(workspacesOptions),
+    writePackagesDependencies,
+    writeDependenciesCommit(prefixes),
+    writePackageVersions,
+    writePublishCommit(prefixes, workspacesOptions),
+    shouldMakeGitTags && writePublishTags(workspacesOptions),
     buildBumpedPackages(preparePackage),
-    publishWorkspacesPackagesBumps(npmOptions),
+    publishPackagesBumps(npmOptions),
     pushCommitsAndTags,
-    shouldMakeGitHubReleases && makeWorkspacesGithubReleases(prefixes, workspacesOptions, githubOptions),
-    shouldSendSlackMessage && sendWorkspacesSlackMessage(prefixes, workspacesOptions, slackOptions)
+    shouldMakeGitHubReleases && makeGithubReleases(prefixes, workspacesOptions, githubOptions),
+    shouldSendSlackMessage && sendSlackMessage(prefixes, workspacesOptions, slackOptions)
   )
 }

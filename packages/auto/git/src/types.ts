@@ -6,11 +6,8 @@ export type TGitOptions = {
 
 export type TParsedMessageType = TBumpType | 'publish' | 'initial'
 
-export type TRepoParsedMessage = {
+export type TParsedMessage = {
   type: TParsedMessageType,
   message: string,
-}
-
-export type TWorkspacesParsedMessage = {
   names: string[],
-} & TRepoParsedMessage
+}

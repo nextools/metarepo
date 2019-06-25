@@ -1,4 +1,4 @@
-import { TBumpType, TGitMessage } from '@auto/utils'
+import { TBumpType } from '@auto/utils'
 
 export type TSlackOptions = {
   token: string,
@@ -18,23 +18,15 @@ export type TGithubOptions = {
   repo: string,
 }
 
-export type TWorkspacesLogMessage = {
+export type TLogMessage = {
   type: TBumpType | 'dependencies' | 'initial',
   value: string,
 }
 
-export type TWorkspacesLog = {
+export type TLog = {
   name: string,
   version: string,
   type: TBumpType,
   dir: string,
-  messages: TWorkspacesLogMessage[],
-}
-
-export type TRepoLogMessage = TGitMessage
-
-export type TRepoLog = {
-  version: string,
-  type: TBumpType,
-  messages: TRepoLogMessage[],
+  messages: TLogMessage[],
 }

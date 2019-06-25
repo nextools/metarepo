@@ -6,9 +6,9 @@ export type TBuildType = 'node' | 'web' | 'native'
 export default (buildType: TBuildType) =>
   plugin<StartDataFilesProps, StartDataFilesProps>('transform-dts', ({ logMessage }) => async ({ files }) => {
     const { createPrinter, createSourceFile, createStringLiteral, ScriptTarget, ScriptKind, SyntaxKind, visitEachChild, visitNode, transform } = await import('typescript')
-    const { getWorkspacesPackages } = await import('@auto/fs')
+    const { getPackages } = await import('@auto/fs')
 
-    const packages = await getWorkspacesPackages()
+    const packages = await getPackages()
 
     const setLiteralSingleQuotes = (node: StringLiteral): StringLiteral => {
       (node as any).singleQuote = true

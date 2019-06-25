@@ -54,21 +54,13 @@ export type TGitMessage = {
   value: string,
 }
 
-export type TRepoGitBump = {
+export type TGitBump = {
+  name: string,
   type: TBumpType,
   messages: TGitMessage[],
 }
 
-export type TWorkspacesGitBump = {
-  name: string,
-} & TRepoGitBump
-
-export type TRepoPackageBump = {
-  type: TBumpType,
-  version: string,
-}
-
-export type TWorkspacesPackageBump = {
+export type TPackageBump = {
   name: string,
   type: TBumpType | null,
   version: string | null,

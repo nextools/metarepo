@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import { suggestFilter } from '../src/suggest-filter'
 
-test('git:makeWorkspacesCommit: suggestFilter', async (t) => {
+test('git:makeCommit: suggestFilter', async (t) => {
   t.deepEquals(
     await suggestFilter('(no package)')(
       '',
