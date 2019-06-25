@@ -45,10 +45,12 @@ export const Text = component(
 
     if (shouldPreserveWhitespace) {
       style.whiteSpace = 'pre'
+      style.flexShrink = 0
     }
 
     if (shouldPreventWrap) {
       style.whiteSpace = 'nowrap'
+      style.flexShrink = 0
     }
 
     if (shouldPreventSelection) {
@@ -59,6 +61,7 @@ export const Text = component(
       style.whiteSpace = 'nowrap'
       style.textOverflow = 'ellipsis'
       style.overflow = 'hidden'
+      style.flexShrink = 0
     }
 
     if (isNumber(letterSpacing)) {
