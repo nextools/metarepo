@@ -211,6 +211,46 @@ export default component(
 ))
 ```
 
+## `mapKeyboardFocused`
+
+This function sets the `isKeyboardFocused` prop to `true` when the target gets focused (after `onFocus`) but only if the focus was acquired via the keyboard interaction, not a pointer event (so if there was no press event before the `onFocus`). The prop is set to `false` once `onBlur` happens.
+
+The reason this is useful is that it allows focus states meant for keyboard navigation to be differentiated from regular focus states. When the user is navigating with the keyboard, for example pressing the Tab key, visual highlighting of the focused elements needs to be more prominent to guide the sight into where the active element is. Pointer events will trigger focus as well, but when the interaction was initiated with a pointer it's not necessary for the highlight to be as prominent, since the user is already focused in the pointer position. In order to distinguish these two states and make it possible to style them separately, you can use `mapFocused` for the general case and `mapKeyboaredFocused` for the specific keyboard navigation case.
+
+Note that `onPressIn` and `onPointerLeave` are synthetic event names meant to abstract from platform specific hover states. In web, they will be typically mapped:
+
+- `onPressIn` -> `onMouseDown`
+- `onPressOut` -> `onMouseUp`
+
+…and each platform will have their own corresponding mapping.
+
+```ts
+import React from 'react'
+import { component, mapKeyboardFocused, startWithType } from 'refun'
+
+type TButton = {
+  label: string,
+}
+
+export default component(
+  startWithType<TButton>(),
+  mapKeyboardFocused
+)(({ isHovered, label, onBlur, onFocus, onPressIn, onPressOut }) = (
+  <button
+    onBlur={onBlur}
+    onFocus={onFocus}
+    onMouseDown={onPressIn}
+    onMouseUp={onPressOut}
+    style={{
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: isHovered ? 'black' : 'grey'
+    }}>
+    {label}
+  </button>
+))
+```
+
 ## `mapPressed`
 
 This function sets the `isPressed` prop to `true` when the `onPressIn` handler is called and to `false` when `onPressOut` is called.
