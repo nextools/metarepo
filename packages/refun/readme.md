@@ -410,3 +410,53 @@ export default component(
   </button>
 ))
 ```
+
+## `pureComponent`
+
+**TODO**
+
+## `startWithType`
+
+This function is simply a way of setting up the initial type in the [`component`](#component) composition change, since TypeScript does not currently support doing that in the composition function itself (`component` in this case, but would be `compose` in Redux, Ramda, etc).
+
+It's purpose is entirely for types, and in runtime it's a no-op.
+
+```ts
+import React from 'react'
+import { component, startWithType } from 'refun'
+
+type TButton = {
+  label: string,
+}
+
+export default component(
+  startWithType<TButton>(),
+)(({ label }) = (
+  <button>
+    {label}
+  </button>
+))
+```
+
+Once this is fixed in TypeScript this function will be redundant and it will be possible to pass the generic directly into `component`:
+
+
+```ts
+import React from 'react'
+import { component } from 'refun'
+
+type TButton = {
+  label: string,
+}
+
+// Remember: this is currently *not* supported
+export default component<TButton>(
+  (props) => props
+)(({ label }) = (
+  <button>
+    {label}
+  </button>
+))
+```
+
+…meanwhile `startWithType` is a straightforward workaround.
