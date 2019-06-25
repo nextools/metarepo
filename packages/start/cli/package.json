@@ -10,6 +10,9 @@
   "files": [
     "build/"
   ],
+  "bin": {
+    "start": "build/index.js"
+  },
   "publishConfig": {
     "access": "public"
   },
