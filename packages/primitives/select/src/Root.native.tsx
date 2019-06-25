@@ -27,6 +27,7 @@ export const Select = component(
 )(({
   children,
   id,
+  accessibilityLabel,
   isDisabled,
   style,
   value,
@@ -38,6 +39,7 @@ export const Select = component(
     style={style}
     selectedValue={value}
     onValueChange={onChange}
+    accessibilityLabel={accessibilityLabel}
   >
     {children}
   </Picker>

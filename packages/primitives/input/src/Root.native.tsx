@@ -49,9 +49,20 @@ export const Input = component(
       }),
     })
   )
-)(({ id, isDisabled, style, value, onChangeText, onSubmitEditing, onFocus, onBlur }) => (
+)(({
+  id,
+  accessibilityLabel,
+  isDisabled,
+  style,
+  value,
+  onChangeText,
+  onSubmitEditing,
+  onFocus,
+  onBlur,
+}) => (
   <TextInput
     testID={id}
+    accessibilityLabel={accessibilityLabel}
     underlineColorAndroid="rgba(0,0,0,0)"
     textAlignVertical="center"
     caretHidden={isDisabled}

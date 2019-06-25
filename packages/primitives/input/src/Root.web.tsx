@@ -65,6 +65,7 @@ export const Input = component(
   )
 )(({
   id,
+  accessibilityLabel,
   style,
   value,
   isDisabled,
@@ -77,6 +78,7 @@ export const Input = component(
 }) => (
   <input
     id={id}
+    aria-label={accessibilityLabel}
     disabled={isDisabled}
     style={style}
     size={1}

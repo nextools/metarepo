@@ -37,6 +37,7 @@ export const Select = component(
 )(({
   children,
   id,
+  accessibilityLabel,
   isDisabled,
   style,
   value,
@@ -48,6 +49,7 @@ export const Select = component(
 }) => (
   <select
     id={id}
+    aria-label={accessibilityLabel}
     disabled={isDisabled}
     style={style}
     value={value}

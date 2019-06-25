@@ -1,5 +1,6 @@
 export type TSelect = {
   id?: string,
+  accessibilityLabel?: string,
   isDisabled?: boolean,
   isHidden?: boolean,
   paddingBottom?: number,

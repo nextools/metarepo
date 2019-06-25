@@ -2,6 +2,7 @@ import { TStyle } from 'stili'
 
 export type TInput = {
   id?: string,
+  accessibilityLabel?: string,
   isDisabled?: boolean,
   color?: string,
   fontFamily?: string,
