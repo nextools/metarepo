@@ -1,15 +1,11 @@
 # ⬛️ cli
 
-[![npm](https://img.shields.io/npm/v/@start/cli.svg?style=flat-square)](https://www.npmjs.com/package/@start/cli) [![linux](https://img.shields.io/travis/deepsweet/start/master.svg?label=linux&style=flat-square)](https://travis-ci.org/deepsweet/start) [![windows](https://img.shields.io/appveyor/ci/deepsweet/start/master.svg?label=windows&style=flat-square)](https://ci.appveyor.com/project/deepsweet/start) [![coverage](https://img.shields.io/codecov/c/github/deepsweet/start/master.svg?style=flat-square)](https://codecov.io/github/deepsweet/start) [![deps](https://david-dm.org/deepsweet/start.svg?path=packages/cli&style=flat-square)](https://david-dm.org/deepsweet/start?path=packages/cli)
-
 CLI entry point, [ESM](https://github.com/standard-things/esm) included.
 
 ## Install
 
 ```sh
 $ yarn add --dev @start/cli
-# or
-$ npm install --save-dev @start/cli
 ```
 
 ## Usage

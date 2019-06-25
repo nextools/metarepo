@@ -1,7 +1,5 @@
 # 🏭 plugin-lib-webpack-serve
 
-[![npm](https://img.shields.io/npm/v/@start/plugin-lib-webpack-serve.svg?style=flat-square)](https://www.npmjs.com/package/@start/plugin-lib-webpack-serve) [![linux](https://img.shields.io/travis/deepsweet/start/master.svg?label=linux&style=flat-square)](https://travis-ci.org/deepsweet/start) [![windows](https://img.shields.io/appveyor/ci/deepsweet/start/master.svg?label=windows&style=flat-square)](https://ci.appveyor.com/project/deepsweet/start) [![coverage](https://img.shields.io/codecov/c/github/deepsweet/start/master.svg?style=flat-square)](https://codecov.io/github/deepsweet/start) [![deps](https://david-dm.org/deepsweet/start.svg?path=packages/plugin-lib-webpack-serve&style=flat-square)](https://david-dm.org/deepsweet/start?path=packages/plugin-lib-webpack-serve)
-
 Run [Webpack development server](https://github.com/webpack-contrib/webpack-serve).
 
 **⚠️ Deprecated in favor of [plugin-webpack-dev-server](https://github.com/deepsweet/start/tree/master/packages/plugin-lib-webpack-dev-server)**
@@ -10,8 +8,6 @@ Run [Webpack development server](https://github.com/webpack-contrib/webpack-serv
 
 ```sh
 $ yarn add --dev @start/plugin-lib-webpack-serve
-# or
-$ npm install --save-dev @start/plugin-lib-webpack-serve
 ```
 
 ## Usage
