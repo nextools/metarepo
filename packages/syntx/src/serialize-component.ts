@@ -1,12 +1,9 @@
-import React, { FC } from 'react'
-import { TConfig } from './types'
+import { FC } from 'react'
+import { TConfig, TLine } from './types'
 import { serializeElement } from './serialize-element'
 import { getDisplayName } from './utils'
 
-export * from './types'
-
-export const highlighter = (Component: FC<any>, props: any, config: TConfig) => {
-  const { components: { Root } } = config
+export const serializeComponent = (Component: FC<any>, props: any, config: TConfig): TLine[] => {
   const name = getDisplayName(Component)
   const { body } = serializeElement({
     name,
@@ -17,7 +14,5 @@ export const highlighter = (Component: FC<any>, props: any, config: TConfig) => 
     path: [],
   })
 
-  return (
-    <Root>{body}</Root>
-  )
+  return body
 }

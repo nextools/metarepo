@@ -1,9 +1,10 @@
 /* eslint-disable import/no-cycle */
-import React, { isValidElement } from 'react'
-import { TConfig, TSerializedElement, TPath } from './types'
+import { isValidElement } from 'react'
+import { TConfig, TSerializedElement, TPath, TLineElement } from './types'
 import { serializeIndent } from './serialize-indent'
-import { isNull, isNumber, isString, getElementName, sanitizeArray } from './utils'
+import { isNumber, isString, getElementName, sanitizeLines } from './utils'
 import { serializeElement } from './serialize-element'
+import { TYPE_VALUE_NUMBER, TYPE_VALUE_STRING } from './constants'
 
 type TSerializeChildrenValue = {
   value: any,
@@ -14,8 +15,6 @@ type TSerializeChildrenValue = {
 }
 
 const serializeChildrenValue = ({ value, currentIndent, childIndex, config, path }: TSerializeChildrenValue): TSerializedElement => {
-  const { components: { ValueString } } = config
-
   if (isValidElement(value)) {
     return serializeElement({
       name: getElementName(value),
@@ -27,20 +26,26 @@ const serializeChildrenValue = ({ value, currentIndent, childIndex, config, path
     })
   }
 
-  if (isString(value) || isNumber(value)) {
+  if (isNumber(value)) {
     return {
-      head: (
-        <ValueString>{value}</ValueString>
-      ),
-      body: null,
-      tail: null,
+      head: [{ type: TYPE_VALUE_NUMBER, value }],
+      body: [],
+      tail: [],
+    }
+  }
+
+  if (isString(value)) {
+    return {
+      head: [{ type: TYPE_VALUE_STRING, value }],
+      body: [],
+      tail: [],
     }
   }
 
   return {
-    head: null,
-    body: null,
-    tail: null,
+    head: [],
+    body: [],
+    tail: [],
   }
 }
 
@@ -52,11 +57,9 @@ export type TSerializeChildren = {
 }
 
 export const serializeChildren = ({ children, currentIndent, config, path }: TSerializeChildren): TSerializedElement => {
-  const { components: { Line } } = config
-
   if (Array.isArray(children)) {
     const lines = []
-    let line = []
+    let lineElements: TLineElement[] = []
     let childIndex = 0
 
     for (const child of children) {
@@ -68,40 +71,42 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
         path,
       })
 
-      if (!isNull(head)) {
-        line.push(head)
+      if (head.length > 0) {
+        lineElements.push(...head)
       }
 
-      if (!isNull(body)) {
-        if (line.length > 0) {
-          lines.push(
-            <Line path={path}>
-              {serializeIndent({ currentIndent, config })}
-              {line}
-            </Line>
-          )
+      if (body.length > 0) {
+        if (lineElements.length > 0) {
+          lines.push({
+            path,
+            elements: [
+              serializeIndent(currentIndent),
+              ...lineElements,
+            ],
+          })
         }
 
-        lines.push(body)
-        line = []
+        lines.push(...body)
+        lineElements = []
       }
 
       childIndex += 1
     }
 
-    if (line.length > 0) {
-      lines.push((
-        <Line path={path}>
-          {serializeIndent({ currentIndent, config })}
-          {line}
-        </Line>
-      ))
+    if (lineElements.length > 0) {
+      lines.push({
+        path,
+        elements: [
+          serializeIndent(currentIndent),
+          ...lineElements,
+        ],
+      })
     }
 
     return {
-      head: null,
-      body: lines.length > 0 ? sanitizeArray(lines) : null,
-      tail: null,
+      head: [],
+      body: sanitizeLines(lines),
+      tail: [],
     }
   }
 
@@ -114,16 +119,17 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
   })
 
   return {
-    head: null,
-    body: sanitizeArray([
-      !isNull(head) && (
-        <Line path={path}>
-          {serializeIndent({ currentIndent, config })}
-          {head}
-        </Line>
-      ),
-      body,
+    head: [],
+    body: sanitizeLines([
+      head.length > 0 && ({
+        path,
+        elements: [
+          serializeIndent(currentIndent),
+          ...head,
+        ],
+      }),
+      ...body,
     ]),
-    tail: null,
+    tail: [],
   }
 }
