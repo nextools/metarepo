@@ -128,10 +128,12 @@ export const writeWorkspacesPublishTags = (workspacesOptions: TWorkspacesOptions
 export const publishWorkspacesPackagesBumps = (npmOptions?: TNpmOptions) =>
   plugin<TWorkspacesPluginData, any>('publishWorkspacesPackagesBumps', () => async ({ packagesBumps }) => {
     const { publishWorkspacesPackage } = await import('@auto/npm')
+    const { default: pAll } = await import('p-all')
 
-    for (const bump of packagesBumps) {
-      await publishWorkspacesPackage(bump, npmOptions)
-    }
+    await pAll(
+      packagesBumps.map((bump) => () => publishWorkspacesPackage(bump, npmOptions)),
+      { concurrency: 4 }
+    )
   })
 
 export const sendWorkspacesSlackMessage = (prefixes: TPrefixes, workspacesOptions: TWorkspacesOptions, slackOptions: TSlackOptions, transformFn?: (logs: TWorkspacesLog[]) => TWorkspacesLog[]) =>
