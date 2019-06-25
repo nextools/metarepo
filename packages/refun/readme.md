@@ -175,6 +175,10 @@ export default component(
 ))
 ```
 
+## `mapHandlers`
+
+**TODO**
+
 ## `mapHovered`
 
 This function sets the `isHovered` prop to `true` when the `onPointerEnter` handler is called and to `false` when `onPointerLeave` is called.
@@ -283,6 +287,28 @@ export default component(
       borderColor: isPressed ? 'black' : 'grey'
     }}>
     {label}
+  </button>
+))
+```
+
+## `mapProps`
+
+This function takes a handler that receives all props and returns new props.
+
+```ts
+import React from 'react'
+import { component, mapProps, startWithType } from 'refun'
+
+type TButton = {
+  label: string,
+}
+
+export default component(
+  startWithType<TButton>(),
+  mapProps(({ label }) => ({ children }))
+)(({ children }) = (
+  <button>
+    {children}
   </button>
 ))
 ```
