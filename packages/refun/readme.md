@@ -354,3 +354,59 @@ export default component(
   </div>
 ))
 ```
+
+## `mapRedux`
+
+**TODO** (no clue)
+
+## `mapRefLayout`
+
+**TODO**
+
+## `mapRef`
+
+**TODO**
+
+## `mapSafeRequestAnimationFrame` & `mapSafeRequestAnimationFrameFactory`
+
+**TODO**
+
+## `mapSafeTimeout` & `mapSafeTimeoutFactory`
+
+**TODO**
+
+## `mapState`
+
+**TODO**
+
+## `mapThrottledHandler` & `mapThrottledHandlerFactory`
+
+**TODO**
+
+## `mapWithAsyncProps`
+
+**TODO**
+
+## `onMount`
+
+This function calls the passed in callback when the component is first mounted, sending the current Props as argument.
+
+For example:
+
+```ts
+import React from 'react'
+import { component, onMount, startWithType } from 'refun'
+
+type TButton = {
+  label: string,
+}
+
+export default component(
+  startWithType<TButton>(),
+  onMount(({ label }) => console.log('Mounted with label', label))
+)(({ label }) = (
+  <button>
+    {label}
+  </button>
+))
+```
