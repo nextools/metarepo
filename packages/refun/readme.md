@@ -148,7 +148,7 @@ export default component(
 
 ## `mapFocused`
 
-This function sets properties when the `onFocus` handler is called and removes them when `onBlur` is called.
+This function sets the `isFocused` prop to `true` when the `onFocus` handler is called and to `false` when `onBlur` is called.
 
 ```ts
 import React from 'react'
@@ -160,9 +160,7 @@ type TButton = {
 
 export default component(
   startWithType<TButton>(),
-  mapFocused({
-    isFocused: true,
-  })
+  mapFocused
 )(({ isFocused, label, onBlur, onFocus }) = (
   <button
     onBlur={onBlur}
@@ -179,7 +177,7 @@ export default component(
 
 ## `mapHovered`
 
-This function sets properties when the `onPointerEnter` handler is called and removes them when `onPointerLeave` is called.
+This function sets the `isHovered` prop to `true` when the `onPointerEnter` handler is called and to `false` when `onPointerLeave` is called.
 
 Note that `onPointerEnter` and `onPointerLeave` are synthetic event names meant to abstract from platform specific hover states. In web, they will be typically mapped:
 
@@ -198,9 +196,7 @@ type TButton = {
 
 export default component(
   startWithType<TButton>(),
-  mapHovered({
-    isHovered: true,
-  })
+  mapHovered
 )(({ isHovered, label, onPointerEnter, onPointerLeave }) = (
   <button
     onMouseEnter={onPointerEnter}
@@ -209,6 +205,42 @@ export default component(
       borderWidth: 1,
       borderStyle: 'solid',
       borderColor: isHovered ? 'black' : 'grey'
+    }}>
+    {label}
+  </button>
+))
+```
+
+## `mapPressed`
+
+This function sets the `isPressed` prop to `true` when the `onPressIn` handler is called and to `false` when `onPressOut` is called.
+
+Note that `onPressIn` and `onPressOut` are synthetic event names meant to abstract from platform specific pressed states. In web, they will be typically mapped:
+
+- `onPressIn` -> `onMouseDown`
+- `onPressOut` -> `onMouseUp`
+
+…and each platform will have their own corresponding mapping.
+
+```ts
+import React from 'react'
+import { component, mapPressed, startWithType } from 'refun'
+
+type TButton = {
+  label: string,
+}
+
+export default component(
+  startWithType<TButton>(),
+  mapPressed
+)(({ isPressed, label, onPressIn, onPressOut }) = (
+  <button
+    onMouseDown={onPressIn}
+    onMouseUp={onPressOut}
+    style={{
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: isPressed ? 'black' : 'grey'
     }}>
     {label}
   </button>
