@@ -6,6 +6,7 @@ export const writeWorkspacesPublishCommit = async (packageBumps: TWorkspacesPack
   const bumps = packageBumps.filter((bump) => bump.type !== null && bump.version !== null)
   const names = bumps.map((bump) => removeAutoNamePrefix(bump.name, workspacesOptions.autoNamePrefix)).join(', ')
   const packageJsonPaths = bumps.map((bump) => path.join(bump.dir, 'package.json'))
+  const packageChangelogPaths = bumps.map((bump) => path.join(bump.dir, 'changelog.md'))
 
   if (bumps.length > 0) {
     await execa(
@@ -15,6 +16,7 @@ export const writeWorkspacesPublishCommit = async (packageBumps: TWorkspacesPack
         '-m',
         `${prefixes.required.publish.value} ${names}: release`,
         ...packageJsonPaths,
+        ...packageChangelogPaths,
       ],
       {
         stdout: null,
