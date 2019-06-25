@@ -10,6 +10,7 @@ test('getWorkspacesMarkdownLog', (t) => {
           name: 'a',
           version: '0.1.2',
           type: 'minor',
+          dir: 'dir',
           messages: [
             {
               type: 'minor',
@@ -25,6 +26,7 @@ test('getWorkspacesMarkdownLog', (t) => {
           name: 'b',
           version: '1.2.3',
           type: 'minor',
+          dir: 'dir',
           messages: [
             {
               type: 'minor',

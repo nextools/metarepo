@@ -37,6 +37,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
         name: '@ns/a',
         version: '0.1.2',
         type: 'minor',
+        dir: 'dir',
         messages: [
           {
             type: 'minor',
@@ -52,6 +53,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
         name: 'b',
         version: '1.2.3',
         type: 'minor',
+        dir: 'dir',
         messages: [
           {
             type: 'minor',
@@ -128,6 +130,7 @@ test('sendWorkspacesSlackMessage: throws if there is no token', async (t) => {
           name: 'a',
           version: '0.1.2',
           type: 'minor',
+          dir: 'dir',
           messages: [
             {
               type: 'minor',
@@ -143,6 +146,7 @@ test('sendWorkspacesSlackMessage: throws if there is no token', async (t) => {
           name: 'b',
           version: '1.2.3',
           type: 'minor',
+          dir: 'dir',
           messages: [
             {
               type: 'minor',
@@ -190,6 +194,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
         name: '@ns/a',
         version: '0.1.2',
         type: 'minor',
+        dir: 'dir',
         messages: [
           {
             type: 'minor',
@@ -201,6 +206,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
         name: 'b',
         version: '1.2.3',
         type: 'minor',
+        dir: 'dir',
         messages: [
           {
             type: 'minor',
@@ -212,6 +218,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
         name: '@ns/c',
         version: '1.2.3',
         type: 'minor',
+        dir: 'dir',
         messages: [
           {
             type: 'minor',
@@ -223,6 +230,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
         name: 'd',
         version: '1.2.3',
         type: 'minor',
+        dir: 'dir',
         messages: [
           {
             type: 'minor',
@@ -234,6 +242,7 @@ test('sendWorkspacesSlackMessage', async (t) => {
         name: '@ns/e',
         version: '1.2.3',
         type: 'minor',
+        dir: 'dir',
         messages: [
           {
             type: 'minor',

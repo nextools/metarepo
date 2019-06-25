@@ -14,14 +14,17 @@
   },
   "dependencies": {
     "@auto/utils": "^0.1.0",
+    "graceful-fs": "^4.1.15",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
+    "@types/graceful-fs": "^4.1.3",
     "@types/request": "^2.47.1",
     "@types/request-promise-native": "^1.0.15",
     "blue-tape": "^1.0.0",
+    "memfs": "^2.15.4",
     "mocku": "^0.5.0",
     "spyfn": "^0.2.0"
   }

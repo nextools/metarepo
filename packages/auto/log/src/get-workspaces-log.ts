@@ -24,6 +24,7 @@ export const getWorkspacesLog = (packageBumps: TWorkspacesPackageBump[], gitBump
         name: bump.name,
         version: bump.version,
         type: bump.type,
+        dir: bump.dir,
         messages: [
           ...messages.sort((a, b) => compareMessageTypes(b.type, a.type)),
           {
@@ -42,6 +43,7 @@ export const getWorkspacesLog = (packageBumps: TWorkspacesPackageBump[], gitBump
       name: bump.name,
       version: bump.version,
       type: bump.type,
+      dir: bump.dir,
       messages: messages.sort((a, b) => compareMessageTypes(b.type, a.type)),
     })
   }, [] as TWorkspacesLog[])

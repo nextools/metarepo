@@ -8508,7 +8508,7 @@ mem@^4.0.0:
     mimic-fn "^2.0.0"
     p-is-promise "^2.0.0"
 
-memfs@^2.15.2:
+memfs@^2.15.2, memfs@^2.15.4:
   version "2.15.4"
   resolved "https://registry.yarnpkg.com/memfs/-/memfs-2.15.4.tgz#707e3c9a999f89d7d9299b04877c1c2f87caa561"
   integrity sha512-u9CNlBHByQ04cNA1jRdyIuvgcZoLA984kC2O/MRBeoJkuSRWO62575WH3H7nrUY9f0MvyxDyLLUwRqC6u1wCiw==

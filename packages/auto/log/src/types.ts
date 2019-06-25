@@ -27,6 +27,7 @@ export type TWorkspacesLog = {
   name: string,
   version: string,
   type: TBumpType,
+  dir: string,
   messages: TWorkspacesLogMessage[],
 }
 
