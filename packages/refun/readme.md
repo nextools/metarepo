@@ -312,3 +312,45 @@ export default component(
   </button>
 ))
 ```
+
+## `mapReducer`
+
+This function takes a reducer and an initial state factory, and passes down the `state` (spreaded as props) and the `dispatch` function. It employs the `useReducer` hook under the hood.
+
+```ts
+import React from 'react'
+import { component, mapReducer, startWithType } from 'refun'
+
+type TCounter = {
+  initialCounter: number,
+}
+
+export default component(
+  startWithType<TCounter>(),
+  mapReducer(
+    (state, action) => {
+      switch (action.type) {
+        case 'ADD':
+          return {
+            counter: state.counter + 1
+          }
+
+        default:
+          return state
+      }
+    },
+    ({ initialCounter }) => ({
+      counter: initialCounter
+    })
+  )
+)(({ counter, dispatch }) = (
+  <div>
+    <button onClick={() => dispatch({ type: 'ADD' })}>
+      Add
+    </button>
+    <span>
+      {counter}
+    </span>
+  </div>
+))
+```
