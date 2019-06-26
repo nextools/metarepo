@@ -12,11 +12,22 @@ export const writePublishCommit = async (packageBumps: TPackageBump[], prefixes:
     await execa(
       'git',
       [
+        'add',
+        ...packageJsonPaths,
+        ...packageChangelogPaths,
+      ],
+      {
+        stdout: null,
+        stderr: null,
+      }
+    )
+
+    await execa(
+      'git',
+      [
         'commit',
         '-m',
         `${prefixes.required.publish.value} ${names}: release`,
-        ...packageJsonPaths,
-        ...packageChangelogPaths,
       ],
       {
         stdout: null,

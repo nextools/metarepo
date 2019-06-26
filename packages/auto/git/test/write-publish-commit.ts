@@ -31,11 +31,17 @@ test('git:writePublishCommit: single package', async (t) => {
       [
         'git',
         [
+          'add',
+          'fakes/a/package.json',
+          'fakes/a/changelog.md',
+        ],
+      ],
+      [
+        'git',
+        [
           'commit',
           '-m',
           `${prefixes.required.publish.value} a: release`,
-          'fakes/a/package.json',
-          'fakes/a/changelog.md',
         ],
       ],
     ],
@@ -80,13 +86,19 @@ test('git:writePublishCommit: multiple packages', async (t) => {
       [
         'git',
         [
-          'commit',
-          '-m',
-          `${prefixes.required.publish.value} ns/a, b: release`,
+          'add',
           'fakes/a/package.json',
           'fakes/b/package.json',
           'fakes/a/changelog.md',
           'fakes/b/changelog.md',
+        ],
+      ],
+      [
+        'git',
+        [
+          'commit',
+          '-m',
+          `${prefixes.required.publish.value} ns/a, b: release`,
         ],
       ],
     ],
