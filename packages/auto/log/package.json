@@ -13,7 +13,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@auto/utils": "^0.1.0",
+    "@auto/utils": "^0.2.0",
     "graceful-fs": "^4.1.15",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5"
