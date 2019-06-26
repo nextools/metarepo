@@ -411,13 +411,89 @@ export default component(
 ))
 ```
 
+## `mapWithPropsMemo`
+
+**WIP**
+
+**Good** use case with calculating the Fibonacci number of an input, which is known to be expensive for large numbers:
+
+```ts
+import React from 'react'
+import { component, mapWithPropsMemo, startWithType } from 'refun'
+
+type TFibonacci = {
+  position: number,
+}
+
+export default component(
+  startWithType<TFibonacci>(),
+  mapWithPropsMemo(({ position }) => ({
+    position,
+    fibonacci: fibonacci(position)
+  }), ['position'])
+)(({ position, fibonacci }) = (
+  <p>
+    The Fibonacci numbers in position {position} is <mark>{fibonacci}</mark>
+  </p>
+))
+```
+
+Notice that the memoization happens for the properties
+
 ## `pureComponent`
 
-**TODO**
+This function is identical to [`component`](#component) except that it memoizes the React element that results from rendering with a certain set of props. The props that are memoized are the _inner_ props, that is, the props that the component will get as the result of the entire composition chain. These are different from the _outer_ props, that are the ones that consumers pass manually into the component.
+
+The purpose of this component is to prevent a re render from happening when the React tree is known to be the same. It is particularly useful when the React tree is a complex one, since the cost grows fast with the amount of nodes in the tree. Since the memoization is done in the inside of the component, all `map` functions will be run, making it ideal for components that control their own state.
+
+```ts
+import React from 'react'
+import { mapReducer, pureComponent, startWithType } from 'refun'
+import AComplexHeader from './AComplexHeader'
+import AnExpensiveToComputeSidebar from './AnExpensiveToComputeSidebar'
+
+type TCounter = {
+  initialCount: number,
+}
+
+export default pureComponent(
+  startWithType<TCounter>(),
+  mapReducer(
+    (state, action) => {
+      switch (action.type) {
+        case 'ADD':
+          return {
+            counter: state.counter + 1
+          }
+
+        default:
+          return state
+      }
+    },
+    ({ initialCounter }) => ({
+      counter: initialCounter
+    })
+  )
+)(({ counter, dispatch }) = (
+  <main>
+    <AComplexHeader />
+    <AnExpensiveToComputeSidebar />
+    <button>
+      Add
+    </button>
+
+    <p>{counter}</p>
+  </main>
+))
+```
+
+So to be clear, the component that receives `counter` and `dispatch` as props is the one that is going to be memoized. If your intention is to memoize an expensive computation in a function in the composition chain, such as calculating a value in the `mapWithProps`, take a look at [`mapWithPropsMemo`](#mapWithPropsMemo) instead.
+
+`pureComponent` should only be used in components that receive no `children` and no complex props, since otherwise the overhead of memoization is not worth it. If the component receives `children` or complex props (objects / arrays), `pureComponent` will not provide any benefit, since those are very likely (or guaranteed in the case of `children`) to be different on every render. `pureComponent` works by doing a shallow comparison of the current props with the previous props. Shallow comparison means that each prop is compared with hard equality with the previous value of that same props.
 
 ## `startWithType`
 
-This function is simply a way of setting up the initial type in the [`component`](#component) composition change, since TypeScript does not currently support doing that in the composition function itself (`component` in this case, but would be `compose` in Redux, Ramda, etc).
+This function is simply a way of setting up the initial type in the [`component`](#component) composition chain, since TypeScript does not currently support doing that in the composition function itself (`component` in this case, but would be `compose` in Redux, Ramda, etc).
 
 It's purpose is entirely for types, and in runtime it's a no-op.
 
