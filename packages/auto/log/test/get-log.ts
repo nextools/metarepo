@@ -62,12 +62,12 @@ test('getLog', (t) => {
         messages: [
           {
             type: 'dependencies',
-            value: 'upgrade dependencies: `b`, `c`',
+            value: 'update dependencies: `b`, `c`',
           },
         ],
       },
     ] as TLog[],
-    'deps only: should return dependency upgrade message'
+    'deps only: should return dependency update message'
   )
 
   t.deepEquals(
@@ -145,12 +145,12 @@ test('getLog', (t) => {
           },
           {
             type: 'dependencies',
-            value: 'upgrade dependencies: `b`, `c`',
+            value: 'update dependencies: `b`, `c`',
           },
         ],
       },
     ] as TLog[],
-    'deps with messages: should return sorted messages with dependency upgrade message'
+    'deps with messages: should return sorted messages with dependency update message'
   )
 
   t.deepEquals(
@@ -218,27 +218,29 @@ test('getLog', (t) => {
           name: 'a',
           dir: 'fakes/a',
           version: '1.2.3',
-          type: 'major',
-          deps: null,
+          type: 'minor',
+          deps: {
+            b: '1.2.3',
+          },
           devDeps: null,
         },
       ],
       [
         {
           name: 'a',
-          type: 'major',
+          type: 'minor',
           messages: [
             {
-              type: 'minor',
-              value: 'minor',
+              type: 'patch',
+              value: 'patch',
             },
             {
               type: 'initial',
-              value: 'initial',
+              value: 'init',
             },
             {
-              type: 'major',
-              value: 'major',
+              type: 'minor',
+              value: 'minor',
             },
           ],
         },
@@ -248,25 +250,17 @@ test('getLog', (t) => {
       {
         name: 'a',
         version: '1.2.3',
-        type: 'major',
+        type: 'minor',
         dir: 'fakes/a',
         messages: [
           {
             type: 'initial',
-            value: 'initial',
-          },
-          {
-            type: 'major',
-            value: 'major',
-          },
-          {
-            type: 'minor',
-            value: 'minor',
+            value: 'init',
           },
         ],
       },
     ] as TLog[],
-    'messages only: should return sorted messages'
+    'initial: should skip dependency update message'
   )
 
   t.end()

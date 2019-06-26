@@ -12,15 +12,26 @@ const getMessages = (gitBumps: TGitBump[], name: string) => {
 }
 
 export const getLog = (packageBumps: TPackageBump[], gitBumps: TGitBump[]): TLog[] => {
-  return packageBumps.reduce((res, bump) => {
+  return packageBumps.reduce((result, bump) => {
     if (bump.version === null || bump.type === null) {
-      return res
+      return result
     }
 
     const messages = getMessages(gitBumps, bump.name)
+    const initialMessage = messages.find((message) => message.type === 'initial')
+
+    if (typeof initialMessage !== 'undefined') {
+      return result.concat({
+        name: bump.name,
+        version: bump.version,
+        type: bump.type,
+        dir: bump.dir,
+        messages: [initialMessage],
+      })
+    }
 
     if (bump.deps !== null) {
-      return res.concat({
+      return result.concat({
         name: bump.name,
         version: bump.version,
         type: bump.type,
@@ -29,17 +40,17 @@ export const getLog = (packageBumps: TPackageBump[], gitBumps: TGitBump[]): TLog
           ...messages.sort((a, b) => compareMessageTypes(b.type, a.type)),
           {
             type: 'dependencies',
-            value: `upgrade dependencies: \`${Object.keys(bump.deps).join('`, `')}\``,
+            value: `update dependencies: \`${Object.keys(bump.deps).join('`, `')}\``,
           } as TLogMessage,
         ],
       })
     }
 
     if (messages.length === 0) {
-      return res
+      return result
     }
 
-    return res.concat({
+    return result.concat({
       name: bump.name,
       version: bump.version,
       type: bump.type,
