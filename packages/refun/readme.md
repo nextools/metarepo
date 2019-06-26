@@ -2,9 +2,12 @@
 
 A collection of React Hook-enabled functions that compose harmoniously with each other. Similar to `recompose`, but:
 
-- Uses `Props -> Props` functions instead of `Component -> Component` functions (and no wrapper is added)
-- Propagates TypeScript types through the composition chain **without any losses**
-- Works entirely with Hooks instead of class components
+- Uses `Props -> Props` functions instead of `Component -> Component` functions. This is all around better. It means:
+  - Less nodes in the React tree
+  - Better optimization options for the JavaScript engine
+  - Being able to reuse general purpose functions (all of Ramda's object manipulation functions work)
+- Propagates TypeScript types through the composition chain **without any losses**.
+- Works entirely with React Hooks instead of class components
 
 ## Usage example
 
@@ -69,21 +72,19 @@ export const Button = component(
 Several things to note:
 
 - [`component`](#component) is used instead of a regular `compose` (from Ramda, Recompose or Redux for example) because `component` accurately propagates the types throughout the entire chain
-- Because of the type propagation, it's convenient to write down all the functions in place in the composition chaing. This way, the types will be inferred: otherwise the types will have to be specified manually.
-- [`startWithType`](#startWithType) is used as the first function of the chain so that the type to be used by the generics throughout the composition chain is available. This shouldn't be necessary: ideally, the `component` function itself should be able to propagate the type variable of the generic down to the functions inside, but at the time of this writing (2019-06-21) TypeScript does not support this. If it would, then the right way to start the composition chain would be:
+- Because of the type propagation, it's convenient to write down all the functions in place in the composition chain. This way, the types will be inferred: otherwise the types will have to be specified manually.
+- [`startWithType`](#startWithType) is necessary because of a TypeScript shortcoming. It is used to make the type that will be received by the first function in the composition chain available. It shouldn't be necessary to do this with a specific function: ideally, the `component` function itself should be able to propagate the type variable of the generic down to the functions inside, but at the time of this writing (2019-06-26) TypeScript does not support this. If it would, the right way to start the composition chain would be:
 
   ```ts
+  // Note: This is currently not possible
   export const Button = component<TButtonProps>(
     mapWithPropsMemo(({ isDisabled }) => ({
     ...
   ```
 
-  …skipping the `startWithType` function.
-
-
 ## `component`
 
-This function is an analog of `compose` and it performs simple function composition with two caveats:
+This function is an analog of `compose` and it performs simple function composition, with two caveats:
 
 - The value sent into the chain is presumed to be a React Function Component (`FC` type)
 - `component` will use the output type of one function in the chain as the input type of the next function in the chain, allowing the functions to modify the type along the way. It is not necessary to tell `component` what the output type at the end of the chain is going to be, since it will be inferred correctly from the functions passed into it.
@@ -313,6 +314,8 @@ export default component(
 ))
 ```
 
+Note that `label` is no longer available as a prop to the component. If you want to expand the props with extra ones instead of replacing them consider using [`mapWithProps`](#mapWithProps)
+
 ## `mapReducer`
 
 This function takes a reducer and an initial state factory, and passes down the `state` (spreaded as props) and the `dispatch` function. It employs the `useReducer` hook under the hood.
@@ -443,6 +446,8 @@ export default component(
 ))
 ```
 
+Note that this function just adds props to the component. If you want to replace all of them, you can use [`mapProps`](#mapProps) instead.
+
 ## `mapWithPropsMemo`
 
 This function does the same as [`mapWithProps`](#mapWithProps) and it memoizes the result for the props specified in the second parameter.
@@ -452,6 +457,7 @@ An example use case in which this can prove useful is if you were to be calculat
 ```ts
 import React from 'react'
 import { component, mapWithPropsMemo, startWithType } from 'refun'
+import calculateFibonacci from './calculateFibonacci'
 
 type TFibonacci = {
   position: number,
@@ -460,8 +466,7 @@ type TFibonacci = {
 export default component(
   startWithType<TFibonacci>(),
   mapWithPropsMemo(({ position }) => ({
-    position,
-    fibonacci: fibonacci(position)
+    fibonacci: calculateFibonacci(position)
   }), ['position'])
 )(({ position, fibonacci }) = (
   <p>
