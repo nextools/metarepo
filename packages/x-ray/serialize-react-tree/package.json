@@ -9,9 +9,6 @@
   "engines": {
     "node": ">=8.6.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@sindresorhus/is": "^0.17.0",

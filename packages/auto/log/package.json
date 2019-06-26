@@ -9,9 +9,6 @@
   "engines": {
     "node": ">=8.6.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "@auto/utils": "^0.2.0",
     "graceful-fs": "^4.1.15",

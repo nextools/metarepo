@@ -9,9 +9,6 @@
   "engines": {
     "node": ">=8.6.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "@x-ray/common-utils": "^0.1.0",
     "@x-ray/serialize-react-tree": "^0.2.0",

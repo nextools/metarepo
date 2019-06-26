@@ -9,9 +9,6 @@
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
   "repository": "bubble-dev/_",
-  "publishConfig": {
-    "access": "public"
-  },
   "engines": {
     "node": ">=8.6.0"
   },

@@ -5,9 +5,6 @@
   "keywords": [],
   "repository": "bubble-dev/_",
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "engines": {
     "node": ">=8.6.0"
   },

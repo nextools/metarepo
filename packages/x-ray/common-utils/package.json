@@ -9,9 +9,6 @@
   "engines": {
     "node": ">=8.6.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "chalk": "^2.4.1",

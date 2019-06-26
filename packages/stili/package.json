@@ -11,9 +11,6 @@
   "engines": {
     "node": ">=8.6.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "sideEffects": false,
   "dependencies": {
     "@types/react": "^16.8.6",

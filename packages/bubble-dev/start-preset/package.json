@@ -12,9 +12,6 @@
   "engines": {
     "node": ">=8.6.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "@auto/bump": "^0.3.0",
     "@auto/git": "^0.2.0",

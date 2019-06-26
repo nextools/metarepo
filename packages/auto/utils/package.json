@@ -9,9 +9,6 @@
   "engines": {
     "node": ">=8.6.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "escape-string-regexp": "^2.0.0"
   },
