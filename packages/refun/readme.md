@@ -411,11 +411,43 @@ export default component(
 ))
 ```
 
+## `mapWithProps`
+
+This function allows you to expand the props passed in to a component with more props derived from them. It is typically used to precalculate values that are to be used in the component, to minimize the amount of logic needed to do in the render.
+
+```ts
+import React from 'react'
+import { component, mapFocused, startWithType } from 'refun'
+
+type TButton = {
+  label: string,
+}
+
+export default component(
+  startWithType<TButton>(),
+  mapFocused,
+  mapWithProps(({ isFocused }) => ({
+    borderColor: isFocused ? 'black' : 'grey'
+  }))
+)(({ borderColor, label, onBlur, onFocus }) = (
+  <button
+    onBlur={onBlur}
+    onFocus={onFocus}
+    style={{
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor
+    }}>
+    {label}
+  </button>
+))
+```
+
 ## `mapWithPropsMemo`
 
-**WIP**
+This function does the same as [`mapWithProps`](#mapWithProps) and it memoizes the result for the props specified in the second parameter.
 
-**Good** use case with calculating the Fibonacci number of an input, which is known to be expensive for large numbers:
+An example use case in which this can prove useful is if you were to be calculating the Fibonacci number of an input, which is known to be expensive for large numbers:
 
 ```ts
 import React from 'react'
@@ -438,7 +470,7 @@ export default component(
 ))
 ```
 
-Notice that the memoization happens for the properties
+Notice that `mapWithPropsMemo` takes two arguments, and that memoization happens for the props that are specified in the second argument, in this case `position`.
 
 ## `pureComponent`
 
