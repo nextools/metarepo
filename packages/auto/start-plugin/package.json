@@ -1,6 +1,6 @@
 {
   "name": "@auto/start-plugin",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "🤖 Auto Tools",
   "keywords": "tasks, runner, start, start-plugin, auto",
   "main": "src/index.ts",

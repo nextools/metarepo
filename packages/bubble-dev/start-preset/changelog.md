@@ -1,3 +1,8 @@
+## v0.7.0 (minor)
+
+* 🌱 add `access` to npm config
+* ♻️ upgrade dependencies: `@auto/start-plugin`, `@auto/npm`
+
 ## v0.6.2 (patch)
 
 * 🐞 pass NPM options for publishing to Start config
