@@ -51,7 +51,8 @@
       "autoNamePrefix": "@",
       "zeroBreakingChangeType": "minor",
       "npm": {
-        "publishSubDirectory": "build"
+        "publishSubDirectory": "build",
+        "access": "public"
       },
       "shouldAlwaysBumpDependents": false,
       "shouldMakeGitTags": true,
