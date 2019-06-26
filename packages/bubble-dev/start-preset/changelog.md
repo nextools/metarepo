@@ -1,3 +1,7 @@
+## v0.6.1 (patch)
+
+* 🐞 include only `readme.md` and `license.md` files when publishing
+
 ## v0.6.0 (major)
 
 * 💥 move all GitHub and Slack options to env vars
