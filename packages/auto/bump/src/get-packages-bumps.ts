@@ -41,7 +41,7 @@ export const getPackagesBumps = (packages: TPackages, bumps: TGitBump[], bumpOpt
         // if bumped range is different from the range from stack (existing or not) then bump
         bumpedRange = bumpRange(dependent.range, version, type, bumpOptions)
 
-        //  skip dependent if we shouldn't always bump a version and it satisfies the bump
+        // skip dependent if we shouldn't always bump a version and it satisfies the bump
         if (bumpedRange === dependent.range) {
           continue
         }
