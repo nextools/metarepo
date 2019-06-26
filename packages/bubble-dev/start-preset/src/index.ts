@@ -50,7 +50,7 @@ export const preparePackage = (packageDir: string) => {
   const dir = path.join('packages', packageDir)
 
   return sequence(
-    find(`${dir}/*.md`),
+    find(`${dir}/{readme,license}.md`),
     copy(`${dir}/build/`),
     buildPackageJson(dir)
   )
