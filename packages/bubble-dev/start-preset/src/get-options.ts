@@ -6,24 +6,11 @@ export type TStartOptions = {
     initialType: TBumpType,
     autoNamePrefix: string,
     zeroBreakingChangeType: TBumpType,
-    github: {
-      username: string,
-      repo: string,
-    },
-    slack: {
-      channel: string,
-      username: string,
-      iconEmoji: string,
-      colors: {
-        major: string,
-        minor: string,
-        patch: string,
-      },
-    },
     shouldAlwaysBumpDependents: boolean,
     shouldMakeGitTags: boolean,
     shouldMakeGitHubReleases: boolean,
     shouldSendSlackMessage: boolean,
+    shouldWriteChangelogFiles: boolean,
   },
 }
 

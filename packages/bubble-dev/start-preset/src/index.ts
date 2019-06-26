@@ -340,8 +340,6 @@ export const publish = async () => {
       initialType,
       autoNamePrefix,
       zeroBreakingChangeType,
-      github,
-      slack,
       shouldAlwaysBumpDependents,
       shouldMakeGitTags,
       shouldMakeGitHubReleases,
@@ -365,15 +363,22 @@ export const publish = async () => {
     initialType,
   }
   const githubOptions: TGithubOptions = {
-    ...github,
     token: process.env.AUTO_GITHUB_TOKEN as string,
+    username: process.env.AUTO_GITHUB_USERNAME as string,
+    repo: process.env.AUTO_GITHUB_REPO as string,
   }
   const slackOptions: TSlackOptions = {
-    ...slack,
     token: process.env.AUTO_SLACK_TOKEN as string,
+    channel: process.env.AUTO_SLACK_CHANNEL as string,
+    username: process.env.AUTO_SLACK_USERNAME as string,
+    iconEmoji: process.env.AUTO_SLACK_ICON_EMOJI as string,
+    colors: {
+      major: process.env.AUTO_SLACK_COLOR_MAJOR as string,
+      minor: process.env.AUTO_SLACK_COLOR_MINOR as string,
+      patch: process.env.AUTO_SLACK_COLOR_PATCH as string,
+    },
   }
 
-  // TODO: refactor Auto options into one config
   return sequence(
     getPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
     publishPrompt(prefixes),
