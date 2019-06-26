@@ -29,7 +29,7 @@ export const getLog = (packageBumps: TPackageBump[], gitBumps: TGitBump[]): TLog
           ...messages.sort((a, b) => compareMessageTypes(b.type, a.type)),
           {
             type: 'dependencies',
-            value: `upgrade dependencies`,
+            value: `upgrade dependencies: \`${Object.keys(bump.deps).join('`, `')}\``,
           } as TLogMessage,
         ],
       })

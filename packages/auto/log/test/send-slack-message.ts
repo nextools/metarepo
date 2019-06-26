@@ -65,7 +65,7 @@ test('sendSlackMessage', async (t) => {
           },
           {
             type: 'dependencies',
-            value: 'update dependencies',
+            value: 'update dependencies: `c`',
           },
         ],
       },

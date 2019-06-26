@@ -17,7 +17,13 @@ export const sendSlackMessage = async (logs: TLog[], prefixes: TPrefixes, worksp
         {
           title: `${name} v${log.version}`,
           value: log.messages
-            .map((message) => `${prefixes.required[message.type].value} ${message.value}`)
+            .map((message) => {
+              if (message.type === 'dependencies') {
+                return `${prefixes.required[message.type].value} update dependencies`
+              }
+
+              return `${prefixes.required[message.type].value} ${message.value}`
+            })
             .join('\n'),
         },
       ],

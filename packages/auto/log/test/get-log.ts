@@ -62,7 +62,7 @@ test('getLog', (t) => {
         messages: [
           {
             type: 'dependencies',
-            value: 'upgrade dependencies',
+            value: 'upgrade dependencies: `b`, `c`',
           },
         ],
       },
@@ -145,7 +145,7 @@ test('getLog', (t) => {
           },
           {
             type: 'dependencies',
-            value: 'upgrade dependencies',
+            value: 'upgrade dependencies: `b`, `c`',
           },
         ],
       },

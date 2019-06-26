@@ -47,7 +47,7 @@ test('writeChangelogFiles', async (t) => {
 
   t.equal(
     changelogData,
-    '## v0.1.0\n\n* 🌱 minor\n* 🐞 patch\n',
+    '## v0.1.0 (minor)\n\n* 🌱 minor\n* 🐞 patch\n',
     'should write a new changelog.md'
   )
 
@@ -55,13 +55,13 @@ test('writeChangelogFiles', async (t) => {
     [
       {
         name: '@ns/a',
-        version: '0.2.0',
-        type: 'minor',
+        version: '0.2.1',
+        type: 'patch',
         dir: 'fakes/a',
         messages: [
           {
-            type: 'minor',
-            value: 'minor',
+            type: 'patch',
+            value: 'patch',
           },
         ],
       },
@@ -73,7 +73,7 @@ test('writeChangelogFiles', async (t) => {
 
   t.equal(
     changelogData,
-    '## v0.2.0\n\n* 🌱 minor\n\n## v0.1.0\n\n* 🌱 minor\n* 🐞 patch\n',
+    '## v0.2.1 (patch)\n\n* 🐞 patch\n\n## v0.1.0 (minor)\n\n* 🌱 minor\n* 🐞 patch\n',
     'should prepend to an already existing changelog.md'
   )
 
