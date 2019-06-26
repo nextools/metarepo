@@ -1,3 +1,7 @@
+## v0.2.1
+
+* 🐞 skip any bumps after initial
+
 ## v0.2.0
 
 * 💥 remove all "repo" methods
