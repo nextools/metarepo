@@ -163,3 +163,12 @@ export const makeGithubReleases = (prefixes: TPrefixes, Options: TWorkspacesOpti
 
     await make(logs, prefixes, Options, githubOptions)
   })
+
+export const writeChangelogFiles = (prefixes: TPrefixes) =>
+  plugin<TPluginData, any>('makeGithubReleases', () => async ({ packagesBumps, gitBumps }) => {
+    const { getLog, writeChangelogFiles: write } = await import('@auto/log')
+
+    const logs = getLog(packagesBumps, gitBumps)
+
+    await write(logs, prefixes)
+  })
