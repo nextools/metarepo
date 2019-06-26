@@ -1,3 +1,7 @@
+## v0.6.2 (patch)
+
+* 🐞 pass NPM options for publishing to Start config
+
 ## v0.6.1 (patch)
 
 * 🐞 include only `readme.md` and `license.md` files when publishing
