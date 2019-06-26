@@ -494,12 +494,6 @@ test('git:getBumps multiple packages initial', async (t) => {
       name: 'foo',
       type: 'minor',
       messages: [{
-        type: 'patch',
-        value: 'patch',
-      }, {
-        type: 'major',
-        value: 'breaking',
-      }, {
         type: 'initial',
         value: 'initial',
       }],
