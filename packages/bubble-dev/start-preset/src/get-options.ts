@@ -6,6 +6,10 @@ export type TStartOptions = {
     initialType: TBumpType,
     autoNamePrefix: string,
     zeroBreakingChangeType: TBumpType,
+    npm?: {
+      publishSubDirectory?: string,
+      registry?: string,
+    },
     shouldAlwaysBumpDependents: boolean,
     shouldMakeGitTags: boolean,
     shouldMakeGitHubReleases: boolean,

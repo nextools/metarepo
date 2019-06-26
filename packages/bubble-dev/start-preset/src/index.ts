@@ -340,6 +340,7 @@ export const publish = async () => {
       initialType,
       autoNamePrefix,
       zeroBreakingChangeType,
+      npm,
       shouldAlwaysBumpDependents,
       shouldMakeGitTags,
       shouldMakeGitHubReleases,
@@ -349,9 +350,7 @@ export const publish = async () => {
   } = await getStartOptions()
   const { prefixes } = await import('./config/auto')
 
-  const npmOptions: TNpmOptions = {
-    publishSubDirectory: 'build/',
-  }
+  const npmOptions: TNpmOptions = npm || {}
   const workspacesOptions: TWorkspacesOptions = {
     autoNamePrefix,
   }

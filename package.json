@@ -50,6 +50,9 @@
       "initialType": "minor",
       "autoNamePrefix": "@",
       "zeroBreakingChangeType": "minor",
+      "npm": {
+        "publishSubDirectory": "build"
+      },
       "shouldAlwaysBumpDependents": false,
       "shouldMakeGitTags": true,
       "shouldMakeGitHubReleases": false,
