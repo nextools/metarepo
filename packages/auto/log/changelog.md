@@ -1,4 +1,4 @@
-## v0.3.0 (major)
+## v0.3.0
 
 * 💥 remove all "repo" methods
 * 🌱 list packages in "update dependencies" message

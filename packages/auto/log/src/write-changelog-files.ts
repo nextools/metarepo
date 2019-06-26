@@ -10,7 +10,7 @@ const pWriteFile = promisify(writeFile)
 export const writeChangelogFiles = async (logs: TLog[], prefixes: TPrefixes) => {
   for (const log of logs) {
     const changelogPath = path.join(log.dir, 'changelog.md')
-    let newLog = `## v${log.version} (${log.type})\n\n`
+    let newLog = `## v${log.version}\n\n`
 
     log.messages.forEach((message) => {
       newLog += `* ${prefixes.required[message.type].value} ${message.value}\n`
