@@ -8,19 +8,34 @@ export const publishPackage = async (bumpPackage: TPackageBump, npmOptions?: TNp
   const packageJson = await getPackage(bumpPackage.dir)
   const options = {
     registry: 'https://registry.npmjs.org/',
-    subDirectory: '',
-    ...(packageJson.publishConfig && packageJson.publishConfig.registry && {
-      registry: packageJson.publishConfig.registry,
-    }),
-    ...(npmOptions && npmOptions.registry && {
-      registry: npmOptions.registry,
-    }),
-    ...(npmOptions && npmOptions.publishSubDirectory && {
-      subDirectory: npmOptions.publishSubDirectory,
-    }),
+    publishSubDirectory: '',
+    access: 'restricted',
   }
 
-  await execa('npm', ['publish', '--registry', options.registry, path.join(bumpPackage.dir, options.subDirectory)], {
+  if (packageJson.publishConfig && packageJson.publishConfig.registry) {
+    options.registry = packageJson.publishConfig.registry
+  }
+
+  if (npmOptions && npmOptions.registry) {
+    options.registry = npmOptions.registry
+  }
+
+  if (npmOptions && npmOptions.publishSubDirectory) {
+    options.publishSubDirectory = npmOptions.publishSubDirectory
+  }
+
+  if (npmOptions && npmOptions.access) {
+    options.access = npmOptions.access
+  }
+
+  await execa('npm', [
+    'publish',
+    '--registry',
+    options.registry,
+    '--access',
+    options.access,
+    path.join(bumpPackage.dir, options.publishSubDirectory),
+  ], {
     stdin: process.stdin,
     stdout: process.stdout,
     stderr: null,

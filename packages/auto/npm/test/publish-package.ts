@@ -31,7 +31,7 @@ test('npm:publishPackage, default', async (t) => {
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
     [
-      ['npm', ['publish', '--registry', 'https://registry.npmjs.org/', '/foo/bar/baz']],
+      ['npm', ['publish', '--registry', 'https://registry.npmjs.org/', '--access', 'restricted', '/foo/bar/baz']],
     ],
     'should spawn NPM with necessary arguments'
   )
@@ -71,7 +71,7 @@ test('npm:publishPackage, with relative directory', async (t) => {
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
     [
-      ['npm', ['publish', '--registry', 'https://registry.npmjs.org/', '/foo/bar/baz/build']],
+      ['npm', ['publish', '--registry', 'https://registry.npmjs.org/', '--access', 'restricted', '/foo/bar/baz/build']],
     ],
     'should spawn NPM with necessary arguments'
   )
@@ -111,7 +111,7 @@ test('npm:publishPackage, user provided registry', async (t) => {
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
     [
-      ['npm', ['publish', '--registry', 'https://custom-registry', '/foo/bar/baz']],
+      ['npm', ['publish', '--registry', 'https://custom-registry', '--access', 'restricted', '/foo/bar/baz']],
     ],
     'should spawn NPM with necessary arguments'
   )
@@ -151,7 +151,7 @@ test('npm:publishPackage, packageJson registry', async (t) => {
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
     [
-      ['npm', ['publish', '--registry', 'https://my-registry', '/foo/bar/baz']],
+      ['npm', ['publish', '--registry', 'https://my-registry', '--access', 'restricted', '/foo/bar/baz']],
     ],
     'should spawn NPM with necessary arguments'
   )
@@ -194,7 +194,47 @@ test('npm:publishPackage, priority test', async (t) => {
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
     [
-      ['npm', ['publish', '--registry', 'https://options-registry', '/foo/bar/baz']],
+      ['npm', ['publish', '--registry', 'https://options-registry', '--access', 'restricted', '/foo/bar/baz']],
+    ],
+    'should spawn NPM with necessary arguments'
+  )
+
+  unmock('../src/publish-package')
+})
+
+test('npm:publishPackage, user provided access', async (t) => {
+  const execaSpy = createSpy(() => Promise.resolve())
+
+  mock('../src/publish-package', {
+    execa: { default: execaSpy },
+    '@auto/fs': {
+      getPackage: () => Promise.resolve({
+        name: 'baz',
+        version: '1.2.3',
+      }),
+    },
+  })
+
+  const { publishPackage } = await import('../src/publish-package')
+
+  await publishPackage(
+    {
+      name: 'baz',
+      dir: '/foo/bar/baz',
+      version: '1.2.3',
+      type: 'minor',
+      deps: null,
+      devDeps: null,
+    },
+    {
+      access: 'public',
+    }
+  )
+
+  t.deepEquals(
+    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    [
+      ['npm', ['publish', '--registry', 'https://registry.npmjs.org/', '--access', 'public', '/foo/bar/baz']],
     ],
     'should spawn NPM with necessary arguments'
   )
