@@ -9,6 +9,7 @@ export type TStartOptions = {
     npm?: {
       publishSubDirectory?: string,
       registry?: string,
+      access?: 'restricted' | 'public',
     },
     shouldAlwaysBumpDependents: boolean,
     shouldMakeGitTags: boolean,
