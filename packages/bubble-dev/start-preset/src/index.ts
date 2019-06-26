@@ -31,6 +31,7 @@ import {
   writePublishTags,
   makeGithubReleases,
   sendSlackMessage,
+  writeChangelogFiles,
 } from '@auto/start-plugin'
 // @ts-ignore
 import tapDiff from 'tap-diff'
@@ -345,6 +346,7 @@ export const publish = async () => {
       shouldMakeGitTags,
       shouldMakeGitHubReleases,
       shouldSendSlackMessage,
+      shouldWriteChangelogFiles,
     },
   } = await getStartOptions()
   const { prefixes } = await import('./config/auto')
@@ -379,6 +381,7 @@ export const publish = async () => {
     writePackagesDependencies,
     writeDependenciesCommit(prefixes),
     writePackageVersions,
+    shouldWriteChangelogFiles && writeChangelogFiles(prefixes),
     writePublishCommit(prefixes, workspacesOptions),
     shouldMakeGitTags && writePublishTags(workspacesOptions),
     buildBumpedPackages(preparePackage),
