@@ -6,6 +6,8 @@
     "pretty": true,
     "lib": ["esnext", "dom"],
     "jsx": "react",
+    "target": "esnext",
+    "module": "esnext",
     "moduleResolution": "node",
     "skipLibCheck": true
   }
