@@ -152,7 +152,7 @@ export default component(
 This function sets the `isFocused` prop to `true` when the `onFocus` handler is called and to `false` when `onBlur` is called.
 
 ```ts
-import React from 'react'
+import * as React from 'react'
 import { component, mapFocused, startWithType } from 'refun'
 
 type TButton = {
@@ -178,7 +178,51 @@ export default component(
 
 ## `mapHandlers`
 
-**TODO**
+This function allows you to build custom handlers that will be memoized so that they do not cause a diff in the shallow comparison, which would lead to a re render.
+
+So instead of writing:
+
+```ts
+// This will cause the component to re render every time because the handler is unique in every execution
+const Input = ({ onChange, value }) => {
+  const handleChange = ({ target: { value } }) => onChange(value)
+
+  return <input
+    onChange={handleChange}
+    value={value}
+  />
+}
+```
+
+…it allows you to do:
+
+```ts
+import * as React from 'react'
+import { component, mapHandlers, startWithType } from 'refun'
+
+type TInput = {
+  onChange: (string) => void,
+  value: string,
+}
+
+export default component(
+  startWithType<TInput>(),
+  mapHandlers({
+    onChange: ({ onChange }) => ({ target: { value } }) => onChange(value),
+  })
+)(
+  ({ onChange, value }) => (
+    <input
+      onChange={onChange}
+      value={value}
+    />
+  )
+)
+```
+
+The first argument that each handler will receive is the current props, and the second is the arguments that had been sent to the handler. Notice that the second argument is curried.
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-maphandlers-8d823)
 
 ## `mapHovered`
 
