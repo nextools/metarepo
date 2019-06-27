@@ -368,7 +368,38 @@ export default component(
 
 ## `mapRef`
 
-**TODO**
+This function provides a way of making a mutable reference available as a prop. It uses the `useRef` hook under the hood.
+
+Refs are useful to store derived values that do not support shallow comparison, such as functions, or DOM elements.
+
+For example you can use it to capture the `ref` to a DOM element and inspect it:
+
+```ts
+import React from 'react'
+import { component, mapRef, onMount, startWithType } from 'refun'
+
+type TButton = {
+  label: string
+}
+
+export default component(
+  startWithType<TButton>(),
+  mapRef('buttonElementRef', undefined),
+  onMount(({ buttonElementRef }) => {
+    if (buttonElementRef.current !== undefined) {
+      console.log(buttonElementRef)
+    }
+  })
+)(
+  ({ buttonElementRef, label }) => (
+    <button ref={buttonElementRef}>
+      {label}
+    </button>
+  )
+)
+```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapref-t3wog)
 
 ## `mapSafeRequestAnimationFrame` & `mapSafeRequestAnimationFrameFactory`
 
@@ -390,33 +421,11 @@ export default component(
 
 **TODO**
 
-## `onMount`
-
-This function calls the passed in callback when the component is first mounted, sending the current Props as argument.
-
-For example:
-
-```ts
-import React from 'react'
-import { component, onMount, startWithType } from 'refun'
-
-type TButton = {
-  label: string,
-}
-
-export default component(
-  startWithType<TButton>(),
-  onMount(({ label }) => console.log('Mounted with label', label))
-)(({ label }) = (
-  <button>
-    {label}
-  </button>
-))
-```
-
 ## `mapWithProps`
 
 This function allows you to expand the props passed in to a component with more props derived from them. It is typically used to precalculate values that are to be used in the component, to minimize the amount of logic needed to do in the render.
+
+If the returned props have the same name as incoming props, they will override the incoming props.
 
 ```ts
 import React from 'react'
@@ -476,6 +485,30 @@ export default component(
 ```
 
 Notice that `mapWithPropsMemo` takes two arguments, and that memoization happens for the props that are specified in the second argument, in this case `position`.
+
+## `onMount`
+
+This function calls the passed in callback when the component is first mounted, sending the current Props as argument.
+
+For example:
+
+```ts
+import React from 'react'
+import { component, onMount, startWithType } from 'refun'
+
+type TButton = {
+  label: string,
+}
+
+export default component(
+  startWithType<TButton>(),
+  onMount(({ label }) => console.log('Mounted with label', label))
+)(({ label }) = (
+  <button>
+    {label}
+  </button>
+))
+```
 
 ## `pureComponent`
 
