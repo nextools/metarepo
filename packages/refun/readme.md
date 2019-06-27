@@ -563,7 +563,50 @@ export default component(
 
 ## `mapWithAsyncProps`
 
-**TODO**
+This function is exactly like [`mapWithPropsMemo`](#mapWithPropsMemo), except that the mapper function is expected to return a Promise that will resolve with the props to add.
+
+```ts
+import * as React from "react";
+import { render } from "react-dom";
+import { component, mapWithAsyncProps, startWithType } from "refun";
+import axios from "axios";
+
+type TPokemon = {
+  id: string;
+};
+
+const Pokemon = component(
+  startWithType<TPokemon>(),
+  mapWithAsyncProps(
+    async ({ id }) => {
+      try {
+        const response = await axios.get(
+          `https://pokeapi.co/api/v2/pokemon/${id}`
+        );
+
+        return {
+          height: response.data.height,
+          weight: response.data.weight
+        };
+      } catch {
+        return {
+          height: undefined,
+          weight: undefined
+        };
+      }
+    },
+    ["id"]
+  )
+)(({ id, height, weight }) => (
+  <p>
+    {id} is {height} height and weights {weight}
+  </p>
+));
+
+export default () => <Pokemon id="pikachu" />
+```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapwithasyncprops-ty9l6)
 
 ## `mapWithProps`
 
