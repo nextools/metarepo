@@ -364,7 +364,52 @@ export default component(
 
 ## `mapRefLayout`
 
-**TODO**
+This function allows you to capture the `ref` to a DOM element, and synchronously perform an update of the props based on some values of the element. It relies on `useLayoutEffect` under the hoods to synchronously capturing the `ref` and then updates the state, which will cause React to cancel the previous render and use the updated one instead.
+
+This is particularly useful in order to measure a component’s size and update the rendering without causing any flickering.
+
+`mapRefLayout` receives three arguments:
+
+1. The name of the prop that will hold the `ref`
+2. A handler that receives the `ref` and the props as arguments, and returns a set of props to be added to the incoming props.
+3. A list of names of incoming props to be monitored. If one of those props changes, the handler should be executed again. Otherwise it will be skipped. See [`mapWithPropsMemo`](#mapWithPropsMemo) for a similar API.
+
+```ts
+import * as React from "react"
+import { component, mapRefLayout, startWithType } from "refun"
+
+type TLayout = {
+  direction: "horizontal" | "vertical"
+}
+
+const Button = component(
+  startWithType<TLayout>(),
+  mapRefLayout(
+    "buttonElementRef",
+    (buttonElementRef, { direction }): { size: number } => {
+      if (buttonElementRef) {
+        switch (direction) {
+          case "horizontal":
+            return {
+              size: buttonElementRef.getBoundingClientRect().width
+            }
+          case "vertical":
+            return {
+              size: buttonElementRef.getBoundingClientRect().height
+            }
+        }
+      }
+
+      return {
+        size: 10
+      }
+    },
+    ["direction"]
+  )
+)(({ buttonElementRef, size }) => <button ref={buttonElementRef}>{size}</button>)
+```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapreflayout-ve3zn)
 
 ## `mapRef`
 
