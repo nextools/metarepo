@@ -384,9 +384,9 @@ type TButton = {
 
 export default component(
   startWithType<TButton>(),
-  mapRef('buttonElementRef', undefined),
+  mapRef('buttonElementRef', null),
   onMount(({ buttonElementRef }) => {
-    if (buttonElementRef.current !== undefined) {
+    if (buttonElementRef.current !== null) {
       console.log(buttonElementRef)
     }
   })
@@ -411,7 +411,62 @@ export default component(
 
 ## `mapState`
 
-**TODO**
+This function allows you to set up a stateful prop and a function for updating that prop. It also supports setting the initial value, derived from the props passed into it, and a list of props to watch to reset that value whenever the external prop changes.
+
+Note in the example how the `OverridableInternalCounter` sets the `["counter"]` as the last argument of `mapState`. This will cause `mapState` to watch for incoming changes to the `counter` prop and use them to update the `internalCounter` prop, accordingly to the function in the third argument `({ counter }) => counter`. In the case of `InternalCounter`, the array in the last argument is empty (`[]`) and then `mapState` does not watch for changes, which causes the external prop `counter` value to be ignored once updated, effectively working as an initial value only for `internalCounter`.
+
+```ts
+import * as React from "react"
+import { component, mapState, startWithType } from "refun"
+
+type TCounter = {
+  counter: number
+}
+
+const InternalCounter = component(
+  startWithType<TCounter>(),
+  mapState("internalCounter", "setCounter", ({ counter }) => counter, [])
+)(({ internalCounter, setCounter }) => (
+  <div>
+    <button onClick={() => setCounter(internalCounter + 1)}>
+      Add to internal counter
+    </button>
+    <p>{internalCounter}</p>
+  </div>
+));
+
+const OverridableInternalCounter = component(
+  startWithType<TCounter>(),
+  mapState("internalCounter", "setCounter", ({ counter }) => counter, [
+    "counter"
+  ])
+)(({ internalCounter, setCounter }) => (
+  <div>
+    <button onClick={() => setCounter(internalCounter + 1)}>
+      Add to overridable internal counter
+    </button>
+    <p>{internalCounter}</p>
+  </div>
+));
+
+export default component(
+  startWithType<TCounter>(),
+  mapState("externalCounter", "setExternalCounter", ({ counter }) => counter, [
+    "counter"
+  ])
+)(({ externalCounter, setExternalCounter }) => (
+  <div>
+    <button onClick={() => setExternalCounter(externalCounter + 1)}>
+      Add to external counter
+    </button>
+    <p>{externalCounter}</p>
+    <OverridableInternalCounter counter={externalCounter} />
+    <InternalCounter counter={externalCounter} />
+  </div>
+))
+```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapstate-zy1rj)
 
 ## `mapThrottledHandler` & `mapThrottledHandlerFactory`
 
