@@ -703,6 +703,8 @@ This function is identical to [`component`](#component) except that it memoizes 
 
 The purpose of this component is to prevent a re render from happening when the React tree is known to be the same. It is particularly useful when the React tree is a complex one, since the cost grows fast with the amount of nodes in the tree. Since the memoization is done in the inside of the component, all `map` functions will be run, making it ideal for components that control their own state.
 
+> Note that this function is meant to be used to avoid pointless re renders of complex trees, which is a concern that should be treated at the high level, in an app for example, rather than in small presentational components. Memoization comes with a cost, and React is already providing optimizations via reconciliation, so the type of optimizations that `pureComponent` does, similar to the old `shouldComponentUpdate`, is to be reserved for cases where there is a clear need for optimization.
+
 ```ts
 import React from 'react'
 import { mapReducer, pureComponent, startWithType } from 'refun'
