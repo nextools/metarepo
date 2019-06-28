@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { isFunction, UNDEFINED, requestAnimationFrame, cancelAnimationFrame } from 'tsfn'
+import { isFunction, UNDEFINED } from 'tsfn'
 import { useEffectFn } from './utils'
 
 export const mapDebouncedHandlerFactory = (setFn: Function, clearFn: Function) =>
@@ -41,4 +41,3 @@ export const mapDebouncedHandlerFactory = (setFn: Function, clearFn: Function) =
     }
 
 export const mapDebouncedHandlerTimeout = mapDebouncedHandlerFactory(setTimeout, clearTimeout)
-export const mapDebouncedHandlerAnimationFrame = mapDebouncedHandlerFactory(requestAnimationFrame, cancelAnimationFrame)
