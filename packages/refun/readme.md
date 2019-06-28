@@ -121,9 +121,52 @@ component(
 ))
 ```
 
-## `mapDebouncedHandlers`
+- debounce: cancels previous one (resets timer)
+- throttle: changes the arguments but preserves timeout
 
-**TODO** (no clue)
+## `mapDebouncedHandlerTimeout`
+
+This function allows you to defer the execution of a handler for a grace period (specified in milliseconds) and if the handler gets invoked again during that period, it cancels the current grace period and overrides it with the new call, restarting the time counter.
+
+Why you ask? Imagine for example that there is a button in the UI in which a user might be tempted to repeatedly click to make sure an action happens, but it doing so they will repeatedly trigger an expensive operation that will freeze the application. To avoid this, you could debounce the `onClick` handler for some milliseconds and make sure only the last call will be acted upon.
+
+```ts
+import * as React from "react"
+import { component, mapHandlers, mapDebouncedHandlerTimeout, startWithType } from "refun"
+
+type TButton = {
+  onClick: () => void
+}
+
+export default component(
+  startWithType<TButton>(),
+  mapHandlers({
+    onClick: () => () => console.log("the handler was now called")
+  }),
+  mapDebouncedHandlerTimeout("onClick", 1000)
+)(({ onClick }) => (
+  <div>
+    <p>
+      Even if you click the button many times in a row (with each click less
+      than a second after the other), you will only see one log message, at the
+      end
+    </p>
+    <button onClick={onClick}>Click me</button>
+  </div>
+))
+```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapdebouncedhandlertimeout-791kn)
+
+## `mapDebouncedHandlerFactory`
+
+This function is a constructor for debouncers. It is used under the hood to build the `mapDebouncedHandlerTimeout` function. If you have a function that creates a deferred effect and a function that will cancel that deferral, you can build your own debouncer.
+
+This is how `mapDebouncedHandlerTimeout` is defined:
+
+```ts
+export const mapDebouncedHandlerTimeout = mapDebouncedHandlerFactory(setTimeout, clearTimeout)
+```
 
 ## `mapDefaultProps`
 
