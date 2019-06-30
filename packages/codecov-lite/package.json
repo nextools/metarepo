@@ -1,8 +1,12 @@
 {
   "name": "codecov-lite",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "LCOV uploader for codecov.io service",
-  "keywords": [ "coverage", "codecov", "lcov" ],
+  "keywords": [
+    "coverage",
+    "codecov",
+    "lcov"
+  ],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
