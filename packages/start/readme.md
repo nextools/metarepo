@@ -353,8 +353,6 @@ Coming soon.
 * [ ] more tests
 * [ ] migrate the rest of important plugins
 
-## Copyright
-
-All the packages in this repository are released under the terms of the [MIT License](license.md).
+## Notes
 
 The font used in logo is [supernova fat](http://www.ffonts.net/supernova-fat.font).
