@@ -4,8 +4,7 @@
   "description": "⬛️ CLI entry point",
   "keywords": "tasks, runner, start, cli",
   "repository": "deepsweet/start",
-  "homepage": "https://github.com/deepsweet/start/tree/master/packages/cli",
-  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
   "files": [
     "build/"

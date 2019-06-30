@@ -4,8 +4,7 @@
   "description": "🏭 Bundle files using Rollup",
   "keywords": "tasks, runner, start, start-plugin, rollup",
   "repository": "deepsweet/start",
-  "homepage": "https://github.com/deepsweet/start/tree/master/packages/plugin-lib-rollup",
-  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
   "main": "src/index.ts",
   "files": [

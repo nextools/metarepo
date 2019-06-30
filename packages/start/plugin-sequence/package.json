@@ -4,8 +4,7 @@
   "description": "⏩ Run plugins in sequence",
   "keywords": "tasks, runner, start, start-plugin, sequence",
   "repository": "deepsweet/start",
-  "homepage": "https://github.com/deepsweet/start/tree/master/packages/plugin-sequence",
-  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
   "main": "src/index.ts",
   "files": [

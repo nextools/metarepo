@@ -4,8 +4,7 @@
   "description": "🔢 Bump package version",
   "keywords": "tasks, runner, start, start-plugin, npm",
   "repository": "deepsweet/start",
-  "homepage": "https://github.com/deepsweet/start/tree/master/packages/plugin-lib-npm-version",
-  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
   "main": "src/index.ts",
   "files": [

@@ -4,8 +4,7 @@
   "description": "💯 Send code coverage report to codecov.io",
   "keywords": "tasks, runner, start, start-plugin, coverage, codecov",
   "repository": "deepsweet/start",
-  "homepage": "https://github.com/deepsweet/start/tree/master/packages/plugin-lib-codecov",
-  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
   "main": "src/index.ts",
   "files": [

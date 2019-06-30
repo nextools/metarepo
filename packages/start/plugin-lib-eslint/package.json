@@ -4,8 +4,7 @@
   "description": "🚷 Lint and/or fix code using ESLint",
   "keywords": "tasks, runner, start, start-plugin, eslint",
   "repository": "deepsweet/start",
-  "homepage": "https://github.com/deepsweet/start/tree/master/packages/plugin-lib-eslint",
-  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
   "main": "src/index.ts",
   "files": [

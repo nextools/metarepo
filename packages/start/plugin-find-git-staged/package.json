@@ -4,8 +4,7 @@
   "description": "🔍 Find Git staged files and filter them using glob patterns",
   "keywords": "tasks, runner, glob, git, start, start-plugin",
   "repository": "deepsweet/start",
-  "homepage": "https://github.com/deepsweet/start/tree/master/packages/plugin-find-git-staged",
-  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
   "main": "src/index.ts",
   "files": [

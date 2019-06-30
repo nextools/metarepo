@@ -4,8 +4,7 @@
   "description": "👯 Copy files to relative destination using streams and keeping folders structure",
   "keywords": "tasks, runner, start, start-plugin",
   "repository": "deepsweet/start",
-  "homepage": "https://github.com/deepsweet/start/tree/master/packages/plugin-copy",
-  "author": "Kir Belevich <kir@belevi.ch> (https://twitter.com/deepsweet)",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
   "main": "src/index.ts",
   "files": [
