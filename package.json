@@ -44,6 +44,9 @@
     "spyfn": "^0.2.0",
     "typescript": "bubble-dev/TypeScript#ext-3.5.2"
   },
+  "scripts": {
+    "start": "packages/bubble-dev/start-preset/src/cli/index.js"
+  },
   "start": {
     "file": "tasks/",
     "auto": {
