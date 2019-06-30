@@ -13,7 +13,7 @@
     {
       "label": "🚷 lint",
       "type": "shell",
-      "command": "./node_modules/.bin/start lint",
+      "command": "packages/bubble-dev/start-preset/src/cli/index.js lint",
       "presentation": {
         "focus": true
       },
@@ -22,7 +22,7 @@
     {
       "label": "✅ test",
       "type": "shell",
-      "command": "./node_modules/.bin/start test",
+      "command": "packages/bubble-dev/start-preset/src/cli/index.js test",
       "presentation": {
         "focus": true
       },
@@ -31,7 +31,7 @@
     {
       "label": "➕ commit",
       "type": "shell",
-      "command": "./node_modules/.bin/start commit",
+      "command": "packages/bubble-dev/start-preset/src/cli/index.js commit",
       "presentation": {
         "focus": true
       },
@@ -40,7 +40,7 @@
     {
       "label": "📦 publish",
       "type": "shell",
-      "command": "./node_modules/.bin/start publish",
+      "command": "packages/bubble-dev/start-preset/src/cli/index.js publish",
       "presentation": {
         "focus": true
       },
