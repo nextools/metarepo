@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@types/graceful-fs": "^4.1.2",
-    "@types/pixelmatch": "^4.0.0",
+    "@types/pixelmatch": "^5.0.0",
     "@types/upng-js": "^2.1.1"
   }
 }
