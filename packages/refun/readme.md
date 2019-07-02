@@ -126,9 +126,23 @@ component(
 
 ## `mapDebouncedHandlerTimeout`
 
+> This function is affected by the [React Synthetic Events vs debouncing / throttling]() issue.
+
 This function allows you to defer the execution of a handler for a grace period (specified in milliseconds) and if the handler gets invoked again during that period, it cancels the current grace period and overrides it with the new call, restarting the time counter.
 
 Why you ask? Imagine for example that there is a button in the UI in which a user might be tempted to repeatedly click to make sure an action happens, but it doing so they will repeatedly trigger an expensive operation that will freeze the application. To avoid this, you could debounce the `onClick` handler for some milliseconds and make sure only the last call will be acted upon.
+
+The difference between debouncing and throttling (available in [`mapThrottledHandlerTimeout`](#mapThrottledHandlerTimeout)) is that successive calls to a debounced handler will restart the timeout each time, while throttled calls will be executed once the initially set timeout it reached, using the last arguments. Following the FRP convention, this is how debouncing could be represented:
+
+```
+debouncing in 3 seconds
+
+          1s 2s 3s 4s 5s 6s 7s 8s 9s
+received  x--y--------z------------
+ran       ---------y--------z------
+```
+
+Notice how the timeout initially set for `x` is simply cancelled and overridden with a new timeout of 3 seconds for `y`.
 
 ```ts
 import * as React from "react"
@@ -159,6 +173,8 @@ export default component(
 [📺 Check out live demo](https://codesandbox.io/s/refun-mapdebouncedhandlertimeout-791kn)
 
 ## `mapDebouncedHandlerFactory`
+
+> All the functions create with this one are affected by the [React Synthetic Events vs debouncing / throttling]() issue.
 
 This function is a constructor for debouncers. It is used under the hood to build the `mapDebouncedHandlerTimeout` function. If you have a function that creates a deferred effect and a function that will cancel that deferral, you can build your own debouncer.
 
@@ -600,7 +616,63 @@ export default component(
 
 [📺 Check out live demo](https://codesandbox.io/s/refun-mapstate-zy1rj)
 
-## `mapThrottledHandler` & `mapThrottledHandlerFactory`
+## `mapThrottledHandlerTimeout`
+
+> This function is affected by the [React Synthetic Events vs debouncing / throttling]() issue.
+
+This function allows you to defer the execution of a handler for a grace period (specified in milliseconds) and if the handler gets invoked again during that period, it overrides the call with the new invocation, so that when the specified timeout is reached, the last call will be the one executed.
+
+Why you ask? Imagine for example that you have an application that monitors the window size and updates the layout depending on the new size. Window size updates happen very often while the user is performing the resize, and the new layout calculation might be fairly expensive, so the application might become unresponsive. In this case, you could use `mapThrottledHandlerTimeout` to make sure the resize update only happens every 500 milliseconds, which will not be too noticeable to the user, but will avoid a lot of unnecessary work. Because `mapThrottledHandlerTimeout` executes the _last_ invocation of the handler, the value that will be captured is the most recent one, which is important since we want to re layout according to the current size, no the one when the resize action started.
+
+The difference between debouncing and throttling (available in [`mapDebouncedHandlerTimeout`](#mapDebouncedHandlerTimeout)) is that successive calls to a debounced handler will restart the timeout each time, while throttled calls will be executed once the initially set timeout it reached, using the last arguments. Following the FRP convention, this is how debouncing could be represented:
+
+```
+throttling in 3 seconds
+
+          1s 2s 3s 4s 5s 6s 7s 8s 9s
+received  x--y--------x------------
+ran       ------y-----------x------
+```
+
+Notice how the timeout initially configured for `x` is respected and the execution happens 3 seconds after the event for `x` is received, but `y` is run instead.
+
+```ts
+import * as React from "react"
+import {
+  component,
+  mapThrottledHandlerTimeout,
+  startWithType,
+  mapHandlers
+} from "refun"
+
+type TSlider = {
+  onChange: (string) => void
+}
+
+export default component(
+  mapHandlers({
+    onChange: () => (value) =>
+      console.log(`the handler has now been invoked with value: ${value}`)
+  }),
+  startWithType<TSlider>(),
+  mapThrottledHandlerTimeout("onChange", 300),
+  mapHandlers({
+    onChange: ({ onChange }) => ({ target: { value } }) => onChange(value)
+  })
+)(({ onChange }) => <input type="range" onChange={onChange} max="1000" />)
+```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapthrottledhandlertimeout-1ss16)
+
+## `mapThrottledHandlerAnimationFrame`
+
+> This function is affected by the [React Synthetic Events vs debouncing / throttling]() issue.
+
+**TODO**
+
+ & `mapThrottledHandlerFactory`
+
+> All the functions created with this one is affected by the [React Synthetic Events vs debouncing / throttling]() issue.
 
 **TODO**
 
@@ -838,3 +910,52 @@ export default component<TButton>(
 ```
 
 …meanwhile `startWithType` is a straightforward workaround.
+
+## Caveats
+
+### React Synthetic Events vs debouncing / throttling
+
+The `mapDebounced*` and `mapThrottled*` family of functions do not accept React Synthetic Events. As you can see in the examples below, some specific properties of the event (`value` in that case) need to be extracted from the original Synthetic Event in order for them to work.
+
+This is necessary because these two function families store the arguments passed to the handlers for delayed use. If that argument is a Synthetic Event, it will be stored to be reused, but React forbids this, because for performance reasons React reuses the references of Synthetic Events and mutates them.
+
+> If you try the example below without the `mapHandlers`, you will get:
+>
+> ```
+> Warning: This synthetic event is reused for performance reasons. If you're seeing this, you're accessing the property `target` on a released/nullified synthetic event. This is set to null. If you must keep the original synthetic event around, use event.persist(). See https://fb.me/react-event-pooling for more information.
+> ```
+>
+> [📺 Check out live demo](https://codesandbox.io/s/refun-mapthrottledhandlertimeout-wrong-usage-7q6cd)
+
+
+If you are going to use information coming from the Synthetic Event, consider extracting the information you care about using `mapHandlers`, which will then let React discard the rest of the Event object.
+
+If you are not going to use _any_ information coming from the Event—such as in the example for [`mapDebouncedHandlerTimeout`](#mapDebouncedHandlerTimeout)—then you will not be affected by this issue.
+
+```ts
+import * as React from "react"
+import {
+  component,
+  mapThrottledHandlerTimeout,
+  startWithType,
+  mapHandlers
+} from "refun"
+
+type TSlider = {
+  onChange: (string) => void
+}
+
+export default component(
+  mapHandlers({
+    onChange: () => (value) =>
+      console.log(`the handler has now been invoked with value: ${value}`)
+  }),
+  startWithType<TSlider>(),
+  mapThrottledHandlerTimeout("onChange", 300),
+  mapHandlers({
+    onChange: ({ onChange }) => ({ target: { value } }) => onChange(value)
+  })
+)(({ onChange }) => <input type="range" onChange={onChange} max="1000" />)
+```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapthrottledhandlertimeout-1ss16)
