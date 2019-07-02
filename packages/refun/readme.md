@@ -126,7 +126,7 @@ component(
 
 ## `mapDebouncedHandlerTimeout`
 
-> This function is affected by the [React Synthetic Events vs debouncing / throttling]() issue.
+> This function is affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
 
 This function allows you to defer the execution of a handler for a grace period (specified in milliseconds) and if the handler gets invoked again during that period, it cancels the current grace period and overrides it with the new call, restarting the time counter.
 
@@ -174,7 +174,7 @@ export default component(
 
 ## `mapDebouncedHandlerFactory`
 
-> All the functions create with this one are affected by the [React Synthetic Events vs debouncing / throttling]() issue.
+> All the functions create with this one are affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
 
 This function is a constructor for debouncers. It is used under the hood to build the `mapDebouncedHandlerTimeout` function. If you have a function that creates a deferred effect and a function that will cancel that deferral, you can build your own debouncer.
 
@@ -618,7 +618,7 @@ export default component(
 
 ## `mapThrottledHandlerTimeout`
 
-> This function is affected by the [React Synthetic Events vs debouncing / throttling]() issue.
+> This function is affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
 
 This function allows you to defer the execution of a handler for a grace period (specified in milliseconds) and if the handler gets invoked again during that period, it overrides the call with the new invocation, so that when the specified timeout is reached, the last call will be the one executed.
 
@@ -666,15 +666,27 @@ export default component(
 
 ## `mapThrottledHandlerAnimationFrame`
 
-> This function is affected by the [React Synthetic Events vs debouncing / throttling]() issue.
+> This function is affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
 
-**TODO**
+This function allows you to defer the execution of a handler until the next animation frame. If the handler gets invoked again before that animation frame hits, the new invocation will override the previous one, so that when the animation frame starts the last call will be the one executed.
 
- & `mapThrottledHandlerFactory`
+Why you ask? Pretty much the same reasons that are true for [`mapThrottledHandlerTimeout`](#mapThrottledHandlerTimeout). Calls that are done between animation frames are wasteful overhead, since the UI will not be updated until the animation frame anyway, so if you have a handler firing continuously, it's a good idea to skip the wasteful ones. This might happen for handlers monitoring scroll or wheel or finger motion actions.
 
-> All the functions created with this one is affected by the [React Synthetic Events vs debouncing / throttling]() issue.
+> You might wonder why there is not `mapDebouncedHandlerAnimationFrame` if there is a `mapDebouncedHandlerTimeout`. The reason is that the behavior of that function would be identical to this one, so it's skipped.
 
-**TODO**
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapthrottledhandleranimationframe-xk8uc)
+
+## `mapThrottledHandlerFactory`
+
+> All the functions created with this one is affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
+
+This function is a constructor for throttlers. It is used under the hood to build the `mapThrottledHandlerTimeout` and `mapThrottledHandlerAnimationFrame` functions. If you have a function that creates a deferred effect and a function that will cancel that deferral, you can build your own throttler.
+
+This is how `mapThrottledHandlerTimeout` is defined:
+
+```ts
+export const mapThrottledHandlerTimeout = mapThrottledHandlerFactory(setTimeout, clearTimeout)
+```
 
 ## `mapWithAsyncProps`
 
