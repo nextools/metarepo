@@ -461,10 +461,6 @@ export default component(
 ))
 ```
 
-## `mapRedux`
-
-**TODO** (no clue)
-
 ## `mapRefLayout`
 
 This function allows you to capture the `ref` to a DOM element, and synchronously perform an update of the props based on some values of the element. It relies on `useLayoutEffect` under the hoods to synchronously capturing the `ref` and then updates the state, which will cause React to cancel the previous render and use the updated one instead.
@@ -673,6 +669,32 @@ This function allows you to defer the execution of a handler until the next anim
 Why you ask? Pretty much the same reasons that are true for [`mapThrottledHandlerTimeout`](#mapThrottledHandlerTimeout). Calls that are done between animation frames are wasteful overhead, since the UI will not be updated until the animation frame anyway, so if you have a handler firing continuously, it's a good idea to skip the wasteful ones. This might happen for handlers monitoring scroll or wheel or finger motion actions.
 
 > You might wonder why there is not `mapDebouncedHandlerAnimationFrame` if there is a `mapDebouncedHandlerTimeout`. The reason is that the behavior of that function would be identical to this one, so it's skipped.
+
+```ts
+import * as React from "react"
+import {
+  component,
+  mapThrottledHandlerAnimationFrame,
+  startWithType,
+  mapHandlers
+} from "refun"
+
+type TSlider = {
+  onChange: (string) => void
+}
+
+export default component(
+  startWithType<TSlider>(),
+  mapHandlers({
+    onChange: () => (value) =>
+      console.log(`the handler has now been invoked with value: ${value}`)
+  }),
+  mapThrottledHandlerAnimationFrame("onChange"),
+  mapHandlers({
+    onChange: ({ onChange }) => ({ target: { value } }) => onChange(value)
+  })
+)(({ onChange }) => <input type="range" onChange={onChange} max="1000" />)
+```
 
 [📺 Check out live demo](https://codesandbox.io/s/refun-mapthrottledhandleranimationframe-xk8uc)
 
@@ -902,7 +924,6 @@ export default component(
 
 Once this is fixed in TypeScript this function will be redundant and it will be possible to pass the generic directly into `component`:
 
-
 ```ts
 import React from 'react'
 import { component } from 'refun'
@@ -922,6 +943,117 @@ export default component<TButton>(
 ```
 
 …meanwhile `startWithType` is a straightforward workaround.
+
+## `StoreContextFactory`
+
+This function is a way of working with Redux stores together with React Hooks. It is an alternative to React Redux, with these goals:
+
+1. Work with Hooks, avoiding higher-order components
+2. Respect the types all throughout
+3. Match the level of optimization of React Redux.
+
+The way this function works is that it receives a Redux Store object, and returns a component and two functions:
+
+- `StoreProvider` is a component that provides the React Context already loaded with the store that was passed in to the `StoreContextFactory`
+- `mapStoreDispatch` is a function to be used as part of a `component` or `pureComponent` composition, which will simply add `dispatch` to the props, so that the component being wrapped by it can dispatch actions.
+- `mapStoreState` is a function to be used as part of a `component` or `pureComponent` composition, which will add props derived from the state. Much like `connect` from React Redux, it receives a `mapStateToProps` function that will be called with the full state and which return value will be spread over the component props. `mapStoreState` takes as a second argument an array of the names of the props to watch in order to run the `mapStateToProps` function: if none of the listed props have changed, the `mapStateToProps` will not be ran.
+
+Check the example below for a full use case.
+
+```ts
+import * as React from "react"
+import { createStore } from "redux"
+import { component, pureComponent, StoreContextFactory, mapHandlers } from "refun"
+
+type TState = {
+  counter: number
+}
+
+type TAction = { type: "INCREMENT" payload: number } | { type: "RESET" }
+
+const reducer = (state: TState, action: TAction): TState => {
+  switch (action.type) {
+    case "INCREMENT":
+      return {
+        ...state,
+        counter: state.counter + action.payload
+      }
+
+    case "RESET":
+      return {
+        ...state,
+        counter: 0
+      }
+
+    default:
+      return state
+  }
+}
+
+const initialState = {
+  counter: 7
+}
+
+const store = createStore(reducer, initialState)
+
+const { StoreProvider, mapStoreState, mapStoreDispatch } = StoreContextFactory(
+  store
+)
+
+const CounterDisplay = pureComponent(
+  mapStoreState(
+    ({ counter }) => ({
+      counter
+    }),
+    ["counter"]
+  )
+)(({ counter }) => (
+  <div>
+    <p>Counter: {counter}</p>
+  </div>
+))
+
+const ResetButton = component(
+  mapStoreDispatch,
+  mapHandlers({
+    onClick: ({ dispatch }) => () =>
+      dispatch({
+        type: "RESET"
+      })
+  })
+)(({ onClick }) => (
+  <div>
+    <button onClick={onClick}>Reset</button>
+  </div>
+))
+
+const IncrementButton = component(
+  mapStoreDispatch,
+  mapHandlers({
+    onClick: ({ dispatch }) => () =>
+      dispatch({
+        type: "INCREMENT",
+        payload: 1
+      })
+  })
+)(({ onClick }) => (
+  <div>
+    <button onClick={onClick}>Increment</button>
+  </div>
+))
+
+export default () => (
+  <StoreProvider>
+    <div>
+      <CounterDisplay />
+      <ResetButton />
+      <IncrementButton />
+    </div>
+  </StoreProvider>
+)
+```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-storecontextfactory-l9bp5)
 
 ## Caveats
 
