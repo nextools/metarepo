@@ -545,9 +545,90 @@ export default component(
 
 [📺 Check out live demo](https://codesandbox.io/s/refun-mapref-t3wog)
 
-## `mapSafeRequestAnimationFrame` & `mapSafeRequestAnimationFrameFactory`
+## `mapSafeRequestAnimationFrame`
 
-**TODO**
+This function allows you to set up operations to be executed in the next animation frame that should only be executed while the component is still mounted, and should be canceled if the component is removed from the tree. Callbacks that are not canceled when unmounted are a common cause of React memory leaks.
+
+Why you ask? Animations. Animations can be done in React by continuously updating style parameters of a component, and the cleanest way of updating those is with `requestAnimationFrame`. This function allows you to use `requestAnimationFrame` without worrying about memory leaks.
+
+
+> As you can check in this [📺 live demo of the issue](https://codesandbox.io/s/refun-mapsafeanimationframe-problem-demonstration-4t0w1), simply using `requestAnimationFrame` will cause the problems when pressing the "Stop loading" button. In particular, React will log:
+> ```
+> Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+> ```
+> `mapSafeRequestAnimationFrame` does the cleanup for you.
+
+```ts
+import * as React from "react"
+import {
+  component,
+  mapState,
+  mapSafeRequestAnimationFrame,
+  startWithType,
+  mapHandlers
+} from "refun"
+
+type TLoader = {
+  initialPosition: number
+}
+
+const Loader = component(
+  startWithType<TLoader>(),
+  mapState(
+    "position",
+    "setPosition",
+    ({ initialPosition }) => initialPosition,
+    []
+  ),
+  mapSafeRequestAnimationFrame("setAnimationFrameCallback")
+)(({ position, setPosition, setAnimationFrameCallback }) => {
+  setAnimationFrameCallback(() => {
+    setPosition((position + 1) % 80)
+  })
+  return (
+    <div
+      style={{
+        width: 100,
+        height: 8,
+        border: "1px solid black"
+      }}
+    >
+      <div
+        style={{
+          width: 20,
+          marginLeft: position,
+          height: 8,
+          backgroundColor: "black"
+        }}
+      />
+    </div>
+  )
+})
+
+type TApp = {
+  loading: boolean
+}
+
+export default component(
+  startWithType<TApp>(),
+  mapState(
+    "loading",
+    "setLoading",
+    ({ loading }) => loading !== undefined ? loading : true,
+    []
+  ),
+  mapHandlers({
+    onStop: ({ setLoading }) => () => setLoading(false)
+  })
+)(({ loading, onStop }) => (
+  <div>
+    {loading && <Loader initialPosition={0} />}
+    <button onClick={onStop}>Stop loading</button>
+  </div>
+))
+```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapsafeanimationframe-s3ttu)
 
 ## `mapSafeTimeout`
 
