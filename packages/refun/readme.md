@@ -213,12 +213,11 @@ This function sets the `isFocused` prop to `true` when the `onFocus` handler is 
 
 ```ts
 import * as React from 'react'
-import { component, mapFocused, startWithType } from 'refun'
+import { component, mapFocused, startWithType, TMapFocused } from 'refun'
 
 type TButton = {
   label: string
-  onBlur?: () => void
-}
+} & TMapFocused
 
 export default component(
   startWithType<TButton>(),
@@ -304,12 +303,11 @@ Note that `onPointerEnter` and `onPointerLeave` are synthetic event names meant 
 
 ```ts
 import React from 'react'
-import { component, mapHovered, startWithType } from 'refun'
+import { component, mapHovered, startWithType, TMapHovered } from 'refun'
 
 type TButton = {
   label: string
-  onPointerLeave?: () => void
-}
+} & TMapHovered
 
 export default component(
   startWithType<TButton>(),
@@ -349,12 +347,11 @@ Note that `onPressIn` and `onPointerLeave` are synthetic event names meant to ab
 
 ```ts
 import React from 'react'
-import { component, mapKeyboardFocused, startWithType } from 'refun'
+import { component, mapKeyboardFocused, startWithType, TMapKeyboardFocused } from 'refun'
 
 type TButton = {
   label: string
-  onBlur?: () => void
-}
+} & TMapKeyboardFocused
 
 export default component(
   startWithType<TButton>(),
@@ -394,12 +391,11 @@ Note that `onPressIn` and `onPressOut` are synthetic event names meant to abstra
 
 ```ts
 import React from 'react'
-import { component, mapPressed, startWithType } from 'refun'
+import { component, mapPressed, startWithType, TMapPressed } from 'refun'
 
 type TButton = {
   label: string
-  onPressIn?: () => void
-}
+} & TMapPressed
 
 export default component(
   startWithType<TButton>(),
@@ -457,15 +453,23 @@ import React from 'react'
 import { component, mapReducer, startWithType } from 'refun'
 
 type TCounter = {
-  initialCounter: number,
+  initialCounter: number
 }
 
-export default component(
+type TState = {
+  counter: number
+}
+
+type TAction = {
+  type: "ADD"
+}
+
+const Counter = component(
   startWithType<TCounter>(),
   mapReducer(
-    (state, action) => {
+    (state: TState, action: TAction): TState => {
       switch (action.type) {
-        case 'ADD':
+        case "ADD":
           return {
             counter: state.counter + 1
           }
@@ -478,17 +482,15 @@ export default component(
       counter: initialCounter
     })
   )
-)(({ counter, dispatch }) = (
+)(({ counter, dispatch }) => (
   <div>
-    <button onClick={() => dispatch({ type: 'ADD' })}>
-      Add
-    </button>
-    <span>
-      {counter}
-    </span>
+    <button onClick={() => dispatch({ type: "ADD" })}>Add</button>
+    <span>{counter}</span>
   </div>
 ))
 ```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapreducer-wqgv6)
 
 ## `mapRefLayout`
 
@@ -983,33 +985,43 @@ If the returned props have the same name as incoming props, they will override t
 
 ```ts
 import React from 'react'
-import { component, mapFocused, startWithType } from 'refun'
+import {
+  component,
+  mapFocused,
+  mapWithProps,
+  startWithType,
+  TMapFocused
+} from "refun"
 
 type TButton = {
-  label: string,
-}
+  label: string
+} & TMapFocused
 
 export default component(
   startWithType<TButton>(),
   mapFocused,
   mapWithProps(({ isFocused }) => ({
-    borderColor: isFocused ? 'black' : 'grey'
+    borderColor: isFocused ? "red" : "grey"
   }))
-)(({ borderColor, label, onBlur, onFocus }) = (
+)(({ borderColor, label, onBlur, onFocus }) => (
   <button
     onBlur={onBlur}
     onFocus={onFocus}
     style={{
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor
-    }}>
+      borderWidth: 2,
+      borderStyle: "solid",
+      borderColor,
+      outline: "none"
+    }}
+  >
     {label}
   </button>
 ))
 ```
 
 Note that this function just adds props to the component. If you want to replace all of them, you can use [`mapProps`](#mapProps) instead.
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapwithprops-cjdsc)
 
 ## `mapWithPropsMemo`
 
@@ -1020,18 +1032,25 @@ An example use case in which this can prove useful is if you were to be calculat
 ```ts
 import React from 'react'
 import { component, mapWithPropsMemo, startWithType } from 'refun'
-import calculateFibonacci from './calculateFibonacci'
+
+const inefficientFibonacci = position =>
+  position < 2
+    ? position
+    : inefficientFibonacci(position - 1) + inefficientFibonacci(position - 2)
 
 type TFibonacci = {
-  position: number,
+  position: number
 }
 
 export default component(
   startWithType<TFibonacci>(),
-  mapWithPropsMemo(({ position }) => ({
-    fibonacci: calculateFibonacci(position)
-  }), ['position'])
-)(({ position, fibonacci }) = (
+  mapWithPropsMemo(
+    ({ position }) => ({
+      fibonacci: inefficientFibonacci(position)
+    }),
+    ["position"]
+  )
+)(({ position, fibonacci }) => (
   <p>
     The Fibonacci numbers in position {position} is <mark>{fibonacci}</mark>
   </p>
@@ -1039,6 +1058,8 @@ export default component(
 ```
 
 Notice that `mapWithPropsMemo` takes two arguments, and that memoization happens for the props that are specified in the second argument, in this case `position`.
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapwithpropsmemo-hjcso)
 
 ## `onMount`
 
@@ -1057,12 +1078,14 @@ type TButton = {
 export default component(
   startWithType<TButton>(),
   onMount(({ label }) => console.log('Mounted with label', label))
-)(({ label }) = (
+)(({ label }) => (
   <button>
     {label}
   </button>
 ))
 ```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-onmount-5r5ol)
 
 ## `pureComponent`
 
