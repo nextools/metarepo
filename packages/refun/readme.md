@@ -549,9 +549,117 @@ export default component(
 
 **TODO**
 
-## `mapSafeTimeout` & `mapSafeTimeoutFactory`
+## `mapSafeTimeout`
 
-**TODO**
+This function allows you to configure time outs that should only be executed while the component is still mounted, and should be canceled if the component is removed from the tree. Timeouts that are not canceled when unmounted are a common cause of React memory leaks.
+
+> As you can check in this [📺 live demo of the issue](https://codesandbox.io/s/refun-mapsafetimeout-problem-demonstration-dkiwq), simply using `setTimeout` will cause the problems when pressing the "Close immediately" button before the countdown is completed. In particular, React will log:
+> ```
+> Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+> ```
+> `mapSafeTimeout` does the cleanup for you.
+
+```ts
+import * as React from "react"
+import {
+  component,
+  mapHandlers,
+  mapState,
+  mapSafeTimeout,
+  startWithType
+} from "refun"
+
+type TMessage = {
+  onClose: () => void
+}
+
+const Message = component(
+  startWithType<TMessage>(),
+  mapState("autoClose", "setAutoClose", () => false, []),
+  mapState("secondsRemaining", "setSecondsRemaining", () => 5, []),
+  mapSafeTimeout("setLocalTimeout")
+)(
+  ({
+    onClose,
+    secondsRemaining,
+    setSecondsRemaining,
+    setLocalTimeout,
+    autoClose,
+    setAutoClose
+  }) => (
+    <div
+      style={{
+        backgroundColor: "#f0f0f0",
+        padding: 20
+      }}
+    >
+      {autoClose ? (
+        <React.Fragment>
+          <p>This message will close in {secondsRemaining} seconds</p>
+          <button onClick={onClose}>Close immediately</button>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <p>
+            This message that will close {secondsRemaining} seconds after you
+            press OK
+          </p>
+
+          <button
+            onClick={() => {
+              setAutoClose(true)
+              setLocalTimeout(() => {
+                console.log("timeout 1000")
+                setSecondsRemaining(4)
+              }, 1000)
+              setLocalTimeout(() => {
+                console.log("timeout 2000")
+                setSecondsRemaining(3)
+              }, 2000)
+              setLocalTimeout(() => {
+                console.log("timeout 3000")
+                setSecondsRemaining(2)
+              }, 3000)
+              setLocalTimeout(() => {
+                console.log("timeout 4000")
+                setSecondsRemaining(1)
+              }, 4000)
+              setLocalTimeout(() => {
+                console.log("timeout 5000")
+                onClose()
+              }, 5000)
+            }}
+          >
+            Ok
+          </button>
+        </React.Fragment>
+      )}
+    </div>
+  )
+)
+
+type TApp = {
+  show?: boolean
+}
+
+export default component(
+  startWithType<TApp>(),
+  mapState("show", "setShow", ({ show }) => true, []),
+  mapHandlers({
+    onClose: ({ setShow }) => () => setShow(false),
+    onShow: ({ setShow }) => () => setShow(true)
+  })
+)(({ show, onClose, onShow }) => (
+  <div>
+    {show ? (
+      <Message onClose={onClose} />
+    ) : (
+      <button onClick={onShow}>Show message again</button>
+    )}
+  </div>
+))
+```
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapsafetimeout-7mqmh]
 
 ## `mapState`
 
