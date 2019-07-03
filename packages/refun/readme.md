@@ -121,8 +121,7 @@ component(
 ))
 ```
 
-- debounce: cancels previous one (resets timer)
-- throttle: changes the arguments but preserves timeout
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapcontext-rtjvk)
 
 ## `mapDebouncedHandlerTimeout`
 
@@ -189,11 +188,11 @@ export const mapDebouncedHandlerTimeout = mapDebouncedHandlerFactory(setTimeout,
 This function sets some default prop values based on the object that is passed into it. Alternative to using the static `defaultProps` component property. The advantage of using it is that the props passed in will be type checked.
 
 ```ts
-import React from 'react'
+import * as React from 'react'
 import { component, mapDefaultProps, startWithType } from 'refun'
 
 type TMessage = {
-  label: string
+  label?: string
 }
 
 export default component(
@@ -206,6 +205,8 @@ export default component(
 ))
 ```
 
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapdefaultprops-gqjqz)
+
 ## `mapFocused`
 
 This function sets the `isFocused` prop to `true` when the `onFocus` handler is called and to `false` when `onBlur` is called.
@@ -215,25 +216,32 @@ import * as React from 'react'
 import { component, mapFocused, startWithType } from 'refun'
 
 type TButton = {
-  label: string,
+  label: string
+  onBlur?: () => void
 }
 
 export default component(
   startWithType<TButton>(),
   mapFocused
-)(({ isFocused, label, onBlur, onFocus }) = (
-  <button
-    onBlur={onBlur}
-    onFocus={onFocus}
-    style={{
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: isFocused ? 'black' : 'grey'
-    }}>
-    {label}
-  </button>
-))
+)(
+  ({ isFocused, label, onBlur, onFocus }) => (
+    <button
+      onBlur={onBlur}
+      onFocus={onFocus}
+      style={{
+        borderWidth: 2,
+        borderStyle: "solid",
+        borderColor: isFocused ? "red" : "grey",
+        outline: "none"
+      }}
+    >
+      {label}
+    </button>
+  )
+)
 ```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapfocused-8gls5)
 
 ## `mapHandlers`
 
@@ -299,25 +307,32 @@ import React from 'react'
 import { component, mapHovered, startWithType } from 'refun'
 
 type TButton = {
-  label: string,
+  label: string
+  onPointerLeave?: () => void
 }
 
 export default component(
   startWithType<TButton>(),
   mapHovered
-)(({ isHovered, label, onPointerEnter, onPointerLeave }) = (
-  <button
-    onMouseEnter={onPointerEnter}
-    onMouseLeave={onPointerLeave}
-    style={{
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: isHovered ? 'black' : 'grey'
-    }}>
-    {label}
-  </button>
-))
+)(
+  ({ isHovered, label, onPointerLeave, onPointerEnter }) => (
+    <button
+      onMouseLeave={onPointerLeave}
+      onMouseEnter={onPointerEnter}
+      style={{
+        borderWidth: 2,
+        borderStyle: "solid",
+        borderColor: isHovered ? "red" : "grey",
+        outline: "none"
+      }}
+    >
+      {label}
+    </button>
+  )
+)
 ```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-maphovered-lfzqj)
 
 ## `mapKeyboardFocused`
 
@@ -337,27 +352,34 @@ import React from 'react'
 import { component, mapKeyboardFocused, startWithType } from 'refun'
 
 type TButton = {
-  label: string,
+  label: string
+  onBlur?: () => void
 }
 
 export default component(
   startWithType<TButton>(),
   mapKeyboardFocused
-)(({ isHovered, label, onBlur, onFocus, onPressIn, onPressOut }) = (
-  <button
-    onBlur={onBlur}
-    onFocus={onFocus}
-    onMouseDown={onPressIn}
-    onMouseUp={onPressOut}
-    style={{
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: isHovered ? 'black' : 'grey'
-    }}>
-    {label}
-  </button>
-))
+)(
+  ({ isKeyboardFocused, label, onBlur, onFocus, onPressIn, onPressOut }) => (
+    <button
+      onBlur={onBlur}
+      onFocus={onFocus}
+      onMouseDown={onPressIn}
+      onMouseUp={onPressOut}
+      style={{
+        borderWidth: 2,
+        borderStyle: "solid",
+        borderColor: isKeyboardFocused ? "red" : "grey",
+        outline: "none"
+      }}
+    >
+      {label}
+    </button>
+  )
+)
 ```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapkeyboardfocused-okqxt)
 
 ## `mapPressed`
 
@@ -375,25 +397,32 @@ import React from 'react'
 import { component, mapPressed, startWithType } from 'refun'
 
 type TButton = {
-  label: string,
+  label: string
+  onPressIn?: () => void
 }
 
 export default component(
   startWithType<TButton>(),
   mapPressed
-)(({ isPressed, label, onPressIn, onPressOut }) = (
-  <button
-    onMouseDown={onPressIn}
-    onMouseUp={onPressOut}
-    style={{
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: isPressed ? 'black' : 'grey'
-    }}>
-    {label}
-  </button>
-))
+)(
+  ({ isPressed, label, onPressIn, onPressOut }) => (
+    <button
+      onMouseDown={onPressIn}
+      onMouseUp={onPressOut}
+      style={{
+        borderWidth: 2,
+        borderStyle: "solid",
+        borderColor: isPressed ? "red" : "grey",
+        outline: "none"
+      }}
+    >
+      {label}
+    </button>
+  )
+)
 ```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mappressed-z8lbx)
 
 ## `mapProps`
 
@@ -404,20 +433,20 @@ import React from 'react'
 import { component, mapProps, startWithType } from 'refun'
 
 type TButton = {
-  label: string,
+  label: string
 }
 
 export default component(
   startWithType<TButton>(),
-  mapProps(({ label }) => ({ children }))
-)(({ children }) = (
-  <button>
-    {children}
-  </button>
-))
+  mapProps(({ label }) => ({ children: label }))
+)(
+  ({ children }) => <button>{children}</button>
+)
 ```
 
 Note that `label` is no longer available as a prop to the component. If you want to expand the props with extra ones instead of replacing them consider using [`mapWithProps`](#mapWithProps)
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-mapprops-37ho6)
 
 ## `mapReducer`
 
