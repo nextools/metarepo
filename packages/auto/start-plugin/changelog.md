@@ -1,3 +1,8 @@
+## v0.5.1
+
+* 🐞 fix `publishPackagesBumps` to skip bumps without types
+* 🐞 fix `buildBumpedPackages` to skip bumps without types
+
 ## v0.5.0
 
 * ♻️ upgrade dependencies: `@auto/npm`

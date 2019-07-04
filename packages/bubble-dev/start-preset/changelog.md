@@ -1,3 +1,7 @@
+## v0.7.1
+
+* 🐞 bump `auto`
+
 ## v0.7.0
 
 * 🌱 add `access` to npm config
