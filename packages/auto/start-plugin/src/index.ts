@@ -86,6 +86,10 @@ export const buildBumpedPackages = (task: (...args: any[]) => StartPlugin<{}, an
     const path = await import('path')
 
     for (const bump of packagesBumps) {
+      if (bump.type === null) {
+        continue
+      }
+
       const packageDir = path.relative(path.resolve('packages/'), bump.dir)
       const taskRunner = await task(packageDir)
 
