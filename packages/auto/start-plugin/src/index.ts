@@ -140,10 +140,11 @@ export const publishPackagesBumps = (npmOptions?: TNpmOptions) =>
     const { publishPackage } = await import('@auto/npm')
     const { default: pAll } = await import('p-all')
 
-    await pAll(
-      packagesBumps.map((bump) => () => publishPackage(bump, npmOptions)),
-      { concurrency: 4 }
-    )
+    const bumps = packagesBumps
+      .filter((bump) => bump.type !== null)
+      .map((bump) => () => publishPackage(bump, npmOptions))
+
+    await pAll(bumps, { concurrency: 4 })
   })
 
 export const sendSlackMessage = (prefixes: TPrefixes, Options: TWorkspacesOptions, slackOptions: TSlackOptions, transformFn?: (logs: TLog[]) => TLog[]) =>
