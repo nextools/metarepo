@@ -461,6 +461,304 @@ test('bump:getPackageBumps: b -> a (should always bump dependents)', (t) => {
   t.end()
 })
 
+test('bump:getPackageBumps: b |> a (should always bump dependents)', (t) => {
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            devDependencies: {
+              '@ns/a': '0.1.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'patch', messages: [] },
+      ],
+      bumpOptions
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.1.1',
+        type: 'patch',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: null,
+        type: null,
+        deps: null,
+        devDeps: {
+          a: '0.1.1',
+        },
+      },
+    ],
+    'exact version patch'
+  )
+
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.2',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            devDependencies: {
+              '@ns/a': '~0.1.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'patch', messages: [] },
+      ],
+      bumpOptions
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.1.3',
+        type: 'patch',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: null,
+        type: null,
+        deps: null,
+        devDeps: {
+          a: '~0.1.3',
+        },
+      },
+    ],
+    '~ patch'
+  )
+
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.2',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            devDependencies: {
+              '@ns/a': '~0.1.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'minor', messages: [] },
+      ],
+      bumpOptions
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.2.0',
+        type: 'minor',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: null,
+        type: null,
+        deps: null,
+        devDeps: {
+          a: '^0.2.0',
+        },
+      },
+    ],
+    '~ minor'
+  )
+
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            devDependencies: {
+              '@ns/a': '^0.1.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'minor', messages: [] },
+      ],
+      bumpOptions
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.2.0',
+        type: 'minor',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: null,
+        type: null,
+        deps: null,
+        devDeps: {
+          a: '^0.2.0',
+        },
+      },
+    ],
+    '^ minor (major 0)'
+  )
+
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '1.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            devDependencies: {
+              '@ns/a': '^1.0.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'minor', messages: [] },
+      ],
+      bumpOptions
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '1.2.0',
+        type: 'minor',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: null,
+        type: null,
+        deps: null,
+        devDeps: {
+          a: '^1.2.0',
+        },
+      },
+    ],
+    '^ minor (major 1)'
+  )
+
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '1.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            devDependencies: {
+              '@ns/a': '^1.0.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'major', messages: [] },
+      ],
+      bumpOptions
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '2.0.0',
+        type: 'major',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: null,
+        type: null,
+        deps: null,
+        devDeps: {
+          a: '^2.0.0',
+        },
+      },
+    ],
+    '^ major'
+  )
+
+  t.end()
+})
+
 test('bump:getPackageBumps: b -> a (should not always bump dependents)', (t) => {
   t.deepEquals(
     getPackagesBumps(
@@ -749,6 +1047,302 @@ test('bump:getPackageBumps: b -> a (should not always bump dependents)', (t) => 
           a: '^2.0.0',
         },
         devDeps: null,
+      },
+    ],
+    '^ major'
+  )
+
+  t.end()
+})
+
+test('bump:getPackageBumps: b |> a (should not always bump dependents)', (t) => {
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            devDependencies: {
+              '@ns/a': '0.1.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'patch', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.1.1',
+        type: 'patch',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: null,
+        type: null,
+        deps: null,
+        devDeps: {
+          a: '0.1.1',
+        },
+      },
+    ],
+    'exact version patch'
+  )
+
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.2',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            devDependencies: {
+              '@ns/a': '~0.1.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'patch', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.1.3',
+        type: 'patch',
+        deps: null,
+        devDeps: null,
+      },
+    ],
+    '~ patch'
+  )
+
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.2',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            devDependencies: {
+              '@ns/a': '~0.1.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'minor', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.2.0',
+        type: 'minor',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: null,
+        type: null,
+        deps: null,
+        devDeps: {
+          a: '^0.2.0',
+        },
+      },
+    ],
+    '~ minor'
+  )
+
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            devDependencies: {
+              '@ns/a': '^0.1.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'minor', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.2.0',
+        type: 'minor',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: null,
+        type: null,
+        deps: null,
+        devDeps: {
+          a: '^0.2.0',
+        },
+      },
+    ],
+    '^ minor (major 0)'
+  )
+
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '1.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            devDependencies: {
+              '@ns/a': '^1.0.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'minor', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '1.2.0',
+        type: 'minor',
+        deps: null,
+        devDeps: null,
+      },
+    ],
+    '^ minor (major 1)'
+  )
+
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '1.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+            devDependencies: {
+              '@ns/a': '^1.0.0',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'major', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '2.0.0',
+        type: 'major',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: null,
+        type: null,
+        deps: null,
+        devDeps: {
+          a: '^2.0.0',
+        },
       },
     ],
     '^ major'
@@ -3548,6 +4142,154 @@ test('bump:getPackageBumps: c |> b, c -> a', (t) => {
         },
         devDeps: {
           b: '2.0.0',
+        },
+      },
+    ],
+    'a minor + b major'
+  )
+
+  t.end()
+})
+
+test('bump:getPackageBumps: c |> b, c -> a (should not always bump dependents)', (t) => {
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+          },
+        },
+        c: {
+          dir: '/fakes/c',
+          json: {
+            name: '@ns/c',
+            version: '2.3.4',
+            dependencies: {
+              '@ns/a': '0.1.0',
+            },
+            devDependencies: {
+              '@ns/b': '^1.2.3',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'patch', messages: [] },
+        { name: 'b', type: 'minor', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.1.1',
+        type: 'patch',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: '1.3.0',
+        type: 'minor',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'c',
+        dir: '/fakes/c',
+        version: '2.3.5',
+        type: 'patch',
+        deps: {
+          a: '0.1.1',
+        },
+        devDeps: null,
+      },
+    ],
+    'a patch + b minor'
+  )
+
+  t.deepEquals(
+    getPackagesBumps(
+      {
+        a: {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.0',
+          },
+        },
+        b: {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+          },
+        },
+        c: {
+          dir: '/fakes/c',
+          json: {
+            name: '@ns/c',
+            version: '2.3.4',
+            dependencies: {
+              '@ns/a': '^0.1.0',
+            },
+            devDependencies: {
+              '@ns/b': '^1.2.3',
+            },
+          },
+        },
+      },
+      [
+        { name: 'a', type: 'minor', messages: [] },
+        { name: 'b', type: 'major', messages: [] },
+      ],
+      {
+        zeroBreakingChangeType: 'major',
+        shouldAlwaysBumpDependents: false,
+      }
+    ),
+    [
+      {
+        name: 'a',
+        dir: '/fakes/a',
+        version: '0.2.0',
+        type: 'minor',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'b',
+        dir: '/fakes/b',
+        version: '2.0.0',
+        type: 'major',
+        deps: null,
+        devDeps: null,
+      },
+      {
+        name: 'c',
+        dir: '/fakes/c',
+        version: '2.4.0',
+        type: 'minor',
+        deps: {
+          a: '^0.2.0',
+        },
+        devDeps: {
+          b: '^2.0.0',
         },
       },
     ],

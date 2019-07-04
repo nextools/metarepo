@@ -51,6 +51,11 @@ export const getPackagesBumps = (packages: TPackages, bumps: TGitBump[], bumpOpt
 
       if (dependent.devRange !== null) {
         bumpedDevRange = bumpRange(dependent.devRange, version, type, bumpOptions)
+
+        // skip dependent if we shouldn't always bump a version and it satisfies the bump
+        if (bumpedDevRange === dependent.devRange && bumpedVersion === null) {
+          continue
+        }
       }
 
       let dependentPrevType: TBumpType | null = null
