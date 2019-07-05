@@ -2,6 +2,7 @@
   "editor.formatOnSave": false,
   "editor.formatOnType": false,
   "editor.formatOnPaste": false,
+  "editor.snippetSuggestions": "top",
   "workbench.statusBar.feedback.visible": false,
   "typescript.format.enable": false,
   "typescript.disableAutomaticTypeAcquisition": true,
