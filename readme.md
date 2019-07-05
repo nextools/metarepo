@@ -10,20 +10,15 @@
 
 This repository is a collection of JavaScript libraries, grouped in the same place for the best developer experience. Check the individual documentations for more details:
 
-## Libraries
-
-- [@auto](packages/auto): Set of helpers for managing and developing (mono)repos.
-- [@fantasy-color](packages/fantasy-color): 🌈 Color manipulation functions for JavaScript.
-- [refun](packages/refun): React Hook-enabled functions that compose harmoniously with each other.
-- [@start](packages/start): Functional, fast and shareable build tool
-
-## Utilities
-
+- [@auto](packages/auto): Set of helpers for managing and developing monorepos.
 - [codecov-lite](packages/codecov-lite): LCOV (code coverage data) uploader for codecov.io service.
 - [copie](packages/copie): Copy a file.
 - [dleet](packages/dleet): Delete directories and files.
 - [ekst](packages/ekst): Append, prepend, replace or remove basename extensions.
+- [@fantasy-color](packages/fantasy-color): 🌈 Color manipulation functions for JavaScript.
 - [mocku](packages/mocku): Mocking library.
 - [move-path](packages/move-path): Move path to destination folder.
+- [refun](packages/refun): React Hook-enabled functions that compose harmoniously with each other.
+- [@start](packages/start): Functional, fast and shareable task runner.
 - [spyfn](packages/spyfn): Spy function.
 - [typeon](packages/typeon): Typed JSON parse and stringify for TypeScript.
