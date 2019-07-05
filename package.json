@@ -17,6 +17,7 @@
     "packages/math-playground",
     "packages/mocku",
     "packages/move-path",
+    "packages/pifs",
     "packages/primitives/*",
     "packages/react-autoprops",
     "packages/rebox/*",

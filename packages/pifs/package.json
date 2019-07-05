@@ -1,0 +1,25 @@
+{
+  "name": "pifs",
+  "version": "0.0.0",
+  "description": "Promisified graceful-fs",
+  "keywords": [
+    "fs",
+    "graceful-fs",
+    "promise",
+    "promisify"
+  ],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "graceful-fs": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "@types/graceful-fs": "^4.1.3",
+    "blue-tape": "^1.0.0"
+  }
+}

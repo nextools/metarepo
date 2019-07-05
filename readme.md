@@ -18,6 +18,7 @@ This repository is a collection of JavaScript libraries, grouped in the same pla
 - [@fantasy-color](packages/fantasy-color): 🌈 Color manipulation functions for JavaScript.
 - [mocku](packages/mocku): Mocking library.
 - [move-path](packages/move-path): Move path to destination folder.
+- [pifs](packages/pifs): Promisified graceful-fs.
 - [refun](packages/refun): React Hook-enabled functions that compose harmoniously with each other.
 - [@start](packages/start): Functional, fast and shareable task runner.
 - [spyfn](packages/spyfn): Spy function.
