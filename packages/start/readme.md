@@ -259,9 +259,9 @@ $ yarn start ci
 
 ## How to
 
-* [Use CLI and pass in options](packages/cli)
-* [Create a plugin](packages/plugin)
-* [Create a reporter](packages/reporter-verbose)
+* [Use CLI and pass in options](cli)
+* [Create a plugin](plugin)
+* [Create a reporter](reporter-verbose)
 * [Create a preset](https://github.com/deepsweet/_/tree/master/packages/start-preset-node-ts-lib)
 
 ## Recipes
@@ -275,71 +275,71 @@ $ yarn start ci
 
 ### Core
 
-* ⬛️ [cli](packages/cli) – CLI entry point
-* ⚙️ [plugin](packages/plugin) – plugin creator
-* 📃 [reporter-verbose](packages/reporter-verbose) – verbose reporter
+* ⬛️ [cli](cli) – CLI entry point
+* ⚙️ [plugin](plugin) – plugin creator
+* 📃 [reporter-verbose](reporter-verbose) – verbose reporter
 
 ### Plugins
 
 #### Misc
 
-* ⏩ [plugin-sequence](packages/plugin-sequence) – run plugins in sequence
-* 🔀 [plugin-parallel](packages/plugin-parallel) – run tasks as parallel child processes with same agruments
-* 🔂 [plugin-xargs](packages/plugin-xargs) – run task as parallel child process for each argument
-* 🐣 [plugin-spawn](packages/plugin-spawn) – spawn new child process
-* 👔 [plugin-env](packages/plugin-env) – set environment variable using [`process.env`](https://nodejs.org/api/all.html#process_process_env)
-* 🔌 [plugin-input-files](packages/plugin-input-files) – inject arguments as files into Start flow files
+* ⏩ [plugin-sequence](plugin-sequence) – run plugins in sequence
+* 🔀 [plugin-parallel](plugin-parallel) – run tasks as parallel child processes with same agruments
+* 🔂 [plugin-xargs](plugin-xargs) – run task as parallel child process for each argument
+* 🐣 [plugin-spawn](plugin-spawn) – spawn new child process
+* 👔 [plugin-env](plugin-env) – set environment variable using [`process.env`](https://nodejs.org/api/all.html#process_process_env)
+* 🔌 [plugin-input-files](plugin-input-files) – inject arguments as files into Start flow files
 * 🔌 plugin-output-files – to be added
 
 #### FS
 
-* 🔍 [plugin-find](packages/plugin-find) – find files using glob patterns
-* 🔍 [plugin-find-git-staged](packages/plugin-find-git-staged) – find Git staged files and filter them using glob patterns
-* 📖 [plugin-read](packages/plugin-read) – read files content
-* 🔠 [plugin-rename](packages/plgun-rename) – rename files
-* ❌ [plugin-remove](packages/plugin-remove) – remove files or directories
-* 👯 [plugin-copy](packages/plugin-copy) – copy files to relative destination using streams and keeping folders structure
-* ✏️ [plugin-write](packages/plugin-write) – write files with source maps to relative destination keeping folders structure
-* ✏️ [plugin-overwrite](packages/plugin-overwrite) – overwrite files
-* 👀 [plugin-watch](packages/plugin-watch) – watch for new or changed files matched by glob patterns
-* 🗜 [plugin-unpack](packages/plugin-unpack) – unpack .tar/.tar.bz2/.tar.gz/.zip archives
+* 🔍 [plugin-find](plugin-find) – find files using glob patterns
+* 🔍 [plugin-find-git-staged](plugin-find-git-staged) – find Git staged files and filter them using glob patterns
+* 📖 [plugin-read](plugin-read) – read files content
+* 🔠 [plugin-rename](plgun-rename) – rename files
+* ❌ [plugin-remove](plugin-remove) – remove files or directories
+* 👯 [plugin-copy](plugin-copy) – copy files to relative destination using streams and keeping folders structure
+* ✏️ [plugin-write](plugin-write) – write files with source maps to relative destination keeping folders structure
+* ✏️ [plugin-overwrite](plugin-overwrite) – overwrite files
+* 👀 [plugin-watch](plugin-watch) – watch for new or changed files matched by glob patterns
+* 🗜 [plugin-unpack](plugin-unpack) – unpack .tar/.tar.bz2/.tar.gz/.zip archives
 
 #### Build and bundle
 
-* 🏭 [plugin-lib-babel](packages/plugin-lib-babel) – transform files using [Babel](https://babeljs.io/)
-* 🏭 [plugin-lib-esm-loader](packages/plugin-lib-esm-loader) – copy a predefined [ESM loader](https://github.com/standard-things/esm) file to a directory
-* 🏭 [plugin-lib-webpack](packages/plugin-lib-webpack) – bundle files using [Webpack](https://webpack.js.org/)
-* 🏭 [plugin-lib-webpack-dev-server](packages/plugin-lib-webpack-dev-server) – run [Webpack development server](https://github.com/webpack/webpack-dev-server)
-* 🏭 [plugin-lib-rollup](packages/plugin-lib-rollup) – bundle files using [Rollup](https://rollupjs.org/)
-* 🏭 [plugin-lib-typescript-generate](packages/plugin-lib-typescript-generate) – generate `.d.ts` files using [TypeScript](https://www.typescriptlang.org/)
-* 🏭 [plugin-lib-flow-generate](packages/plugin-lib-flow-generate) – generate `.js.flow` files using [Flow](https://flow.org/)
-* 🏭 [plugin-lib-postcss](packages/plugin-lib-postcss) – transform files using [PostCSS](https://postcss.org/)
+* 🏭 [plugin-lib-babel](plugin-lib-babel) – transform files using [Babel](https://babeljs.io/)
+* 🏭 [plugin-lib-esm-loader](plugin-lib-esm-loader) – copy a predefined [ESM loader](https://github.com/standard-things/esm) file to a directory
+* 🏭 [plugin-lib-webpack](plugin-lib-webpack) – bundle files using [Webpack](https://webpack.js.org/)
+* 🏭 [plugin-lib-webpack-dev-server](plugin-lib-webpack-dev-server) – run [Webpack development server](https://github.com/webpack/webpack-dev-server)
+* 🏭 [plugin-lib-rollup](plugin-lib-rollup) – bundle files using [Rollup](https://rollupjs.org/)
+* 🏭 [plugin-lib-typescript-generate](plugin-lib-typescript-generate) – generate `.d.ts` files using [TypeScript](https://www.typescriptlang.org/)
+* 🏭 [plugin-lib-flow-generate](plugin-lib-flow-generate) – generate `.js.flow` files using [Flow](https://flow.org/)
+* 🏭 [plugin-lib-postcss](plugin-lib-postcss) – transform files using [PostCSS](https://postcss.org/)
 * 🏭 plugin-lib-less – [to be migrated](https://github.com/start-runner/less)
 * 🏭 plugin-lib-clean-css – [to be migrated](https://github.com/start-runner/clean-css)
 * 🏭 plugin-lib-uglify – [to be migrated](https://github.com/start-runner/uglify)
 
 #### Tests
 
-* ✅ [plugin-lib-jest](packages/plugin-lib-jest) – run tests using [Jest](https://facebook.github.io/jest/)
-* ✅ [plugin-lib-tape](packages/plugin-lib-tape) – run tests using [Tape](https://github.com/substack/tape)
-* ✅ [plugin-lib-karma](packages/plugin-lib-karma) – run tests using [Karma](https://github.com/karma-runner/karma)
-* 💯 [plugin-lib-instanbul](packages/plugin-lib-istanbul) – collect, report and check code coverage using [Istanbul](https://istanbul.js.org/)
+* ✅ [plugin-lib-jest](plugin-lib-jest) – run tests using [Jest](https://facebook.github.io/jest/)
+* ✅ [plugin-lib-tape](plugin-lib-tape) – run tests using [Tape](https://github.com/substack/tape)
+* ✅ [plugin-lib-karma](plugin-lib-karma) – run tests using [Karma](https://github.com/karma-runner/karma)
+* 💯 [plugin-lib-instanbul](plugin-lib-istanbul) – collect, report and check code coverage using [Istanbul](https://istanbul.js.org/)
 * ✅ plugin-lib-ava – [to be migrated](https://github.com/start-runner/ava)
 * ✅ plugin-lib-mocha – [to be migrated](https://github.com/start-runner/mocha)
-* ❓ [plugin-assert](packages/plugin-assert) – Node.js [`assert()`](https://nodejs.org/docs/latest-v8.x/api/all.html#assert_assert_value_message)
+* ❓ [plugin-assert](plugin-assert) – Node.js [`assert()`](https://nodejs.org/docs/latest-v8.x/api/all.html#assert_assert_value_message)
 
 #### Lint, check and fix
 
-* 🚷 [plugin-lib-eslint](packages/plugin-lib-eslint) – lint and/or fix code using [ESLint](https://eslint.org/)
-* 🚷 [plugin-lib-prettier-eslint](packages/plugin-lib-prettier-eslint) – fix code(style) using [Prettier + ESLint](https://github.com/prettier/prettier-eslint)
-* 🚷 [plugin-lib-typescript-check](packages/plugin-lib-typescript-check) – check types using [TypeScript](https://www.typescriptlang.org/)
-* 🚷 [plugin-lib-flow-check](packages/plugin-lib-flow-check) – check types using [Flow](https://flow.org/)
+* 🚷 [plugin-lib-eslint](plugin-lib-eslint) – lint and/or fix code using [ESLint](https://eslint.org/)
+* 🚷 [plugin-lib-prettier-eslint](plugin-lib-prettier-eslint) – fix code(style) using [Prettier + ESLint](https://github.com/prettier/prettier-eslint)
+* 🚷 [plugin-lib-typescript-check](plugin-lib-typescript-check) – check types using [TypeScript](https://www.typescriptlang.org/)
+* 🚷 [plugin-lib-flow-check](plugin-lib-flow-check) – check types using [Flow](https://flow.org/)
 
 #### CI and publish
 
-* 💯 [plugin-lib-codecov](packages/plugin-lib-codecov) – send code coverage report to [codecov.io](https://codecov.io/)
-* 🔢 [plugin-lib-npm-version](packages/plugin-lib-npm-version) – bump package version
-* 📦 [plugin-lib-npm-publish](packages/plugin-lib-npm-publish) – publish package to NPM
+* 💯 [plugin-lib-codecov](plugin-lib-codecov) – send code coverage report to [codecov.io](https://codecov.io/)
+* 🔢 [plugin-lib-npm-version](plugin-lib-npm-version) – bump package version
+* 📦 [plugin-lib-npm-publish](plugin-lib-npm-publish) – publish package to NPM
 * 💯 plugin-lib-coveralls – [to be migrated](https://github.com/start-runner/coveralls)
 
 ### Tasks
