@@ -1,3 +1,7 @@
+## v0.7.2
+
+* 🐞 cleanup and fix deps
+
 ## v0.7.1
 
 * 🐞 bump `auto`

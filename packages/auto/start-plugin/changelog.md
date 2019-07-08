@@ -1,3 +1,7 @@
+## v0.5.2
+
+* 🐞 cleanup and fix deps
+
 ## v0.5.1
 
 * 🐞 fix `publishPackagesBumps` to skip bumps without types

@@ -1,6 +1,6 @@
 {
   "name": "@fantasy-color/luminance-for-contrast-ratio",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "For a given contrast ratio and a relative luminance, give a relative luminance that will match this contrast ratio",
   "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/luminance-for-contrast-ratio",
   "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",
