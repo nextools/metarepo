@@ -13,9 +13,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@primitives/animation": "^0.1.0",
-    "@primitives/block": "^0.4.0",
     "@babel/runtime": "^7.1.2",
+    "@primitives/block": "^0.4.0",
     "colorido": "^0.1.0"
   },
   "devDependencies": {

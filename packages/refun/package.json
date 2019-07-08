@@ -13,21 +13,13 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "react-is": "^16.8.3",
     "shallowequal": "^1.1.0",
     "tsfn": "^0.1.0"
   },
   "devDependencies": {
-    "@types/blue-tape": "^0.1.32",
     "@types/react": "^16.8.6",
-    "@types/react-is": "^16.7.1",
-    "@types/react-test-renderer": "^16.0.3",
     "@types/shallowequal": "^1.1.0",
-    "blue-tape": "^1.0.0",
     "react": "^16.8.6",
-    "react-test-renderer": "^16.8.2",
-    "redux": "4.0.1",
-    "spyfn": "^0.2.0",
-    "spyt": "^0.1.0"
+    "redux": "4.0.1"
   }
 }

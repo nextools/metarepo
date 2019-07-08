@@ -15,7 +15,6 @@
     "@x-ray/screenshot-utils": "^0.1.0",
     "graceful-fs": "^4.1.11",
     "make-dir": "^3.0.0",
-    "p-all": "^2.0.0",
     "react-native-view-shot": "github:batata-frita/react-native-view-shot#semver:^0.1.1"
   },
   "devDependencies": {

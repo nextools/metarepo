@@ -9,7 +9,7 @@ export type TOptions = {
 }
 
 export const runAndroid = async (options: TOptions) => {
-  await execa('bash', [require.resolve('@rebox/android/android/run-android-emulator.sh')], {
+  await execa('bash', [require.resolve('../../android/run-android-emulator.sh')], {
     stdout: process.stdout,
     stderr: process.stderr,
     env: {

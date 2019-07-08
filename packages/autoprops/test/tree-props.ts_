@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import autoprops from '../src'
 
-test.only('Get Props: boolean triple state', async (t) => {
+test('Get Props: boolean triple state', async (t) => {
   const { props: childProps } = autoprops({
     props: {
       foo: [undefined, 'foo content'],

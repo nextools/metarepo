@@ -32,6 +32,10 @@
     "packages/typeon",
     "packages/x-ray/*"
   ],
+  "resolutions": {
+    "react": "^16.8.6",
+    "typeon": "^0.3.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@bubble-dev/eslint-config": "*",

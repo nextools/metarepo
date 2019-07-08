@@ -32,6 +32,9 @@ export type TPackageJson = {
   devDependencies?: {
     [k: string]: string,
   },
+  peerDependencies?: {
+    [k: string]: string,
+  },
   workspaces?: string[] | {
     packages: string[],
   },

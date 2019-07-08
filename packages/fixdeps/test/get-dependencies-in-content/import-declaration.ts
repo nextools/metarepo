@@ -1,7 +1,7 @@
 import test from 'blue-tape'
-import { getDependenciesInContent } from '../src/get-dependencies-in-content'
+import { getDependenciesInContent } from '../../src/get-dependencies-in-content'
 
-test('import declaration: package dependency', (t) => {
+test('fixdeps: import declaration: package dependency', (t) => {
   const content = `
   import path from 'path'
   import fs from 'fs'
@@ -17,7 +17,7 @@ test('import declaration: package dependency', (t) => {
   t.end()
 })
 
-test('import declaration: package with path', (t) => {
+test('fixdeps: import declaration: package with path', (t) => {
   const content = `
   import { func } from 'pkg/path/to/file'
   `
@@ -32,7 +32,7 @@ test('import declaration: package with path', (t) => {
   t.end()
 })
 
-test('import declaration: scoped package', (t) => {
+test('fixdeps: import declaration: scoped package', (t) => {
   const content = `
   import { func1 } from '@scope/pkg'
   import { func2 } from '@ns/my-package/path/to/file'
@@ -51,7 +51,7 @@ test('import declaration: scoped package', (t) => {
   t.end()
 })
 
-test('import declaration: relative path', (t) => {
+test('fixdeps: import declaration: relative path', (t) => {
   const content = `
   import { func1 } from '../src/path/to/file'
   import { func2 } from './file'

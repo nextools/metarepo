@@ -1,7 +1,7 @@
 import test from 'blue-tape'
-import { getDependenciesInContent } from '../src/get-dependencies-in-content'
+import { getDependenciesInContent } from '../../src/get-dependencies-in-content'
 
-test('require resolve expression: package dependency', async (t) => {
+test('fixdeps: require-expression: package dependency', (t) => {
   const content = `
   const path = require.resolve('path')
   const fs = require.resolve('fs')
@@ -13,9 +13,11 @@ test('require resolve expression: package dependency', async (t) => {
     ['path', 'fs'],
     'should find required packages'
   )
+
+  t.end()
 })
 
-test('require resolve expression: package with path', async (t) => {
+test('fixdeps: require-expression: package with path', (t) => {
   const content = `
   const { func } = require.resolve('pkg/path/to/file')
   `
@@ -26,9 +28,11 @@ test('require resolve expression: package with path', async (t) => {
     ['pkg'],
     'should find package name'
   )
+
+  t.end()
 })
 
-test('require resolve expression: scoped package', async (t) => {
+test('fixdeps: require-expression: scoped package', (t) => {
   const content = `
   const { func1 } = require.resolve('@scope/pkg')
   const { func2 } = require.resolve('@ns/my-package/path/to/file')
@@ -43,9 +47,11 @@ test('require resolve expression: scoped package', async (t) => {
     ],
     'should find scoped packages'
   )
+
+  t.end()
 })
 
-test('require resolve expression: relative paths', async (t) => {
+test('fixdeps: require-expression: relative paths', (t) => {
   const content = `
   const { func1 } = require.resolve('../src/path/to/file')
   const { func2 } = require.resolve('./file')
@@ -58,4 +64,6 @@ test('require resolve expression: relative paths', async (t) => {
     ['pkg'],
     'should skip relative paths'
   )
+
+  t.end()
 })

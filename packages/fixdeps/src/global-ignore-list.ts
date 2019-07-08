@@ -9,6 +9,7 @@ export const globalIgnoreList = [
   'fs',
   'http',
   'https',
+  'module',
   'net',
   'os',
   'path',

@@ -24,7 +24,6 @@
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
     "@types/webpack-serve": "^2.0.1",
-    "blue-tape": "^1.0.0",
-    "webpack": "^4.29.6"
+    "blue-tape": "^1.0.0"
   }
 }

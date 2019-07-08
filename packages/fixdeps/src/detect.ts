@@ -7,13 +7,15 @@ import {
   isImport,
   isImportDeclaration,
   isStringLiteral,
+  isMemberExpression,
 } from '@babel/types'
-import { isString } from './is-string'
+import { isString } from 'tsfn'
 
 const detectExportDeclaration = (node: Node): string | null => {
   if (isExportAllDeclaration(node) || isExportNamedDeclaration(node)) {
     const source = node.source
 
+    /* istanbul ignore else */
     if (source !== null) {
       return source.value
     }
@@ -29,6 +31,7 @@ const detectImportCallExpression = (node: Node): string | null => {
     if (isImport(callee)) {
       const stringArg = node.arguments[0]
 
+      /* istanbul ignore else */
       if (isStringLiteral(stringArg)) {
         return stringArg.value
       }
@@ -53,6 +56,7 @@ const detectRequireCallExpression = (node: Node): string | null => {
     if (isIdentifier(callee) && callee.name === 'require') {
       const stringArg = node.arguments[0]
 
+      /* istanbul ignore else */
       if (isStringLiteral(stringArg)) {
         return stringArg.value
       }
@@ -62,32 +66,35 @@ const detectRequireCallExpression = (node: Node): string | null => {
   return null
 }
 
-// const detectRequireResolveCallExpression = (node: Node): string | null => {
-//   if (isCallExpression(node)) {
-//     const callee = node.callee
+const detectRequireResolveCallExpression = (node: Node): string | null => {
+  if (isCallExpression(node)) {
+    const callee = node.callee
 
-//     if (isMemberExpression(callee)) {
-//       const isCalleeObjectName = isIdentifier(callee.object) && callee.object.name === 'require'
-//       const isCalleeProperty = isIdentifier(callee.property) && callee.property.name === 'resolve'
+    if (isMemberExpression(callee)) {
+      const isCalleeObjectName = isIdentifier(callee.object) && callee.object.name === 'require'
+      const isCalleeProperty = isIdentifier(callee.property) && callee.property.name === 'resolve'
 
-//       if (isCalleeObjectName && isCalleeProperty) {
-//         const stringArg = node.arguments[0]
+      /* istanbul ignore else */
+      if (isCalleeObjectName && isCalleeProperty) {
+        const stringArg = node.arguments[0]
 
-//         if (isStringLiteral(stringArg)) {
-//           return stringArg.value
-//         }
-//       }
-//     }
-//   }
+        /* istanbul ignore else */
+        if (isStringLiteral(stringArg)) {
+          return stringArg.value
+        }
+      }
+    }
+  }
 
-//   return null
-// }
+  return null
+}
 
 const detectors = [
   detectImportDeclaration,
   detectImportCallExpression,
   detectExportDeclaration,
   detectRequireCallExpression,
+  detectRequireResolveCallExpression,
 ]
 
 export const detect = (node: Node): string | null => {

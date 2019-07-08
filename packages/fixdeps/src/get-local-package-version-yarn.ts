@@ -25,11 +25,7 @@ export const getLocalPackageVersionYarn = async (packageName: string): Promise<s
   }
 
   if (matchedLines.length === 1) {
-    const [versionMatch] = matchedLines
-
-    if (versionMatch === null) {
-      throw new Error(`Cannot parse version of "${packageName}"`)
-    }
+    const versionMatch = matchedLines[0] as RegExpMatchArray
 
     return versionMatch[1]
   }

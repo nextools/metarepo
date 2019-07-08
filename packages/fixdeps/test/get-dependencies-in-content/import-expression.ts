@@ -1,7 +1,7 @@
 import test from 'blue-tape'
-import { getDependenciesInContent } from '../src/get-dependencies-in-content'
+import { getDependenciesInContent } from '../../src/get-dependencies-in-content'
 
-test('import expression: package dependency', (t) => {
+test('fixdeps: import expression: package dependency', (t) => {
   const content = `
   (async () => {
     const { default: path } = await import('path')
@@ -19,7 +19,7 @@ test('import expression: package dependency', (t) => {
   t.end()
 })
 
-test('import expression: package with path', (t) => {
+test('fixdeps: import expression: package with path', (t) => {
   const content = `
   (async () => {
     const { func } = await import('pkg/path/to/file')
@@ -36,7 +36,7 @@ test('import expression: package with path', (t) => {
   t.end()
 })
 
-test('import expression: scoped package', (t) => {
+test('fixdeps: import expression: scoped package', (t) => {
   const content = `
   (async () => {
     const { func1 } = await import('@scope/pkg')
@@ -57,7 +57,7 @@ test('import expression: scoped package', (t) => {
   t.end()
 })
 
-test('import expression: relative path', (t) => {
+test('fixdeps: import expression: relative path', (t) => {
   const content = `
   (async () => {
     const { func1 } = await import('../src/path/to/file')

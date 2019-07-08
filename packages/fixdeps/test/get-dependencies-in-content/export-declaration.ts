@@ -1,7 +1,7 @@
 import test from 'blue-tape'
-import { getDependenciesInContent } from '../src/get-dependencies-in-content'
+import { getDependenciesInContent } from '../../src/get-dependencies-in-content'
 
-test('export declaration: package dependency', (t) => {
+test('fixdeps: export declaration: package dependency', (t) => {
   const content = `
   export { default as path } from 'path'
   export * from 'fs'
@@ -17,7 +17,7 @@ test('export declaration: package dependency', (t) => {
   t.end()
 })
 
-test('export declaration: package with path', (t) => {
+test('fixdeps: export declaration: package with path', (t) => {
   const content = `
   export { func } from 'pkg/path/to/file'
   `
@@ -32,7 +32,7 @@ test('export declaration: package with path', (t) => {
   t.end()
 })
 
-test('export declaration: scoped package', (t) => {
+test('fixdeps: export declaration: scoped package', (t) => {
   const content = `
   export { func1 } from '@scope/pkg'
   export { func2 } from '@ns/my-package/path/to/file'
@@ -51,7 +51,7 @@ test('export declaration: scoped package', (t) => {
   t.end()
 })
 
-test('export declaration: relative path', (t) => {
+test('fixdeps: export declaration: relative path', (t) => {
   const content = `
   export { func1 } from '../src/path/to/file'
   export { func2 } from './file'
