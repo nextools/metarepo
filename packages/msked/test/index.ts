@@ -70,10 +70,20 @@ test('msked: getPositionInMasked', (t) => {
     () => getPositionInMasked(
       '12',
       [],
-      0
+      1
     ),
     /Position is out of bounds of the mask/,
     'should fail'
+  )
+
+  t.equals(
+    getPositionInMasked(
+      '12',
+      [],
+      0
+    ),
+    0,
+    'should be 0'
   )
 
   t.end()
