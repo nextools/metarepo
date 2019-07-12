@@ -1,0 +1,19 @@
+{
+  "name": "msked",
+  "version": "0.0.0",
+  "description": "Functions to operate with masked string values",
+  "keywords": ["masking", "input"],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "blue-tape": "^1.0.0"
+  }
+}
