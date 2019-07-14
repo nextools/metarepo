@@ -82,6 +82,10 @@ Several things to note:
     ...
   ```
 
+> Note: you might notice that `refun` has functions that serve as the equivalent of most of the React Hooks, so it might seem odd that some, such as `useEffect`, are missing. The reason is simply that wrapping them in the composition chain of `refun` provides no benefit: `useEffect` in particular does not result in any prop being added or removed, and there is no implicit state to keep track of, as is the case with the `mapSafeTimeout` and similar functions.
+
+> It is not the goal of `refun` to be a replacement of direct usage of React Hooks, rather a way to use them as a clean and decoupled composition chain and with good TypeScript typings, features that are only relevant to certain Hooks.
+
 ## `component`
 
 This function is an analog of `compose` and it performs simple function composition, with two caveats:
