@@ -1,3 +1,7 @@
+## v0.1.2
+
+* 🐞 do not blow up when overflowing
+
 ## v0.1.1
 
 * 🐞 fix off-by-one error in getPositionInMasked
