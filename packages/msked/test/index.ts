@@ -66,14 +66,17 @@ test('msked: getPositionInMasked', (t) => {
     'should be 1'
   )
 
-  t.throws(
-    () => getPositionInMasked(
+  // What this means is that it will not fail on overflowing.
+  // If the requested position is past the size of the mask,
+  // the result will be clipped to the mask length
+  t.equals(
+    getPositionInMasked(
       '12',
       [],
       1
     ),
-    /Position is out of bounds of the mask/,
-    'should fail'
+    0,
+    'should be 0'
   )
 
   t.equals(

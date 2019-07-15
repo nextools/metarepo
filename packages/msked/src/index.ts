@@ -4,11 +4,7 @@ export type TMask = TCharOrDelimiter[]
 
 export const getPositionInMasked = (value: string, mask: TMask, position: number, result = 0): number => {
   if (mask.length === 0) {
-    if (position === 0) {
-      return result
-    }
-
-    throw new Error('Position is out of bounds of the mask')
+    return result
   }
 
   const [maskHead, ...maskTail] = mask
