@@ -1,6 +1,6 @@
 import test from 'blue-tape'
-import { bumpRange } from '../src/bump-range'
 import { TBumpType } from '@auto/utils'
+import { bumpRange } from '../src/bump-range'
 import { TBumpOptions } from '..'
 
 test('bump:bumpRange (should always bump dependents)', (t) => {
