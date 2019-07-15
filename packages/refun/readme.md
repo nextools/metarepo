@@ -100,6 +100,36 @@ Several things to note:
 
 > It is not the goal of `refun` to be a replacement of direct usage of React Hooks, rather a way to use them as a clean and decoupled composition chain and with good TypeScript typings, features that are only relevant to certain Hooks.
 
+## API
+
+- [component](#component)
+- [mapContext](#mapContext)
+- [mapDebouncedHandlerTimeout](#mapDebouncedHandlerTimeout)
+- [mapDebouncedHandlerFactory](#mapDebouncedHandlerFactory)
+- [mapDefaultProps](#mapDefaultProps)
+- [mapFocused](#mapFocused)
+- [mapHandlers](#mapHandlers)
+- [mapHovered](#mapHovered)
+- [mapKeyboardFocused](#mapKeyboardFocused)
+- [mapPressed](#mapPressed)
+- [mapProps](#mapProps)
+- [mapReducer](#mapReducer)
+- [mapRefLayout](#mapRefLayout)
+- [mapRef](#mapRef)
+- [mapSafeRequestAnimationFrame](#mapSafeRequestAnimationFrame)
+- [mapSafeTimeout](#mapSafeTimeout)
+- [mapState](#mapState)
+- [mapThrottledHandlerTimeout](#mapThrottledHandlerTimeout)
+- [mapThrottledHandlerAnimationFrame](#mapThrottledHandlerAnimationFrame)
+- [mapThrottledHandlerFactory](#mapThrottledHandlerFactory)
+- [mapWithAsyncProps](#mapWithAsyncProps)
+- [mapWithProps](#mapWithProps)
+- [mapWithPropsMemo](#mapWithPropsMemo)
+- [onMount](#onMount)
+- [pureComponent](#pureComponent)
+- [startWithType](#startWithType)
+- [StoreContextFactory](#StoreContextFactory)
+
 ## `component`
 
 This function is an analog of `compose` and it performs simple function composition, with two caveats:
