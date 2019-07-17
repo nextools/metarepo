@@ -14,19 +14,19 @@ React Native does not currently support hover-like actions.
 
 ## Press-like handlers
 
-- `onPress`: triggered when a complete press action is done on the component
+- `onToggle`: triggered when a complete press action is done on the component
 - `onPressIn`: triggered when the component is being pressed
 - `onPressOut`: triggered when the component stops being pressed
 
 In Web:
 
-- `onPress` -> `onClick`
+- `onToggle` -> `onClick`
 - `onPressIn` -> `onMouseDown`
 - `onPressOut` -> `onMouseUp`
 
 In Native:
 
-- `onPress` -> `onPress`
+- `onToggle` -> `onValueChange`
 - `onPressIn` -> `onPressIn`
 - `onPressOut` -> `onPressOut`
 
@@ -65,7 +65,7 @@ export type TButtonProps = {
   accessibilityLabel?: string,
   isDisabled?: boolean,
   shouldStretch?: boolean,
-  onPress?: () => void
+  onToggle?: () => void
 } & TIsHoveredHandlers & TIsPressedHandlers & TIsFocusedHandlers
 ```
 
