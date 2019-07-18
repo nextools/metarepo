@@ -13,7 +13,10 @@ export type TBorder = {
   rightWidth?: number,
   bottomWidth?: number,
   leftWidth?: number,
-  overflow?: number,
+  overflowBottom?: number,
+  overflowLeft?: number,
+  overflowRight?: number,
+  overflowTop?: number,
 }
 
 export const Border = component(
@@ -27,7 +30,10 @@ export const Border = component(
     rightWidth: 0,
     bottomWidth: 0,
     leftWidth: 0,
-    overflow: 0,
+    overflowBottom: 0,
+    overflowLeft: 0,
+    overflowRight: 0,
+    overflowTop: 0,
   })
 )(({
   topLeftRadius,
@@ -39,15 +45,18 @@ export const Border = component(
   bottomWidth,
   leftWidth,
   color,
-  overflow,
+  overflowBottom,
+  overflowLeft,
+  overflowRight,
+  overflowTop,
 }) => (
   <Block
     shouldIgnorePointerEvents
     isFloating
-    top={-overflow}
-    right={-overflow}
-    bottom={-overflow}
-    left={-overflow}
+    top={-overflowTop}
+    right={-overflowRight}
+    bottom={-overflowBottom}
+    left={-overflowLeft}
     style={{
       borderTopLeftRadius: topLeftRadius,
       borderTopRightRadius: topRightRadius,
