@@ -65,6 +65,16 @@ export const getConfig = (entryPointPath: string, outputPath: string, htmlTempla
           },
         ],
       },
+      {
+        test: /\.png$/,
+        exclude: /node_modules/,
+        loader: 'images/[name].[hash].[ext]',
+      },
+      {
+        test: /\.mp4$/,
+        exclude: /node_modules/,
+        loader: 'videos/[name].[hash].[ext]',
+      },
     ],
   },
   performance: {
