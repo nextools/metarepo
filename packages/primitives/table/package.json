@@ -1,0 +1,22 @@
+{
+  "name": "@primitives/table",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.web.tsx",
+  "browser": "src/index.web.tsx",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "stili": "^0.1.0",
+    "refun": "^0.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.6",
+    "react": "^16.8.6"
+  }
+}
