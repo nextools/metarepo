@@ -1,3 +1,7 @@
+## v0.3.2
+
+* 🐞 re-enable minimize for `buildWeb`
+
 ## v0.3.1
 
 * 🐞 fix images and videos loader
