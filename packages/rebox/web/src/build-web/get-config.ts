@@ -81,7 +81,7 @@ export const getConfig = (entryPointPath: string, outputPath: string, htmlTempla
     hints: false,
   },
   optimization: {
-    minimize: false,
+    minimize: true,
     minimizer: [
       new TerserPlugin({
         parallel: true,
