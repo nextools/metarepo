@@ -25,42 +25,22 @@ export const getInitialPermutation = <Props extends TProps> (
   return new Array(lengthPerm.length).fill(0) as Permutation<Props>
 }
 
-export const arePermutationsEqual = <Props extends TProps> (
-  a: Permutation<Props>, b: Permutation<Props>
-): boolean => {
-  return a.length === b.length && a.every((val, i) => val === b[i])
-}
+export const bumpPermutation = <Props extends TProps> (lengthPerm: LengthPermutation<Props>, currentPerm: Permutation<Props>): void => {
+  /* increment next digit */
+  let i = 0
 
-export const bumpPermutation = <Props extends TProps> (
-  lengthPerm: LengthPermutation<Props>
-) => {
-  /* maximum possible permutation value */
-  const maxPerm = getMaxPermutation(lengthPerm)
+  for (; i < currentPerm.length; ++i) {
+    if (currentPerm[i] < (lengthPerm[i] - 1)) {
+      ++currentPerm[i]
 
-  /* bump function */
-  return (currentPerm: Permutation<Props>): void => {
-    /* check permutation overflow */
-    if (arePermutationsEqual(maxPerm, currentPerm)) {
+      break
+    } else if (i === currentPerm.length - 1) {
       throw new Error('Permutation overflow')
     }
+  }
 
-    /* copy current permutation */
-    const nextPerm = currentPerm
-
-    /* increment next digit */
-    let i = 0
-
-    for (; i < nextPerm.length; ++i) {
-      if (nextPerm[i] < maxPerm[i]) {
-        ++nextPerm[i]
-
-        break
-      }
-    }
-
-    /* reset previous digits */
-    for (let k = 0; k < i; ++k) {
-      nextPerm[k] = 0
-    }
+  /* reset previous digits */
+  for (let k = 0; k < i; ++k) {
+    currentPerm[k] = 0
   }
 }
