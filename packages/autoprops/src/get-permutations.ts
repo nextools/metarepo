@@ -19,22 +19,24 @@ export const getPermutations = <Props extends TProps> (
   const lengthPerm = getLengthPermutation(props, keys)
   const totalPerms = getTotalPermutations(lengthPerm)
 
-  /* bump function */
-  const bump = bumpPermutation(lengthPerm)
-
   /* initial permutation */
   const currentPerm = getInitialPermutation(lengthPerm)
 
   /* iterate over all possible permutations */
   const perms = [] as Permutation<Props>[]
-
   const keysWithState = []
+  let permIncrement = 1
 
-  for (let pi = 0; pi < totalPerms; ++pi) {
+  for (let pi = 0; pi < totalPerms; pi += permIncrement) {
     /* get next permutation, skip first */
     if (pi > 0) {
-      bump(currentPerm)
+      for (let i = 0; i < permIncrement; ++i) {
+        bumpPermutation(lengthPerm, currentPerm)
+      }
     }
+
+    /* reset increment counter */
+    permIncrement = 1
 
     /* check mutex groups */
     let validPerm = true
@@ -57,8 +59,7 @@ export const getPermutations = <Props extends TProps> (
           const skipMutexes = getNumMutexesToSkip(currentPerm, lengthPerm)
 
           if (skipMutexes > 0) {
-            /* skip 1 because we are currently at it, and another 1 because for-loop will increment pi */
-            pi += skipMutexes - 2
+            permIncrement = skipMutexes
           }
 
           break

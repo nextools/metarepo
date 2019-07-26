@@ -28,12 +28,38 @@ test('getNumMutexesToSkip', (t) => {
 })
 
 test('getNumMutexesToSkip', (t) => {
-  const lengthPerm = [4, 20, 4, 2]
+  const lengthPerm = [4, 4, 4, 4]
   const currentPerm = [0, 1, 0, 1]
 
   t.equals(
     getNumMutexesToSkip(currentPerm, lengthPerm),
-    76,
+    12,
+    'should return num mutexes to skip'
+  )
+
+  t.end()
+})
+
+test('getNumMutexesToSkip', (t) => {
+  const lengthPerm = [4, 4, 4, 4]
+  const currentPerm = [0, 1, 1, 0]
+
+  t.equals(
+    getNumMutexesToSkip(currentPerm, lengthPerm),
+    12,
+    'should return num mutexes to skip'
+  )
+
+  t.end()
+})
+
+test('getNumMutexesToSkip', (t) => {
+  const lengthPerm = [4, 4, 4, 4, 4]
+  const currentPerm = [1, 0, 1, 0, 1]
+
+  t.equals(
+    getNumMutexesToSkip(currentPerm, lengthPerm),
+    3,
     'should return num mutexes to skip'
   )
 

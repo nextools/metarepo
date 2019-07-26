@@ -144,7 +144,6 @@ test('Permutations: single prop', (t) => {
   }
   const keys = getKeys(props)
   const lengthPerm = getLengthPermutation<Props>(props, keys)
-  const bump = bumpPermutation(lengthPerm)
   const total = getTotalPermutations(lengthPerm)
   const res = [] as Permutation<Props>[]
 
@@ -152,7 +151,7 @@ test('Permutations: single prop', (t) => {
   res.push(currentPerm.slice() as Permutation<Props>)
 
   for (let i = 1; i < total; ++i) {
-    bump(currentPerm)
+    bumpPermutation(lengthPerm, currentPerm)
     res.push(currentPerm.slice() as Permutation<Props>)
   }
 
@@ -180,7 +179,6 @@ test('Permutations: two booleans', (t) => {
   }
   const keys = getKeys<Props>(props)
   const lengthPerm = getLengthPermutation<Props>(props, keys)
-  const bump = bumpPermutation(lengthPerm)
   const total = getTotalPermutations(lengthPerm)
   const res = [] as Permutation<Props>[]
 
@@ -188,7 +186,7 @@ test('Permutations: two booleans', (t) => {
   res.push(currentPerm.slice() as Permutation<Props>)
 
   for (let i = 1; i < total; ++i) {
-    bump(currentPerm)
+    bumpPermutation(lengthPerm, currentPerm)
     res.push(currentPerm.slice() as Permutation<Props>)
   }
 
@@ -220,14 +218,13 @@ test('Permutations: multiple props with different length', (t) => {
   const keys = getKeys(props)
   const lengthPerm = getLengthPermutation<Props>(props, keys)
   const total = getTotalPermutations(lengthPerm)
-  const bump = bumpPermutation(lengthPerm)
   const res = [] as Permutation<Props>[]
 
   const currentPerm = getInitialPermutation(lengthPerm)
   res.push(currentPerm.slice() as Permutation<Props>)
 
   for (let i = 1; i < total; ++i) {
-    bump(currentPerm)
+    bumpPermutation(lengthPerm, currentPerm)
     res.push(currentPerm.slice() as Permutation<Props>)
   }
 
@@ -255,17 +252,16 @@ test('Permutations: should throw on permutation overflow', (t) => {
   }
   const keys = getKeys(props)
   const lengthPerm = getLengthPermutation(props, keys)
-  const bump = bumpPermutation(lengthPerm)
 
   /* [0] */
   const currentPerm = getInitialPermutation(lengthPerm)
 
   /* [1] */
-  bump(currentPerm)
+  bumpPermutation(lengthPerm, currentPerm)
 
   /* no more bumps available */
   t.throws(
-    bump.bind(null, currentPerm),
+    bumpPermutation.bind(null, lengthPerm, currentPerm),
     'should throw when no more bumps available'
   )
 
