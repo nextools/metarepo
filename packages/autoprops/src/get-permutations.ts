@@ -7,6 +7,7 @@ import {
   getLengthPermutation,
   getTotalPermutations,
 } from './permutation-utils'
+import { getNumMutexesToSkip } from './get-num-mutexes-to-skip'
 
 export const getPermutations = <Props extends TProps> (
   props: PropsWithValues<Props>,
@@ -22,38 +23,54 @@ export const getPermutations = <Props extends TProps> (
   const bump = bumpPermutation(lengthPerm)
 
   /* initial permutation */
-  let currentPerm = getInitialPermutation(lengthPerm)
+  const currentPerm = getInitialPermutation(lengthPerm)
 
   /* iterate over all possible permutations */
   const perms = [] as Permutation<Props>[]
 
+  const keysWithState = []
+
   for (let pi = 0; pi < totalPerms; ++pi) {
     /* get next permutation, skip first */
     if (pi > 0) {
-      currentPerm = bump(currentPerm)
+      bump(currentPerm)
     }
 
     /* check mutex groups */
     let validPerm = true
 
     if (mutexGroups.length > 0 || mutinGroups.length > 0) {
-      const keysWithState = keys.filter((k, i) => currentPerm[i] > 0 && props[k][currentPerm[i]] !== undefined)
+      let keysWithStateLength = 0
 
-      if (mutexGroups.length > 0) {
-        for (const mutexGroup of mutexGroups) {
-          if (arrayIntersect(keysWithState, mutexGroup).length > 1) {
-            validPerm = false
-
-            break
-          }
+      for (let i = 0; i < keys.length; ++i) {
+        if (currentPerm[i] > 0) {
+          keysWithState[keysWithStateLength++] = keys[i]
         }
       }
 
-      if (mutinGroups.length > 0) {
-        for (const mutinGroup of mutinGroups) {
-          const intersect = arrayIntersect(keysWithState, mutinGroup)
+      for (let i = 0; i < mutexGroups.length; ++i) {
+        const mutexGroup = mutexGroups[i]
 
-          if (intersect.length !== 0 && intersect.length !== mutinGroup.length) {
+        if (arrayIntersect(keysWithState, keysWithStateLength, mutexGroup, mutexGroup.length) > 1) {
+          validPerm = false
+
+          const skipMutexes = getNumMutexesToSkip(currentPerm, lengthPerm)
+
+          if (skipMutexes > 0) {
+            /* skip 1 because we are currently at it, and another 1 because for-loop will increment pi */
+            pi += skipMutexes - 2
+          }
+
+          break
+        }
+      }
+
+      if (validPerm) {
+        for (let i = 0; i < mutinGroups.length; ++i) {
+          const mutinGroup = mutinGroups[i]
+          const intersect = arrayIntersect(keysWithState, keysWithStateLength, mutinGroup, mutinGroup.length)
+
+          if (intersect !== 0 && intersect !== mutinGroup.length) {
             validPerm = false
 
             break
@@ -64,7 +81,7 @@ export const getPermutations = <Props extends TProps> (
 
     /* push valid permutation */
     if (validPerm) {
-      perms.push(currentPerm)
+      perms.push(currentPerm.slice() as Permutation<Props>)
     }
   }
 

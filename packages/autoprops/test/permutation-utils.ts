@@ -148,11 +148,12 @@ test('Permutations: single prop', (t) => {
   const total = getTotalPermutations(lengthPerm)
   const res = [] as Permutation<Props>[]
 
-  let currentPerm = getInitialPermutation(lengthPerm)
-  res.push(currentPerm)
+  const currentPerm = getInitialPermutation(lengthPerm)
+  res.push(currentPerm.slice() as Permutation<Props>)
 
   for (let i = 1; i < total; ++i) {
-    res.push(currentPerm = bump(currentPerm))
+    bump(currentPerm)
+    res.push(currentPerm.slice() as Permutation<Props>)
   }
 
   t.deepEquals(
@@ -183,11 +184,12 @@ test('Permutations: two booleans', (t) => {
   const total = getTotalPermutations(lengthPerm)
   const res = [] as Permutation<Props>[]
 
-  let currentPerm = getInitialPermutation(lengthPerm)
-  res.push(currentPerm)
+  const currentPerm = getInitialPermutation(lengthPerm)
+  res.push(currentPerm.slice() as Permutation<Props>)
 
   for (let i = 1; i < total; ++i) {
-    res.push(currentPerm = bump(currentPerm))
+    bump(currentPerm)
+    res.push(currentPerm.slice() as Permutation<Props>)
   }
 
   t.deepEquals(
@@ -221,11 +223,12 @@ test('Permutations: multiple props with different length', (t) => {
   const bump = bumpPermutation(lengthPerm)
   const res = [] as Permutation<Props>[]
 
-  let currentPerm = getInitialPermutation(lengthPerm)
-  res.push(currentPerm)
+  const currentPerm = getInitialPermutation(lengthPerm)
+  res.push(currentPerm.slice() as Permutation<Props>)
 
   for (let i = 1; i < total; ++i) {
-    res.push(currentPerm = bump(currentPerm))
+    bump(currentPerm)
+    res.push(currentPerm.slice() as Permutation<Props>)
   }
 
   t.deepEquals(
@@ -255,10 +258,10 @@ test('Permutations: should throw on permutation overflow', (t) => {
   const bump = bumpPermutation(lengthPerm)
 
   /* [0] */
-  let currentPerm = getInitialPermutation(lengthPerm)
+  const currentPerm = getInitialPermutation(lengthPerm)
 
   /* [1] */
-  currentPerm = bump(currentPerm)
+  bump(currentPerm)
 
   /* no more bumps available */
   t.throws(

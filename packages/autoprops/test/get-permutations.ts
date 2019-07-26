@@ -211,7 +211,7 @@ test('Get Permutations: consider \'undefined\' as valid exclusion', (t) => {
     b: string,
   }
   const props: PropsWithValues<Props> = {
-    a: [false, undefined, true],
+    a: [undefined, false, true],
     b: ['short', 'long', 'another'],
   }
   const mutex: MutexGroup<Props>[] = [
@@ -228,9 +228,7 @@ test('Get Permutations: consider \'undefined\' as valid exclusion', (t) => {
       [1, 0],
       [2, 0],
       [0, 1],
-      [1, 1],
       [0, 2],
-      [1, 2],
     ]
   )
 

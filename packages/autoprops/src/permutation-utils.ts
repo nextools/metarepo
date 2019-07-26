@@ -38,14 +38,14 @@ export const bumpPermutation = <Props extends TProps> (
   const maxPerm = getMaxPermutation(lengthPerm)
 
   /* bump function */
-  return (currentPerm: Permutation<Props>): Permutation<Props> => {
+  return (currentPerm: Permutation<Props>): void => {
     /* check permutation overflow */
     if (arePermutationsEqual(maxPerm, currentPerm)) {
       throw new Error('Permutation overflow')
     }
 
     /* copy current permutation */
-    const nextPerm = [...currentPerm] as Permutation<Props>
+    const nextPerm = currentPerm
 
     /* increment next digit */
     let i = 0
@@ -62,7 +62,5 @@ export const bumpPermutation = <Props extends TProps> (
     for (let k = 0; k < i; ++k) {
       nextPerm[k] = 0
     }
-
-    return nextPerm
   }
 }

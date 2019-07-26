@@ -1,12 +1,19 @@
-export const arrayIntersect = <T> (a: T[], b: T[]): T[] => {
-  const [smallArr, largeArr] = a.length < b.length ? [a, b] : [b, a]
+export const arrayIntersect = <T> (a: T[], aLenght: number, b: T[], bLength: number): number => {
+  if (bLength < aLenght) {
+    return arrayIntersect(b, bLength, a, aLenght)
+  }
 
-  return smallArr.reduce((res, av) => {
-    if (largeArr.includes(av)) {
-      res.push(av)
+  let result = 0
+
+  for (let i = 0; i < aLenght; ++i) {
+    for (let j = 0; j < bLength; ++j) {
+      if (a[i] === b[j]) {
+        ++result
+
+        break
+      }
     }
+  }
 
-    return res
-  },
-  [] as T[])
+  return result
 }
