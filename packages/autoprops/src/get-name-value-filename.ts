@@ -1,5 +1,5 @@
 import sanitize from 'sanitize-filename'
-import { getElementName } from 'refun'
+import { ReactElement, FC } from 'react'
 import {
   isArray,
   isBoolean,
@@ -14,6 +14,14 @@ import {
   isString,
   isUndefined,
 } from './guards'
+
+const getElementName = (element: ReactElement<any>) => {
+  if (typeof element.type === 'string') {
+    return element.type
+  }
+
+  return (element.type as FC<any>).displayName || element.type.name
+}
 
 export const getNameValueFilenameRaw = (name: string, value: any, index: number): string => {
   const i = `-${index}`

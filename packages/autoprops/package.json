@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "refun": "^0.3.0",
     "sanitize-filename": "^1.6.1"
   },
   "devDependencies": {
