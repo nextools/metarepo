@@ -20,7 +20,6 @@
     "packages/msked",
     "packages/pifs",
     "packages/primitives/*",
-    "packages/react-autoprops",
     "packages/rebox/*",
     "packages/refun",
     "packages/rn-fonts",

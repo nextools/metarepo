@@ -4,19 +4,7 @@ import { getBaseName } from './get-indexed-name'
 import { TChildrenMap, TChildrenConfig } from './types'
 import { isChildrenMap } from './is-children-map'
 
-const childrenCache = new WeakMap()
-
 export const createChildren = (childrenConfig: TChildrenConfig, children: TChildrenMap): ReactElement | ReactElement[] => {
-  if (childrenCache.has(children)) {
-    const cachedChildren = childrenCache.get(children)
-
-    if (cachedChildren.length === 1) {
-      return cachedChildren[0]
-    }
-
-    return cachedChildren
-  }
-
   const createdChildren = Object.keys(children).reduce((result, childIndexedKey, i) => {
     const childKey = getBaseName(childIndexedKey)
     const childMeta = childrenConfig.meta[childKey]
@@ -43,8 +31,6 @@ export const createChildren = (childrenConfig: TChildrenConfig, children: TChild
 
     return result
   }, [] as ReactElement[])
-
-  childrenCache.set(children, createdChildren)
 
   if (createdChildren.length === 1) {
     return createdChildren[0]

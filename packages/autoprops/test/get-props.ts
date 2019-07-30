@@ -1,147 +1,199 @@
 import test from 'blue-tape'
+import { TMetaFile } from '../src/types'
 import { getProps } from '../src/get-props'
-import { getKeys } from '../src/get-keys'
-import { getPermutations } from '../src/get-permutations'
 
-test('Get Props: boolean triple state', (t) => {
-  type Props = {
-    a?: boolean,
+test('autoprops: getProps single prop', (t) => {
+  const meta: TMetaFile = {
+    config: {
+      props: {
+        a: [true],
+      },
+    },
+    Component: () => null,
   }
-  const props = {
-    a: [undefined, true, false],
-  }
-  const keys = getKeys<Props>(props)
-  const perms = getPermutations(props, keys)
-  const res = getProps<Props>(props, keys, perms)
 
-  /* values */
+  const decimals = [0n, 1n, 2n]
+
   t.deepEquals(
-    res,
+    decimals.map((value) => getProps(value, meta)),
     [
       {},
       {
         a: true,
       },
-      {
-        a: false,
-      },
-    ]
+      {},
+    ],
+    'should return props'
   )
 
   t.end()
 })
 
-test('Get Props: boolean states', (t) => {
-  type Props = {
-    a?: boolean,
-    b?: boolean,
+test('autoprops: getProps required props', (t) => {
+  const meta: TMetaFile = {
+    config: {
+      props: {
+        a: [true],
+        b: [true],
+      },
+      required: ['a'],
+    },
+    Component: () => null,
   }
-  const props = {
-    a: [undefined, true],
-    b: [undefined, true],
-  }
-  const keys = getKeys<Props>(props)
-  const perms = getPermutations(props, keys)
-  const res = getProps<Props>(props, keys, perms)
 
-  /* values */
   t.deepEquals(
-    res,
+    getProps(0n, meta),
+    {
+      a: true,
+    },
+    'perm 0'
+  )
+
+  t.deepEquals(
+    getProps(1n, meta),
+    {
+      a: true,
+      b: true,
+    },
+    'perm 1'
+  )
+
+  t.end()
+})
+
+test('autoprops: getProps empty childrenMap', (t) => {
+  const meta: TMetaFile = {
+    config: {
+      props: {},
+    },
+    childrenConfig: {
+      meta: {
+        child: {
+          config: {
+            props: {},
+          },
+          Component: () => null,
+        },
+      },
+      children: ['child'],
+    },
+    Component: () => null,
+  }
+
+  const decimals = [0n, 1n]
+
+  t.deepEquals(
+    decimals.map((value) => getProps(value, meta)),
     [
       {},
       {
-        a: true,
+        children: {
+          child__0: {},
+        },
       },
-      {
-        b: true,
-      },
-      {
-        a: true,
-        b: true,
-      },
-    ]
+    ],
+    'should return props'
   )
 
   t.end()
 })
 
-test('Get Props: multiple boolean states', (t) => {
-  type Props = {
-    a?: boolean,
-    b?: boolean,
-    c?: boolean,
+test('autoprops: getProps children with required', (t) => {
+  const meta: TMetaFile = {
+    config: {
+      props: {},
+    },
+    childrenConfig: {
+      meta: {
+        child: {
+          config: {
+            props: {},
+          },
+          Component: () => null,
+        },
+        child2: {
+          config: {
+            props: {},
+          },
+          Component: () => null,
+        },
+      },
+      children: ['child', 'child2'],
+      required: ['child'],
+    },
+    Component: () => null,
   }
-  const props = {
-    a: [undefined, true],
-    b: [undefined, true],
-    c: [undefined, true],
-  }
-  const keys = getKeys<Props>(props)
-  const perms = getPermutations(props, keys)
-  const res = getProps<Props>(props, keys, perms)
 
-  /* values */
+  const decimals = [0n, 1n]
+
   t.deepEquals(
-    res,
+    decimals.map((value) => getProps(value, meta)),
+    [
+      {
+        children: {
+
+          child__0: {},
+
+        },
+      },
+      {
+        children: {
+
+          child__0: {},
+          child2__0: {},
+
+        },
+      },
+    ],
+    'should return props'
+  )
+
+  t.end()
+})
+
+test('autoprops: getProps same child placed multiple times', (t) => {
+  const meta: TMetaFile = {
+    config: {
+      props: {},
+    },
+    childrenConfig: {
+      meta: {
+        child: {
+          config: {
+            props: {},
+          },
+          Component: () => null,
+        },
+      },
+      children: ['child', 'child'],
+    },
+    Component: () => null,
+  }
+
+  const decimals = [0n, 1n, 2n, 3n]
+
+  t.deepEquals(
+    decimals.map((value) => getProps(value, meta)),
     [
       {},
       {
-        a: true,
+        children: {
+          child__0: {},
+        },
       },
       {
-        b: true,
+        children: {
+          child__1: {},
+        },
       },
       {
-        a: true,
-        b: true,
+        children: {
+          child__0: {},
+          child__1: {},
+        },
       },
-      {
-        c: true,
-      },
-      {
-        a: true,
-        c: true,
-      },
-      {
-        b: true,
-        c: true,
-      },
-      {
-        a: true,
-        b: true,
-        c: true,
-      },
-    ]
-  )
-
-  t.end()
-})
-
-test('Get Props: should work with 10 values', (t) => {
-  const props = {
-    a: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  }
-  const keys = getKeys(props)
-  const perms = getPermutations(props, keys)
-
-  t.deepEquals(
-    getProps(props, keys, perms).length,
-    10
-  )
-
-  t.end()
-})
-
-test('Get Props: should work with more than 10 values', (t) => {
-  const props = {
-    a: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-  }
-  const keys = getKeys(props)
-  const perms = getPermutations(props, keys)
-
-  t.deepEquals(
-    getProps(props, keys, perms).length,
-    12
+    ],
+    'should return props'
   )
 
   t.end()
