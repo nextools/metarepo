@@ -26,7 +26,7 @@
     "@types/blue-tape": "^0.1.32",
     "@types/got": "^9.6.0",
     "blue-tape": "^1.0.0",
-    "mocku": "^0.5.0",
+    "mocku": "^0.6.0",
     "spyfn": "^0.2.0"
   }
 }
