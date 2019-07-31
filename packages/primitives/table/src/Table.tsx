@@ -34,6 +34,7 @@ export const Table = component(
       borderLeftWidth: `${borderLeftWidth}px`,
       borderRightWidth: `${borderRightWidth}px`,
       borderStyle,
+      tableLayout: 'fixed',
     }),
   }), ['borderTopWidth', 'borderLeftWidth', 'borderRightWidth', 'borderBottomWidth', 'borderStyle', 'borderColor', 'backgroundColor'])
 )(({ id, children, style }) => (
