@@ -309,7 +309,10 @@ export const test = (packageDir: string = '**') =>
     remove,
     find(`packages/${packageDir}/src/**/*.{ts,tsx}`),
     istanbulInstrument({ esModules: true }, ['.ts', '.tsx']),
-    find(`packages/${packageDir}/test/**/*.{ts,tsx}`),
+    find([
+      `packages/${packageDir}/test/**/*.{ts,tsx}`,
+      `!packages/${packageDir}/test/fixtures`,
+    ]),
     tape(tapDiff),
     istanbulReport(['lcovonly', 'html', 'text-summary'])
   )
