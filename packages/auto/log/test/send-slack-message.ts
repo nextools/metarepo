@@ -1,6 +1,6 @@
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { prefixes } from '@auto/utils/test/prefixes'
 import { TWorkspacesOptions } from '@auto/utils'
 import { TSlackOptions } from '../src/types'
@@ -23,7 +23,7 @@ const workspacesOptions: TWorkspacesOptions = {
 test('sendSlackMessage', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
-  mock('../src/send-slack-message', {
+  const unmock = mock('../src/send-slack-message', {
     'request-promise-native': {
       default: spy,
     },
@@ -109,13 +109,13 @@ test('sendSlackMessage', async (t) => {
     'should make request'
   )
 
-  unmock('../src/send-slack-message')
+  unmock()
 })
 
 test('sendSlackMessage: throws if there is no token', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
-  mock('../src/send-slack-message', {
+  const unmock = mock('../src/send-slack-message', {
     'request-promise-native': {
       default: spy,
     },
@@ -170,13 +170,13 @@ test('sendSlackMessage: throws if there is no token', async (t) => {
     t.equals(e.message, 'Slack token is required')
   }
 
-  unmock('../src/send-slack-message')
+  unmock()
 })
 
 test('sendSlackMessage', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
-  mock('../src/send-slack-message', {
+  const unmock = mock('../src/send-slack-message', {
     'request-promise-native': {
       default: spy,
     },
@@ -324,5 +324,5 @@ test('sendSlackMessage', async (t) => {
     'should make request'
   )
 
-  unmock('../src/send-slack-message')
+  unmock()
 })

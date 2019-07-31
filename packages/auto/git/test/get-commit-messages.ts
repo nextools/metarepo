@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createSpy, getSpyCalls } from 'spyfn'
 
 test('git:getCommitMessages', async (t) => {
@@ -7,7 +7,7 @@ test('git:getCommitMessages', async (t) => {
     stdout: 'second commit\nfirst commit',
   }))
 
-  mock('../src/get-commit-messages', {
+  const unmock = mock('../src/get-commit-messages', {
     execa: { default: execaSpy },
   })
 
@@ -27,5 +27,5 @@ test('git:getCommitMessages', async (t) => {
     'should spawn git with arguments'
   )
 
-  unmock('../src/get-commit-messages')
+  unmock()
 })

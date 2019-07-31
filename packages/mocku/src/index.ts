@@ -39,11 +39,11 @@ const isCacheRelated = (target: string, meta: Meta): boolean => {
   return false
 }
 
-const uncache = (fullPath: string) => {
+const uncache = (target: string) => {
   Object.keys(_Module._cache).forEach((key) => {
     const meta: Meta = _Module._cache[key]
 
-    if (isCacheRelated(fullPath, meta)) {
+    if (isCacheRelated(target, meta)) {
       Reflect.deleteProperty(_Module._cache, key)
     }
   })
@@ -52,7 +52,7 @@ const uncache = (fullPath: string) => {
 export const mock = (file: string, mocks: Mocks) => {
   const callerDir = path.dirname(getCallerFile())
   const targetPath = path.resolve(callerDir, file)
-  const fullPath: string = require.resolve(targetPath)
+  const fullPath = require.resolve(targetPath)
 
   uncache(fullPath)
   mocked.set(fullPath, mocks)
@@ -74,21 +74,27 @@ export const mock = (file: string, mocks: Mocks) => {
       return originalLoad(request, meta, ...rest)
     }
   }
-}
 
-export const unmock = (file: string) => {
-  const callerDir = path.dirname(getCallerFile())
-  const targetPath = path.resolve(callerDir, file)
-  const fullPath: string = require.resolve(targetPath)
+  return () => {
+    uncache(fullPath)
+    mocked.delete(fullPath)
 
-  uncache(fullPath)
-  mocked.delete(fullPath)
-
-  if (mocked.size === 0) {
-    _Module._load = originalLoad
+    if (mocked.size === 0) {
+      _Module._load = originalLoad
+    }
   }
 }
 
-export const deleteFromCache = (targetPath: string) => {
-  uncache(require.resolve(targetPath))
+export const deleteFromCache = (target: string) => {
+  if (path.isAbsolute(target)) {
+    uncache(target)
+  } else if (target.startsWith('.')) {
+    const callerDir = path.dirname(getCallerFile())
+    const targetPath = path.resolve(callerDir, target)
+    const fullPath = require.resolve(targetPath)
+
+    uncache(fullPath)
+  } else {
+    uncache(require.resolve(target))
+  }
 }

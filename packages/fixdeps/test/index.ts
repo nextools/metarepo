@@ -1,6 +1,6 @@
 /* eslint-disable no-sync */
 import test from 'blue-tape'
-import { mock, unmock, deleteFromCache } from 'mocku'
+import { mock, deleteFromCache } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
 import { createSpy, getSpyCalls } from 'spyfn'
 
@@ -42,11 +42,11 @@ test('fixdeps: all', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/index', {
+  const unmockIndex = mock('../src/index', {
     fs,
     'graceful-fs': fs,
   })
-  mock('../src/get-package-version', {
+  const unmockGetPackageVersion = mock('../src/get-package-version', {
     './get-local-package-version-yarn': {
       getLocalPackageVersionYarn: () => '1.0.0',
     },
@@ -111,8 +111,8 @@ test('fixdeps: all', async (t) => {
     'should return result'
   )
 
-  unmock('../src/index')
-  unmock('../src/get-package-version')
+  unmockIndex()
+  unmockGetPackageVersion()
 })
 
 test('fixdeps: remove empty dependencies objects', async (t) => {
@@ -136,11 +136,11 @@ test('fixdeps: remove empty dependencies objects', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/index', {
+  const unmockIndex = mock('../src/index', {
     fs,
     'graceful-fs': fs,
   })
-  mock('../src/get-package-version', {
+  const unmockGetPackageVersion = mock('../src/get-package-version', {
     './get-local-package-version-yarn': {
       getLocalPackageVersionYarn: () => '1.0.0',
     },
@@ -165,8 +165,8 @@ test('fixdeps: remove empty dependencies objects', async (t) => {
     }
   )
 
-  unmock('../src/index')
-  unmock('../src/get-package-version')
+  unmockIndex()
+  unmockGetPackageVersion()
 })
 
 test('fixdeps: nothing to do', async (t) => {
@@ -190,11 +190,11 @@ test('fixdeps: nothing to do', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/index', {
+  const unmockIndex = mock('../src/index', {
     fs,
     'graceful-fs': fs,
   })
-  mock('../src/get-package-version', {
+  const unmockGetPackageVersion = mock('../src/get-package-version', {
     './get-local-package-version-yarn': {
       getLocalPackageVersionYarn: () => '1.0.0',
     },
@@ -231,8 +231,8 @@ test('fixdeps: nothing to do', async (t) => {
     'return null if nothing to do'
   )
 
-  unmock('../src/index')
-  unmock('../src/get-package-version')
+  unmockIndex()
+  unmockGetPackageVersion()
 })
 
 test('fixdeps: create dependencies objects if was missing', async (t) => {
@@ -247,11 +247,11 @@ test('fixdeps: create dependencies objects if was missing', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/index', {
+  const unmockIndex = mock('../src/index', {
     fs,
     'graceful-fs': fs,
   })
-  mock('../src/get-package-version', {
+  const unmockGetPackageVersion = mock('../src/get-package-version', {
     './get-local-package-version-yarn': {
       getLocalPackageVersionYarn: () => '1.0.0',
     },
@@ -279,8 +279,8 @@ test('fixdeps: create dependencies objects if was missing', async (t) => {
     }
   )
 
-  unmock('../src/index')
-  unmock('../src/get-package-version')
+  unmockIndex()
+  unmockGetPackageVersion()
 })
 
 test('fixdeps: get remote version with npm', async (t) => {
@@ -299,11 +299,11 @@ test('fixdeps: get remote version with npm', async (t) => {
   const fs = createFsFromVolume(vol)
   const spy = createSpy(() => '1.0.0')
 
-  mock('../src/index', {
+  const unmockIndex = mock('../src/index', {
     fs,
     'graceful-fs': fs,
   })
-  mock('../src/get-package-version', {
+  const unmockGetPackageVersion = mock('../src/get-package-version', {
     './get-local-package-version-yarn': {
       getLocalPackageVersionYarn: () => null,
     },
@@ -345,6 +345,6 @@ test('fixdeps: get remote version with npm', async (t) => {
     'should call npm once'
   )
 
-  unmock('../src/index')
-  unmock('../src/get-package-version')
+  unmockIndex()
+  unmockGetPackageVersion()
 })

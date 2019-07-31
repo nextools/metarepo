@@ -1,6 +1,6 @@
 import { resolve } from 'path'
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createSpy, getSpyCalls } from 'spyfn'
 
 test('cli: export', async (t) => {
@@ -29,7 +29,7 @@ test('cli: throw without reporter', async (t) => {
 })
 
 test('cli: throw without task name', async (t) => {
-  mock('../src/lib', {
+  const unmock = mock('../src/lib', {
     preset: {
       a: 1,
       b: 2,
@@ -51,12 +51,12 @@ test('cli: throw without task name', async (t) => {
       'should throw'
     )
 
-    unmock('../src/lib')
+    unmock()
   })
 })
 
 test('cli: throw with unknown task name', async (t) => {
-  mock('../src/lib', {
+  const unmock = mock('../src/lib', {
     preset: {
       a: 1,
       b: 2,
@@ -78,7 +78,7 @@ test('cli: throw with unknown task name', async (t) => {
       'should throw'
     )
 
-    unmock('../src/lib')
+    unmock()
   })
 })
 
@@ -86,7 +86,8 @@ test('cli: default file', async (t) => {
   const taskRunnerSpy = createSpy(() => () => {})
   const taskSpy = createSpy(() => taskRunnerSpy)
   const reporterSpy = createSpy(() => 'reporter')
-  mock('../src/lib', {
+
+  const unmock = mock('../src/lib', {
     [resolve('./tasks')]: {
       task: taskSpy,
     },
@@ -122,14 +123,15 @@ test('cli: default file', async (t) => {
     'should call reporter with task name'
   )
 
-  unmock('../src/lib')
+  unmock()
 })
 
 test('cli: custom file', async (t) => {
   const taskRunnerSpy = createSpy(() => () => {})
   const taskSpy = createSpy(() => taskRunnerSpy)
   const reporterSpy = createSpy(() => 'reporter')
-  mock('../src/lib', {
+
+  const unmock = mock('../src/lib', {
     [resolve('./my-tasks')]: {
       task: taskSpy,
     },
@@ -166,14 +168,15 @@ test('cli: custom file', async (t) => {
     'should call reporter with task name'
   )
 
-  unmock('../src/lib')
+  unmock()
 })
 
 test('cli: preset', async (t) => {
   const taskRunnerSpy = createSpy(() => () => {})
   const taskSpy = createSpy(() => taskRunnerSpy)
   const reporterSpy = createSpy(() => 'reporter')
-  mock('../src/lib', {
+
+  const unmock = mock('../src/lib', {
     preset: {
       task: taskSpy,
     },
@@ -210,5 +213,5 @@ test('cli: preset', async (t) => {
     'should call reporter with task name'
   )
 
-  unmock('../src/lib')
+  unmock()
 })

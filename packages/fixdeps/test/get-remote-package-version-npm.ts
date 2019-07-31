@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createSpy, getSpyCalls } from 'spyfn'
 
 test('fixdeps: getRemotePackageVersionNpm result', async (t) => {
@@ -7,7 +7,7 @@ test('fixdeps: getRemotePackageVersionNpm result', async (t) => {
     stdout: '1.0.0',
   }))
 
-  mock('../src/get-remote-package-version-npm', {
+  const unmock = mock('../src/get-remote-package-version-npm', {
     execa: { default: spy },
   })
 
@@ -27,7 +27,7 @@ test('fixdeps: getRemotePackageVersionNpm result', async (t) => {
     'should call npm with arguments'
   )
 
-  unmock('../src/get-remote-package-version-npm')
+  unmock()
 })
 
 test('fixdeps: getRemotePackageVersionNpm no result', async (t) => {
@@ -35,7 +35,7 @@ test('fixdeps: getRemotePackageVersionNpm no result', async (t) => {
     stdout: '',
   }))
 
-  mock('../src/get-remote-package-version-npm', {
+  const unmock = mock('../src/get-remote-package-version-npm', {
     execa: { default: spy },
   })
 
@@ -52,5 +52,5 @@ test('fixdeps: getRemotePackageVersionNpm no result', async (t) => {
     )
   }
 
-  unmock('../src/get-remote-package-version-npm')
+  unmock()
 })

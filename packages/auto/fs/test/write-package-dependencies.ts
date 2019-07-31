@@ -1,6 +1,6 @@
 /* eslint-disable no-sync */
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
 
 const rootDir = process.cwd()
@@ -14,7 +14,7 @@ test('fs:writePackageDependencies: ignore version bump', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/write-package-dependencies', {
+  const unmock = mock('../src/write-package-dependencies', {
     'graceful-fs': fs,
   })
 
@@ -41,7 +41,7 @@ test('fs:writePackageDependencies: ignore version bump', async (t) => {
     'should ignore version'
   )
 
-  unmock('../src/write-package-dependencies')
+  unmock()
 })
 
 test('fs:writePackageDependencies: multiple dependencies bump', async (t) => {
@@ -57,7 +57,7 @@ test('fs:writePackageDependencies: multiple dependencies bump', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/write-package-dependencies', {
+  const unmock = mock('../src/write-package-dependencies', {
     'graceful-fs': fs,
   })
 
@@ -91,7 +91,7 @@ test('fs:writePackageDependencies: multiple dependencies bump', async (t) => {
     'should write bumps, and ignore version'
   )
 
-  unmock('../src/write-package-dependencies')
+  unmock()
 })
 
 test('fs:writePackageDependencies: multiple dev dependencies bump', async (t) => {
@@ -107,7 +107,7 @@ test('fs:writePackageDependencies: multiple dev dependencies bump', async (t) =>
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/write-package-dependencies', {
+  const unmock = mock('../src/write-package-dependencies', {
     'graceful-fs': fs,
   })
 
@@ -141,5 +141,5 @@ test('fs:writePackageDependencies: multiple dev dependencies bump', async (t) =>
     'should write bumps, and ignore version'
   )
 
-  unmock('../src/write-package-dependencies')
+  unmock()
 })

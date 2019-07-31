@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createSpy, getSpyCalls } from 'spyfn'
 
 test('fixdeps: getLocalPackageVersionYarn result', async (t) => {
@@ -7,7 +7,7 @@ test('fixdeps: getLocalPackageVersionYarn result', async (t) => {
     stdout: ' pkg@1.0.0',
   }))
 
-  mock('../src/get-local-package-version-yarn', {
+  const unmock = mock('../src/get-local-package-version-yarn', {
     execa: { default: spy },
   })
 
@@ -27,7 +27,7 @@ test('fixdeps: getLocalPackageVersionYarn result', async (t) => {
     'should call yarn with arguments'
   )
 
-  unmock('../src/get-local-package-version-yarn')
+  unmock()
 })
 
 test('fixdeps: getLocalPackageVersionYarn more than one version', async (t) => {
@@ -35,7 +35,7 @@ test('fixdeps: getLocalPackageVersionYarn more than one version', async (t) => {
     stdout: ' pkg@1.0.0\n pkg@2.0.0',
   }))
 
-  mock('../src/get-local-package-version-yarn', {
+  const unmock = mock('../src/get-local-package-version-yarn', {
     execa: { default: spy },
   })
 
@@ -52,7 +52,7 @@ test('fixdeps: getLocalPackageVersionYarn more than one version', async (t) => {
     )
   }
 
-  unmock('../src/get-local-package-version-yarn')
+  unmock()
 })
 
 test('fixdeps: getLocalPackageVersionYarn no result', async (t) => {
@@ -60,7 +60,7 @@ test('fixdeps: getLocalPackageVersionYarn no result', async (t) => {
     stdout: '',
   }))
 
-  mock('../src/get-local-package-version-yarn', {
+  const unmock = mock('../src/get-local-package-version-yarn', {
     execa: { default: spy },
   })
 
@@ -74,5 +74,5 @@ test('fixdeps: getLocalPackageVersionYarn no result', async (t) => {
     'should return null'
   )
 
-  unmock('../src/get-local-package-version-yarn')
+  unmock()
 })

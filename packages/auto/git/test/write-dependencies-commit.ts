@@ -1,12 +1,12 @@
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { prefixes } from '@auto/utils/test/prefixes'
 
 test('git:writeDependenciesCommit: no dependencies', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/write-dependencies-commit', {
+  const unmock = mock('../src/write-dependencies-commit', {
     execa: { default: execaSpy },
   })
 
@@ -30,13 +30,13 @@ test('git:writeDependenciesCommit: no dependencies', async (t) => {
     'empty array'
   )
 
-  unmock('../src/write-dependencies-commit')
+  unmock()
 })
 
 test('git:writeDependenciesCommit: single dependency', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/write-dependencies-commit', {
+  const unmock = mock('../src/write-dependencies-commit', {
     execa: { default: execaSpy },
   })
 
@@ -72,13 +72,13 @@ test('git:writeDependenciesCommit: single dependency', async (t) => {
     'single commit'
   )
 
-  unmock('../src/write-dependencies-commit')
+  unmock()
 })
 
 test('git:writeDependenciesCommit: single dev dependency', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/write-dependencies-commit', {
+  const unmock = mock('../src/write-dependencies-commit', {
     execa: { default: execaSpy },
   })
 
@@ -114,13 +114,13 @@ test('git:writeDependenciesCommit: single dev dependency', async (t) => {
     'single commit'
   )
 
-  unmock('../src/write-dependencies-commit')
+  unmock()
 })
 
 test('git:writeDependenciesCommit: multiple packages', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/write-dependencies-commit', {
+  const unmock = mock('../src/write-dependencies-commit', {
     execa: { default: execaSpy },
   })
 
@@ -173,5 +173,5 @@ test('git:writeDependenciesCommit: multiple packages', async (t) => {
     'multiple packages'
   )
 
-  unmock('../src/write-dependencies-commit')
+  unmock()
 })

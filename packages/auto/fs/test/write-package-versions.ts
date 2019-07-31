@@ -1,6 +1,6 @@
 /* eslint-disable no-sync */
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
 
 const rootDir = process.cwd()
@@ -14,7 +14,7 @@ test('fs:writePackageVersion: single version bump', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/write-package-versions', {
+  const unmock = mock('../src/write-package-versions', {
     'graceful-fs': fs,
   })
 
@@ -41,7 +41,7 @@ test('fs:writePackageVersion: single version bump', async (t) => {
     'should write bumps'
   )
 
-  unmock('../src/write-package-versions')
+  unmock()
 })
 
 test('fs:writePackageVersion: ignore dependencies', async (t) => {
@@ -57,7 +57,7 @@ test('fs:writePackageVersion: ignore dependencies', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/write-package-versions', {
+  const unmock = mock('../src/write-package-versions', {
     'graceful-fs': fs,
   })
 
@@ -91,7 +91,7 @@ test('fs:writePackageVersion: ignore dependencies', async (t) => {
     'should write version, and skip dependencies'
   )
 
-  unmock('../src/write-package-versions')
+  unmock()
 })
 
 test('fs:writePackageVersion: ignore devDependencies', async (t) => {
@@ -107,7 +107,7 @@ test('fs:writePackageVersion: ignore devDependencies', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/write-package-versions', {
+  const unmock = mock('../src/write-package-versions', {
     'graceful-fs': fs,
   })
 
@@ -141,7 +141,7 @@ test('fs:writePackageVersion: ignore devDependencies', async (t) => {
     'should write version, and skip devDependencies'
   )
 
-  unmock('../src/write-package-versions')
+  unmock()
 })
 
 test('fs:writePackageVersion: no version bump', async (t) => {
@@ -153,7 +153,7 @@ test('fs:writePackageVersion: no version bump', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/write-package-versions', {
+  const unmock = mock('../src/write-package-versions', {
     'graceful-fs': fs,
   })
 
@@ -180,5 +180,5 @@ test('fs:writePackageVersion: no version bump', async (t) => {
     'should not write version'
   )
 
-  unmock('../src/write-package-versions')
+  unmock()
 })

@@ -1,12 +1,12 @@
 import Module from 'module'
 import test from 'blue-tape'
-import { mock, unmock, deleteFromCache } from '../src'
+import { mock, deleteFromCache } from '../src'
 
 const _Module: any = Module
 const originalLoad = _Module._load
 
-test('mocku: Module: hook', (t) => {
-  mock('./fixtures/scoped/file', {
+test('mocku: `Module.load()` hook', (t) => {
+  const unmock1 = mock('./fixtures/scoped/file', {
     './file2': {
       default: 'mock1',
     },
@@ -14,7 +14,7 @@ test('mocku: Module: hook', (t) => {
 
   const mockedLoad = _Module._load
 
-  mock('./fixtures/scoped/file3', {
+  const unmock2 = mock('./fixtures/scoped/file3', {
     './file2': {
       default: 'mock2',
     },
@@ -23,68 +23,62 @@ test('mocku: Module: hook', (t) => {
   t.notEqual(
     originalLoad,
     _Module._load,
-    'Module._load should be hooked'
+    'should be hooked'
   )
 
   t.equal(
     mockedLoad,
     _Module._load,
-    'Module._load should be hooked only once'
+    'should be hooked only once'
   )
 
-  t.end()
-})
-
-test('mocku: Module: unhook', (t) => {
-  unmock('./fixtures/scoped/file')
+  unmock1()
 
   t.notEqual(
     originalLoad,
     _Module._load,
-    'Module._load should be still hooked after first unmock'
+    'should be still hooked after first unmock'
   )
 
-  unmock('./fixtures/scoped/file3')
+  unmock2()
 
   t.equal(
     originalLoad,
     _Module._load,
-    'Module._load should be unhooked if there are no mocks'
+    'should be unhooked if there are no mocks'
   )
 
   t.end()
 })
 
-test('mocku: scoped file: mock', async (t) => {
-  mock('./fixtures/scoped/file', {
+test('mocku: scoped file', async (t) => {
+  const unmock = mock('./fixtures/scoped/file', {
     './file2': {
       default: 'mock',
     },
   })
 
-  const { default: result } = await import('./fixtures/scoped/file')
+  const { default: result1 } = await import('./fixtures/scoped/file')
 
   t.deepEqual(
-    result,
+    result1,
     'mock',
     'should mock'
   )
-})
 
-test('mocku: scoped file: unmock', async (t) => {
-  unmock('./fixtures/scoped/file')
+  unmock()
 
-  const { default: result } = await import('./fixtures/scoped/file')
+  const { default: result2 } = await import('./fixtures/scoped/file')
 
   t.deepEqual(
-    result,
+    result2,
     'file2',
     'should unmock'
   )
 })
 
 test('mocku: not scoped file: mock', async (t) => {
-  mock('./fixtures/scoped/file', {
+  const unmock = mock('./fixtures/scoped/file', {
     './file2': {
       default: 'mock',
     },
@@ -98,11 +92,11 @@ test('mocku: not scoped file: mock', async (t) => {
     'should not mock'
   )
 
-  unmock('./fixtures/scoped/file')
+  unmock()
 })
 
-test('mocku: modules: mock', async (t) => {
-  mock('./fixtures/modules/file', {
+test('mocku: modules', async (t) => {
+  const unmock = mock('./fixtures/modules/file', {
     fs: {
       readFile: 'readFile',
     },
@@ -111,51 +105,74 @@ test('mocku: modules: mock', async (t) => {
     },
   })
 
-  const { readFile, transform } = await import('./fixtures/modules/file')
+  const result1 = await import('./fixtures/modules/file')
 
   t.equal(
-    readFile,
+    result1.readFile,
     'readFile',
     'should mock builtin module'
   )
 
   t.equal(
-    transform,
+    result1.transform,
     'babel',
     'should mock external module'
   )
-})
 
-test('mocku: modules: unmock', async (t) => {
-  unmock('./fixtures/modules/file')
+  unmock()
 
-  const { readFile, transform } = await import('./fixtures/modules/file')
+  const result2 = await import('./fixtures/modules/file')
 
   t.equal(
-    typeof readFile,
+    typeof result2.readFile,
     'function',
     'should unmock builtin module'
   )
 
   t.equal(
-    typeof transform,
+    typeof result2.transform,
     'function',
     'should unmock external module'
   )
 })
 
-test('mocku: modules: deleteFromCache', (t) => {
-  t.true(
-    Reflect.has(_Module._cache, require.resolve('blue-tape')),
-    'check for cache'
+test('mocku: modules: deleteFromCache', async (t) => {
+  await import('./fixtures/file')
+
+  const absolutePath = require.resolve('./fixtures/file')
+
+  if (!Reflect.has(_Module._cache, absolutePath)) {
+    t.fail('should not get there')
+  }
+
+  deleteFromCache(absolutePath)
+
+  t.false(
+    Reflect.has(_Module._cache, absolutePath),
+    'should delete absolute path target from cache'
   )
+
+  await import('./fixtures/file')
+
+  if (!Reflect.has(_Module._cache, absolutePath)) {
+    t.fail('should not get there')
+  }
+
+  deleteFromCache('./fixtures/file')
+
+  t.false(
+    Reflect.has(_Module._cache, absolutePath),
+    'should delete absolute path target from cache'
+  )
+
+  if (!Reflect.has(_Module._cache, require.resolve('blue-tape'))) {
+    t.fail('should not get there')
+  }
 
   deleteFromCache('blue-tape')
 
   t.false(
     Reflect.has(_Module._cache, require.resolve('blue-tape')),
-    'should delete from cache'
+    'should delete module name target from cache'
   )
-
-  t.end()
 })

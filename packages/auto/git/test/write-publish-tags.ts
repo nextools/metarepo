@@ -1,11 +1,11 @@
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createSpy, getSpyCalls } from 'spyfn'
 
 test('git:writePublishTag: multiple tags', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/write-publish-tags', {
+  const unmock = mock('../src/write-publish-tags', {
     execa: { default: execaSpy },
   })
 
@@ -39,13 +39,13 @@ test('git:writePublishTag: multiple tags', async (t) => {
     'multiple tags'
   )
 
-  unmock('../src/write-publish-tags')
+  unmock()
 })
 
 test('git:writePublishTag: no tags', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/write-publish-tags', {
+  const unmock = mock('../src/write-publish-tags', {
     execa: { default: execaSpy },
   })
 
@@ -76,5 +76,5 @@ test('git:writePublishTag: no tags', async (t) => {
     'no tags'
   )
 
-  unmock('../src/write-publish-tags')
+  unmock()
 })

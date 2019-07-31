@@ -1,11 +1,11 @@
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 
 test('npm:publishPackage, default', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/publish-package', {
+  const unmock = mock('../src/publish-package', {
     execa: { default: execaSpy },
     '@auto/fs': {
       getPackage: () => Promise.resolve({
@@ -36,13 +36,13 @@ test('npm:publishPackage, default', async (t) => {
     'should spawn NPM with necessary arguments'
   )
 
-  unmock('../src/publish-package')
+  unmock()
 })
 
 test('npm:publishPackage, with relative directory', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/publish-package', {
+  const unmock = mock('../src/publish-package', {
     execa: { default: execaSpy },
     '@auto/fs': {
       getPackage: () => Promise.resolve({
@@ -76,13 +76,13 @@ test('npm:publishPackage, with relative directory', async (t) => {
     'should spawn NPM with necessary arguments'
   )
 
-  unmock('../src/publish-package')
+  unmock()
 })
 
 test('npm:publishPackage, user provided registry', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/publish-package', {
+  const unmock = mock('../src/publish-package', {
     execa: { default: execaSpy },
     '@auto/fs': {
       getPackage: () => Promise.resolve({
@@ -116,13 +116,13 @@ test('npm:publishPackage, user provided registry', async (t) => {
     'should spawn NPM with necessary arguments'
   )
 
-  unmock('../src/publish-package')
+  unmock()
 })
 
 test('npm:publishPackage, packageJson registry', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/publish-package', {
+  const unmock = mock('../src/publish-package', {
     execa: { default: execaSpy },
     '@auto/fs': {
       getPackage: () => Promise.resolve({
@@ -156,13 +156,13 @@ test('npm:publishPackage, packageJson registry', async (t) => {
     'should spawn NPM with necessary arguments'
   )
 
-  unmock('../src/publish-package')
+  unmock()
 })
 
 test('npm:publishPackage, priority test', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/publish-package', {
+  const unmock = mock('../src/publish-package', {
     execa: { default: execaSpy },
     '@auto/fs': {
       getPackage: () => Promise.resolve({
@@ -199,13 +199,13 @@ test('npm:publishPackage, priority test', async (t) => {
     'should spawn NPM with necessary arguments'
   )
 
-  unmock('../src/publish-package')
+  unmock()
 })
 
 test('npm:publishPackage, user provided access', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/publish-package', {
+  const unmock = mock('../src/publish-package', {
     execa: { default: execaSpy },
     '@auto/fs': {
       getPackage: () => Promise.resolve({
@@ -239,5 +239,5 @@ test('npm:publishPackage, user provided access', async (t) => {
     'should spawn NPM with necessary arguments'
   )
 
-  unmock('../src/publish-package')
+  unmock()
 })

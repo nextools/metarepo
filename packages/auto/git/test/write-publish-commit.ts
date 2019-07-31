@@ -1,12 +1,12 @@
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { prefixes } from '@auto/utils/test/prefixes'
 
 test('git:writePublishCommit: single package', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/write-publish-commit', {
+  const unmock = mock('../src/write-publish-commit', {
     execa: { default: execaSpy },
   })
 
@@ -48,13 +48,13 @@ test('git:writePublishCommit: single package', async (t) => {
     'single package'
   )
 
-  unmock('../src/write-publish-commit')
+  unmock()
 })
 
 test('git:writePublishCommit: multiple packages', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/write-publish-commit', {
+  const unmock = mock('../src/write-publish-commit', {
     execa: { default: execaSpy },
   })
 
@@ -105,13 +105,13 @@ test('git:writePublishCommit: multiple packages', async (t) => {
     'multiple packages'
   )
 
-  unmock('../src/write-publish-commit')
+  unmock()
 })
 
 test('git:writePublishCommit: no packages to publish', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/write-publish-commit', {
+  const unmock = mock('../src/write-publish-commit', {
     execa: { default: execaSpy },
   })
 
@@ -138,5 +138,5 @@ test('git:writePublishCommit: no packages to publish', async (t) => {
     'no packages to publish'
   )
 
-  unmock('../src/write-publish-commit')
+  unmock()
 })

@@ -1,6 +1,6 @@
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { prefixes } from '@auto/utils/test/prefixes'
 import { TWorkspacesOptions } from '@auto/utils'
 import { TGithubOptions } from '../src/types'
@@ -17,7 +17,7 @@ const workspacesOptions: TWorkspacesOptions = {
 test('makeGithubReleases', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
-  mock('../src/make-github-releases', {
+  const unmock = mock('../src/make-github-releases', {
     'request-promise-native': {
       default: spy,
     },
@@ -98,13 +98,13 @@ test('makeGithubReleases', async (t) => {
     'should make request'
   )
 
-  unmock('../src/make-github-releases')
+  unmock()
 })
 
 test('makeGithubReleases: throws if there is no token', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
-  mock('../src/make-github-releases', {
+  const unmock = mock('../src/make-github-releases', {
     'request-promise-native': {
       default: spy,
     },
@@ -159,5 +159,5 @@ test('makeGithubReleases: throws if there is no token', async (t) => {
     t.equals(e.message, 'GitHub token is required')
   }
 
-  unmock('../src/make-github-releases')
+  unmock()
 })
