@@ -1,3 +1,7 @@
+## v0.7.3
+
+* 🐞 skip `fixtures/` folder in `test` task
+
 ## v0.7.2
 
 * 🐞 cleanup and fix deps
