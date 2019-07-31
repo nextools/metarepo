@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import { mock, unmock, deleteFromCache } from 'mocku'
+import { mock, deleteFromCache } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
 
 const rootDir = process.cwd()
@@ -24,7 +24,7 @@ test('fs:getPackages workspaces[]', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/get-packages', {
+  const unmock = mock('../src/get-packages', {
     fs,
     'graceful-fs': fs,
   })
@@ -59,5 +59,5 @@ test('fs:getPackages workspaces[]', async (t) => {
     'should return packages'
   )
 
-  unmock('../src/get-packages')
+  unmock()
 })

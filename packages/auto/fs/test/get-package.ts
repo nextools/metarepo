@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
 
 const rootDir = process.cwd()
@@ -12,7 +12,7 @@ const vol = Volume.fromJSON({
 const fs = createFsFromVolume(vol)
 
 test('fs:getPackage', async (t) => {
-  mock('../src/get-package', {
+  const unmock = mock('../src/get-package', {
     'graceful-fs': fs,
   })
 
@@ -26,5 +26,5 @@ test('fs:getPackage', async (t) => {
     'should get package content'
   )
 
-  unmock('../src/get-package')
+  unmock()
 })

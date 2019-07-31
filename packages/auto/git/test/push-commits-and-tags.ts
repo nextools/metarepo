@@ -1,11 +1,11 @@
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createSpy, getSpyCalls } from 'spyfn'
 
 test('git:pushCommitsAndTags', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  mock('../src/push-commits-and-tags', {
+  const unmock = mock('../src/push-commits-and-tags', {
     execa: { default: execaSpy },
   })
 
@@ -21,5 +21,5 @@ test('git:pushCommitsAndTags', async (t) => {
     'should push'
   )
 
-  unmock('../src/push-commits-and-tags')
+  unmock()
 })

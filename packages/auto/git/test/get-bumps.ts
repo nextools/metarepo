@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { TGitBump, TPackages } from '@auto/utils/src/types'
 import { prefixes } from '@auto/utils/test/prefixes'
 import { TGitOptions } from '../src/types'
@@ -33,7 +33,7 @@ const packages: TPackages = {
 }
 
 test('git:getBumps single package', async (t) => {
-  mock('../src/get-bumps', {
+  const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.patch.value} foo: patch 2`,
@@ -62,11 +62,11 @@ test('git:getBumps single package', async (t) => {
     'bump as patch + patch'
   )
 
-  unmock('../src/get-bumps')
+  unmock()
 })
 
 test('git:getBumps single package', async (t) => {
-  mock('../src/get-bumps', {
+  const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.minor.value} foo: minor`,
@@ -95,11 +95,11 @@ test('git:getBumps single package', async (t) => {
     'bump as patch + minor'
   )
 
-  unmock('../src/get-bumps')
+  unmock()
 })
 
 test('git:getBumps single package', async (t) => {
-  mock('../src/get-bumps', {
+  const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.patch.value} foo: patch`,
@@ -128,11 +128,11 @@ test('git:getBumps single package', async (t) => {
     'bump as minor + patch'
   )
 
-  unmock('../src/get-bumps')
+  unmock()
 })
 
 test('git:getBumps single package', async (t) => {
-  mock('../src/get-bumps', {
+  const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.major.value} foo: major`,
@@ -165,11 +165,11 @@ test('git:getBumps single package', async (t) => {
     'bump as patch + minor + major'
   )
 
-  unmock('../src/get-bumps')
+  unmock()
 })
 
 test('git:getBumps single package', async (t) => {
-  mock('../src/get-bumps', {
+  const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.minor.value} foo: minor`,
@@ -203,11 +203,11 @@ test('git:getBumps single package', async (t) => {
     'bump as patch + major + minor'
   )
 
-  unmock('../src/get-bumps')
+  unmock()
 })
 
 test('git:getBumps single package', async (t) => {
-  mock('../src/get-bumps', {
+  const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.minor.value} foo: minor`,
@@ -240,11 +240,11 @@ test('git:getBumps single package', async (t) => {
     'bump as major + patch + minor'
   )
 
-  unmock('../src/get-bumps')
+  unmock()
 })
 
 test('git:getBumps multiple packages', async (t) => {
-  mock('../src/get-bumps', {
+  const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.patch.value} foo: patch`,
@@ -281,11 +281,11 @@ test('git:getBumps multiple packages', async (t) => {
     'bump as patch && patch'
   )
 
-  unmock('../src/get-bumps')
+  unmock()
 })
 
 test('git:getBumps multiple packages in one commit', async (t) => {
-  mock('../src/get-bumps', {
+  const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.patch.value} foo: patch`,
@@ -324,11 +324,11 @@ test('git:getBumps multiple packages in one commit', async (t) => {
     'bump as major && patch'
   )
 
-  unmock('../src/get-bumps')
+  unmock()
 })
 
 test('git:getBumps star symbol', async (t) => {
-  mock('../src/get-bumps', {
+  const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.minor.value} *: minor`,
@@ -381,11 +381,11 @@ test('git:getBumps star symbol', async (t) => {
     'bump as minor && minor'
   )
 
-  unmock('../src/get-bumps')
+  unmock()
 })
 
 test('git:getBumps string + star symbol', async (t) => {
-  mock('../src/get-bumps', {
+  const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.minor.value} ba*: minor`,
@@ -429,11 +429,11 @@ test('git:getBumps string + star symbol', async (t) => {
     'bump as minor && minor'
   )
 
-  unmock('../src/get-bumps')
+  unmock()
 })
 
 test('git:getBumps skipped commits', async (t) => {
-  mock('../src/get-bumps', {
+  const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.minor.value} foo: minor`,
@@ -466,11 +466,11 @@ test('git:getBumps skipped commits', async (t) => {
     'skip invalid commit messages'
   )
 
-  unmock('../src/get-bumps')
+  unmock()
 })
 
 test('git:getBumps multiple packages initial', async (t) => {
-  mock('../src/get-bumps', {
+  const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.patch.value} foo: patch`,
@@ -515,5 +515,5 @@ test('git:getBumps multiple packages initial', async (t) => {
     'bump as patch && patch'
   )
 
-  unmock('../src/get-bumps')
+  unmock()
 })

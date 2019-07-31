@@ -1,12 +1,12 @@
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 
 test('codecov-lite', async (t) => {
   const postSpy = createSpy(() => Promise.resolve({ body: 'reportURL\nputURL' }))
   const putSpy = createSpy(() => {})
 
-  mock('../src/index', {
+  const unmock = mock('../src/index', {
     got: {
       default: {
         post: postSpy,
@@ -72,5 +72,5 @@ test('codecov-lite', async (t) => {
     'should return result object'
   )
 
-  unmock('../src/index')
+  unmock()
 })

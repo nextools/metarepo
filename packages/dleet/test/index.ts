@@ -1,7 +1,7 @@
 /* eslint-disable no-sync */
 import test from 'blue-tape'
 import { createFsFromVolume, Volume } from 'memfs'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createSpy, getSpyCalls } from 'spyfn'
 
 class CustomError extends Error {
@@ -26,7 +26,7 @@ test('dleet: delete directory with subdirectories, files and symlinks', async (t
 
   fs.symlinkSync('/test/foo/2.md', '/test/symlink')
 
-  mock('../src/', { fs })
+  const unmock = mock('../src/', { fs })
 
   const { default: dleet } = await import('../src')
 
@@ -38,7 +38,7 @@ test('dleet: delete directory with subdirectories, files and symlinks', async (t
     'should wipe everything'
   )
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -46,7 +46,7 @@ test('dleet: error: ENOENT + win32', async (t) => {
   const vol = Volume.fromJSON({})
   const fs = createFsFromVolume(vol)
 
-  mock('../src/', { fs })
+  const unmock = mock('../src/', { fs })
 
   const { default: dleet } = await import('../src')
 
@@ -58,7 +58,7 @@ test('dleet: error: ENOENT + win32', async (t) => {
     'should ignore it'
   )
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -67,7 +67,7 @@ test('dleet: error: ENOENT + not win32', async (t) => {
   const vol = Volume.fromJSON({})
   const fs = createFsFromVolume(vol)
 
-  mock('../src/', { fs })
+  const unmock = mock('../src/', { fs })
 
   const { default: dleet } = await import('../src')
 
@@ -87,7 +87,7 @@ test('dleet: error: ENOENT + not win32', async (t) => {
     value: originalPlatform,
   })
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -106,7 +106,7 @@ test('dleet: error: EBUSY + win32 + 1 retry', async (t) => {
   })
   const delaySpy = createSpy(() => Promise.resolve())
 
-  mock('../src/', {
+  const unmock = mock('../src/', {
     fs: {
       ...fs,
       lstat: lstatSpy,
@@ -146,7 +146,7 @@ test('dleet: error: EBUSY + win32 + 1 retry', async (t) => {
     value: originalPlatform,
   })
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -165,7 +165,7 @@ test('dleet: error: EBUSY + win32 + 2 retries', async (t) => {
   })
   const delaySpy = createSpy(() => Promise.resolve())
 
-  mock('../src/', {
+  const unmock = mock('../src/', {
     fs: {
       ...fs,
       lstat: lstatSpy,
@@ -205,7 +205,7 @@ test('dleet: error: EBUSY + win32 + 2 retries', async (t) => {
     value: originalPlatform,
   })
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -219,7 +219,7 @@ test('dleet: error: EBUSY + win32 + 3 retries', async (t) => {
     throw new CustomError({ code: 'EBUSY' })
   })
 
-  mock('../src/', {
+  const unmock = mock('../src/', {
     fs: {
       ...fs,
       lstat: lstatSpy,
@@ -252,7 +252,7 @@ test('dleet: error: EBUSY + win32 + 3 retries', async (t) => {
     value: originalPlatform,
   })
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -265,7 +265,7 @@ test('dleet: error: EBUSY + not win32', async (t) => {
     throw new CustomError({ code: 'EBUSY' })
   })
 
-  mock('../src/', {
+  const unmock = mock('../src/', {
     fs: {
       ...fs,
       lstat: lstatSpy,
@@ -290,7 +290,7 @@ test('dleet: error: EBUSY + not win32', async (t) => {
     )
   }
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -311,7 +311,7 @@ test('dleet: error: EPERM + win32 + fix + fixed', async (t) => {
     args[2](null)
   })
 
-  mock('../src/', {
+  const unmock = mock('../src/', {
     fs: {
       ...fs,
       chmod: chmodSpy,
@@ -349,7 +349,7 @@ test('dleet: error: EPERM + win32 + fix + fixed', async (t) => {
     value: originalPlatform,
   })
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -363,7 +363,7 @@ test('dleet: error: EPERM + win32 + fix + not fixed', async (t) => {
     throw new CustomError({ code: 'EPERM' })
   })
 
-  mock('../src/', {
+  const unmock = mock('../src/', {
     fs: {
       ...fs,
       lstat: lstatSpy,
@@ -396,7 +396,7 @@ test('dleet: error: EPERM + win32 + fix + not fixed', async (t) => {
     value: originalPlatform,
   })
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -409,7 +409,7 @@ test('dleet: error: EPERM + not win32', async (t) => {
     throw new CustomError({ code: 'EPERM' })
   })
 
-  mock('../src/', {
+  const unmock = mock('../src/', {
     fs: {
       ...fs,
       lstat: lstatSpy,
@@ -434,7 +434,7 @@ test('dleet: error: EPERM + not win32', async (t) => {
     )
   }
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -447,7 +447,7 @@ test('dleet: error: any other + not win32', async (t) => {
     throw new CustomError({ code: 'OOPSIE' })
   })
 
-  mock('../src/', {
+  const unmock = mock('../src/', {
     fs: {
       ...fs,
       lstat: lstatSpy,
@@ -472,7 +472,7 @@ test('dleet: error: any other + not win32', async (t) => {
     )
   }
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -486,7 +486,7 @@ test('dleet: error: any other + win32', async (t) => {
     throw new CustomError({ code: 'OOPSIE' })
   })
 
-  mock('../src/', {
+  const unmock = mock('../src/', {
     fs: {
       ...fs,
       lstat: lstatSpy,
@@ -519,6 +519,6 @@ test('dleet: error: any other + win32', async (t) => {
     value: originalPlatform,
   })
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })

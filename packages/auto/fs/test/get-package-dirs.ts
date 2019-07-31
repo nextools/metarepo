@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import { mock, unmock, deleteFromCache } from 'mocku'
+import { mock, deleteFromCache } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
 
 const rootDir = process.cwd()
@@ -15,7 +15,7 @@ test('fs:getPackageDirs workspaces[]', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/get-package-dirs', {
+  const unmock = mock('../src/get-package-dirs', {
     fs,
     'graceful-fs': fs,
   })
@@ -31,7 +31,7 @@ test('fs:getPackageDirs workspaces[]', async (t) => {
     'should return packages directories'
   )
 
-  unmock('../src/get-package-dirs')
+  unmock()
 })
 
 test('fs:getPackageDirs workspaces.packages[]', async (t) => {
@@ -47,7 +47,7 @@ test('fs:getPackageDirs workspaces.packages[]', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/get-package-dirs', {
+  const unmock = mock('../src/get-package-dirs', {
     fs,
     'graceful-fs': fs,
   })
@@ -62,7 +62,7 @@ test('fs:getPackageDirs workspaces.packages[]', async (t) => {
     'should return packages directories'
   )
 
-  unmock('../src/get-package-dirs')
+  unmock()
 })
 
 test('fs:getPackageDirs no workspaces', async (t) => {
@@ -74,7 +74,7 @@ test('fs:getPackageDirs no workspaces', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/get-package-dirs', {
+  const unmock = mock('../src/get-package-dirs', {
     fs,
     'graceful-fs': fs,
   })
@@ -89,7 +89,7 @@ test('fs:getPackageDirs no workspaces', async (t) => {
     t.equals(e.message, '`workspaces` field in `package.json` is required')
   }
 
-  unmock('../src/get-package-dirs')
+  unmock()
 })
 
 test('fs:getPackageDirs no workspaces.packages', async (t) => {
@@ -103,7 +103,7 @@ test('fs:getPackageDirs no workspaces.packages', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/get-package-dirs', {
+  const unmock = mock('../src/get-package-dirs', {
     fs,
     'graceful-fs': fs,
   })
@@ -118,5 +118,5 @@ test('fs:getPackageDirs no workspaces.packages', async (t) => {
     t.equals(e.message, '`workspaces.packages` field in `package.json` is required')
   }
 
-  unmock('../src/get-package-dirs')
+  unmock()
 })

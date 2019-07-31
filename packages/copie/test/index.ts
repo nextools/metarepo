@@ -1,7 +1,7 @@
 /* eslint-disable no-sync */
 import test from 'blue-tape'
 import { createFsFromVolume, Volume } from 'memfs'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 
 test('copie: core', async (t) => {
   const vol = Volume.fromJSON({
@@ -9,7 +9,7 @@ test('copie: core', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/', { fs })
+  const unmock = mock('../src/', { fs })
 
   const { default: copie } = await import('../src')
 
@@ -24,7 +24,7 @@ test('copie: core', async (t) => {
     'should copy file'
   )
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -34,7 +34,7 @@ test('copie: preserve stats', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/', { fs })
+  const unmock = mock('../src/', { fs })
 
   const { default: copie } = await import('../src')
 
@@ -73,7 +73,7 @@ test('copie: preserve stats', async (t) => {
     'should preserve mtime'
   )
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -84,7 +84,7 @@ test('copie: read error', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/', { fs })
+  const unmock = mock('../src/', { fs })
 
   const { default: copie } = await import('../src')
 
@@ -98,7 +98,7 @@ test('copie: read error', async (t) => {
     )
   }
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })
 
@@ -109,7 +109,7 @@ test('copie: write error', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/', { fs })
+  const unmock = mock('../src/', { fs })
 
   const { default: copie } = await import('../src')
 
@@ -123,6 +123,6 @@ test('copie: write error', async (t) => {
     )
   }
 
-  unmock('../src/')
+  unmock()
   vol.reset()
 })

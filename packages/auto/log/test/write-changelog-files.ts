@@ -1,6 +1,6 @@
 /* eslint-disable no-sync */
 import test from 'blue-tape'
-import { mock, unmock } from 'mocku'
+import { mock } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
 import { prefixes } from '@auto/utils/test/prefixes'
 
@@ -15,7 +15,7 @@ test('writeChangelogFiles', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  mock('../src/write-changelog-files', {
+  const unmock = mock('../src/write-changelog-files', {
     'graceful-fs': fs,
   })
 
@@ -77,5 +77,5 @@ test('writeChangelogFiles', async (t) => {
     'should prepend to an already existing changelog.md'
   )
 
-  unmock('../src/write-changelog-files')
+  unmock()
 })
