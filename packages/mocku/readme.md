@@ -11,9 +11,9 @@ $ yarn add --dev mocku
 ## Usage
 
 ```js
-import { mock, unmock, deleteFromCache } from 'mocku'
+import { mock, deleteFromCache } from 'mocku'
 
-mock('./file', {
+const unmock = mock('./file', {
   './file2': {
     default: 'file2'
   },
@@ -25,7 +25,7 @@ mock('./file', {
 import('./file')
   .then(console.log)
   .then(() => {
-    unmock('./file')
+    unmock()
 
     return import('./file')
   })
