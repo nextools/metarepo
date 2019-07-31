@@ -1373,6 +1373,11 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
+"@types/get-caller-file@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/get-caller-file/-/get-caller-file-1.0.0.tgz#50805a80bed3bcd3d58f2cc2046c2f3c5d6bc91c"
+  integrity sha512-LKjVkuAyxzYAz2Ek0AX8cm9Kyjw+5eHVqUZwQiquWYwnDDdQcCabqkxPvlIf7/sEbY6jPuKgsmKPDGLV4owkPg==
+
 "@types/glob@^7.1.1":
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.1.tgz#aa59a1c6e3fbc421e07ccd31a944c30eba521575"
@@ -9154,6 +9159,14 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
+
+mocku@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/mocku/-/mocku-0.5.0.tgz#db150d8258b71cf6b658c14c2c0c73931f4214b3"
+  integrity sha512-ukqDItBlicbOQYSHBeJEdRHJQDJrTbdlyMxFHv9mTKpDES3JdaDTB7bNhtE0Z9ODgP+QoL7wxCAEVTehMceikA==
+  dependencies:
+    "@babel/runtime" "^7.4.2"
+    get-caller-file "^2.0.5"
 
 morgan@^1.8.1, morgan@^1.9.0:
   version "1.9.1"
