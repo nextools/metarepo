@@ -1,4 +1,3 @@
-/* eslint-disable promise/param-names */
 import path from 'path'
 import http from 'http'
 import { promisify } from 'util'
