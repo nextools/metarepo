@@ -8,19 +8,20 @@ require('dotenv/config')
 require('@babel/register')({
   presets: [
     [
-      '@babel/preset-env',
+      require.resolve('@babel/preset-env'),
       {
         targets: {
           node: 'current',
         },
       },
     ],
-    '@babel/preset-typescript',
-    '@babel/preset-react',
+    require.resolve('@babel/preset-typescript'),
+    require.resolve('@babel/preset-react'),
   ],
   plugins: [
-    '@babel/plugin-syntax-dynamic-import',
-    'babel-plugin-dynamic-import-node',
+    require.resolve('@babel/plugin-syntax-dynamic-import'),
+    require.resolve('babel-plugin-dynamic-import-node'),
+    require.resolve('@babel/plugin-syntax-bigint'),
   ],
   extensions: [
     '.tsx',
