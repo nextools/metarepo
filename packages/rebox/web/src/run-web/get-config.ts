@@ -56,6 +56,7 @@ export const getConfig = (entryPointPath: string, htmlTemplatePath: string): TWe
               plugins: [
                 require.resolve('@babel/plugin-transform-runtime'),
                 require.resolve('@babel/plugin-syntax-dynamic-import'),
+                require.resolve('@babel/plugin-syntax-bigint'),
               ],
               cacheDirectory: true,
             },

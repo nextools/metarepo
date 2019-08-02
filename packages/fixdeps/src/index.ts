@@ -75,13 +75,13 @@ export const fixdeps = async ({
   const composedDevDependencies = composeDependencies(packageJson.devDependencies, allDevDepsToAddWithVersions, depsToRemove)
 
   if (Object.keys(composedDependencies).length > 0) {
-    packageJson.dependencies = composedDependencies
+    packageJson.dependencies = composedDependencies // eslint-disable-line
   } else {
     Reflect.deleteProperty(packageJson, 'dependencies')
   }
 
   if (Object.keys(composedDevDependencies).length > 0) {
-    packageJson.devDependencies = composedDevDependencies
+    packageJson.devDependencies = composedDevDependencies // eslint-disable-line
   } else {
     Reflect.deleteProperty(packageJson, 'devDependencies')
   }

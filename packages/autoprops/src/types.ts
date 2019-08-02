@@ -1,32 +1,38 @@
-export type TProps = {}
+import { FC } from 'react'
+import { TAnyObject } from 'tsfn'
 
-export type PropsWithValues<P extends TProps> = {
-  [K in keyof P]: P[K][]
+export type TMetaFile = {
+  Component: FC<any>,
+  config: TComponentConfig,
+  childrenConfig?: TChildrenConfig,
 }
 
-export type MutexGroup<T extends TProps> = (keyof T)[]
-export type MutinGroup<T extends TProps> = (keyof T)[]
-
-export interface AutoConfig<T extends TProps> {
-  props: PropsWithValues<T>,
-  mutex?: MutexGroup<T>[],
-  mutin?: MutinGroup<T>[],
+export type TChildrenConfig = {
+  meta: {
+    [K in string]: TMetaFile
+  },
+  children: string[],
+  mutex?: string[][],
+  mutin?: string[][],
+  required?: string[],
 }
 
-export interface AutoResult<T extends TProps> {
-  props: T[],
-  fileNames: string[],
-  requestParams: string[],
+export type TComponentConfig = {
+  props: {
+    [K in string]: any[]
+  },
+  required?: string[],
+  mutex?: string[][],
+  mutin?: string[][],
 }
 
-export interface Permutation<T extends TProps> extends Array<number> {
-  __PERMUTATION__: T,
+export type TChildrenMap = {
+  [K in string]?: TAnyObject
 }
 
-export interface LengthPermutation<T extends TProps> extends Array<number> {
-  __LENGTH_PERMUTATION__: T,
+export type Permutation = {
+  values: bigint[],
+  length: bigint[],
 }
 
-export interface Keys<T extends TProps> extends Array<keyof T> {
-  __KEYS__: T,
-}
+export type PermutationDecimal = bigint

@@ -27,6 +27,7 @@ const plugins = [
   ],
   require.resolve('@babel/plugin-syntax-dynamic-import'),
   require.resolve('babel-plugin-dynamic-import-node'),
+  require.resolve('@babel/plugin-syntax-bigint'),
 ]
 
 export const babelConfigWeb: BabelConfig = {

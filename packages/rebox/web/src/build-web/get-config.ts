@@ -59,6 +59,7 @@ export const getConfig = (entryPointPath: string, outputPath: string, htmlTempla
               plugins: [
                 require.resolve('@babel/plugin-transform-runtime'),
                 require.resolve('@babel/plugin-syntax-dynamic-import'),
+                require.resolve('@babel/plugin-syntax-bigint'),
               ],
               cacheDirectory: false,
             },

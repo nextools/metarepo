@@ -1,5 +1,3 @@
-/* eslint-disable standard/no-callback-literal */
-/* eslint-disable promise/catch-or-return */
 import plugin, { StartFile, StartFilesProps, StartPlugin } from '@start/plugin'
 
 export default (glob: string | string[], userOptions?: {}) => (target: StartPlugin<StartFilesProps, any>) =>

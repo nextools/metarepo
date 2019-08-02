@@ -13,12 +13,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "sanitize-filename": "^1.6.1"
+    "tsfn": "^0.1.2"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
     "@types/react": "^16.8.6",
-    "@types/sanitize-filename": "^1.1.28",
     "blue-tape": "^1.0.0",
     "react": "^16.8.6"
   }
