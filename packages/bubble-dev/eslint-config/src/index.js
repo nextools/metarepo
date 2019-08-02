@@ -13,4 +13,7 @@ module.exports = {
     require.resolve('./config/react'),
     require.resolve('./config/typescript'),
   ],
+  globals: {
+    BigInt: 'readonly',
+  },
 }
