@@ -1,3 +1,7 @@
+## v0.5.0
+
+* 💥 refactor props generator
+
 ## v0.4.3
 
 * 🐞 remove `refun` dependency

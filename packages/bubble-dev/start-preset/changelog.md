@@ -1,3 +1,8 @@
+## v0.8.0
+
+* 🐞 add bigint support
+* ♻️ update dependencies: `@start/plugin-lib-eslint`
+
 ## v0.7.3
 
 * 🐞 skip `fixtures/` folder in `test` task

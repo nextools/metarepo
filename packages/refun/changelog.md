@@ -1,3 +1,7 @@
+## v0.3.4
+
+* 🐞 tweak `redux` dependency semver range
+
 ## v0.3.3
 
 * 🐞 cleanup and fix deps

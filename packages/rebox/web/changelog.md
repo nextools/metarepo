@@ -1,3 +1,7 @@
+## v0.3.3
+
+* 🐞 add bigint support
+
 ## v0.3.2
 
 * 🐞 re-enable minimize for `buildWeb`
