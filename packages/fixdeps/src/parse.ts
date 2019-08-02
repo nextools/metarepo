@@ -15,6 +15,7 @@ export const parse = (content: string): File => (
       'dynamicImport',
       'optionalCatchBinding',
       'throwExpressions',
+      'bigInt',
     ],
   })
 )
