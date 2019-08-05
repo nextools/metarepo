@@ -1,6 +1,6 @@
 import test from 'blue-tape'
 import { TMetaFile } from '../src/types'
-import { applyPropValue } from '../src/apply-prop-value'
+import { applyPropValue } from '../src'
 
 test('applyPropValue: boolean case', (t) => {
   const meta: TMetaFile = {
