@@ -1,6 +1,6 @@
 import test from 'blue-tape'
 import { TMetaFile } from '../src/types'
-import { getProps } from '../src/get-props'
+import { getProps } from '../src'
 
 test('autoprops: getProps single prop', (t) => {
   const meta: TMetaFile = {
