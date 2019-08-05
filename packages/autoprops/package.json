@@ -19,6 +19,7 @@
     "@types/blue-tape": "^0.1.32",
     "@types/react": "^16.8.6",
     "blue-tape": "^1.0.0",
+    "mocku": "^0.6.0",
     "react": "^16.8.6"
   }
 }

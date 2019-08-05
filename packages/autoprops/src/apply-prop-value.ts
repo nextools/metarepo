@@ -65,16 +65,16 @@ export const applyPropValue = (decimal: PermutationDecimal, metaFile: TMetaFile,
   if (!isUndefined(metaFile.childrenConfig) && propPath[0] === 'children') {
     const childName = propPath[1]
     const childBaseName = getBaseName(childName)
-    const childIndex = getIndexedNameIndex(metaFile.childrenConfig.children, childName)
+    const childIndex = getIndexedNameIndex(metaFile.childrenConfig.children, childName) + propKeys.length
 
     if (propPath.length > 2) {
-      values[childIndex + propKeys.length] = applyChildPropValue(values[childIndex + propKeys.length], metaFile.childrenConfig.meta[childBaseName], propPath.slice(2), propValue, childBaseName, metaFile.childrenConfig.required)
+      values[childIndex] = applyChildPropValue(values[childIndex], metaFile.childrenConfig.meta[childBaseName], propPath.slice(2), propValue, childBaseName, metaFile.childrenConfig.required)
 
       return permToDecimal(values, length)
     }
 
     if (isUndefined(propValue)) {
-      values[childIndex + propKeys.length] = 0n
+      values[childIndex] = 0n
 
       if (!isUndefined(metaFile.childrenConfig.mutin)) {
         checkAndDisableMutins(values, propKeys.length, metaFile.childrenConfig.children, childBaseName, metaFile.childrenConfig.mutin)
@@ -83,7 +83,7 @@ export const applyPropValue = (decimal: PermutationDecimal, metaFile: TMetaFile,
       return permToDecimal(values, length)
     }
 
-    values[childIndex + propKeys.length] = 1n
+    values[childIndex] = 1n
 
     if (!isUndefined(metaFile.childrenConfig.mutin)) {
       checkAndEnableMutins(values, propKeys.length, metaFile.childrenConfig.children, childBaseName, metaFile.childrenConfig.mutin)

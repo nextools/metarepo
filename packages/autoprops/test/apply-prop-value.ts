@@ -276,3 +276,78 @@ test('applyPropPath: child mutexes', (t) => {
 
   t.end()
 })
+
+test('applyPropPath: change required child prop', (t) => {
+  const meta: TMetaFile = {
+    config: {
+      props: {},
+    },
+    childrenConfig: {
+      meta: {
+        child: {
+          config: {
+            props: {
+              a: [true],
+            },
+          },
+          Component: () => null,
+        },
+      },
+      children: ['child'],
+      required: ['child'],
+    },
+    Component: () => null,
+  }
+
+  t.equals(
+    applyPropValue(0n, meta, ['children', 'child__0', 'a'], true),
+    1n,
+    'should enable prop in child'
+  )
+
+  t.end()
+})
+
+test('applyPropPath: errors', (t) => {
+  const meta: TMetaFile = {
+    config: {
+      props: {
+        a: [true],
+      },
+    },
+    childrenConfig: {
+      meta: {
+        child: {
+          config: {
+            props: {
+              a: [true],
+            },
+          },
+          Component: () => null,
+        },
+      },
+      children: ['child'],
+    },
+    Component: () => null,
+  }
+
+  t.throws(
+    () => applyPropValue(0n, meta, ['children', 'child__0', 'a'], true),
+    /was not enabled/,
+    'should throw if previous state is not compatible with path'
+  )
+
+  t.throws(
+    () => applyPropValue(0n, meta, ['b'], true),
+    /could not find prop/,
+    'should throw if path is incorrect'
+  )
+
+  t.throws(
+    () => applyPropValue(2n, meta, ['children', 'child__0', 'a', 'a'], true),
+    /incorrect path/,
+    'should throw if children not exist'
+  )
+
+  t.end()
+})
