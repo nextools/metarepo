@@ -1,3 +1,7 @@
+## v0.3.4
+
+* 🐞 add babel plugin bigint to dependencies
+
 ## v0.3.3
 
 * 🐞 add bigint support

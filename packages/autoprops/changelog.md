@@ -1,3 +1,7 @@
+## v0.5.1
+
+* 🐞 add get-props-iterable
+
 ## v0.5.0
 
 * 💥 refactor props generator
