@@ -1,3 +1,7 @@
+## v0.5.2
+
+* 🐞 add BigInt polyfill
+
 ## v0.5.1
 
 * 🐞 add get-props-iterable
