@@ -1,7 +1,8 @@
 /* eslint-disable max-params */
 import { isUndefined } from 'tsfn'
+import BigInt, { BigInteger } from 'big-integer'
 
-export const checkAndEnableMutins = (values: bigint[], valuesIndexOffset: number, propKeys: string[], propName: string, mutinConfig: string[][], requiredConfig?: string[]): void => {
+export const checkAndEnableMutins = (values: BigInteger[], valuesIndexOffset: number, propKeys: string[], propName: string, mutinConfig: string[][], requiredConfig?: string[]): void => {
   let changedProps: Set<string> | null = null
 
   for (const mutinGroup of mutinConfig) {
@@ -16,8 +17,8 @@ export const checkAndEnableMutins = (values: bigint[], valuesIndexOffset: number
 
       const mutinPropIndex = propKeys.indexOf(mutinName)
 
-      if (mutinPropIndex >= 0 && values[mutinPropIndex + valuesIndexOffset] === 0n && (isUndefined(requiredConfig) || !requiredConfig.includes(mutinName))) {
-        values[mutinPropIndex + valuesIndexOffset] = 1n
+      if (mutinPropIndex >= 0 && BigInt.zero.equals(values[mutinPropIndex + valuesIndexOffset]) && (isUndefined(requiredConfig) || !requiredConfig.includes(mutinName))) {
+        values[mutinPropIndex + valuesIndexOffset] = BigInt.one
 
         if (changedProps === null) {
           changedProps = new Set()
@@ -35,7 +36,7 @@ export const checkAndEnableMutins = (values: bigint[], valuesIndexOffset: number
   }
 }
 
-export const checkAndDisableMutins = (values: bigint[], valuesIndexOffset: number, propKeys: string[], propName: string, mutinConfig: string[][]): void => {
+export const checkAndDisableMutins = (values: BigInteger[], valuesIndexOffset: number, propKeys: string[], propName: string, mutinConfig: string[][]): void => {
   let changedProps: Set<string> | null = null
 
   for (const mutinGroup of mutinConfig) {
@@ -50,8 +51,8 @@ export const checkAndDisableMutins = (values: bigint[], valuesIndexOffset: numbe
 
       const mutinPropIndex = propKeys.indexOf(mutinName)
 
-      if (mutinPropIndex >= 0 && values[mutinPropIndex + valuesIndexOffset] > 0) {
-        values[mutinPropIndex + valuesIndexOffset] = 0n
+      if (mutinPropIndex >= 0 && values[mutinPropIndex + valuesIndexOffset].greater(BigInt.zero)) {
+        values[mutinPropIndex + valuesIndexOffset] = BigInt.zero
 
         if (changedProps === null) {
           changedProps = new Set()
@@ -69,7 +70,7 @@ export const checkAndDisableMutins = (values: bigint[], valuesIndexOffset: numbe
   }
 }
 
-export const checkAndDisableMutexes = (values: bigint[], valuesIndexOffset: number, propKeys: string[], propName: string, mutexConfig: string[][]): void => {
+export const checkAndDisableMutexes = (values: BigInteger[], valuesIndexOffset: number, propKeys: string[], propName: string, mutexConfig: string[][]): void => {
   for (const mutexGroup of mutexConfig) {
     if (!mutexGroup.includes(propName)) {
       continue
@@ -83,7 +84,7 @@ export const checkAndDisableMutexes = (values: bigint[], valuesIndexOffset: numb
       const mutexPropIndex = propKeys.indexOf(mutexName)
 
       if (mutexPropIndex >= 0) {
-        values[mutexPropIndex + valuesIndexOffset] = 0n
+        values[mutexPropIndex + valuesIndexOffset] = BigInt.zero
       }
     }
   }

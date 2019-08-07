@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
+    "big-integer": "^1.6.44",
     "tsfn": "^0.1.2"
   },
   "devDependencies": {

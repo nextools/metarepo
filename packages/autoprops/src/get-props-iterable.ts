@@ -1,14 +1,15 @@
-import { getProps } from './get-props'
-import { getNextPerm } from './get-next-perm'
+import BigInt, { BigInteger } from 'big-integer'
+import { getPropsImpl } from './get-props'
+import { getNextPermImpl } from './get-next-perm'
 import { TMetaFile } from './types'
 
 export const getPropsIterable = (metaFile: TMetaFile) => ({
-  decimal: 0n as bigint | null,
+  int: BigInt.zero as BigInteger | null,
   *[Symbol.iterator]() {
-    while (this.decimal !== null) {
-      yield getProps(this.decimal, metaFile)
+    while (this.int !== null) {
+      yield getPropsImpl(this.int, metaFile)
 
-      this.decimal = getNextPerm(this.decimal, metaFile)
+      this.int = getNextPermImpl(this.int, metaFile)
     }
   },
 })

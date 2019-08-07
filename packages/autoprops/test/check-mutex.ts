@@ -1,20 +1,22 @@
 import test from 'blue-tape'
+import BigInt from 'big-integer'
 import { checkAndEnableMutins, checkAndDisableMutins, checkAndDisableMutexes } from '../src/check-mutex'
 
 test('checkAndEnableMutins', (t) => {
-  const values = [0n, 0n, 0n, 0n, 0n]
+  const values = [BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0)]
+  const expected = [BigInt(0), BigInt(0), BigInt(1), BigInt(1), BigInt(1), BigInt(0)]
+
   checkAndEnableMutins(
     values,
     2,
-    ['a', 'b', 'c'],
+    ['a', 'b', 'c', 'd'],
     'c',
-    [['a', 'b'], ['b', 'c']],
-    undefined
+    [['a', 'b'], ['b', 'c'], ['c', 'd']],
+    ['d']
   )
 
-  t.deepEquals(
-    values,
-    [0n, 0n, 1n, 1n, 1n],
+  t.true(
+    values.every((val, i) => val.equals(expected[i])),
     'should properly modify values'
   )
 
@@ -22,7 +24,9 @@ test('checkAndEnableMutins', (t) => {
 })
 
 test('checkAndDisableMutins', (t) => {
-  const values = [0n, 0n, 1n, 1n, 1n]
+  const values = [BigInt(0), BigInt(0), BigInt(1), BigInt(1), BigInt(1)]
+  const expected = [BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0)]
+
   checkAndDisableMutins(
     values,
     2,
@@ -31,9 +35,8 @@ test('checkAndDisableMutins', (t) => {
     [['a', 'b'], ['b', 'c']]
   )
 
-  t.deepEquals(
-    values,
-    [0n, 0n, 0n, 0n, 0n],
+  t.true(
+    values.every((val, i) => val.equals(expected[i])),
     'should properly modify values'
   )
 
@@ -41,18 +44,19 @@ test('checkAndDisableMutins', (t) => {
 })
 
 test('checkAndDisableMutexes', (t) => {
-  const values = [0n, 0n, 1n, 1n, 1n]
+  const values = [BigInt(0), BigInt(0), BigInt(1), BigInt(1), BigInt(1)]
+  const expected = [BigInt(0), BigInt(0), BigInt(1), BigInt(0), BigInt(1)]
+
   checkAndDisableMutexes(
     values,
     2,
     ['a', 'b', 'c'],
     'c',
-    [['a', 'b'], ['b', 'c']]
+    [['a', 'b'], ['b', 'c', 'd']]
   )
 
-  t.deepEquals(
-    values,
-    [0n, 0n, 1n, 0n, 1n],
+  t.true(
+    values.every((val, i) => val.equals(expected[i])),
     'should properly modify values'
   )
 

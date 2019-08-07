@@ -1,8 +1,10 @@
-export const getNumSkipMutex = (values: bigint[], length: bigint[], changedIndex: number): bigint => {
-  let numSkip = 1n
+import BigInt, { BigInteger } from 'big-integer'
+
+export const getNumSkipMutex = (values: BigInteger[], length: BigInteger[], changedIndex: number): BigInteger => {
+  let numSkip = BigInt.one
 
   for (let i = 0; i <= changedIndex; ++i) {
-    numSkip *= (length[i] - values[i])
+    numSkip = numSkip.multiply(length[i].minus(values[i]))
   }
 
   return numSkip

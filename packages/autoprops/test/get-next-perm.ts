@@ -13,11 +13,12 @@ test('getNextPerm: simple case', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n, 2n, 3n]
+  const decimals = ['0', '1', '2', '3']
+  const expected = ['1', '2', '3', null]
 
   t.deepEquals(
     decimals.map((value) => getNextPerm(value, meta)),
-    [1n, 2n, 3n, null],
+    expected,
     'should return next perm'
   )
 
@@ -40,11 +41,12 @@ test('getNextPerm: props mutex', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n, 2n, 3n, 4n, 5n, 6n, 7n]
+  const decimals = ['0', '1', '2', '3', '4', '5', '6', '7']
+  const expected = ['1', '2', '4', '4', '6', '6', null, null]
 
   t.deepEquals(
     decimals.map((value) => getNextPerm(value, meta)),
-    [1n, 2n, 4n, 4n, 6n, 6n, null, null],
+    expected,
     'should return next perm'
   )
 
@@ -66,11 +68,12 @@ test('getNextPerm: props mutin', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n, 2n, 3n, 4n, 5n, 6n, 7n]
+  const decimals = ['0', '1', '2', '3', '4', '5', '6', '7']
+  const expected = ['2', '2', '5', '5', '5', '7', '7', null]
 
   t.deepEquals(
     decimals.map((value) => getNextPerm(value, meta)),
-    [2n, 2n, 5n, 5n, 5n, 7n, 7n, null],
+    expected,
     'should return next perm'
   )
 
@@ -105,11 +108,12 @@ test('getNextPerm: children', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n, 2n, 3n]
+  const decimals = ['0', '1', '2', '3']
+  const expected = ['1', '2', '3', null]
 
   t.deepEquals(
     decimals.map((value) => getNextPerm(value, meta)),
-    [1n, 2n, 3n, null],
+    expected,
     'should return next perm'
   )
 

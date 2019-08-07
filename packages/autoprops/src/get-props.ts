@@ -1,8 +1,10 @@
 /* eslint-disable no-use-before-define */
 import { TAnyObject, isUndefined } from 'tsfn'
-import { TMetaFile, PermutationDecimal } from './types'
-import { decimalToPerm } from './decimal-to-perm'
+import BigInt, { BigInteger } from 'big-integer'
+import { TMetaFile } from './types'
+import { unpackPerm } from './unpack-perm'
 import { getIndexedName } from './get-indexed-name'
+import { parseBigInt } from './parse-bigint'
 
 const getValue = (valueIndex: number, values: any[], key: string, required?: string[]): any => {
   if (!isUndefined(required) && required.includes(key)) {
@@ -12,25 +14,25 @@ const getValue = (valueIndex: number, values: any[], key: string, required?: str
   }
 }
 
-const getChildValue = (decimal: PermutationDecimal, childMeta: TMetaFile, childKey: string, required?: string[]): any => {
+const getChildValue = (int: BigInteger, childMeta: TMetaFile, childKey: string, required?: string[]): any => {
   if (!isUndefined(required) && required.includes(childKey)) {
-    return getProps(decimal, childMeta)
-  } else if (decimal > 0) {
-    return getProps(decimal - 1n, childMeta)
+    return getPropsImpl(int, childMeta)
+  } else if (int.greater(BigInt.zero)) {
+    return getPropsImpl(int.minus(BigInt.one), childMeta)
   }
 }
 
-export const getProps = (decimal: PermutationDecimal, metaFile: TMetaFile): TAnyObject => {
+export const getPropsImpl = (int: BigInteger, metaFile: TMetaFile): TAnyObject => {
   const propsKeys = Object.keys(metaFile.config.props)
   const result: TAnyObject = {}
-  const { values } = decimalToPerm(decimal, metaFile)
+  const { values } = unpackPerm(int, metaFile)
 
   let i = 0
 
   for (; i < propsKeys.length; ++i) {
     const propKey = propsKeys[i]
     const valueIndex = values[i]
-    const value = getValue(Number(valueIndex), metaFile.config.props[propKey], propKey, metaFile.config.required)
+    const value = getValue(valueIndex.toJSNumber(), metaFile.config.props[propKey], propKey, metaFile.config.required)
 
     if (!isUndefined(value)) {
       result[propKey] = value
@@ -60,4 +62,8 @@ export const getProps = (decimal: PermutationDecimal, metaFile: TMetaFile): TAny
   }
 
   return result
+}
+
+export const getProps = (intStr: string, metaFile: TMetaFile): TAnyObject => {
+  return getPropsImpl(parseBigInt(intStr), metaFile)
 }

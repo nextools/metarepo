@@ -1,4 +1,5 @@
 import test from 'blue-tape'
+import BigInt from 'big-integer'
 import { checkRestriction, RESTRICTION_OK, RESTRICTION_MUTEX, RESTRICTION_MUTIN } from '../src/check-restriction'
 
 test('checkRestriction: mutex', (t) => {
@@ -8,14 +9,14 @@ test('checkRestriction: mutex', (t) => {
   ]
   const keys = ['a', 'b', 'c']
   const values = [
-    [0n, 0n, 0n],
-    [1n, 0n, 0n],
-    [0n, 1n, 0n],
-    [1n, 1n, 0n],
-    [0n, 0n, 1n],
-    [1n, 0n, 1n],
-    [0n, 1n, 1n],
-    [1n, 1n, 1n],
+    [BigInt(0), BigInt(0), BigInt(0)],
+    [BigInt(1), BigInt(0), BigInt(0)],
+    [BigInt(0), BigInt(1), BigInt(0)],
+    [BigInt(1), BigInt(1), BigInt(0)],
+    [BigInt(0), BigInt(0), BigInt(1)],
+    [BigInt(1), BigInt(0), BigInt(1)],
+    [BigInt(0), BigInt(1), BigInt(1)],
+    [BigInt(1), BigInt(1), BigInt(1)],
   ]
 
   t.deepEquals(
@@ -43,14 +44,14 @@ test('checkRestriction: mutin', (t) => {
   ]
   const keys = ['a', 'b', 'c']
   const values = [
-    [0n, 0n, 0n],
-    [1n, 0n, 0n],
-    [0n, 1n, 0n],
-    [1n, 1n, 0n],
-    [0n, 0n, 1n],
-    [1n, 0n, 1n],
-    [0n, 1n, 1n],
-    [1n, 1n, 1n],
+    [BigInt(0), BigInt(0), BigInt(0)],
+    [BigInt(1), BigInt(0), BigInt(0)],
+    [BigInt(0), BigInt(1), BigInt(0)],
+    [BigInt(1), BigInt(1), BigInt(0)],
+    [BigInt(0), BigInt(0), BigInt(1)],
+    [BigInt(1), BigInt(0), BigInt(1)],
+    [BigInt(0), BigInt(1), BigInt(1)],
+    [BigInt(1), BigInt(1), BigInt(1)],
   ]
 
   t.deepEquals(
@@ -74,10 +75,10 @@ test('checkRestriction: mutin', (t) => {
 test('checkRestriction: nothing to do', (t) => {
   const keys = ['a', 'b']
   const values = [
-    [0n, 0n, 0n],
-    [1n, 0n, 0n],
-    [0n, 1n, 0n],
-    [1n, 1n, 0n],
+    [BigInt(0), BigInt(0), BigInt(0)],
+    [BigInt(1), BigInt(0), BigInt(0)],
+    [BigInt(0), BigInt(1), BigInt(0)],
+    [BigInt(1), BigInt(1), BigInt(0)],
   ]
 
   t.deepEquals(

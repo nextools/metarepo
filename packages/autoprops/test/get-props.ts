@@ -12,7 +12,7 @@ test('autoprops: getProps single prop', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n, 2n]
+  const decimals = ['0', '1', '2']
 
   t.deepEquals(
     decimals.map((value) => getProps(value, meta)),
@@ -42,7 +42,7 @@ test('autoprops: getProps required props', (t) => {
   }
 
   t.deepEquals(
-    getProps(0n, meta),
+    getProps('0', meta),
     {
       a: true,
     },
@@ -50,7 +50,7 @@ test('autoprops: getProps required props', (t) => {
   )
 
   t.deepEquals(
-    getProps(1n, meta),
+    getProps('1', meta),
     {
       a: true,
       b: true,
@@ -80,7 +80,7 @@ test('autoprops: getProps empty childrenMap', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n]
+  const decimals = ['0', '1']
 
   t.deepEquals(
     decimals.map((value) => getProps(value, meta)),
@@ -124,7 +124,7 @@ test('autoprops: getProps children with required', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n]
+  const decimals = ['0', '1']
 
   t.deepEquals(
     decimals.map((value) => getProps(value, meta)),
@@ -170,7 +170,7 @@ test('autoprops: getProps same child placed multiple times', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n, 2n, 3n]
+  const decimals = ['0', '1', '2', '3']
 
   t.deepEquals(
     decimals.map((value) => getProps(value, meta)),

@@ -1,11 +1,12 @@
 /* eslint-disable max-params */
 import { isUndefined } from 'tsfn'
+import BigInt, { BigInteger } from 'big-integer'
 
 export const RESTRICTION_OK = 0
 export const RESTRICTION_MUTEX = 1
 export const RESTRICTION_MUTIN = 2
 
-export const checkRestriction = (values: bigint[], valuesIndexOffset: number, propKeys: string[], mutexGroups?: string[][], mutinGroups?: string[][]): number => {
+export const checkRestriction = (values: BigInteger[], valuesIndexOffset: number, propKeys: string[], mutexGroups?: string[][], mutinGroups?: string[][]): number => {
   if (isUndefined(mutexGroups) && isUndefined(mutinGroups)) {
     return RESTRICTION_OK
   }
@@ -13,7 +14,7 @@ export const checkRestriction = (values: bigint[], valuesIndexOffset: number, pr
   const keysWithState: string[] = []
 
   for (let i = 0; i < propKeys.length; ++i) {
-    if (values[i + valuesIndexOffset] > 0) {
+    if (values[i + valuesIndexOffset].greater(BigInt.zero)) {
       keysWithState.push(propKeys[i])
     }
   }

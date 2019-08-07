@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { TAnyObject } from 'tsfn'
+import { BigInteger } from 'big-integer'
 
 export type TMetaFile = {
   Component: FC<any>,
@@ -31,8 +32,6 @@ export type TChildrenMap = {
 }
 
 export type Permutation = {
-  values: bigint[],
-  length: bigint[],
+  values: BigInteger[],
+  length: BigInteger[],
 }
-
-export type PermutationDecimal = bigint

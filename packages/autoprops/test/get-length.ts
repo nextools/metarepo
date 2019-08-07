@@ -1,4 +1,5 @@
 import test from 'blue-tape'
+import BigInt from 'big-integer'
 import { TMetaFile } from '../src/types'
 import { getLength } from '../src/get-length'
 
@@ -45,9 +46,8 @@ test('react-autoprops: getLength', (t) => {
     Component: () => null,
   }
 
-  t.equals(
-    getLength(meta),
-    8n,
+  t.true(
+    getLength(meta).equals(BigInt(8)),
     'should return proper length'
   )
 

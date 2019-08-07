@@ -1,36 +1,38 @@
 /* eslint-disable no-use-before-define */
 import { isUndefined } from 'tsfn'
-import { TMetaFile, PermutationDecimal } from './types'
-import { permToDecimal } from './perm-to-decimal'
-import { decimalToPerm } from './decimal-to-perm'
+import BigInt, { BigInteger } from 'big-integer'
+import { TMetaFile } from './types'
+import { packPerm } from './pack-perm'
+import { unpackPerm } from './unpack-perm'
+import { parseBigInt } from './parse-bigint'
+import { stringifyBigInt } from './stringify-bigint'
 import { checkRestriction, RESTRICTION_MUTEX, RESTRICTION_MUTIN } from './check-restriction'
 import { getNumSkipMutex } from './get-num-skip-mutex'
 
-const getChildNextPerm = (decimal: PermutationDecimal, childMeta: TMetaFile, childKey: string, required?: string[]): PermutationDecimal | null => {
+const getChildNextPerm = (int: BigInteger, childMeta: TMetaFile, childKey: string, required?: string[]): BigInteger | null => {
   if (!isUndefined(required) && required.includes(childKey)) {
-    return getNextPerm(decimal, childMeta)
-  } else if (decimal > 0) {
-    return getNextPerm(decimal - 1n, childMeta)
+    return getNextPermImpl(int, childMeta)
+  } else if (int.greater(BigInt.zero)) {
+    return getNextPermImpl(int.minus(BigInt.one), childMeta)
   }
 
-  return decimal + 1n
+  return int.plus(BigInt.one)
 }
 
-export const getNextPerm = (decimal: PermutationDecimal, metaFile: TMetaFile): PermutationDecimal | null => {
+export const getNextPermImpl = (int: BigInteger, metaFile: TMetaFile): BigInteger | null => {
   const propsKeys = Object.keys(metaFile.config.props)
-  const { values, length } = decimalToPerm(decimal, metaFile)
+  const { values, length } = unpackPerm(int, metaFile)
 
   if (values.length === 0) {
     return null
   }
 
-  /* increment perm */
-  let changedIndex = 0
+  let i = 0
 
-  for (let i = 0; i < values.length; ++i) {
+  for (; i < values.length; ++i) {
     // increment props or children
     if (i < propsKeys.length) {
-      ++values[i]
+      values[i] = values[i].plus(BigInt.one)
     } else {
       const childrenConfig = metaFile.childrenConfig!
       const childKey = childrenConfig.children[i - propsKeys.length]
@@ -40,34 +42,41 @@ export const getNextPerm = (decimal: PermutationDecimal, metaFile: TMetaFile): P
       values[i] = childNextPerm !== null ? childNextPerm : length[i]
     }
 
-    // if incremented digit overflow
-    if (values[i] === length[i]) {
-      // if all digits overflow
-      if (i === values.length - 1) {
-        return null
-      }
-
-      // reset overflow digit
-      values[i] = 0n
-    } else {
-      // done incrementing
-      changedIndex = i
-
+    // if done incrementing
+    if (values[i].notEquals(length[i])) {
       break
     }
+
+    // if all digits overflow
+    if (i === values.length - 1) {
+      return null
+    }
+
+    // reset overflow digit
+    values[i] = BigInt.zero
   }
 
   /* check restrictions */
-  const restriction = changedIndex < propsKeys.length
+  const restriction = i < propsKeys.length
     ? checkRestriction(values, 0, propsKeys, metaFile.config.mutex, metaFile.config.mutin)
     : checkRestriction(values, propsKeys.length, metaFile.childrenConfig!.children, metaFile.childrenConfig!.mutex, metaFile.childrenConfig!.mutin)
 
   switch (restriction) {
     case RESTRICTION_MUTEX:
-      return getNextPerm(decimal + getNumSkipMutex(values, length, changedIndex), metaFile)
+      return getNextPermImpl(int.plus(getNumSkipMutex(values, length, i)), metaFile)
     case RESTRICTION_MUTIN:
-      return getNextPerm(decimal + 1n, metaFile)
+      return getNextPermImpl(int.plus(BigInt.one), metaFile)
   }
 
-  return permToDecimal(values, length)
+  return packPerm(values, length)
+}
+
+export const getNextPerm = (intStr: string, metaFile: TMetaFile): string | null => {
+  const result = getNextPermImpl(parseBigInt(intStr), metaFile)
+
+  if (result !== null) {
+    return stringifyBigInt(result)
+  }
+
+  return result
 }
