@@ -5,17 +5,18 @@ import bsc from '../src'
 const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 test('found', (t) => {
-  const comparator = createSpy(({ args: [key, mid] }) => key - mid)
+  const key = 2
+  const comparator = createSpy(({ args: [mid] }) => key - mid)
 
   t.equal(
-    bsc(arr, 2, comparator),
+    bsc(arr, comparator),
     2,
     'should return an index of matched item'
   )
 
   t.deepEqual(
     getSpyCalls(comparator),
-    [[2, 4], [2, 1], [2, 2]],
+    [[4], [1], [2]],
     'should call comparator with necessary values'
   )
 
@@ -23,17 +24,18 @@ test('found', (t) => {
 })
 
 test('not found', (t) => {
-  const comparator = createSpy(({ args: [key, mid] }) => key - mid)
+  const key = 10
+  const comparator = createSpy(({ args: [mid] }) => key - mid)
 
   t.equal(
-    bsc(arr, 10, comparator),
+    bsc(arr, comparator),
     -1,
     'should return -1'
   )
 
   t.deepEqual(
     getSpyCalls(comparator),
-    [[10, 4], [10, 7], [10, 8], [10, 9]],
+    [[4], [7], [8], [9]],
     'should call comparator with necessary values'
   )
 
@@ -41,10 +43,11 @@ test('not found', (t) => {
 })
 
 test('empty array', (t) => {
-  const comparator = createSpy(({ args: [key, mid] }) => key - mid)
+  const key = 0
+  const comparator = createSpy(({ args: [mid] }) => key - mid)
 
   t.equal(
-    bsc([], 0, comparator),
+    bsc([], comparator),
     -1,
     'should return -1'
   )
