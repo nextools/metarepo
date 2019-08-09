@@ -1,0 +1,22 @@
+{
+  "name": "bsc",
+  "version": "0.1.0",
+  "description": "Binary search with comparator",
+  "keywords": [
+    "binary",
+    "search"
+  ],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "blue-tape": "^1.0.0",
+    "spyfn": "^0.2.0"
+  }
+}

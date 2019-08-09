@@ -4,6 +4,7 @@
   "workspaces": [
     "packages/auto/*",
     "packages/autoprops",
+    "packages/bsc",
     "packages/bubble-dev/*",
     "packages/codecov-lite",
     "packages/colorido",
