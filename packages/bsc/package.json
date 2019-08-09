@@ -1,6 +1,6 @@
 {
   "name": "bsc",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Binary search with comparator",
   "keywords": [
     "binary",
