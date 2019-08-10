@@ -17,6 +17,7 @@ So far, the _Metarepo_ is working really well for us, but we are aware it might 
 This repository is a collection of JavaScript libraries, grouped in the same place for the best developer experience. Check the individual documentations for more details:
 
 - [@auto](packages/auto): Set of helpers for managing and developing monorepos.
+- [bsc](packages/bsc): Binary search with comparator.
 - [codecov-lite](packages/codecov-lite): LCOV (code coverage data) uploader for codecov.io service.
 - [copie](packages/copie): Copy a file.
 - [dleet](packages/dleet): Delete directories and files.
