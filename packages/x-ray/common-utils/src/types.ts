@@ -1,17 +1,17 @@
-export type TMessageStatus = 'ok' | 'diff' | 'new' | 'unknown'
+import { TLineElement } from 'syntx'
 
-export type TMessage = {
-  status: TMessageStatus,
-  path: string,
+export type TCheckRequest = { type: 'FILE', path: string } | { type: 'DONE' }
+
+export type TOptions = {
+  mocks?: {
+    [k: string]: string,
+  },
+  extensions: string[],
+  platform: string,
 }
 
-export type TCheckResult = {
-  status: TMessageStatus,
-  path: string,
-}
-
-export type TTotalResult = {
-  ok: number,
-  diff: number,
-  new: number,
+export type TItem = {
+  serializedElement: TLineElement[][],
+  width: number,
+  height: number,
 }
