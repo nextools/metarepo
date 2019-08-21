@@ -30,6 +30,7 @@ export const Root = component(
     globalObject.addEventListener('resize', setDimensions)
 
     return () => {
+      globalObject.removeEventListener('resize', setDimensions)
     }
   }),
   mapWithProps(({ dimensions }) => ({
