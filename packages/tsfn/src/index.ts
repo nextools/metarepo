@@ -22,6 +22,7 @@ export const isFunction = (value: any): value is Function => typeof value === 'f
 export const isArray = (value: any): value is any[] => Array.isArray(value)
 export const isObject = (value: any): value is TAnyObject => Object.prototype.toString.call(value) === '[object Object]'
 export const isSymbol = (value: any): value is symbol => typeof value === 'symbol'
+export const isRegExp = (value: any): value is RegExp => Object.prototype.toString.call(value) === '[object RegExp]'
 
 export const requestAnimationFrame = (global as any as Window).requestAnimationFrame || global.setImmediate
 export const cancelAnimationFrame = (global as any as Window).cancelAnimationFrame || global.clearImmediate
