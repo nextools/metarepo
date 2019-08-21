@@ -8,6 +8,7 @@ export type TRequireKeys<T, K extends keyof T> = T & {
 }
 
 export const getObjectKeys = <T extends {}> (obj: T) => Object.keys(obj) as (keyof T)[]
+export const objectHas = <T extends {}, K extends keyof T> (obj: T, key: K): obj is T & { [k in K]-?: T[k] } => Reflect.has(obj, key)
 
 export const EMPTY_OBJECT = Object.freeze(Object.create(null)) as any
 export const EMPTY_ARRAY = [] as any
