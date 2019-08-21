@@ -1,0 +1,28 @@
+{
+  "name": "@x-ray/native-screenshots-app",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "react-native": "src/index.js",
+  "buildTasks": [
+    "buildXRayIos"
+  ],
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.3",
+    "react-native-view-shot": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.6",
+    "react": "^16.8.0",
+    "react-native": "^0.59.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-native": "^0.59.0"
+  }
+}
