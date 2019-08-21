@@ -1,20 +1,20 @@
 import React, { createContext } from 'react'
-import { Store } from 'redux' // eslint-disable-line
+import { Store, AnyAction, Dispatch } from 'redux' // eslint-disable-line
 import { component } from './component'
 import { mapState } from './map-state'
 import { onMount } from './on-mount'
 import { mapReduxState, mapReduxDispatch, TStoreContextValue } from './map-redux'
 
-export const StoreContextFactory = <T extends {}> (store: Store<T>) => {
-  const Context = createContext<TStoreContextValue<T>>({
+export const StoreContextFactory = <S extends {}, D extends Dispatch> (store: Store<S>) => {
+  const Context = createContext<TStoreContextValue<S, D>>({
     state: store.getState(),
-    dispatch: store.dispatch,
+    dispatch: store.dispatch as D,
   })
 
   const StoreProvider = component(
     mapState('value', 'setValue', () => ({
       state: store.getState(),
-      dispatch: store.dispatch,
+      dispatch: store.dispatch as D,
     }), []),
     onMount(({ setValue }) => {
       const state = store.getState()
@@ -22,14 +22,14 @@ export const StoreContextFactory = <T extends {}> (store: Store<T>) => {
       if (state !== null) {
         setValue({
           state,
-          dispatch: store.dispatch,
+          dispatch: store.dispatch as D,
         })
       }
 
       return store.subscribe(() => {
         setValue({
           state: store.getState(),
-          dispatch: store.dispatch,
+          dispatch: store.dispatch as D,
         })
       })
     })
@@ -39,8 +39,10 @@ export const StoreContextFactory = <T extends {}> (store: Store<T>) => {
     </Context.Provider>
   ))
 
-  const mapStoreState = mapReduxState(Context)
-  const mapStoreDispatch = mapReduxDispatch(Context)
+  const mapStoreState = mapReduxState<S, D>(Context)
+  const mapStoreDispatch = mapReduxDispatch<S, D>(Context)
+
+  StoreProvider.displayName = 'StoreProvider'
 
   return {
     StoreProvider,

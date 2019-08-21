@@ -3,12 +3,12 @@ import { Dispatch } from 'redux' // eslint-disable-line import/named
 import { EMPTY_OBJECT, TExtend } from 'tsfn'
 import { shallowEqualByKeys } from './utils'
 
-export type TStoreContextValue<S> = {
+export type TStoreContextValue<S, D extends Dispatch> = {
   state: S,
-  dispatch: Dispatch,
+  dispatch: D,
 }
 
-export const mapReduxState = <S>(context: Context<TStoreContextValue<S>>) => <P extends {}, SP extends {}>(mapStateToProps: (state: S) => SP, stateKeysToWatch: (keyof S)[]) =>
+export const mapReduxState = <S, D extends Dispatch>(context: Context<TStoreContextValue<S, D>>) => <P extends {}, SP extends {}>(mapStateToProps: (state: S) => SP, stateKeysToWatch: (keyof S)[]) =>
   (props: P): TExtend<P, SP> => {
     const prevState = useRef<S>(EMPTY_OBJECT)
     const prevStateProps = useRef<SP>(EMPTY_OBJECT)
@@ -26,7 +26,7 @@ export const mapReduxState = <S>(context: Context<TStoreContextValue<S>>) => <P 
     }
   }
 
-export const mapReduxDispatch = (context: Context<TStoreContextValue<any>>) => <P extends {}>(props: P): TExtend<P, { dispatch: Dispatch }> => {
+export const mapReduxDispatch = <S, D extends Dispatch>(context: Context<TStoreContextValue<S, D>>) => <P extends {}>(props: P): TExtend<P, { dispatch: D }> => {
   const { dispatch } = useContext(context)
 
   return {
