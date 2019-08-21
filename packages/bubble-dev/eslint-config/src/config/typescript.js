@@ -22,6 +22,5 @@ module.exports = {
     }],
     '@typescript-eslint/no-namespace': 2,
     '@typescript-eslint/no-triple-slash-reference': 2,
-    '@typescript-eslint/no-require-imports': 2,
   },
 }
