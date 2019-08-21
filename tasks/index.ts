@@ -2,6 +2,7 @@
 import plugin from '@start/plugin'
 
 export * from '@bubble-dev/start-preset'
+export * from './x-ray'
 
 // custom tasks:
 export const fixDeps = () => plugin('fixDeps', ({ logPath, logMessage }) => async () => {
