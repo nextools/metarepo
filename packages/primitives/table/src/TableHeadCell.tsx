@@ -7,6 +7,7 @@ export type TTableHeadCell = {
   id?: string,
   children?: ReactNode,
   backgroundColor?: string,
+  width?: string,
 } & TTableBorderStyle
 
 export const TableHeadCell = component(
@@ -18,7 +19,7 @@ export const TableHeadCell = component(
     borderRightWidth: 0,
     borderStyle: 'solid',
   }),
-  mapWithPropsMemo(({ borderTopWidth, borderBottomWidth, borderLeftWidth, borderRightWidth, borderStyle, borderColor, backgroundColor }) => ({
+  mapWithPropsMemo(({ borderTopWidth, borderBottomWidth, borderLeftWidth, borderRightWidth, borderStyle, borderColor, backgroundColor, width }) => ({
     style: normalizeStyle({
       padding: 0,
       borderColor,
@@ -28,6 +29,7 @@ export const TableHeadCell = component(
       borderLeftWidth: `${borderLeftWidth}px`,
       borderRightWidth: `${borderRightWidth}px`,
       borderStyle,
+      width,
     }),
   }), ['borderTopWidth', 'borderLeftWidth', 'borderRightWidth', 'borderBottomWidth', 'borderStyle', 'borderColor', 'backgroundColor'])
 )(({ id, style, children }) => (
