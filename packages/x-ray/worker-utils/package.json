@@ -1,0 +1,25 @@
+{
+  "name": "@x-ray/worker-utils",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.4.4",
+    "@babel/runtime": "^7.1.2",
+    "babel-plugin-dynamic-import-node": "^2.3.0",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "tsfn": "^0.1.2"
+  },
+  "devDependencies": {
+    "@types/react-dom": "^16.0.9"
+  }
+}
