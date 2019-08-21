@@ -11,7 +11,7 @@ export type TIsFocusedHandlers = {
   onBlur?: () => void,
 }
 
-export type TButtonProps = {
+export type TButton = {
   id?: string,
   accessibilityLabel?: string,
   isDisabled?: boolean,

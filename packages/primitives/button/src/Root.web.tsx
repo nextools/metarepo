@@ -1,10 +1,10 @@
 import React from 'react'
 import { normalizeStyle } from 'stili'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
-import { TButtonProps } from './types'
+import { TButton } from './types'
 
 export const Button = component(
-  startWithType<TButtonProps>(),
+  startWithType<TButton>(),
   mapWithPropsMemo(({ isDisabled }) => ({
     styles: normalizeStyle({
       appearance: 'none',
