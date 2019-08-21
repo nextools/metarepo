@@ -22,5 +22,6 @@ export const globalIgnoreList = [
   'url',
   'util',
   'vm',
+  'worker_threads',
   'zlib',
 ]
