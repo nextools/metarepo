@@ -1,3 +1,3 @@
-export { default as runServer } from './run-server'
-export { default as prepareFiles } from './prepare-files'
+export * from './run-screenshots-server'
+export * from './prepare-files'
 export * from './types'

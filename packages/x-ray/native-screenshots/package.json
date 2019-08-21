@@ -4,6 +4,7 @@
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
+  "react-native": "src/App.js",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
@@ -11,11 +12,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@x-ray/common-utils": "^0.1.0",
     "@x-ray/screenshot-utils": "^0.1.0",
+    "@x-ray/tar-fs": "^0.0.0",
     "graceful-fs": "^4.1.11",
-    "make-dir": "^3.0.0",
-    "react-native-view-shot": "github:batata-frita/react-native-view-shot#semver:^0.1.1"
+    "syntx": "^0.3.0",
+    "tsfn": "^0.1.2",
+    "upng-js": "^2.1.0"
   },
   "devDependencies": {
     "@types/graceful-fs": "^4.1.2",
