@@ -1,66 +1,49 @@
-import { promisify } from 'util'
-import fs from 'graceful-fs'
 // @ts-ignore
 import imageminPngout from 'imagemin-pngout'
-import { TCheckResult } from '@x-ray/common-utils'
-import hasPngDiff from './has-png-diff'
+import { TTarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
+import upng from 'upng-js'
+import { TScreenshotsCheckResult } from './types'
+import { hasPngDiff } from './has-png-diff'
 
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
-const pathExists = promisify(fs.access)
 const optimizePng = imageminPngout({ strategy: 2 })
 
-const checkScreenshot = async (data: Buffer, screenshotPath: string, shouldBailout: boolean): Promise<TCheckResult> => {
-  let screenshotExists = false
+export const checkScreenshot = async (data: Buffer, tar: TTarFs, screenshotName: string): Promise<TScreenshotsCheckResult> => {
+  if (tar.has(screenshotName)) {
+    const { data: existingData } = await tar.read(screenshotName) as TTarDataWithMeta
 
-  try {
-    await pathExists(screenshotPath)
+    const pngOld = upng.decode(existingData)
+    const pngNew = upng.decode(data)
 
-    screenshotExists = true
-  } catch (e) {
-    //
-  }
-
-  if (screenshotExists) {
-    const existingData = await readFile(screenshotPath)
-
-    if (!hasPngDiff(existingData, data)) {
+    if (!hasPngDiff(pngOld, pngNew)) {
       return {
-        status: 'ok',
-        path: screenshotPath,
-      }
-    }
-
-    if (shouldBailout) {
-      return {
-        status: 'diff',
-        path: screenshotPath,
+        type: 'OK',
       }
     }
 
     const optimizedScreenshot = await optimizePng(data)
-    await writeFile(screenshotPath, optimizedScreenshot)
 
     return {
-      status: 'diff',
-      path: screenshotPath,
+      type: 'DIFF',
+      old: {
+        data: existingData,
+        width: pngOld.width,
+        height: pngOld.height,
+      },
+      new: {
+        data: optimizedScreenshot,
+        width: pngNew.width,
+        height: pngNew.height,
+      },
     }
   }
 
-  if (shouldBailout) {
-    return {
-      status: 'unknown',
-      path: screenshotPath,
-    }
-  }
-
+  const pngNew = upng.decode(data)
   const optimizedScreenshot = await optimizePng(data)
-  await writeFile(screenshotPath, optimizedScreenshot)
 
   return {
-    status: 'new',
-    path: screenshotPath,
+    type: 'NEW',
+    data: optimizedScreenshot,
+    width: pngNew.width,
+    height: pngNew.height,
   }
 }
-
-export default checkScreenshot
