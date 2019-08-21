@@ -1,5 +1,3 @@
-/* eslint-disable import/no-commonjs */
-
 // https://github.com/benmosher/eslint-plugin-import
 module.exports = {
   settings: {
@@ -73,7 +71,6 @@ module.exports = {
     'import/no-named-as-default': 2,
     'import/no-named-as-default-member': 2,
     'import/no-extraneous-dependencies': 2,
-    'import/no-commonjs': 2,
     'import/first': 2,
     'import/no-duplicates': 2,
     'import/extensions': [2, 'never', { json: 'always' }],

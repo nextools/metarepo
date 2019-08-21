@@ -1,5 +1,3 @@
-/* eslint-disable import/no-commonjs */
-
 // https://github.com/yannickcr/eslint-plugin-react
 module.exports = {
   parserOptions: {
