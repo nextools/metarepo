@@ -1,33 +1,26 @@
-/* eslint-disable no-throw-literal */
+/* eslint-disable no-throw-literal, no-duplicate-case, no-fallthrough */
 import path from 'path'
-import { promisify } from 'util'
+import { parentPort, MessagePort } from 'worker_threads'
 import puppeteer, { Page } from 'puppeteer-core'
 import pAll from 'p-all'
-import fs from 'graceful-fs'
-import makeDir from 'make-dir'
-import { TMessage } from '@x-ray/common-utils'
-import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
+import { TCheckRequest } from '@x-ray/common-utils'
+import { checkScreenshot, TMeta, TScreenshotsItemResult } from '@x-ray/screenshot-utils'
+import upng from 'upng-js'
+import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
+import { map } from 'iterama'
 import getScreenshot from './get'
+import { TOptions } from './types'
 
-const webSocketDebuggerUrl = process.argv[2]
-const options = process.argv[3]
-const targetFiles = process.argv.slice(4)
-
-const pathExists = promisify(fs.access)
 const shouldBailout = Boolean(process.env.XRAY_CI)
 const CONCURRENCY = 4
+const port = parentPort as any as MessagePort
 
-// @ts-ignore
-const processSend: (message: TMessage) => Promise<void> = promisify(process.send.bind(process))
-
-;(async () => {
+export default async (options: TOptions) => {
   try {
-    const { setupFile, dpr, width, height } = JSON.parse(options)
-
-    await import(setupFile)
+    const { dpr, width, height } = options
 
     const browser = await puppeteer.connect({
-      browserWSEndpoint: webSocketDebuggerUrl,
+      browserWSEndpoint: options.webSocketDebuggerUrl,
       defaultViewport: {
         deviceScaleFactor: dpr,
         width,
@@ -43,50 +36,114 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
 
     const pages: Page[] = await Promise.all(pagesPromises)
 
-    for (const targetPath of targetFiles) {
-      const { default: items } = await import(targetPath) as { default: TMeta[] }
-      const screenshotsDir = path.join(path.dirname(targetPath), '__x-ray__', 'chrome-screenshots')
+    const filenames: string[] = []
 
-      if (!shouldBailout) {
+    await new Promise((resolve, reject) => {
+      port.on('message', async (action: TCheckRequest) => {
         try {
-          await pathExists(screenshotsDir)
-        } catch (e) {
-          await makeDir(screenshotsDir)
-        }
-      }
+          switch (action.type) {
+            case 'FILE': {
+              const { default: items } = await import(action.path) as { default: Iterable<TMeta> }
+              const screenshotsDir = path.join(path.dirname(action.path), '__x-ray__')
+              const tar = await TarFs(path.join(screenshotsDir, 'chrome-screenshots.tar'))
 
-      await pAll(
-        items.map((item) => async () => {
-          const page = pages.shift() as Page
-          const screenshot = await getScreenshot(page, item)
-          const screenshotPath = path.join(screenshotsDir, `${item.options.name}.png`)
+              await pAll(
+                map((item: TMeta) => async () => {
+                  const page = pages.shift() as Page
+                  const screenshot = await getScreenshot(page, item)
 
-          pages.push(page)
+                  filenames.push(item.id)
+                  pages.push(page)
 
-          const message = await checkScreenshot(screenshot, screenshotPath, shouldBailout)
+                  const message = await checkScreenshot(screenshot, tar, item.id)
 
-          await processSend(message)
+                  if (shouldBailout) {
+                    switch (message.type) {
+                      case 'DIFF':
+                      case 'NEW': {
+                        await browser.disconnect()
 
-          if (shouldBailout) {
-            if (message.status === 'diff' || message.status === 'unknown') {
-              throw null
+                        port.postMessage({
+                          type: 'BAILOUT',
+                          id: item.id,
+                        } as TScreenshotsItemResult)
+
+                        port.close()
+
+                        throw null
+                      }
+                    }
+                  }
+
+                  switch (message.type) {
+                    case 'DIFF':
+                    case 'NEW': {
+                      port.postMessage({
+                        ...message,
+                        id: item.id,
+                        serializedElement: item.serializedElement,
+                      } as TScreenshotsItemResult)
+
+                      break
+                    }
+                    case 'OK': {
+                      port.postMessage({
+                        type: 'OK',
+                        id: item.id,
+                      })
+
+                      break
+                    }
+                  }
+                })(items),
+                { concurrency: pages.length }
+              )
+
+              for (const filename of tar.list()) {
+                if (!filenames.includes(filename)) {
+                  const { data, meta } = await tar.read(filename) as TTarDataWithMeta
+
+                  const { width, height } = upng.decode(data.buffer as ArrayBuffer)
+
+                  port.postMessage({
+                    type: 'DELETED',
+                    id: filename,
+                    serializedElement: meta,
+                    data,
+                    width,
+                    height,
+                  } as TScreenshotsItemResult)
+                }
+              }
+
+              await tar.close()
+
+              port.postMessage({
+                type: 'DONE',
+                path: action.path,
+              } as TScreenshotsItemResult)
+
+              break
+            }
+            case 'DONE': {
+              await browser.disconnect()
+              port.close()
+              resolve()
             }
           }
-        }),
-        { concurrency: pages.length }
-      )
-    }
-
-    await browser.disconnect()
-
-    process.disconnect()
-    process.exit(0) // eslint-disable-line
+        } catch (err) {
+          reject(err)
+        }
+      })
+    })
   } catch (err) {
-    if (err !== null) {
-      console.error(err)
-    }
+    console.error(err)
 
-    process.disconnect()
-    process.exit(1) // eslint-disable-line
+    if (err !== null) {
+      port.postMessage({
+        type: 'ERROR',
+        data: err.message,
+      } as TScreenshotsItemResult)
+    }
   }
-})()
+}

@@ -1,34 +1,47 @@
 import { cpus } from 'os'
 import request from 'request-promise-native'
-import { divideFiles, logTotalResults } from '@x-ray/common-utils'
-import parent from './parent'
-import { TOptions } from './types'
+import { run } from '@rebox/web'
+import { runServer, runScreenshots } from '@x-ray/screenshot-utils'
+import { TOptions, TUserOptions } from './types'
 
+const CONCURRENCY = Math.max(cpus().length - 1, 1)
 const DEBUGGER_ENDPOINT_HOST = 'localhost'
 const DEBUGGER_ENDPOINT_PORT = 9222
-const CONCURRENCY = Math.max(cpus().length - 1, 1)
-const defaultOptions: Partial<TOptions> = {
-  dpr: 1,
+const defaultOptions = {
+  dpr: 2,
   width: 1024,
   height: 1024,
 }
+const childFile = require.resolve('./child')
 
-const runFiles = async (targetFiles: string[], userOptions: TOptions) => {
-  const options = {
-    ...defaultOptions,
-    ...userOptions,
-  }
+export const runFiles = async (targetFiles: string[], userOptions: TUserOptions) => {
   const { body: { webSocketDebuggerUrl } } = await request({
     uri: `http://${DEBUGGER_ENDPOINT_HOST}:${DEBUGGER_ENDPOINT_PORT}/json/version`,
     json: true,
     resolveWithFullResponse: true,
   })
+  const options: TOptions = {
+    ...defaultOptions,
+    ...userOptions,
+    webSocketDebuggerUrl,
+  }
 
-  const totalResults = await Promise.all(
-    divideFiles(targetFiles, CONCURRENCY).map((files) => parent(webSocketDebuggerUrl, files, options))
-  )
+  const { result, resultData, hasBeenChanged } = await runScreenshots(childFile, targetFiles, CONCURRENCY, options)
 
-  logTotalResults(totalResults)
+  if (hasBeenChanged) {
+    const closeReboxServer = await run({
+      htmlTemplatePath: 'packages/x-ray/ui/src/index.html',
+      entryPointPath: 'packages/x-ray/ui/src/index.tsx',
+      isQuiet: true,
+    })
+
+    console.log('open http://localhost:3000/ to approve or discard changes')
+
+    await runServer({
+      platform: options.platform,
+      result,
+      resultData,
+    })
+    await closeReboxServer()
+  }
 }
-
-export default runFiles
