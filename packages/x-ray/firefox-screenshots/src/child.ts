@@ -1,27 +1,20 @@
-/* eslint-disable no-throw-literal */
+/* eslint-disable no-throw-literal, no-duplicate-case, no-fallthrough */
 import path from 'path'
-import { promisify } from 'util'
+import { parentPort, MessagePort } from 'worker_threads'
 import foxr from 'foxr'
-import fs from 'graceful-fs'
-import makeDir from 'make-dir'
-import { TMessage } from '@x-ray/common-utils'
-import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
+import upng from 'upng-js'
+import { checkScreenshot, TMeta, TScreenshotsItemResult } from '@x-ray/screenshot-utils'
+import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
+import { TCheckRequest } from '@x-ray/common-utils'
 import getScreenshot from './get'
+import { TOptions } from './types'
 
-const options = process.argv[2]
-const targetFiles = process.argv.slice(3)
-
-const pathExists = promisify(fs.access)
 const shouldBailout = Boolean(process.env.XRAY_CI)
+const port = parentPort as any as MessagePort
 
-// @ts-ignore
-const processSend: (message: TMessage) => Promise<void> = promisify(process.send.bind(process))
-
-;(async () => {
+export default async (options: TOptions) => {
   try {
-    const { setupFile, width, height } = JSON.parse(options)
-
-    await import(setupFile)
+    const { width, height } = options
 
     const browser = await foxr.connect({
       defaultViewport: {
@@ -32,41 +25,101 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
 
     const page = await browser.newPage()
 
-    for (const targetPath of targetFiles) {
-      const { default: items } = await import(targetPath) as { default: TMeta[] }
-      const screenshotsDir = path.join(path.dirname(targetPath), '__x-ray__', 'firefox-screenshots')
-
-      if (!shouldBailout) {
+    await new Promise((resolve, reject) => {
+      port.on('message', async (action: TCheckRequest) => {
         try {
-          await pathExists(screenshotsDir)
-        } catch (e) {
-          await makeDir(screenshotsDir)
+          switch (action.type) {
+            case 'FILE': {
+              const { default: items } = await import(action.path) as { default: TMeta[] }
+              const screenshotsDir = path.join(path.dirname(action.path), '__x-ray__')
+              const tar = await TarFs(path.join(screenshotsDir, 'firefox-screenshots.tar'))
+
+              for (const item of items) {
+                const screenshot = await getScreenshot(page, item)
+                const message = await checkScreenshot(screenshot, tar, item.id)
+
+                if (shouldBailout) {
+                  switch (message.type) {
+                    case 'DIFF':
+                    case 'NEW': {
+                      await browser.disconnect()
+
+                      port.postMessage({
+                        type: 'BAILOUT',
+                        id: item.id,
+                      } as TScreenshotsItemResult)
+
+                      port.close()
+
+                      throw null
+                    }
+                  }
+                }
+
+                switch (message.type) {
+                  case 'DIFF':
+                  case 'NEW': {
+                    port.postMessage({
+                      ...message,
+                      id: item.id,
+                      serializedElement: item.serializedElement,
+                    } as TScreenshotsItemResult)
+
+                    break
+                  }
+                  case 'OK': {
+                    port.postMessage({
+                      type: 'OK',
+                      id: item.id,
+                    })
+
+                    break
+                  }
+                }
+              }
+
+              for (const filename of tar.list()) {
+                if (!items.find((metaItem) => metaItem.id === filename)) {
+                  const { data, meta } = await tar.read(filename) as TTarDataWithMeta
+                  const { width, height } = upng.decode(data)
+
+                  port.postMessage({
+                    type: 'DELETED',
+                    id: filename,
+                    serializedElement: meta,
+                    data,
+                    width,
+                    height,
+                  } as TScreenshotsItemResult)
+                }
+              }
+
+              port.postMessage({
+                type: 'DONE',
+                path: action.path,
+              } as TScreenshotsItemResult)
+
+              break
+            }
+            case 'DONE': {
+              await browser.disconnect()
+              port.close()
+              resolve()
+            }
+          }
+        } catch (err) {
+          reject(err)
         }
-      }
-
-      for (const item of items) {
-        const screenshot = await getScreenshot(page, item)
-        const screenshotPath = path.join(screenshotsDir, `${item.options.name}.png`)
-        const message = await checkScreenshot(screenshot, screenshotPath, shouldBailout)
-
-        await processSend(message)
-
-        if (shouldBailout && (message.status === 'diff' || message.status === 'unknown')) {
-          throw null
-        }
-      }
-    }
-
-    await browser.disconnect()
-
-    process.disconnect()
-    process.exit(0) // eslint-disable-line
+      })
+    })
   } catch (err) {
-    if (err !== null) {
-      console.error(err)
-    }
+    console.error(err)
 
-    process.disconnect()
-    process.exit(1) // eslint-disable-line
+    if (err !== null) {
+      port.postMessage({
+        type: 'ERROR',
+        data: err.message,
+      } as TScreenshotsItemResult)
+    }
   }
-})()
+}
