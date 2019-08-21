@@ -43,7 +43,7 @@ import { TNpmOptions } from '@auto/npm'
 import move from './plugins/move'
 import transformDts from './plugins/transform-dts'
 import buildPackageJson from './plugins/build-package-json'
-import buildAssets from './plugins/build-assets'
+import copyAssets from './plugins/copy-assets'
 import { getStartOptions } from './get-options'
 
 export const preparePackage = (packageDir: string) => {
@@ -54,6 +54,13 @@ export const preparePackage = (packageDir: string) => {
     copy(`${dir}/build/`),
     buildPackageJson(dir)
   )
+}
+
+export const buildAssets = async (dir: string) => {
+  const packageJsonPath = path.resolve(dir, 'package.json')
+  const { default: packageJson } = await import(packageJsonPath)
+
+  return copyAssets(dir, packageJson.buildAssets)
 }
 
 export const buildWeb = async (dir: string) => {
@@ -195,12 +202,19 @@ const buildPackage = async (packageDir: string) => {
     tasks.push('buildReactNative')
   }
 
+  if (Reflect.has(packageJson, 'buildAssets')) {
+    tasks.push('buildAssets')
+  }
+
+  if (Reflect.has(packageJson, 'buildTasks')) {
+    tasks.push(...packageJson.buildTasks)
+  }
+
   return sequence(
     env({ NODE_ENV: 'production' }),
     find(`${dir}/build/`),
     remove,
-    parallel(tasks)(dir),
-    Reflect.has(packageJson, 'buildAssets') && buildAssets(dir, packageJson.buildAssets)
+    parallel(tasks)(dir)
   )
 }
 

@@ -12,7 +12,7 @@ const globbyOptions = {
 }
 
 export default (packageDir: string, assets: TAssets) =>
-  plugin('buildAssets', ({ logPath }) => async () => {
+  plugin('copy', ({ logPath }) => async () => {
     const path = await import('path')
     const { default: movePath } = await import('move-path')
     const { default: makeDir } = await import('make-dir')
