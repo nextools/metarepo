@@ -47,7 +47,7 @@ export const serializeValue = ({ value, currentIndent, config, childIndex, path 
 
   if (isFunction(value)) {
     return {
-      head: [{ type: TYPE_VALUE_FUNCTION, value }],
+      head: [{ type: TYPE_VALUE_FUNCTION, value: '() => {}' }],
       body: [],
       tail: [],
     }
@@ -55,7 +55,7 @@ export const serializeValue = ({ value, currentIndent, config, childIndex, path 
 
   if (isNull(value)) {
     return {
-      head: [{ type: TYPE_VALUE_NULL, value }],
+      head: [{ type: TYPE_VALUE_NULL, value: 'null' }],
       body: [],
       tail: [],
     }
@@ -63,7 +63,7 @@ export const serializeValue = ({ value, currentIndent, config, childIndex, path 
 
   if (isNumber(value)) {
     return {
-      head: [{ type: TYPE_VALUE_NUMBER, value }],
+      head: [{ type: TYPE_VALUE_NUMBER, value: String(value) }],
       body: [],
       tail: [],
     }
@@ -71,7 +71,7 @@ export const serializeValue = ({ value, currentIndent, config, childIndex, path 
 
   if (isBoolean(value)) {
     return {
-      head: [{ type: TYPE_VALUE_BOOLEAN, value }],
+      head: [{ type: TYPE_VALUE_BOOLEAN, value: String(value) }],
       body: [],
       tail: [],
     }
@@ -79,7 +79,7 @@ export const serializeValue = ({ value, currentIndent, config, childIndex, path 
 
   if (isSymbol(value)) {
     return {
-      head: [{ type: TYPE_VALUE_SYMBOL, value }],
+      head: [{ type: TYPE_VALUE_SYMBOL, value: value.description || 'symbol' }],
       body: [],
       tail: [],
     }

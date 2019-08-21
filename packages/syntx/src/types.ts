@@ -6,8 +6,8 @@ export type TPathSegment = {
 export type TPath = TPathSegment[]
 
 export type TLineElement = {
-  type: symbol,
-  value: any,
+  type: string,
+  value: string,
 }
 
 export type TLine = {
