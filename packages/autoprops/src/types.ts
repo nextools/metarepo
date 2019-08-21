@@ -2,9 +2,9 @@ import { FC } from 'react'
 import { TAnyObject } from 'tsfn'
 import { BigInteger } from 'big-integer'
 
-export type TMetaFile = {
-  Component: FC<any>,
-  config: TComponentConfig,
+export type TMetaFile<T = any> = {
+  Component: FC<T>,
+  config: TComponentConfig<T>,
   childrenConfig?: TChildrenConfig,
 }
 
@@ -18,13 +18,15 @@ export type TChildrenConfig = {
   required?: string[],
 }
 
-export type TComponentConfig = {
+type TKeyOf<T> = (keyof T) & string
+
+export type TComponentConfig<T = TAnyObject> = {
   props: {
-    [K in string]: any[]
+    [k in keyof T]: T[k][]
   },
-  required?: string[],
-  mutex?: string[][],
-  mutin?: string[][],
+  required?: TKeyOf<T>[],
+  mutex?: TKeyOf<T>[][],
+  mutin?: TKeyOf<T>[][],
 }
 
 export type TChildrenMap = {

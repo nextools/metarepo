@@ -14,7 +14,16 @@ test('getPropsIterable', (t) => {
 
   t.deepEquals(
     Array.from(getPropsIterable(meta)),
-    [{}, { a: true }],
+    [
+      {
+        id: 'vyGp6PvFo4RvsFtPoIWeCReyIC8=',
+        props: {},
+      },
+      {
+        id: 'xgkW/AgY+9oivGzjSbA2Dxj2Ihc=',
+        props: { a: true },
+      },
+    ],
     'should iterate props'
   )
 
