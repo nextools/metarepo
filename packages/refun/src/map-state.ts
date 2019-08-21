@@ -3,7 +3,7 @@ import { TExtend3, EMPTY_OBJECT } from 'tsfn'
 import { shallowEqualByKeys } from './utils'
 
 export const mapState = <SN extends string, SSN extends string, P extends {}, R> (stateName: SN, stateSetterName: SSN, getValue: (props: P) => R, watchKeys: (keyof P)[]) =>
-  (props: P): TExtend3<P, { [K in SN]: R }, { [K in SSN]: (arg: R) => void }> => {
+  (props: P): TExtend3<P, { [K in SN]: R }, { [K in SSN]: (arg: R | ((arg: R) => R)) => void }> => {
     const isFirstRender = useRef(true)
     const [state, setState] = useState<R>(isFirstRender.current ? getValue(props) : EMPTY_OBJECT)
     const prevProps = useRef<P>(props)
