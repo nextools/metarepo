@@ -13,15 +13,7 @@ export type ReactElementJson = {
 
 const hasKeys = (obj: any) => Object.keys(obj).length > 0
 
-const serializeReactTree = (reactNode: ReactElement<any>, indent: number, primitives: string[]) => {
-  const registerType = (primitive: string) => {
-    const type = primitive.split('.')[0]
-
-    if (!primitives.includes(type)) {
-      primitives.push(type)
-    }
-  }
-
+const serializeReactTree = (reactNode: ReactElement<any>, indent: number) => {
   const go = (json: ReactElementJson, indent: number) => {
     let result = makeIndent(indent)
 
@@ -39,14 +31,12 @@ const serializeReactTree = (reactNode: ReactElement<any>, indent: number, primit
       return result + json
     }
 
-    registerType(json.type)
-
     result += '<'
     result += json.type
 
     if (hasKeys(json.props)) {
       result += '\n'
-      result += serializeProps(json.props, nextIndent(indent), primitives)
+      result += serializeProps(json.props, nextIndent(indent))
     }
 
     if (Array.isArray(json.children)) {

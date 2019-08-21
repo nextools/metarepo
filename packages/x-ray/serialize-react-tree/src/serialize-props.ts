@@ -4,7 +4,7 @@ import is from '@sindresorhus/is'
 import serializeReactTree from './serialize-react-tree'
 import { makeIndent, nextIndent, prevIndent } from './make-indent'
 
-const serializeArray = (array: any[], indent: number, primitives: string[]) => {
+const serializeArray = (array: any[], indent: number) => {
   if (array.length === 0) {
     return '[]'
   }
@@ -23,7 +23,7 @@ const serializeArray = (array: any[], indent: number, primitives: string[]) => {
 
     if (isValidElement(value)) {
       result += '(\n'
-      result += serializeReactTree(value, nextIndent(indent), primitives)
+      result += serializeReactTree(value, nextIndent(indent))
       result += '\n'
       result += makeIndent(indent)
       result += ')'
@@ -32,12 +32,12 @@ const serializeArray = (array: any[], indent: number, primitives: string[]) => {
     }
 
     if (is.plainObject(value)) {
-      result += serializeObject(value, nextIndent(indent), primitives)
+      result += serializeObject(value, nextIndent(indent))
       continue
     }
 
     if (Array.isArray(value)) {
-      result += serializeArray(value, nextIndent(indent), primitives)
+      result += serializeArray(value, nextIndent(indent))
       continue
     }
 
@@ -76,7 +76,7 @@ const serializeArray = (array: any[], indent: number, primitives: string[]) => {
   return result
 }
 
-const serializeObject = (obj: { [k: string]: any }, indent: number, primitives: string[]) => {
+const serializeObject = (obj: { [k: string]: any }, indent: number) => {
   const entries = Object.entries(obj)
 
   if (entries.length === 0) {
@@ -87,6 +87,10 @@ const serializeObject = (obj: { [k: string]: any }, indent: number, primitives: 
   let index = 0
 
   for (const [key, value] of entries) {
+    if (typeof value === 'undefined') {
+      continue
+    }
+
     if (index !== 0) {
       result += ',\n'
     }
@@ -99,7 +103,7 @@ const serializeObject = (obj: { [k: string]: any }, indent: number, primitives: 
 
     if (isValidElement(value)) {
       result += '(\n'
-      result += serializeReactTree(value, nextIndent(indent), primitives)
+      result += serializeReactTree(value, nextIndent(indent))
       result += '\n'
       result += makeIndent(indent)
       result += ')'
@@ -108,22 +112,17 @@ const serializeObject = (obj: { [k: string]: any }, indent: number, primitives: 
     }
 
     if (is.plainObject(value)) {
-      result += serializeObject(value, nextIndent(indent), primitives)
+      result += serializeObject(value, nextIndent(indent))
       continue
     }
 
     if (Array.isArray(value)) {
-      result += serializeArray(value, nextIndent(indent), primitives)
+      result += serializeArray(value, nextIndent(indent))
       continue
     }
 
     if (is.function_(value)) {
       result += '() => {}'
-      continue
-    }
-
-    if (typeof value === 'undefined') {
-      result += 'undefined'
       continue
     }
 
@@ -152,13 +151,17 @@ const serializeObject = (obj: { [k: string]: any }, indent: number, primitives: 
   return result
 }
 
-const serializeProps = (props: { [k: string]: any }, indent: number, primitives: string[]) => {
+const serializeProps = (props: { [k: string]: any }, indent: number) => {
   const entries = Object.entries(props)
 
   let result = ''
   let index = 0
 
   for (const [key, value] of entries) {
+    if (typeof value === 'undefined') {
+      continue
+    }
+
     if (index !== 0) {
       result += '\n'
     }
@@ -171,7 +174,7 @@ const serializeProps = (props: { [k: string]: any }, indent: number, primitives:
 
     if (isValidElement(value)) {
       result += '{\n'
-      result += serializeReactTree(value, nextIndent(indent), primitives)
+      result += serializeReactTree(value, nextIndent(indent))
       result += '\n'
       result += makeIndent(indent)
       result += '}'
@@ -181,25 +184,20 @@ const serializeProps = (props: { [k: string]: any }, indent: number, primitives:
 
     if (is.plainObject(value)) {
       result += '{'
-      result += serializeObject(value, nextIndent(indent), primitives)
+      result += serializeObject(value, nextIndent(indent))
       result += '}'
       continue
     }
 
     if (Array.isArray(value)) {
       result += '{'
-      result += serializeArray(value, nextIndent(indent), primitives)
+      result += serializeArray(value, nextIndent(indent))
       result += '}'
       continue
     }
 
     if (is.function_(value)) {
       result += '{() => {}}'
-      continue
-    }
-
-    if (typeof value === 'undefined') {
-      result += '{undefined}'
       continue
     }
 
