@@ -13,13 +13,17 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "stili": "^0.1.0",
     "refun": "^0.3.0",
+    "stili": "^0.1.0",
     "tsfn": "^0.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
     "@types/react-native": "^0.57.51",
+    "@x-ray/common-utils": "^0.1.1",
+    "@x-ray/screenshot-utils": "^0.1.1",
+    "@x-ray/snapshots": "^0.0.0",
+    "autoprops": "^0.5.2",
     "react": "^16.8.6",
     "react-native": "^0.59.0"
   }
