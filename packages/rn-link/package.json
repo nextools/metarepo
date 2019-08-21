@@ -1,0 +1,17 @@
+{
+  "name": "rn-link",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@react-native-community/cli-platform-android": "^2.1.1",
+    "@react-native-community/cli-platform-ios": "^2.2.0"
+  }
+}
