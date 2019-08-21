@@ -2,31 +2,34 @@ import path from 'path'
 import os from 'os'
 import { promisify } from 'util'
 import execa from 'execa'
-import { readdir } from 'graceful-fs'
 import { isUndefined } from 'tsfn'
 import cpy from 'cpy'
 import makeDir from 'make-dir'
+import { readdir } from 'graceful-fs'
 // @ts-ignore
 import simplePlist from 'simple-plist'
+import { buildJsBundle } from './build-js-bundle'
 
 const pReadDir = promisify(readdir)
 const pPlistRead = promisify(simplePlist.readFile)
 const pPlistWrite = promisify(simplePlist.writeFile)
 
-export type TBuildIosOptions = {
+export type TBuildReleaseOptions = {
   entryPointPath: string,
+  projectPath: string,
   osVersion: string,
   platformName: string,
   appName: string,
+  appId: string,
   outputPath: string,
 }
 
-export const buildIos = async (options: TBuildIosOptions) => {
+export const buildRelease = async (options: TBuildReleaseOptions) => {
   await execa(
     'xcodebuild',
     [
-      '-workspace',
-      'node_modules/@rebox/ios/ios/rebox.xcodeproj/project.xcworkspace',
+      '-project',
+      path.join(options.projectPath, 'rebox.xcodeproj'),
       '-scheme',
       'rebox',
       '-configuration',
@@ -74,32 +77,11 @@ export const buildIos = async (options: TBuildIosOptions) => {
 
   plist.CFBundleDisplayName = options.appName
   plist.CFBundleName = options.appName
+  plist.CFBundleIdentifier = options.appId
 
   await pPlistWrite(plistPath, plist)
-
-  await execa(
-    'haul',
-    [
-      'bundle',
-      '--config',
-      require.resolve('./haul.config.js'),
-      '--platform',
-      'ios',
-      '--dev',
-      'false',
-      '--minify',
-      'true',
-      '--progress',
-      'none',
-      '--bundle-output',
-      path.join(newAppPath, 'main.jsbundle'),
-    ],
-    {
-      stderr: process.stderr,
-      env: {
-        FORCE_COLOR: '1',
-        REBOX_ENTRY_POINT: options.entryPointPath,
-      },
-    }
-  )
+  await buildJsBundle({
+    entryPointPath: options.entryPointPath,
+    outputPath: newAppPath,
+  })
 }
