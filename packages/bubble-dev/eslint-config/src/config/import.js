@@ -58,7 +58,11 @@ module.exports = {
     },
   },
   rules: {
-    'import/no-unresolved': 2,
+    'import/no-unresolved': [2, {
+      ignore: [
+        'worker_threads',
+      ],
+    }],
     'import/named': 2,
     'import/default': 2,
     'import/namespace': 2,
