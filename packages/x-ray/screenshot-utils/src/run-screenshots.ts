@@ -34,6 +34,14 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
 
       worker.on('message', async (action: TScreenshotsItemResult) => {
         switch (action.type) {
+          case 'INIT': {
+            worker.send({
+              type: 'FILE',
+              path: targetFiles[targetFileIndex++],
+            })
+
+            break
+          }
           case 'OK': {
             okCount++
 
@@ -88,7 +96,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
             break
           }
           case 'BAILOUT': {
-            await Promise.all(workers.map((worker) => worker.terminate()))
+            await Promise.all(workers.map((worker) => worker.kill()))
 
             reject(null)
 
@@ -109,7 +117,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
             }
 
             if (targetFileIndex < targetFiles.length) {
-              worker.postMessage({
+              worker.send({
                 type: 'FILE',
                 path: targetFiles[targetFileIndex++],
               })
@@ -117,7 +125,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
               break
             }
 
-            worker.postMessage({ type: 'DONE' })
+            worker.send({ type: 'DONE' })
 
             doneWorkersCount++
 
@@ -141,11 +149,6 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
             reject(action.data)
           }
         }
-      })
-
-      worker.postMessage({
-        type: 'FILE',
-        path: targetFiles[targetFileIndex++],
       })
 
       return worker

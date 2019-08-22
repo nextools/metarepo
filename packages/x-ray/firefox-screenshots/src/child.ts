@@ -1,16 +1,16 @@
 /* eslint-disable no-throw-literal, no-duplicate-case, no-fallthrough */
 import path from 'path'
-import { parentPort, MessagePort } from 'worker_threads'
 import foxr from 'foxr'
 import upng from 'upng-js'
 import { checkScreenshot, TMeta, TScreenshotsItemResult } from '@x-ray/screenshot-utils'
 import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { TCheckRequest } from '@x-ray/common-utils'
+import { processSend } from '@x-ray/worker-utils'
+import { TLineElement } from 'syntx'
 import getScreenshot from './get'
 import { TOptions } from './types'
 
 const shouldBailout = Boolean(process.env.XRAY_CI)
-const port = parentPort as any as MessagePort
 
 export default async (options: TOptions) => {
   try {
@@ -26,7 +26,7 @@ export default async (options: TOptions) => {
     const page = await browser.newPage()
 
     await new Promise((resolve, reject) => {
-      port.on('message', async (action: TCheckRequest) => {
+      process.on('message', async (action: TCheckRequest) => {
         try {
           switch (action.type) {
             case 'FILE': {
@@ -44,12 +44,13 @@ export default async (options: TOptions) => {
                     case 'NEW': {
                       await browser.disconnect()
 
-                      port.postMessage({
+                      await processSend<TScreenshotsItemResult>({
                         type: 'BAILOUT',
                         id: item.id,
-                      } as TScreenshotsItemResult)
+                      })
 
-                      port.close()
+                      process.disconnect()
+                      process.exit(1)
 
                       throw null
                     }
@@ -59,16 +60,16 @@ export default async (options: TOptions) => {
                 switch (message.type) {
                   case 'DIFF':
                   case 'NEW': {
-                    port.postMessage({
+                    await processSend<TScreenshotsItemResult>({
                       ...message,
                       id: item.id,
                       serializedElement: item.serializedElement,
-                    } as TScreenshotsItemResult)
+                    })
 
                     break
                   }
                   case 'OK': {
-                    port.postMessage({
+                    await processSend<TScreenshotsItemResult>({
                       type: 'OK',
                       id: item.id,
                     })
@@ -83,27 +84,28 @@ export default async (options: TOptions) => {
                   const { data, meta } = await tar.read(filename) as TTarDataWithMeta
                   const { width, height } = upng.decode(data)
 
-                  port.postMessage({
+                  await processSend<TScreenshotsItemResult>({
                     type: 'DELETED',
                     id: filename,
-                    serializedElement: meta,
+                    serializedElement: meta as TLineElement[][],
                     data,
                     width,
                     height,
-                  } as TScreenshotsItemResult)
+                  })
                 }
               }
 
-              port.postMessage({
+              await tar.close()
+
+              await processSend<TScreenshotsItemResult>({
                 type: 'DONE',
                 path: action.path,
-              } as TScreenshotsItemResult)
+              })
 
               break
             }
             case 'DONE': {
               await browser.disconnect()
-              port.close()
               resolve()
             }
           }
@@ -111,15 +113,25 @@ export default async (options: TOptions) => {
           reject(err)
         }
       })
+
+      processSend<TScreenshotsItemResult>({
+        type: 'INIT',
+      })
     })
   } catch (err) {
     console.error(err)
 
     if (err !== null) {
-      port.postMessage({
+      await processSend<TScreenshotsItemResult>({
         type: 'ERROR',
         data: err.message,
-      } as TScreenshotsItemResult)
+      })
     }
+
+    process.disconnect()
+    process.exit(1)
   }
+
+  process.disconnect()
+  process.exit(0)
 }

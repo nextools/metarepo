@@ -1,6 +1,5 @@
 /* eslint-disable no-throw-literal, no-duplicate-case, no-fallthrough */
 import path from 'path'
-import { parentPort, MessagePort } from 'worker_threads'
 import puppeteer, { Page } from 'puppeteer-core'
 import pAll from 'p-all'
 import { TCheckRequest } from '@x-ray/common-utils'
@@ -8,12 +7,13 @@ import { checkScreenshot, TMeta, TScreenshotsItemResult } from '@x-ray/screensho
 import upng from 'upng-js'
 import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { map } from 'iterama'
+import { processSend } from '@x-ray/worker-utils'
+import { TLineElement } from 'syntx'
 import getScreenshot from './get'
 import { TOptions } from './types'
 
 const shouldBailout = Boolean(process.env.XRAY_CI)
 const CONCURRENCY = 4
-const port = parentPort as any as MessagePort
 
 export default async (options: TOptions) => {
   try {
@@ -39,7 +39,7 @@ export default async (options: TOptions) => {
     const filenames: string[] = []
 
     await new Promise((resolve, reject) => {
-      port.on('message', async (action: TCheckRequest) => {
+      process.on('message', async (action: TCheckRequest) => {
         try {
           switch (action.type) {
             case 'FILE': {
@@ -63,12 +63,13 @@ export default async (options: TOptions) => {
                       case 'NEW': {
                         await browser.disconnect()
 
-                        port.postMessage({
+                        await processSend<TScreenshotsItemResult>({
                           type: 'BAILOUT',
                           id: item.id,
-                        } as TScreenshotsItemResult)
+                        })
 
-                        port.close()
+                        process.disconnect()
+                        process.exit(1)
 
                         throw null
                       }
@@ -78,16 +79,16 @@ export default async (options: TOptions) => {
                   switch (message.type) {
                     case 'DIFF':
                     case 'NEW': {
-                      port.postMessage({
+                      await processSend<TScreenshotsItemResult>({
                         ...message,
                         id: item.id,
                         serializedElement: item.serializedElement,
-                      } as TScreenshotsItemResult)
+                      })
 
                       break
                     }
                     case 'OK': {
-                      port.postMessage({
+                      await processSend<TScreenshotsItemResult>({
                         type: 'OK',
                         id: item.id,
                       })
@@ -102,32 +103,30 @@ export default async (options: TOptions) => {
               for (const filename of tar.list()) {
                 if (!filenames.includes(filename)) {
                   const { data, meta } = await tar.read(filename) as TTarDataWithMeta
-
                   const { width, height } = upng.decode(data.buffer as ArrayBuffer)
 
-                  port.postMessage({
+                  await processSend<TScreenshotsItemResult>({
                     type: 'DELETED',
                     id: filename,
-                    serializedElement: meta,
+                    serializedElement: meta as TLineElement[][],
                     data,
                     width,
                     height,
-                  } as TScreenshotsItemResult)
+                  })
                 }
               }
 
               await tar.close()
 
-              port.postMessage({
+              await processSend<TScreenshotsItemResult>({
                 type: 'DONE',
                 path: action.path,
-              } as TScreenshotsItemResult)
+              })
 
               break
             }
             case 'DONE': {
               await browser.disconnect()
-              port.close()
               resolve()
             }
           }
@@ -135,15 +134,25 @@ export default async (options: TOptions) => {
           reject(err)
         }
       })
+
+      processSend<TScreenshotsItemResult>({
+        type: 'INIT',
+      })
     })
   } catch (err) {
     console.error(err)
 
     if (err !== null) {
-      port.postMessage({
+      await processSend<TScreenshotsItemResult>({
         type: 'ERROR',
         data: err.message,
-      } as TScreenshotsItemResult)
+      })
     }
+
+    process.disconnect()
+    process.exit(1)
   }
+
+  process.disconnect()
+  process.exit(0)
 }

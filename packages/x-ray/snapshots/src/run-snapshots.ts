@@ -141,7 +141,7 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
             break
           }
           case 'BAILOUT': {
-            await Promise.all(workers.map((worker) => worker.terminate()))
+            await Promise.all(workers.map((worker) => worker.kill()))
 
             reject(null)
 
@@ -164,7 +164,7 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
             }
 
             if (targetFileIndex < targetFiles.length) {
-              worker.postMessage({
+              worker.send({
                 type: 'FILE',
                 path: targetFiles[targetFileIndex++],
               })
@@ -172,7 +172,7 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
               break
             }
 
-            worker.postMessage({ type: 'DONE' })
+            worker.send({ type: 'DONE' })
 
             doneWorkersCount++
 
@@ -198,7 +198,7 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
         }
       })
 
-      worker.postMessage({
+      worker.send({
         type: 'FILE',
         path: targetFiles[targetFileIndex++],
       })

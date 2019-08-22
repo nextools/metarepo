@@ -1,16 +1,16 @@
 /* eslint-disable no-throw-literal */
 import path from 'path'
-import { parentPort, MessagePort } from 'worker_threads'
 import pAll from 'p-all'
 import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import serialize from '@x-ray/serialize-react-tree'
 import { TCheckRequest, TOptions } from '@x-ray/common-utils'
 import { map } from 'iterama'
+import { processSend } from '@x-ray/worker-utils'
+import { TLineElement } from 'syntx'
 import { checkSnapshot } from './check-snapshot'
 import { TMeta, TSnapshotsItemResult } from './types'
 
 const shouldBailout = Boolean(process.env.XRAY_CI)
-const port = parentPort as any as MessagePort
 const CONCURRENCY = 4
 
 export default async (options: TOptions) => {
@@ -19,7 +19,7 @@ export default async (options: TOptions) => {
     const filenames: string[] = []
 
     await new Promise((resolve, reject) => {
-      port.on('message', async (action: TCheckRequest) => {
+      process.on('message', async (action: TCheckRequest) => {
         try {
           switch (action.type) {
             case 'FILE': {
@@ -38,12 +38,13 @@ export default async (options: TOptions) => {
                     switch (message.type) {
                       case 'DIFF':
                       case 'NEW': {
-                        port.postMessage({
+                        await processSend<TSnapshotsItemResult>({
                           type: 'BAILOUT',
                           id: item.id,
-                        } as TSnapshotsItemResult)
+                        })
 
-                        port.close()
+                        process.disconnect()
+                        process.exit(1)
 
                         throw null
                       }
@@ -53,16 +54,16 @@ export default async (options: TOptions) => {
                   switch (message.type) {
                     case 'DIFF':
                     case 'NEW': {
-                      port.postMessage({
+                      await processSend<TSnapshotsItemResult>({
                         ...message,
                         id: item.id,
                         serializedElement: item.serializedElement,
-                      } as TSnapshotsItemResult)
+                      })
 
                       break
                     }
                     case 'OK': {
-                      port.postMessage({
+                      await processSend<TSnapshotsItemResult>({
                         type: 'OK',
                         id: item.id,
                       })
@@ -78,24 +79,25 @@ export default async (options: TOptions) => {
                 if (!filenames.includes(filename)) {
                   const { data, meta } = await tar.read(filename) as TTarDataWithMeta
 
-                  port.postMessage({
+                  await processSend<TSnapshotsItemResult>({
                     type: 'DELETED',
                     id: filename,
-                    serializedElement: meta,
+                    serializedElement: meta as TLineElement[][],
                     data,
-                  } as TSnapshotsItemResult)
+                  })
                 }
               }
 
-              port.postMessage({
+              await tar.close()
+
+              await processSend<TSnapshotsItemResult>({
                 type: 'DONE',
                 path: action.path,
-              } as TSnapshotsItemResult)
+              })
 
               break
             }
             case 'DONE': {
-              port.close()
               resolve()
             }
           }
@@ -103,15 +105,25 @@ export default async (options: TOptions) => {
           reject(err)
         }
       })
+
+      processSend<TSnapshotsItemResult>({
+        type: 'INIT',
+      })
     })
   } catch (err) {
     console.error(err)
 
     if (err !== null) {
-      port.postMessage({
+      await processSend<TSnapshotsItemResult>({
         type: 'ERROR',
         data: err.message,
-      } as TSnapshotsItemResult)
+      })
     }
+
+    process.disconnect()
+    process.exit(1)
   }
+
+  process.disconnect()
+  process.exit(0)
 }

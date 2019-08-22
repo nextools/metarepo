@@ -67,10 +67,41 @@ export type TScreenshotsResult = {
 export type TScreenshotsSave = string[]
 
 export type TScreenshotsItemResult =
-  (TScreenshotsCheckResult & {
+  {
+    type: 'OK',
+    id: string,
+  } |
+  {
+    type: 'DIFF',
+    old: {
+      data: Buffer,
+      width: number,
+      height: number,
+    },
+    new: {
+      data: Buffer,
+      width: number,
+      height: number,
+    },
     id: string,
     serializedElement: TLineElement[][],
-  }) |
+  } |
+  {
+    type: 'NEW',
+    data: Buffer,
+    width: number,
+    height: number,
+    id: string,
+    serializedElement: TLineElement[][],
+  } |
+  {
+    type: 'DELETED',
+    data: Buffer,
+    width: number,
+    height: number,
+    id: string,
+    serializedElement: TLineElement[][],
+  } |
   {
     type: 'DONE',
     path: string,
@@ -82,6 +113,8 @@ export type TScreenshotsItemResult =
   {
     type: 'BAILOUT',
     id: string,
+  } | {
+    type: 'INIT',
   }
 
 export type TScreenshotsFileResultData = {

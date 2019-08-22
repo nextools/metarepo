@@ -1,12 +1,17 @@
-import { Worker } from 'worker_threads'
+import execa from 'execa'
 import { TAnyObject } from 'tsfn'
 
 const setupFile = require.resolve('./setup')
 
-export const makeWorker = (childFile: string, options: TAnyObject): Worker =>
-  new Worker(setupFile, {
-    workerData: {
+export const makeWorker = (childFile: string, options: TAnyObject) =>
+  execa(
+    'node',
+    [
+      setupFile,
       childFile,
-      options,
-    },
-  })
+      JSON.stringify(options),
+    ],
+    {
+      stdio: ['ignore', process.stdout, process.stderr, 'ipc'],
+    }
+  )

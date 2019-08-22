@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports, import/no-dynamic-require */
-const { workerData } = require('worker_threads')
 const babelRegister = require('@babel/register')
 
-const { options, childFile } = workerData
+const childFile = process.argv[2]
+const options = JSON.parse(process.argv[3])
 
 global.navigator = {
   userAgent: 'x-ray',

@@ -27,10 +27,29 @@ export type TSnapshotsCheckResult =
   }
 
 export type TSnapshotsItemResult =
-  (TSnapshotsCheckResult & {
+  {
+    type: 'DIFF',
+    oldData: Buffer,
+    newData: Buffer,
     id: string,
     serializedElement: TLineElement[][],
-  }) |
+  } |
+  {
+    type: 'NEW',
+    data: Buffer,
+    id: string,
+    serializedElement: TLineElement[][],
+  } |
+  {
+    type: 'DELETED',
+    data: Buffer,
+    id: string,
+    serializedElement: TLineElement[][],
+  } |
+  {
+    type: 'OK',
+    id: string,
+  } |
   {
     type: 'DONE',
     path: string,
@@ -42,6 +61,9 @@ export type TSnapshotsItemResult =
   {
     type: 'BAILOUT',
     id: string,
+  } |
+  {
+    type: 'INIT',
   }
 
 export type TSnapshotItem = TItem & {
