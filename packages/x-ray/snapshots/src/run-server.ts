@@ -122,8 +122,6 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                 })
             })
 
-            console.log('SAVE', ids)
-
             const data = ids.reduce((result, item) => {
               const [shortPath, id] = item.split(':')
 
