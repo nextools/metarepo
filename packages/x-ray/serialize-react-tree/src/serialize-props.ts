@@ -47,7 +47,7 @@ const serializeArray = (array: any[], indent: number) => {
     }
 
     if (typeof value === 'undefined') {
-      result += 'undefined'
+      result += 'null'
       continue
     }
 

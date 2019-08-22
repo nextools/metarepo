@@ -47,7 +47,6 @@ test('serialize-react-tree', (t) => {
   c={true}
   d={false}
   e={null}
-  f={undefined}
   g={() => {}}
   h={{
     a: {},
@@ -57,7 +56,7 @@ test('serialize-react-tree', (t) => {
       true,
       false,
       null,
-      undefined,
+      null,
       () => {},
       [],
       {}
@@ -65,8 +64,7 @@ test('serialize-react-tree', (t) => {
     c: 'string',
     d: 123,
     e: true,
-    f: null,
-    g: undefined
+    f: null
   }}
   i={[
     {
@@ -322,7 +320,7 @@ test('serialize-react-tree', (t) => {
     true,
     false,
     null,
-    undefined
+    null
   ]}
 />`,
     'children named prop array with mixed types'
