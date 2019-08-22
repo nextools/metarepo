@@ -94,22 +94,8 @@ export const checkFirefoxScreenshots = (component = '**') =>
     )
   )
 
-export const checkIosScreenshots = (component = '**') =>
-  sequence(
-    find(`packages/${component}/test/screenshots.tsx`),
-    env({ NODE_ENV: 'production' }),
-    xRayIosScreenshots('packages/x-ray/native-screenshots-app/build/X-Ray.app')
-  )
-
-export const checkAndroidScreenshots = (component = '**') =>
-  sequence(
-    find(`packages/${component}/test/screenshots.tsx`),
-    env({ NODE_ENV: 'production' }),
-    xRayAndroidScreenshots('packages/x-ray/native-screenshots-app/build/X-Ray.apk')
-  )
-
 export const buildXRayIos = (packageDir = 'packages/x-ray/native-screenshots-app/') =>
-  plugin('build', ({ logMessage }) => async () => {
+  plugin('buildXRayIos', ({ logMessage }) => async () => {
     const { copyTemplate, buildDebug } = await import('@rebox/ios')
     const { linkDependencyIos } = await import('rn-link')
 
@@ -135,7 +121,7 @@ export const buildXRayIos = (packageDir = 'packages/x-ray/native-screenshots-app
   })
 
 export const buildXRayAndroid = (packageDir = 'packages/x-ray/native-screenshots-app/') =>
-  plugin('build', ({ logMessage }) => async () => {
+  plugin('buildXRayAndroid', ({ logMessage }) => async () => {
     const { buildDebug, copyTemplate } = await import('@rebox/android')
     const { linkDependencyAndroid } = await import('rn-link')
 
@@ -158,3 +144,39 @@ export const buildXRayAndroid = (packageDir = 'packages/x-ray/native-screenshots
       appId: 'org.bubble_dev.xray',
     })
   })
+
+export const checkIosScreenshots = (component = '**') =>
+  sequence(
+    find(`packages/${component}/test/screenshots.tsx`),
+    env({ NODE_ENV: 'production' }),
+    plugin('buildXray', ({ reporter }) => async () => {
+      const { access } = await import('pifs')
+
+      try {
+        await access('packages/x-ray/native-screenshots-app/build/X-Ray.app')
+      } catch {
+        const plugin = await buildXRayIos()
+
+        return plugin(reporter)()
+      }
+    }),
+    xRayIosScreenshots('packages/x-ray/native-screenshots-app/build/X-Ray.app')
+  )
+
+export const checkAndroidScreenshots = (component = '**') =>
+  sequence(
+    find(`packages/${component}/test/screenshots.tsx`),
+    env({ NODE_ENV: 'production' }),
+    plugin('buildXray', ({ reporter }) => async () => {
+      const { access } = await import('pifs')
+
+      try {
+        await access('packages/x-ray/native-screenshots-app/build/X-Ray.apk')
+      } catch {
+        const plugin = await buildXRayAndroid()
+
+        return plugin(reporter)()
+      }
+    }),
+    xRayAndroidScreenshots('packages/x-ray/native-screenshots-app/build/X-Ray.apk')
+  )
