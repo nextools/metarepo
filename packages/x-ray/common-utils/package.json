@@ -4,6 +4,8 @@
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {

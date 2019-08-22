@@ -5,7 +5,8 @@
   "keywords": [],
   "react-native": "src/index.js",
   "buildTasks": [
-    "buildXRayIos"
+    "buildXRayIos",
+    "buildXRayAndroid"
   ],
   "repository": "bubble-dev/_",
   "license": "MIT",
