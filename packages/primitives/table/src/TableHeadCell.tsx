@@ -7,7 +7,7 @@ export type TTableHeadCell = {
   id?: string,
   children?: ReactNode,
   backgroundColor?: string,
-  width?: string,
+  width?: number,
 } & TTableBorderStyle
 
 export const TableHeadCell = component(
@@ -31,7 +31,7 @@ export const TableHeadCell = component(
       borderStyle,
       width,
     }),
-  }), ['borderTopWidth', 'borderLeftWidth', 'borderRightWidth', 'borderBottomWidth', 'borderStyle', 'borderColor', 'backgroundColor'])
+  }), ['borderTopWidth', 'borderLeftWidth', 'borderRightWidth', 'borderBottomWidth', 'borderStyle', 'borderColor', 'backgroundColor', 'width'])
 )(({ id, style, children }) => (
   <th id={id} style={style}>
     {children}
