@@ -1,3 +1,7 @@
+## v0.3.1
+
+* 🐞 change prop type in TableHeadCell
+
 ## v0.3.0
 
 * 🌱 add 'width' prop to TableHeadCell
