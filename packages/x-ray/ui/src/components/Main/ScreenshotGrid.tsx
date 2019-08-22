@@ -19,13 +19,14 @@ import { isVisibleItem } from './is-visible-item'
 export type TScreenshotGrid = TRect & {
   items: TScreenshotItems,
   discardedItems: string[],
+  filteredFiles: string[],
   shouldAnimate: boolean,
 }
 
 export const ScreenshotGrid = component(
   startWithType<TScreenshotGrid>(),
   mapStoreDispatch,
-  mapWithPropsMemo(({ width, items }) => {
+  mapWithPropsMemo(({ width, items, filteredFiles }) => {
     const colCount = Math.max(1, Math.floor((width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
     const gridWidth = (width - (COL_SPACE * (colCount + 1))) / colCount
     const top = new Array(colCount).fill(COL_SPACE)
@@ -34,6 +35,14 @@ export const ScreenshotGrid = component(
       .map(() => [])
 
     Object.entries(items).forEach(([id, item]) => {
+      if (filteredFiles.length > 0) {
+        const hasFiltered = filteredFiles.every((file) => !id.startsWith(`${file}:`))
+
+        if (hasFiltered) {
+          return
+        }
+      }
+
       let minIndex = 0
 
       for (let i = 1; i < top.length; ++i) {
@@ -79,7 +88,7 @@ export const ScreenshotGrid = component(
       cols,
       maxHeight: top[maxIndex],
     }
-  }, ['width', 'items']),
+  }, ['width', 'items', 'filteredFiles']),
   mapScrollState(),
   mapHandlers({
     onPress: ({ dispatch, scrollTop, cols }) => (x: number, y: number) => {

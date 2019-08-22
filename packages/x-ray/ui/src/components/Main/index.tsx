@@ -69,6 +69,7 @@ export const Main = component(
         height={height - TOOLBAR_HEIGHT - BORDER_WIDTH - COL_SPACE}
         items={items}
         discardedItems={discardedItems}
+        filteredFiles={filteredFiles}
         shouldAnimate={selectedItem === null}
       />
     )}
