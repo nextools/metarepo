@@ -24,7 +24,7 @@ export default async (options: TOptions) => {
           switch (action.type) {
             case 'FILE': {
               const { default: items } = await import(action.path) as { default: Iterable<TMeta> }
-              const snapshotsDir = path.join(path.dirname(action.path), '__x-ray__')
+              const snapshotsDir = path.join(path.dirname(action.path), '__tar__')
               const tar = await TarFs(path.join(snapshotsDir, `${platform}-snapshots.tar`))
 
               await pAll(

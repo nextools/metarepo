@@ -142,7 +142,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                   throw new Error(`Cannot resolve "${shortPath}"`)
                 }
 
-                const snapshotDir = path.join(path.dirname(file), '__x-ray__')
+                const snapshotDir = path.join(path.dirname(file), '__tar__')
                 const tarPath = path.join(snapshotDir, `${platform}-snapshots.tar`)
 
                 await makeDir(snapshotDir)

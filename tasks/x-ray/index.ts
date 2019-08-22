@@ -15,7 +15,7 @@ import withFirefox from './plugins/with-firefox'
 
 export const checkWebSnapshots = (component = '**') =>
   sequence(
-    find(`packages/${component}/test/snapshots.tsx`),
+    find(`packages/${component}/x-ray/snapshots.tsx`),
     env({ NODE_ENV: 'production' }),
     xRaySnapshots({
       platform: 'web',
@@ -32,7 +32,7 @@ export const checkWebSnapshots = (component = '**') =>
 
 export const checkNativeSnapshots = (component = '**') =>
   sequence(
-    find(`packages/${component}/test/snapshots.tsx`),
+    find(`packages/${component}/x-ray/snapshots.tsx`),
     env({ NODE_ENV: 'production' }),
     xRaySnapshots({
       platform: 'native',
@@ -57,7 +57,7 @@ export const checkNativeSnapshots = (component = '**') =>
 export const checkChromeScreenshots = (component = '**') =>
   withChromium(
     sequence(
-      find(`packages/${component}/test/screenshots.tsx`),
+      find(`packages/${component}/x-ray/screenshots.tsx`),
       waitForChromium,
       env({ NODE_ENV: 'production' }),
       xRayChromeScreenshots({
@@ -77,7 +77,7 @@ export const checkChromeScreenshots = (component = '**') =>
 export const checkFirefoxScreenshots = (component = '**') =>
   withFirefox(
     sequence(
-      find(`packages/${component}/test/screenshots.tsx`),
+      find(`packages/${component}/x-ray/screenshots.tsx`),
       waitForFirefox,
       env({ NODE_ENV: 'production' }),
       xRayFirefoxScreenshots({
