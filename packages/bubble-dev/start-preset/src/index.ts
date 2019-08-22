@@ -287,7 +287,7 @@ export const build = async (...packageDirs: string[]) => {
 export const lint = () =>
   sequence(
     find([
-      'packages/**/{src,test}/**/*.{ts,tsx}',
+      'packages/**/{src,test,x-ray}/**/*.{ts,tsx}',
       'tasks/**/*.ts',
     ]),
     read,
@@ -304,7 +304,7 @@ export const lint = () =>
 export const fix = () =>
   sequence(
     find([
-      'packages/**/{src,test}/**/*.{ts,tsx}',
+      'packages/**/{src,test,x-ray}/**/*.{ts,tsx}',
       'tasks/**/*.ts',
     ]),
     read,
