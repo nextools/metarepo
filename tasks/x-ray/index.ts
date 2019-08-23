@@ -147,7 +147,7 @@ export const buildXRayAndroid = (packageDir = 'packages/x-ray/native-screenshots
 
 export const checkIosScreenshots = (component = '**') =>
   sequence(
-    find(`packages/${component}/test/screenshots.tsx`),
+    find(`packages/${component}/x-ray/screenshots.tsx`),
     env({ NODE_ENV: 'production' }),
     plugin('buildXray', ({ reporter }) => async () => {
       const { access } = await import('pifs')
@@ -165,7 +165,7 @@ export const checkIosScreenshots = (component = '**') =>
 
 export const checkAndroidScreenshots = (component = '**') =>
   sequence(
-    find(`packages/${component}/test/screenshots.tsx`),
+    find(`packages/${component}/x-ray/screenshots.tsx`),
     env({ NODE_ENV: 'production' }),
     plugin('buildXray', ({ reporter }) => async () => {
       const { access } = await import('pifs')
