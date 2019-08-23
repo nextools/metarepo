@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "description": "",
   "keywords": [],
-  "browser": "src/index.ts",
+  "browser": "src/index.tsx",
+  "buildAssets": {
+    "src/*.html": "web/"
+  },
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {

@@ -17,6 +17,7 @@
     "@x-ray/tar-fs": "^0.0.0",
     "@x-ray/worker-utils": "^0.0.0",
     "@x-ray/ui": "^0.0.0",
+    "bro-resolve": "^0.0.0",
     "foxr": "^0.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.6.0",

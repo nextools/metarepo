@@ -1,7 +1,9 @@
+import path from 'path'
 import { cpus } from 'os'
 import request from 'request-promise-native'
 import { run } from '@rebox/web'
 import { runServer, runScreenshots } from '@x-ray/screenshot-utils'
+import { broResolve } from 'bro-resolve'
 import { TOptions, TUserOptions } from './types'
 
 const CONCURRENCY = Math.max(cpus().length - 1, 1)
@@ -29,9 +31,12 @@ export const runFiles = async (targetFiles: string[], userOptions: TUserOptions)
   const { result, resultData, hasBeenChanged } = await runScreenshots(childFile, targetFiles, CONCURRENCY, options)
 
   if (hasBeenChanged) {
+    const entryPointPath = await broResolve('@x-ray/ui')
+    const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
+
     const closeReboxServer = await run({
-      htmlTemplatePath: 'packages/x-ray/ui/src/index.html',
-      entryPointPath: 'packages/x-ray/ui/src/index.tsx',
+      htmlTemplatePath,
+      entryPointPath,
       isQuiet: true,
     })
 

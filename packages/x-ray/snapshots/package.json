@@ -16,6 +16,7 @@
     "@x-ray/tar-fs": "^0.0.0",
     "@x-ray/worker-utils": "^0.0.0",
     "@x-ray/ui": "^0.0.0",
+    "bro-resolve": "^0.0.0",
     "diff": "^4.0.1",
     "iterama": "^0.1.1",
     "make-dir": "^3.0.0",
