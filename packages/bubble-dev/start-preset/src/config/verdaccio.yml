@@ -1,0 +1,21 @@
+max_body_size: 100mb
+storage: /opt/verdaccio/storage
+auth:
+  htpasswd:
+    file: /opt/verdaccio/htpasswd
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+packages:
+  '@*/*':
+    access: $all
+    publish: $all
+    proxy: npmjs
+  '**':
+    access: $all
+    publish: $all
+    proxy: npmjs
+logs:
+  - type: stdout
+    format: pretty
+    level: info

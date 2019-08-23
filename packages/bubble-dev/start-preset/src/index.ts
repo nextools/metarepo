@@ -44,6 +44,7 @@ import move from './plugins/move'
 import transformDts from './plugins/transform-dts'
 import buildPackageJson from './plugins/build-package-json'
 import copyAssets from './plugins/copy-assets'
+import runVerdaccio from './plugins/run-verdaccio'
 import { getStartOptions } from './get-options'
 
 export const preparePackage = (packageDir: string) => {
@@ -410,5 +411,46 @@ export const publish = async () => {
     pushCommitsAndTags,
     shouldMakeGitHubReleases && makeGithubReleases(prefixes, workspacesOptions, githubOptions),
     shouldSendSlackMessage && sendSlackMessage(prefixes, workspacesOptions, slackOptions)
+  )
+}
+
+export const testPublish = async () => {
+  const {
+    auto: {
+      initialType,
+      autoNamePrefix,
+      zeroBreakingChangeType,
+      npm,
+      shouldAlwaysBumpDependents,
+    },
+  } = await getStartOptions()
+  const { prefixes } = await import('./config/auto')
+
+  const npmOptions: TNpmOptions = {
+    ...npm,
+    registry: 'http://localhost:4873',
+  }
+  const workspacesOptions: TWorkspacesOptions = {
+    autoNamePrefix,
+  }
+  const bumpOptions: TBumpOptions = {
+    zeroBreakingChangeType,
+    shouldAlwaysBumpDependents,
+  }
+  const gitOptions: TGitOptions = {
+    initialType,
+  }
+
+  const verdaccioConfigPath = require.resolve('./config/verdaccio.yml')
+
+  return sequence(
+    getPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
+    publishPrompt(prefixes),
+    buildBumpedPackages(buildPackage),
+    writePackagesDependencies,
+    writePackageVersions,
+    buildBumpedPackages(preparePackage),
+    runVerdaccio(verdaccioConfigPath),
+    publishPackagesBumps(npmOptions)
   )
 }
