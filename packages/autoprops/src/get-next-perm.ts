@@ -13,7 +13,13 @@ const getChildNextPerm = (int: BigInteger, childMeta: TMetaFile, childKey: strin
   if (!isUndefined(required) && required.includes(childKey)) {
     return getNextPermImpl(int, childMeta)
   } else if (int.greater(BigInt.zero)) {
-    return getNextPermImpl(int.minus(BigInt.one), childMeta)
+    const nextPerm = getNextPermImpl(int.minus(BigInt.one), childMeta)
+
+    if (nextPerm === null) {
+      return nextPerm
+    }
+
+    return nextPerm.plus(BigInt.one)
   }
 
   return int.plus(BigInt.one)
