@@ -166,7 +166,11 @@ export const Block = component(
       }
 
       if (isFunction(onPress)) {
-        props.onClick = (e: MouseEvent<HTMLDivElement>) => onPress(e.pageX, e.pageY)
+        props.onClick = (e: MouseEvent<HTMLDivElement>) => {
+          const { left, top } = e.currentTarget.getBoundingClientRect()
+
+          onPress(e.pageX - left, e.pageY - top)
+        }
       }
 
       return props
