@@ -8,7 +8,7 @@ import { apiLoadSnapshot, TApiLoadSnapshotOpts } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
 import { TRect } from '../types'
-import { SNAPSHOT_GRID_FONT_SIZE, SNAPSHOT_GRID_LINE_HEIGHT, COLOR_BORDER_NEW, COLOR_BORDER_DIFF, COLOR_BORDER_DELETED, COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED, DISCARD_ALPHA, BORDER_WIDTH, SNAPSHOT_GRID_MAX_LINES } from '../config'
+import { SNAPSHOT_GRID_FONT_SIZE, SNAPSHOT_GRID_LINE_HEIGHT, COLOR_BORDER_NEW, COLOR_BORDER_DIFF, COLOR_BORDER_DELETED, COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED, DISCARD_ALPHA, BORDER_SIZE, SNAPSHOT_GRID_MAX_LINES } from '../config'
 import { Text } from './Text'
 import { Block } from './Block'
 import { Border } from './Border'
@@ -93,9 +93,10 @@ export const SnapshotGridItem = pureComponent(
     {lines.map((line, i) => (
       <Block
         key={i}
-        top={i * SNAPSHOT_GRID_LINE_HEIGHT}
+        left={BORDER_SIZE}
+        top={i * SNAPSHOT_GRID_LINE_HEIGHT + BORDER_SIZE}
         height={SNAPSHOT_GRID_LINE_HEIGHT}
-        width={width}
+        width={width - BORDER_SIZE * 2}
         shouldHideOverflow
       >
         {line.type === 'added' && (
@@ -116,14 +117,10 @@ export const SnapshotGridItem = pureComponent(
       </Block>
     ))}
     <Border
-      topWidth={BORDER_WIDTH}
-      leftWidth={BORDER_WIDTH}
-      rightWidth={BORDER_WIDTH}
-      bottomWidth={BORDER_WIDTH}
-      overflowTop={BORDER_WIDTH}
-      overflowLeft={BORDER_WIDTH}
-      overflowRight={BORDER_WIDTH}
-      overflowBottom={BORDER_WIDTH}
+      topWidth={BORDER_SIZE}
+      leftWidth={BORDER_SIZE}
+      rightWidth={BORDER_SIZE}
+      bottomWidth={BORDER_SIZE}
       color={borderColor}
     />
   </Block>

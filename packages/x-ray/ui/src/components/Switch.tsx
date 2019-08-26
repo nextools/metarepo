@@ -4,14 +4,14 @@ import { Checkbox } from '@primitives/checkbox'
 import { Size } from '@primitives/size'
 import { TOmitKey } from 'tsfn'
 import { TRect } from '../types'
-import { COLOR_GREEN, COLOR_WHITE, BORDER_WIDTH } from '../config'
+import { COLOR_GREEN, COLOR_WHITE, BORDER_SIZE } from '../config'
 import { Block } from './Block'
 import { Text } from './Text'
 import { Background } from './Background'
 import { Border } from './Border'
 
 export const SWITCH_HORIZONTAL_PADDING = 10
-export const SWITCH_HEIGHT = 24
+export const SWITCH_HEIGHT = 24 + BORDER_SIZE * 2
 export const SWITCH_LINE_HEIGHT = 16
 
 export type TSwitch = TOmitKey<TRect, 'height'> & {
@@ -31,11 +31,11 @@ export const Switch = component(
       onToggle(file, !isActive)
     },
     onWidthChange: ({ file, onWidthChange }) => (width: number) => {
-      onWidthChange(file, width + SWITCH_HORIZONTAL_PADDING * 2)
+      onWidthChange(file, width + SWITCH_HORIZONTAL_PADDING * 2 + BORDER_SIZE * 2)
     },
   }),
   mapWithProps(({ width }) => ({
-    textWidth: width - SWITCH_HORIZONTAL_PADDING * 2,
+    textWidth: width - SWITCH_HORIZONTAL_PADDING * 2 - BORDER_SIZE * 2,
   }))
 )(({ left, top, width, textWidth, isActive, file, onToggle, onWidthChange }) => (
   <Block
@@ -50,21 +50,17 @@ export const Switch = component(
     <Background color={isActive ? COLOR_GREEN : COLOR_WHITE}/>
     <Border
       color={COLOR_GREEN}
-      topWidth={BORDER_WIDTH}
-      leftWidth={BORDER_WIDTH}
-      rightWidth={BORDER_WIDTH}
-      bottomWidth={BORDER_WIDTH}
-      overflowTop={BORDER_WIDTH}
-      overflowLeft={BORDER_WIDTH}
-      overflowRight={BORDER_WIDTH}
-      overflowBottom={BORDER_WIDTH}
+      topWidth={BORDER_SIZE}
+      leftWidth={BORDER_SIZE}
+      rightWidth={BORDER_SIZE}
+      bottomWidth={BORDER_SIZE}
     />
     <Checkbox
       isChecked={isActive}
       onToggle={onToggle}
     />
     <Block
-      left={SWITCH_HORIZONTAL_PADDING}
+      left={SWITCH_HORIZONTAL_PADDING + BORDER_SIZE}
       height={SWITCH_HEIGHT}
       top={(SWITCH_HEIGHT - SWITCH_LINE_HEIGHT) / 2}
       shouldIgnorePointerEvents

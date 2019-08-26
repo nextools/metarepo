@@ -3,7 +3,7 @@ import { startWithType, pureComponent } from 'refun'
 import { TOmitKey } from 'tsfn'
 import { TPosition } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
-import { COLOR_BORDER_DELETED, COLOR_BORDER_NEW, DISCARD_ALPHA, BORDER_WIDTH } from '../config'
+import { COLOR_BORDER_DELETED, COLOR_BORDER_NEW, DISCARD_ALPHA, BORDER_SIZE } from '../config'
 import { Block } from './Block'
 import { Border } from './Border'
 import { Screenshot } from './Screenshot'
@@ -43,21 +43,19 @@ export const ScreenshotDiff = pureComponent(
         cursor: 'pointer',
       }}
     >
-      <Screenshot
-        id={id}
-        type="old"
-        width={oldWidth}
-        height={oldHeight}
-      />
+      <Block left={BORDER_SIZE} top={BORDER_SIZE}>
+        <Screenshot
+          id={id}
+          type="old"
+          width={oldWidth - BORDER_SIZE * 2}
+          height={oldHeight - BORDER_SIZE * 2}
+        />
+      </Block>
       <Border
-        topWidth={BORDER_WIDTH}
-        leftWidth={BORDER_WIDTH}
-        rightWidth={BORDER_WIDTH}
-        bottomWidth={BORDER_WIDTH}
-        overflowTop={BORDER_WIDTH}
-        overflowLeft={BORDER_WIDTH}
-        overflowRight={BORDER_WIDTH}
-        overflowBottom={BORDER_WIDTH}
+        topWidth={BORDER_SIZE}
+        leftWidth={BORDER_SIZE}
+        rightWidth={BORDER_SIZE}
+        bottomWidth={BORDER_SIZE}
         color={COLOR_BORDER_DELETED}
       />
     </Block>
@@ -71,21 +69,19 @@ export const ScreenshotDiff = pureComponent(
         cursor: 'pointer',
       }}
     >
-      <Screenshot
-        id={id}
-        type="new"
-        width={newWidth}
-        height={newHeight}
-      />
+      <Block left={BORDER_SIZE} top={BORDER_SIZE}>
+        <Screenshot
+          id={id}
+          type="new"
+          width={newWidth - BORDER_SIZE * 2}
+          height={newHeight - BORDER_SIZE * 2}
+        />
+      </Block>
       <Border
-        topWidth={BORDER_WIDTH}
-        leftWidth={BORDER_WIDTH}
-        rightWidth={BORDER_WIDTH}
-        bottomWidth={BORDER_WIDTH}
-        overflowTop={BORDER_WIDTH}
-        overflowLeft={BORDER_WIDTH}
-        overflowRight={BORDER_WIDTH}
-        overflowBottom={BORDER_WIDTH}
+        topWidth={BORDER_SIZE}
+        leftWidth={BORDER_SIZE}
+        rightWidth={BORDER_SIZE}
+        bottomWidth={BORDER_SIZE}
         color={COLOR_BORDER_NEW}
       />
     </Block>

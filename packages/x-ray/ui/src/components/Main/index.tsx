@@ -7,7 +7,7 @@ import { TSize, TType, TScreenshotItems, TSnapshotItems } from '../../types'
 import { Popup } from '../Popup'
 import { Block } from '../Block'
 import { Background } from '../Background'
-import { COLOR_GREEN, COL_SPACE, BORDER_WIDTH, COLOR_GRAY } from '../../config'
+import { COLOR_GREEN, COL_SPACE, BORDER_SIZE, COLOR_GRAY } from '../../config'
 import { Toolbar, TOOLBAR_HEIGHT } from '../Toolbar'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
@@ -65,16 +65,16 @@ export const Main = component(
       left={0}
       top={TOOLBAR_HEIGHT}
       width={width}
-      height={BORDER_WIDTH}
+      height={BORDER_SIZE}
     >
       <Background color={COLOR_GRAY}/>
     </Block>
     {isScreenshots(items, type) && (
       <ScreenshotGrid
-        top={TOOLBAR_HEIGHT + BORDER_WIDTH + COL_SPACE}
+        top={TOOLBAR_HEIGHT + BORDER_SIZE + COL_SPACE}
         left={0}
         width={width}
-        height={height - TOOLBAR_HEIGHT - BORDER_WIDTH - COL_SPACE}
+        height={height - TOOLBAR_HEIGHT - BORDER_SIZE - COL_SPACE}
         items={items}
         discardedItems={discardedItems}
         filteredFiles={filteredFiles}
@@ -83,10 +83,10 @@ export const Main = component(
     )}
     {isSnapshots(items, type) && (
       <SnapshotGrid
-        top={TOOLBAR_HEIGHT + BORDER_WIDTH + COL_SPACE}
+        top={TOOLBAR_HEIGHT + BORDER_SIZE + COL_SPACE}
         left={0}
         width={width}
-        height={height - TOOLBAR_HEIGHT - BORDER_WIDTH - COL_SPACE}
+        height={height - TOOLBAR_HEIGHT - BORDER_SIZE - COL_SPACE}
         items={items}
         discardedItems={discardedItems}
         filteredFiles={filteredFiles}

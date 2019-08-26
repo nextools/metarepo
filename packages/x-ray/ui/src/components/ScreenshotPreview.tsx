@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { component, startWithType, mapWithProps, mapState, mapSafeTimeout, mapHandlers, mapRef, onChange, onMount } from 'refun'
 import { easeInOutCubic, Animation } from '@primitives/animation'
 import { TRect, TScreenshotGridItem } from '../types'
-import { DIFF_TIMEOUT } from '../config'
+import { DIFF_TIMEOUT, BORDER_SIZE } from '../config'
 import { Block } from './Block'
 import { ScreenshotDiff } from './ScreenshotDiff'
 import { ScreenshotNew } from './ScreenshotNew'
@@ -56,8 +56,8 @@ export const ScreenshotPreview = component(
             key={item.id}
             top={halfHeight - item.height / 2}
             left={halfWidth - item.width / 2}
-            width={item.width}
-            height={item.height}
+            width={item.width + BORDER_SIZE * 2}
+            height={item.height + BORDER_SIZE * 2}
             id={item.id}
             isDiscarded={false}
           />
@@ -70,10 +70,10 @@ export const ScreenshotPreview = component(
                 key={item.id}
                 top={halfHeight - item.height / 2}
                 left={halfWidth - item.width / 2}
-                oldWidth={item.width}
-                oldHeight={item.height}
-                newWidth={item.newWidth}
-                newHeight={item.newHeight}
+                oldWidth={item.width + BORDER_SIZE * 2}
+                oldHeight={item.height + BORDER_SIZE * 2}
+                newWidth={item.newWidth + BORDER_SIZE * 2}
+                newHeight={item.newHeight + BORDER_SIZE * 2}
                 oldAlpha={1 - alpha}
                 newAlpha={alpha}
                 id={item.id}
@@ -88,8 +88,8 @@ export const ScreenshotPreview = component(
             key={item.id}
             top={halfHeight - item.height / 2}
             left={halfWidth - item.width / 2}
-            width={item.width}
-            height={item.height}
+            width={item.width + BORDER_SIZE * 2}
+            height={item.height + BORDER_SIZE * 2}
             id={item.id}
             isDiscarded={false}
           />

@@ -8,7 +8,7 @@ import { actionSelectSnapshot } from '../../actions'
 import { TSnapshotGridItem, TSnapshotItems, TRect } from '../../types'
 import { Block } from '../Block'
 import { SnapshotGridItem } from '../SnapshotGridItem'
-import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT, BORDER_WIDTH, COLOR_BLACK, SNAPSHOT_GRID_MAX_LINES } from '../../config'
+import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT, BORDER_SIZE, COLOR_BLACK, SNAPSHOT_GRID_MAX_LINES } from '../../config'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 
@@ -24,7 +24,7 @@ export const SnapshotGrid = component(
   mapWithPropsMemo(({ width, items, filteredFiles }) => {
     const colCount = Math.max(1, Math.floor((width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
     const gridWidth = (width - (COL_SPACE * (colCount + 1))) / colCount
-    const top = new Array(colCount).fill(2)
+    const top = new Array(colCount).fill(0)
     const cols: TSnapshotGridItem[][] = new Array(colCount)
       .fill(0)
       .map(() => [])
@@ -46,7 +46,7 @@ export const SnapshotGrid = component(
         }
       }
 
-      const gridHeight = Math.min(item.height, SNAPSHOT_GRID_MAX_LINES) * SNAPSHOT_GRID_LINE_HEIGHT
+      const gridHeight = Math.min(item.height, SNAPSHOT_GRID_MAX_LINES) * SNAPSHOT_GRID_LINE_HEIGHT + BORDER_SIZE * 2
 
       const result: TSnapshotGridItem = {
         ...item,
@@ -77,7 +77,7 @@ export const SnapshotGrid = component(
   }, ['width', 'items', 'filteredFiles']),
   mapScrollState(),
   mapHandlers({
-    onPress: ({ dispatch, scrollTop, cols }) => (x: number, y: number) => {
+    onPress: ({ top, dispatch, scrollTop, cols }) => (x: number, y: number) => {
       for (let colIndex = 0; colIndex < cols.length; ++colIndex) {
         const firstItem = cols[colIndex][0]
 
@@ -102,7 +102,7 @@ export const SnapshotGrid = component(
 
           dispatch(actionSelectSnapshot({
             ...item,
-            top: item.top - scrollTop,
+            top: item.top - scrollTop + top,
           }))
         }
       }
@@ -148,14 +148,10 @@ export const SnapshotGrid = component(
               >
                 <Border
                   color={COLOR_BLACK}
-                  topWidth={BORDER_WIDTH}
-                  leftWidth={BORDER_WIDTH}
-                  rightWidth={BORDER_WIDTH}
-                  bottomWidth={BORDER_WIDTH}
-                  overflowLeft={BORDER_WIDTH}
-                  overflowRight={BORDER_WIDTH}
-                  overflowTop={BORDER_WIDTH}
-                  overflowBottom={BORDER_WIDTH}
+                  topWidth={BORDER_SIZE}
+                  leftWidth={BORDER_SIZE}
+                  rightWidth={BORDER_SIZE}
+                  bottomWidth={BORDER_SIZE}
                 />
               </Block>
             )

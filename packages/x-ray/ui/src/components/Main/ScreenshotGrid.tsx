@@ -11,7 +11,7 @@ import { Block } from '../Block'
 import { ScreenshotNew } from '../ScreenshotNew'
 import { ScreenshotDeleted } from '../ScreenshotDeleted'
 import { ScreenshotDiff } from '../ScreenshotDiff'
-import { COL_SPACE, COL_WIDTH, BORDER_WIDTH, COLOR_BLACK } from '../../config'
+import { COL_SPACE, COL_WIDTH, BORDER_SIZE, COLOR_BLACK } from '../../config'
 import { mapDiffState } from './map-diff-state'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
@@ -29,7 +29,7 @@ export const ScreenshotGrid = component(
   mapWithPropsMemo(({ width, items, filteredFiles }) => {
     const colCount = Math.max(1, Math.floor((width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
     const gridWidth = (width - (COL_SPACE * (colCount + 1))) / colCount
-    const top = new Array(colCount).fill(COL_SPACE)
+    const top = new Array(colCount).fill(0)
     const cols: TScreenshotGridItem[][] = new Array(colCount)
       .fill(0)
       .map(() => [])
@@ -57,9 +57,9 @@ export const ScreenshotGrid = component(
         const largestWidth = item.width > item.newWidth ? item.width : item.newWidth
         const largestHeight = item.height > item.newHeight ? item.height : item.newHeight
 
-        gridHeight = gridWidth / largestWidth * largestHeight
+        gridHeight = (gridWidth - BORDER_SIZE * 2) / largestWidth * largestHeight + BORDER_SIZE * 2
       } else {
-        gridHeight = gridWidth / item.width * item.height
+        gridHeight = (gridWidth - BORDER_SIZE * 2) / item.width * item.height + BORDER_SIZE * 2
       }
 
       const result: TScreenshotGridItem = {
@@ -91,7 +91,7 @@ export const ScreenshotGrid = component(
   }, ['width', 'items', 'filteredFiles']),
   mapScrollState(),
   mapHandlers({
-    onPress: ({ dispatch, scrollTop, cols }) => (x: number, y: number) => {
+    onPress: ({ top, dispatch, scrollTop, cols }) => (x: number, y: number) => {
       for (let colIndex = 0; colIndex < cols.length; ++colIndex) {
         const firstItem = cols[colIndex][0]
 
@@ -116,7 +116,7 @@ export const ScreenshotGrid = component(
 
           dispatch(actionSelectScreenshot({
             ...item,
-            top: item.top - scrollTop,
+            top: item.top - scrollTop + top,
           }))
         }
       }
@@ -167,14 +167,10 @@ export const ScreenshotGrid = component(
                     >
                       <Border
                         color={COLOR_BLACK}
-                        topWidth={BORDER_WIDTH}
-                        leftWidth={BORDER_WIDTH}
-                        rightWidth={BORDER_WIDTH}
-                        bottomWidth={BORDER_WIDTH}
-                        overflowLeft={BORDER_WIDTH}
-                        overflowRight={BORDER_WIDTH}
-                        overflowTop={BORDER_WIDTH}
-                        overflowBottom={BORDER_WIDTH}
+                        topWidth={BORDER_SIZE}
+                        leftWidth={BORDER_SIZE}
+                        rightWidth={BORDER_SIZE}
+                        bottomWidth={BORDER_SIZE}
                       />
                     </Block>
                   )

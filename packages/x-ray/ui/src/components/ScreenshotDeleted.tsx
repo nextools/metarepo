@@ -3,7 +3,7 @@ import { startWithType, pureComponent } from 'refun'
 import { TOmitKey } from 'tsfn'
 import { TRect } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
-import { COLOR_BORDER_DELETED, DISCARD_ALPHA, BORDER_WIDTH } from '../config'
+import { COLOR_BORDER_DELETED, DISCARD_ALPHA, BORDER_SIZE } from '../config'
 import { Block } from './Block'
 import { Border } from './Border'
 import { Screenshot } from './Screenshot'
@@ -25,21 +25,23 @@ export const ScreenshotDeleted = pureComponent(
       cursor: 'pointer',
     }}
   >
-    <Screenshot
-      id={id}
-      type="old"
-      width={width}
-      height={height}
-    />
+    <Block left={BORDER_SIZE} top={BORDER_SIZE}>
+      <Screenshot
+        id={id}
+        type="old"
+        width={width - BORDER_SIZE * 2}
+        height={height - BORDER_SIZE * 2}
+      />
+    </Block>
     <Border
-      topWidth={BORDER_WIDTH}
-      leftWidth={BORDER_WIDTH}
-      rightWidth={BORDER_WIDTH}
-      bottomWidth={BORDER_WIDTH}
-      overflowTop={BORDER_WIDTH}
-      overflowLeft={BORDER_WIDTH}
-      overflowRight={BORDER_WIDTH}
-      overflowBottom={BORDER_WIDTH}
+      topWidth={BORDER_SIZE}
+      leftWidth={BORDER_SIZE}
+      rightWidth={BORDER_SIZE}
+      bottomWidth={BORDER_SIZE}
+      overflowTop={BORDER_SIZE}
+      overflowLeft={BORDER_SIZE}
+      overflowRight={BORDER_SIZE}
+      overflowBottom={BORDER_SIZE}
       color={COLOR_BORDER_DELETED}
     />
   </Block>
