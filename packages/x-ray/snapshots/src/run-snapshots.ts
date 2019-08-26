@@ -49,6 +49,14 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
 
       worker.on('message', async (action: TSnapshotsItemResult) => {
         switch (action.type) {
+          case 'INIT': {
+            worker.send({
+              type: 'FILE',
+              path: targetFiles[targetFileIndex++],
+            })
+
+            break
+          }
           case 'OK': {
             okCount++
 
@@ -196,11 +204,6 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
             reject(action.data)
           }
         }
-      })
-
-      worker.send({
-        type: 'FILE',
-        path: targetFiles[targetFileIndex++],
       })
 
       return worker

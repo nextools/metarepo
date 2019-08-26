@@ -28,6 +28,10 @@ export type TSnapshotsCheckResult =
 
 export type TSnapshotsItemResult =
   {
+    type: 'OK',
+    id: string,
+  } |
+  {
     type: 'DIFF',
     oldData: Buffer,
     newData: Buffer,
@@ -45,10 +49,6 @@ export type TSnapshotsItemResult =
     data: Buffer,
     id: string,
     serializedElement: TLineElement[][],
-  } |
-  {
-    type: 'OK',
-    id: string,
   } |
   {
     type: 'DONE',
