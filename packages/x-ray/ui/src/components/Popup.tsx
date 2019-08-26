@@ -3,6 +3,7 @@ import { component, startWithType, mapHandlers, mapState, mapWithProps, onMount 
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { Background } from '@primitives/background'
 import { Button } from '@primitives/button'
+import { Size } from '@primitives/size'
 import { mapStoreDispatch } from '../store'
 import { TRect, TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
 import { actionDeselect, actionDiscardItem } from '../actions'
@@ -13,13 +14,16 @@ import { SourceCode } from './SourceCode'
 import { Block } from './Block'
 import { ScreenshotPreview } from './ScreenshotPreview'
 import { SnapshotPreview } from './SnapshotPreview'
+import { Text } from './Text'
 
 const isScreenshotGridItem = (type: TType | undefined, item: TGridItem | null): item is TScreenshotGridItem => type === 'image' && item !== null
 const isSnapshotGridItem = (type: TType | undefined, item: TGridItem | null): item is TSnapshotGridItem => type === 'text' && item !== null
 
 const POPUP_OFFSET = 50
 const POPUP_SPACING = 20
-const BUTTON_HEIGHT = 30
+const DISCARD_BUTTON_HEIGHT = 30
+const DISCARD_LINE_HEIGHT = 18
+const DISCARD_FONT_SIZE = 18
 
 const STATE_CLOSE = 0
 const STATE_OPENING = 1
@@ -112,15 +116,16 @@ export const Popup = component(
 
     return ({
       sourceCodeWidth: halfWidth - POPUP_SPACING * 2,
-      sourceCodeHeight: popupHeight - BUTTON_HEIGHT - POPUP_SPACING * 2,
+      sourceCodeHeight: popupHeight - DISCARD_BUTTON_HEIGHT - POPUP_SPACING * 2,
       sourceCodeLeft: POPUP_SPACING,
-      sourceCodeTop: BUTTON_HEIGHT + POPUP_SPACING,
+      sourceCodeTop: DISCARD_BUTTON_HEIGHT + POPUP_SPACING,
       previewWidth: halfWidth - POPUP_SPACING * 2,
-      previewHeight: popupHeight - BUTTON_HEIGHT - POPUP_SPACING * 2,
+      previewHeight: popupHeight - DISCARD_BUTTON_HEIGHT - POPUP_SPACING * 2,
       previewLeft: halfWidth + POPUP_SPACING,
-      previewTop: BUTTON_HEIGHT + POPUP_SPACING,
+      previewTop: DISCARD_BUTTON_HEIGHT + POPUP_SPACING,
     })
-  })
+  }),
+  mapState('discardTextWidth', 'setDiscardTextWidth', () => 0, [])
 )(({
   left,
   top,
@@ -143,6 +148,8 @@ export const Popup = component(
   previewTop,
   previewWidth,
   previewHeight,
+  discardTextWidth,
+  setDiscardTextWidth,
   shouldNotAnimate,
   isDiscarded,
   onDiscardToggle,
@@ -180,9 +187,27 @@ export const Popup = component(
             <Background color={[255, 255, 255, popupAlpha]}/>
             {state === STATE_OPEN && item !== null && (
               <Fragment>
-                <Block width={popupWidth} height={BUTTON_HEIGHT} style={{ display: 'flex' }}>
+                <Block width={popupWidth} height={DISCARD_BUTTON_HEIGHT} isFlexbox>
                   <Background color={isDiscarded ? COLOR_GREEN : COLOR_RED}/>
-                  <Button onPress={onDiscardToggle}/>
+                  <Button onPress={onDiscardToggle}>
+                    <Block
+                      top={(DISCARD_BUTTON_HEIGHT - DISCARD_LINE_HEIGHT) / 2}
+                      left={(popupWidth - discardTextWidth) / 2}
+                      height={DISCARD_LINE_HEIGHT}
+                      shouldIgnorePointerEvents
+                    >
+                      <Size width={discardTextWidth} onWidthChange={setDiscardTextWidth}>
+                        <Text
+                          lineHeight={DISCARD_LINE_HEIGHT}
+                          fontSize={DISCARD_FONT_SIZE}
+                          fontFamily="sans-serif"
+                          shouldPreserveWhitespace
+                        >
+                          {isDiscarded ? 'Undiscard' : 'Discard'}
+                        </Text>
+                      </Size>
+                    </Block>
+                  </Button>
                 </Block>
                 <SourceCode
                   top={sourceCodeTop}

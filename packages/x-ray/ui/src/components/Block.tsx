@@ -15,6 +15,7 @@ export type TBlock = {
   bottom?: number,
   opacity?: number,
   floatingIndex?: number,
+  isFlexbox?: boolean,
   shouldIgnorePointerEvents?: boolean,
   shouldFlow?: boolean,
   shouldScrollX?: boolean,
@@ -35,8 +36,8 @@ export const Block = component(
     shouldFlow: false,
     shouldHideOverflow: false,
     shouldIgnorePointerEvents: false,
-    shouldUseFlex: false,
     shouldForceAcceleration: false,
+    isFlexbox: false,
   }),
   mapProps(
     ({
@@ -61,6 +62,7 @@ export const Block = component(
       shouldFlow,
       shouldIgnorePointerEvents,
       shouldForceAcceleration,
+      isFlexbox,
       onScroll,
       onPress,
     }) => {
@@ -70,6 +72,10 @@ export const Block = component(
         left: 0,
         top: 0,
         // lineHeight: 0,
+      }
+
+      if (isFlexbox) {
+        styles.display = 'flex'
       }
 
       if (!isUndefined(styles.lineHeight)) {

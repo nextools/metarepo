@@ -12,7 +12,8 @@ import { Border } from './Border'
 
 export const SWITCH_HORIZONTAL_PADDING = 10
 export const SWITCH_HEIGHT = 24 + BORDER_SIZE * 2
-export const SWITCH_LINE_HEIGHT = 16
+export const SWITCH_LINE_HEIGHT = 18
+export const SWITCH_FONT_SIZE = 16
 
 export type TSwitch = TOmitKey<TRect, 'height'> & {
   file: string,
@@ -43,9 +44,7 @@ export const Switch = component(
     top={top}
     width={width}
     height={SWITCH_HEIGHT}
-    style={{
-      display: 'flex',
-    }}
+    isFlexbox
   >
     <Background color={isActive ? COLOR_GREEN : COLOR_WHITE}/>
     <Border
@@ -66,7 +65,14 @@ export const Switch = component(
       shouldIgnorePointerEvents
     >
       <Size width={textWidth} onWidthChange={onWidthChange}>
-        <Text lineHeight={SWITCH_LINE_HEIGHT} shouldPreserveWhitespace>{file}</Text>
+        <Text
+          lineHeight={SWITCH_LINE_HEIGHT}
+          fontSize={SWITCH_FONT_SIZE}
+          fontFamily="sans-serif"
+          shouldPreserveWhitespace
+        >
+          {file}
+        </Text>
       </Size>
     </Block>
   </Block>

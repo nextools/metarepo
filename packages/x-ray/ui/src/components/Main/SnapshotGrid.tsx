@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { component, startWithType, mapHandlers, mapWithPropsMemo } from 'refun'
+import { pureComponent, startWithType, mapHandlers, mapWithPropsMemo } from 'refun'
 import bsc from 'bsc'
 import { Border } from '@primitives/border'
 import { isUndefined } from 'tsfn'
@@ -18,7 +18,7 @@ export type TSnapshotGrid = TRect & {
   filteredFiles: string[],
 }
 
-export const SnapshotGrid = component(
+export const SnapshotGrid = pureComponent(
   startWithType<TSnapshotGrid>(),
   mapStoreDispatch,
   mapWithPropsMemo(({ width, items, filteredFiles }) => {

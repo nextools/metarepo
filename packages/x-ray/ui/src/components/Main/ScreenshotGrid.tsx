@@ -1,5 +1,5 @@
 import React, { Fragment, ReactNode } from 'react'
-import { component, startWithType, mapHandlers, mapWithPropsMemo } from 'refun'
+import { startWithType, mapHandlers, mapWithPropsMemo, pureComponent } from 'refun'
 import bsc from 'bsc'
 import { easeInOutCubic, Animation } from '@primitives/animation'
 import { Border } from '@primitives/border'
@@ -23,7 +23,7 @@ export type TScreenshotGrid = TRect & {
   shouldAnimate: boolean,
 }
 
-export const ScreenshotGrid = component(
+export const ScreenshotGrid = pureComponent(
   startWithType<TScreenshotGrid>(),
   mapStoreDispatch,
   mapWithPropsMemo(({ width, items, filteredFiles }) => {

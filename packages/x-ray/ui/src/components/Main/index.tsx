@@ -1,18 +1,16 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, onMount, mapHandlers } from 'refun'
-import { Button } from '@primitives/button'
+import { component, startWithType, onMount, mapHandlers, mapState } from 'refun'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { actionLoadList, actionSave } from '../../actions'
 import { TSize, TType, TScreenshotItems, TSnapshotItems } from '../../types'
 import { Popup } from '../Popup'
 import { Block } from '../Block'
 import { Background } from '../Background'
-import { COLOR_GREEN, COL_SPACE, BORDER_SIZE, COLOR_GRAY } from '../../config'
+import { COL_SPACE, BORDER_SIZE, COLOR_GRAY } from '../../config'
 import { Toolbar, TOOLBAR_HEIGHT } from '../Toolbar'
+import { SaveButton, SAVE_BUTTON_HEIGHT } from '../SaveButton'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
-
-const SAVE_BUTTON_SIZE = 48
 
 const isScreenshots = (items: any, type: TType | null): items is TScreenshotItems => type === 'image' && Object.keys(items).length > 0
 const isSnapshots = (items: any, type: TType | null): items is TSnapshotItems => type === 'text' && Object.keys(items).length > 0
@@ -41,7 +39,8 @@ export const Main = component(
         dispatch(actionSave(itemKeys, discardedItems))
       }
     },
-  })
+  }),
+  mapState('saveButtonWidth', 'setSaveButtonWidth', () => 0, [])
 )(({
   width,
   height,
@@ -51,6 +50,8 @@ export const Main = component(
   filteredFiles,
   files,
   type,
+  saveButtonWidth,
+  setSaveButtonWidth,
   onSave,
 }) => (
   <Fragment>
@@ -92,18 +93,13 @@ export const Main = component(
         filteredFiles={filteredFiles}
       />
     )}
-    <Block
-      top={height - SAVE_BUTTON_SIZE - 10}
-      left={width - SAVE_BUTTON_SIZE - 10}
-      width={SAVE_BUTTON_SIZE}
-      height={SAVE_BUTTON_SIZE}
-      style={{
-        display: 'flex',
-      }}
-    >
-      <Background color={COLOR_GREEN}/>
-      <Button onPress={onSave}/>
-    </Block>
+    <SaveButton
+      top={height - SAVE_BUTTON_HEIGHT - 10}
+      left={width - saveButtonWidth - 10}
+      width={saveButtonWidth}
+      onPress={onSave}
+      onWidthChange={setSaveButtonWidth}
+    />
     {type !== null && selectedItem !== null && (
       <Popup
         left={0}
