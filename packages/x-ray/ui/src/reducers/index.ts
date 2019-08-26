@@ -139,9 +139,8 @@ export const reducer: Reducer<TState> = (state, action) => {
 
   if (isActionSave(action)) {
     return {
-      ...state,
+      ...initialState,
       isSaved: true,
-      discardedItems: [],
     }
   }
 
