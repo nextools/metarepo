@@ -107,6 +107,8 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
             result[relativePath] = targetResult
             resultData[relativePath] = targetResultData
 
+            console.log(relativePath)
+
             targetResult = {
               old: {},
               new: {},

@@ -160,6 +160,8 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
             result[relativePath] = targetResult
             resultData[relativePath] = targetResultData
 
+            console.log(relativePath)
+
             targetResult = {
               deleted: {},
               new: {},
