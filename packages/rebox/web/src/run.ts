@@ -73,6 +73,32 @@ export const run = (options: TServeJsBundleOptions) => {
             },
           ],
         },
+        {
+          test: /\.(png|jpg)$/,
+          exclude: /node_modules/,
+          use: [
+            {
+              loader: require.resolve('file-loader'),
+              options: {
+                name: '[name].[hash].[ext]',
+                outputPath: 'images',
+              },
+            },
+          ],
+        },
+        {
+          test: /\.mp4$/,
+          exclude: /node_modules/,
+          use: [
+            {
+              loader: require.resolve('file-loader'),
+              options: {
+                name: '[name].[hash].[ext]',
+                outputPath: 'videos',
+              },
+            },
+          ],
+        },
       ],
     },
     optimization: {
