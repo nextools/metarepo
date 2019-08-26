@@ -16,13 +16,15 @@ export const Image = component(
       resizeMode,
     }),
   }))
-)(({ source, id, height, width, style }) => (
+)(({ source, id, height, width, style, onLoad, onError }) => (
   <ImageRN
     testID={id}
     source={{ uri: source }}
     height={height}
     width={width}
     style={style}
+    onLoad={onLoad}
+    onError={onError}
   />
 ))
 

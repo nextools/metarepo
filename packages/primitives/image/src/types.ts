@@ -6,4 +6,6 @@ export type TImage = {
   width: number,
   borderRadius?: number,
   resizeMode?: 'contain' | 'cover',
+  onLoad?: () => void,
+  onError?: () => void,
 }
