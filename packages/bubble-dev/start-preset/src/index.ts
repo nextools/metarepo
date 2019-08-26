@@ -46,6 +46,7 @@ import buildPackageJson from './plugins/build-package-json'
 import copyAssets from './plugins/copy-assets'
 import runVerdaccio from './plugins/run-verdaccio'
 import { getStartOptions } from './get-options'
+import { removeYarnCache } from './plugins/remove-yarn-cache'
 
 export const preparePackage = (packageDir: string) => {
   const dir = path.join('packages', packageDir)
@@ -451,6 +452,7 @@ export const testPublish = async () => {
     writePackageVersions,
     buildBumpedPackages(preparePackage),
     runVerdaccio(verdaccioConfigPath),
-    publishPackagesBumps(npmOptions)
+    publishPackagesBumps(npmOptions),
+    removeYarnCache
   )
 }
