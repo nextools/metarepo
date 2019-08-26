@@ -70,7 +70,7 @@ export const Switch = component(
       shouldIgnorePointerEvents
     >
       <Size width={textWidth} onWidthChange={onWidthChange}>
-        <Text lineHeight={SWITCH_LINE_HEIGHT}>{file}</Text>
+        <Text lineHeight={SWITCH_LINE_HEIGHT} shouldPreserveWhitespace>{file}</Text>
       </Size>
     </Block>
   </Block>
