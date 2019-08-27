@@ -87,6 +87,7 @@ export const runEmulator = async (options: TRunEmulator): Promise<() => void> =>
       '-accel',
       'on',
       '-no-boot-anim',
+      '-no-snapshot',
     ],
     {
       stderr: process.stderr,
