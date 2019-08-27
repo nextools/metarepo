@@ -2,7 +2,16 @@ import path from 'path'
 import plugin from '@start/plugin'
 import sequence from '@start/plugin-sequence'
 import find from '@start/plugin-find'
+import remove from '@start/plugin-remove'
+import read from '@start/plugin-read'
 import env from '@start/plugin-env'
+import eslint from '@start/plugin-lib-eslint'
+import typescriptCheck from '@start/plugin-lib-typescript-check'
+import codecov from '@start/plugin-lib-codecov'
+import tape from '@start/plugin-lib-tape'
+import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
+// @ts-ignore
+import tapDiff from 'tap-diff'
 import xRayChromeScreenshots from './plugins/chrome-screenshots-plugin'
 import xRayFirefoxScreenshots from './plugins/firefox-screenshots-plugin'
 import xRayIosScreenshots from './plugins/ios-screenshots-plugin'
@@ -37,8 +46,8 @@ export const checkNativeSnapshots = (component = '**') =>
     xRaySnapshots({
       platform: 'native',
       mocks: {
-        'react-native': path.resolve('tasks/x-ray/mocks/react-native.js'),
-        'react-native-svg': path.resolve('tasks/x-ray/mocks/react-native-svg.js'),
+        'react-native': require.resolve('./mocks/react-native.js'),
+        'react-native-svg': path.resolve('./mocks/react-native-svg.js'),
       },
       extensions: [
         '.native.js',
@@ -54,7 +63,7 @@ export const checkNativeSnapshots = (component = '**') =>
     })
   )
 
-export const checkChromeScreenshots = (component = '**') =>
+export const CheckChromeScreenshots = (fontsDir?: string) => (component = '**') =>
   withChromium(
     sequence(
       find(`packages/${component}/x-ray/screenshots.tsx`),
@@ -71,10 +80,11 @@ export const checkChromeScreenshots = (component = '**') =>
           '.tsx',
         ],
       })
-    )
+    ),
+    fontsDir
   )
 
-export const checkFirefoxScreenshots = (component = '**') =>
+export const CheckFirefoxScreenshots = (fontsDir?: string) => (component = '**') =>
   withFirefox(
     sequence(
       find(`packages/${component}/x-ray/screenshots.tsx`),
@@ -91,13 +101,15 @@ export const checkFirefoxScreenshots = (component = '**') =>
           '.tsx',
         ],
       })
-    )
+    ),
+    fontsDir
   )
 
-export const buildXRayIos = (packageDir = 'packages/x-ray/native-screenshots-app/') =>
+export const buildXRayIos = (outputPath: string, fontsDir?: string) =>
   plugin('buildXRayIos', ({ logMessage }) => async () => {
     const { copyTemplate, buildDebug } = await import('@rebox/ios')
     const { linkDependencyIos } = await import('rn-link')
+    const { isString } = await import('tsfn')
 
     const projectPath = await copyTemplate('X-Ray')
 
@@ -110,9 +122,17 @@ export const buildXRayIos = (packageDir = 'packages/x-ray/native-screenshots-app
 
     logMessage('dependencies are linked')
 
+    if (isString(fontsDir)) {
+      const { addFontsIos } = await import('rn-fonts')
+
+      await addFontsIos(projectPath, fontsDir)
+
+      logMessage('fonts are linked')
+    }
+
     await buildDebug({
       projectPath,
-      outputPath: path.join(packageDir, 'build'),
+      outputPath,
       osVersion: '12.2',
       platformName: 'iOS Simulator',
       appName: 'X-Ray',
@@ -120,10 +140,11 @@ export const buildXRayIos = (packageDir = 'packages/x-ray/native-screenshots-app
     })
   })
 
-export const buildXRayAndroid = (packageDir = 'packages/x-ray/native-screenshots-app/') =>
+export const buildXRayAndroid = (outputPath: string, fontsDir?: string) =>
   plugin('buildXRayAndroid', ({ logMessage }) => async () => {
     const { buildDebug, copyTemplate } = await import('@rebox/android')
     const { linkDependencyAndroid } = await import('rn-link')
+    const { isString } = await import('tsfn')
 
     const projectPath = await copyTemplate('X-Ray')
 
@@ -137,46 +158,101 @@ export const buildXRayAndroid = (packageDir = 'packages/x-ray/native-screenshots
 
     logMessage('dependencies are linked')
 
+    if (isString(fontsDir)) {
+      const { addFontsAndroid } = await import('rn-fonts')
+
+      await addFontsAndroid(projectPath, fontsDir)
+
+      logMessage('fonts are linked')
+    }
+
     await buildDebug({
       projectPath,
-      outputPath: path.join(packageDir, 'build'),
+      outputPath,
       appName: 'X-Ray',
       appId: 'org.bubble_dev.xray',
     })
   })
 
-export const checkIosScreenshots = (component = '**') =>
-  sequence(
+export const CheckIosScreenshots = (appDir: string, fontsDir?: string) => (component = '**') => {
+  const appPath = path.join(appDir, 'X-Ray.app')
+
+  return sequence(
     find(`packages/${component}/x-ray/screenshots.tsx`),
     env({ NODE_ENV: 'production' }),
     plugin('buildXray', ({ reporter }) => async () => {
       const { access } = await import('pifs')
 
       try {
-        await access('packages/x-ray/native-screenshots-app/build/X-Ray.app')
+        await access(appPath)
       } catch {
-        const plugin = await buildXRayIos()
+        const plugin = await buildXRayIos(appDir, fontsDir)
 
         return plugin(reporter)()
       }
     }),
-    xRayIosScreenshots('packages/x-ray/native-screenshots-app/build/X-Ray.app')
+    xRayIosScreenshots(appPath)
+  )
+}
+
+export const CheckAndroidScreenshots = (appDir: string, fontsDir?: string) => (component = '**') => {
+  const appPath = path.join(appDir, 'X-Ray.apk')
+
+  return sequence(
+    find(`packages/${component}/x-ray/screenshots.tsx`),
+    env({ NODE_ENV: 'production' }),
+    plugin('buildXray', ({ reporter }) => async () => {
+      const { access } = await import('pifs')
+
+      try {
+        await access(appPath)
+      } catch {
+        const plugin = await buildXRayAndroid(appDir, fontsDir)
+
+        return plugin(reporter)()
+      }
+    }),
+    xRayAndroidScreenshots(appPath)
+  )
+}
+
+export const lint = () =>
+  sequence(
+    find([
+      'packages/**/{src,test,x-ray}/**/*.{ts,tsx}',
+      'tasks/**/*.ts',
+    ]),
+    read,
+    eslint({
+      cache: true,
+      cacheLocation: 'node_modules/.cache/eslint',
+    }),
+    typescriptCheck({
+      lib: ['esnext', 'dom'],
+      typeRoots: ['types/', 'node_modules/@types/'],
+    })
   )
 
-export const checkAndroidScreenshots = (component = '**') =>
+export const test = (packageDir: string = '**') =>
   sequence(
-    find(`packages/${component}/x-ray/screenshots.tsx`),
-    env({ NODE_ENV: 'production' }),
-    plugin('buildXray', ({ reporter }) => async () => {
-      const { access } = await import('pifs')
+    env({ NODE_ENV: 'test' }),
+    find(`coverage/`),
+    remove,
+    find(`packages/${packageDir}/src/**/*.{ts,tsx}`),
+    istanbulInstrument({ esModules: true }, ['.ts', '.tsx']),
+    find([
+      `packages/${packageDir}/test/**/*.{ts,tsx}`,
+      `!packages/${packageDir}/test/fixtures`,
+    ]),
+    tape(tapDiff),
+    istanbulReport(['lcovonly', 'html', 'text-summary'])
+  )
 
-      try {
-        await access('packages/x-ray/native-screenshots-app/build/X-Ray.apk')
-      } catch {
-        const plugin = await buildXRayAndroid()
-
-        return plugin(reporter)()
-      }
-    }),
-    xRayAndroidScreenshots('packages/x-ray/native-screenshots-app/build/X-Ray.apk')
+export const ci = () =>
+  sequence(
+    lint(),
+    test(),
+    find('coverage/lcov.info'),
+    read,
+    codecov
   )

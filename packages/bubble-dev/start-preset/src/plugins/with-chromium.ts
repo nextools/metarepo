@@ -1,9 +1,11 @@
 /* eslint-disable import/named */
 import plugin, { StartPlugin } from '@start/plugin'
 
-export default (target: StartPlugin<{}, void>) =>
+export default (target: StartPlugin<{}, void>, fontsDir?: string) =>
   plugin('with-chromium', ({ reporter }) => async () => {
     const { default: execa } = await import('execa')
+    const { isString } = await import('tsfn')
+    const path = await import('path')
 
     const targetRunner = await target
     const execaOptions = {
@@ -30,6 +32,14 @@ export default (target: StartPlugin<{}, void>) =>
           '9222:9222',
           '--name',
           'chromium-headless-remote',
+          ...(isString(fontsDir)
+            ?
+            [
+              '-v',
+              `${path.resolve(fontsDir)}:/home/chromium/.fonts`,
+            ]
+            : []
+          ),
           'deepsweet/chromium-headless-remote:73',
         ],
         execaOptions

@@ -1,9 +1,11 @@
 /* eslint-disable import/named */
 import plugin, { StartPlugin } from '@start/plugin'
 
-export default (target: StartPlugin<{}, any>) =>
+export default (target: StartPlugin<{}, any>, fontsDir?: string) =>
   plugin('with-firefox', ({ reporter }) => async () => {
     const { default: execa } = await import('execa')
+    const { isString } = await import('tsfn')
+    const path = await import('path')
 
     const targetRunner = await target
     const execaOptions = {
@@ -32,6 +34,14 @@ export default (target: StartPlugin<{}, any>) =>
           '2828:2828',
           '--name',
           'foxr-firefox',
+          ...(isString(fontsDir)
+            ?
+            [
+              '-v',
+              `${path.resolve(fontsDir)}:/home/firefox/.fonts`,
+            ]
+            : []
+          ),
           'deepsweet/firefox-headless-remote:64',
         ],
         execaOptions

@@ -1,55 +1,14 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import plugin from '@start/plugin'
+import {
+  CheckChromeScreenshots,
+  CheckFirefoxScreenshots,
+  CheckAndroidScreenshots,
+  CheckIosScreenshots,
+} from '@bubble-dev/start-preset'
 
 export * from '@bubble-dev/start-preset'
-export * from './x-ray'
 
 // custom tasks:
-export const fixDeps = () => plugin('fixDeps', ({ logPath, logMessage }) => async () => {
-  const { fixdeps } = await import('fixdeps')
-  const { getPackageDirs } = await import('@auto/fs')
-  const packages = await getPackageDirs()
-
-  for (const pkg of packages) {
-    const result = await fixdeps({
-      ignoredPackages: [
-        '@babel/core',
-        '@babel/runtime',
-        '@babel/runtime-corejs3',
-        '__REBOX_ENTRY_POINT__',
-        '@typescript-eslint/eslint-plugin',
-        '@typescript-eslint/parser',
-        'eslint-plugin-import',
-        'eslint-plugin-react',
-        'eslint',
-        'typescript',
-        'react-dom',
-        'react-hot-loader',
-        'request',
-        'core-js',
-      ],
-      packagePath: pkg,
-      dependencyFilesGlobs: ['src/**/*.{ts,tsx,js}'],
-      devDependencyFilesGlobs: ['{test,x-ray}/**/*.{ts,tsx,js}', 'meta.{ts,tsx}'],
-    })
-
-    if (result !== null) {
-      logPath(pkg)
-
-      const addedDeps = Object.keys(result.addedDeps)
-      const addedDevDeps = Object.keys(result.addedDevDeps)
-
-      if (addedDeps.length > 0) {
-        logMessage(`added deps: ${addedDeps.join(', ')}`)
-      }
-
-      if (addedDevDeps.length > 0) {
-        logMessage(`added devDeps: ${addedDevDeps.join(', ')}`)
-      }
-
-      if (result.removedDeps.length > 0) {
-        logMessage(`removed deps: ${result.removedDeps.join(', ')}`)
-      }
-    }
-  }
-})
+export const checkChromeScreenshots = CheckChromeScreenshots()
+export const checkFirefoxScreenshots = CheckFirefoxScreenshots()
+export const checkAndroidScreenshots = CheckAndroidScreenshots('.x-ray/')
+export const checkIosScreenshots = CheckIosScreenshots('.x-ray/')

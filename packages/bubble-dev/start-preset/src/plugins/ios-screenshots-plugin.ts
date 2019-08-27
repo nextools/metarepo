@@ -6,7 +6,9 @@ export default (appPath: string) =>
       return logMessage('no files, skipping')
     }
 
+    const path = await import('path')
     const { rnResolve } = await import('rn-resolve')
+    const { broResolve } = await import('bro-resolve')
     const { runSimulator, installApp, launchApp, serveJsBundle } = await import('@rebox/ios')
     const { run: runWeb } = await import('@rebox/web')
     const { runScreenshotsServer, prepareFiles } = await import('@x-ray/native-screenshots')
@@ -48,9 +50,12 @@ export default (appPath: string) =>
       const { result, resultData, hasBeenChanged } = await runScreenshots()
 
       if (hasBeenChanged) {
+        const entryPointPath = await broResolve('@x-ray/ui')
+        const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
+
         const closeReboxServer = await runWeb({
-          htmlTemplatePath: 'packages/x-ray/ui/src/index.html',
-          entryPointPath: 'packages/x-ray/ui/src/index.tsx',
+          entryPointPath,
+          htmlTemplatePath,
           isQuiet: true,
         })
 

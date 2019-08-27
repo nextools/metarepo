@@ -32,11 +32,9 @@ export const Text = (props) => createElement('Text', props)
 
 export const TextInput = (props) => createElement('TextInput', props)
 
-const Item = (props) => createElement('Picker.Item', props)
-
 export const Picker = (props) => createElement('Picker', props)
 
-Picker.Item = Item
+Picker.Item = (props) => createElement('Picker.Item', props)
 
 export const Modal = (props) => createElement('Modal', props)
 
