@@ -5,6 +5,8 @@ import HTMLWebpackPlugin from 'html-webpack-plugin'
 import { browsersList } from '@bubble-dev/browsers-list'
 import { isUndefined } from 'tsfn'
 
+const excludeNodeModulesRegExp = /[\\/]node_modules[\\/]/
+
 export type TServeJsBundleOptions = {
   entryPointPath: string,
   htmlTemplatePath: string,
@@ -38,66 +40,50 @@ export const run = (options: TServeJsBundleOptions) => {
       rules: [
         {
           test: path.resolve(options.entryPointPath),
-          use: [
-            {
-              loader: require.resolve('./loader.js'),
-            },
-          ],
+          loader: require.resolve('./loader.js'),
         },
         {
           test: /\.tsx?$/,
-          exclude: /[\\/]node_modules[\\/]/,
-          use: [
-            {
-              loader: require.resolve('babel-loader'),
-              options: {
-                babelrc: false,
-                presets: [
-                  [
-                    require.resolve('@babel/preset-env'),
-                    {
-                      targets: { browsers: browsersList },
-                      exclude: ['@babel/plugin-transform-regenerator'],
-                      ignoreBrowserslistConfig: true,
-                      modules: false,
-                    },
-                  ],
-                  require.resolve('@babel/preset-react'),
-                  require.resolve('@babel/preset-typescript'),
-                ],
-                plugins: [
-                  require.resolve('@babel/plugin-syntax-dynamic-import'),
-                ],
-                cacheDirectory: true,
-              },
-            },
-          ],
+          exclude: excludeNodeModulesRegExp,
+          loader: require.resolve('babel-loader'),
+          options: {
+            babelrc: false,
+            presets: [
+              [
+                require.resolve('@babel/preset-env'),
+                {
+                  targets: { browsers: browsersList },
+                  exclude: ['@babel/plugin-transform-regenerator'],
+                  ignoreBrowserslistConfig: true,
+                  modules: false,
+                },
+              ],
+              require.resolve('@babel/preset-react'),
+              require.resolve('@babel/preset-typescript'),
+            ],
+            plugins: [
+              require.resolve('@babel/plugin-syntax-dynamic-import'),
+            ],
+            cacheDirectory: true,
+          },
         },
         {
           test: /\.(png|jpg)$/,
-          exclude: /node_modules/,
-          use: [
-            {
-              loader: require.resolve('file-loader'),
-              options: {
-                name: '[name].[hash].[ext]',
-                outputPath: 'images',
-              },
-            },
-          ],
+          exclude: excludeNodeModulesRegExp,
+          loader: require.resolve('file-loader'),
+          options: {
+            name: '[name].[hash].[ext]',
+            outputPath: 'images',
+          },
         },
         {
           test: /\.mp4$/,
-          exclude: /node_modules/,
-          use: [
-            {
-              loader: require.resolve('file-loader'),
-              options: {
-                name: '[name].[hash].[ext]',
-                outputPath: 'videos',
-              },
-            },
-          ],
+          exclude: excludeNodeModulesRegExp,
+          loader: require.resolve('file-loader'),
+          options: {
+            name: '[name].[hash].[ext]',
+            outputPath: 'videos',
+          },
         },
       ],
     },
@@ -107,7 +93,7 @@ export const run = (options: TServeJsBundleOptions) => {
           default: false,
           vendor: {
             name: 'vendor',
-            test: /[\\/]node_modules[\\/]/,
+            test: excludeNodeModulesRegExp,
             enforce: true,
             chunks: 'all',
           },

@@ -7,6 +7,8 @@ import TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import { browsersList } from '@bubble-dev/browsers-list'
 
+const nodeModulesRegExp = /[\\/]node_modules[\\/]/
+
 export type TBuildJsBundleOptions = {
   entryPointPath: string,
   outputPath: string,
@@ -57,68 +59,52 @@ export const buildRelease = (options: TBuildJsBundleOptions) => {
       rules: [
         {
           test: path.resolve(options.entryPointPath),
-          use: [
-            {
-              loader: require.resolve('./loader.js'),
-            },
-          ],
+          loader: require.resolve('./loader.js'),
         },
         {
           test: /\.(ts|tsx)$/,
-          exclude: /node_modules/,
-          use: [
-            {
-              loader: 'babel-loader',
-              options: {
-                babelrc: false,
-                presets: [
-                  [
-                    require.resolve('@babel/preset-env'),
-                    {
-                      targets: { browsers: browsersList },
-                      modules: false,
-                      useBuiltIns: 'usage',
-                      corejs: 3,
-                      ignoreBrowserslistConfig: true,
-                      exclude: ['@babel/plugin-transform-regenerator'],
-                    },
-                  ],
-                  require.resolve('@babel/preset-react'),
-                  require.resolve('@babel/preset-typescript'),
-                ],
-                plugins: [
-                  require.resolve('@babel/plugin-syntax-dynamic-import'),
-                ],
-                cacheDirectory: false,
-              },
-            },
-          ],
+          exclude: nodeModulesRegExp,
+          loader: 'babel-loader',
+          options: {
+            babelrc: false,
+            presets: [
+              [
+                require.resolve('@babel/preset-env'),
+                {
+                  targets: { browsers: browsersList },
+                  modules: false,
+                  useBuiltIns: 'usage',
+                  corejs: 3,
+                  ignoreBrowserslistConfig: true,
+                  exclude: ['@babel/plugin-transform-regenerator'],
+                },
+              ],
+              require.resolve('@babel/preset-react'),
+              require.resolve('@babel/preset-typescript'),
+            ],
+            plugins: [
+              require.resolve('@babel/plugin-syntax-dynamic-import'),
+            ],
+            cacheDirectory: false,
+          },
         },
         {
           test: /\.(png|jpg)$/,
-          exclude: /node_modules/,
-          use: [
-            {
-              loader: require.resolve('file-loader'),
-              options: {
-                name: '[name].[hash].[ext]',
-                outputPath: 'images',
-              },
-            },
-          ],
+          exclude: nodeModulesRegExp,
+          loader: require.resolve('file-loader'),
+          options: {
+            name: '[name].[hash].[ext]',
+            outputPath: 'images',
+          },
         },
         {
           test: /\.mp4$/,
-          exclude: /node_modules/,
-          use: [
-            {
-              loader: require.resolve('file-loader'),
-              options: {
-                name: '[name].[hash].[ext]',
-                outputPath: 'videos',
-              },
-            },
-          ],
+          exclude: nodeModulesRegExp,
+          loader: require.resolve('file-loader'),
+          options: {
+            name: '[name].[hash].[ext]',
+            outputPath: 'videos',
+          },
         },
       ],
     },
@@ -155,7 +141,7 @@ export const buildRelease = (options: TBuildJsBundleOptions) => {
           },
           vendor: {
             name: 'vendor',
-            test: /[\\/]node_modules[\\/]/,
+            test: nodeModulesRegExp,
             priority: 10,
             enforce: true,
             chunks: 'all',
