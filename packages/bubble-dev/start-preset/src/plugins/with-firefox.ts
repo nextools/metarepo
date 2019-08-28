@@ -1,4 +1,3 @@
-/* eslint-disable import/named */
 import plugin, { StartPlugin } from '@start/plugin'
 
 export default (target: StartPlugin<{}, any>, fontsDir?: string) =>
@@ -8,17 +7,9 @@ export default (target: StartPlugin<{}, any>, fontsDir?: string) =>
     const path = await import('path')
 
     const targetRunner = await target
-    const execaOptions = {
-      stderr: process.stderr,
-      stripEof: true,
-      env: {
-        FORCE_COLOR: '1',
-      },
-    }
 
     try {
       await execa('docker', ['stop', 'foxr-firefox'], {
-        ...execaOptions,
         reject: false,
       })
       await execa(
@@ -37,17 +28,22 @@ export default (target: StartPlugin<{}, any>, fontsDir?: string) =>
             ?
             [
               '-v',
-              `${path.resolve(fontsDir)}:/home/firefox/.fonts`,
+              `${path.resolve(fontsDir)}:/home/firefox/.fonts:ro`,
             ]
             : []
           ),
           'deepsweet/firefox-headless-remote:64',
         ],
-        execaOptions
+        {
+          stderr: process.stderr,
+          env: {
+            FORCE_COLOR: '1',
+          },
+        }
       )
 
       return await targetRunner(reporter)()
     } finally {
-      await execa('docker', ['stop', 'foxr-firefox'], execaOptions)
+      await execa('docker', ['stop', 'foxr-firefox'])
     }
   })

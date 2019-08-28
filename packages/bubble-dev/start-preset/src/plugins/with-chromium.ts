@@ -1,4 +1,3 @@
-/* eslint-disable import/named */
 import plugin, { StartPlugin } from '@start/plugin'
 
 export default (target: StartPlugin<{}, void>, fontsDir?: string) =>
@@ -8,17 +7,9 @@ export default (target: StartPlugin<{}, void>, fontsDir?: string) =>
     const path = await import('path')
 
     const targetRunner = await target
-    const execaOptions = {
-      stderr: process.stderr,
-      stripEof: true,
-      env: {
-        FORCE_COLOR: '1',
-      },
-    }
 
     try {
       await execa('docker', ['stop', 'chromium-headless-remote'], {
-        ...execaOptions,
         reject: false,
       })
       await execa(
@@ -35,17 +26,22 @@ export default (target: StartPlugin<{}, void>, fontsDir?: string) =>
             ?
             [
               '-v',
-              `${path.resolve(fontsDir)}:/home/chromium/.fonts`,
+              `${path.resolve(fontsDir)}:/home/chromium/.fonts:ro`,
             ]
             : []
           ),
           'deepsweet/chromium-headless-remote:73',
         ],
-        execaOptions
+        {
+          stderr: process.stderr,
+          env: {
+            FORCE_COLOR: '1',
+          },
+        }
       )
 
       return await targetRunner(reporter)()
     } finally {
-      await execa('docker', ['stop', 'chromium-headless-remote'], execaOptions)
+      await execa('docker', ['stop', 'chromium-headless-remote'])
     }
   })
