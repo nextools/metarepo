@@ -5,7 +5,8 @@
   "keywords": [],
   "browser": "src/index.tsx",
   "buildAssets": {
-    "src/*.html": "web/"
+    "src/*.html": "web/",
+    "src/images/*.png": "web/"
   },
   "repository": "bubble-dev/_",
   "license": "MIT",
