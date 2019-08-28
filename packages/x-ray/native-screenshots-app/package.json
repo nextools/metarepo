@@ -4,10 +4,6 @@
   "description": "",
   "keywords": [],
   "react-native": "src/index.js",
-  "buildTasks": [
-    "buildXRayIos",
-    "buildXRayAndroid"
-  ],
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
