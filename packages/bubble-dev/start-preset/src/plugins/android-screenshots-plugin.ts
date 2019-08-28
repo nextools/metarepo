@@ -48,6 +48,8 @@ export default (appPath: string) =>
 
       const { result, resultData, hasBeenChanged } = await runScreenshots()
 
+      killEmulator()
+
       if (hasBeenChanged) {
         const entryPointPath = await broResolve('@x-ray/ui')
         const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
