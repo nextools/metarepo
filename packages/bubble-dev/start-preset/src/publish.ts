@@ -144,7 +144,7 @@ export const testPublish = async () => {
   return sequence(
     getPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
     publishPrompt(prefixes),
-    // buildBumpedPackages(buildPackage),
+    buildBumpedPackages(buildPackage),
     writePackagesDependencies,
     writePackageVersions,
     buildBumpedPackages(preparePackage),
