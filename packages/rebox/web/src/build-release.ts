@@ -90,7 +90,7 @@ export const buildRelease = (options: TBuildJsBundleOptions) => {
         },
         {
           test: /\.(png|jpg)$/,
-          exclude: nodeModulesRegExp,
+          // exclude: nodeModulesRegExp,
           loader: require.resolve('file-loader'),
           options: {
             name: '[name].[hash].[ext]',
@@ -99,7 +99,7 @@ export const buildRelease = (options: TBuildJsBundleOptions) => {
         },
         {
           test: /\.mp4$/,
-          exclude: nodeModulesRegExp,
+          // exclude: nodeModulesRegExp,
           loader: require.resolve('file-loader'),
           options: {
             name: '[name].[hash].[ext]',

@@ -69,7 +69,7 @@ export const run = (options: TServeJsBundleOptions) => {
         },
         {
           test: /\.(png|jpg)$/,
-          exclude: excludeNodeModulesRegExp,
+          // exclude: excludeNodeModulesRegExp,
           loader: require.resolve('file-loader'),
           options: {
             name: '[name].[hash].[ext]',
@@ -78,7 +78,7 @@ export const run = (options: TServeJsBundleOptions) => {
         },
         {
           test: /\.mp4$/,
-          exclude: excludeNodeModulesRegExp,
+          // exclude: excludeNodeModulesRegExp,
           loader: require.resolve('file-loader'),
           options: {
             name: '[name].[hash].[ext]',
