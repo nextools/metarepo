@@ -13,7 +13,7 @@ test('getNumPerms: simple case', (t) => {
     Component: () => null,
   }
 
-  t.deepEquals(
+  t.equals(
     getNumPerms(meta),
     4,
     'should return num perms'
@@ -38,7 +38,7 @@ test('getNumPerms: props mutex', (t) => {
     Component: () => null,
   }
 
-  t.deepEquals(
+  t.equals(
     getNumPerms(meta),
     5,
     'should return num perms'
@@ -62,7 +62,7 @@ test('getNumPerms: props mutin', (t) => {
     Component: () => null,
   }
 
-  t.deepEquals(
+  t.equals(
     getNumPerms(meta),
     4,
     'should return num perms'
@@ -99,7 +99,7 @@ test('getNumPerms: children', (t) => {
     Component: () => null,
   }
 
-  t.deepEquals(
+  t.equals(
     getNumPerms(meta),
     4,
     'should return num perms'
