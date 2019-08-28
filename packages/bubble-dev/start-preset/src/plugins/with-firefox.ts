@@ -19,7 +19,6 @@ export default (target: StartPlugin<{}, any>, fontsDir?: string) =>
     try {
       await execa('docker', ['stop', 'foxr-firefox'], {
         ...execaOptions,
-        stderr: null,
         reject: false,
       })
       await execa(

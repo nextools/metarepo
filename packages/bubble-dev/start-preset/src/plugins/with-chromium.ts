@@ -19,7 +19,6 @@ export default (target: StartPlugin<{}, void>, fontsDir?: string) =>
     try {
       await execa('docker', ['stop', 'chromium-headless-remote'], {
         ...execaOptions,
-        stderr: null,
         reject: false,
       })
       await execa(
