@@ -47,7 +47,7 @@ export const checkNativeSnapshots = (component = '**') =>
       platform: 'native',
       mocks: {
         'react-native': require.resolve('./mocks/react-native.js'),
-        'react-native-svg': path.resolve('./mocks/react-native-svg.js'),
+        'react-native-svg': require.resolve('./mocks/react-native-svg.js'),
       },
       extensions: [
         '.native.js',
