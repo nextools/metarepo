@@ -7,6 +7,7 @@ export type TOptions = {
     [k: string]: string,
   },
   extensions: string[],
+  entryPointField: 'main' | 'browser' | 'react-native',
   platform: string,
 }
 
