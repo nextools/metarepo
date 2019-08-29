@@ -15,7 +15,7 @@
   "dependencies": {
     "@babel/core": "^7.4.3",
     "@babel/runtime": "^7.4.3",
-    "@rebox/native-utils": "^0.0.0",
+    "@rebox/native-utils": "^0.1.0",
     "cpy": "^7.2.0",
     "execa": "^1.0.0",
     "graceful-fs": "^4.1.15",
@@ -23,7 +23,7 @@
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.0",
     "simple-plist": "^1.0.0",
-    "tsfn": "^0.1.1"
+    "tsfn": "^0.2.0"
   },
   "devDependencies": {
     "@types/execa": "^0.9.0",

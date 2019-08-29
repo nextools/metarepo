@@ -14,16 +14,16 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "refun": "^0.3.0",
-    "stili": "^0.1.0"
+    "refun": "^0.4.0",
+    "stili": "^0.2.0"
   },
   "devDependencies": {
-    "@primitives/text": "^0.7.1",
+    "@primitives/text": "^0.8.0",
     "@types/react": "^16.8.6",
-    "@x-ray/common-utils": "^0.1.1",
-    "@x-ray/screenshot-utils": "^0.1.1",
-    "@x-ray/snapshots": "^0.0.0",
-    "autoprops": "^0.5.2",
+    "@x-ray/common-utils": "^0.2.0",
+    "@x-ray/screenshot-utils": "^0.2.0",
+    "@x-ray/snapshots": "^0.1.0",
+    "autoprops": "^0.6.0",
     "react": "^16.8.6",
     "react-native": "^0.59.0"
   }

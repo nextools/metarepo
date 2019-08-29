@@ -17,7 +17,7 @@
     "@babel/runtime": "^7.1.2",
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "execa": "^2.0.4",
-    "tsfn": "^0.1.2",
+    "tsfn": "^0.2.0",
     "pkg-dir": "^4.2.0",
     "resolve": "^1.12.0"
   },

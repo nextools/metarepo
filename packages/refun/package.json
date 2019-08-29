@@ -14,7 +14,7 @@
   "sideEffects": false,
   "dependencies": {
     "shallowequal": "^1.1.0",
-    "tsfn": "^0.1.0"
+    "tsfn": "^0.2.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

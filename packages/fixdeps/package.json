@@ -18,7 +18,7 @@
     "fast-glob": "^3.0.3",
     "graceful-fs": "^4.1.15",
     "p-all": "^2.1.0",
-    "tsfn": "^0.1.2",
+    "tsfn": "^0.2.0",
     "typeon": "^0.3.0"
   },
   "devDependencies": {

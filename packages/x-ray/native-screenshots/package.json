@@ -11,11 +11,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@x-ray/screenshot-utils": "^0.1.0",
-    "@x-ray/tar-fs": "^0.0.0",
+    "@x-ray/screenshot-utils": "^0.2.0",
+    "@x-ray/tar-fs": "^0.1.0",
     "graceful-fs": "^4.1.11",
-    "syntx": "^0.3.0",
-    "tsfn": "^0.1.2",
+    "syntx": "^0.4.0",
+    "tsfn": "^0.2.0",
     "upng-js": "^2.1.0"
   },
   "devDependencies": {

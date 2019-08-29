@@ -12,16 +12,16 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@types/react": "^16.8.6",
-    "@x-ray/common-utils": "^0.1.1",
-    "@x-ray/tar-fs": "^0.0.0",
-    "@x-ray/worker-utils": "^0.0.0",
+    "@x-ray/common-utils": "^0.2.0",
+    "@x-ray/tar-fs": "^0.1.0",
+    "@x-ray/worker-utils": "^0.1.0",
     "imagemin-pngout": "^4.0.0",
     "make-dir": "^3.0.0",
     "p-all": "^2.1.0",
     "pixelmatch": "^5.0.0",
     "pkg-dir": "^4.2.0",
-    "syntx": "^0.3.0",
-    "tsfn": "^0.1.2",
+    "syntx": "^0.4.0",
+    "tsfn": "^0.2.0",
     "upng-js": "^2.1.0"
   },
   "devDependencies": {

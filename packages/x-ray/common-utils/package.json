@@ -14,8 +14,8 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "react": "^16.8.6",
-    "syntx": "^0.3.0",
-    "tsfn": "^0.1.2"
+    "syntx": "^0.4.0",
+    "tsfn": "^0.2.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

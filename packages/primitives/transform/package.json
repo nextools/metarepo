@@ -13,8 +13,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "stili": "^0.1.0",
-    "refun": "^0.3.0"
+    "stili": "^0.2.0",
+    "refun": "^0.4.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
