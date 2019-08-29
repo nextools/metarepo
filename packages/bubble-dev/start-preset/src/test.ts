@@ -36,6 +36,7 @@ export const checkWebSnapshots = (component = '**') =>
         '.ts',
         '.tsx',
       ],
+      entryPointField: 'main',
     })
   )
 
@@ -60,6 +61,7 @@ export const checkNativeSnapshots = (component = '**') =>
         '.ts',
         '.tsx',
       ],
+      entryPointField: 'react-native',
     })
   )
 
@@ -79,6 +81,7 @@ export const CheckChromeScreenshots = (fontsDir?: string) => (component = '**') 
           '.ts',
           '.tsx',
         ],
+        entryPointField: 'main',
       })
     ),
     fontsDir
@@ -100,6 +103,7 @@ export const CheckFirefoxScreenshots = (fontsDir?: string) => (component = '**')
           '.ts',
           '.tsx',
         ],
+        entryPointField: 'main',
       })
     ),
     fontsDir
