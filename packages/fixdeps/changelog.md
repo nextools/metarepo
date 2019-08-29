@@ -1,3 +1,8 @@
+## v0.4.0
+
+* 🐞 ignore `worker_threads` imports
+* ♻️ update dependencies: `tsfn`
+
 ## v0.3.1
 
 * 🐞 add bigint support

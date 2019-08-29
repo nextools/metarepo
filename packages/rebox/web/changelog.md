@@ -1,3 +1,9 @@
+## v0.4.0
+
+* 💥 refactor
+* 🐞 handle images and videos
+* ♻️ update dependencies: `tsfn`
+
 ## v0.3.4
 
 * 🐞 add babel plugin bigint to dependencies

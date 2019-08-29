@@ -1,6 +1,6 @@
 {
   "name": "@primitives/layout",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "",
   "keywords": [],
   "main": "src/index.web.ts",

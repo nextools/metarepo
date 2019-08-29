@@ -1,3 +1,8 @@
+## v0.2.0
+
+* 🐞 add `onLoad` and `onError`
+* ♻️ update dependencies: `refun`, `stili`
+
 ## v0.1.1
 
 * 🐞 cleanup and fix deps

@@ -1,3 +1,7 @@
+## v0.4.0
+
+* ♻️ update dependencies: `refun`, `stili`
+
 ## v0.3.1
 
 * 🐞 change prop type in TableHeadCell

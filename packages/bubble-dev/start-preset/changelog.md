@@ -1,3 +1,15 @@
+## v0.9.0
+
+* 🌱 add x-ray tasks
+* 🌱 add `removeYarnCache` plugin to `testPublish` task
+* 🌱 add `testPublish` task with local Verdaccio NPM registry
+* 🌱 add `buildTasks` feature
+* 🐞 add 	`entryPointField` to x-ray tests
+* 🐞 fix mocks resolve
+* 🐞 disable Babel `transform-regenerator` and `transform-async-to-generator` for build tasks
+* 🐞 lint x-ray folder
+* ♻️ update dependencies: `@x-ray/firefox-screenshots`, `@x-ray/chrome-screenshots`, `@x-ray/screenshot-utils`, `@x-ray/native-screenshots`, `@x-ray/snapshots`, `@x-ray/common-utils`, `@rebox/web`, `bro-resolve`, `@rebox/android`, `@rebox/ios`, `rn-link`, `rn-resolve`, `fixdeps`, `tsfn`, `@start/plugin-lib-istanbul`
+
 ## v0.8.0
 
 * 🐞 add bigint support

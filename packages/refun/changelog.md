@@ -1,3 +1,12 @@
+## v0.4.0
+
+* 🌱 handle function as argument in `setState` of `mapState`
+* 🌱 add `mapHandlersFactory`
+* 🌱 add `onChange`
+* 🐞 expose `Dispatch` type in `mapRedux`
+* 🐞 add more type overloads to `component` and `pureComponent`
+* ♻️ update dependencies: `tsfn`
+
 ## v0.3.4
 
 * 🐞 tweak `redux` dependency semver range

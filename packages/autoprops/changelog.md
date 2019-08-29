@@ -1,3 +1,11 @@
+## v0.6.0
+
+* 🐞 skip mutins
+* 🐞 add `getNumPerms`
+* 🐞 fix child index offset in `getNextPerm`
+* 🐞 add `id` field to props generator
+* ♻️ update dependencies: `tsfn`
+
 ## v0.5.2
 
 * 🐞 add BigInt polyfill
