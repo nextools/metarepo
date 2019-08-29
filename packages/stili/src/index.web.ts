@@ -20,20 +20,28 @@ export const normalizeStyle = (style: TStyle): TCssProps =>
       result.MozUserSelect = value as TCssProps['MozUserSelect']
       result.msUserSelect = value as TCssProps['msUserSelect']
       result.userSelect = value as TCssProps['userSelect']
+
+      return result
     }
 
     if (key === 'tapHighlightColor') {
       result.WebkitTapHighlightColor = value as TCssProps['WebkitTapHighlightColor']
+
+      return result
     }
 
     if (key === 'fontSmoothing') {
       result.WebkitFontSmoothing = value as TCssProps['WebkitFontSmoothing']
+
+      return result
     }
 
     if (key === 'appearance') {
       result.WebkitAppearance = value as TCssProps['WebkitAppearance']
       result.MozAppearance = value as TCssProps['MozAppearance']
       result.appearance = value as TCssProps['appearance']
+
+      return result
     }
 
     // FIXME

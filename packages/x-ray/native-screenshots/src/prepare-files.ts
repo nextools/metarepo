@@ -4,10 +4,11 @@ import { writeFile } from 'graceful-fs'
 
 const pWriteFile = promisify(writeFile)
 
-const prepareFiles = async (targetFiles: string[]) => {
-  const outfile = `export default [${targetFiles.map((file) => `() => ({ path: '${file}', content: import('${file}')})`).join(', ')}]`
+export const prepareFiles = async (entryPointPath: string, targetFiles: string[]) => {
+  let data = targetFiles.map((file, i) => `import file${i} from '${file}'`).join('\n')
+  data += '\n'
+  data += `export default [${targetFiles.map((file, i) => `{ path: '${file}', content: file${i} }`)}]`
+  const outfilePath = path.join(path.dirname(entryPointPath), 'files.js')
 
-  await pWriteFile(path.join(__dirname, 'files.js'), outfile, { encoding: 'utf8' })
+  await pWriteFile(outfilePath, data)
 }
-
-export default prepareFiles

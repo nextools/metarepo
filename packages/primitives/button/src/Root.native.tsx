@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { TouchableWithoutFeedback, View } from 'react-native'
 import { TStyle } from 'stili'
-import { TButtonProps } from './types'
+import { TButton } from './types'
 
 const hitSlop = {
   bottom: 5,
@@ -17,7 +17,7 @@ const style: TStyle = {
   alignSelf: 'stretch',
 }
 
-export const Button: FC<TButtonProps> = ({
+export const Button: FC<TButton> = ({
   id,
   accessibilityLabel,
   isDisabled,

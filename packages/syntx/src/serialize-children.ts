@@ -28,7 +28,7 @@ const serializeChildrenValue = ({ value, currentIndent, childIndex, config, path
 
   if (isNumber(value)) {
     return {
-      head: [{ type: TYPE_VALUE_NUMBER, value }],
+      head: [{ type: TYPE_VALUE_NUMBER, value: String(value) }],
       body: [],
       tail: [],
     }

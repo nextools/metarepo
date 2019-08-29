@@ -15,7 +15,7 @@ export const Image = component(
       objectFit: resizeMode,
     }),
   }))
-)(({ alt, source, id, height, width, style }) => (
+)(({ alt, source, id, height, width, style, onLoad, onError }) => (
   <img
     id={id}
     alt={alt}
@@ -23,6 +23,8 @@ export const Image = component(
     height={height}
     width={width}
     style={style}
+    onLoad={onLoad}
+    onError={onError}
   />
 ))
 

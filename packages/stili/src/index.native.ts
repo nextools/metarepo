@@ -13,6 +13,8 @@ export const normalizeStyle = (style: TStyle): TCssProps =>
 
     if (key === 'fontWeight' && !isUndefined(value)) {
       result.fontWeight = String(value) as TCssProps['fontWeight']
+
+      return result
     }
 
     // FIXME

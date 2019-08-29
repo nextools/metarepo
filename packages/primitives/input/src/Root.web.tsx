@@ -81,7 +81,6 @@ export const Input = component(
     aria-label={accessibilityLabel}
     disabled={isDisabled}
     style={style}
-    size={1}
     value={value}
     onChange={onChange}
     onKeyPress={onKeyPress}

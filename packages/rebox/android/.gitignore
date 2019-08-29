@@ -1,5 +1,5 @@
+!src/build/
 *.log
-build/
 .idea
 .gradle
 local.properties

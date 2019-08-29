@@ -7,10 +7,7 @@ test('serialize-react-tree', (t) => {
     serialize(
       createElement('div')
     ),
-    {
-      component: '<div/>',
-      primitives: ['div'],
-    },
+    '<div/>',
     'single element'
   )
 
@@ -44,15 +41,12 @@ test('serialize-react-tree', (t) => {
         ],
       })
     ),
-    {
-      component:
-        `<div
+    `<div
   a="string"
   b={123}
   c={true}
   d={false}
   e={null}
-  f={undefined}
   g={() => {}}
   h={{
     a: {},
@@ -62,7 +56,7 @@ test('serialize-react-tree', (t) => {
       true,
       false,
       null,
-      undefined,
+      null,
       () => {},
       [],
       {}
@@ -70,8 +64,7 @@ test('serialize-react-tree', (t) => {
     c: 'string',
     d: 123,
     e: true,
-    f: null,
-    g: undefined
+    f: null
   }}
   i={[
     {
@@ -82,8 +75,6 @@ test('serialize-react-tree', (t) => {
     123
   ]}
 />`,
-      primitives: ['div'],
-    },
     'props combinations'
   )
 
@@ -95,13 +86,9 @@ test('serialize-react-tree', (t) => {
         createElement('span')
       )
     ),
-    {
-      component:
-        `<div>
+    `<div>
   <span/>
 </div>`,
-      primitives: ['div', 'span'],
-    },
     'children arg single'
   )
 
@@ -117,15 +104,11 @@ test('serialize-react-tree', (t) => {
         )
       )
     ),
-    {
-      component:
-        `<div>
+    `<div>
   <div>
     <span/>
   </div>
 </div>`,
-      primitives: ['div', 'span'],
-    },
     'children arg tree'
   )
 
@@ -148,9 +131,7 @@ test('serialize-react-tree', (t) => {
         ]
       )
     ),
-    {
-      component:
-        `<div>
+    `<div>
   <div>
     <span/>
   </div>
@@ -158,8 +139,6 @@ test('serialize-react-tree', (t) => {
     <span/>
   </div>
 </div>`,
-      primitives: ['div', 'span'],
-    },
     'children arg array'
   )
 
@@ -180,9 +159,7 @@ test('serialize-react-tree', (t) => {
         )
       )
     ),
-    {
-      component:
-        `<div>
+    `<div>
   <div>
     <span/>
   </div>
@@ -190,8 +167,6 @@ test('serialize-react-tree', (t) => {
     <span/>
   </div>
 </div>`,
-      primitives: ['div', 'span'],
-    },
     'children arg 3rd 4th'
   )
 
@@ -228,9 +203,7 @@ test('serialize-react-tree', (t) => {
         )
       )
     ),
-    {
-      component:
-        `<div>
+    `<div>
   <div
     a={{
       title: (
@@ -251,8 +224,6 @@ test('serialize-react-tree', (t) => {
   </div>
   <div/>
 </div>`,
-      primitives: ['div', 'span'],
-    },
     'children arg mixed types'
   )
 
@@ -269,17 +240,13 @@ test('serialize-react-tree', (t) => {
         }
       )
     ),
-    {
-      component:
-        `<div
+    `<div
   a={
     <div>
       <span/>
     </div>
   }
 />`,
-      primitives: ['div', 'span'],
-    },
     'children named prop'
   )
 
@@ -303,9 +270,7 @@ test('serialize-react-tree', (t) => {
         }
       )
     ),
-    {
-      component:
-        `<div
+    `<div
   a={[
     (
       <div>
@@ -319,8 +284,6 @@ test('serialize-react-tree', (t) => {
     )
   ]}
 />`,
-      primitives: ['div', 'span'],
-    },
     'children named prop array'
   )
 
@@ -345,9 +308,7 @@ test('serialize-react-tree', (t) => {
         }
       )
     ),
-    {
-      component:
-        `<div
+    `<div
   a={[
     (
       <div>
@@ -359,11 +320,9 @@ test('serialize-react-tree', (t) => {
     true,
     false,
     null,
-    undefined
+    null
   ]}
 />`,
-      primitives: ['div', 'span'],
-    },
     'children named prop array with mixed types'
   )
 
@@ -380,15 +339,11 @@ test('serialize-react-tree', (t) => {
         }
       )
     ),
-    {
-      component:
-        `<div>
+    `<div>
   <div>
     <span/>
   </div>
 </div>`,
-      primitives: ['div', 'span'],
-    },
     '\'children\' named prop'
   )
 
@@ -412,9 +367,7 @@ test('serialize-react-tree', (t) => {
         }
       )
     ),
-    {
-      component:
-        `<div>
+    `<div>
   <div>
     <span/>
   </div>
@@ -422,8 +375,6 @@ test('serialize-react-tree', (t) => {
     <span/>
   </div>
 </div>`,
-      primitives: ['div', 'span'],
-    },
     '\'children\' prop array'
   )
 
@@ -448,17 +399,13 @@ test('serialize-react-tree', (t) => {
         }
       )
     ),
-    {
-      component:
-        `<div>
+    `<div>
   <div>
     <span/>
   </div>
   string
   123
 </div>`,
-      primitives: ['div', 'span'],
-    },
     '\'children\' prop array with mixed types'
   )
 

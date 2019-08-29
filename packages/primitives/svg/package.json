@@ -3,9 +3,9 @@
   "version": "0.1.5",
   "description": "",
   "keywords": [],
-  "main": "src/index.web.tsx",
-  "browser": "src/index.web.tsx",
-  "react-native": "src/index.native.tsx",
+  "main": "src/index.web.ts",
+  "browser": "src/index.web.ts",
+  "react-native": "src/index.native.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {

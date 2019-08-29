@@ -4,6 +4,8 @@
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
@@ -11,6 +13,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "chalk": "^2.4.1"
+    "react": "^16.8.6",
+    "syntx": "^0.3.0",
+    "tsfn": "^0.1.2"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.6",
+    "@types/react-dom": "^16.0.9"
   }
 }

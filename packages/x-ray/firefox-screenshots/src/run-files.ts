@@ -1,20 +1,41 @@
-import { logTotalResults } from '@x-ray/common-utils'
-import parent from './parent'
-import { TOptions } from './types'
+import path from 'path'
+import { runScreenshots, runServer } from '@x-ray/screenshot-utils'
+import { run } from '@rebox/web'
+import { broResolve } from 'bro-resolve'
+import { TOptions, TUserOptions } from './types'
 
-const defaultOptions: Partial<TOptions> = {
+const defaultOptions = {
   width: 1024,
   height: 1024,
 }
+const childFile = require.resolve('./child')
 
-const runFiles = async (targetFiles: string[], userOptions: TOptions) => {
-  const options = {
+export const runFiles = async (targetFiles: string[], userOptions: TUserOptions) => {
+  const options: TOptions = {
     ...defaultOptions,
     ...userOptions,
+    dpr: 1,
   }
-  const totalResults = await parent(targetFiles, options)
 
-  logTotalResults([totalResults])
+  const { result, resultData, hasBeenChanged } = await runScreenshots(childFile, targetFiles, 1, options)
+
+  if (hasBeenChanged) {
+    const entryPointPath = await broResolve('@x-ray/ui')
+    const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
+
+    const closeReboxServer = await run({
+      htmlTemplatePath,
+      entryPointPath,
+      isQuiet: true,
+    })
+
+    console.log('open http://localhost:3000/ to approve or discard changes')
+
+    await runServer({
+      platform: options.platform,
+      result,
+      resultData,
+    })
+    await closeReboxServer()
+  }
 }
-
-export default runFiles

@@ -1,7 +1,7 @@
 import path from 'path'
 import Reporter from '@start/reporter-verbose'
 import { StartPlugin } from '@start/plugin'
-import { getStartOptions } from '../get-options'
+import { getStartOptions } from '../utils'
 
 (async () => {
   try {

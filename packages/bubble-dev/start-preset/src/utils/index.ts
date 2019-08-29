@@ -1,4 +1,5 @@
 import escapeStringRegexp from 'escape-string-regexp'
+import { TBumpType } from '@auto/utils'
 
 export type TPrompt = {
   title: string,
@@ -38,3 +39,29 @@ export const suggestFilter = (noPackageMessage: string | null) =>
       ...choices.filter((choice) => choice.value.includes(input)),
     ]
   }
+
+export type TStartOptions = {
+  file?: string,
+  auto: {
+    initialType: TBumpType,
+    autoNamePrefix: string,
+    zeroBreakingChangeType: TBumpType,
+    npm?: {
+      publishSubDirectory?: string,
+      registry?: string,
+      access?: 'restricted' | 'public',
+    },
+    shouldAlwaysBumpDependents: boolean,
+    shouldMakeGitTags: boolean,
+    shouldMakeGitHubReleases: boolean,
+    shouldSendSlackMessage: boolean,
+    shouldWriteChangelogFiles: boolean,
+  },
+}
+
+export const getStartOptions = async () => {
+  const path = await import('path')
+  const { start } = await import(path.resolve('./package.json'))
+
+  return start as TStartOptions
+}

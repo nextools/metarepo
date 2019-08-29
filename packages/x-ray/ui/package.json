@@ -1,0 +1,44 @@
+{
+  "name": "@x-ray/ui",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "browser": "src/index.tsx",
+  "buildAssets": {
+    "src/*.html": "web/",
+    "src/images/*.png": "web/"
+  },
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "@primitives/animation": "^0.1.2",
+    "@primitives/background": "^0.4.1",
+    "@primitives/border": "^0.5.0",
+    "@primitives/button": "^0.4.1",
+    "@primitives/checkbox": "^0.4.1",
+    "@primitives/image": "^0.1.1",
+    "@primitives/root": "^0.3.1",
+    "@primitives/size": "^0.4.1",
+    "@primitives/svg": "^0.1.5",
+    "@primitives/text": "^0.7.1",
+    "@psxcode/compose": "^0.1.3",
+    "@x-ray/common-utils": "^0.1.1",
+    "@x-ray/screenshot-utils": "^0.1.1",
+    "@x-ray/snapshots": "^0.0.0",
+    "bsc": "^0.2.1",
+    "colorido": "^0.1.0",
+    "elegir": "^0.3.3",
+    "react": "^16.8.6",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
+    "refun": "^0.3.3",
+    "stili": "^0.1.3",
+    "syntx": "^0.3.0",
+    "tsfn": "^0.1.2",
+    "typeon": "^0.3.0"
+  }
+}

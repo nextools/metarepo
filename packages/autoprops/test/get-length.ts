@@ -3,7 +3,7 @@ import BigInt from 'big-integer'
 import { TMetaFile } from '../src/types'
 import { getLength } from '../src/get-length'
 
-test('react-autoprops: getLength', (t) => {
+test('autoprops: getLength', (t) => {
   const meta: TMetaFile = {
     config: {
       props: {

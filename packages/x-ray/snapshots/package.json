@@ -1,0 +1,33 @@
+{
+  "name": "@x-ray/snapshots",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@rebox/web": "^0.3.4",
+    "@x-ray/common-utils": "^0.1.0",
+    "@x-ray/serialize-react-tree": "^0.2.0",
+    "@x-ray/tar-fs": "^0.0.0",
+    "@x-ray/worker-utils": "^0.0.0",
+    "bro-resolve": "^0.0.0",
+    "@x-ray/ui": "^0.0.0",
+    "diff": "^4.0.1",
+    "iterama": "^0.1.1",
+    "make-dir": "^3.0.0",
+    "p-all": "^2.0.0",
+    "pkg-dir": "^4.2.0",
+    "syntx": "^0.3.0",
+    "tsfn": "^0.1.2"
+  },
+  "devDependencies": {
+    "@types/diff": "^4.0.2",
+    "@types/react": "^16.8.6",
+    "react": "^16.8.6"
+  }
+}

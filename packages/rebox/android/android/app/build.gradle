@@ -77,10 +77,10 @@ project.ext.react = [
 ]
 
 project.ext.react = [
-  cliPath: "node/build-android/empty.js"
+  cliPath: "../../../node_modules/noop3/index.js"
 ]
 
-apply from: "../../../../react-native/react.gradle"
+apply from: "../../../../../node_modules/react-native/react.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:

@@ -2,8 +2,10 @@ node_modules/
 build/
 coverage/
 tmp/
+.x-ray/
 .npmrc
 .DS_Store
 *.log
 .idea/
 .env
+*.tar

@@ -1,2 +1,2 @@
-export * from './build-web'
-export * from './run-web'
+export * from './build-release'
+export * from './run'

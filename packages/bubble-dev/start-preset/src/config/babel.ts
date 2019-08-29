@@ -39,6 +39,10 @@ export const babelConfigWeb: BabelConfig = {
       {
         targets: { browsers: browsersList },
         modules: false,
+        exclude: [
+          'transform-regenerator',
+          'transform-async-to-generator',
+        ],
       },
     ],
     ...presets,
@@ -61,6 +65,10 @@ export const babelConfigNode: BabelConfig = {
       require.resolve('@babel/preset-env'),
       {
         targets: { node },
+        exclude: [
+          'transform-regenerator',
+          'transform-async-to-generator',
+        ],
       },
     ],
     ...presets,
