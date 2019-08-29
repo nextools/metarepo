@@ -158,7 +158,7 @@ export const Popup = component(
 }) => (
   <Block left={left} top={top} width={width} height={height}>
     <Animation
-      time={500}
+      time={300}
       values={[popupLeft, popupTop, popupWidth, popupHeight, popupAlpha, backdropAlpha]}
       easing={easeInOutCubic}
       onAnimationEnd={onAnimationEnd}
