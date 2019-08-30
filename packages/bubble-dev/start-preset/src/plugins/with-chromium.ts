@@ -30,7 +30,7 @@ export default (target: StartPlugin<{}, void>, fontsDir?: string) =>
             ]
             : []
           ),
-          'deepsweet/chromium-headless-remote:73',
+          'deepsweet/chromium-headless-remote:76',
         ],
         {
           stderr: process.stderr,
