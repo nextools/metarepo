@@ -24,6 +24,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
     let deletedCount = 0
     let diffCount = 0
 
+    let filenames: string[] = []
     let targetResult: TScreenshotsFileResult = {
       old: {},
       new: {},
@@ -36,7 +37,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
     const onFileDone = async (tar: TTarFs, filePath: string) => {
       if (!isUndefined(tar)) {
         for (const itemName of tar.list()) {
-          if (Reflect.has(targetResult.old, itemName)) {
+          if (filenames.includes(itemName)) {
             continue
           }
 
@@ -62,6 +63,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
         result[relativePath] = targetResult
         resultData[relativePath] = targetResultData
 
+        filenames = []
         targetResult = {
           old: {},
           new: {},
@@ -100,6 +102,8 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
 
                   currentTar = await TarFs(screenshotsTarPath)
                 }
+
+                filenames.push(id)
 
                 const action = await checkScreenshot(screenshot, currentTar, id)
 
