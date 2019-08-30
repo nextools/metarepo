@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import { FC, ReactElement } from 'react'
 import { TOmitKey } from 'tsfn'
 

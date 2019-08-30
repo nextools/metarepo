@@ -63,7 +63,7 @@ export const getPositionInValue = (value: string, mask: TMask, position: number,
   )
 }
 
-export const applyMask = (value: string, mask: TMask, result:string = ''): string => {
+export const applyMask = (value: string, mask: TMask, result: string = ''): string => {
   if (value.length === 0 || mask.length === 0) {
     return result
   }
