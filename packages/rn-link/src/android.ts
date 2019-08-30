@@ -1,5 +1,4 @@
 import path from 'path'
-// @ts-ignore
 import { linkConfig, projectConfig as getProjectConfig, dependencyConfig as getDepConfig } from '@react-native-community/cli-platform-android'
 
 export type TLinkDependencyAndroid = {
@@ -10,8 +9,8 @@ export type TLinkDependencyAndroid = {
 
 export const linkDependencyAndroid = ({ projectPath, dependencyName, dependencyPath }: TLinkDependencyAndroid) => {
   const parentPath = path.join(projectPath, '..')
-  const projectConfig = getProjectConfig(parentPath, {})
-  const depConfig = getDepConfig(dependencyPath, {})
+  const projectConfig = getProjectConfig(parentPath, {})!
+  const depConfig = getDepConfig(dependencyPath, {})!
   const { register, unregister } = linkConfig()
 
   unregister(dependencyName, depConfig, projectConfig)
