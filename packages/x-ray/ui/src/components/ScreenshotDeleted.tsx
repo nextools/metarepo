@@ -38,10 +38,6 @@ export const ScreenshotDeleted = pureComponent(
       leftWidth={BORDER_SIZE}
       rightWidth={BORDER_SIZE}
       bottomWidth={BORDER_SIZE}
-      overflowTop={BORDER_SIZE}
-      overflowLeft={BORDER_SIZE}
-      overflowRight={BORDER_SIZE}
-      overflowBottom={BORDER_SIZE}
       color={COLOR_BORDER_DELETED}
     />
   </Block>
