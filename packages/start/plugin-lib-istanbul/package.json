@@ -33,7 +33,7 @@
     "@types/blue-tape": "^0.1.32",
     "@types/convert-source-map": "^1.5.1",
     "@types/istanbul-lib-coverage": "^2.0.0",
-    "@types/istanbul-lib-hook": "^1.0.0",
+    "@types/istanbul-lib-hook": "^2.0.0",
     "@types/istanbul-lib-report": "^1.1.0",
     "@types/istanbul-lib-source-maps": "^1.2.1",
     "blue-tape": "^1.0.0"

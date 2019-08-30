@@ -37,30 +37,15 @@
     "packages/x-ray/*"
   ],
   "resolutions": {
-    "react": "^16.8.6",
-    "typeon": "^0.3.0"
+    "react": "^16.8.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.0",
     "@bubble-dev/eslint-config": "*",
     "@bubble-dev/start-preset": "*",
     "@bubble-dev/typescript-config": "*",
-    "@start/plugin": "*",
-    "@start/plugin-env": "*",
-    "@start/plugin-find": "*",
-    "@start/plugin-sequence": "*",
-    "@types/blue-tape": "^0.1.32",
     "@types/node": "^11.13.10",
-    "@x-ray/chrome-screenshots": "*",
-    "@x-ray/common-utils": "*",
-    "@x-ray/firefox-screenshots": "*",
-    "blue-tape": "^1.0.0",
-    "core-js": "^3.1.4",
     "eslint": "^6.1.0",
-    "mocku": "^0.5.0",
-    "request-promise-native": "^1.0.5",
-    "spyfn": "^0.2.0",
-    "typescript": "bubble-dev/TypeScript#ext-3.5.2"
+    "typescript": "bubble-dev/TypeScript#ext-3.6.2"
   },
   "scripts": {
     "start": "packages/bubble-dev/start-preset/src/cli/index.js"

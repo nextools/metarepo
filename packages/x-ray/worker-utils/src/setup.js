@@ -102,10 +102,6 @@ const babelConfig = {
     require.resolve('@babel/preset-react'),
     '@babel/preset-typescript',
   ],
-  plugins: [
-    require.resolve('@babel/plugin-syntax-dynamic-import'),
-    require.resolve('babel-plugin-dynamic-import-node'),
-  ],
   extensions: options.extensions,
 }
 
