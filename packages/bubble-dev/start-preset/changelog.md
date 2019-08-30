@@ -1,3 +1,9 @@
+## v0.9.1
+
+* 🐞 update Firefox to v68
+* 🐞 update Chromium to v76
+* 🐞 refactor using latest babel/preset-env
+
 ## v0.9.0
 
 * 🌱 add x-ray tasks

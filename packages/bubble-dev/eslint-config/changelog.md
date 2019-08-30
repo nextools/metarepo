@@ -1,3 +1,7 @@
+## v0.3.2
+
+* 🐞 bump `typescript-eslint` deps
+
 ## v0.3.1
 
 * 🐞 remove `@typescript-eslint/no-require-imports` rule
