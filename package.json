@@ -45,7 +45,7 @@
     "@bubble-dev/typescript-config": "*",
     "@types/node": "^11.13.10",
     "eslint": "^6.1.0",
-    "typescript": "bubble-dev/TypeScript#ext-3.5.2"
+    "typescript": "bubble-dev/TypeScript#ext-3.6.2"
   },
   "scripts": {
     "start": "packages/bubble-dev/start-preset/src/cli/index.js"
