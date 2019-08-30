@@ -32,7 +32,7 @@ export default (target: StartPlugin<{}, any>, fontsDir?: string) =>
             ]
             : []
           ),
-          'deepsweet/firefox-headless-remote:64',
+          'deepsweet/firefox-headless-remote:68',
         ],
         {
           stderr: process.stderr,
