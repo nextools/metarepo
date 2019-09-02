@@ -45,7 +45,7 @@ export const fixDeps = () => plugin('fixDeps', ({ logPath, logMessage }) => asyn
       ],
       packagePath: pkg,
       dependencyFilesGlobs: ['src/**/*.{ts,tsx,js}'],
-      devDependencyFilesGlobs: ['{test,x-ray}/**/*.{ts,tsx,js}', 'meta.{ts,tsx}'],
+      devDependencyFilesGlobs: ['{test,x-ray}/**/*.{ts,tsx,js}', '*-meta.{ts,tsx}', 'meta.{ts,tsx}'],
     })
 
     if (result !== null) {
