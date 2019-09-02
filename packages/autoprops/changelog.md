@@ -1,3 +1,7 @@
+## v0.6.1
+
+* 🐞 enhance types
+
 ## v0.6.0
 
 * 🐞 skip mutins

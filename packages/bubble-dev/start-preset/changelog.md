@@ -1,3 +1,7 @@
+## v0.9.2
+
+* 🐞 handle `*-meta` files in `fixDeps` task
+
 ## v0.9.1
 
 * 🐞 update Firefox to v68
