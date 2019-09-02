@@ -1,11 +1,21 @@
 export type TAnyObject = {
   [key: string]: any,
 }
-export type TKeyOf<T> = Exclude<keyof T, number | symbol>
+export type TKeyOf<T> = (keyof T) & string
 export type TIntersect <T1 extends {}, T2 extends {}> = { [K in Extract<keyof T1, keyof T2>]: T1[K] }
 export type TRequireKeys<T, K extends keyof T> = T & {
   [P in Extract<keyof T, K>]: Exclude<T[P], undefined>;
 }
+export type TOptionalKeys<T extends {}> = Exclude<{
+  [K in keyof T]: T extends Record<K, T[K]>
+    ? never
+    : K
+}[keyof T], undefined>
+export type TRequiredKeys<T extends {}> = Exclude<{
+  [K in keyof T]: T extends Record<K, T[K]>
+    ? K
+    : never
+}[keyof T], undefined>
 
 export const getObjectKeys = <T extends {}> (obj: T) => Object.keys(obj) as (keyof T)[]
 export const objectHas = <T extends {}, K extends keyof T> (obj: T, key: K): obj is T & { [k in K]-?: T[k] } => Reflect.has(obj, key)
