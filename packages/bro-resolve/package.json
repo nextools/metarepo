@@ -18,5 +18,10 @@
   "devDependencies": {
     "@types/enhanced-resolve": "^3.0.6",
     "@types/get-caller-file": "^1.0.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime"
+    ]
   }
 }

@@ -13,15 +13,12 @@
     "ios/**/*": "ios/"
   },
   "dependencies": {
-    "@babel/core": "^7.4.3",
     "@babel/runtime": "^7.4.3",
     "@rebox/native-utils": "^0.1.0",
     "cpy": "^7.2.0",
     "execa": "^1.0.0",
     "graceful-fs": "^4.1.15",
     "make-dir": "^3.0.0",
-    "react-dom": "^16.8.6",
-    "react-hot-loader": "^4.8.0",
     "simple-plist": "^1.0.0",
     "tsfn": "^0.2.0"
   },
@@ -36,5 +33,10 @@
     "react": "^16.8.0",
     "react-native": "^0.59.0",
     "react-native-svg": "^9.3.6"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime"
+    ]
   }
 }

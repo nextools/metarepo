@@ -26,5 +26,10 @@
     "blue-tape": "^1.0.0",
     "mocku": "^0.6.0",
     "spyfn": "^0.2.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime"
+    ]
   }
 }

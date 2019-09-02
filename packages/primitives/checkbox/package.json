@@ -14,13 +14,18 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "stili": "^0.2.0",
     "@primitives/block": "^0.5.0",
-    "refun": "^0.4.0"
+    "refun": "^0.4.0",
+    "stili": "^0.2.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
     "react": "^16.8.6",
     "react-native": "^0.59.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime"
+    ]
   }
 }

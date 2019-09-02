@@ -4,7 +4,7 @@
   "description": "🗜 Unpack .tar/.tar.bz2/.tar.gz/.zip archives",
   "keywords": "tasks, runner, start, start-plugin, unpack, tar, tarbz2, targz, zip",
   "repository": "deepsweet/start",
-    "contributors": [
+  "contributors": [
     "Philipp 'luii' Czarnetzk <iczarnetzki.philipp@protonmail.ch> (https://github.com/luii)",
     "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)"
   ],
@@ -28,5 +28,10 @@
     "@babel/runtime": "^7.4.2",
     "@types/decompress": "^4.2.2",
     "blue-tape": "^1.0.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime"
+    ]
   }
 }

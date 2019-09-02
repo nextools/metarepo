@@ -27,5 +27,10 @@
     "@types/tape": "^4.2.33",
     "@types/through": "^0.0.29",
     "blue-tape": "^1.0.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime"
+    ]
   }
 }

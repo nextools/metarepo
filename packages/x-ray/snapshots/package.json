@@ -10,6 +10,7 @@
     "node": ">=8.6.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.1.2",
     "@rebox/web": "^0.4.0",
     "@x-ray/common-utils": "^0.2.0",
     "@x-ray/serialize-react-tree": "^0.3.0",
@@ -29,5 +30,11 @@
     "@types/diff": "^4.0.2",
     "@types/react": "^16.8.6",
     "react": "^16.8.6"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime",
+      "@x-ray/ui"
+    ]
   }
 }

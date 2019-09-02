@@ -27,5 +27,11 @@
   "devDependencies": {
     "@types/react": "^16.8.6",
     "@types/react-dom": "^16.0.9"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime",
+      "@x-ray/ui"
+    ]
   }
 }
