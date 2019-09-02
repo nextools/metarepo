@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { TAnyObject } from 'tsfn'
+import { TAnyObject, TExtend, TKeyOf, TRequiredKeys } from 'tsfn'
 import { BigInteger } from 'big-integer'
 
 export type TMetaFile<T = any> = {
@@ -18,13 +18,13 @@ export type TChildrenConfig = {
   required?: string[],
 }
 
-type TKeyOf<T> = (keyof T) & string
-
 export type TComponentConfig<T = TAnyObject> = {
-  props: {
+  props: TExtend<{
     [k in keyof T]: T[k][]
-  },
-  required?: TKeyOf<T>[],
+  }, {
+    [k in Extract<keyof T, 'children'>]?: T[k][]
+  }>,
+  required?: TRequiredKeys<T>[],
   mutex?: TKeyOf<T>[][],
   mutin?: TKeyOf<T>[][],
 }
