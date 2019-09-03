@@ -6,7 +6,7 @@ export type TAssets = {
 
 const globbyOptions = {
   ignore: ['node_modules/**'],
-  deep: true,
+  deep: Infinity,
   onlyFiles: true,
   absolute: true,
 }
