@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "eslint": "^6.1.0",
-    "typescript": "*"
+    "typescript": "bubble-dev/TypeScript#ext-3.6.2"
   },
   "fixdeps": {
     "ignoredPackages": [
