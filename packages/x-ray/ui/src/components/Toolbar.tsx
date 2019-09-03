@@ -1,5 +1,5 @@
 import React from 'react'
-import { startWithType, component, mapState, mapHandlers, mapWithPropsMemo } from 'refun'
+import { startWithType, component, mapHandlers, mapWithPropsMemo, mapStateRef } from 'refun'
 import { TOmitKey } from 'tsfn'
 import { TRect } from '../types'
 import { mapStoreDispatch } from '../store'
@@ -20,30 +20,25 @@ export type TToolbar = TOmitKey<TRect, 'height'> & {
 export const Toolbar = component(
   startWithType<TToolbar>(),
   mapStoreDispatch,
-  mapState('switchWidths', 'setSwitchWidths', ({ files }) => (Array.isArray(files) ? new Array(files.length).fill(0) : []) as number[], ['files']),
+  mapStateRef('switchWidthsRef', 'flushSwitchWidths', ({ files }) => (Array.isArray(files) ? new Array(files.length).fill(0) : []) as number[], ['files']),
   mapHandlers({
-    onSwitchWidthChange: ({ files, setSwitchWidths }) => (file: string, width: number) => {
-      setSwitchWidths((switchWidths) => {
-        const newState = switchWidths.slice()
-
-        newState[files.indexOf(file)] = width
-
-        return newState
-      })
+    onSwitchWidthChange: ({ files, switchWidthsRef, flushSwitchWidths }) => (file: string, width: number) => {
+      switchWidthsRef.current[files.indexOf(file)] = width
+      flushSwitchWidths()
     },
     onSwitchToggle: ({ dispatch }) => (file: string, isActive: boolean) => {
       dispatch(isActive ? actionAddFilter(file) : actionRemoveFilter(file))
     },
   }),
-  mapWithPropsMemo(({ switchWidths, width }) => ({
+  mapWithPropsMemo(({ switchWidthsRef, width }) => ({
     totalWidth: Math.max(
-      switchWidths.reduce((result, width) => {
+      switchWidthsRef.current.reduce((result, width) => {
         return result + width + TOOLBAR_SPACING
       }, TOOLBAR_SPACING),
       width
     ),
-  }), ['switchWidths', 'width'])
-)(({ files, filteredFiles, width, switchWidths, totalWidth, onSwitchToggle, onSwitchWidthChange }) => (
+  }), ['switchWidthsRef', 'width'])
+)(({ files, filteredFiles, width, switchWidthsRef, totalWidth, onSwitchToggle, onSwitchWidthChange }) => (
   <Block
     left={0}
     top={0}
@@ -55,8 +50,8 @@ export const Toolbar = component(
       <Background color={COLOR_LIGHT_GRAY}/>
     </Block>
     {
-      switchWidths.map((switchWidth, i) => {
-        const left = switchWidths.slice(0, i).reduce((r, w) => r + w, 0) + TOOLBAR_SPACING * (i + 1)
+      switchWidthsRef.current.map((switchWidth, i) => {
+        const left = switchWidthsRef.current.slice(0, i).reduce((r, w) => r + w, 0) + TOOLBAR_SPACING * (i + 1)
         const file = files[i]
 
         return (
