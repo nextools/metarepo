@@ -1398,13 +1398,6 @@
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
   integrity sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==
 
-"@types/execa@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@types/execa/-/execa-0.9.0.tgz#9b025d2755f17e80beaf9368c3f4f319d8b0fb93"
-  integrity sha512-mgfd93RhzjYBUHHV532turHC2j4l/qxsF/PbfDmprHDEUHmNZGlDn1CEsulGK3AfsPdhkWzZQT/S/k0UGhLGsA==
-  dependencies:
-    "@types/node" "*"
-
 "@types/express-serve-static-core@*":
   version "4.16.9"
   resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.16.9.tgz#69e00643b0819b024bdede95ced3ff239bb54558"
@@ -5250,7 +5243,7 @@ execa@^1.0.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
-execa@^2.0.4:
+execa@^2.0.0, execa@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/execa/-/execa-2.0.4.tgz#2f5cc589c81db316628627004ea4e37b93391d8e"
   integrity sha512-VcQfhuGD51vQUQtKIq2fjGDLDbL6N1DTQVpYzxZ7LPIXw3HqTuIz6uxRmpV1qf8i31LHf2kjiaGI+GdHwRgbnQ==

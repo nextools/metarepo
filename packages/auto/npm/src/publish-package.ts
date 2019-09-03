@@ -38,6 +38,6 @@ export const publishPackage = async (bumpPackage: TPackageBump, npmOptions?: TNp
   ], {
     stdin: process.stdin,
     stdout: process.stdout,
-    stderr: null,
+    stderr: 'ignore',
   })
 }

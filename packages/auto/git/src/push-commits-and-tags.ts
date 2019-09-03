@@ -8,8 +8,8 @@ export const pushCommitsAndTags = async () => {
       '--follow-tags',
     ],
     {
-      stdout: null,
-      stderr: null,
+      stdout: 'ignore',
+      stderr: 'ignore',
     }
   )
 }

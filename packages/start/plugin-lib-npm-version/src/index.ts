@@ -33,7 +33,7 @@ export default (version: string, userOptions?: Options) =>
         cwd: packagePath,
         stdout: process.stdout,
         stderr: process.stderr,
-        stripEof: false,
+        stripFinalNewline: false,
         env: {
           FORCE_COLOR: '1',
         },

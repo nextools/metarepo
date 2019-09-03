@@ -76,7 +76,7 @@ export const makeCommit = async (packages: TPackages, prefixes: TPrefixes, works
     ],
     {
       stdout: process.stdout,
-      stderr: null,
+      stderr: 'ignore',
     }
   )
 }

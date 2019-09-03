@@ -16,7 +16,7 @@
     "@psxcode/wait": "^0.1.1",
     "babel-loader": "^8.0.5",
     "copie": "^0.3.0",
-    "execa": "^1.0.0",
+    "execa": "^2.0.0",
     "fast-glob": "^3.0.0",
     "graceful-fs": "^4.1.15",
     "haul": "^1.0.0-rc.15",
@@ -28,7 +28,6 @@
     "tsfn": "^0.2.0"
   },
   "devDependencies": {
-    "@types/execa": "^0.9.0",
     "@types/graceful-fs": "^4.1.3",
     "react": "^16.8.0",
     "react-native": "0.59.10",
