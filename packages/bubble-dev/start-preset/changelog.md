@@ -1,3 +1,7 @@
+## v0.10.2
+
+* 🐞 fix missed dependency
+
 ## v0.10.1
 
 * 🐞 ignore `@babel-runtime` by default
