@@ -27,10 +27,5 @@
     "@types/execa": "^0.9.0",
     "@types/multimatch": "^2.1.3",
     "blue-tape": "^1.0.0"
-  },
-  "fixdeps": {
-    "ignoredPackages": [
-      "@babel/runtime"
-    ]
   }
 }

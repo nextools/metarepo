@@ -29,10 +29,5 @@
   },
   "peerDependencies": {
     "typescript": "*"
-  },
-  "fixdeps": {
-    "ignoredPackages": [
-      "@babel/runtime"
-    ]
   }
 }
