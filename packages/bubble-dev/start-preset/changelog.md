@@ -1,3 +1,8 @@
+## v0.10.0
+
+* 🌱 handle fixdeps options per package
+* ♻️ update dependencies: `fixdeps`
+
 ## v0.9.2
 
 * 🐞 handle `*-meta` files in `fixDeps` task

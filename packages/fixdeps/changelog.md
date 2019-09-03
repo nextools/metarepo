@@ -1,3 +1,7 @@
+## v0.5.0
+
+* 💥 refactor interface type
+
 ## v0.4.0
 
 * 🐞 ignore `worker_threads` imports
