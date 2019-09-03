@@ -1,3 +1,7 @@
+## v0.10.1
+
+* 🐞 ignore `@babel-runtime` by default
+
 ## v0.10.0
 
 * 🌱 handle fixdeps options per package
