@@ -1,3 +1,8 @@
+## v0.4.1
+
+* 🐞 add `mapStateRef`
+* 🐞 remove function as argument in `setState` of `mapState`
+
 ## v0.4.0
 
 * 🌱 handle function as argument in `setState` of `mapState`
