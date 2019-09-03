@@ -31,7 +31,7 @@ export default (packagePath: string = '.', userOptions?: Options) =>
       await execa('npm', ['publish', ...cliArgs, packagePath], {
         stdout: process.stdout,
         stderr: process.stderr,
-        stripEof: false,
+        stripFinalNewline: false,
         env: {
           FORCE_COLOR: '1',
         },

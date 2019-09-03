@@ -17,8 +17,8 @@ export const writePublishCommit = async (packageBumps: TPackageBump[], prefixes:
         ...packageChangelogPaths,
       ],
       {
-        stdout: null,
-        stderr: null,
+        stdout: 'ignore',
+        stderr: 'ignore',
       }
     )
 
@@ -30,8 +30,8 @@ export const writePublishCommit = async (packageBumps: TPackageBump[], prefixes:
         `${prefixes.required.publish.value} ${names}: release`,
       ],
       {
-        stdout: null,
-        stderr: null,
+        stdout: 'ignore',
+        stderr: 'ignore',
       }
     )
   }

@@ -16,8 +16,8 @@ export const writeDependenciesCommit = async (packageBumps: TPackageBump[], pref
         ...packageJsonPaths,
       ],
       {
-        stdout: null,
-        stderr: null,
+        stdout: 'ignore',
+        stderr: 'ignore',
       }
     )
   }

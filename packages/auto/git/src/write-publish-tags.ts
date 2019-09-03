@@ -18,8 +18,8 @@ export const writePublishTags = async (packageBumps: TPackageBump[], workspacesO
         `${name}@${bump.version}`,
       ],
       {
-        stdout: null,
-        stderr: null,
+        stdout: 'ignore',
+        stderr: 'ignore',
       }
     )
   }

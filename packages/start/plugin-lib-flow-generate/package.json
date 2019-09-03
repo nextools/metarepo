@@ -19,11 +19,10 @@
   "dependencies": {
     "@babel/runtime": "^7.4.2",
     "@start/plugin": "^0.3.1",
-    "execa": "^1.0.0"
+    "execa": "^2.0.0"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
-    "@types/execa": "^0.9.0",
     "blue-tape": "^1.0.0"
   }
 }

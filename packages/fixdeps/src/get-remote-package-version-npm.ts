@@ -9,8 +9,8 @@ export const getRemotePackageVersionNpm = async (packageName: string): Promise<s
       'version',
     ],
     {
-      stdout: null,
-      stderr: null,
+      stdout: 'ignore',
+      stderr: 'ignore',
     }
   )
 

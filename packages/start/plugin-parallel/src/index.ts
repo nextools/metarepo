@@ -13,7 +13,7 @@ export default (taskNames: string[], options: Options = {}) => (...args: string[
     const spawnOptions: TExecaOptions = {
       stdout: process.stdout,
       stderr: process.stderr,
-      stripEof: false,
+      stripFinalNewline: false,
       env: {
         FORCE_COLOR: '1',
       },
