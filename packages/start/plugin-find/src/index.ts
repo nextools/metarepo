@@ -6,7 +6,7 @@ export default (glob: string | string[], userOptions?: {}) =>
 
     const options = {
       ignore: ['node_modules/**'],
-      deep: true,
+      deep: Infinity,
       onlyFiles: false,
       expandDirectories: false,
       absolute: true,

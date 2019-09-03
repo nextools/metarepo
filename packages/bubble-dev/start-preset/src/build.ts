@@ -145,7 +145,7 @@ export const buildPackage = async (packageDir: string) => {
     const { default: globby } = await import('globby')
     const nodeFiles = await globby(`${dir}/src/**/*.node.{ts,tsx}`, {
       ignore: ['node_modules/**'],
-      deep: true,
+      deep: Infinity,
       onlyFiles: true,
     })
 
