@@ -6,8 +6,8 @@ export type TDepsObject = {[k: string]: string}
 
 export type TOptions = {
   packagePath: string,
-  dependencyFilesGlobs: string[],
-  devDependencyFilesGlobs: string[],
+  dependenciesGlobs: string[],
+  devDependenciesGlobs: string[],
   ignoredPackages?: string[],
 }
 
@@ -20,6 +20,11 @@ export type TPackageJson = {
   },
   peerDependencies?: {
     [k: string]: string,
+  },
+  fixdeps?: {
+    ignoredPackages?: string[],
+    dependenciesGlobs?: string[],
+    devDependenciesGlobs?: string[],
   },
 } & TJsonMap
 

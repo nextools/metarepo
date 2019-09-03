@@ -4,6 +4,8 @@ import sequence from '@start/plugin-sequence'
 import find from '@start/plugin-find'
 import read from '@start/plugin-read'
 import eslint from '@start/plugin-lib-eslint'
+import { objectHas } from 'tsfn'
+import { TPackageJson } from 'fixdeps'
 
 export const fixLint = () =>
   sequence(
@@ -22,34 +24,41 @@ export const fixLint = () =>
 
 export const fixDeps = () => plugin('fixDeps', ({ logPath, logMessage }) => async () => {
   const { fixdeps } = await import('fixdeps')
-  const { getPackageDirs } = await import('@auto/fs')
-  const packages = await getPackageDirs()
+  const { getPackages } = await import('@auto/fs')
+  const packages = await getPackages()
 
-  for (const pkg of packages) {
+  for (const pkg of Object.values(packages)) {
+    const dir = pkg.dir
+    const json = pkg.json as TPackageJson
+    let ignoredPackages: string[] = []
+    let dependenciesGlobs = ['src/**/*.{ts,tsx,js}']
+    let devDependenciesGlobs = ['{test,x-ray}/**/*.{ts,tsx,js}', 'meta.{ts,tsx}']
+
+    if (objectHas(json, 'fixdeps')) {
+      const options = json.fixdeps
+
+      if (objectHas(options, 'ignoredPackages')) {
+        ignoredPackages = options.ignoredPackages
+      }
+
+      if (objectHas(options, 'dependenciesGlobs')) {
+        dependenciesGlobs = options.dependenciesGlobs
+      }
+
+      if (objectHas(options, 'devDependenciesGlobs')) {
+        devDependenciesGlobs = options.devDependenciesGlobs
+      }
+    }
+
     const result = await fixdeps({
-      ignoredPackages: [
-        '@babel/core',
-        '@babel/runtime',
-        '@babel/runtime-corejs3',
-        '__REBOX_ENTRY_POINT__',
-        '@typescript-eslint/eslint-plugin',
-        '@typescript-eslint/parser',
-        'eslint-plugin-import',
-        'eslint-plugin-react',
-        'eslint',
-        'typescript',
-        'react-dom',
-        'react-hot-loader',
-        'request',
-        'core-js',
-      ],
-      packagePath: pkg,
-      dependencyFilesGlobs: ['src/**/*.{ts,tsx,js}'],
-      devDependencyFilesGlobs: ['{test,x-ray}/**/*.{ts,tsx,js}', '*-meta.{ts,tsx}', 'meta.{ts,tsx}'],
+      ignoredPackages,
+      packagePath: dir,
+      dependenciesGlobs,
+      devDependenciesGlobs,
     })
 
     if (result !== null) {
-      logPath(pkg)
+      logPath(dir)
 
       const addedDeps = Object.keys(result.addedDeps)
       const addedDevDeps = Object.keys(result.addedDevDeps)

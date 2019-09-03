@@ -23,9 +23,14 @@
     "multimatch": "^3.0.0"
   },
   "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
     "@types/execa": "^0.9.0",
     "@types/multimatch": "^2.1.3",
-    "@types/blue-tape": "^0.1.32",
     "blue-tape": "^1.0.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime"
+    ]
   }
 }

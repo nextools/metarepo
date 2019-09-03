@@ -40,5 +40,10 @@
     "syntx": "^0.4.0",
     "tsfn": "^0.2.0",
     "typeon": "^0.3.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime"
+    ]
   }
 }

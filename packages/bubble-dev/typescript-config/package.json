@@ -12,6 +12,9 @@
     "node": ">=8.6.0"
   },
   "peerDependencies": {
-    "typescript": "3.4.1"
+    "typescript": "*"
+  },
+  "devDependencies": {
+    "typescript": "*"
   }
 }

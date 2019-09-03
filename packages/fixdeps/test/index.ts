@@ -42,7 +42,7 @@ test('fixdeps: all', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmockIndex = mock('../src/index', {
+  const unmockIndex = mock('../src', {
     fs,
     'graceful-fs': fs,
   })
@@ -53,12 +53,12 @@ test('fixdeps: all', async (t) => {
   })
   deleteFromCache('fast-glob')
 
-  const { fixdeps } = await import('../src/index')
+  const { fixdeps } = await import('../src')
 
   const result = await fixdeps({
     packagePath: rootDir,
-    dependencyFilesGlobs: ['src/**/*.ts'],
-    devDependencyFilesGlobs: ['test/**/*.ts'],
+    dependenciesGlobs: ['src/**/*.ts'],
+    devDependenciesGlobs: ['test/**/*.ts'],
     ignoredPackages: [
       '@babel/runtime',
     ],
@@ -136,7 +136,7 @@ test('fixdeps: remove empty dependencies objects', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmockIndex = mock('../src/index', {
+  const unmockIndex = mock('../src', {
     fs,
     'graceful-fs': fs,
   })
@@ -147,12 +147,12 @@ test('fixdeps: remove empty dependencies objects', async (t) => {
   })
   deleteFromCache('fast-glob')
 
-  const { fixdeps } = await import('../src/index')
+  const { fixdeps } = await import('../src')
 
   await fixdeps({
     packagePath: rootDir,
-    dependencyFilesGlobs: ['src/**/*.ts'],
-    devDependencyFilesGlobs: ['test/**/*.ts'],
+    dependenciesGlobs: ['src/**/*.ts'],
+    devDependenciesGlobs: ['test/**/*.ts'],
   })
 
   const packageJson = JSON.parse(fs.readFileSync(`${rootDir}/package.json`).toString())
@@ -190,7 +190,7 @@ test('fixdeps: nothing to do', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmockIndex = mock('../src/index', {
+  const unmockIndex = mock('../src', {
     fs,
     'graceful-fs': fs,
   })
@@ -201,12 +201,12 @@ test('fixdeps: nothing to do', async (t) => {
   })
   deleteFromCache('fast-glob')
 
-  const { fixdeps } = await import('../src/index')
+  const { fixdeps } = await import('../src')
 
   const result = await fixdeps({
     packagePath: rootDir,
-    dependencyFilesGlobs: ['src/**/*.ts'],
-    devDependencyFilesGlobs: ['test/**/*.ts'],
+    dependenciesGlobs: ['src/**/*.ts'],
+    devDependenciesGlobs: ['test/**/*.ts'],
   })
 
   const packageJson = JSON.parse(fs.readFileSync(`${rootDir}/package.json`).toString())
@@ -247,7 +247,7 @@ test('fixdeps: create dependencies objects if was missing', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmockIndex = mock('../src/index', {
+  const unmockIndex = mock('../src', {
     fs,
     'graceful-fs': fs,
   })
@@ -258,12 +258,12 @@ test('fixdeps: create dependencies objects if was missing', async (t) => {
   })
   deleteFromCache('fast-glob')
 
-  const { fixdeps } = await import('../src/index')
+  const { fixdeps } = await import('../src')
 
   await fixdeps({
     packagePath: rootDir,
-    dependencyFilesGlobs: ['src/**/*.ts'],
-    devDependencyFilesGlobs: ['test/**/*.ts'],
+    dependenciesGlobs: ['src/**/*.ts'],
+    devDependenciesGlobs: ['test/**/*.ts'],
   })
 
   const packageJson = JSON.parse(fs.readFileSync(`${rootDir}/package.json`, 'utf8') as string)
@@ -299,7 +299,7 @@ test('fixdeps: get remote version with npm', async (t) => {
   const fs = createFsFromVolume(vol)
   const spy = createSpy(() => '1.0.0')
 
-  const unmockIndex = mock('../src/index', {
+  const unmockIndex = mock('../src', {
     fs,
     'graceful-fs': fs,
   })
@@ -313,12 +313,12 @@ test('fixdeps: get remote version with npm', async (t) => {
   })
   deleteFromCache('fast-glob')
 
-  const { fixdeps } = await import('../src/index')
+  const { fixdeps } = await import('../src')
 
   await fixdeps({
     packagePath: rootDir,
-    dependencyFilesGlobs: ['src/**/*.ts'],
-    devDependencyFilesGlobs: ['test/**/*.ts'],
+    dependenciesGlobs: ['src/**/*.ts'],
+    devDependenciesGlobs: ['test/**/*.ts'],
   })
 
   const packageJson = JSON.parse(fs.readFileSync(`${rootDir}/package.json`, 'utf8') as string)

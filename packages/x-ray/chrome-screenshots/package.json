@@ -33,5 +33,12 @@
     "@types/react": "^16.8.6",
     "@types/react-dom": "^16.0.9",
     "@types/request-promise-native": "^1.0.15"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime",
+      "@x-ray/ui",
+      "request"
+    ]
   }
 }

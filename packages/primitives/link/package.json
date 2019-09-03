@@ -22,5 +22,10 @@
     "@types/react": "^16.8.6",
     "react": "^16.8.6",
     "react-native": "^0.59.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime"
+    ]
   }
 }

@@ -17,6 +17,18 @@
   },
   "peerDependencies": {
     "eslint": "^6.1.0",
-    "typescript": "^3.5.2"
+    "typescript": "*"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "typescript": "*"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@typescript-eslint/eslint-plugin",
+      "@typescript-eslint/parser",
+      "eslint-plugin-import",
+      "eslint-plugin-react"
+    ]
   }
 }

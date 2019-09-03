@@ -14,5 +14,10 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.4.3"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime"
+    ]
   }
 }
