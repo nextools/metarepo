@@ -56,6 +56,7 @@
     "@x-ray/chrome-screenshots": "^0.3.0",
     "@x-ray/common-utils": "^0.2.0",
     "@x-ray/firefox-screenshots": "^0.3.0",
+    "@x-ray/native-screenshots-app": "^0.1.1",
     "@x-ray/native-screenshots": "^0.3.0",
     "@x-ray/screenshot-utils": "^0.2.0",
     "@x-ray/snapshots": "^0.1.0",
@@ -89,5 +90,10 @@
   },
   "peerDependencies": {
     "typescript": "*"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@x-ray/native-screenshots-app"
+    ]
   }
 }
