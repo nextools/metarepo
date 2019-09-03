@@ -20,10 +20,5 @@
     "@types/react-test-renderer": "^16.0.0",
     "@types/tape": "^4.2.33",
     "tape": "^4.10.1"
-  },
-  "fixdeps": {
-    "ignoredPackages": [
-      "@babel/runtime"
-    ]
   }
 }

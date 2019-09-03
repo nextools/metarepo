@@ -30,7 +30,7 @@ export const fixDeps = () => plugin('fixDeps', ({ logPath, logMessage }) => asyn
   for (const pkg of Object.values(packages)) {
     const dir = pkg.dir
     const json = pkg.json as TPackageJson
-    let ignoredPackages: string[] = []
+    let ignoredPackages: string[] = ['@babel/runtime']
     let dependenciesGlobs = ['src/**/*.{ts,tsx,js}']
     let devDependenciesGlobs = ['{test,x-ray}/**/*.{ts,tsx,js}', 'meta.{ts,tsx}']
 

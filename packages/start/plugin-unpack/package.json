@@ -28,10 +28,5 @@
     "@babel/runtime": "^7.4.2",
     "@types/decompress": "^4.2.2",
     "blue-tape": "^1.0.0"
-  },
-  "fixdeps": {
-    "ignoredPackages": [
-      "@babel/runtime"
-    ]
   }
 }

@@ -27,10 +27,5 @@
   "peerDependencies": {
     "react": "^16.8.0",
     "react-native": "^0.59.0"
-  },
-  "fixdeps": {
-    "ignoredPackages": [
-      "@babel/runtime"
-    ]
   }
 }

@@ -18,10 +18,5 @@
     "pkg-dir": "^4.2.0",
     "resolve": "^1.12.0",
     "tsfn": "^0.2.0"
-  },
-  "fixdeps": {
-    "ignoredPackages": [
-      "@babel/runtime"
-    ]
   }
 }

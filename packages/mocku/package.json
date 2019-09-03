@@ -29,9 +29,6 @@
     "blue-tape": "^1.0.0"
   },
   "fixdeps": {
-    "ignoredPackages": [
-      "@babel/runtime"
-    ],
     "devDependenciesGlobs": [
       "test/**/*.ts",
       "!test/fixtures"

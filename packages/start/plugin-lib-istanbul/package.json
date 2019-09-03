@@ -37,10 +37,5 @@
     "@types/istanbul-lib-report": "^1.1.0",
     "@types/istanbul-lib-source-maps": "^1.2.1",
     "blue-tape": "^1.0.0"
-  },
-  "fixdeps": {
-    "ignoredPackages": [
-      "@babel/runtime"
-    ]
   }
 }
