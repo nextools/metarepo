@@ -1,7 +1,21 @@
+/* eslint-disable max-params */
 import BigInt, { BigInteger } from 'big-integer'
 import { packPerm } from './pack-perm'
 
-export const getNumSkipMutin = (values: BigInteger[], length: BigInteger[], mutinIndices: number[]): BigInteger => {
+const getGroupIndices = (propsKeys: string[], group: string[], indexOffset: number): number[] => {
+  const result: number[] = []
+
+  for (let i = 0; i < propsKeys.length; ++i) {
+    if (group.includes(propsKeys[i])) {
+      result.push(i + indexOffset)
+    }
+  }
+
+  return result
+}
+
+export const getNumSkipMutin = (values: BigInteger[], length: BigInteger[], propsKeys: string[], group: string[], indexOffset: number): BigInteger => {
+  const mutinIndices = getGroupIndices(propsKeys, group, indexOffset)
   let changedIndex = 0
 
   for (let i = 0; i < mutinIndices.length; ++i) {
