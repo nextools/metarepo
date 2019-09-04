@@ -8,7 +8,11 @@ export type TMeta = {
   element: ReactElement<any>,
   options: {
     hasOwnWidth?: boolean,
-    negativeOverflow?: number,
+    overflow?: number,
+    overflowTop?: number,
+    overflowBottom?: number,
+    overflowLeft?: number,
+    overflowRight?: number,
     backgroundColor?: string,
     maxWidth?: number,
   },
