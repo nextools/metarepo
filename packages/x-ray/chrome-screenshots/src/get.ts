@@ -1,7 +1,7 @@
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { Page, ElementHandle } from 'puppeteer-core'
-import { TMeta } from '@x-ray/screenshot-utils'
+import { TMeta, getContainerStyle } from '@x-ray/screenshot-utils'
 
 const SELECTOR = '[data-x-ray]'
 
@@ -11,12 +11,7 @@ const getWebScreenshot = async (page: Page, { element, options }: TMeta): Promis
       'div',
       {
         'data-x-ray': true,
-        style: {
-          display: options.hasOwnWidth ? 'inline-block' : 'block',
-          padding: options.negativeOverflow ? `${options.negativeOverflow}px` : 0,
-          maxWidth: options.maxWidth ? `${options.maxWidth}px` : 'initial',
-          backgroundColor: options.backgroundColor || '#fff',
-        },
+        style: getContainerStyle(options),
       },
       element
     )
