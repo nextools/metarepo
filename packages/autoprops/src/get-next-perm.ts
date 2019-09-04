@@ -94,7 +94,7 @@ export const getNextPermImpl = (int: BigInteger, metaFile: TMetaFile): BigIntege
     let keysWithState
 
     if (childrenConfig.mutex || childrenConfig.mutin) {
-      keysWithState = getKeysWithState(values, childrenConfig.children, i)
+      keysWithState = getKeysWithState(values, childrenConfig.children, propsKeys.length)
 
       if (childrenConfig.mutex) {
         const mutexGroupIndex = checkRestrictionMutex(keysWithState, childrenConfig.mutex)
