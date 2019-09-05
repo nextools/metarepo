@@ -1,5 +1,5 @@
 /* eslint-disable max-params, no-use-before-define */
-import { isUndefined } from 'tsfn'
+import { isUndefined, isDefined } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
 import { TMetaFile } from './types'
 import { unpackPerm } from './unpack-perm'
@@ -7,7 +7,9 @@ import { packPerm } from './pack-perm'
 import { stringifyBigInt } from './stringify-bigint'
 import { parseBigInt } from './parse-bigint'
 import { getBaseName, getIndexedNameIndex } from './get-indexed-name'
-import { checkAndDisableMutins, checkAndEnableMutins, checkAndDisableMutexes } from './check-mutex'
+import { applyDisableMutins } from './apply-disable-mutins'
+import { applyEnableMutins } from './apply-enable-mutins'
+import { applyDisableMutexes } from './apply-disable-mutexes'
 
 const applyChildPropValue = (int: BigInteger, childMeta: TMetaFile, propPath: string[], propValue: any, childKey: string, required?: string[]): BigInteger => {
   if (!isUndefined(required) && required.includes(childKey)) {
@@ -42,8 +44,8 @@ const applyPropValueImpl = (int: BigInteger, metaFile: TMetaFile, propPath: stri
       values[propIndex] = BigInt.zero
 
       // check mutin
-      if (!isUndefined(metaFile.config.mutin)) {
-        checkAndDisableMutins(values, 0, propKeys, propName, metaFile.config.mutin)
+      if (isDefined(metaFile.config.mutin)) {
+        applyDisableMutins(values, 0, propKeys, propName, metaFile.config.mutin)
       }
 
       return packPerm(values, length)
@@ -52,19 +54,19 @@ const applyPropValueImpl = (int: BigInteger, metaFile: TMetaFile, propPath: stri
     values[propIndex] = BigInt(propValueIndex)
 
     // check mutin
-    if (!isUndefined(metaFile.config.mutin)) {
-      checkAndEnableMutins(values, 0, propKeys, propName, metaFile.config.mutin, metaFile.config.required)
+    if (isDefined(metaFile.config.mutin)) {
+      applyEnableMutins(values, 0, propKeys, propName, metaFile.config.mutin, metaFile.config.required)
     }
 
     // check mutex
-    if (!isUndefined(metaFile.config.mutex)) {
-      checkAndDisableMutexes(values, 0, propKeys, propName, metaFile.config.mutex)
+    if (isDefined(metaFile.config.mutex)) {
+      applyDisableMutexes(values, 0, propKeys, propName, metaFile.config.mutex)
     }
 
     return packPerm(values, length)
   }
 
-  if (!isUndefined(metaFile.childrenConfig) && propPath[0] === 'children') {
+  if (isDefined(metaFile.childrenConfig) && propPath[0] === 'children') {
     const childName = propPath[1]
     const childBaseName = getBaseName(childName)
     const childIndex = getIndexedNameIndex(metaFile.childrenConfig.children, childName) + propKeys.length
@@ -78,8 +80,8 @@ const applyPropValueImpl = (int: BigInteger, metaFile: TMetaFile, propPath: stri
     if (isUndefined(propValue)) {
       values[childIndex] = BigInt.zero
 
-      if (!isUndefined(metaFile.childrenConfig.mutin)) {
-        checkAndDisableMutins(values, propKeys.length, metaFile.childrenConfig.children, childBaseName, metaFile.childrenConfig.mutin)
+      if (isDefined(metaFile.childrenConfig.mutin)) {
+        applyDisableMutins(values, propKeys.length, metaFile.childrenConfig.children, childBaseName, metaFile.childrenConfig.mutin)
       }
 
       return packPerm(values, length)
@@ -87,12 +89,12 @@ const applyPropValueImpl = (int: BigInteger, metaFile: TMetaFile, propPath: stri
 
     values[childIndex] = BigInt.one
 
-    if (!isUndefined(metaFile.childrenConfig.mutin)) {
-      checkAndEnableMutins(values, propKeys.length, metaFile.childrenConfig.children, childBaseName, metaFile.childrenConfig.mutin)
+    if (isDefined(metaFile.childrenConfig.mutin)) {
+      applyEnableMutins(values, propKeys.length, metaFile.childrenConfig.children, childBaseName, metaFile.childrenConfig.mutin)
     }
 
-    if (!isUndefined(metaFile.childrenConfig.mutex)) {
-      checkAndDisableMutexes(values, propKeys.length, metaFile.childrenConfig.children, childBaseName, metaFile.childrenConfig.mutex)
+    if (isDefined(metaFile.childrenConfig.mutex)) {
+      applyDisableMutexes(values, propKeys.length, metaFile.childrenConfig.children, childBaseName, metaFile.childrenConfig.mutex)
     }
 
     return packPerm(values, length)
