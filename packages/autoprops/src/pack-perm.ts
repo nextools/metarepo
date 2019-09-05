@@ -1,14 +1,11 @@
 import BigInt, { BigInteger } from 'big-integer'
 
 export const packPerm = (values: BigInteger[], length: BigInteger[]): BigInteger => {
-  let result = BigInt.zero
+  let result = values[0]
   let multipliedLength = BigInt.one
 
-  for (let i = 0; i < values.length; ++i) {
-    if (i > 0) {
-      multipliedLength = multipliedLength.multiply(length[i - 1])
-    }
-
+  for (let i = 1; i < values.length; ++i) {
+    multipliedLength = multipliedLength.multiply(length[i - 1])
     result = result.add(multipliedLength.multiply(values[i]))
   }
 
