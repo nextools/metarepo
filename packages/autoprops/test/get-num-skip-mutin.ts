@@ -39,5 +39,41 @@ test('getNumSkipMutin', (t) => {
     'right index case'
   )
 
+  t.equals(
+    getNumSkipMutin(
+      [BigInt(0), BigInt(0), BigInt(0), BigInt(1)],
+      [BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      ['a', 'b', 'c'],
+      ['children', 'a'],
+      0
+    ).toString(),
+    '1',
+    'left index case children'
+  )
+
+  t.equals(
+    getNumSkipMutin(
+      [BigInt(0), BigInt(1), BigInt(0), BigInt(0), BigInt(0)],
+      [BigInt(4), BigInt(4), BigInt(4), BigInt(4), BigInt(4)],
+      ['a', 'b', 'c'],
+      ['a', 'children', 'b'],
+      0
+    ).toString(),
+    '12',
+    'middle index case children'
+  )
+
+  t.equals(
+    getNumSkipMutin(
+      [BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(1)],
+      [BigInt(4), BigInt(4), BigInt(4), BigInt(4), BigInt(4)],
+      ['a', 'b', 'c'],
+      ['a', 'children', 'c'],
+      0
+    ).toString(),
+    '17',
+    'right index case children'
+  )
+
   t.end()
 })
