@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import BigInt from 'big-integer'
+import I from 'big-integer'
 import { TMetaFile } from '../src/types'
 import { getLength } from '../src/get-length'
 
@@ -47,7 +47,7 @@ test('autoprops: getLength', (t) => {
   }
 
   t.true(
-    getLength(meta).equals(BigInt(8)),
+    getLength(meta).equals(I(8)),
     'should return proper length'
   )
 

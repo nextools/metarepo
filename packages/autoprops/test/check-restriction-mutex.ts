@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import BigInt from 'big-integer'
+import I from 'big-integer'
 import { checkRestrictionMutex } from '../src/check-restriction-mutex'
 import { getKeysWithStateProps } from '../src/get-keys-with-state'
 
@@ -10,14 +10,14 @@ test('checkRestrictionMutex', (t) => {
   ]
   const keys = ['a', 'b', 'c']
   const values = [
-    [BigInt(0), BigInt(0), BigInt(0)],
-    [BigInt(1), BigInt(0), BigInt(0)],
-    [BigInt(0), BigInt(1), BigInt(0)],
-    [BigInt(1), BigInt(1), BigInt(0)],
-    [BigInt(0), BigInt(0), BigInt(1)],
-    [BigInt(1), BigInt(0), BigInt(1)],
-    [BigInt(0), BigInt(1), BigInt(1)],
-    [BigInt(1), BigInt(1), BigInt(1)],
+    [I(0), I(0), I(0)],
+    [I(1), I(0), I(0)],
+    [I(0), I(1), I(0)],
+    [I(1), I(1), I(0)],
+    [I(0), I(0), I(1)],
+    [I(1), I(0), I(1)],
+    [I(0), I(1), I(1)],
+    [I(1), I(1), I(1)],
   ]
 
   t.deepEquals(
@@ -32,10 +32,10 @@ test('checkRestrictionMutex', (t) => {
 test('checkRestrictionMutex: nothing to do', (t) => {
   const keys = ['a', 'b']
   const values = [
-    [BigInt(0), BigInt(0), BigInt(0)],
-    [BigInt(1), BigInt(0), BigInt(0)],
-    [BigInt(0), BigInt(1), BigInt(0)],
-    [BigInt(1), BigInt(1), BigInt(0)],
+    [I(0), I(0), I(0)],
+    [I(1), I(0), I(0)],
+    [I(0), I(1), I(0)],
+    [I(1), I(1), I(0)],
   ]
 
   t.deepEquals(
@@ -54,10 +54,10 @@ test('checkRestrictionMutex: children', (t) => {
     ['b', 'children'],
   ]
   const values = [
-    [BigInt(0), BigInt(0), BigInt(1), BigInt(0)],
-    [BigInt(1), BigInt(0), BigInt(1), BigInt(0)],
-    [BigInt(0), BigInt(1), BigInt(0), BigInt(1)],
-    [BigInt(1), BigInt(1), BigInt(0), BigInt(1)],
+    [I(0), I(0), I(1), I(0)],
+    [I(1), I(0), I(1), I(0)],
+    [I(0), I(1), I(0), I(1)],
+    [I(1), I(1), I(0), I(1)],
   ]
 
   t.deepEquals(

@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import BigInt from 'big-integer'
+import I from 'big-integer'
 import { TMetaFile, Permutation } from '../src/types'
 import { unpackPerm } from '../src/unpack-perm'
 
@@ -31,23 +31,23 @@ test('decimalToPerm: props', (t) => {
     Component: () => null,
   }
 
-  const packed = [BigInt(0), BigInt(1), BigInt(2), BigInt(3)]
+  const packed = [I(0), I(1), I(2), I(3)]
   const expected = [
     {
-      values: [BigInt(0), BigInt(0)],
-      length: [BigInt(2), BigInt(2)],
+      values: [I(0), I(0)],
+      length: [I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(0)],
-      length: [BigInt(2), BigInt(2)],
+      values: [I(1), I(0)],
+      length: [I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(1)],
-      length: [BigInt(2), BigInt(2)],
+      values: [I(0), I(1)],
+      length: [I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(1)],
-      length: [BigInt(2), BigInt(2)],
+      values: [I(1), I(1)],
+      length: [I(2), I(2)],
     },
   ]
 
@@ -92,135 +92,135 @@ test('decimalToPerm: props with children', (t) => {
     Component: () => null,
   }
 
-  const decimals = [BigInt(0), BigInt(1), BigInt(2), BigInt(3), BigInt(4), BigInt(5), BigInt(6), BigInt(7), BigInt(8), BigInt(9), BigInt(10), BigInt(11), BigInt(12), BigInt(13), BigInt(14), BigInt(15), BigInt(16), BigInt(17), BigInt(18), BigInt(19), BigInt(20), BigInt(21), BigInt(22), BigInt(23), BigInt(24), BigInt(25), BigInt(26), BigInt(27), BigInt(28), BigInt(29), BigInt(30), BigInt(31)]
+  const decimals = [I(0), I(1), I(2), I(3), I(4), I(5), I(6), I(7), I(8), I(9), I(10), I(11), I(12), I(13), I(14), I(15), I(16), I(17), I(18), I(19), I(20), I(21), I(22), I(23), I(24), I(25), I(26), I(27), I(28), I(29), I(30), I(31)]
   const expected = [
     {
-      values: [BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(0), I(0), I(0), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(0), BigInt(0), BigInt(0), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(0), I(0), I(0), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(1), BigInt(0), BigInt(0), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(1), I(0), I(0), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(1), BigInt(0), BigInt(0), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(1), I(0), I(0), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(0), BigInt(1), BigInt(0), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(0), I(1), I(0), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(0), BigInt(1), BigInt(0), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(0), I(1), I(0), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(1), BigInt(1), BigInt(0), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(1), I(1), I(0), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(1), BigInt(1), BigInt(0), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(1), I(1), I(0), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(0), BigInt(0), BigInt(1), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(0), I(0), I(1), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(0), BigInt(0), BigInt(1), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(0), I(0), I(1), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(1), BigInt(0), BigInt(1), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(1), I(0), I(1), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(1), BigInt(0), BigInt(1), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(1), I(0), I(1), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(0), BigInt(1), BigInt(1), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(0), I(1), I(1), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(0), BigInt(1), BigInt(1), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(0), I(1), I(1), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(1), BigInt(1), BigInt(1), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(1), I(1), I(1), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(1), BigInt(1), BigInt(1), BigInt(0)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(1), I(1), I(1), I(0)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(0), I(0), I(0), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(0), BigInt(0), BigInt(0), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(0), I(0), I(0), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(1), BigInt(0), BigInt(0), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(1), I(0), I(0), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(1), BigInt(0), BigInt(0), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(1), I(0), I(0), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(0), BigInt(1), BigInt(0), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(0), I(1), I(0), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(0), BigInt(1), BigInt(0), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(0), I(1), I(0), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(1), BigInt(1), BigInt(0), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(1), I(1), I(0), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(1), BigInt(1), BigInt(0), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(1), I(1), I(0), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(0), BigInt(0), BigInt(1), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(0), I(0), I(1), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(0), BigInt(0), BigInt(1), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(0), I(0), I(1), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(1), BigInt(0), BigInt(1), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(1), I(0), I(1), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(1), BigInt(0), BigInt(1), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(1), I(0), I(1), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(0), BigInt(1), BigInt(1), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(0), I(1), I(1), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(0), BigInt(1), BigInt(1), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(0), I(1), I(1), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(0), BigInt(1), BigInt(1), BigInt(1), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(0), I(1), I(1), I(1), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
     {
-      values: [BigInt(1), BigInt(1), BigInt(1), BigInt(1), BigInt(1)],
-      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+      values: [I(1), I(1), I(1), I(1), I(1)],
+      length: [I(2), I(2), I(2), I(2), I(2)],
     },
   ]
 
