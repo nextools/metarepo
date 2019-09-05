@@ -1,3 +1,7 @@
+## v0.3.1
+
+* 🐞 use `getContainerStyle`
+
 ## v0.3.0
 
 * 💥 refactor using tar

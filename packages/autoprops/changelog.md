@@ -1,3 +1,10 @@
+## v0.6.2
+
+* 🐞 cleanup `TComponentConfig` type
+* 🐞 handle `children` key in mutex and mutin groups
+* 🐞 fix index offset
+* 🐞 enhance `serializeProps`
+
 ## v0.6.1
 
 * 🐞 enhance types
