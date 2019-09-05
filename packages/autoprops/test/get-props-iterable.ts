@@ -20,7 +20,7 @@ test('getPropsIterable', (t) => {
         props: {},
       },
       {
-        id: 'xgkW/AgY+9oivGzjSbA2Dxj2Ihc=',
+        id: '/PaKjeN23mDE6A7+0iWHainFpLE=',
         props: { a: true },
       },
     ],

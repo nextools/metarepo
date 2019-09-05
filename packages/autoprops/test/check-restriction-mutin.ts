@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import BigInt from 'big-integer'
 import { checkRestrictionMutin } from '../src/check-restriction-mutin'
-import { getKeysWithState } from '../src/get-keys-with-state'
+import { getKeysWithStateProps } from '../src/get-keys-with-state'
 
 test('checkRestrictionMutin', (t) => {
   const mutin = [
@@ -21,7 +21,7 @@ test('checkRestrictionMutin', (t) => {
   ]
 
   t.deepEquals(
-    values.map((values) => checkRestrictionMutin(getKeysWithState(values, keys, 0), mutin)),
+    values.map((values) => checkRestrictionMutin(getKeysWithStateProps(values, keys), mutin)),
     [-1, 0, 0, 1, 1, 0, 0, -1],
     'should return proper restriction'
   )
@@ -39,8 +39,32 @@ test('checkRestrictionMutin: nothing to do', (t) => {
   ]
 
   t.deepEquals(
-    values.map((values) => checkRestrictionMutin(getKeysWithState(values, keys, 0), [])),
+    values.map((values) => checkRestrictionMutin(getKeysWithStateProps(values, keys), [])),
     [-1, -1, -1, -1],
+    'should return proper restriction'
+  )
+
+  t.end()
+})
+
+test('checkRestrictionMutin: children', (t) => {
+  const keys = ['a', 'b']
+  const mutin = [
+    ['a', 'children'],
+    ['b', 'children'],
+  ]
+  const values = [
+    [BigInt(0), BigInt(0), BigInt(0), BigInt(0)],
+    [BigInt(1), BigInt(0), BigInt(0), BigInt(0)],
+    [BigInt(1), BigInt(0), BigInt(0), BigInt(1)],
+    [BigInt(0), BigInt(1), BigInt(0), BigInt(0)],
+    [BigInt(1), BigInt(1), BigInt(0), BigInt(0)],
+    [BigInt(1), BigInt(1), BigInt(0), BigInt(1)],
+  ]
+
+  t.deepEquals(
+    values.map((values) => checkRestrictionMutin(getKeysWithStateProps(values, keys), mutin)),
+    [-1, 0, 1, 1, 0, -1],
     'should return proper restriction'
   )
 
