@@ -2,7 +2,7 @@
 import BigInt, { BigInteger } from 'big-integer'
 import { packPerm } from './pack-perm'
 
-const getGroupIndices = (propsKeys: string[], group: string[], indexOffset: number): number[] => {
+const getGroupIndices = (values: BigInteger[], propsKeys: string[], group: string[], indexOffset: number): number[] => {
   const result: number[] = []
 
   for (let i = 0; i < propsKeys.length; ++i) {
@@ -11,11 +11,29 @@ const getGroupIndices = (propsKeys: string[], group: string[], indexOffset: numb
     }
   }
 
+  /* mutin group with children word */
+  if (propsKeys.length < values.length && indexOffset === 0 && group.includes('children')) {
+    let foundChildWithState = false
+
+    for (let i = propsKeys.length; i < values.length; ++i) {
+      if (values[i].greater(BigInt.zero)) {
+        result.push(i)
+        foundChildWithState = true
+
+        break
+      }
+    }
+
+    if (!foundChildWithState) {
+      result.push(propsKeys.length)
+    }
+  }
+
   return result
 }
 
 export const getNumSkipMutin = (values: BigInteger[], length: BigInteger[], propsKeys: string[], group: string[], indexOffset: number): BigInteger => {
-  const mutinIndices = getGroupIndices(propsKeys, group, indexOffset)
+  const mutinIndices = getGroupIndices(values, propsKeys, group, indexOffset)
   let changedIndex = 0
 
   for (let i = 0; i < mutinIndices.length; ++i) {
@@ -26,6 +44,7 @@ export const getNumSkipMutin = (values: BigInteger[], length: BigInteger[], prop
     }
   }
 
+  /* special case for right-most changed index */
   if (mutinIndices[mutinIndices.length - 1] === changedIndex) {
     const nextValues = [...values]
 
@@ -39,6 +58,7 @@ export const getNumSkipMutin = (values: BigInteger[], length: BigInteger[], prop
     return nextValuesInt.minus(valuesInt)
   }
 
+  /* all other cases */
   let numSkip = BigInt.one
 
   for (let i = 0; i <= changedIndex; ++i) {
