@@ -1,3 +1,7 @@
+## v0.6.3
+
+* 🐞 fix `getNumSkipMutin` for `children` word
+
 ## v0.6.2
 
 * 🐞 cleanup `TComponentConfig` type
