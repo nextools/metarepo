@@ -1,3 +1,7 @@
+## v0.3.2
+
+* 🐞 print time in human readable form
+
 ## v0.3.1
 
 * 🐞 fix deleted screenshots
