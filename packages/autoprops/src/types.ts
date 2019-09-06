@@ -36,4 +36,5 @@ export type TChildrenMap = {
 export type Permutation = {
   values: BigInteger[],
   length: BigInteger[],
+  propKeys: string[],
 }

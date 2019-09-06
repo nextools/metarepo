@@ -36,18 +36,22 @@ test('decimalToPerm: props', (t) => {
     {
       values: [I(0), I(0)],
       length: [I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(0)],
       length: [I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(1)],
       length: [I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(1)],
       length: [I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
   ]
 
@@ -97,130 +101,162 @@ test('decimalToPerm: props with children', (t) => {
     {
       values: [I(0), I(0), I(0), I(0), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(0), I(0), I(0), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(1), I(0), I(0), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(1), I(0), I(0), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(0), I(1), I(0), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(0), I(1), I(0), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(1), I(1), I(0), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(1), I(1), I(0), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(0), I(0), I(1), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(0), I(0), I(1), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(1), I(0), I(1), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(1), I(0), I(1), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(0), I(1), I(1), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(0), I(1), I(1), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(1), I(1), I(1), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(1), I(1), I(1), I(0)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(0), I(0), I(0), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(0), I(0), I(0), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(1), I(0), I(0), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(1), I(0), I(0), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(0), I(1), I(0), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(0), I(1), I(0), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(1), I(1), I(0), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(1), I(1), I(0), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(0), I(0), I(1), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(0), I(0), I(1), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(1), I(0), I(1), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(1), I(0), I(1), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(0), I(1), I(1), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(0), I(1), I(1), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(0), I(1), I(1), I(1), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
     {
       values: [I(1), I(1), I(1), I(1), I(1)],
       length: [I(2), I(2), I(2), I(2), I(2)],
+      propKeys: ['a', 'b'],
     },
   ]
 

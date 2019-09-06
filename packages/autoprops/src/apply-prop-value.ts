@@ -14,7 +14,9 @@ import { applyDisableMutexes } from './apply-disable-mutexes'
 const applyChildPropValue = (int: BigInteger, childMeta: TMetaFile, propPath: string[], propValue: any, childKey: string, required?: string[]): BigInteger => {
   if (!isUndefined(required) && required.includes(childKey)) {
     return applyPropValueImpl(int, childMeta, propPath, propValue)
-  } else if (int.greater(BigInt.zero)) {
+  }
+
+  if (int.greater(BigInt.zero)) {
     return applyPropValueImpl(int.minus(BigInt.one), childMeta, propPath, propValue).plus(BigInt.one)
   }
 
@@ -22,8 +24,7 @@ const applyChildPropValue = (int: BigInteger, childMeta: TMetaFile, propPath: st
 }
 
 const applyPropValueImpl = (int: BigInteger, metaFile: TMetaFile, propPath: string[], propValue: any): BigInteger => {
-  const { values, length } = unpackPerm(int, metaFile)
-  const propKeys = Object.keys(metaFile.config.props)
+  const { values, length, propKeys } = unpackPerm(int, metaFile)
 
   // check if local prop has changed
   if (propPath.length === 1) {
