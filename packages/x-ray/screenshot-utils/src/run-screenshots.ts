@@ -1,5 +1,6 @@
 import path from 'path'
 import { TAnyObject } from 'tsfn'
+import prettyMs from 'pretty-ms'
 import { makeWorker } from '@x-ray/worker-utils'
 import { TScreenshotsFileResultData, TScreenshotsItemResult, TScreenshotsResultData, TRunScreesnotsResult, TScreenshotsResult, TScreenshotsFileResult } from './types'
 
@@ -136,7 +137,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
               console.log(`new: ${newCount}`)
               console.log(`deleted: ${deletedCount}`)
               console.log(`diff: ${diffCount}`)
-              console.log(`done in ${Date.now() - startTime}ms`)
+              console.log(`done in ${prettyMs(Date.now() - startTime)}`)
 
               resolve({
                 result,

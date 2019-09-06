@@ -5,6 +5,7 @@ import { checkScreenshot, TScreenshotsResultData, TScreenshotsFileResultData, TR
 import { TarFs, TTarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { isUndefined, isString } from 'tsfn'
 import { TLineElement } from 'syntx'
+import prettyMs from 'pretty-ms'
 import { TOptions } from './types'
 
 const shouldBailout = Boolean(process.env.XRAY_CI)
@@ -191,7 +192,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
             console.log(`new: ${newCount}`)
             console.log(`deleted: ${deletedCount}`)
             console.log(`diff: ${diffCount}`)
-            console.log(`done in ${Date.now() - startTime}ms`)
+            console.log(`done in ${prettyMs(Date.now() - startTime)}`)
 
             server.close(() => screenshotsResolve({
               result,

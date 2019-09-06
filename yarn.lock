@@ -10418,6 +10418,11 @@ parse-ms@^1.0.0:
   resolved "https://registry.yarnpkg.com/parse-ms/-/parse-ms-1.0.1.tgz#56346d4749d78f23430ca0c713850aef91aa361d"
   integrity sha1-VjRtR0nXjyNDDKDHE4UK75GqNh0=
 
+parse-ms@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/parse-ms/-/parse-ms-2.1.0.tgz#348565a753d4391fa524029956b172cb7753097d"
+  integrity sha512-kHt7kzLoS9VBZfUsiKjv43mr91ea+U05EyKkEtqp7vNbHxmaVuEqN7XxeEVnGrMtYOAxGrDElSi96K7EgO1zCA==
+
 parse-node-version@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parse-node-version/-/parse-node-version-1.0.1.tgz#e2b5dbede00e7fa9bc363607f53327e8b073189b"
@@ -10794,6 +10799,13 @@ pretty-ms@^2.1.0:
     is-finite "^1.0.1"
     parse-ms "^1.0.0"
     plur "^1.0.0"
+
+pretty-ms@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/pretty-ms/-/pretty-ms-5.0.0.tgz#6133a8f55804b208e4728f6aa7bf01085e951e24"
+  integrity sha512-94VRYjL9k33RzfKiGokPBPpsmloBYSf5Ri+Pq19zlsEcUKFob+admeXr5eFDRuPjFmEOcjJvPGdillYOJyvZ7Q==
+  dependencies:
+    parse-ms "^2.1.0"
 
 private@^0.1.6:
   version "0.1.8"
@@ -11240,7 +11252,17 @@ react-transform-hmr@^1.0.4:
     global "^4.3.0"
     react-proxy "^1.1.7"
 
-react@16.5.0, react@^16.8.0, react@^16.8.6, react@^16.9.0:
+react@16.5.0:
+  version "16.5.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.5.0.tgz#f2c1e754bf9751a549d9c6d9aca41905beb56575"
+  integrity sha512-nw/yB/L51kA9PsAy17T1JrzzGRk+BlFCJwFF7p+pwVxgqwPjYNeZEkkH7LXn9dmflolrYMXLWMTkQ77suKPTNQ==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    schedule "^0.3.0"
+
+react@^16.8.0, react@^16.8.6, react@^16.9.0:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.9.0.tgz#40ba2f9af13bc1a38d75dbf2f4359a5185c4f7aa"
   integrity sha512-+7LQnFBwkiw+BobzOF6N//BdoNw0ouwmSJTEm9cglOOmsg/TMiFHZLe2sEoN5M7LgJTj9oHH0gxklfnQe66S1w==
@@ -11935,6 +11957,13 @@ sax@~1.1.1:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.1.6.tgz#5d616be8a5e607d54e114afae55b7eaf2fcc3240"
   integrity sha1-XWFr6KXmB9VOEUr65Vt+ry/MMkA=
+
+schedule@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/schedule/-/schedule-0.3.0.tgz#1be2ab2fc2e768536269ce7326efb478d6c045e8"
+  integrity sha512-20+1KVo517sR7Nt+bYBN8a+bEJDKLPEx7Ohtts1kX05E4/HY53YUNuhfkVNItmWAnBYHcpG9vsd2/CJxG+aPCQ==
+  dependencies:
+    object-assign "^4.1.1"
 
 scheduler@^0.15.0:
   version "0.15.0"

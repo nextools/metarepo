@@ -2,6 +2,7 @@ import path from 'path'
 import { TOptions } from '@x-ray/common-utils'
 import { makeWorker } from '@x-ray/worker-utils'
 import { diffArrays } from 'diff'
+import prettyMs from 'pretty-ms'
 import { TRunSnapshotsResult, TSnapshotsResultData, TSnapshotsFileResultData, TSnapshotsItemResult, TSnapshotsResult, TSnapshotsFileResult, TFileResultLine } from './types'
 
 const getDataSize = (lines: TFileResultLine[]) => {
@@ -191,7 +192,7 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
               console.log(`new: ${newCount}`)
               console.log(`deleted: ${deletedCount}`)
               console.log(`diff: ${diffCount}`)
-              console.log(`done in ${Date.now() - startTime}ms`)
+              console.log(`done in ${prettyMs(Date.now() - startTime)}`)
 
               resolve({
                 result,
