@@ -1,5 +1,5 @@
 import React from 'react'
-import { startWithType, component, mapHandlers, mapWithPropsMemo, mapStateRef } from 'refun'
+import { startWithType, component, mapHandlers, mapWithProps, mapStateRef } from 'refun'
 import { TOmitKey } from 'tsfn'
 import { TRect } from '../types'
 import { mapStoreDispatch } from '../store'
@@ -30,14 +30,14 @@ export const Toolbar = component(
       dispatch(isActive ? actionAddFilter(file) : actionRemoveFilter(file))
     },
   }),
-  mapWithPropsMemo(({ switchWidthsRef, width }) => ({
+  mapWithProps(({ switchWidthsRef, width }) => ({
     totalWidth: Math.max(
       switchWidthsRef.current.reduce((result, width) => {
         return result + width + TOOLBAR_SPACING
       }, TOOLBAR_SPACING),
       width
     ),
-  }), ['switchWidthsRef', 'width'])
+  }))
 )(({ files, filteredFiles, width, switchWidthsRef, totalWidth, onSwitchToggle, onSwitchWidthChange }) => (
   <Block
     left={0}
