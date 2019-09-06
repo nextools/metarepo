@@ -2,7 +2,7 @@
 import BigInt, { BigInteger } from 'big-integer'
 import { packPerm } from './pack-perm'
 
-const getGroupIndices = (values: BigInteger[], propsKeys: string[], group: string[], indexOffset: number): number[] => {
+const getGroupIndices = (propsKeys: string[], group: string[], indexOffset: number): number[] => {
   const result: number[] = []
 
   for (let i = 0; i < propsKeys.length; ++i) {
@@ -11,29 +11,11 @@ const getGroupIndices = (values: BigInteger[], propsKeys: string[], group: strin
     }
   }
 
-  /* mutin group with children word */
-  if (propsKeys.length < values.length && indexOffset === 0 && group.includes('children')) {
-    let foundChildWithState = false
-
-    for (let i = propsKeys.length; i < values.length; ++i) {
-      if (values[i].greater(BigInt.zero)) {
-        result.push(i)
-        foundChildWithState = true
-
-        break
-      }
-    }
-
-    if (!foundChildWithState) {
-      result.push(propsKeys.length)
-    }
-  }
-
   return result
 }
 
 export const getNumSkipMutin = (values: BigInteger[], length: BigInteger[], propsKeys: string[], group: string[], indexOffset: number): BigInteger => {
-  const mutinIndices = getGroupIndices(values, propsKeys, group, indexOffset)
+  const mutinIndices = getGroupIndices(propsKeys, group, indexOffset)
   let changedIndex = 0
 
   for (let i = 0; i < mutinIndices.length; ++i) {

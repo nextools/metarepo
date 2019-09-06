@@ -8,7 +8,6 @@ import { parseBigInt } from './parse-bigint'
 import { stringifyBigInt } from './stringify-bigint'
 import { getNumSkipMutex } from './get-num-skip-mutex'
 import { checkRestrictionMutex } from './check-restriction-mutex'
-import { getKeysWithStateProps, getKeysWithStateChildren } from './get-keys-with-state'
 import { checkRestrictionMutin } from './check-restriction-mutin'
 import { getNumSkipMutin } from './get-num-skip-mutin'
 
@@ -68,48 +67,37 @@ export const getNextPermImpl = (int: BigInteger, metaFile: TMetaFile): BigIntege
 
   /* check restrictions */
   if (i < propKeys.length) {
-    let keysWithState
+    if (metaFile.config.mutex) {
+      const mutexGroupIndex = checkRestrictionMutex(values, 0, propKeys, metaFile.config.mutex)
 
-    if (metaFile.config.mutex || metaFile.config.mutin) {
-      keysWithState = getKeysWithStateProps(values, propKeys)
-
-      if (metaFile.config.mutex) {
-        const mutexGroupIndex = checkRestrictionMutex(keysWithState, metaFile.config.mutex)
-
-        if (mutexGroupIndex >= 0) {
-          return getNextPermImpl(int.plus(getNumSkipMutex(values, length, i)), metaFile)
-        }
+      if (mutexGroupIndex >= 0) {
+        return getNextPermImpl(int.plus(getNumSkipMutex(values, length, i)), metaFile)
       }
+    }
 
-      if (metaFile.config.mutin) {
-        const mutinGroupIndex = checkRestrictionMutin(keysWithState, metaFile.config.mutin)
+    if (metaFile.config.mutin) {
+      const mutinGroupIndex = checkRestrictionMutin(values, 0, propKeys, metaFile.config.mutin)
 
-        if (mutinGroupIndex >= 0) {
-          return getNextPermImpl(int.plus(getNumSkipMutin(values, length, propKeys, metaFile.config.mutin[mutinGroupIndex], 0)), metaFile)
-        }
+      if (mutinGroupIndex >= 0) {
+        return getNextPermImpl(int.plus(getNumSkipMutin(values, length, propKeys, metaFile.config.mutin[mutinGroupIndex], 0)), metaFile)
       }
     }
   } else {
     const childrenConfig = metaFile.childrenConfig!
-    let keysWithState
 
-    if (childrenConfig.mutex || childrenConfig.mutin) {
-      keysWithState = getKeysWithStateChildren(values, childrenConfig.children, propKeys.length)
+    if (childrenConfig.mutex) {
+      const mutexGroupIndex = checkRestrictionMutex(values, propKeys.length, childrenConfig.children, childrenConfig.mutex)
 
-      if (childrenConfig.mutex) {
-        const mutexGroupIndex = checkRestrictionMutex(keysWithState, childrenConfig.mutex)
-
-        if (mutexGroupIndex >= 0) {
-          return getNextPermImpl(int.plus(getNumSkipMutex(values, length, i)), metaFile)
-        }
+      if (mutexGroupIndex >= 0) {
+        return getNextPermImpl(int.plus(getNumSkipMutex(values, length, i)), metaFile)
       }
+    }
 
-      if (childrenConfig.mutin) {
-        const mutinGroupIndex = checkRestrictionMutin(keysWithState, childrenConfig.mutin)
+    if (childrenConfig.mutin) {
+      const mutinGroupIndex = checkRestrictionMutin(values, propKeys.length, childrenConfig.children, childrenConfig.mutin)
 
-        if (mutinGroupIndex >= 0) {
-          return getNextPermImpl(int.plus(getNumSkipMutin(values, length, childrenConfig.children, childrenConfig.mutin[mutinGroupIndex], propKeys.length)), metaFile)
-        }
+      if (mutinGroupIndex >= 0) {
+        return getNextPermImpl(int.plus(getNumSkipMutin(values, length, childrenConfig.children, childrenConfig.mutin[mutinGroupIndex], propKeys.length)), metaFile)
       }
     }
   }
