@@ -1,3 +1,7 @@
+## v0.6.4
+
+* 🐞 optimize `packPerm`
+
 ## v0.6.3
 
 * 🐞 fix `getNumSkipMutin` for `children` word
