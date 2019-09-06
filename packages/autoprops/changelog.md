@@ -1,3 +1,7 @@
+## v0.6.5
+
+* 🐞 sort props keys
+
 ## v0.6.4
 
 * 🐞 optimize `packPerm`
