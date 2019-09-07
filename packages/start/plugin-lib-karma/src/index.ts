@@ -8,7 +8,7 @@ export default (options: ConfigOptions) =>
     await new Promise<void>((resolve, reject) => {
       const karmaServer = new Server(options)
 
-      karmaServer.on('run_complete', (browsers, results) => {
+      karmaServer.on('run_complete', (_, results) => {
         if (results.exitCode !== 0) {
           reject(null)
         } else {
