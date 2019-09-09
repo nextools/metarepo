@@ -1,3 +1,7 @@
+## v0.1.3
+
+* 🐞 fix Toolbar total width calculation
+
 ## v0.1.2
 
 * 🐞 use `mapStateRef` in toolbar
