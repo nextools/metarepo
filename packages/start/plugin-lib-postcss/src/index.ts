@@ -26,12 +26,9 @@ export default (options?: Options) =>
               inline: false,
               annotation: false,
             }
-          }
 
-          if (file.map !== null) {
-            realOptions.map = {
-              ...realOptions.map,
-              prev: file.map,
+            if (file.map !== null) {
+              realOptions.map.prev
             }
           }
 
