@@ -1,8 +1,7 @@
-/* eslint-disable import/named */
 import plugin from '@start/plugin'
-import { RollupFileOptions } from 'rollup'
+import { RollupOptions } from 'rollup'
 
-export default (config: RollupFileOptions) =>
+export default (config: RollupOptions) =>
   plugin('rollup', () => async () => {
     const { rollup } = await import('rollup')
 
