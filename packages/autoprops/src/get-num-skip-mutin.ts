@@ -21,7 +21,7 @@ export const getNumSkipMutin = (values: BigInteger[], length: BigInteger[], prop
   for (let i = 0; i < mutinIndices.length; ++i) {
     changedIndex = mutinIndices[i]
 
-    if (values[changedIndex].greater(BigInt.zero)) {
+    if (!values[changedIndex].isZero()) {
       break
     }
   }

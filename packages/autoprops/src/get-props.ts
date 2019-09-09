@@ -21,7 +21,7 @@ const getChildValue = (int: BigInteger, childMeta: TMetaFile, childKey: string, 
     return getPropsImpl(int, childMeta)
   }
 
-  if (int.greater(BigInt.zero)) {
+  if (!int.isZero()) {
     return getPropsImpl(int.minus(BigInt.one), childMeta)
   }
 }

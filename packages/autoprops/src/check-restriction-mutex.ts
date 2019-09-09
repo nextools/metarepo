@@ -1,4 +1,4 @@
-import BigInt, { BigInteger } from 'big-integer'
+import { BigInteger } from 'big-integer'
 
 export const checkRestrictionMutex = (values: BigInteger[], indexOffset: number, keys: string[], mutexGroups: string[][]): number => {
   for (let i = 0; i < mutexGroups.length; ++i) {
@@ -7,7 +7,7 @@ export const checkRestrictionMutex = (values: BigInteger[], indexOffset: number,
 
     for (const mutexKey of mutexGroup) {
       for (let k = 0; k < keys.length; ++k) {
-        if (values[k + indexOffset].greater(BigInt.zero) && mutexKey === keys[k]) {
+        if (!values[k + indexOffset].isZero() && mutexKey === keys[k]) {
           ++intersectCount
         }
 

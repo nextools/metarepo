@@ -16,7 +16,7 @@ const getChildNextPerm = (int: BigInteger, childMeta: TMetaFile, childKey: strin
     return getNextPermImpl(int, childMeta)
   }
 
-  if (int.greater(BigInt.zero)) {
+  if (!int.isZero()) {
     const nextPerm = getNextPermImpl(int.minus(BigInt.one), childMeta)
 
     if (nextPerm === null) {
