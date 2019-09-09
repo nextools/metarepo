@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@sindresorhus/is": "^0.17.0",
     "react": "^16.8.6",
-    "react-test-renderer": "^16.6.0"
+    "react-test-renderer": "^16.6.0",
+    "tsfn": "^0.2.1"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

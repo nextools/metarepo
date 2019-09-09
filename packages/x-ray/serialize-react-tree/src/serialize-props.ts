@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle, no-use-before-define */
 import { isValidElement } from 'react'
-import is from '@sindresorhus/is'
+import { isObject, isArray, isFunction, isNull, isUndefined, isString, isNumber } from 'tsfn'
 import serializeReactTree from './serialize-react-tree'
 import { makeIndent, nextIndent, prevIndent } from './make-indent'
 
@@ -31,37 +31,37 @@ const serializeArray = (array: any[], indent: number) => {
       continue
     }
 
-    if (is.plainObject(value)) {
+    if (isObject(value)) {
       result += serializeObject(value, nextIndent(indent))
       continue
     }
 
-    if (Array.isArray(value)) {
+    if (isArray(value)) {
       result += serializeArray(value, nextIndent(indent))
       continue
     }
 
-    if (is.function_(value)) {
+    if (isFunction(value)) {
       result += '() => {}'
       continue
     }
 
-    if (typeof value === 'undefined') {
+    if (isUndefined(value)) {
       result += 'null'
       continue
     }
 
-    if (value === null) {
+    if (isNull(value)) {
       result += 'null'
       continue
     }
 
-    if (typeof value === 'string') {
+    if (isString(value)) {
       result += `'${value.replace(/'/g, '"')}'`
       continue
     }
 
-    if (typeof value === 'number') {
+    if (isNumber(value)) {
       result += value
       continue
     }
@@ -111,32 +111,32 @@ const serializeObject = (obj: { [k: string]: any }, indent: number) => {
       continue
     }
 
-    if (is.plainObject(value)) {
+    if (isObject(value)) {
       result += serializeObject(value, nextIndent(indent))
       continue
     }
 
-    if (Array.isArray(value)) {
+    if (isArray(value)) {
       result += serializeArray(value, nextIndent(indent))
       continue
     }
 
-    if (is.function_(value)) {
+    if (isFunction(value)) {
       result += '() => {}'
       continue
     }
 
-    if (value === null) {
+    if (isNull(value)) {
       result += 'null'
       continue
     }
 
-    if (typeof value === 'string') {
+    if (isString(value)) {
       result += `'${value.replace(/'/g, '"')}'`
       continue
     }
 
-    if (typeof value === 'number') {
+    if (isNumber(value)) {
       result += value
       continue
     }
@@ -182,36 +182,36 @@ const serializeProps = (props: { [k: string]: any }, indent: number) => {
       continue
     }
 
-    if (is.plainObject(value)) {
+    if (isObject(value)) {
       result += '{'
       result += serializeObject(value, nextIndent(indent))
       result += '}'
       continue
     }
 
-    if (Array.isArray(value)) {
+    if (isArray(value)) {
       result += '{'
       result += serializeArray(value, nextIndent(indent))
       result += '}'
       continue
     }
 
-    if (is.function_(value)) {
+    if (isFunction(value)) {
       result += '{() => {}}'
       continue
     }
 
-    if (value === null) {
+    if (isNull(value)) {
       result += '{null}'
       continue
     }
 
-    if (typeof value === 'string') {
+    if (isString(value)) {
       result += `"${value.replace(/"/g, '\\"')}"`
       continue
     }
 
-    if (typeof value === 'number') {
+    if (isNumber(value)) {
       result += `{${value}}`
       continue
     }

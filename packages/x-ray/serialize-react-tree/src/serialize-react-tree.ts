@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { ReactElement } from 'react'
 import renderer, { ReactTestRendererJSON } from 'react-test-renderer'
-import is from '@sindresorhus/is'
+import { isString, isNumber, isBoolean } from 'tsfn'
 import serializeProps from './serialize-props'
 import { makeIndent, nextIndent } from './make-indent'
 
@@ -17,7 +17,7 @@ const serializeReactTree = (reactNode: ReactElement<any>, indent: number) => {
   const go = (json: ReactElementJson, indent: number) => {
     let result = makeIndent(indent)
 
-    if (is.string(json)) {
+    if (isString(json)) {
       return result + json
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
@@ -27,7 +27,7 @@ const serializeReactTree = (reactNode: ReactElement<any>, indent: number) => {
         .replace(/( +)$/, (match) => match.replace(/ /g, '&#32;'))
     }
 
-    if (is.number(json) || is.boolean(json)) {
+    if (isNumber(json) || isBoolean(json)) {
       return result + json
     }
 
