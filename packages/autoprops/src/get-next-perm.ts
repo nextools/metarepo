@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { isUndefined } from 'tsfn'
+import { isUndefined, isDefined } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
 import { TMetaFile } from './types'
 import { packPerm } from './pack-perm'
@@ -7,7 +7,7 @@ import { unpackPerm } from './unpack-perm'
 import { parseBigInt } from './parse-bigint'
 import { stringifyBigInt } from './stringify-bigint'
 import { getNumSkipMutex } from './get-num-skip-mutex'
-import { checkRestrictionMutex } from './check-restriction-mutex'
+import { checkRestrictionMutex, checkRestrictionMutexPropsChildren } from './check-restriction-mutex'
 import { checkRestrictionMutin } from './check-restriction-mutin'
 import { getNumSkipMutin } from './get-num-skip-mutin'
 
@@ -68,9 +68,11 @@ export const getNextPermImpl = (int: BigInteger, metaFile: TMetaFile): BigIntege
   /* check restrictions */
   if (i < propKeys.length) {
     if (metaFile.config.mutex) {
-      const mutexGroupIndex = checkRestrictionMutex(values, 0, propKeys, metaFile.config.mutex)
+      const isRestricted = isDefined(metaFile.childrenConfig)
+        ? checkRestrictionMutexPropsChildren(values, propKeys, metaFile.childrenConfig.children, metaFile.config.mutex)
+        : checkRestrictionMutex(values, 0, propKeys, metaFile.config.mutex)
 
-      if (mutexGroupIndex >= 0) {
+      if (isRestricted) {
         return getNextPermImpl(int.plus(getNumSkipMutex(values, length, i)), metaFile)
       }
     }
@@ -86,9 +88,9 @@ export const getNextPermImpl = (int: BigInteger, metaFile: TMetaFile): BigIntege
     const childrenConfig = metaFile.childrenConfig!
 
     if (childrenConfig.mutex) {
-      const mutexGroupIndex = checkRestrictionMutex(values, propKeys.length, childrenConfig.children, childrenConfig.mutex)
+      const isRestricted = checkRestrictionMutex(values, propKeys.length, childrenConfig.children, childrenConfig.mutex)
 
-      if (mutexGroupIndex >= 0) {
+      if (isRestricted) {
         return getNextPermImpl(int.plus(getNumSkipMutex(values, length, i)), metaFile)
       }
     }
