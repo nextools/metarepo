@@ -1,3 +1,7 @@
+## v0.6.6
+
+* 🐞 allow children keys in props mutexes
+
 ## v0.6.5
 
 * 🐞 sort props keys
