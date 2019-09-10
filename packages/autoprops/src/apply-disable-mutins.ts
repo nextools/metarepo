@@ -16,7 +16,7 @@ export const applyDisableMutins = (values: BigInteger[], valuesIndexOffset: numb
 
       const mutinPropIndex = propKeys.indexOf(mutinName)
 
-      if (mutinPropIndex >= 0 && values[mutinPropIndex + valuesIndexOffset].greater(BigInt.zero)) {
+      if (mutinPropIndex >= 0 && !values[mutinPropIndex + valuesIndexOffset].isZero()) {
         values[mutinPropIndex + valuesIndexOffset] = BigInt.zero
 
         if (changedProps === null) {

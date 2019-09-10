@@ -120,3 +120,40 @@ test('getNextPerm: children', (t) => {
   t.end()
 })
 
+test('getNextPerm: props mutex children', (t) => {
+  const meta: TMetaFile = {
+    config: {
+      props: {
+        a: [true],
+        b: [true],
+      },
+      mutex: [
+        ['a', 'b'],
+        ['a', 'child'],
+      ],
+    },
+    childrenConfig: {
+      meta: {
+        child: {
+          config: {
+            props: {},
+          },
+          Component: () => null,
+        },
+      },
+      children: ['child'],
+    },
+    Component: () => null,
+  }
+
+  const decimals = ['0', '1', '2', '3', '4', '5', '6', '7']
+  const expected = ['1', '2', '4', '4', '6', '6', null, null]
+
+  t.deepEquals(
+    decimals.map((value) => getNextPerm(value, meta)),
+    expected,
+    'should return next perm'
+  )
+
+  t.end()
+})

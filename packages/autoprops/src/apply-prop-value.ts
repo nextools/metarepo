@@ -16,7 +16,7 @@ const applyChildPropValue = (int: BigInteger, childMeta: TMetaFile, propPath: st
     return applyPropValueImpl(int, childMeta, propPath, propValue)
   }
 
-  if (int.greater(BigInt.zero)) {
+  if (!int.isZero()) {
     return applyPropValueImpl(int.minus(BigInt.one), childMeta, propPath, propValue).plus(BigInt.one)
   }
 

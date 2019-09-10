@@ -25,7 +25,7 @@ export type TComponentConfig<T = TAnyObject> = {
     [k in TOptionalKeys<T> | Extract<keyof T, 'children'>]?: (Exclude<T[k], undefined>)[];
   },
   required?: TRequiredKeys<T>[],
-  mutex?: TKeyOf<T>[][],
+  mutex?: string[][],
   mutin?: TKeyOf<T>[][],
 }
 

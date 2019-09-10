@@ -1,11 +1,18 @@
 /* eslint-disable no-use-before-define */
-import { isValidElement } from 'react'
+import { isValidElement, ReactElement, FC } from 'react'
 import { isFunction, isSymbol, isUndefined, isRegExp, TAnyObject, isString, isDefined } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
-import { getElementName } from './get-element-name'
 import { TMetaFile } from './types'
 import { unpackPerm } from './unpack-perm'
 import { getIndexedName } from './get-indexed-name'
+
+const getElementName = (element: ReactElement<any>) => {
+  if (typeof element.type === 'string') {
+    return element.type
+  }
+
+  return (element.type as FC<any>).displayName || element.type.name
+}
 
 const getValue = (valueIndex: number, values: any[], key: string, required?: string[]): string | undefined => {
   let index = -1
@@ -48,7 +55,7 @@ const getChildValue = (int: BigInteger, childMeta: TMetaFile, childKey: string, 
     return getPropsImpl(int, childMeta)
   }
 
-  if (int.greater(BigInt.zero)) {
+  if (!int.isZero()) {
     return getPropsImpl(int.minus(BigInt.one), childMeta)
   }
 }
