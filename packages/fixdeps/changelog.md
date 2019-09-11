@@ -1,3 +1,7 @@
+## v0.5.1
+
+* 🐞 fix execa stdout config
+
 ## v0.5.0
 
 * 💥 refactor interface type
