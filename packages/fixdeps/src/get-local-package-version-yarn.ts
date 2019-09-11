@@ -9,7 +9,6 @@ export const getLocalPackageVersionYarn = async (packageName: string): Promise<s
       packageName,
     ],
     {
-      stdout: 'ignore',
       stderr: 'ignore',
     }
   )
