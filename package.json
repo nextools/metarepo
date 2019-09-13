@@ -44,6 +44,7 @@
     "@bubble-dev/start-preset": "*",
     "@bubble-dev/typescript-config": "*",
     "@types/node": "^11.13.10",
+    "react-native": "0.60.5",
     "eslint": "^6.1.0",
     "typescript": "bubble-dev/TypeScript#ext-3.6.2"
   },
