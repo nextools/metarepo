@@ -1,91 +1,91 @@
 import path from 'path'
-import { createWebpackConfig } from 'haul'
+import { makeConfig, withPolyfills } from '@haul-bundler/preset-0.60'
 
-export default {
-  webpack: (env) => {
-    const appPath = path.resolve(process.env.REBOX_ENTRY_POINT)
-    const config = createWebpackConfig({
-      entry: appPath,
-    })(env)
+const appPath = path.resolve(process.env.REBOX_ENTRY_POINT)
 
-    config.module.rules = [
-      {
-        test: appPath,
-        use: [
+export default makeConfig({
+  bundles: {
+    index: {
+      entry: withPolyfills(appPath),
+      transform({ env, config }) {
+        config.module.rules = [
+          ...config.module.rules,
           {
-            loader: require.resolve('./loader.js'),
+            test: appPath,
+            use: [
+              {
+                loader: require.resolve('./loader.js'),
+              },
+            ],
           },
-        ],
-      },
-      {
-        test: /\.js$/,
-        include: [
-          path.resolve('node_modules/react-native/'),
-          path.resolve('node_modules/metro/'),
-          path.resolve('node_modules/react-devtools-core/'),
-          path.resolve('node_modules/react-hot-loader/'),
-          path.resolve('node_modules/haul/node_modules/react-hot-loader/'),
-        ],
-        use: [
           {
-            loader: require.resolve('babel-loader'),
-            options: {
-              babelrc: false,
-              presets: [
-                require.resolve('metro-react-native-babel-preset'),
-              ],
-              cacheDirectory: true,
-            },
+            test: /\.(js|ts)x?$/,
+            include: [
+              path.resolve('node_modules/react-native/'),
+              path.resolve('node_modules/metro/'),
+              path.resolve('node_modules/react-devtools-core/'),
+              path.resolve('node_modules/react-native-svg/'),
+            ],
+            use: [
+              {
+                loader: require.resolve('babel-loader'),
+                options: {
+                  babelrc: false,
+                  presets: [
+                    require.resolve('metro-react-native-babel-preset'),
+                  ],
+                  cacheDirectory: true,
+                },
+              },
+            ],
           },
-        ],
-      },
-      {
-        test: /\.tsx?$/,
-        exclude: path.resolve('node_modules/'),
-        use: [
           {
-            loader: require.resolve('babel-loader'),
-            options: {
-              babelrc: false,
-              presets: [
-                require.resolve('metro-react-native-babel-preset'),
-                require.resolve('@babel/preset-typescript'),
-              ],
-              cacheDirectory: true,
-            },
+            test: /\.(ts|js)x?$/,
+            exclude: path.resolve('node_modules/'),
+            use: [
+              {
+                loader: require.resolve('babel-loader'),
+                options: {
+                  babelrc: false,
+                  presets: [
+                    require.resolve('metro-react-native-babel-preset'),
+                  ],
+                  cacheDirectory: true,
+                },
+              },
+            ],
           },
-        ],
-      },
-      ...config.module.rules,
-    ]
+        ]
 
-    config.performance = {
-      ...config.performance,
-      hints: false,
-    }
-
-    if (process.env.NODE_ENV === 'production') {
-      config.plugins = config.plugins.filter((plugin) => {
-        if (!plugin.constructor) {
-          return true
+        config.performance = {
+          ...config.performance,
+          hints: false,
         }
 
-        return plugin.constructor.name !== 'SourceMapDevToolPlugin'
-      })
-    }
+        if (process.env.NODE_ENV === 'production') {
+          config.plugins = config.plugins.filter((plugin) => {
+            if (!plugin.constructor) {
+              return true
+            }
 
-    config.resolve.extensions = [
-      ...config.resolve.extensions,
-      `.${env.platform}.js`,
-      `.${env.platform}.ts`,
-      `.${env.platform}.tsx`,
-      '.native.js',
-      '.native.ts',
-      '.native.tsx',
-      '.ts',
-      '.tsx',
-    ]
+            return plugin.constructor.name !== 'SourceMapDevToolPlugin'
+          })
+        }
 
-    return config
+        config.resolve.extensions = [
+          ...config.resolve.extensions,
+          `.${env.platform}.js`,
+          `.${env.platform}.ts`,
+          `.${env.platform}.tsx`,
+          '.native.js',
+          '.native.ts',
+          '.native.tsx',
+          '.ts',
+          '.tsx',
+        ]
+
+        return config
+      },
+    },
   },
-}
+})
