@@ -27,11 +27,11 @@
     "@types/graceful-fs": "^4.1.3",
     "react": "^16.8.0",
     "react-native": "0.60.5",
-    "react-native-svg": "^9.3.6"
+    "react-native-svg": "^9.9.3"
   },
   "peerDependencies": {
     "react": "^16.8.0",
     "react-native": "^0.60.5",
-    "react-native-svg": "^9.3.6"
+    "react-native-svg": "^9.9.3"
   }
 }

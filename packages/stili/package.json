@@ -14,7 +14,7 @@
   "sideEffects": false,
   "dependencies": {
     "@types/react": "^16.8.6",
-    "@types/react-native": "^0.57.51",
+    "@types/react-native": "^0.60.13",
     "tsfn": "^0.2.0"
   },
   "devDependencies": {
