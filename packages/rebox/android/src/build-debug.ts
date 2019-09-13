@@ -3,6 +3,7 @@ import { promisify } from 'util'
 import { readFile, writeFile } from 'graceful-fs'
 import execa from 'execa'
 import moveFile from 'move-file'
+import { getAppPath } from './get-app-path'
 
 const pReadFile = promisify(readFile)
 const pWriteFile = promisify(writeFile)
@@ -11,7 +12,6 @@ export type TBuildDebugOptions = {
   projectPath: string,
   appName: string,
   appId: string,
-  outputPath: string,
 }
 
 export const buildDebug = async (options: TBuildDebugOptions) => {
@@ -53,6 +53,7 @@ export const buildDebug = async (options: TBuildDebugOptions) => {
       '--quiet',
       '--no-daemon',
       '--warning-mode=none',
+      '-PreactNativeDevServerPort=8082',
     ],
     {
       cwd: options.projectPath,
@@ -66,7 +67,7 @@ export const buildDebug = async (options: TBuildDebugOptions) => {
   await pWriteFile(stringsXmlPath, '<resources><string name="app_name">rebox</string></resources>')
 
   const originalApkPath = path.join(options.projectPath, 'app', 'build', 'outputs', 'apk', 'debug', 'app-debug.apk')
-  const newApkPath = path.join(options.outputPath, `${options.appName}.apk`)
+  const newApkPath = getAppPath(options.appName)
 
   await moveFile(originalApkPath, newApkPath)
 }

@@ -1,8 +1,6 @@
 package com.rebox;
 
 import com.facebook.react.ReactActivity;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
 
 public class MainActivity extends ReactActivity {
 
@@ -13,11 +11,5 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "rebox";
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-      PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("js_bundle_deltas", false).apply();
-      super.onCreate(savedInstanceState);
     }
 }

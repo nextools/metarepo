@@ -1,3 +1,1 @@
-import { serveJsBundle as serveCommon } from '@rebox/native-utils'
-
-export const serveJsBundle = serveCommon('android')
+export { serveJsBundle } from '@rebox/native-utils'
