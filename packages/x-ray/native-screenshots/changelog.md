@@ -1,3 +1,7 @@
+## v0.3.3
+
+* 🐞 bump react-native
+
 ## v0.3.2
 
 * 🐞 print time in human readable form

@@ -1,3 +1,9 @@
+## v0.11.0
+
+* 💥 update react-native v0.60
+* 🐞 bump react-native
+* ♻️ update dependencies: `@rebox/android`, `@rebox/ios`
+
 ## v0.10.2
 
 * 🐞 fix missed dependency
