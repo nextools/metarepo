@@ -6,7 +6,7 @@ export const config: TComponentConfig<TInput> = {
     isDisabled: [true],
     color: ['#ff0000'],
     fontSize: [24],
-    fontFamily: ['serif'],
+    fontFamily: ['Arial'],
     fontWeight: [700],
     lineHeight: [24],
     letterSpacing: [5],

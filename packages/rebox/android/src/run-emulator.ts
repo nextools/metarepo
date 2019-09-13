@@ -6,8 +6,8 @@ import { isString } from 'tsfn'
 import makeDir from 'make-dir'
 
 export type TRunEmulator = {
-  isHeadless: boolean,
   portsToForward: number[],
+  isHeadless?: boolean,
 }
 
 export const runEmulator = async (options: TRunEmulator): Promise<() => void> => {

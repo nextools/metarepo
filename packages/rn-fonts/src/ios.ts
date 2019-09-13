@@ -26,6 +26,18 @@ export const addFontsIos = async (projectPath: string, fontsPath: string) => {
   const projectTargetUuid = project.getFirstTarget().uuid
   const plistData = await pReadFile(plistPath, 'utf8')
   const plist = plistParser.parse(plistData) as PlistValue & { UIAppFonts?: string[] }
+  const firstProject = project.getFirstProject().firstProject
+  const mainGroup = project.getPBXGroupByKey(firstProject.mainGroup)
+  const group = mainGroup.children.find((group: any) => group.comment === 'Resources')
+
+  if (!group) {
+    const uuid = project.pbxCreateGroup('Resources', '""')
+
+    mainGroup.children.push({
+      value: uuid,
+      comment: 'Resources',
+    })
+  }
 
   plist.UIAppFonts = plist.UIAppFonts || []
 

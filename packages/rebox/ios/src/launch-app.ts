@@ -13,7 +13,7 @@ export const launchApp = async (options: TLaunchAppOptions): Promise<void> => {
       'simctl',
       'launch',
       isUndefined(options.deviceId) ? 'booted' : options.deviceId,
-      'org.bubble-dev.xray',
+      options.appId,
     ]
   )
 }

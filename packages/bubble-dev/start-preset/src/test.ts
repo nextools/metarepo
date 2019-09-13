@@ -1,5 +1,3 @@
-import path from 'path'
-import plugin from '@start/plugin'
 import sequence from '@start/plugin-sequence'
 import find from '@start/plugin-find'
 import remove from '@start/plugin-remove'
@@ -109,114 +107,19 @@ export const CheckFirefoxScreenshots = (fontsDir?: string) => (component = '**')
     fontsDir
   )
 
-export const buildXRayIos = (outputPath: string, fontsDir?: string) =>
-  plugin('buildXRayIos', ({ logMessage }) => async () => {
-    const { copyTemplate, buildDebug } = await import('@rebox/ios')
-    const { linkDependencyIos } = await import('rn-link')
-    const { isString } = await import('tsfn')
-
-    const projectPath = await copyTemplate('X-Ray')
-
-    logMessage(`rebox copy: ${projectPath}`)
-
-    linkDependencyIos({
-      projectPath,
-      dependencyPath: 'node_modules/react-native-view-shot/ios',
-    })
-
-    logMessage('dependencies are linked')
-
-    if (isString(fontsDir)) {
-      const { addFontsIos } = await import('rn-fonts')
-
-      await addFontsIos(projectPath, fontsDir)
-
-      logMessage('fonts are linked')
-    }
-
-    await buildDebug({
-      projectPath,
-      outputPath,
-      osVersion: '12.2',
-      platformName: 'iOS Simulator',
-      appName: 'X-Ray',
-      appId: 'org.bubble-dev.xray',
-    })
-  })
-
-export const buildXRayAndroid = (outputPath: string, fontsDir?: string) =>
-  plugin('buildXRayAndroid', ({ logMessage }) => async () => {
-    const { buildDebug, copyTemplate } = await import('@rebox/android')
-    const { linkDependencyAndroid } = await import('rn-link')
-    const { isString } = await import('tsfn')
-
-    const projectPath = await copyTemplate('X-Ray')
-
-    logMessage(`rebox copy: ${projectPath}`)
-
-    linkDependencyAndroid({
-      projectPath,
-      dependencyName: 'react-native-view-shot',
-      dependencyPath: 'node_modules/react-native-view-shot',
-    })
-
-    logMessage('dependencies are linked')
-
-    if (isString(fontsDir)) {
-      const { addFontsAndroid } = await import('rn-fonts')
-
-      await addFontsAndroid(projectPath, fontsDir)
-
-      logMessage('fonts are linked')
-    }
-
-    await buildDebug({
-      projectPath,
-      outputPath,
-      appName: 'X-Ray',
-      appId: 'org.bubble_dev.xray',
-    })
-  })
-
-export const CheckIosScreenshots = (appDir: string, fontsDir?: string) => (component = '**') => {
-  const appPath = path.join(appDir, 'X-Ray.app')
-
+export const CheckIosScreenshots = (fontsDir?: string) => (component = '**') => {
   return sequence(
     find(`packages/${component}/x-ray/screenshots.tsx`),
     env({ NODE_ENV: 'production' }),
-    plugin('buildXray', ({ reporter }) => async () => {
-      const { access } = await import('pifs')
-
-      try {
-        await access(appPath)
-      } catch {
-        const plugin = await buildXRayIos(appDir, fontsDir)
-
-        return plugin(reporter)()
-      }
-    }),
-    xRayIosScreenshots(appPath)
+    xRayIosScreenshots(fontsDir)
   )
 }
 
-export const CheckAndroidScreenshots = (appDir: string, fontsDir?: string) => (component = '**') => {
-  const appPath = path.join(appDir, 'X-Ray.apk')
-
+export const CheckAndroidScreenshots = (fontsDir?: string) => (component = '**') => {
   return sequence(
     find(`packages/${component}/x-ray/screenshots.tsx`),
     env({ NODE_ENV: 'production' }),
-    plugin('buildXray', ({ reporter }) => async () => {
-      const { access } = await import('pifs')
-
-      try {
-        await access(appPath)
-      } catch {
-        const plugin = await buildXRayAndroid(appDir, fontsDir)
-
-        return plugin(reporter)()
-      }
-    }),
-    xRayAndroidScreenshots(appPath)
+    xRayAndroidScreenshots(fontsDir)
   )
 }
 

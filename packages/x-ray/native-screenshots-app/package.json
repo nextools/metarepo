@@ -11,15 +11,15 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "react-native-view-shot": "bubble-dev/react-native-view-shot#0.1.1"
+    "react-native-view-shot": "^3.0.2"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
     "react": "^16.8.0",
-    "react-native": "^0.59.0"
+    "react-native": "^0.60.5"
   },
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-native": "^0.59.0"
+    "react-native": "^0.60.5"
   }
 }

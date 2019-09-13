@@ -12,7 +12,6 @@ export const installApp = async (options: TInstallAppOptions): Promise<void> => 
     [
       ...(isUndefined(options.deviceId) ? [] : ['-s', options.deviceId]),
       'install',
-      '-r',
       options.appPath,
     ],
     {

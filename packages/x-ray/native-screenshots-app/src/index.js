@@ -112,7 +112,11 @@ class Main extends Component {
           options={{ result: 'base64' }}
           key={`${fileIndex}:${item.id}`}
           style={{
-            padding: item.options.negativeOverflow,
+            padding: item.options.overflow,
+            paddingTop: item.options.overflowTop,
+            paddingBottom: item.options.overflowBottom,
+            paddingLeft: item.options.overflowLeft,
+            paddingRight: item.options.overflowRight,
             maxWidth: item.options.maxWidth,
             backgroundColor: item.options.backgroundColor || '#fff',
           }}
