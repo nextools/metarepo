@@ -1,0 +1,44 @@
+platform :ios, '9.0'
+
+target 'rebox' do
+  # Pods for rebox
+  pod 'React', :path => '../../../react-native/'
+  pod 'React-Core', :path => '../../../react-native/React'
+  pod 'React-DevSupport', :path => '../../../react-native/React'
+  pod 'React-RCTActionSheet', :path => '../../../react-native/Libraries/ActionSheetIOS'
+  pod 'React-RCTAnimation', :path => '../../../react-native/Libraries/NativeAnimation'
+  pod 'React-RCTBlob', :path => '../../../react-native/Libraries/Blob'
+  pod 'React-RCTImage', :path => '../../../react-native/Libraries/Image'
+  pod 'React-RCTLinking', :path => '../../../react-native/Libraries/LinkingIOS'
+  pod 'React-RCTNetwork', :path => '../../../react-native/Libraries/Network'
+  pod 'React-RCTSettings', :path => '../../../react-native/Libraries/Settings'
+  pod 'React-RCTText', :path => '../../../react-native/Libraries/Text'
+  pod 'React-RCTVibration', :path => '../../../react-native/Libraries/Vibration'
+  pod 'React-RCTWebSocket', :path => '../../../react-native/Libraries/WebSocket'
+
+  pod 'React-cxxreact', :path => '../../../react-native/ReactCommon/cxxreact'
+  pod 'React-jsi', :path => '../../../react-native/ReactCommon/jsi'
+  pod 'React-jsiexecutor', :path => '../../../react-native/ReactCommon/jsiexecutor'
+  pod 'React-jsinspector', :path => '../../../react-native/ReactCommon/jsinspector'
+  pod 'yoga', :path => '../../../react-native/ReactCommon/yoga'
+
+  pod 'DoubleConversion', :podspec => '../../../react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../../../react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../../../react-native/third-party-podspecs/Folly.podspec'
+  # REBOX
+
+  target 'reboxTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+end
+
+target 'rebox-tvOS' do
+  # Pods for rebox-tvOS
+
+  target 'rebox-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

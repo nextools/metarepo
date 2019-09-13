@@ -3,31 +3,47 @@ import os from 'os'
 import { promisify } from 'util'
 import execa from 'execa'
 import { isUndefined } from 'tsfn'
-import cpy from 'cpy'
 import makeDir from 'make-dir'
-import { readdir } from 'graceful-fs'
+import { readdir } from 'pifs'
+import fastGlob from 'fast-glob'
+import copie from 'copie'
 // @ts-ignore
 import simplePlist from 'simple-plist'
+import dleet from 'dleet'
+import { getAppPath } from './get-app-path'
 
-const pReadDir = promisify(readdir)
 const pPlistRead = promisify(simplePlist.readFile)
 const pPlistWrite = promisify(simplePlist.writeFile)
 
 export type TBuildDebugOptions = {
   projectPath: string,
-  osVersion: string,
+  iOSVersion: string,
   platformName: string,
   appName: string,
   appId: string,
-  outputPath: string,
 }
 
 export const buildDebug = async (options: TBuildDebugOptions) => {
+  // TODO: https://stackoverflow.com/a/48889760
+  const derivedDataPath = path.join(os.homedir(), 'Library', 'Developer', 'Xcode', 'DerivedData')
+  let derivedDataFiles = await readdir(derivedDataPath)
+
+  for (const dataFile of derivedDataFiles) {
+    if (dataFile.startsWith('rebox-')) {
+      await dleet(dataFile)
+    }
+  }
+
+  await execa('pod', ['install', '--silent'], {
+    cwd: options.projectPath,
+    stderr: process.stderr,
+  })
+
   await execa(
     'xcodebuild',
     [
-      '-project',
-      path.join(options.projectPath, 'rebox.xcodeproj'),
+      '-workspace',
+      path.join(options.projectPath, 'rebox.xcworkspace'),
       '-scheme',
       'rebox',
       '-configuration',
@@ -35,7 +51,7 @@ export const buildDebug = async (options: TBuildDebugOptions) => {
       'CODE_SIGN_IDENTITY=""',
       'CODE_SIGNING_ALLOWED="NO"',
       '-destination',
-      `generic/platform=${options.platformName},OS=${options.osVersion}`,
+      `generic/platform=${options.platformName},OS=${options.iOSVersion}`,
       'clean',
       'build',
     ],
@@ -43,13 +59,12 @@ export const buildDebug = async (options: TBuildDebugOptions) => {
       stderr: process.stderr,
       env: {
         FORCE_COLOR: '1',
+        RCT_METRO_PORT: '8082',
       },
     }
   )
 
-  // TODO: https://stackoverflow.com/a/48889760
-  const derivedDataPath = path.join(os.homedir(), 'Library', 'Developer', 'Xcode', 'DerivedData')
-  const derivedDataFiles = await pReadDir(derivedDataPath)
+  derivedDataFiles = await readdir(derivedDataPath)
   const derivedBuildPath = derivedDataFiles.find((file) => file.startsWith('rebox-'))
 
   if (isUndefined(derivedBuildPath)) {
@@ -57,7 +72,7 @@ export const buildDebug = async (options: TBuildDebugOptions) => {
   }
 
   const productsPath = path.join(derivedDataPath, derivedBuildPath, 'Build', 'Products')
-  const productsFiles = await pReadDir(productsPath)
+  const productsFiles = await readdir(productsPath)
   const productReleaseName = productsFiles.find((file) => file.startsWith('Debug-'))
 
   if (isUndefined(productReleaseName)) {
@@ -65,10 +80,22 @@ export const buildDebug = async (options: TBuildDebugOptions) => {
   }
 
   const originalAppPath = path.join(productsPath, productReleaseName, 'rebox.app')
-  const newAppPath = path.join(options.outputPath, `${options.appName}.app`)
+  const newAppPath = getAppPath(options.appName)
 
-  await makeDir(newAppPath)
-  await cpy(`${originalAppPath}/**/*`, newAppPath)
+  const files = await fastGlob(`${originalAppPath}/**/*`, {
+    ignore: ['node_modules/**'],
+    deep: Infinity,
+    onlyFiles: true,
+    absolute: true,
+  })
+
+  for (const file of files) {
+    const outFile = path.join(newAppPath, path.relative(originalAppPath, file))
+    const outDir = path.dirname(outFile)
+
+    await makeDir(outDir)
+    await copie(file, outFile)
+  }
 
   const plistPath = path.join(newAppPath, 'Info.plist')
   const plist = await pPlistRead(plistPath)

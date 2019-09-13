@@ -13,7 +13,7 @@ type TDeviceList = {
 export type TRunSimulatorOptions = {
   iPhoneVersion: number,
   iOSVersion: string,
-  isHeadless: boolean,
+  isHeadless?: boolean,
 }
 
 export const runSimulator = async (options: TRunSimulatorOptions): Promise<() => void> => {
