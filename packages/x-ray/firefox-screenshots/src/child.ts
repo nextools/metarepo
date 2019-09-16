@@ -24,18 +24,22 @@ export default async (options: TOptions) => {
     })
 
     const page = await browser.newPage()
+    const filenames: string[] = []
 
     await new Promise((resolve, reject) => {
       process.on('message', async (action: TCheckRequest) => {
         try {
           switch (action.type) {
             case 'FILE': {
-              const { default: items } = await import(action.path) as { default: TMeta[] }
+              const { default: items } = await import(action.path) as { default: Iterable<TMeta> }
               const screenshotsDir = path.join(path.dirname(action.path), '__tar__')
               const tar = await TarFs(path.join(screenshotsDir, 'firefox-screenshots.tar'))
 
               for (const item of items) {
                 const screenshot = await getScreenshot(page, item)
+
+                filenames.push(item.id)
+
                 const message = await checkScreenshot(screenshot, tar, item.id)
 
                 if (shouldBailout) {
@@ -80,7 +84,7 @@ export default async (options: TOptions) => {
               }
 
               for (const filename of tar.list()) {
-                if (!items.find((metaItem) => metaItem.id === filename)) {
+                if (!filenames.includes(filename)) {
                   const { data, meta } = await tar.read(filename) as TTarDataWithMeta
                   const { width, height } = upng.decode(data)
 
