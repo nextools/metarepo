@@ -117,6 +117,7 @@ export type TScreenshotsItemResult =
   {
     type: 'BAILOUT',
     id: string,
+    path: string,
   } | {
     type: 'INIT',
   }

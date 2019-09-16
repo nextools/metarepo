@@ -112,7 +112,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
                   res.writeHead(500)
                   res.end()
 
-                  return server.close(() => screenshotsReject(null)) // eslint-disable-line
+                  return server.close(() => screenshotsReject(`${path.relative(process.cwd(), filePath)}:${id}`))
                 }
 
                 // switch
