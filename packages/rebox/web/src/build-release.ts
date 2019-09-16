@@ -115,8 +115,10 @@ export const buildRelease = (options: TBuildJsBundleOptions) => {
       minimize: false,
       minimizer: [
         new TerserPlugin({
+          cache: true,
           parallel: true,
           sourceMap: true,
+          extractComments: true,
           terserOptions: {
             ecma: 8,
             output: {
