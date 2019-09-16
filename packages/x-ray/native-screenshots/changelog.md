@@ -1,3 +1,7 @@
+## v0.3.4
+
+* 🐞 report path on bailout
+
 ## v0.3.3
 
 * 🐞 bump react-native

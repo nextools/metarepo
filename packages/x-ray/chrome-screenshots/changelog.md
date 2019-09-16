@@ -1,3 +1,7 @@
+## v0.3.2
+
+* 🐞 report path on bailout
+
 ## v0.3.1
 
 * 🐞 use `getContainerStyle`

@@ -1,3 +1,7 @@
+## v0.2.3
+
+* 🐞 report path on bailout
+
 ## v0.2.2
 
 * 🐞 print time in human readable form

@@ -1,3 +1,8 @@
+## v0.3.2
+
+* 🐞 report path on bailout
+* 🐞 fix screenshot filenames
+
 ## v0.3.1
 
 * 🐞 use `getContainerStyle`
