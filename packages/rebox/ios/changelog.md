@@ -1,3 +1,7 @@
+## v0.6.1
+
+* 🐞 fix `DerivedData` path
+
 ## v0.6.0
 
 * 💥 update react-native v0.60
