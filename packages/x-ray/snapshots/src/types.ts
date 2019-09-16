@@ -61,6 +61,7 @@ export type TSnapshotsItemResult =
   {
     type: 'BAILOUT',
     id: string,
+    path: string,
   } |
   {
     type: 'INIT',
