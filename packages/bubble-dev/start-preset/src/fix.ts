@@ -10,7 +10,8 @@ import { TPackageJson } from 'fixdeps'
 export const fixLint = () =>
   sequence(
     find([
-      'packages/**/{src,test,x-ray}/**/*.{ts,tsx}',
+      'packages/*/{src,test,x-ray}/**/*.{ts,tsx}',
+      'packages/*/*/{src,test,x-ray}/**/*.{ts,tsx}',
       'tasks/**/*.ts',
     ]),
     read,
