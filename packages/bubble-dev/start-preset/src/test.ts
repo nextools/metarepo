@@ -126,7 +126,8 @@ export const CheckAndroidScreenshots = (fontsDir?: string) => (component = '**')
 export const lint = () =>
   sequence(
     find([
-      'packages/**/{src,test,x-ray}/**/*.{ts,tsx}',
+      'packages/*/{src,test,x-ray}/**/*.{ts,tsx}',
+      'packages/*/*/{src,test,x-ray}/**/*.{ts,tsx}',
       'tasks/**/*.ts',
     ]),
     read,
