@@ -1,3 +1,7 @@
+## v0.11.2
+
+* 🐞 fix globs for `lint` and `fix` tasks
+
 ## v0.11.1
 
 * 🐞 log progress from `rebox`
