@@ -1,3 +1,7 @@
+## v0.11.1
+
+* 🐞 log progress from `rebox`
+
 ## v0.11.0
 
 * 💥 update react-native v0.60

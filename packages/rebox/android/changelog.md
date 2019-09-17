@@ -1,3 +1,8 @@
+## v0.6.1
+
+* 🐞 log progress from `rebox`
+* 🐞 eager bundle
+
 ## v0.6.0
 
 * 💥 update react-native v0.60

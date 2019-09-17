@@ -1,3 +1,8 @@
+## v0.6.2
+
+* 🐞 log progress from `rebox`
+* 🐞 eager bundle
+
 ## v0.6.1
 
 * 🐞 fix `DerivedData` path
