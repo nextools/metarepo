@@ -1,6 +1,6 @@
 import path from 'path'
 import { access } from 'pifs'
-import { isArray, isString } from 'tsfn'
+import { isArray, isString, isFunction } from 'tsfn'
 import { addFontsIos } from 'rn-fonts'
 import { serveJsBundle } from './serve-js-bundle'
 import { buildDebug } from './build-debug'
@@ -21,15 +21,25 @@ export type TRunIosOptions = {
   fontsDir?: string,
   dependencyNames?: string[],
   isHeadless?: boolean,
+  logMessage?: (msg: string) => void,
 }
 
-export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir, dependencyNames, isHeadless }: TRunIosOptions) => {
+export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir, dependencyNames, logMessage, isHeadless }: TRunIosOptions) => {
   const projectPath = getProjectPath(appName)
+  const log = (message: string) => {
+    if (isFunction(logMessage)) {
+      logMessage(message)
+    }
+  }
 
   try {
     await access(projectPath)
+
+    log('copying template, installing dependencies and adding fonts have been skipped')
   } catch {
     await copyTemplate(projectPath)
+
+    log('template has been copied')
 
     if (isArray(dependencyNames)) {
       for (const dependencyName of dependencyNames) {
@@ -38,10 +48,14 @@ export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir
           dependencyName,
         })
       }
+
+      log('dependencies have been installed')
     }
 
     if (isString(fontsDir)) {
       await addFontsIos(projectPath, fontsDir)
+
+      log('fonts have been added')
     }
   }
 
@@ -49,6 +63,8 @@ export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir
 
   try {
     await access(appPath)
+
+    log('app build has been skipped')
   } catch {
     await buildDebug({
       projectPath,
@@ -57,6 +73,8 @@ export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir
       appName,
       appId,
     })
+
+    log('app has been built')
   }
 
   const killSimulator = await runSimulator({
@@ -65,7 +83,11 @@ export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir
     isHeadless,
   })
 
+  log('simulator has been launched')
+
   await installApp({ appPath })
+
+  log('app has been installed')
 
   const killServer = await serveJsBundle({
     entryPointPath,
@@ -73,7 +95,11 @@ export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir
     platform: 'ios',
   })
 
+  log('bundle has been served')
+
   await launchApp({ appId })
+
+  log('app has been launched')
 
   return () => {
     killServer()

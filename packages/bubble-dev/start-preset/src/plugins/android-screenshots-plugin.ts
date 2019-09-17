@@ -1,6 +1,6 @@
 import plugin, { StartFilesProps } from '@start/plugin'
 
-export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray-android-screenshots', ({ logMessage }) => async ({ files }) => {
+export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ logMessage }) => async ({ files }) => {
   if (files.length === 0) {
     return logMessage('no files, skipping')
   }
@@ -33,6 +33,7 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray-andro
       ],
       portsToForward: [3002],
       isHeadless: true,
+      logMessage,
     })
 
     const { result, resultData, hasBeenChanged } = await runScreenshots()

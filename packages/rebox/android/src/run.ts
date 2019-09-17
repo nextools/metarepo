@@ -1,6 +1,6 @@
 import path from 'path'
 import { access } from 'pifs'
-import { isArray, isString } from 'tsfn'
+import { isArray, isString, isFunction } from 'tsfn'
 import { addFontsAndroid } from 'rn-fonts'
 import { runEmulator } from './run-emulator'
 import { serveJsBundle } from './serve-js-bundle'
@@ -22,15 +22,25 @@ export type TOptions = {
   fontsDir?: string,
   dependencyNames?: string[],
   isHeadless?: boolean,
+  logMessage?: (msg: string) => void,
 }
 
-export const run = async ({ appId, appName, entryPointPath, portsToForward, fontsDir, dependencyNames, isHeadless }: TOptions) => {
+export const run = async ({ appId, appName, entryPointPath, portsToForward, fontsDir, dependencyNames, logMessage, isHeadless }: TOptions) => {
   const projectPath = getProjectPath(appName)
+  const log = (message: string) => {
+    if (isFunction(logMessage)) {
+      logMessage(message)
+    }
+  }
 
   try {
     await access(projectPath)
+
+    log('copying template, installing dependencies and adding fonts have been skipped')
   } catch {
     await copyTemplate(projectPath)
+
+    log('template has been copied')
 
     if (isArray(dependencyNames)) {
       for (const dependencyName of dependencyNames) {
@@ -41,8 +51,12 @@ export const run = async ({ appId, appName, entryPointPath, portsToForward, font
       }
     }
 
+    log('dependencies have been installed')
+
     if (isString(fontsDir)) {
       await addFontsAndroid(projectPath, fontsDir)
+
+      log('fonts have been added')
     }
   }
 
@@ -50,12 +64,16 @@ export const run = async ({ appId, appName, entryPointPath, portsToForward, font
 
   try {
     await access(appPath)
+
+    log('app build has been skipped')
   } catch {
     await buildDebug({
       projectPath,
       appName,
       appId,
     })
+
+    log('app has been built')
   }
 
   const killEmulator = await runEmulator({
@@ -63,8 +81,12 @@ export const run = async ({ appId, appName, entryPointPath, portsToForward, font
     portsToForward: [PORT, ...portsToForward],
   })
 
+  log('emulator has been launched')
+
   await uninstallApp({ appId })
   await installApp({ appPath })
+
+  log('app has been installed')
 
   const killServer = await serveJsBundle({
     entryPointPath,
@@ -72,7 +94,11 @@ export const run = async ({ appId, appName, entryPointPath, portsToForward, font
     platform: 'android',
   })
 
+  log('bundle has been served')
+
   await launchApp({ appId })
+
+  log('app has been launched')
 
   return () => {
     killServer()
