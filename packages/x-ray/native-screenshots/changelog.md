@@ -1,3 +1,7 @@
+## v0.3.6
+
+* 🐞 fix total time calculation
+
 ## v0.3.5
 
 * 🐞 add path log
