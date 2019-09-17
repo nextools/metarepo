@@ -1,4 +1,3 @@
-import path from 'path'
 import { access } from 'pifs'
 import { isArray, isString, isFunction } from 'tsfn'
 import { addFontsIos } from 'rn-fonts'
@@ -10,6 +9,7 @@ import { launchApp } from './launch-app'
 import { getProjectPath } from './get-project-path'
 import { copyTemplate } from './copy-template'
 import { linkDependency } from './link-dependency'
+import { getAppPath } from './get-app-path'
 
 const PORT = 8081
 
@@ -26,6 +26,7 @@ export type TRunIosOptions = {
 
 export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir, dependencyNames, logMessage, isHeadless }: TRunIosOptions) => {
   const projectPath = getProjectPath(appName)
+  const appPath = getAppPath(appName)
   const log = (message: string) => {
     if (isFunction(logMessage)) {
       logMessage(message)
@@ -33,39 +34,37 @@ export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir
   }
 
   try {
-    await access(projectPath)
-
-    log('copying template, installing dependencies and adding fonts have been skipped')
-  } catch {
-    await copyTemplate(projectPath)
-
-    log('template has been copied')
-
-    if (isArray(dependencyNames)) {
-      for (const dependencyName of dependencyNames) {
-        await linkDependency({
-          projectPath,
-          dependencyName,
-        })
-      }
-
-      log('dependencies have been installed')
-    }
-
-    if (isString(fontsDir)) {
-      await addFontsIos(projectPath, fontsDir)
-
-      log('fonts have been added')
-    }
-  }
-
-  const appPath = path.join(projectPath, `${appName}.app`)
-
-  try {
     await access(appPath)
 
     log('app build has been skipped')
   } catch {
+    try {
+      await access(projectPath)
+
+      log('copying template, installing dependencies and adding fonts have been skipped')
+    } catch {
+      await copyTemplate(projectPath)
+
+      log('template has been copied')
+
+      if (isArray(dependencyNames)) {
+        for (const dependencyName of dependencyNames) {
+          await linkDependency({
+            projectPath,
+            dependencyName,
+          })
+        }
+
+        log('dependencies have been installed')
+      }
+
+      if (isString(fontsDir)) {
+        await addFontsIos(projectPath, fontsDir)
+
+        log('fonts have been added')
+      }
+    }
+
     await buildDebug({
       projectPath,
       iOSVersion,

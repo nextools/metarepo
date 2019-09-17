@@ -1,3 +1,3 @@
 import path from 'path'
 
-export const getAppPath = (appName: string) => path.join('node_modules', '.rebox', appName, 'ios', `${appName}.app`)
+export const getAppPath = (appName: string) => path.join('.rebox', `${appName}.app`)
