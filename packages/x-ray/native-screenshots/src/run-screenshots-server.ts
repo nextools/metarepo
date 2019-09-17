@@ -3,7 +3,7 @@ import http from 'http'
 import upng from 'upng-js'
 import { checkScreenshot, TScreenshotsResultData, TScreenshotsFileResultData, TRunScreesnotsResult, TScreenshotsResult, TScreenshotsFileResult } from '@x-ray/screenshot-utils'
 import { TarFs, TTarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
-import { isUndefined, isString } from 'tsfn'
+import { isUndefined, isString, isNumber } from 'tsfn'
 import { TLineElement } from 'syntx'
 import prettyMs from 'pretty-ms'
 import { TOptions } from './types'
@@ -19,7 +19,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
     let currentTar: TTarFs
     let currentFilePath: string
     let hasBeenChanged = false
-    const startTime = Date.now()
+    let startTime: number | null = null
     let okCount = 0
     let newCount = 0
     let deletedCount = 0
@@ -194,7 +194,10 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
             console.log(`new: ${newCount}`)
             console.log(`deleted: ${deletedCount}`)
             console.log(`diff: ${diffCount}`)
-            console.log(`done in ${prettyMs(Date.now() - startTime)}`)
+
+            if (isNumber(startTime)) {
+              console.log(`done in ${prettyMs(Date.now() - startTime)}`)
+            }
 
             server.close(() => screenshotsResolve({
               result,
@@ -205,7 +208,11 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
         }
       })
       .listen(3002, '127.0.0.1', () => {
-        serverResolve(() => screenshotsPromise)
+        serverResolve(() => {
+          startTime = Date.now()
+
+          return screenshotsPromise
+        })
       })
   })
 })
