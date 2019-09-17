@@ -64,6 +64,8 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
         result[relativePath] = targetResult
         resultData[relativePath] = targetResultData
 
+        console.log(relativePath)
+
         filenames = []
         targetResult = {
           old: {},

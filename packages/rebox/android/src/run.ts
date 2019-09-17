@@ -1,4 +1,3 @@
-import path from 'path'
 import { access } from 'pifs'
 import { isArray, isString, isFunction } from 'tsfn'
 import { addFontsAndroid } from 'rn-fonts'
@@ -11,6 +10,7 @@ import { uninstallApp } from './uninstall-app'
 import { getProjectPath } from './get-project-path'
 import { copyTemplate } from './copy-template'
 import { linkDependency } from './link-dependency'
+import { getAppPath } from './get-app-path'
 
 const PORT = 8082
 
@@ -27,6 +27,7 @@ export type TOptions = {
 
 export const run = async ({ appId, appName, entryPointPath, portsToForward, fontsDir, dependencyNames, logMessage, isHeadless }: TOptions) => {
   const projectPath = getProjectPath(appName)
+  const appPath = getAppPath(appName)
   const log = (message: string) => {
     if (isFunction(logMessage)) {
       logMessage(message)
@@ -34,39 +35,37 @@ export const run = async ({ appId, appName, entryPointPath, portsToForward, font
   }
 
   try {
-    await access(projectPath)
-
-    log('copying template, installing dependencies and adding fonts have been skipped')
-  } catch {
-    await copyTemplate(projectPath)
-
-    log('template has been copied')
-
-    if (isArray(dependencyNames)) {
-      for (const dependencyName of dependencyNames) {
-        await linkDependency({
-          projectPath,
-          dependencyName,
-        })
-      }
-    }
-
-    log('dependencies have been installed')
-
-    if (isString(fontsDir)) {
-      await addFontsAndroid(projectPath, fontsDir)
-
-      log('fonts have been added')
-    }
-  }
-
-  const appPath = path.join(projectPath, `${appName}.apk`)
-
-  try {
     await access(appPath)
 
     log('app build has been skipped')
   } catch {
+    try {
+      await access(projectPath)
+
+      log('copying template, installing dependencies and adding fonts have been skipped')
+    } catch {
+      await copyTemplate(projectPath)
+
+      log('template has been copied')
+
+      if (isArray(dependencyNames)) {
+        for (const dependencyName of dependencyNames) {
+          await linkDependency({
+            projectPath,
+            dependencyName,
+          })
+        }
+      }
+
+      log('dependencies have been installed')
+
+      if (isString(fontsDir)) {
+        await addFontsAndroid(projectPath, fontsDir)
+
+        log('fonts have been added')
+      }
+    }
+
     await buildDebug({
       projectPath,
       appName,
