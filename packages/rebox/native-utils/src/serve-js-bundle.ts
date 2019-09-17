@@ -3,41 +3,54 @@ import { isUndefined } from 'tsfn'
 // @ts-ignore
 import isPortReachable from 'is-port-reachable'
 import { waitTimePromise } from '@psxcode/wait'
+import request from 'request-promise-native'
+
+const REQUEST_TIMEOUT = 2 * 60 * 1000
 
 export type TServeJsBundleOptions = {
   entryPointPath: string,
   port: number,
+  platform: 'ios' | 'android',
   isDev?: boolean,
   shouldMinify?: boolean,
 }
 
-export const serveJsBundle = async (options: TServeJsBundleOptions) => {
+export const serveJsBundle = async ({ port, entryPointPath, platform, isDev, shouldMinify }: TServeJsBundleOptions) => {
+  const isDevString = isUndefined(isDev) ? 'true' : String(isDev)
+  const shouldMinifyString = isUndefined(shouldMinify) ? 'false' : String(shouldMinify)
+
   const proc = execa(
     'haul',
     [
       'start',
       '--port',
-      String(options.port),
+      String(port),
       '--dev',
-      isUndefined(options.isDev) ? 'true' : String(options.isDev),
+      isDevString,
       '--minify',
-      isUndefined(options.shouldMinify) ? 'false' : String(options.shouldMinify),
+      shouldMinifyString,
       '--interactive',
       'false',
+      '--eager',
+      platform,
       '--config',
       require.resolve('./haul.config.js'),
     ],
     {
       env: {
         FORCE_COLOR: '1',
-        REBOX_ENTRY_POINT: options.entryPointPath,
+        REBOX_ENTRY_POINT: entryPointPath,
       },
     }
   )
 
-  while (!(await isPortReachable(options.port))) {
+  while (!(await isPortReachable(port))) {
     await waitTimePromise(200)
   }
+
+  await request(`http://localhost:${port}/index.bundle?platform=${platform}&dev=${isDevString}&minify=${shouldMinifyString}`, {
+    timeout: REQUEST_TIMEOUT,
+  })
 
   return () => proc.kill()
 }

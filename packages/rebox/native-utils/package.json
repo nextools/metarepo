@@ -24,9 +24,12 @@
     "make-dir": "^3.0.0",
     "metro-react-native-babel-preset": "0.56.0",
     "react-dom": "^16.8.6",
+    "request-promise-native": "^1.0.5",
+    "request": "^2.87.0",
     "tsfn": "^0.2.0"
   },
   "devDependencies": {
+    "@types/request-promise-native": "^1.0.15",
     "react": "^16.8.0",
     "react-native": "0.60.5",
     "react-native-svg": "^9.9.3"

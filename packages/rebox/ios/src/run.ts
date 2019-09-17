@@ -45,11 +45,6 @@ export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir
     }
   }
 
-  const killServer = await serveJsBundle({
-    entryPointPath,
-    port: PORT,
-  })
-
   const appPath = path.join(projectPath, `${appName}.app`)
 
   try {
@@ -71,6 +66,12 @@ export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir
   })
 
   await installApp({ appPath })
+
+  const killServer = await serveJsBundle({
+    entryPointPath,
+    port: PORT,
+    platform: 'ios',
+  })
 
   await launchApp({ appId })
 

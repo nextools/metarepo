@@ -46,11 +46,6 @@ export const run = async ({ appId, appName, entryPointPath, portsToForward, font
     }
   }
 
-  const killServer = await serveJsBundle({
-    entryPointPath,
-    port: PORT,
-  })
-
   const appPath = path.join(projectPath, `${appName}.apk`)
 
   try {
@@ -70,6 +65,12 @@ export const run = async ({ appId, appName, entryPointPath, portsToForward, font
 
   await uninstallApp({ appId })
   await installApp({ appPath })
+
+  const killServer = await serveJsBundle({
+    entryPointPath,
+    port: PORT,
+    platform: 'android',
+  })
 
   await launchApp({ appId })
 
