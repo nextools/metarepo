@@ -1,3 +1,7 @@
+## v0.3.5
+
+* 🐞 add path log
+
 ## v0.3.4
 
 * 🐞 report path on bailout

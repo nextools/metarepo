@@ -1,3 +1,7 @@
+## v0.6.2
+
+* 🐞 change app path to `.rebox`
+
 ## v0.6.1
 
 * 🐞 log progress from `rebox`
