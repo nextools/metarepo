@@ -1,3 +1,7 @@
+## v0.1.3
+
+* 🐞 handle `SizeContext`
+
 ## v0.1.2
 
 * 🐞 bump react-native

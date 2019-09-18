@@ -1,3 +1,7 @@
+## v0.3.7
+
+* 🐞 add missing try-catch block
+
 ## v0.3.6
 
 * 🐞 fix total time calculation

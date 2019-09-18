@@ -1,3 +1,7 @@
+## v0.4.2
+
+* 🐞 add `onUpdate`
+
 ## v0.4.1
 
 * 🐞 add `mapStateRef`

@@ -1,3 +1,7 @@
+## v0.2.4
+
+* 🐞 add `shouldWaitForResize` flag to `TMeta`
+
 ## v0.2.3
 
 * 🐞 report path on bailout
