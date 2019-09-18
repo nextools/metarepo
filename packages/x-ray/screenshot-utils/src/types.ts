@@ -15,6 +15,7 @@ export type TMeta = {
     overflowRight?: number,
     backgroundColor?: string,
     maxWidth?: number,
+    shouldWaitForResize?: boolean,
   },
 }
 
