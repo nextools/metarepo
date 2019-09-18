@@ -89,79 +89,83 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
                 body += chunk
               })
               .on('end', async () => {
-                const { data, path: filePath, id, serializedElement } = JSON.parse(body)
-                const screenshotsDir = path.join(path.dirname(filePath), '__tar__')
-                const screenshotsTarPath = path.join(screenshotsDir, `${options.platform}-screenshots.tar`)
-                const screenshot = Buffer.from(data, 'base64')
+                try {
+                  const { data, path: filePath, id, serializedElement } = JSON.parse(body)
+                  const screenshotsDir = path.join(path.dirname(filePath), '__tar__')
+                  const screenshotsTarPath = path.join(screenshotsDir, `${options.platform}-screenshots.tar`)
+                  const screenshot = Buffer.from(data, 'base64')
 
-                if (currentFilePath !== filePath) {
-                  await onFileDone(currentTar, currentFilePath)
+                  if (currentFilePath !== filePath) {
+                    await onFileDone(currentTar, currentFilePath)
 
-                  currentFilePath = filePath
+                    currentFilePath = filePath
 
-                  if (!isUndefined(currentTar)) {
-                    await currentTar.close()
+                    if (!isUndefined(currentTar)) {
+                      await currentTar.close()
+                    }
+
+                    currentTar = await TarFs(screenshotsTarPath)
                   }
 
-                  currentTar = await TarFs(screenshotsTarPath)
-                }
+                  filenames.push(id)
 
-                filenames.push(id)
+                  const action = await checkScreenshot(screenshot, currentTar, id)
 
-                const action = await checkScreenshot(screenshot, currentTar, id)
+                  if (shouldBailout && (action.type === 'DIFF' || action.type === 'NEW')) {
+                    throw new Error(`${path.relative(process.cwd(), filePath)}:${id}`)
+                  }
 
-                if (shouldBailout && (action.type === 'DIFF' || action.type === 'NEW')) {
+                  // switch
+                  switch (action.type) {
+                    case 'OK': {
+                      okCount++
+
+                      break
+                    }
+                    case 'DIFF': {
+                      targetResult.old[id] = {
+                        serializedElement,
+                        width: dpr(action.old.width),
+                        height: dpr(action.old.height),
+                      }
+                      targetResult.new[id] = {
+                        serializedElement,
+                        width: dpr(action.new.width),
+                        height: dpr(action.new.height),
+                      }
+                      targetResultData.old[id] = action.old.data
+                      targetResultData.new[id] = action.new.data
+
+                      hasBeenChanged = true
+
+                      diffCount++
+
+                      break
+                    }
+                    case 'NEW': {
+                      targetResult.new[id] = {
+                        serializedElement,
+                        width: dpr(action.width),
+                        height: dpr(action.height),
+                      }
+                      targetResultData.new[id] = action.data
+
+                      hasBeenChanged = true
+
+                      newCount++
+
+                      break
+                    }
+                  }
+
+                  res.writeHead(200)
+                  res.end()
+                } catch (e) {
                   res.writeHead(500)
                   res.end()
 
-                  return server.close(() => screenshotsReject(`${path.relative(process.cwd(), filePath)}:${id}`))
+                  return server.close(() => screenshotsReject(e))
                 }
-
-                // switch
-                switch (action.type) {
-                  case 'OK': {
-                    okCount++
-
-                    break
-                  }
-                  case 'DIFF': {
-                    targetResult.old[id] = {
-                      serializedElement,
-                      width: dpr(action.old.width),
-                      height: dpr(action.old.height),
-                    }
-                    targetResult.new[id] = {
-                      serializedElement,
-                      width: dpr(action.new.width),
-                      height: dpr(action.new.height),
-                    }
-                    targetResultData.old[id] = action.old.data
-                    targetResultData.new[id] = action.new.data
-
-                    hasBeenChanged = true
-
-                    diffCount++
-
-                    break
-                  }
-                  case 'NEW': {
-                    targetResult.new[id] = {
-                      serializedElement,
-                      width: dpr(action.width),
-                      height: dpr(action.height),
-                    }
-                    targetResultData.new[id] = action.data
-
-                    hasBeenChanged = true
-
-                    newCount++
-
-                    break
-                  }
-                }
-
-                res.writeHead(200)
-                res.end()
               })
           } else if (req.url === '/error') {
             let body = ''

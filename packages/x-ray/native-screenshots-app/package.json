@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
+    "@primitives/size": "^0.5.1",
     "react-native-view-shot": "^3.0.2"
   },
   "devDependencies": {

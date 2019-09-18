@@ -45,6 +45,7 @@
       "@babel/runtime",
       "react-dom",
       "react-hot-loader",
+      "request",
       "@haul-bundler/cli",
       "@haul-bundler/core"
     ]
