@@ -44,8 +44,8 @@ export default async (options: TOptions) => {
           switch (action.type) {
             case 'FILE': {
               const { default: items } = await import(action.path) as { default: Iterable<TMeta> }
-              const screenshotsDir = path.join(path.dirname(action.path), '__tar__')
-              const tar = await TarFs(path.join(screenshotsDir, 'chrome-screenshots.tar'))
+              const screenshotsDir = path.join(path.dirname(action.path), '__data__')
+              const tar = await TarFs(path.join(screenshotsDir, 'chrome-screenshots.tar.gz'))
 
               await pAll(
                 map((item: TMeta) => async () => {

@@ -1,6 +1,7 @@
 /* eslint-disable import/no-named-as-default-member */
 import path from 'path'
 import crypto from 'crypto'
+import { createGzip, createGunzip } from 'zlib'
 import fs from 'pifs'
 import { TAnyObject } from 'tsfn'
 
@@ -117,9 +118,23 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
   let pos = 0
   const nameBuffer = Buffer.alloc(100)
   const sizeBuffer = Buffer.alloc(12)
+  let tempFilePath = tarFilePath
 
   try {
-    fd = await fs.open(tarFilePath, 'r')
+    await fs.access(tarFilePath)
+
+    tempFilePath = tarFilePath.replace('.gz', '')
+
+    await new Promise((resolve, reject) => {
+      fs.createReadStream(tarFilePath)
+        .on('error', reject)
+        .pipe(createGunzip())
+        .on('error', reject)
+        .pipe(fs.createWriteStream(tempFilePath))
+        .on('error', reject)
+        .on('finish', resolve)
+    })
+    fd = await fs.open(tempFilePath, 'r')
 
     // read index file
     await fs.read(fd, sizeBuffer, 0, 12, 124)
@@ -212,8 +227,8 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
         return
       }
 
-      const tempTarFilePath = `${tarFilePath}.tmp`
-      const tempFd = await fs.open(tempTarFilePath, 'w')
+      const tempSaveFilePath = `${tempFilePath}.tmp`
+      const tempFd = await fs.open(tempSaveFilePath, 'w')
       let tempPos = 0
 
       for (const fileName of filesToDelete) {
@@ -289,11 +304,20 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
       if (fd !== null) {
         await fs.close(fd)
         fd = null
-        await fs.unlink(tarFilePath)
+        await fs.unlink(tempFilePath)
       }
 
       await fs.close(tempFd)
-      await fs.rename(tempTarFilePath, tarFilePath)
+      await new Promise((resolve, reject) => {
+        fs.createReadStream(tempSaveFilePath)
+          .on('error', reject)
+          .pipe(createGzip())
+          .on('error', reject)
+          .pipe(fs.createWriteStream(tarFilePath))
+          .on('error', reject)
+          .on('finish', resolve)
+      })
+      await fs.unlink(tempSaveFilePath)
     },
     close: async () => {
       files.clear()
@@ -303,6 +327,7 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
       if (fd !== null) {
         await fs.close(fd)
         fd = null
+        await fs.unlink(tempFilePath)
       }
     },
   }

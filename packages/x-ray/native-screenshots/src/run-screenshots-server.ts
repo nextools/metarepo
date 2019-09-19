@@ -91,8 +91,8 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
               .on('end', async () => {
                 try {
                   const { data, path: filePath, id, serializedElement } = JSON.parse(body)
-                  const screenshotsDir = path.join(path.dirname(filePath), '__tar__')
-                  const screenshotsTarPath = path.join(screenshotsDir, `${options.platform}-screenshots.tar`)
+                  const screenshotsDir = path.join(path.dirname(filePath), '__data__')
+                  const screenshotsTarPath = path.join(screenshotsDir, `${options.platform}-screenshots.tar.gz`)
                   const screenshot = Buffer.from(data, 'base64')
 
                   if (currentFilePath !== filePath) {
