@@ -1,7 +1,7 @@
 /* eslint-disable import/no-named-as-default-member */
 import path from 'path'
 import crypto from 'crypto'
-import { createGzip, createGunzip } from 'zlib'
+import { createGzip, createGunzip, constants } from 'zlib'
 import fs from 'pifs'
 import { TAnyObject } from 'tsfn'
 
@@ -311,7 +311,7 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
       await new Promise((resolve, reject) => {
         fs.createReadStream(tempSaveFilePath)
           .on('error', reject)
-          .pipe(createGzip())
+          .pipe(createGzip({ level: constants.Z_BEST_COMPRESSION }))
           .on('error', reject)
           .pipe(fs.createWriteStream(tarFilePath))
           .on('error', reject)
