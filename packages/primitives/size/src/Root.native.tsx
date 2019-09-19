@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, LayoutChangeEvent } from 'react-native'
 import { component, mapHandlers, startWithType, mapContext, onMount, onUpdate } from 'refun'
-import { isFunction } from 'tsfn'
+import { isFunction, isUndefined } from 'tsfn'
 import { normalizeStyle } from 'stili'
 import { pipe } from '@psxcode/compose'
-import { SizeContext } from './Context'
+import { SizeContext, TSizeContext } from './Context'
 import { TSize } from './types'
 
 const style = normalizeStyle({
@@ -32,14 +32,14 @@ const mapSizeUpdate = <P extends TSize> () => {
     )
   }
 
-  return (props: P) => props
+  return (props: P) => props as P & TSizeContext
 }
 
 export const Size = component(
   startWithType<TSize>(),
   mapSizeUpdate(),
   mapHandlers({
-    onLayout: ({ width, height, onWidthChange, onHeightChange, onChange }) => ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+    onLayout: ({ width, height, onWidthChange, onHeightChange, onChange, onSizeUpdate }) => ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
       const layoutWidth = Math.round(layout.width * 1000) / 1000
       const layoutHeight = Math.round(layout.height * 1000) / 1000
       const hasWidthChanged = layoutWidth !== width
@@ -55,6 +55,10 @@ export const Size = component(
 
       if ((hasWidthChanged || hasHeightChanged) && isFunction(onChange)) {
         onChange({ width: layoutWidth, height: layoutHeight })
+      }
+
+      if (isFunction(onSizeUpdate) && (isUndefined(width) || !hasWidthChanged) && (isUndefined(height) || !hasHeightChanged)) {
+        onSizeUpdate()
       }
     },
   })
