@@ -1,3 +1,7 @@
+## v0.3.8
+
+* 🐞 add gzip compression to tar-fs
+
 ## v0.3.7
 
 * 🐞 add missing try-catch block

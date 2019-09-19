@@ -1,3 +1,7 @@
+## v0.1.3
+
+* 🐞 add gzip compression to tar-fs
+
 ## v0.1.2
 
 * 🐞 report path on bailout

@@ -1,3 +1,7 @@
+## v0.2.5
+
+* 🐞 add gzip compression to tar-fs
+
 ## v0.2.4
 
 * 🐞 add `shouldWaitForResize` flag to `TMeta`
