@@ -19,9 +19,11 @@ export const Image = component(
 )(({ source, id, height, width, style, onLoad, onError }) => (
   <ImageRN
     testID={id}
-    source={{ uri: source }}
-    height={height}
-    width={width}
+    source={{
+      uri: source,
+      width,
+      height,
+    }}
     style={style}
     onLoad={onLoad}
     onError={onError}
