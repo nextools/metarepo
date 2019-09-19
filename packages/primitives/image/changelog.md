@@ -1,3 +1,7 @@
+## v0.2.2
+
+* 🐞 fix native width height
+
 ## v0.2.1
 
 * 🐞 bump react-native
