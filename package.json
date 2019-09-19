@@ -82,9 +82,7 @@
     "commitMessageTopic": "{{depName}}",
     "ignoreDeps": [
       "gradle",
-      "puppeteer-core",
-      "typescript",
-      "metro-react-native-babel-preset"
+      "typescript"
     ],
     "packageRules": [
       {
