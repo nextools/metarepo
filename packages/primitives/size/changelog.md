@@ -1,3 +1,7 @@
+## v0.5.3
+
+* 🐞 fix native `onSizeUpdate`
+
 ## v0.5.2
 
 * 🐞 add `SizeContext`
