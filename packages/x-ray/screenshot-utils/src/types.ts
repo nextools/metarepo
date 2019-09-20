@@ -16,6 +16,7 @@ export type TMeta = {
     backgroundColor?: string,
     maxWidth?: number,
     shouldWaitForResize?: boolean,
+    shouldWaitForImages?: boolean,
   },
 }
 
