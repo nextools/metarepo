@@ -1,11 +1,7 @@
 import path from 'path'
-import { promisify } from 'util'
-import { readFile, writeFile } from 'graceful-fs'
+import { readFile, writeFile } from 'pifs'
 import { TPrefixes } from '@auto/utils'
 import { TLog } from './types'
-
-const pReadFile = promisify(readFile)
-const pWriteFile = promisify(writeFile)
 
 export const writeChangelogFiles = async (logs: TLog[], prefixes: TPrefixes) => {
   for (const log of logs) {
@@ -17,11 +13,11 @@ export const writeChangelogFiles = async (logs: TLog[], prefixes: TPrefixes) => 
     })
 
     try {
-      const changelogData = await pReadFile(changelogPath, 'utf8')
+      const changelogData = await readFile(changelogPath, 'utf8')
 
-      await pWriteFile(changelogPath, `${newLog}\n${changelogData}`, 'utf8')
+      await writeFile(changelogPath, `${newLog}\n${changelogData}`, 'utf8')
     } catch (e) {
-      await pWriteFile(changelogPath, newLog, 'utf8')
+      await writeFile(changelogPath, newLog, 'utf8')
     }
   }
 }

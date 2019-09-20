@@ -1,4 +1,5 @@
 /* eslint-disable no-sync */
+import { promisify } from 'util'
 import test from 'blue-tape'
 import { mock } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
@@ -15,7 +16,10 @@ test('fs:writePackageDependencies: ignore version bump', async (t) => {
   const fs = createFsFromVolume(vol)
 
   const unmock = mock('../src/write-package-dependencies', {
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
 
   const { writePackageDependencies } = await import('../src/write-package-dependencies')
@@ -58,7 +62,10 @@ test('fs:writePackageDependencies: multiple dependencies bump', async (t) => {
   const fs = createFsFromVolume(vol)
 
   const unmock = mock('../src/write-package-dependencies', {
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
 
   const { writePackageDependencies } = await import('../src/write-package-dependencies')
@@ -108,7 +115,10 @@ test('fs:writePackageDependencies: multiple dev dependencies bump', async (t) =>
   const fs = createFsFromVolume(vol)
 
   const unmock = mock('../src/write-package-dependencies', {
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
 
   const { writePackageDependencies } = await import('../src/write-package-dependencies')

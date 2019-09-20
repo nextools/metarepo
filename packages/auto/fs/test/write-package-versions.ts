@@ -1,4 +1,5 @@
 /* eslint-disable no-sync */
+import { promisify } from 'util'
 import test from 'blue-tape'
 import { mock } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
@@ -15,7 +16,10 @@ test('fs:writePackageVersion: single version bump', async (t) => {
   const fs = createFsFromVolume(vol)
 
   const unmock = mock('../src/write-package-versions', {
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
 
   const { writePackageVersions } = await import('../src/write-package-versions')
@@ -58,7 +62,10 @@ test('fs:writePackageVersion: ignore dependencies', async (t) => {
   const fs = createFsFromVolume(vol)
 
   const unmock = mock('../src/write-package-versions', {
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
 
   const { writePackageVersions } = await import('../src/write-package-versions')
@@ -108,7 +115,10 @@ test('fs:writePackageVersion: ignore devDependencies', async (t) => {
   const fs = createFsFromVolume(vol)
 
   const unmock = mock('../src/write-package-versions', {
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
 
   const { writePackageVersions } = await import('../src/write-package-versions')
@@ -154,7 +164,10 @@ test('fs:writePackageVersion: no version bump', async (t) => {
   const fs = createFsFromVolume(vol)
 
   const unmock = mock('../src/write-package-versions', {
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
 
   const { writePackageVersions } = await import('../src/write-package-versions')

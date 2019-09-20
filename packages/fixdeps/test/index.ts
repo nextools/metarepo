@@ -1,4 +1,5 @@
 /* eslint-disable no-sync */
+import { promisify } from 'util'
 import test from 'blue-tape'
 import { mock, deleteFromCache } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
@@ -44,7 +45,10 @@ test('fixdeps: all', async (t) => {
 
   const unmockIndex = mock('../src', {
     fs,
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
   const unmockGetPackageVersion = mock('../src/get-package-version', {
     './get-local-package-version-yarn': {
@@ -138,7 +142,10 @@ test('fixdeps: remove empty dependencies objects', async (t) => {
 
   const unmockIndex = mock('../src', {
     fs,
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
   const unmockGetPackageVersion = mock('../src/get-package-version', {
     './get-local-package-version-yarn': {
@@ -192,7 +199,10 @@ test('fixdeps: nothing to do', async (t) => {
 
   const unmockIndex = mock('../src', {
     fs,
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
   const unmockGetPackageVersion = mock('../src/get-package-version', {
     './get-local-package-version-yarn': {
@@ -249,7 +259,10 @@ test('fixdeps: create dependencies objects if was missing', async (t) => {
 
   const unmockIndex = mock('../src', {
     fs,
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
   const unmockGetPackageVersion = mock('../src/get-package-version', {
     './get-local-package-version-yarn': {
@@ -301,7 +314,10 @@ test('fixdeps: get remote version with npm', async (t) => {
 
   const unmockIndex = mock('../src', {
     fs,
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
   const unmockGetPackageVersion = mock('../src/get-package-version', {
     './get-local-package-version-yarn': {

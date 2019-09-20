@@ -16,13 +16,12 @@
     "@babel/types": "^7.3.0",
     "execa": "^2.0.0",
     "fast-glob": "^3.0.3",
-    "graceful-fs": "^4.1.15",
     "p-all": "^2.1.0",
+    "pifs": "^0.1.0",
     "tsfn": "^0.2.0",
     "typeon": "^0.3.0"
   },
   "devDependencies": {
-    "@types/graceful-fs": "^4.1.2",
     "blue-tape": "^1.0.0",
     "memfs": "^2.15.4",
     "mocku": "^0.6.0",

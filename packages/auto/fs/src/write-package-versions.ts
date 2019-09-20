@@ -1,10 +1,7 @@
 import path from 'path'
-import { promisify } from 'util'
-import { writeFile } from 'graceful-fs'
+import { writeFile } from 'pifs'
 import { TPackageBump } from '@auto/utils'
 import { getPackage } from './get-package'
-
-const pWriteFile = promisify(writeFile)
 
 export const writePackageVersions = async (packageBumps: TPackageBump[]) => {
   for (const bump of packageBumps) {
@@ -19,6 +16,6 @@ export const writePackageVersions = async (packageBumps: TPackageBump[]) => {
 
     const packageData = `${JSON.stringify(packageJson, null, 2)}\n`
 
-    await pWriteFile(packageJsonPath, packageData, { encoding: 'utf8' })
+    await writeFile(packageJsonPath, packageData, { encoding: 'utf8' })
   }
 }

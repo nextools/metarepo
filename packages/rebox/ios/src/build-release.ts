@@ -5,12 +5,11 @@ import execa from 'execa'
 import { isUndefined } from 'tsfn'
 import cpy from 'cpy'
 import makeDir from 'make-dir'
-import { readdir } from 'graceful-fs'
+import { readdir } from 'pifs'
 // @ts-ignore
 import simplePlist from 'simple-plist'
 import { buildJsBundle } from './build-js-bundle'
 
-const pReadDir = promisify(readdir)
 const pPlistRead = promisify(simplePlist.readFile)
 const pPlistWrite = promisify(simplePlist.writeFile)
 
@@ -51,7 +50,7 @@ export const buildRelease = async (options: TBuildReleaseOptions) => {
 
   // TODO: https://stackoverflow.com/a/48889760
   const derivedDataPath = path.join(os.homedir(), 'Library', 'Developer', 'Xcode', 'DerivedData')
-  const derivedDataFiles = await pReadDir(derivedDataPath)
+  const derivedDataFiles = await readdir(derivedDataPath)
   const derivedBuildPath = derivedDataFiles.find((file) => file.startsWith('rebox-'))
 
   if (isUndefined(derivedBuildPath)) {
@@ -59,7 +58,7 @@ export const buildRelease = async (options: TBuildReleaseOptions) => {
   }
 
   const productsPath = path.join(derivedDataPath, derivedBuildPath, 'Build', 'Products')
-  const productsFiles = await pReadDir(productsPath)
+  const productsFiles = await readdir(productsPath)
   const productReleaseName = productsFiles.find((file) => file.startsWith('Release-'))
 
   if (isUndefined(productReleaseName)) {

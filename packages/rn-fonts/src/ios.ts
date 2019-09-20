@@ -3,7 +3,8 @@ import path from 'path'
 // @ts-ignore
 import xcode from 'xcode'
 import plistParser, { PlistValue } from 'plist'
-import { getFontPaths, pReadDir, pReadFile, pWriteFile } from './utils'
+import { readFile, readdir, writeFile } from 'pifs'
+import { getFontPaths } from './utils'
 
 const plistBuildOptions = {
   indent: '\t',
@@ -12,7 +13,7 @@ const plistBuildOptions = {
 
 export const addFontsIos = async (projectPath: string, fontsPath: string) => {
   const fontPaths = await getFontPaths(fontsPath)
-  const projectFiles = await pReadDir(projectPath)
+  const projectFiles = await readdir(projectPath)
   const xcodeProjectPath = projectFiles.find((file) => path.extname(file) === '.xcodeproj')
 
   if (typeof xcodeProjectPath !== 'string') {
@@ -24,7 +25,7 @@ export const addFontsIos = async (projectPath: string, fontsPath: string) => {
   const pbxprojPath = path.join(projectPath, xcodeProjectPath, 'project.pbxproj')
   const project = xcode.project(pbxprojPath).parseSync()
   const projectTargetUuid = project.getFirstTarget().uuid
-  const plistData = await pReadFile(plistPath, 'utf8')
+  const plistData = await readFile(plistPath, 'utf8')
   const plist = plistParser.parse(plistData) as PlistValue & { UIAppFonts?: string[] }
   const firstProject = project.getFirstProject().firstProject
   const mainGroup = project.getPBXGroupByKey(firstProject.mainGroup)
@@ -54,6 +55,6 @@ export const addFontsIos = async (projectPath: string, fontsPath: string) => {
     }
   }
 
-  await pWriteFile(plistPath, `${plistParser.build(plist, plistBuildOptions)}\n`)
-  await pWriteFile(pbxprojPath, project.writeSync())
+  await writeFile(plistPath, `${plistParser.build(plist, plistBuildOptions)}\n`)
+  await writeFile(pbxprojPath, project.writeSync())
 }

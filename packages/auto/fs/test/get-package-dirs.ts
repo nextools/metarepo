@@ -1,3 +1,4 @@
+import { promisify } from 'util'
 import test from 'blue-tape'
 import { mock, deleteFromCache } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
@@ -17,7 +18,9 @@ test('fs:getPackageDirs workspaces[]', async (t) => {
 
   const unmock = mock('../src/get-package-dirs', {
     fs,
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+    },
   })
   deleteFromCache('fast-glob')
 
@@ -49,7 +52,9 @@ test('fs:getPackageDirs workspaces.packages[]', async (t) => {
 
   const unmock = mock('../src/get-package-dirs', {
     fs,
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+    },
   })
 
   const { getPackageDirs } = await import('../src/get-package-dirs')
@@ -76,7 +81,9 @@ test('fs:getPackageDirs no workspaces', async (t) => {
 
   const unmock = mock('../src/get-package-dirs', {
     fs,
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+    },
   })
 
   const { getPackageDirs } = await import('../src/get-package-dirs')
@@ -105,7 +112,9 @@ test('fs:getPackageDirs no workspaces.packages', async (t) => {
 
   const unmock = mock('../src/get-package-dirs', {
     fs,
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+    },
   })
 
   const { getPackageDirs } = await import('../src/get-package-dirs')

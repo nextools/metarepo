@@ -29,6 +29,7 @@ export const readFile = promisify(fs.readFile)
 export const readlink = promisify(fs.readlink)
 export const realpath = promisify(fs.realpath)
 export const rename = promisify(fs.rename)
+export const rmdir = promisify(fs.rmdir)
 export const stat = promisify(fs.stat)
 export const unlink = promisify(fs.unlink)
 export const unwatchFile = fs.unwatchFile
@@ -67,6 +68,7 @@ export default {
   readlink,
   realpath,
   rename,
+  rmdir,
   stat,
   unlink,
   unwatchFile,

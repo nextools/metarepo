@@ -1,4 +1,5 @@
 /* eslint-disable no-sync */
+import { promisify } from 'util'
 import test from 'blue-tape'
 import { createFsFromVolume, Volume } from 'memfs'
 import { mock } from 'mocku'
@@ -9,7 +10,16 @@ test('copie: core', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/', { fs })
+  const unmock = mock('../src/', {
+    pifs: {
+      createReadStream: fs.createReadStream,
+      createWriteStream: fs.createWriteStream,
+      lstat: promisify(fs.lstat),
+      chmod: promisify(fs.chmod),
+      chown: promisify(fs.chown),
+      utimes: promisify(fs.utimes),
+    },
+  })
 
   const { default: copie } = await import('../src')
 
@@ -34,7 +44,16 @@ test('copie: preserve stats', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/', { fs })
+  const unmock = mock('../src/', {
+    pifs: {
+      createReadStream: fs.createReadStream,
+      createWriteStream: fs.createWriteStream,
+      lstat: promisify(fs.lstat),
+      chmod: promisify(fs.chmod),
+      chown: promisify(fs.chown),
+      utimes: promisify(fs.utimes),
+    },
+  })
 
   const { default: copie } = await import('../src')
 
@@ -84,7 +103,16 @@ test('copie: read error', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/', { fs })
+  const unmock = mock('../src/', {
+    pifs: {
+      createReadStream: fs.createReadStream,
+      createWriteStream: fs.createWriteStream,
+      lstat: promisify(fs.lstat),
+      chmod: promisify(fs.chmod),
+      chown: promisify(fs.chown),
+      utimes: promisify(fs.utimes),
+    },
+  })
 
   const { default: copie } = await import('../src')
 
@@ -109,7 +137,16 @@ test('copie: write error', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/', { fs })
+  const unmock = mock('../src/', {
+    pifs: {
+      createReadStream: fs.createReadStream,
+      createWriteStream: fs.createWriteStream,
+      lstat: promisify(fs.lstat),
+      chmod: promisify(fs.chmod),
+      chown: promisify(fs.chown),
+      utimes: promisify(fs.utimes),
+    },
+  })
 
   const { default: copie } = await import('../src')
 
