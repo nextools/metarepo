@@ -1,7 +1,6 @@
 /* eslint-disable no-use-before-define */
-import { chmod, lstat, readdir, rmdir, unlink } from 'fs'
-import { promisify } from 'util'
 import { join } from 'path'
+import { chmod, lstat, readdir, rmdir, unlink } from 'pifs'
 import { delay } from './delay'
 
 const EBUSY_MAX_TRIES = 3
@@ -9,26 +8,20 @@ const EBUSY_RETRY_DELAY = 100
 const CHMOD_RWRWRW = 0o666
 const IS_WINDOWS = process.platform === 'win32'
 
-const pChmod = promisify(chmod)
-const pLstat = promisify(lstat)
-const pReaddir = promisify(readdir)
-const pRmdir = promisify(rmdir)
-const pUnlink = promisify(unlink)
-
 const rm = async (targetPath: string): Promise<void> => {
-  const stats = await pLstat(targetPath)
+  const stats = await lstat(targetPath)
 
   if (stats.isDirectory()) {
-    const list = await pReaddir(targetPath)
+    const list = await readdir(targetPath)
 
     await Promise.all(
       list
         .map((item) => join(targetPath, item))
         .map(dleet)
     )
-    await pRmdir(targetPath)
+    await rmdir(targetPath)
   } else {
-    await pUnlink(targetPath)
+    await unlink(targetPath)
   }
 }
 
@@ -48,7 +41,7 @@ const dleet = async (targetPath: string) => {
 
         hasFixedMode = true
 
-        await pChmod(targetPath, CHMOD_RWRWRW)
+        await chmod(targetPath, CHMOD_RWRWRW)
         await tryToRm()
       // target is busy or locked, wait and try again few times
       } else if (IS_WINDOWS && error.code === 'EBUSY') {

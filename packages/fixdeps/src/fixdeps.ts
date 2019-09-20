@@ -1,6 +1,5 @@
 import path from 'path'
-import { promisify } from 'util'
-import { readFile, writeFile } from 'graceful-fs'
+import { readFile, writeFile } from 'pifs'
 import fastGlob from 'fast-glob'
 import { TOptions, TDepsEntries, TResult } from './types'
 import { uniqueArray } from './unique-array'
@@ -13,9 +12,6 @@ import { getDepsVersions } from './get-deps-versions'
 import { composeDependencies } from './compose-dependencies'
 import { getPackage } from './get-package-json'
 import { objectFromEntries } from './object-from-entries'
-
-const pReadFile = promisify(readFile)
-const pWriteFile = promisify(writeFile)
 
 export const fixdeps = async ({
   packagePath,
@@ -56,7 +52,7 @@ export const fixdeps = async ({
   const devDependencyList: string[] = []
 
   for (const filename of allFiles) {
-    const fileContent = await pReadFile(filename, 'utf8')
+    const fileContent = await readFile(filename, 'utf8')
 
     getDependenciesInContent(fileContent).forEach((dep) => {
       if (dependencyFiles.includes(filename)) {
@@ -95,7 +91,7 @@ export const fixdeps = async ({
   if (depsToRemove.length > 0 || depsToAddWithVersions.length > 0 || allDevDepsToAddWithVersions.length > 0) {
     const packageData = `${JSON.stringify(packageJson, null, 2)}\n`
 
-    await pWriteFile(packageJsonPath, packageData)
+    await writeFile(packageJsonPath, packageData)
 
     return {
       addedDeps: objectFromEntries(depsToAddWithVersions),

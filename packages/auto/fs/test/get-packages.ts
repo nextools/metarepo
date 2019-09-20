@@ -1,3 +1,4 @@
+import { promisify } from 'util'
 import test from 'blue-tape'
 import { mock, deleteFromCache } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
@@ -26,7 +27,9 @@ test('fs:getPackages workspaces[]', async (t) => {
 
   const unmock = mock('../src/get-packages', {
     fs,
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+    },
   })
   deleteFromCache('fast-glob')
 

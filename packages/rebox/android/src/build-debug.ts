@@ -1,12 +1,8 @@
 import path from 'path'
-import { promisify } from 'util'
-import { readFile, writeFile } from 'graceful-fs'
+import { readFile, writeFile } from 'pifs'
 import execa from 'execa'
 import moveFile from 'move-file'
 import { getAppPath } from './get-app-path'
-
-const pReadFile = promisify(readFile)
-const pWriteFile = promisify(writeFile)
 
 export type TBuildDebugOptions = {
   projectPath: string,
@@ -35,15 +31,15 @@ export const buildDebug = async (options: TBuildDebugOptions) => {
 
   const stringsXmlPath = path.join(options.projectPath, 'app', 'src', 'main', 'res', 'values', 'strings.xml')
 
-  await pWriteFile(stringsXmlPath, `<resources><string name="app_name">${options.appName}</string></resources>`)
+  await writeFile(stringsXmlPath, `<resources><string name="app_name">${options.appName}</string></resources>`)
 
   const buildGradlePath = path.join(options.projectPath, 'app', 'build.gradle')
 
-  let buildGradleData = await pReadFile(buildGradlePath, 'utf8')
+  let buildGradleData = await readFile(buildGradlePath, 'utf8')
 
   buildGradleData = buildGradleData.replace('applicationId "com.rebox"', `applicationId "${options.appId}"`)
 
-  await pWriteFile(buildGradlePath, buildGradleData)
+  await writeFile(buildGradlePath, buildGradleData)
 
   await execa(
     path.resolve(options.projectPath, 'gradlew'),
@@ -64,7 +60,7 @@ export const buildDebug = async (options: TBuildDebugOptions) => {
     }
   )
 
-  await pWriteFile(stringsXmlPath, '<resources><string name="app_name">rebox</string></resources>')
+  await writeFile(stringsXmlPath, '<resources><string name="app_name">rebox</string></resources>')
 
   const originalApkPath = path.join(options.projectPath, 'app', 'build', 'outputs', 'apk', 'debug', 'app-debug.apk')
   const newApkPath = getAppPath(options.appName)

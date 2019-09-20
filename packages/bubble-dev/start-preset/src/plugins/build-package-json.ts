@@ -4,14 +4,10 @@ import { TJsonMap } from 'typeon'
 export default (dir: string) =>
   plugin('buildPackageJson', ({ logPath }) => async () => {
     const { resolve } = await import('path')
-    const { promisify } = await import('util')
-    const { readFile, writeFile } = await import('graceful-fs')
-
-    const pReadFile = promisify(readFile)
-    const pWriteFile = promisify(writeFile)
+    const { readFile, writeFile } = await import('pifs')
     const packageJsonPath = resolve(dir, 'package.json')
 
-    const packageJson = JSON.parse(await pReadFile(packageJsonPath, 'utf8')) as TJsonMap
+    const packageJson = JSON.parse(await readFile(packageJsonPath, 'utf8')) as TJsonMap
     const newPackageJsonPath = resolve(dir, 'build/package.json')
     const newPackageJson = Object.entries(packageJson).reduce((result, [key, value]) => {
       if (key === 'devDependencies' || key === 'files' || key === 'buildAssets') {
@@ -41,7 +37,7 @@ export default (dir: string) =>
       return result
     }, {} as TJsonMap)
 
-    await pWriteFile(newPackageJsonPath, JSON.stringify(newPackageJson, null, 2))
+    await writeFile(newPackageJsonPath, JSON.stringify(newPackageJson, null, 2))
 
     logPath(newPackageJsonPath)
   })

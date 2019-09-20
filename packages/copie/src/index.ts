@@ -1,10 +1,4 @@
-import { promisify } from 'util'
-import { createReadStream, createWriteStream, lstat, chmod, chown, utimes } from 'fs'
-
-const pChmod = promisify(chmod)
-const pChown = promisify(chown)
-const pLstat = promisify(lstat)
-const pUtimes = promisify(utimes)
+import { createReadStream, createWriteStream, lstat, chmod, chown, utimes } from 'pifs'
 
 // TODO: extract me
 const toUnixTimestamp = (date: Date): number => Math.trunc(date.getTime() / 1000)
@@ -21,12 +15,12 @@ const copie = async (fromPath: string, toPath: string): Promise<void> => {
     readStream.pipe(writeStream)
   })
 
-  const stats = await pLstat(fromPath)
+  const stats = await lstat(fromPath)
 
   await Promise.all([
-    pChown(toPath, stats.uid, stats.gid),
-    pChmod(toPath, stats.mode),
-    pUtimes(toPath, toUnixTimestamp(stats.atime), toUnixTimestamp(stats.mtime)),
+    chown(toPath, stats.uid, stats.gid),
+    chmod(toPath, stats.mode),
+    utimes(toPath, toUnixTimestamp(stats.atime), toUnixTimestamp(stats.mtime)),
   ])
 }
 

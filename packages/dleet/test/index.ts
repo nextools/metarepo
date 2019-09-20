@@ -1,4 +1,5 @@
 /* eslint-disable no-sync */
+import { promisify } from 'util'
 import test from 'blue-tape'
 import { createFsFromVolume, Volume } from 'memfs'
 import { mock } from 'mocku'
@@ -26,7 +27,15 @@ test('dleet: delete directory with subdirectories, files and symlinks', async (t
 
   fs.symlinkSync('/test/foo/2.md', '/test/symlink')
 
-  const unmock = mock('../src/', { fs })
+  const unmock = mock('../src/', {
+    pifs: {
+      chmod: promisify(fs.chmod),
+      lstat: promisify(fs.lstat),
+      readdir: promisify(fs.readdir),
+      rmdir: promisify(fs.rmdir),
+      unlink: promisify(fs.unlink),
+    },
+  })
 
   const { default: dleet } = await import('../src')
 
@@ -46,7 +55,15 @@ test('dleet: error: ENOENT + win32', async (t) => {
   const vol = Volume.fromJSON({})
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/', { fs })
+  const unmock = mock('../src/', {
+    pifs: {
+      chmod: promisify(fs.chmod),
+      lstat: promisify(fs.lstat),
+      readdir: promisify(fs.readdir),
+      rmdir: promisify(fs.rmdir),
+      unlink: promisify(fs.unlink),
+    },
+  })
 
   const { default: dleet } = await import('../src')
 
@@ -67,7 +84,15 @@ test('dleet: error: ENOENT + not win32', async (t) => {
   const vol = Volume.fromJSON({})
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/', { fs })
+  const unmock = mock('../src/', {
+    pifs: {
+      chmod: promisify(fs.chmod),
+      lstat: promisify(fs.lstat),
+      readdir: promisify(fs.readdir),
+      rmdir: promisify(fs.rmdir),
+      unlink: promisify(fs.unlink),
+    },
+  })
 
   const { default: dleet } = await import('../src')
 
@@ -107,9 +132,12 @@ test('dleet: error: EBUSY + win32 + 1 retry', async (t) => {
   const delaySpy = createSpy(() => Promise.resolve())
 
   const unmock = mock('../src/', {
-    fs: {
-      ...fs,
-      lstat: lstatSpy,
+    pifs: {
+      chmod: promisify(fs.chmod),
+      lstat: promisify(lstatSpy),
+      readdir: promisify(fs.readdir),
+      rmdir: promisify(fs.rmdir),
+      unlink: promisify(fs.unlink),
     },
     './delay': {
       delay: delaySpy,
@@ -166,9 +194,12 @@ test('dleet: error: EBUSY + win32 + 2 retries', async (t) => {
   const delaySpy = createSpy(() => Promise.resolve())
 
   const unmock = mock('../src/', {
-    fs: {
-      ...fs,
-      lstat: lstatSpy,
+    pifs: {
+      chmod: promisify(fs.chmod),
+      lstat: promisify(lstatSpy),
+      readdir: promisify(fs.readdir),
+      rmdir: promisify(fs.rmdir),
+      unlink: promisify(fs.unlink),
     },
     './delay': {
       delay: delaySpy,
@@ -220,9 +251,12 @@ test('dleet: error: EBUSY + win32 + 3 retries', async (t) => {
   })
 
   const unmock = mock('../src/', {
-    fs: {
-      ...fs,
-      lstat: lstatSpy,
+    pifs: {
+      chmod: promisify(fs.chmod),
+      lstat: promisify(lstatSpy),
+      readdir: promisify(fs.readdir),
+      rmdir: promisify(fs.rmdir),
+      unlink: promisify(fs.unlink),
     },
   })
 
@@ -266,9 +300,12 @@ test('dleet: error: EBUSY + not win32', async (t) => {
   })
 
   const unmock = mock('../src/', {
-    fs: {
-      ...fs,
-      lstat: lstatSpy,
+    pifs: {
+      chmod: promisify(fs.chmod),
+      lstat: promisify(lstatSpy),
+      readdir: promisify(fs.readdir),
+      rmdir: promisify(fs.rmdir),
+      unlink: promisify(fs.unlink),
     },
   })
 
@@ -312,10 +349,12 @@ test('dleet: error: EPERM + win32 + fix + fixed', async (t) => {
   })
 
   const unmock = mock('../src/', {
-    fs: {
-      ...fs,
-      chmod: chmodSpy,
-      lstat: lstatSpy,
+    pifs: {
+      chmod: promisify(chmodSpy),
+      lstat: promisify(lstatSpy),
+      readdir: promisify(fs.readdir),
+      rmdir: promisify(fs.rmdir),
+      unlink: promisify(fs.unlink),
     },
   })
 
@@ -364,9 +403,12 @@ test('dleet: error: EPERM + win32 + fix + not fixed', async (t) => {
   })
 
   const unmock = mock('../src/', {
-    fs: {
-      ...fs,
-      lstat: lstatSpy,
+    pifs: {
+      chmod: promisify(fs.chmod),
+      lstat: promisify(lstatSpy),
+      readdir: promisify(fs.readdir),
+      rmdir: promisify(fs.rmdir),
+      unlink: promisify(fs.unlink),
     },
   })
 
@@ -410,9 +452,12 @@ test('dleet: error: EPERM + not win32', async (t) => {
   })
 
   const unmock = mock('../src/', {
-    fs: {
-      ...fs,
-      lstat: lstatSpy,
+    pifs: {
+      chmod: promisify(fs.chmod),
+      lstat: promisify(lstatSpy),
+      readdir: promisify(fs.readdir),
+      rmdir: promisify(fs.rmdir),
+      unlink: promisify(fs.unlink),
     },
   })
 
@@ -448,9 +493,12 @@ test('dleet: error: any other + not win32', async (t) => {
   })
 
   const unmock = mock('../src/', {
-    fs: {
-      ...fs,
-      lstat: lstatSpy,
+    pifs: {
+      chmod: promisify(fs.chmod),
+      lstat: promisify(lstatSpy),
+      readdir: promisify(fs.readdir),
+      rmdir: promisify(fs.rmdir),
+      unlink: promisify(fs.unlink),
     },
   })
 
@@ -487,9 +535,12 @@ test('dleet: error: any other + win32', async (t) => {
   })
 
   const unmock = mock('../src/', {
-    fs: {
-      ...fs,
-      lstat: lstatSpy,
+    pifs: {
+      chmod: promisify(fs.chmod),
+      lstat: promisify(lstatSpy),
+      readdir: promisify(fs.readdir),
+      rmdir: promisify(fs.rmdir),
+      unlink: promisify(fs.unlink),
     },
   })
 

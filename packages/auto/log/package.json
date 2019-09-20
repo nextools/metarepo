@@ -11,13 +11,12 @@
   },
   "dependencies": {
     "@auto/utils": "^0.2.0",
-    "graceful-fs": "^4.1.15",
+    "pifs": "^0.1.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
-    "@types/graceful-fs": "^4.1.3",
     "@types/request": "^2.47.1",
     "@types/request-promise-native": "^1.0.15",
     "blue-tape": "^1.0.0",

@@ -1,4 +1,5 @@
 /* eslint-disable no-sync */
+import { promisify } from 'util'
 import test from 'blue-tape'
 import { mock } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
@@ -16,7 +17,10 @@ test('writeChangelogFiles', async (t) => {
   const fs = createFsFromVolume(vol)
 
   const unmock = mock('../src/write-changelog-files', {
-    'graceful-fs': fs,
+    pifs: {
+      readFile: promisify(fs.readFile),
+      writeFile: promisify(fs.writeFile),
+    },
   })
 
   const { writeChangelogFiles } = await import('../src/write-changelog-files')
