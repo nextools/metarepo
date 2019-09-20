@@ -4,11 +4,12 @@ export const mapDefaultProps = <T extends {}> (defaultProps: T) =>
   <P extends {}> (props: P): P & T => {
     const mergedProps = { ...defaultProps, ...props }
 
-    return getObjectKeys(props).reduce((result, key) => {
-      if (isUndefined(result[key]) && Reflect.has(defaultProps, key)) {
-        result[key] = (defaultProps as typeof mergedProps)[key]
+    // prevent undefined values to overwrite default props
+    for (const key of getObjectKeys(props)) {
+      if (isUndefined(mergedProps[key]) && Reflect.has(defaultProps, key)) {
+        mergedProps[key] = (defaultProps as typeof mergedProps)[key]
       }
+    }
 
-      return result
-    }, mergedProps)
+    return mergedProps
   }
