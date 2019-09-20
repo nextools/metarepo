@@ -1,20 +1,27 @@
 import React from 'react'
-import { normalizeStyle } from 'stili'
+import { normalizeStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapWithProps } from 'refun'
+import { isNumber } from 'tsfn'
 import { TImage } from './types'
 
 export const Image = component(
   startWithType<TImage>(),
   mapDefaultProps({
     resizeMode: 'cover',
-    borderRadius: 0,
   }),
-  mapWithProps(({ borderRadius, resizeMode }) => ({
-    style: normalizeStyle({
-      borderRadius: `${borderRadius}px`,
+  mapWithProps(({ borderRadius, resizeMode }) => {
+    const style: TStyle = {
       objectFit: resizeMode,
-    }),
-  }))
+    }
+
+    if (isNumber(borderRadius)) {
+      style.borderRadius = `${borderRadius}px`
+    }
+
+    return {
+      style: normalizeStyle(style),
+    }
+  })
 )(({ alt, source, id, height, width, style, onLoad, onError }) => (
   <img
     id={id}
