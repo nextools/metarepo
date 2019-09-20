@@ -1,3 +1,7 @@
+## v0.1.4
+
+* 🐞 handle `shouldWaitForImage` option
+
 ## v0.1.3
 
 * 🐞 handle `SizeContext`

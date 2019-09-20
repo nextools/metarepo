@@ -1,3 +1,7 @@
+## v0.2.3
+
+* 🐞 add `ImageContext`
+
 ## v0.2.2
 
 * 🐞 fix native width height

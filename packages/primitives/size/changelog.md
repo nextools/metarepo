@@ -1,3 +1,7 @@
+## v0.5.4
+
+* 🐞 use ids in `SizeContext`
+
 ## v0.5.3
 
 * 🐞 fix native `onSizeUpdate`

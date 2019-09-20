@@ -1,3 +1,7 @@
+## v0.2.6
+
+* 🐞 add `shouldWaitForImages` flag to `TMeta`
+
 ## v0.2.5
 
 * 🐞 add gzip compression to tar-fs

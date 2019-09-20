@@ -1,3 +1,8 @@
+## v0.4.3
+
+* 🐞 fix `mapRef` types
+* 🐞 improve `mapDefaultProps` performance
+
 ## v0.4.2
 
 * 🐞 add `onUpdate`

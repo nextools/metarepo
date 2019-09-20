@@ -1,3 +1,7 @@
+## v0.1.4
+
+* 🐞 fix SourceCode line wrap
+
 ## v0.1.3
 
 * 🐞 fix Toolbar total width calculation
