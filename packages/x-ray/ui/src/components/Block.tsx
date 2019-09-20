@@ -16,6 +16,7 @@ export type TBlock = {
   opacity?: number,
   floatingIndex?: number,
   isFlexbox?: boolean,
+  shouldPreventWrap?: boolean,
   shouldIgnorePointerEvents?: boolean,
   shouldFlow?: boolean,
   shouldScrollX?: boolean,
@@ -36,6 +37,7 @@ export const Block = component(
     shouldFlow: false,
     shouldHideOverflow: false,
     shouldIgnorePointerEvents: false,
+    shouldPreventWrap: false,
     shouldForceAcceleration: false,
     isFlexbox: false,
   }),
@@ -61,6 +63,7 @@ export const Block = component(
       shouldHideOverflow,
       shouldFlow,
       shouldIgnorePointerEvents,
+      shouldPreventWrap,
       shouldForceAcceleration,
       isFlexbox,
       onScroll,
@@ -124,6 +127,10 @@ export const Block = component(
 
       if (shouldIgnorePointerEvents) {
         styles.pointerEvents = 'none'
+      }
+
+      if (shouldPreventWrap) {
+        styles.whiteSpace = 'nowrap'
       }
 
       if (shouldHideOverflow) {

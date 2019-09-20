@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 import ViewShot from 'react-native-view-shot' // eslint-disable-line
 import { SizeContext } from '@primitives/size'
+import { ImageContext } from '@primitives/image'
 import files from './files' // eslint-disable-line
 
 const defaultStyles = {}
@@ -10,23 +11,70 @@ const hasOwnWidthStyles = {
   alignItems: 'flex-start',
 }
 
-const SizeProvider = ({ shouldWaitForResize, onCapture, children }) => {
-  if (shouldWaitForResize) {
-    let numMountedSizes = 0
-    let numUpdatedSizes = 0
+const Provider = ({ shouldWaitForResize, shouldWaitForImages, onCapture, children }) => {
+  if (shouldWaitForResize || shouldWaitForImages) {
+    const sizesIds = new Set()
+    let numSizesReady = 0
+    const imagesIds = new Set()
+    let numImagesReady = 0
+
+    const onSizeReady = (id) => {
+      if (sizesIds.has(id)) {
+        numSizesReady++
+
+        if (numSizesReady === sizesIds.size && numImagesReady === imagesIds.size) {
+          onCapture()
+        }
+      } else {
+        sizesIds.add(id)
+      }
+    }
+    const onImageReady = (id) => {
+      if (imagesIds.has(id)) {
+        numImagesReady++
+
+        if (numImagesReady === imagesIds.size && numSizesReady === sizesIds.size) {
+          onCapture()
+        }
+      } else {
+        imagesIds.add(id)
+      }
+    }
+
+    if (shouldWaitForImages && shouldWaitForResize) {
+      return (
+        <SizeContext.Provider value={{
+          onSizeMount: onSizeReady,
+          onSizeUpdate: onSizeReady,
+        }}
+        >
+          <ImageContext.Provider value={{
+            onImageMount: onImageReady,
+            onImageLoad: onImageReady,
+          }}
+          >
+            {children}
+          </ImageContext.Provider>
+        </SizeContext.Provider>
+      )
+    }
+
+    if (shouldWaitForImages) {
+      return (
+        <ImageContext.Provider value={{
+          onImageMount: onImageReady,
+          onImageLoad: onImageReady,
+        }}
+        >
+          {children}
+        </ImageContext.Provider>
+      )
+    }
 
     return (
       <SizeContext.Provider value={{
-        onSizeMount: () => {
-          numMountedSizes++
-        },
-        onSizeUpdate: () => {
-          numUpdatedSizes++
-
-          if (numUpdatedSizes === numMountedSizes) {
-            onCapture()
-          }
-        },
+        onSizeMount: onSizeReady,
+        onSizeUpdate: onSizeReady,
       }}
       >
         {children}
@@ -89,7 +137,7 @@ class Main extends Component {
 
     const { item } = this.state
 
-    if (item !== null && !item.options.shouldWaitForResize) {
+    if (item !== null && !item.options.shouldWaitForResize && !item.options.shouldWaitForImages) {
       this.onCapture()
     }
   }
@@ -159,8 +207,9 @@ class Main extends Component {
     }
 
     return (
-      <SizeProvider
+      <Provider
         shouldWaitForResize={item.options.shouldWaitForResize}
+        shouldWaitForImages={item.options.shouldWaitForImages}
         onCapture={this.onCapture}
       >
         <View
@@ -183,7 +232,7 @@ class Main extends Component {
             {item.element}
           </ViewShot>
         </View>
-      </SizeProvider>
+      </Provider>
     )
   }
 }

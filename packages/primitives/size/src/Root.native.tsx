@@ -1,10 +1,9 @@
 import React from 'react'
 import { View, LayoutChangeEvent } from 'react-native'
-import { component, mapHandlers, startWithType, mapContext, onMount, onUpdate } from 'refun'
+import { component, mapHandlers, startWithType } from 'refun'
 import { isFunction, isUndefined } from 'tsfn'
 import { normalizeStyle } from 'stili'
-import { pipe } from '@psxcode/compose'
-import { SizeContext, TSizeContext } from './Context'
+import { mapSizeUpdate } from './map-size-update'
 import { TSize } from './types'
 
 const style = normalizeStyle({
@@ -14,32 +13,11 @@ const style = normalizeStyle({
   alignSelf: 'flex-start',
 })
 
-const mapSizeUpdate = <P extends TSize> () => {
-  if (process.env.NODE_ENV !== 'production') {
-    return pipe(
-      startWithType<P & TSize>(),
-      mapContext(SizeContext),
-      onMount(({ onSizeMount }) => {
-        if (isFunction(onSizeMount)) {
-          onSizeMount()
-        }
-      }),
-      onUpdate(({ onSizeUpdate }) => {
-        if (isFunction(onSizeUpdate)) {
-          onSizeUpdate()
-        }
-      }, ['width', 'height'])
-    )
-  }
-
-  return (props: P) => props as P & TSizeContext
-}
-
 export const Size = component(
   startWithType<TSize>(),
   mapSizeUpdate(),
   mapHandlers({
-    onLayout: ({ width, height, onWidthChange, onHeightChange, onChange, onSizeUpdate }) => ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+    onLayout: ({ width, height, onWidthChange, onHeightChange, onChange, onSizeUpdate, sizeId }) => ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
       const layoutWidth = Math.round(layout.width * 1000) / 1000
       const layoutHeight = Math.round(layout.height * 1000) / 1000
       const hasWidthChanged = layoutWidth !== width
@@ -58,7 +36,7 @@ export const Size = component(
       }
 
       if (isFunction(onSizeUpdate) && (isUndefined(width) || !hasWidthChanged) && (isUndefined(height) || !hasHeightChanged)) {
-        onSizeUpdate()
+        onSizeUpdate(sizeId.current)
       }
     },
   })
