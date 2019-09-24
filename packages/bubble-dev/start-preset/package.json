@@ -78,10 +78,12 @@
     "rn-resolve": "^0.1.0",
     "tap-diff": "^0.1.1",
     "tsfn": "^0.2.0",
-    "typeon": "^0.3.0"
+    "typeon": "^0.3.0",
+    "ws": "^7.1.2"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.1",
+    "@types/ws": "^6.0.3",
     "typescript": "bubble-dev/TypeScript#ext-3.6.2"
   },
   "peerDependencies": {
