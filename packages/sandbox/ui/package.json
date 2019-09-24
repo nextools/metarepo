@@ -1,0 +1,47 @@
+{
+  "name": "@sandbox/ui",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.web.ts",
+  "browser": "src/index.web.ts",
+  "react-native": "src/index.native.ts",
+  "files": [
+    "build/"
+  ],
+  "dependencies": {
+    "@primitives/animation": "^0.2.0",
+    "@primitives/background": "^0.5.0",
+    "@primitives/block": "^0.5.1",
+    "@primitives/border": "^0.6.0",
+    "@primitives/button": "^0.5.1",
+    "@primitives/checkbox": "^0.5.1",
+    "@primitives/input": "^0.6.1",
+    "@primitives/pointer": "^0.5.1",
+    "@primitives/root": "^0.4.1",
+    "@primitives/select": "^0.5.1",
+    "@primitives/size": "^0.5.4",
+    "@primitives/svg": "^0.1.6",
+    "@primitives/text": "^0.8.1",
+    "@primitives/transform": "^0.5.1",
+    "@psxcode/compose": "^0.1.3",
+    "colorido": "^0.1.0",
+    "elegir": "^0.3.3",
+    "redux": "^4.0.4",
+    "refun": "^0.4.3",
+    "stili": "^0.2.1",
+    "syntx": "^0.4.0",
+    "tsfn": "^0.2.2"
+  },
+  "devDependencies": {
+    "autoprops": "^0.6.6",
+    "react": "^16.8.6",
+    "react-native": "^0.60.5",
+    "typeon": "^0.3.0",
+    "utility-types": "^3.4.1"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-native": "^0.60.5"
+  }
+}
