@@ -26,7 +26,6 @@ export const runFiles = async (targetFiles: string[], userOptions: TUserOptions)
     const closeReboxServer = await run({
       htmlTemplatePath,
       entryPointPath,
-      isQuiet: true,
     })
 
     console.log('open http://localhost:3000/ to approve or discard changes')

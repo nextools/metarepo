@@ -1,5 +1,5 @@
 import path from 'path'
-import Webpack, { Configuration as TWebpackConfig } from 'webpack'
+import Webpack, { Configuration as TWebpackConfig, Stats } from 'webpack'
 import WebpackDevServer, { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
 import { browsersList } from '@bubble-dev/browsers-list'
@@ -7,11 +7,28 @@ import { isUndefined } from 'tsfn'
 
 const excludeNodeModulesRegExp = /[\\/]node_modules[\\/]/
 
+const statsOptions: Stats.ToStringOptionsObject = {
+  colors: true,
+  assets: true,
+  assetsSort: '!size',
+  builtAt: false,
+  children: false,
+  entrypoints: false,
+  errors: true,
+  errorDetails: true,
+  excludeAssets: [/\.js\.map$/],
+  hash: false,
+  modules: false,
+  performance: true,
+  timings: false,
+  version: false,
+  warnings: true,
+}
+
 export type TServeJsBundleOptions = {
   entryPointPath: string,
   htmlTemplatePath: string,
   assetsPath?: string,
-  isQuiet?: boolean,
   shouldOpenBrowser?: boolean,
 }
 
@@ -115,7 +132,7 @@ export const run = (options: TServeJsBundleOptions) => {
   const server = new WebpackDevServer(compiler, {
     ...devConfig,
     open: options.shouldOpenBrowser,
-    ...(options.isQuiet ? { stats: 'errors-only', noInfo: true } : {}),
+    stats: statsOptions,
   })
 
   return new Promise<() => Promise<void>>((resolve, reject) => {
