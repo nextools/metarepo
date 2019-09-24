@@ -135,10 +135,7 @@ export const lint = () =>
       cache: true,
       cacheLocation: 'node_modules/.cache/eslint',
     }),
-    typescriptCheck({
-      lib: ['esnext', 'dom'],
-      typeRoots: ['types/', 'node_modules/@types/'],
-    })
+    typescriptCheck()
   )
 
 export const test = (packageDir: string = '**') =>
