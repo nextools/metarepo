@@ -50,7 +50,7 @@
     "eslint": "^6.1.0",
     "react": "^16.8.6",
     "react-native": "0.60.5",
-    "typescript": "bubble-dev/TypeScript#ext-3.6.2"
+    "typescript": "bubble-dev/TypeScript#fork-3.6.3"
   },
   "scripts": {
     "start": "packages/bubble-dev/start-preset/src/cli/index.js"
