@@ -1,3 +1,7 @@
+## v0.12.0
+
+* 🌱 add `sandbox` support
+
 ## v0.11.2
 
 * 🐞 fix globs for `lint` and `fix` tasks

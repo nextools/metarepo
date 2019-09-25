@@ -1,3 +1,7 @@
+## v0.5.2
+
+* 🐞 fix `package.json` fields
+
 ## v0.5.1
 
 * 🐞 bump react-native

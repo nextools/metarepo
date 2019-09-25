@@ -1,3 +1,7 @@
+## v0.4.2
+
+* 🐞 remove `isQuiet` option
+
 ## v0.4.1
 
 * 🐞 update `terser-webpack-plugin` to v2
