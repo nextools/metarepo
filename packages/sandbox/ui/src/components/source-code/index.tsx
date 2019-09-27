@@ -73,6 +73,7 @@ export const SourceCode = pureComponent(
     >
       {lines && componentMetaFile && (
         <Root
+          width={width}
           lines={lines}
           componentMetaFile={componentMetaFile}
           theme={theme[themeName]}

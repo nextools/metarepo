@@ -8,6 +8,7 @@ const SET_RESOLUTION = 'SET_RESOLUTION'
 const SET_TRANSFORM = 'SET_TRANSFORM'
 const TOGGLE_GRID = 'TOGGLE_GRID'
 const TOGGLE_STRETCH = 'TOGGLE_STRETCH'
+const TOGGLE_INSPECT = 'TOGGLE_INSPECT'
 const TOGGLE_THEME = 'TOGGLE_THEME'
 const TOGGLE_CONTROLS = 'TOGGLE_CONTROLS'
 const NAVIGATE = 'NAVIGATE'
@@ -16,6 +17,7 @@ const SELECT_ELEMENT = 'SELECT_ELEMENT'
 export type TSetWidthAction = TActionWithPayload<typeof SET_WIDTH, TState['width']>
 export type TSetHeightAction = TActionWithPayload<typeof SET_HEIGHT, TState['height']>
 export type TToggleStretchAction = TAction<typeof TOGGLE_STRETCH>
+export type TToggleInspectAction = TAction<typeof TOGGLE_INSPECT>
 export type TToggleGridAction = TAction<typeof TOGGLE_GRID>
 export type TToggleThemeAction = TAction<typeof TOGGLE_THEME>
 export type TToggleControlsAction = TAction<typeof TOGGLE_CONTROLS>
@@ -46,6 +48,10 @@ export const toggleGrid: TActionCreator<TToggleGridAction> = () => ({
 
 export const toggleStretch: TActionCreator<TToggleStretchAction> = () => ({
   type: TOGGLE_STRETCH,
+})
+
+export const toggleInspect: TActionCreator<TToggleInspectAction> = () => ({
+  type: TOGGLE_INSPECT,
 })
 
 export const toggleTheme: TActionCreator<TToggleThemeAction> = () => ({
@@ -91,6 +97,7 @@ export const isSetTransformAction = (obj: TAnyAction): obj is TSetTransformActio
 export const isToggleControlsAction = (obj: TAnyAction): obj is TToggleControlsAction => obj.type === TOGGLE_CONTROLS
 export const isToggleGridAction = (obj: TAnyAction): obj is TToggleGridAction => obj.type === TOGGLE_GRID
 export const isToggleStretchAction = (obj: TAnyAction): obj is TToggleStretchAction => obj.type === TOGGLE_STRETCH
+export const isToggleInspectAction = (obj: TAnyAction): obj is TToggleInspectAction => obj.type === TOGGLE_INSPECT
 export const isToggleThemeAction = (obj: TAnyAction): obj is TToggleThemeAction => obj.type === TOGGLE_THEME
 export const isNavigateAction = (obj: TAnyAction): obj is TNavigateAction => obj.type === NAVIGATE
 export const isSelectElementAction = (obj: TAnyAction): obj is TSelectElementAction => obj.type === SELECT_ELEMENT

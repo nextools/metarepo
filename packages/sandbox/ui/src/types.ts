@@ -27,6 +27,7 @@ export type TState = {
   height: number,
   hasGrid: boolean,
   shouldStretch: boolean,
+  shouldInspect: boolean,
   themeName: TThemeName,
   componentKey: string | null,
   selectedElementPath: string,

@@ -8,14 +8,19 @@ import { Line } from './Line'
 import { LineElement } from './LineElement'
 
 export type TRoot = {
+  width: number,
   lines: TLine[],
   theme: TTheme,
   componentMetaFile: TMetaFile,
 }
 
-export const Root: FC<TRoot> = ({ lines, theme, componentMetaFile }) => {
+export const Root: FC<TRoot> = ({ width, lines, theme, componentMetaFile }) => {
   return (
-    <Block height={lines.length * LINE_HEIGHT} shouldFlow>
+    <Block
+      width={width}
+      height={lines.length * LINE_HEIGHT}
+      shouldFlow
+    >
       {lines.map((line, i) => (
         <Block key={i} left={0} top={i * LINE_HEIGHT} right={0} height={LINE_HEIGHT}>
           <Line path={line.path} index={i + 1} componentMetaFile={componentMetaFile}>

@@ -8,6 +8,7 @@ export const state: TState = {
   height: resolutions[initialResolutionKey].height,
   hasGrid: false,
   shouldStretch: false,
+  shouldInspect: false,
   themeName: 'light',
   componentKey: null,
   selectedElementPath: '',
