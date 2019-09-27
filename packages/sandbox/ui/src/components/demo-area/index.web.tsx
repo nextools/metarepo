@@ -27,7 +27,7 @@ import { setTransform } from '../../actions'
 import { ThemeContext } from '../themes'
 import { mapTransform } from './map-transform'
 import { PureComponent } from './pure-component'
-import { mapInspectRect } from './map-inspect-rect.web'
+import { mapInspectRect } from './map-inspect-rect'
 
 const CONTROLS_HEIGHT = 60
 const COMPONENT_MIN_WIDTH = 200
