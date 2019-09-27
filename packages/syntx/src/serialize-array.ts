@@ -2,7 +2,7 @@
 import { TConfig, TSerializedElement, TPath } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'
-import { sanitizeLines } from './utils'
+import { sanitizeLines, createGetNameIndex } from './utils'
 import { TYPE_ARRAY_BRACKET, TYPE_ARRAY_COMMA } from './constants'
 
 export type TSerializeArray = {
@@ -16,6 +16,7 @@ export const serializeArray = ({ arr, currentIndent, config, path }: TSerializeA
   const { indent } = config
   const length = arr.length
   const isLast = (i: number) => i === length - 1
+  const getNameIndex = createGetNameIndex()
 
   if (length === 0) {
     return {
@@ -33,8 +34,8 @@ export const serializeArray = ({ arr, currentIndent, config, path }: TSerializeA
           value,
           currentIndent: currentIndent + indent,
           config,
-          childIndex: i,
           path,
+          getNameIndex,
         })
 
         return [

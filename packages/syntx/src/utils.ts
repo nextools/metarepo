@@ -107,3 +107,17 @@ export const sanitizeLines = (lines: any[]): TLine[] => {
       return result
     }, [] as TLine[])
 }
+
+export const createGetNameIndex = () => {
+  const nameMap = new Map<string, number>()
+
+  return (name: string) => {
+    const index = nameMap.has(name)
+      ? nameMap.get(name)! + 1
+      : 0
+
+    nameMap.set(name, index)
+
+    return index
+  }
+}

@@ -2,27 +2,27 @@
 import { isValidElement } from 'react'
 import { TConfig, TSerializedElement, TPath, TLineElement } from './types'
 import { serializeIndent } from './serialize-indent'
-import { isNumber, isString, getElementName, sanitizeLines } from './utils'
+import { isNumber, isString, getElementName, sanitizeLines, createGetNameIndex } from './utils'
 import { serializeElement } from './serialize-element'
 import { TYPE_VALUE_NUMBER, TYPE_VALUE_STRING } from './constants'
 
 type TSerializeChildrenValue = {
   value: any,
   currentIndent: number,
-  childIndex: number,
   config: TConfig,
   path: TPath,
+  getNameIndex: (name: string) => number,
 }
 
-const serializeChildrenValue = ({ value, currentIndent, childIndex, config, path }: TSerializeChildrenValue): TSerializedElement => {
+const serializeChildrenValue = ({ value, currentIndent, config, path, getNameIndex }: TSerializeChildrenValue): TSerializedElement => {
   if (isValidElement(value)) {
     return serializeElement({
       name: getElementName(value),
       props: value.props,
       currentIndent,
-      childIndex,
       config,
       path,
+      getNameIndex,
     })
   }
 
@@ -60,15 +60,15 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
   if (Array.isArray(children)) {
     const lines = []
     let lineElements: TLineElement[] = []
-    let childIndex = 0
+    const getNameIndex = createGetNameIndex()
 
     for (const child of children) {
       const { head, body } = serializeChildrenValue({
         value: child,
         currentIndent,
-        childIndex,
         config,
         path,
+        getNameIndex,
       })
 
       if (head.length > 0) {
@@ -89,8 +89,6 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
         lines.push(...body)
         lineElements = []
       }
-
-      childIndex += 1
     }
 
     if (lineElements.length > 0) {
@@ -113,9 +111,9 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
   const { head, body } = serializeChildrenValue({
     value: children,
     currentIndent,
-    childIndex: 0,
     config,
     path,
+    getNameIndex: () => 0,
   })
 
   return {
