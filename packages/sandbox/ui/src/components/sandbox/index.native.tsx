@@ -8,7 +8,10 @@ import { DemoArea } from '../demo-area'
 import { mapImportedComponent } from '../../utils/map-imported-component'
 import { ThemeContext } from '../themes'
 
-export type TSandbox = { components: TComponents } & TRect
+export type TSandbox = {
+  components: TComponents,
+  copyImportPackageName?: string,
+} & TRect
 
 export const Sandbox = component(
   startWithType<TSandbox>(),

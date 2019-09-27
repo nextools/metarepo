@@ -17,7 +17,10 @@ import { ThemeContext } from '../themes'
 const CONTROLS_WIDTH = 500
 const TOP_BAR_HEIGHT = 60
 
-export type TSandbox = { components: TComponents } & TRect
+export type TSandbox = {
+  components: TComponents,
+  copyImportPackageName?: string,
+} & TRect
 
 export const Sandbox = component(
   startWithType<TSandbox>(),
@@ -85,6 +88,7 @@ export const Sandbox = component(
   controlsToggleLeft,
   componentSelectTop,
   componentSelectHeight,
+  copyImportPackageName,
   isVisibleControls,
   textColor,
   borderColor,
@@ -126,6 +130,7 @@ export const Sandbox = component(
           top={sourceCodeTop}
           componentProps={componentProps}
           componentMetaFile={componentMetaFile}
+          copyImportPackageName={copyImportPackageName}
         />
 
         <ComponentControls

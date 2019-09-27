@@ -1,2 +1,1 @@
-export * from './App'
-export { TComponents } from './types'
+index.web.ts

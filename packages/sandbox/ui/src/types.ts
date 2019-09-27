@@ -4,6 +4,12 @@ import { TMetaFile } from 'autoprops'
 import { TColor } from 'colorido'
 import { TResolutionKey } from './resolutions'
 
+export type TApp = {
+  components: TComponents,
+  theme: TThemes,
+  copyImportPackageName?: string,
+}
+
 export type TComponents = {
   [k: string]: () => Promise<TMetaFile>,
 }
