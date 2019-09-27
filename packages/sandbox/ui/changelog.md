@@ -1,3 +1,7 @@
+## v0.3.0
+
+* 🌱 add `copyImportPackageName` option
+
 ## v0.2.1
 
 * 🐞 fix import
