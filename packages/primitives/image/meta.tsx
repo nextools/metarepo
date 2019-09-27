@@ -4,7 +4,7 @@ import { TImage } from './src/types'
 export const config: TComponentConfig<TImage> = {
   props: {
     source: ['data:image/gif;base64,R0lGODdhAQABAIABAAAAAP///ywAAAAAAQABAAACAkQBADs='],
-    alt: ['pepe'],
+    alt: ['image'],
     width: [100],
     height: [100],
     borderRadius: [20],
