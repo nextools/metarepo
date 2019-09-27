@@ -1,3 +1,7 @@
+## v0.2.1
+
+* 🐞 fix import
+
 ## v0.2.0
 
 * 🌱 add inspect rectangle
