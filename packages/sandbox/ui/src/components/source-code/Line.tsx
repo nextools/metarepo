@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { mapHovered, TMapHovered, component, mapHandlers, startWithType, mapWithProps, mapContext } from 'refun'
+import { mapHovered, TMapHovered, component, mapHandlers, startWithType, mapWithProps, mapContext, mapWithPropsMemo } from 'refun'
 import { TPath } from 'syntx'
 import { Button } from '@primitives/button'
 import { TMetaFile } from 'autoprops'
@@ -25,26 +25,22 @@ export const Line = component(
     themeName,
   }), ['selectedElementPath', 'themeName']),
   mapStoreDispatch,
-  mapWithProps(({ selectedElementPath, path, componentMetaFile }) => {
-    const serializedPath = serializeSyntxPath(clampSyntxPath(componentMetaFile, path))
-
-    return ({
-      serializedPath,
-      isSelected: selectedElementPath === serializedPath,
-    })
-  }),
-  mapWithProps(({ theme, themeName }) => ({
-    backgroundColor: theme[themeName].foreground,
+  mapHovered,
+  mapWithPropsMemo(({ path, componentMetaFile }) => ({
+    serializedPath: serializeSyntxPath(clampSyntxPath(componentMetaFile, path)),
+  }), ['path', 'componentMetaFile']),
+  mapWithProps(({ serializedPath, selectedElementPath }) => ({
+    isSelected: selectedElementPath === serializedPath,
+  })),
+  mapWithProps(({ theme, themeName, isSelected, isHovered }) => ({
+    backgroundColor: (isSelected || isHovered) ? theme[themeName].foreground : theme[themeName].foregroundTransparent,
     lineNumberColor: theme[themeName].sourceBaseword,
   })),
   mapHandlers({
     onPress: ({ dispatch, serializedPath }) => () => dispatch(selectElement(serializedPath)),
-  }),
-  mapHovered
+  })
 )(({
   children,
-  isSelected,
-  isHovered,
   onPointerEnter,
   onPointerLeave,
   onPress,
@@ -53,7 +49,7 @@ export const Line = component(
   lineNumberColor,
 }) => (
   <Fragment>
-    {(isSelected || isHovered) && (<Background color={backgroundColor}/>)}
+    <Background color={backgroundColor}/>
     <Block left={20} top={0}>
       <Text color={lineNumberColor}>
         {String(index).padStart(2, '0')}

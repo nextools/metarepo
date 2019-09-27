@@ -2,7 +2,7 @@
 import { TConfig, TSerializedElement, TPath } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'
-import { isUndefined, sanitizeLines } from './utils'
+import { isUndefined, sanitizeLines, createGetNameIndex } from './utils'
 import { TYPE_OBJECT_BRACE, TYPE_OBJECT_COMMA, TYPE_WHITESPACE, TYPE_OBJECT_COLON, TYPE_OBJECT_KEY } from './constants'
 
 export type TSerializeObject = {
@@ -14,6 +14,7 @@ export type TSerializeObject = {
 
 export const serializeObject = ({ obj, currentIndent, config, path }: TSerializeObject): TSerializedElement => {
   const { indent } = config
+  const getNameIndex = createGetNameIndex()
 
   if (Object.keys(obj).length === 0) {
     return {
@@ -33,8 +34,8 @@ export const serializeObject = ({ obj, currentIndent, config, path }: TSerialize
             value,
             currentIndent: currentIndent + indent,
             config,
-            childIndex: i,
             path,
+            getNameIndex,
           })
 
           return [

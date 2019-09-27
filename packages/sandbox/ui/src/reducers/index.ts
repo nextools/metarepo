@@ -3,6 +3,7 @@ import { isUndefined } from 'tsfn'
 import { DeepReadonly } from 'utility-types'
 import {
   isToggleStretchAction,
+  isToggleInspectAction,
   isToggleGridAction,
   isToggleThemeAction,
   isSetWidthAction,
@@ -108,6 +109,13 @@ export const reducer: Reducer<DeepReadonly<TState>> = (state, action) => {
     return {
       ...state,
       shouldStretch: !state.shouldStretch,
+    }
+  }
+
+  if (isToggleInspectAction(action)) {
+    return {
+      ...state,
+      shouldInspect: !state.shouldInspect,
     }
   }
 

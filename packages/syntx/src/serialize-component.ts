@@ -8,10 +8,10 @@ export const serializeComponent = (Component: FC<any>, props: any, config: TConf
   const { body } = serializeElement({
     name,
     currentIndent: 0,
-    childIndex: 0,
     props,
     config,
     path: [],
+    getNameIndex: () => 0,
   })
 
   return body

@@ -11,12 +11,13 @@ import {
 } from 'refun'
 import { Pointer } from '@primitives/pointer'
 import { Transform } from '@primitives/transform'
-import { Size } from '@primitives/size'
+import { Size, TDimensions } from '@primitives/size'
 import { TAnyObject } from 'tsfn'
 import { Border } from '../border'
 import { Shadow } from '../shadow'
 import { Background } from '../background'
 import { Block } from '../block'
+import { BlockRef } from '../block-ref'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { isSafari } from '../../utils/platform-id'
 import { Grid } from '../grid'
@@ -26,6 +27,7 @@ import { setTransform } from '../../actions'
 import { ThemeContext } from '../themes'
 import { mapTransform } from './map-transform'
 import { PureComponent } from './pure-component'
+import { mapInspectRect } from './map-inspect-rect.web'
 
 const CONTROLS_HEIGHT = 60
 const COMPONENT_MIN_WIDTH = 200
@@ -39,14 +41,16 @@ export type TDemoArea = {
 export const DemoArea = pureComponent(
   startWithType<TDemoArea>(),
   mapContext(ThemeContext),
-  mapStoreState(({ width, height, hasGrid, shouldStretch, transform, themeName }) => ({
+  mapStoreState(({ width, height, hasGrid, shouldStretch, shouldInspect, transform, themeName, selectedElementPath }) => ({
     canvasWidth: width,
     canvasHeight: height,
     shouldStretch,
+    shouldInspect,
     hasGrid,
     transform,
     themeName,
-  }), ['width', 'height', 'hasGrid', 'shouldStretch', 'transform', 'themeName']),
+    selectedElementPath,
+  }), ['width', 'height', 'hasGrid', 'shouldStretch', 'shouldInspect', 'transform', 'themeName', 'selectedElementPath']),
   mapStoreDispatch,
   mapHandlers({
     dispatchTransform: ({ dispatch }) => (transform: TTransform) => dispatch(setTransform(transform)),
@@ -65,24 +69,25 @@ export const DemoArea = pureComponent(
     canvasLeft: Math.max((width - canvasWidth) / 2, 0),
     canvasTop: Math.max((height - canvasHeight - CONTROLS_HEIGHT) / 2, 0),
   })),
-  mapState('componentHeight', 'setComponentHeight', () => 0, []),
-  mapWithPropsMemo(({ componentHeight, canvasWidth, canvasHeight, shouldStretch }) => {
-    if (componentHeight === 0) {
+  mapState('componentSize', 'setComponentSize', () => ({ width: 0, height: 0 }) as TDimensions, []),
+  mapWithPropsMemo(({ componentSize, canvasWidth, canvasHeight, shouldStretch }) => {
+    const componentWidth = shouldStretch ? canvasWidth : COMPONENT_MIN_WIDTH
+
+    if (componentSize.height === 0) {
       return {
         componentLeft: 0,
         componentTop: 0,
-        componentWidth: COMPONENT_MIN_WIDTH,
+        componentWidth,
       }
     }
 
-    const componentWidth = shouldStretch ? canvasWidth : COMPONENT_MIN_WIDTH
-
     return {
       componentLeft: shouldStretch ? 0 : round10((canvasWidth - componentWidth) / 2),
-      componentTop: round10((canvasHeight - componentHeight) / 2),
+      componentTop: round10((canvasHeight - componentSize.height) / 2),
       componentWidth,
     }
-  }, ['componentHeight', 'shouldStretch', 'canvasWidth', 'canvasHeight']),
+  }, ['componentSize', 'shouldStretch', 'canvasWidth', 'canvasHeight']),
+  mapInspectRect(),
   mapTransform(0, CONTROLS_HEIGHT)
 )(({
   left,
@@ -101,12 +106,14 @@ export const DemoArea = pureComponent(
   componentWidth,
   componentLeft,
   componentTop,
-  componentHeight,
-  setComponentHeight,
+  componentSize,
+  setComponentSize,
   backgroundColor,
   borderColor,
   shadowColor,
   themeName,
+  selectedInspectRect,
+  setBlockNode,
   onMove,
   onReset,
   onWheel,
@@ -145,15 +152,31 @@ export const DemoArea = pureComponent(
             {Component && (
               <Transform x={componentLeft} y={componentTop} hOrigin="left" vOrigin="top" shouldUse3d={!isSafari}>
                 <Size
-                  height={componentHeight}
+                  width={componentSize.width}
+                  height={componentSize.height}
                   valuesToWatch={[componentWidth, componentProps, canvasWidth, canvasHeight]}
-                  onHeightChange={setComponentHeight}
+                  onChange={setComponentSize}
                 >
-                  <Block shouldFlow width={componentWidth}>
+                  <BlockRef
+                    ref={setBlockNode}
+                    width={componentWidth}
+                    shouldFlow
+                  >
                     <PureComponent Component={Component} props={componentProps}/>
-                  </Block>
+                  </BlockRef>
                 </Size>
               </Transform>
+            )}
+
+            {selectedInspectRect !== null && (
+              <Block
+                left={selectedInspectRect.left + componentLeft}
+                top={selectedInspectRect.top + componentTop}
+                width={selectedInspectRect.width}
+                height={selectedInspectRect.height}
+              >
+                <Background color={[255, 0, 0, 0.3]}/>
+              </Block>
             )}
 
             {hasGrid && (

@@ -100,7 +100,7 @@ export const Block = component(
       }
 
       if (shouldFlow) {
-        styles.position = 'static'
+        styles.position = 'relative'
         styles.alignSelf = 'flex-start'
         styles.flexGrow = 0
         styles.flexShrink = 0

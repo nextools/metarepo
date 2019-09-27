@@ -2,18 +2,18 @@
 import { TConfig, TSerializedElement, TPath } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'
-import { isString, sanitizeLineElements, sanitizeLines } from './utils'
+import { isString, sanitizeLineElements, sanitizeLines, createGetNameIndex } from './utils'
 import { TYPE_QUOTE, TYPE_VALUE_STRING, TYPE_PROPS_BRACE, TYPE_PROPS_KEY, TYPE_PROPS_EQUALS } from './constants'
 
 type TSerializePropertyValue = {
   value: any,
   currentIndent: number,
   path: TPath,
-  childIndex: number,
   config: TConfig,
+  getNameIndex: (name: string) => number,
 }
 
-const serializePropertyValue = ({ value, currentIndent, config, childIndex, path }: TSerializePropertyValue): TSerializedElement => {
+const serializePropertyValue = ({ value, currentIndent, config, path, getNameIndex }: TSerializePropertyValue): TSerializedElement => {
   const { indent } = config
 
   if (isString(value)) {
@@ -40,7 +40,7 @@ const serializePropertyValue = ({ value, currentIndent, config, childIndex, path
     value,
     currentIndent: currentIndent + indent,
     config,
-    childIndex,
+    getNameIndex,
     path,
   })
 
@@ -73,17 +73,19 @@ export type TSerializeProps = {
 }
 
 export const serializeProps = ({ props, currentIndent, config, path }: TSerializeProps): TSerializedElement => {
+  const getNameIndex = createGetNameIndex()
+
   return {
     head: [],
     body: sanitizeLines(
       Object.entries(props)
-        .map(([key, value], i) => {
+        .map(([key, value]) => {
           const { head, body } = serializePropertyValue({
             value,
             currentIndent,
             config,
-            childIndex: i,
             path,
+            getNameIndex,
           })
 
           return [

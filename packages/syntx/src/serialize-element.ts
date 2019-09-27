@@ -10,12 +10,12 @@ export type TSerializeElement = {
   name: string,
   props: any,
   currentIndent: number,
-  childIndex: number,
   config: TConfig,
   path: TPath,
+  getNameIndex: (name: string) => number,
 }
 
-export const serializeElement = ({ name, props, currentIndent, childIndex, config, path }: TSerializeElement): TSerializedElement => {
+export const serializeElement = ({ name, props, currentIndent, config, path, getNameIndex }: TSerializeElement): TSerializedElement => {
   const { indent } = config
   const { children, ...restProps } = props
   const hasChildren = isValidChildren(children)
@@ -23,7 +23,7 @@ export const serializeElement = ({ name, props, currentIndent, childIndex, confi
   const hasProps = hasKeys(filteredProps)
   const elementPath = [
     ...path,
-    { name, index: childIndex },
+    { name, index: getNameIndex(name) },
   ]
 
   if (!hasProps && !hasChildren) {

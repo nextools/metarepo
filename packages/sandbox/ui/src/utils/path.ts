@@ -31,6 +31,14 @@ export const clampSyntxPath = (rootMetaFile: TMetaFile, path: TPath): TPath => {
 
 const pathCache = new Map<string, TPath>([['', []]])
 
+export const getPath = (serializedPath: string): TPath => {
+  if (!pathCache.has(serializedPath)) {
+    throw new Error(`Cache miss for ${serializedPath}`)
+  }
+
+  return pathCache.get(serializedPath)!
+}
+
 export const serializeSyntxPath = (path: TPath): string => {
   const serializedPath = path.reduce((result, { name, index }) => {
     return result.length > 0 ? `${result}--${name}-${index}` : `${name}-${index}`
@@ -69,16 +77,21 @@ export const getMetaByPath = (rootMetaFile: TMetaFile, componentPropsChildrenMap
       throw new Error(`childrenMap is invalid for ${serializedPath} at ${name}`)
     }
 
-    const nextChildMeta = Object.values(childMeta.childrenConfig.meta).find(({ Component }) => getComponentName(Component) === name)
-    const childrenKeys = Object.keys(childrenProps.children)
-    const nextPropsKey = childrenKeys[index]
+    const childEntry = Object.entries(childMeta.childrenConfig.meta).find((entry) => getComponentName(entry[1].Component) === name)
+
+    if (isUndefined(childEntry)) {
+      throw new Error(`Path contains name '${name}', which wasn't found in childConfig.meta`)
+    }
+
+    const [childName, nextChildMeta] = childEntry
+    const nextPropsKey = Object.keys(childrenProps.children).find((name) => {
+      const [baseName, nameIndex] = name.split('__')
+
+      return baseName === childName && index === parseInt(nameIndex)
+    })
 
     if (isUndefined(nextPropsKey)) {
       throw new Error(`path ${serializedPath} is invalid for ${JSON.stringify(componentPropsChildrenMap)}`)
-    }
-
-    if (isUndefined(nextChildMeta)) {
-      throw new Error(`Path contains name '${name}', which wasn't found in childConfig.meta`)
     }
 
     childMeta = nextChildMeta

@@ -10,20 +10,20 @@ import { TYPE_VALUE_FUNCTION, TYPE_VALUE_NULL, TYPE_VALUE_NUMBER, TYPE_VALUE_BOO
 export type TSerializeValue = {
   value: any,
   currentIndent: number,
-  childIndex: number,
   config: TConfig,
   path: TPath,
+  getNameIndex: (name: string) => number,
 }
 
-export const serializeValue = ({ value, currentIndent, config, childIndex, path }: TSerializeValue): TSerializedElement => {
+export const serializeValue = ({ value, currentIndent, config, path, getNameIndex }: TSerializeValue): TSerializedElement => {
   if (isValidElement(value)) {
     return serializeElement({
       name: getElementName(value),
       props: value.props,
       currentIndent,
-      childIndex,
       config,
       path,
+      getNameIndex,
     })
   }
 
