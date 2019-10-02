@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { TExtend, isUndefined, isFunction } from 'tsfn'
+import { isFunction, NOOP } from 'tsfn'
 
 export type TMapPressed = {
   isPressed?: boolean,
@@ -7,41 +7,40 @@ export type TMapPressed = {
   onPressOut?: () => void,
 }
 
-export const mapPressed = <P extends TMapPressed>(props: P): TExtend<P, Required<TMapPressed>> => {
+export const mapPressed = <P extends TMapPressed>(props: P): P & Required<TMapPressed> => {
+  const origOnPressInRef = useRef<() => void>()
+  const origOnPressOutRef = useRef<() => void>()
   const [isPressed, setIsPressed] = useState(false)
+  const onPressInRef = useRef<() => void>(NOOP)
+  const onPressOutRef = useRef<() => void>(NOOP)
 
-  const prevOnPressIn = useRef<() => void>()
-  const prevOnPressOut = useRef<() => void>()
-  const onPressIn = useRef<any>()
-  const onPressOut = useRef<any>()
+  origOnPressInRef.current = props.onPressIn
+  origOnPressOutRef.current = props.onPressOut
 
-  if (isUndefined(onPressIn.current) || (prevOnPressIn.current !== props.onPressIn && isFunction(props.onPressIn))) {
-    onPressIn.current = () => {
+  if (onPressInRef.current === NOOP) {
+    onPressInRef.current = () => {
       setIsPressed(true)
 
-      if (typeof props.onPressIn === 'function') {
-        props.onPressIn()
+      if (isFunction(origOnPressInRef.current)) {
+        origOnPressInRef.current()
       }
     }
   }
 
-  if (isUndefined(onPressOut.current) || (prevOnPressOut.current !== props.onPressOut && isFunction(props.onPressOut))) {
-    onPressOut.current = () => {
+  if (onPressOutRef.current === NOOP) {
+    onPressOutRef.current = () => {
       setIsPressed(false)
 
-      if (typeof props.onPressOut === 'function') {
-        props.onPressOut()
+      if (isFunction(origOnPressOutRef.current)) {
+        origOnPressOutRef.current()
       }
     }
   }
-
-  prevOnPressIn.current = props.onPressIn
-  prevOnPressOut.current = props.onPressOut
 
   return {
     ...props,
     isPressed: isPressed || Boolean(props.isPressed),
-    onPressIn: onPressIn.current,
-    onPressOut: onPressOut.current,
+    onPressIn: onPressInRef.current,
+    onPressOut: onPressOutRef.current,
   }
 }

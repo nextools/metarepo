@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { isUndefined, isFunction, TExtend } from 'tsfn'
+import { isFunction, NOOP } from 'tsfn'
 
 export type TMapHovered = {
   isHovered?: boolean,
@@ -7,41 +7,41 @@ export type TMapHovered = {
   onPointerLeave?: () => void,
 }
 
-export const mapHovered = <P extends TMapHovered>(props: P): TExtend<P, Required<TMapHovered>> => {
+export const mapHovered = <P extends TMapHovered>(props: P): P & Required<TMapHovered> => {
   const [isHovered, setIsHovered] = useState(false)
 
-  const prevOnPointerEnter = useRef<() => void>()
-  const prevOnPointerLeave = useRef<() => void>()
-  const onPointerEnter = useRef<any>()
-  const onPointerLeave = useRef<any>()
+  const origOnPointerEnterRef = useRef<() => void>()
+  const origOnPointerLeaveRef = useRef<() => void>()
+  const onPointerEnterRef = useRef<() => void>(NOOP)
+  const onPointerLeaveRef = useRef<() => void>(NOOP)
 
-  if (isUndefined(onPointerEnter.current) || (prevOnPointerEnter.current !== props.onPointerEnter && isFunction(props.onPointerEnter))) {
-    onPointerEnter.current = () => {
+  origOnPointerEnterRef.current = props.onPointerEnter
+  origOnPointerLeaveRef.current = props.onPointerLeave
+
+  if (onPointerEnterRef.current === NOOP) {
+    onPointerEnterRef.current = () => {
       setIsHovered(true)
 
-      if (isFunction(props.onPointerEnter)) {
-        props.onPointerEnter()
+      if (isFunction(origOnPointerEnterRef.current)) {
+        origOnPointerEnterRef.current()
       }
     }
   }
 
-  if (isUndefined(onPointerLeave.current) || (prevOnPointerLeave.current !== props.onPointerLeave && isFunction(props.onPointerLeave))) {
-    onPointerLeave.current = () => {
+  if (onPointerLeaveRef.current === NOOP) {
+    onPointerLeaveRef.current = () => {
       setIsHovered(false)
 
-      if (isFunction(props.onPointerLeave)) {
-        props.onPointerLeave()
+      if (isFunction(origOnPointerLeaveRef.current)) {
+        origOnPointerLeaveRef.current()
       }
     }
   }
-
-  prevOnPointerEnter.current = props.onPointerEnter
-  prevOnPointerLeave.current = props.onPointerLeave
 
   return {
     ...props,
     isHovered: isHovered || Boolean(props.isHovered),
-    onPointerEnter: onPointerEnter.current,
-    onPointerLeave: onPointerLeave.current,
+    onPointerEnter: onPointerEnterRef.current,
+    onPointerLeave: onPointerLeaveRef.current,
   }
 }
