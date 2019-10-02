@@ -3,7 +3,7 @@ import http from 'http'
 import upng from 'upng-js'
 import { checkScreenshot, TScreenshotsResultData, TScreenshotsFileResultData, TRunScreesnotsResult, TScreenshotsResult, TScreenshotsFileResult } from '@x-ray/screenshot-utils'
 import { TarFs, TTarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
-import { isUndefined, isString, isNumber } from 'tsfn'
+import { isString, isNumber } from 'tsfn'
 import { TLineElement } from 'syntx'
 import prettyMs from 'pretty-ms'
 import { TOptions } from './types'
@@ -16,8 +16,8 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
   const screenshotsPromise = new Promise<TRunScreesnotsResult>((screenshotsResolve, screenshotsReject) => {
     const result: TScreenshotsResult = {}
     const resultData: TScreenshotsResultData = {}
-    let currentTar: TTarFs
-    let currentFilePath: string
+    let currentTar: TTarFs | null = null
+    let currentFilePath: string | null = null
     let hasBeenChanged = false
     let startTime: number | null = null
     let okCount = 0
@@ -25,7 +25,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
     let deletedCount = 0
     let diffCount = 0
 
-    let filenames: string[] = []
+    let screenshotsTakenNames: string[] = []
     let targetResult: TScreenshotsFileResult = {
       old: {},
       new: {},
@@ -35,16 +35,24 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
       new: {},
     }
 
-    const onFileDone = async (tar: TTarFs, filePath: string) => {
-      if (!isUndefined(tar)) {
-        for (const itemName of tar.list()) {
-          if (filenames.includes(itemName)) {
+    const closeCurrentTar = async () => {
+      if (currentTar !== null) {
+        await currentTar.close()
+      }
+
+      currentTar = null
+    }
+
+    const onFileDone = async () => {
+      if (currentTar !== null) {
+        for (const itemName of currentTar.list()) {
+          if (screenshotsTakenNames.includes(itemName)) {
             continue
           }
 
           deletedCount++
 
-          const { data, meta } = await tar.read(itemName) as TTarDataWithMeta
+          const { data, meta } = await currentTar.read(itemName) as TTarDataWithMeta
           const { width, height } = upng.decode(data.buffer)
 
           targetResult.old[itemName] = {
@@ -59,14 +67,14 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
       }
 
       // target file DONE
-      if (isString(filePath)) {
-        const relativePath = path.relative(process.cwd(), filePath)
+      if (isString(currentFilePath)) {
+        const relativePath = path.relative(process.cwd(), currentFilePath)
         result[relativePath] = targetResult
         resultData[relativePath] = targetResultData
 
         console.log(relativePath)
 
-        filenames = []
+        screenshotsTakenNames = []
         targetResult = {
           old: {},
           new: {},
@@ -91,24 +99,23 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
               .on('end', async () => {
                 try {
                   const { data, path: filePath, id, serializedElement } = JSON.parse(body)
-                  const screenshotsDir = path.join(path.dirname(filePath), '__data__')
-                  const screenshotsTarPath = path.join(screenshotsDir, `${options.platform}-screenshots.tar.gz`)
-                  const screenshot = Buffer.from(data, 'base64')
 
                   if (currentFilePath !== filePath) {
-                    await onFileDone(currentTar, currentFilePath)
+                    await onFileDone()
+                    await closeCurrentTar()
+                  }
 
-                    currentFilePath = filePath
+                  currentFilePath = filePath
+                  screenshotsTakenNames.push(id)
 
-                    if (!isUndefined(currentTar)) {
-                      await currentTar.close()
-                    }
+                  if (currentTar === null) {
+                    const screenshotsDir = path.join(path.dirname(filePath), '__data__')
+                    const screenshotsTarPath = path.join(screenshotsDir, `${options.platform}-screenshots.tar.gz`)
 
                     currentTar = await TarFs(screenshotsTarPath)
                   }
 
-                  filenames.push(id)
-
+                  const screenshot = Buffer.from(data, 'base64')
                   const action = await checkScreenshot(screenshot, currentTar, id)
 
                   if (shouldBailout && (action.type === 'DIFF' || action.type === 'NEW')) {
@@ -164,6 +171,8 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
                   res.writeHead(500)
                   res.end()
 
+                  await closeCurrentTar()
+
                   return server.close(() => screenshotsReject(e))
                 }
               })
@@ -174,11 +183,13 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
               .on('data', (chunk) => {
                 body += chunk
               })
-              .on('end', () => {
+              .on('end', async () => {
                 console.error(body)
 
                 res.writeHead(500)
                 res.end()
+
+                await closeCurrentTar()
 
                 return server.close(() => screenshotsReject(null)) // eslint-disable-line
               })
@@ -188,11 +199,8 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
           res.end()
 
           if (req.url === '/done') {
-            await onFileDone(currentTar, currentFilePath)
-
-            if (!isUndefined(currentTar)) {
-              await currentTar.close()
-            }
+            await onFileDone()
+            await closeCurrentTar()
 
             console.log(`ok: ${okCount}`)
             console.log(`new: ${newCount}`)
