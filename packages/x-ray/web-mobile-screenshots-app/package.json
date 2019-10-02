@@ -1,0 +1,27 @@
+{
+  "name": "@x-ray/web-mobile-screenshots-app",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "react-native": "src/index.tsx",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.3",
+    "react-native-view-shot": "^3.0.2",
+    "react-native-webview": "^7.4.0",
+    "refun": "^0.4.3"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.6",
+    "react": "^16.8.0",
+    "react-native": "^0.60.5"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-native": "^0.60.5"
+  }
+}
