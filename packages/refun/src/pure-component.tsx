@@ -1,8 +1,8 @@
 /* eslint-disable import/export */
 import { useRef, ReactElement, FC } from 'react'
 import { EMPTY_OBJECT } from 'tsfn'
-import shallowEqual from 'shallowequal'
 import { TComponent } from './types'
+import { shallowEqualByKeys } from './utils'
 
 export function pureComponent<T1, R> (fn: (p: T1) => R): (Component: FC<R>) => TComponent<T1>
 export function pureComponent<T1, T2, R> (fn1: (p: T1) => T2, fn2: (p: T2) => R): (Component: FC<R>) => TComponent<T1>
@@ -33,10 +33,9 @@ export function pureComponent(...uses: any[]) {
   return (Component: FC<any>) => (props: any) => {
     const renderResultRef = useRef<ReactElement | null>(null)
     const prevOutPropsRef = useRef(EMPTY_OBJECT)
-    const prevOutProps = prevOutPropsRef.current
     const outProps = uses.reduce((props, use) => use(props), props)
 
-    if (prevOutProps === EMPTY_OBJECT || !shallowEqual(prevOutProps, outProps)) {
+    if (prevOutPropsRef.current === EMPTY_OBJECT || !shallowEqualByKeys(prevOutPropsRef.current, outProps, Object.keys(outProps))) {
       prevOutPropsRef.current = outProps
       renderResultRef.current = Component(outProps)
     }
