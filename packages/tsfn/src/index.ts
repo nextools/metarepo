@@ -26,6 +26,7 @@ export const objectHas = <T extends {}, K extends keyof T> (obj: T, key: K): obj
 export const EMPTY_OBJECT = Object.freeze(Object.create(null)) as any
 export const EMPTY_ARRAY = [] as any
 export const UNDEFINED = void 0
+export const NOOP = () => {}
 
 export const isUndefined = (value: any): value is undefined => value === UNDEFINED
 export const isDefined = <T>(value: T): value is T extends undefined ? never : T => value !== UNDEFINED
