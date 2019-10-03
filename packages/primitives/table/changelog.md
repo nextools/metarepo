@@ -1,3 +1,7 @@
+## v0.5.0
+
+* 🌱 naive native support
+
 ## v0.4.0
 
 * ♻️ update dependencies: `refun`, `stili`
