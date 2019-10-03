@@ -14,7 +14,6 @@ export const Block = component(
     shouldFlow: false,
     shouldHideOverflow: false,
     shouldIgnorePointerEvents: false,
-    shouldUseFlex: false,
     shouldForceAcceleration: false,
   }),
   mapProps(
