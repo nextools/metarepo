@@ -1,3 +1,8 @@
+## v0.5.1
+
+* 🐞 add missing 'react-native' target in table
+* 🐞 add missing 'react-native' target to package.json for table
+
 ## v0.5.0
 
 * 🌱 naive native support
