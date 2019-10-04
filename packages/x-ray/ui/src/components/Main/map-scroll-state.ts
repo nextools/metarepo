@@ -6,23 +6,24 @@ export const mapScrollState = <P extends {}>() => pipe(
   mapState('scrollTop', 'setScrollTop', () => 0, []),
   mapState('prevScrollTop', 'setPrevScrollTop', () => null as number | null, []),
   mapHandlers(({
-    onScroll1: ({ setScrollTop, setPrevScrollTop, prevScrollTop }) => (scrollTop) => {
-      setScrollTop(scrollTop)
+    onScrollScrolling: ({ scrollTop, setScrollTop, setPrevScrollTop, prevScrollTop }) => (newScrollTop) => {
+      setScrollTop(newScrollTop)
 
+      // is scrolling just started, store previous scroll pos
       if (prevScrollTop === null) {
         setPrevScrollTop(scrollTop)
       }
     },
-    onScroll2: ({ setPrevScrollTop }) => () => {
+    onScrollStop: ({ setPrevScrollTop }) => () => {
       setPrevScrollTop(null)
     },
   })),
-  mapThrottledHandlerAnimationFrame('onScroll1'),
-  mapDebouncedHandlerTimeout('onScroll2', 100),
+  mapThrottledHandlerAnimationFrame('onScrollScrolling'),
+  mapDebouncedHandlerTimeout('onScrollStop', 100),
   mapHandlers({
-    onScroll: ({ onScroll1, onScroll2 }) => (scrollTop) => {
-      onScroll1(scrollTop)
-      onScroll2()
+    onScroll: ({ onScrollScrolling, onScrollStop }) => (scrollTop) => {
+      onScrollScrolling(scrollTop)
+      onScrollStop()
     },
   })
 )
