@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { TExtend, requestAnimationFrame, cancelAnimationFrame, UNDEFINED, EMPTY_ARRAY } from 'tsfn'
+import { TExtend, requestAnimationFrame, cancelAnimationFrame, UNDEFINED, EMPTY_ARRAY, EMPTY_OBJECT } from 'tsfn'
 import { useEffectFn } from './utils'
 
 export type TSafeRequestAnimationFrame = (cb: () => void) => () => void
@@ -7,43 +7,40 @@ export type TSafeRequestAnimationFrame = (cb: () => void) => () => void
 export const mapSafeRequestAnimationFrameFactory = (requestAnimationFrameFn: Function, cancelAnimationFrameFn: Function) =>
   <P extends {}, K extends string>(propName: K) =>
     (props: P): TExtend<P, { [k in K]: TSafeRequestAnimationFrame }> => {
-      const firstCall = useRef(true)
-      const timerIds = useRef<Set<number>>(UNDEFINED as any)
-      const setSafeRAF = useRef<TSafeRequestAnimationFrame>(UNDEFINED as any)
-      const unmountFn = useRef<() => void>(UNDEFINED as any)
+      const timerIdsRef = useRef<Set<any>>(EMPTY_OBJECT)
+      const setSafeRafRef = useRef<TSafeRequestAnimationFrame>()
+      const useEffectFnRef = useRef<() => () => void>()
 
-      if (firstCall.current) {
-        firstCall.current = false
+      if (setSafeRafRef.current === UNDEFINED) {
+        timerIdsRef.current = new Set()
 
-        timerIds.current = new Set()
-        setSafeRAF.current = ((cb) => {
+        setSafeRafRef.current = ((cb) => {
           const timerId = requestAnimationFrameFn(() => {
-            timerIds.current.delete(timerId)
+            timerIdsRef.current.delete(timerId)
             cb()
           })
 
-          timerIds.current.add(timerId)
+          timerIdsRef.current.add(timerId)
 
           return () => {
             cancelAnimationFrameFn(timerId)
-            timerIds.current.delete(timerId)
+            timerIdsRef.current.delete(timerId)
           }
         }) as TSafeRequestAnimationFrame
 
-        unmountFn.current = () => () => {
-          timerIds.current.forEach((id) => cancelAnimationFrameFn(id))
-          timerIds.current.clear()
+        useEffectFnRef.current = () => () => {
+          timerIdsRef.current.forEach((id) => cancelAnimationFrameFn(id))
+          timerIdsRef.current.clear()
         }
       }
 
-      useEffectFn(unmountFn.current, EMPTY_ARRAY)
+      useEffectFn(useEffectFnRef.current!, EMPTY_ARRAY)
 
       // FIXME https://github.com/microsoft/TypeScript/issues/13948
-      // @ts-ignore
       return {
         ...props,
-        [propName]: setSafeRAF.current,
-      }
+        [propName]: setSafeRafRef.current,
+      } as any
     }
 
 export const mapSafeRequestAnimationFrame = mapSafeRequestAnimationFrameFactory(requestAnimationFrame, cancelAnimationFrame)

@@ -1,43 +1,49 @@
 import { useRef } from 'react'
-import { requestAnimationFrame, cancelAnimationFrame, UNDEFINED } from 'tsfn'
+import { requestAnimationFrame, cancelAnimationFrame, UNDEFINED, EMPTY_ARRAY, isFunction } from 'tsfn'
 import { useEffectFn } from './utils'
 
 export const mapThrottledHandlerFactory = (setFn: Function, clearFn: Function) =>
   <P extends {}> (handlerName: keyof P, ...setFnArgs: any[]) =>
     (props: P): P => {
-      const timerId = useRef<number>()
-      const throttledHandler = useRef<(...args: any[]) => void>()
-      const originalHandler = useRef<P[keyof P]>()
-      const args = useRef<any[]>([])
+      const timerId = useRef<any>(null)
+      const throttledHandlerRef = useRef<(...args: any[]) => void>()
+      const onUnmountRef = useRef<() => () => void>()
+      const currentPropsHandlerRef = useRef<P[keyof P]>()
+      const handlerArgsRef = useRef<any[]>(EMPTY_ARRAY)
 
-      if (originalHandler.current !== props[handlerName] || originalHandler === UNDEFINED) {
-        originalHandler.current = props[handlerName]
-        throttledHandler.current = (...newArgs: any[]) => {
-          args.current = newArgs
+      currentPropsHandlerRef.current = props[handlerName]
 
-          if (timerId.current === UNDEFINED) {
-            timerId.current = setFn(() => {
-              if (typeof originalHandler.current === 'function') {
-                originalHandler.current(...args.current)
-              }
+      if (throttledHandlerRef.current === UNDEFINED) {
+        const timeoutCallback = () => {
+          timerId.current = null
 
-              timerId.current = UNDEFINED
-            }, ...setFnArgs)
+          if (isFunction(currentPropsHandlerRef.current)) {
+            currentPropsHandlerRef.current(...handlerArgsRef.current)
+          }
+        }
+
+        throttledHandlerRef.current = (...args: any[]) => {
+          handlerArgsRef.current = args
+
+          if (timerId.current === null && isFunction(currentPropsHandlerRef.current)) {
+            timerId.current = setFn(timeoutCallback, ...setFnArgs)
+          }
+        }
+
+        onUnmountRef.current = () => () => {
+          if (timerId.current !== null) {
+            clearFn(timerId.current)
+
+            timerId.current = null
           }
         }
       }
 
-      useEffectFn(() => () => {
-        if (timerId.current !== UNDEFINED) {
-          clearFn(timerId.current)
-
-          timerId.current = UNDEFINED
-        }
-      }, [])
+      useEffectFn(onUnmountRef.current!, EMPTY_ARRAY)
 
       return {
         ...props,
-        [handlerName]: throttledHandler.current,
+        [handlerName]: throttledHandlerRef.current,
       }
     }
 
