@@ -5,7 +5,7 @@
 ### macOS
 
 ```sh
-brew tap caskroom/cask
+brew update
 brew tap caskroom/versions
 brew cask install adoptopenjdk8
 brew cask install android-sdk
