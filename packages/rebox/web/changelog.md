@@ -1,3 +1,7 @@
+## v0.4.5
+
+* 🐞 fix too many extracted comments in `buildRelease`
+
 ## v0.4.4
 
 * 🐞 re-enable `minimize` option for `buildRelease`
