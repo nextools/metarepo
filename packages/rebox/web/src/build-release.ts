@@ -112,7 +112,7 @@ export const buildRelease = (options: TBuildJsBundleOptions) => {
       hints: false,
     },
     optimization: {
-      minimize: false,
+      minimize: true,
       minimizer: [
         new TerserPlugin({
           cache: true,
