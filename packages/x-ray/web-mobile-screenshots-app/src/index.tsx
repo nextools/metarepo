@@ -4,6 +4,8 @@ import { View, Platform } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { captureRef } from 'react-native-view-shot' // eslint-disable-line
 
+let htmlIndex = 0
+
 const makeHtml = (element: string) => `
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
@@ -15,6 +17,7 @@ const makeHtml = (element: string) => `
   </style>
 </head>
 <body>
+<!-- ${htmlIndex++} -->
 ${element}
 <script>
   (async () => {
