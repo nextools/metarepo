@@ -3,7 +3,7 @@ import { createSpy, getSpyCalls } from 'spyfn'
 import { mock } from 'mocku'
 
 test('codecov-lite', async (t) => {
-  const postSpy = createSpy(() => Promise.resolve({ body: 'reportURL\nputURL' }))
+  const postSpy = createSpy(() => Promise.resolve({ body: 'HTTP 200\nreportURL' }))
   const putSpy = createSpy(() => {})
 
   const unmock = mock('../src/index', {
@@ -26,30 +26,11 @@ test('codecov-lite', async (t) => {
     getSpyCalls(postSpy),
     [
       [
-        'https://codecov.io/upload/v4?foo=1&bar=2',
+        'https://codecov.io/upload/v2?foo=1&bar=2',
         {
           headers: {
             'Content-Type': 'text/plain',
             Accept: 'text/plain',
-          },
-          body: '',
-          timeout: 5000,
-          retry: 3,
-        },
-      ],
-    ],
-    'should send POST request'
-  )
-
-  t.deepEqual(
-    getSpyCalls(putSpy),
-    [
-      [
-        'putURL',
-        {
-          headers: {
-            'Content-Type': 'text/plain',
-            'x-amz-acl': 'public-read',
           },
           body: 'data',
           timeout: 5000,
@@ -57,7 +38,7 @@ test('codecov-lite', async (t) => {
         },
       ],
     ],
-    'should send PUT request'
+    'should send POST request'
   )
 
   t.deepEqual(

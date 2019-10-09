@@ -1,10 +1,11 @@
 {
   "name": "@primitives/table",
-  "version": "0.4.0",
+  "version": "0.5.1",
   "description": "",
   "keywords": [],
-  "main": "src/index.web.tsx",
-  "browser": "src/index.web.tsx",
+  "main": "src/index.web.ts",
+  "browser": "src/index.web.ts",
+  "react-native": "src/index.native.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
@@ -17,6 +18,8 @@
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
-    "react": "^16.8.6"
+    "@types/react-native": "^0.60.13",
+    "react": "^16.8.6",
+    "react-native": "^0.60.5"
   }
 }

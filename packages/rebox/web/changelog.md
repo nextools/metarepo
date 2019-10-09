@@ -1,3 +1,7 @@
+## v0.4.3
+
+* 🐞 handle more image types
+
 ## v0.4.2
 
 * 🐞 remove `isQuiet` option

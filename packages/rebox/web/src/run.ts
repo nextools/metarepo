@@ -29,6 +29,7 @@ export type TServeJsBundleOptions = {
   entryPointPath: string,
   htmlTemplatePath: string,
   assetsPath?: string,
+  isQuiet?: boolean,
   shouldOpenBrowser?: boolean,
 }
 
@@ -85,7 +86,7 @@ export const run = (options: TServeJsBundleOptions) => {
           },
         },
         {
-          test: /\.(png|jpg)$/,
+          test: /\.(gif|jpg|jpeg|tiff|png)$/,
           // exclude: excludeNodeModulesRegExp,
           loader: require.resolve('file-loader'),
           options: {
@@ -132,7 +133,8 @@ export const run = (options: TServeJsBundleOptions) => {
   const server = new WebpackDevServer(compiler, {
     ...devConfig,
     open: options.shouldOpenBrowser,
-    stats: statsOptions,
+    stats: options.isQuiet === true ? 'errors-only' : statsOptions,
+    noInfo: options.isQuiet,
   })
 
   return new Promise<() => Promise<void>>((resolve, reject) => {
