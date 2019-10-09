@@ -1,3 +1,7 @@
+## v0.2.3
+
+* 🐞 add `NOOP` function
+
 ## v0.2.2
 
 * 🐞 add `getObjectValues` and `getObjectEntries`

@@ -1,3 +1,7 @@
+## v0.1.5
+
+* 🐞 use new `onMount`
+
 ## v0.1.4
 
 * 🐞 fix SourceCode line wrap

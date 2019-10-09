@@ -1,8 +1,13 @@
 {
   "name": "spyfn",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Spy function",
-  "keywords": ["spy", "tests", "calls", "args"],
+  "keywords": [
+    "spy",
+    "tests",
+    "calls",
+    "args"
+  ],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",

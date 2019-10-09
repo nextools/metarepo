@@ -1,3 +1,20 @@
+## v0.4.4
+
+* 🐞 rename `mapReduxState` to `ReduxStateFactory` and `mapReduxDispatch` to `ReduxDispatchFactory`
+* 🐞 remove `mapReducer`
+* 🐞 prevent calling `set` function after unmount in `mapSafeTimeout` and `mapSafeRequestAnimationFrame`
+* 🐞 fix `mapStateRef` to rerender on flush
+* 🐞 remove `getElementName` and `getComponentName` functions
+* 🐞 make `onChange` invoke on first render
+* 🐞 allow async function in `onChange`
+* 🐞 add `onMountUnmount`
+* 🐞 enhance `mapDefaultProps`
+* 🐞 add `onUnmount`, allow async functions
+* 🐞 optimize `onUpdate`, allow async functions
+* 🐞 optimize `onMount`, allow async functions
+* 🐞 fix dangling functions in `mapFocused`, `mapHovered`, `mapPressed`, `mapKeyboardFocused`
+* 🐞 fix `mapRef` type
+
 ## v0.4.3
 
 * 🐞 fix `mapRef` types
