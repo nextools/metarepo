@@ -5,6 +5,7 @@ import {
   component,
   mapState,
   onMount,
+  onUnmount,
   startWithType,
   mapHandlers,
   mapWithProps,
@@ -29,10 +30,9 @@ export const Root = component(
   }),
   onMount(({ setDimensions }) => {
     Dimensions.addEventListener('change', setDimensions)
-
-    return () => {
-      Dimensions.removeEventListener('change', setDimensions)
-    }
+  }),
+  onUnmount(({ setDimensions }) => {
+    Dimensions.removeEventListener('change', setDimensions)
   }),
   mapWithProps(({ dimensions }) => ({
     styles: normalizeStyle({

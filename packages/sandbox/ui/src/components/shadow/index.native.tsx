@@ -29,14 +29,12 @@ export const Shadow = component(
     blurRadius: 0,
     spreadRadius: 0,
     overflow: 0,
-    borderWidth: 1,
   })
 )(({
   topLeftRadius,
   topRightRadius,
   bottomRightRadius,
   bottomLeftRadius,
-  borderWidth,
   color,
   overflow,
 }) => (
@@ -55,7 +53,7 @@ export const Shadow = component(
           borderBottomRightRadius: bottomRightRadius,
           borderBottomLeftRadius: bottomLeftRadius,
           borderColor: colorToString(color),
-          borderWidth,
+          borderWidth: 1,
         }}
       />
     )}

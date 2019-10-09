@@ -1,15 +1,19 @@
-import { getObjectKeys, isUndefined } from 'tsfn'
+import { UNDEFINED, TOptionalKeys, getObjectKeys } from 'tsfn'
 
-export const mapDefaultProps = <T extends {}> (defaultProps: T) =>
-  <P extends {}> (props: P): P & T => {
-    const mergedProps = { ...defaultProps, ...props }
+export const mapDefaultProps = <P extends {}, K extends TOptionalKeys<P>> (defaultProps: { [k in K]: Exclude<P[k], undefined> }) => {
+  const defaultPropsKeys = getObjectKeys(defaultProps)
 
-    // prevent undefined values to overwrite default props
-    for (const key of getObjectKeys(props)) {
-      if (isUndefined(mergedProps[key]) && Reflect.has(defaultProps, key)) {
-        mergedProps[key] = (defaultProps as typeof mergedProps)[key]
+  return (props: P): P & typeof defaultProps => {
+    const mergedProps = { ...props } as any
+
+    for (const key of defaultPropsKeys) {
+      const value = props[key]
+
+      if (value === UNDEFINED) {
+        mergedProps[key] = defaultProps[key]
       }
     }
 
     return mergedProps
   }
+}

@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { TExtend, isUndefined, isFunction } from 'tsfn'
+import { isFunction, NOOP } from 'tsfn'
 
 export type TMapKeyboardFocused = {
   isKeyboardFocused?: boolean,
@@ -9,72 +9,72 @@ export type TMapKeyboardFocused = {
   onPressOut?: () => void,
 }
 
-export const mapKeyboardFocused = <P extends TMapKeyboardFocused>(props: P): TExtend<P, Required<TMapKeyboardFocused>> => {
+export const mapKeyboardFocused = <P extends TMapKeyboardFocused>(props: P): P & Required<TMapKeyboardFocused> => {
   const [isKeyboardFocused, setIsKeyboardFocused] = useState(false)
 
-  const prevOnFocus = useRef<() => void>()
-  const prevOnBlur = useRef<() => void>()
-  const prevOnPressIn = useRef<() => void>()
-  const prevOnPressOut = useRef<() => void>()
+  const origOnFocusRef = useRef<() => void>()
+  const origOnBlurRef = useRef<() => void>()
+  const origOnPressInRef = useRef<() => void>()
+  const origOnPressOutRef = useRef<() => void>()
   const isPressed = useRef(false)
-  const onPressIn = useRef<any>()
-  const onPressOut = useRef<any>()
-  const onFocus = useRef<any>()
-  const onBlur = useRef<any>()
+  const onPressInRef = useRef<() => void>(NOOP)
+  const onPressOutRef = useRef<() => void>(NOOP)
+  const onFocusRef = useRef<() => void>(NOOP)
+  const onBlurRef = useRef<() => void>(NOOP)
 
-  if (isUndefined(onPressIn.current) || (prevOnPressIn.current !== props.onPressIn && isFunction(props.onPressIn))) {
-    onPressIn.current = () => {
+  origOnFocusRef.current = props.onFocus
+  origOnBlurRef.current = props.onBlur
+  origOnPressInRef.current = props.onPressIn
+  origOnPressOutRef.current = props.onPressOut
+
+  if (onPressInRef.current === NOOP) {
+    onPressInRef.current = () => {
       isPressed.current = true
 
-      if (isFunction(props.onPressIn)) {
-        props.onPressIn()
+      if (isFunction(origOnPressInRef.current)) {
+        origOnPressInRef.current()
       }
     }
   }
 
-  if (isUndefined(onPressOut.current) || (prevOnPressOut.current !== props.onPressOut && isFunction(props.onPressOut))) {
-    onPressOut.current = () => {
+  if (onPressOutRef.current === NOOP) {
+    onPressOutRef.current = () => {
       isPressed.current = false
 
-      if (isFunction(props.onPressOut)) {
-        props.onPressOut()
+      if (isFunction(origOnPressOutRef.current)) {
+        origOnPressOutRef.current()
       }
     }
   }
 
-  if (isUndefined(onFocus.current) || (prevOnFocus.current !== props.onFocus && isFunction(props.onFocus))) {
-    onFocus.current = () => {
+  if (onFocusRef.current === NOOP) {
+    onFocusRef.current = () => {
       if (isPressed.current === false) {
         setIsKeyboardFocused(true)
       }
 
-      if (isFunction(props.onFocus)) {
-        props.onFocus()
+      if (isFunction(origOnFocusRef.current)) {
+        origOnFocusRef.current()
       }
     }
   }
 
-  if (isUndefined(onBlur.current) || (prevOnBlur.current !== props.onBlur && isFunction(props.onBlur))) {
-    onBlur.current = () => {
+  if (onBlurRef.current === NOOP) {
+    onBlurRef.current = () => {
       setIsKeyboardFocused(false)
 
-      if (isFunction(props.onBlur)) {
-        props.onBlur()
+      if (isFunction(origOnBlurRef.current)) {
+        origOnBlurRef.current()
       }
     }
   }
-
-  prevOnFocus.current = props.onFocus
-  prevOnBlur.current = props.onBlur
-  prevOnPressIn.current = props.onPressIn
-  prevOnPressOut.current = props.onPressOut
 
   return {
     ...props,
     isKeyboardFocused: isKeyboardFocused || Boolean(props.isKeyboardFocused),
-    onFocus: onFocus.current,
-    onBlur: onBlur.current,
-    onPressIn: onPressIn.current,
-    onPressOut: onPressOut.current,
+    onFocus: onFocusRef.current,
+    onBlur: onBlurRef.current,
+    onPressIn: onPressInRef.current,
+    onPressOut: onPressOutRef.current,
   }
 }

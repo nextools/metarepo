@@ -1,6 +1,6 @@
 import { ReactElement, isValidElement } from 'react'
-import { getElementName } from 'refun'
 import { isUndefined, isObject, isFunction } from 'tsfn'
+import { getElementName } from '../../utils'
 
 const REACT_FRAGMENT_TYPE = Symbol.for('react.fragment')
 

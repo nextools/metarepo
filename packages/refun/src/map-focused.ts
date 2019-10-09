@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { TExtend, isUndefined, isFunction } from 'tsfn'
+import { isFunction, NOOP } from 'tsfn'
 
 export type TMapFocused = {
   isFocused?: boolean,
@@ -7,41 +7,41 @@ export type TMapFocused = {
   onBlur?: () => void,
 }
 
-export const mapFocused = <P extends TMapFocused>(props: P): TExtend<P, Required<TMapFocused>> => {
+export const mapFocused = <P extends TMapFocused>(props: P): P & Required<TMapFocused> => {
   const [isFocused, setIsFocused] = useState(false)
 
-  const prevOnFocus = useRef<() => void>()
-  const prevOnBlur = useRef<() => void>()
-  const onFocus = useRef<any>()
-  const onBlur = useRef<any>()
+  const origOnFocusRef = useRef<() => void>()
+  const origOnBlurRef = useRef<() => void>()
+  const onFocusRef = useRef<() => void>(NOOP)
+  const onBlurRef = useRef<() => void>(NOOP)
 
-  if (isUndefined(onFocus.current) || prevOnFocus.current !== props.onFocus && isFunction(props.onFocus)) {
-    onFocus.current = () => {
+  origOnFocusRef.current = props.onFocus
+  origOnBlurRef.current = props.onBlur
+
+  if (onFocusRef.current === NOOP) {
+    onFocusRef.current = () => {
       setIsFocused(true)
 
-      if (isFunction(props.onFocus)) {
-        props.onFocus()
+      if (isFunction(origOnFocusRef.current)) {
+        origOnFocusRef.current()
       }
     }
   }
 
-  if (isUndefined(onBlur.current) || (prevOnBlur.current !== props.onBlur && isFunction(props.onBlur))) {
-    onBlur.current = () => {
+  if (onBlurRef.current === NOOP) {
+    onBlurRef.current = () => {
       setIsFocused(false)
 
-      if (isFunction(props.onBlur)) {
-        props.onBlur()
+      if (isFunction(origOnBlurRef.current)) {
+        origOnBlurRef.current()
       }
     }
   }
-
-  prevOnFocus.current = props.onFocus
-  prevOnBlur.current = props.onBlur
 
   return {
     ...props,
     isFocused: isFocused || Boolean(props.isFocused),
-    onFocus: onFocus.current,
-    onBlur: onBlur.current,
+    onFocus: onFocusRef.current,
+    onBlur: onBlurRef.current,
   }
 }

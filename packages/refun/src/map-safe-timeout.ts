@@ -1,38 +1,51 @@
-import { useRef } from 'react'
-import { TExtend } from 'tsfn'
-import { useEffectFn } from './utils'
+import { useRef, useEffect } from 'react'
+import { TExtend, UNDEFINED, EMPTY_OBJECT, EMPTY_ARRAY, NOOP } from 'tsfn'
 
 export type TSetSafeTimeout = (cb: () => void, delay: number) => () => void
 
 export const mapSafeTimeoutFactory = (setTimeoutFn: Function, clearTimeoutFn: Function) =>
-  <P extends {}, K extends string>(propName: K) =>
-    (props: P): TExtend<P, { [k in K]: TSetSafeTimeout }> => {
-      const timerIds = useRef<Set<number>>(new Set())
-      const setSafeTimeout = useRef<TSetSafeTimeout>((cb, delay) => {
+  <K extends string>(propName: K) => <P extends {}>(props: P): TExtend<P, { [k in K]: TSetSafeTimeout }> => {
+    const timerIdsRef = useRef<Set<any>>(EMPTY_OBJECT)
+    const setSafeTimeoutRef = useRef<TSetSafeTimeout>()
+    const useEffectFnRef = useRef<() => () => void>()
+
+    if (setSafeTimeoutRef.current === UNDEFINED) {
+      timerIdsRef.current = new Set()
+
+      setSafeTimeoutRef.current = (cb, delay) => {
+        // check if component has been unmounted
+        if (timerIdsRef.current === EMPTY_OBJECT) {
+          return NOOP
+        }
+
         const timerId = setTimeoutFn(() => {
-          timerIds.current.delete(timerId)
+          timerIdsRef.current.delete(timerId)
           cb()
         }, delay)
 
-        timerIds.current.add(timerId)
+        timerIdsRef.current.add(timerId)
 
         return () => {
           clearTimeoutFn(timerId)
-          timerIds.current.delete(timerId)
+          timerIdsRef.current.delete(timerId)
         }
-      })
+      }
 
-      useEffectFn(() => () => {
-        timerIds.current.forEach((id) => clearTimeoutFn(id))
-        timerIds.current.clear()
-      }, [])
-
-      // FIXME https://github.com/microsoft/TypeScript/issues/13948
-      // @ts-ignore
-      return {
-        ...props,
-        [propName]: setSafeTimeout.current,
+      useEffectFnRef.current = () => () => {
+        timerIdsRef.current.forEach((id) => clearTimeoutFn(id))
+        timerIdsRef.current.clear()
+        // indicates that component has been unmounted
+        timerIdsRef.current = EMPTY_OBJECT
       }
     }
+
+    useEffect(useEffectFnRef.current!, EMPTY_ARRAY)
+
+    // FIXME https://github.com/microsoft/TypeScript/issues/13948
+    return {
+      ...props,
+      [propName]: setSafeTimeoutRef.current,
+    } as any
+  }
 
 export const mapSafeTimeout = mapSafeTimeoutFactory(setTimeout, clearTimeout)

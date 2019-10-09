@@ -31,7 +31,7 @@ export const Text = component(
     shouldPreserveWhitespace: false,
     shouldPreventSelection: false,
     shouldPreventWrap: false,
-    sholdHideOverflow: false,
+    shouldHideOverflow: false,
     isUnderlined: false,
     color: COLOR_BLACK,
   }),

@@ -3,6 +3,7 @@ import {
   component,
   mapState,
   onMount,
+  onUnmount,
   startWithType,
   mapHandlers,
   mapWithProps,
@@ -28,10 +29,9 @@ export const Root = component(
   mapThrottledHandlerAnimationFrame('setDimensions'),
   onMount(({ setDimensions }) => {
     globalObject.addEventListener('resize', setDimensions)
-
-    return () => {
-      globalObject.removeEventListener('resize', setDimensions)
-    }
+  }),
+  onUnmount(({ setDimensions }) => {
+    globalObject.removeEventListener('resize', setDimensions)
   }),
   mapWithProps(({ dimensions }) => ({
     style: normalizeStyle({

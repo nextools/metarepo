@@ -1,53 +1,35 @@
 import React, { createContext } from 'react'
-import { Store, AnyAction, Dispatch } from 'redux' // eslint-disable-line
+import { Store, Dispatch } from 'redux'
 import { component } from './component'
 import { mapState } from './map-state'
-import { onMount } from './on-mount'
-import { mapReduxState, mapReduxDispatch, TStoreContextValue } from './map-redux'
+import { onMountUnmount } from './on-mount-unmount'
+import { ReduxStateFactory, TStoreContextValue } from './redux-state-factory'
+import { ReduxDispatchFactory } from './redux-dispatch-factory'
 
 export const StoreContextFactory = <S extends {}, D extends Dispatch> (store: Store<S>) => {
-  const Context = createContext<TStoreContextValue<S, D>>({
+  const getStateAndDispatch = () => ({
     state: store.getState(),
     dispatch: store.dispatch as D,
   })
+  const Context = createContext<TStoreContextValue<S, D>>({} as any)
 
   const StoreProvider = component(
-    mapState('value', 'setValue', () => ({
-      state: store.getState(),
-      dispatch: store.dispatch as D,
-    }), []),
-    onMount(({ setValue }) => {
-      const state = store.getState()
-
-      if (state !== null) {
-        setValue({
-          state,
-          dispatch: store.dispatch as D,
-        })
-      }
-
-      return store.subscribe(() => {
-        setValue({
-          state: store.getState(),
-          dispatch: store.dispatch as D,
-        })
-      })
-    })
+    mapState('value', 'setValue', getStateAndDispatch, []),
+    onMountUnmount(({ setValue }) => store.subscribe(() => {
+      setValue(getStateAndDispatch())
+    }))
   )(({ value, children }) => (
     <Context.Provider value={value}>
       {value.state === null ? null : children}
     </Context.Provider>
   ))
 
-  const mapStoreState = mapReduxState<S, D>(Context)
-  const mapStoreDispatch = mapReduxDispatch<S, D>(Context)
-
   StoreProvider.displayName = 'StoreProvider'
 
   return {
     StoreProvider,
-    mapStoreState,
-    mapStoreDispatch,
+    mapStoreState: ReduxStateFactory<S, D>(Context),
+    mapStoreDispatch: ReduxDispatchFactory<S, D>(Context),
   }
 }
 

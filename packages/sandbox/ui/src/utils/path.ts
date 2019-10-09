@@ -1,7 +1,7 @@
 import { TPath } from 'syntx'
 import { TMetaFile, isChildrenMap } from 'autoprops'
-import { getComponentName } from 'refun'
 import { isUndefined, TAnyObject } from 'tsfn'
+import { getComponentName } from './get-element-name'
 
 export const clampSyntxPath = (rootMetaFile: TMetaFile, path: TPath): TPath => {
   if (path[0].name !== getComponentName(rootMetaFile.Component)) {

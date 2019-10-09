@@ -1,6 +1,5 @@
-/* eslint-disable import/export */
+/* eslint-disable import/export, @typescript-eslint/consistent-type-definitions */
 import { FC } from 'react'
-import { TComponent } from './types'
 
 // Generator
 // let str = 'export function component<T1, T2, R> (fn1: (p: T1) => T2, fn2: (p: T2) => R): (Component: FC<R>) => TComponent<T1>'
@@ -13,6 +12,10 @@ import { TComponent } from './types'
 // .replace(`fn${last}: (p: T${last}) => R`, `fn${last}: (p: T${last}) => T${next}, fn${next}: (p: T${next}) => R`)
 // console.log(str)
 // }
+
+export interface TComponent<T> extends FC<T> {
+  [k: string]: any,
+}
 
 export function component<T1, R> (fn: (p: T1) => R): (Component: FC<R>) => TComponent<T1>
 export function component<T1, T2, R> (fn1: (p: T1) => T2, fn2: (p: T2) => R): (Component: FC<R>) => TComponent<T1>

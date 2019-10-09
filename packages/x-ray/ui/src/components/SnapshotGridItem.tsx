@@ -1,5 +1,5 @@
 import React from 'react'
-import { startWithType, mapState, onMount, mapWithPropsMemo, pureComponent } from 'refun'
+import { startWithType, mapState, mapWithPropsMemo, pureComponent } from 'refun'
 import { TFileResultLine } from '@x-ray/snapshots'
 import { elegir } from 'elegir'
 import { TColor } from 'colorido'
@@ -13,6 +13,7 @@ import { Text } from './Text'
 import { Block } from './Block'
 import { Border } from './Border'
 import { Background } from './Background'
+import { onMountAsync } from './on-mount-async'
 
 export type TSnapshotGridItem = TApiLoadSnapshotOpts & TRect & {
   isDiscarded: boolean,
@@ -22,24 +23,16 @@ export const SnapshotGridItem = pureComponent(
   startWithType<TSnapshotGridItem>(),
   mapStoreDispatch,
   mapState('state', 'setState', () => null as TFileResultLine[] | null, []),
-  onMount(({ setState, id, type, dispatch }) => {
-    let isMounted = true
+  onMountAsync(async ({ setState, id, type, dispatch, isMountedRef }) => {
+    try {
+      const data = await apiLoadSnapshot({ id, type })
 
-    ;(async () => {
-      try {
-        const data = await apiLoadSnapshot({ id, type })
-
-        if (isMounted) {
-          setState(data)
-        }
-      } catch (err) {
-        console.log(err)
-        dispatch(actionError(err.message))
+      if (isMountedRef.current) {
+        setState(data)
       }
-    })()
-
-    return () => {
-      isMounted = false
+    } catch (err) {
+      console.log(err)
+      dispatch(actionError(err.message))
     }
   }),
   mapWithPropsMemo(({ type }) => ({

@@ -1,42 +1,55 @@
-import { useRef } from 'react'
-import { isFunction, UNDEFINED } from 'tsfn'
-import { useEffectFn } from './utils'
+import { useRef, useEffect } from 'react'
+import { isFunction, UNDEFINED, EMPTY_ARRAY } from 'tsfn'
 
 export const mapDebouncedHandlerFactory = (setFn: Function, clearFn: Function) =>
   <P extends {}> (handlerName: keyof P, ...setFnArgs: any[]) =>
     (props: P): P => {
-      const timerId = useRef<number>()
-      const debouncedHandler = useRef<((...args: any[]) => void)>()
-      const originalHandler = useRef<P[keyof P]>()
+      const timerId = useRef<number | null>(null)
+      const debouncedHandlerRef = useRef<(...args: any[]) => void>()
+      const onUnmountRef = useRef<() => () => void>()
+      const currentPropsHandlerRef = useRef<P[keyof P]>()
+      const handlerArgsRef = useRef<any[]>(EMPTY_ARRAY)
 
-      if (originalHandler.current !== props[handlerName] || originalHandler === UNDEFINED) {
-        originalHandler.current = props[handlerName]
-        debouncedHandler.current = (...args: any[]) => {
-          if (timerId.current !== UNDEFINED) {
+      currentPropsHandlerRef.current = props[handlerName]
+
+      if (debouncedHandlerRef.current === UNDEFINED) {
+        const timeoutCallback = () => {
+          timerId.current = null
+
+          if (isFunction(currentPropsHandlerRef.current)) {
+            currentPropsHandlerRef.current(...handlerArgsRef.current)
+          }
+        }
+
+        debouncedHandlerRef.current = (...args: any[]) => {
+          if (timerId.current !== null) {
             clearFn(timerId.current)
+
+            timerId.current = null
           }
 
-          timerId.current = setFn(() => {
-            if (isFunction(originalHandler.current)) {
-              originalHandler.current(...args)
-            }
+          handlerArgsRef.current = EMPTY_ARRAY
 
-            timerId.current = UNDEFINED
-          }, ...setFnArgs)
+          if (isFunction(currentPropsHandlerRef.current)) {
+            handlerArgsRef.current = args
+            timerId.current = setFn(timeoutCallback, ...setFnArgs)
+          }
+        }
+
+        onUnmountRef.current = () => () => {
+          if (timerId.current !== null) {
+            clearFn(timerId.current)
+
+            timerId.current = null
+          }
         }
       }
 
-      useEffectFn(() => () => {
-        if (timerId.current !== UNDEFINED) {
-          clearFn(timerId.current)
-        }
-
-        timerId.current = UNDEFINED
-      }, [])
+      useEffect(onUnmountRef.current!, EMPTY_ARRAY)
 
       return {
         ...props,
-        [handlerName]: debouncedHandler.current,
+        [handlerName]: debouncedHandlerRef.current,
       }
     }
 
