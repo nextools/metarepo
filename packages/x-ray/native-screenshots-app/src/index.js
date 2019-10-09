@@ -149,53 +149,49 @@ class Main extends Component {
 
     this.isCapturing = true
 
-    try {
-      const data = await this.viewShot.capture()
+    const data = await this.viewShot.capture()
 
-      this.isCapturing = false
+    this.isCapturing = false
 
-      const res = await fetch('http://localhost:3002/upload', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          data,
-          id: this.state.item.id,
-          serializedElement: this.state.item.serializedElement,
-          path: this.state.path,
-        }),
-        keepalive: true,
+    const res = await fetch('http://localhost:3002/upload', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        data,
+        id: this.state.item.id,
+        serializedElement: this.state.item.serializedElement,
+        path: this.state.path,
+      }),
+      keepalive: true,
+    })
+
+    if (!res.ok) {
+      return
+    }
+
+    const nextResult = this.state.iterator.next()
+
+    if (!nextResult.done) {
+      this.setState({
+        item: nextResult.value,
       })
+    } else if (this.state.fileIndex < files.length - 1) {
+      const nextFileIndex = this.state.fileIndex + 1
+      const { path, content } = files[nextFileIndex]
+      const iterator = content[Symbol.iterator]()
 
-      if (!res.ok) {
-        return
-      }
-
-      const nextResult = this.state.iterator.next()
-
-      if (!nextResult.done) {
-        this.setState({
-          item: nextResult.value,
-        })
-      } else if (this.state.fileIndex < files.length - 1) {
-        const nextFileIndex = this.state.fileIndex + 1
-        const { path, content } = files[nextFileIndex]
-        const iterator = content[Symbol.iterator]()
-
-        this.setState(() => ({
-          item: iterator.next().value,
-          fileIndex: nextFileIndex,
-          path,
-          iterator,
-        }))
-      } else {
+      this.setState(() => ({
+        item: iterator.next().value,
+        fileIndex: nextFileIndex,
+        path,
+        iterator,
+      }))
+    } else {
       // finish
-        await fetch('http://localhost:3002/done')
-      }
-    } catch (err) {
-      console.log(err)
+      await fetch('http://localhost:3002/done')
     }
   }
 

@@ -1,8 +1,10 @@
 import {
   CheckChromeScreenshots,
   CheckFirefoxScreenshots,
-  CheckAndroidScreenshots,
   CheckIosScreenshots,
+  CheckAndroidScreenshots,
+  CheckIosWebScreenshots,
+  CheckAndroidWebScreenshots,
   Sandbox,
 } from '@bubble-dev/start-preset'
 
@@ -13,6 +15,8 @@ export const checkChromeScreenshots = CheckChromeScreenshots()
 export const checkFirefoxScreenshots = CheckFirefoxScreenshots()
 export const checkAndroidScreenshots = CheckAndroidScreenshots()
 export const checkIosScreenshots = CheckIosScreenshots()
+export const checkIosWebScreenshots = CheckIosWebScreenshots()
+export const checkAndroidWebScreenshots = CheckAndroidWebScreenshots()
 
 export const sandbox = Sandbox({
   entryPointPath: './tasks/sandbox/index.tsx',

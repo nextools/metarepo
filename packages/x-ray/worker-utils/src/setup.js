@@ -100,7 +100,7 @@ const babelConfig = {
       },
     ],
     require.resolve('@babel/preset-react'),
-    '@babel/preset-typescript',
+    require.resolve('@babel/preset-typescript'),
   ],
   extensions: options.extensions,
 }

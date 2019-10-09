@@ -191,7 +191,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
           }
         }
       } catch (e) {
-        reject(e)
+        server.close(() => reject(e))
       }
     })
     .on('error', reject)

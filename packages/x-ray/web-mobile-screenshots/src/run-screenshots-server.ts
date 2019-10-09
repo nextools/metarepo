@@ -3,21 +3,24 @@ import http from 'http'
 import upng from 'upng-js'
 import { checkScreenshot, TScreenshotsResultData, TScreenshotsFileResultData, TRunScreesnotsResult, TScreenshotsResult, TScreenshotsFileResult } from '@x-ray/screenshot-utils'
 import { TarFs, TTarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
-import { isString, isNumber } from 'tsfn'
+import { isNumber } from 'tsfn'
 import { TLineElement } from 'syntx'
 import prettyMs from 'pretty-ms'
-import { TOptions } from './types'
+import { makeWorker } from '@x-ray/worker-utils'
+import { TOptions, TWorkerHtmlResult, TWorkerResult } from './types'
+
+const childFile = require.resolve('./child')
 
 const shouldBailout = Boolean(process.env.XRAY_CI)
 const dprSize = (dpr: number) => (size: number): number => Math.round(size / dpr * 100) / 100
 
-export const runScreenshotsServer = (options: TOptions) => new Promise<() => Promise<TRunScreesnotsResult>>((serverResolve) => {
+export const runScreenshotsServer = (targetFiles: string[], options: TOptions) => new Promise<() => Promise<TRunScreesnotsResult>>((serverResolve) => {
   const dpr = dprSize(options.dpr)
   const screenshotsPromise = new Promise<TRunScreesnotsResult>((screenshotsResolve, screenshotsReject) => {
     const result: TScreenshotsResult = {}
     const resultData: TScreenshotsResultData = {}
+    let currentItemData: TWorkerHtmlResult | null = null
     let currentTar: TTarFs | null = null
-    let currentFilePath: string | null = null
     let hasBeenChanged = false
     let startTime: number | null = null
     let okCount = 0
@@ -67,8 +70,8 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
       }
 
       // target file DONE
-      if (isString(currentFilePath)) {
-        const relativePath = path.relative(process.cwd(), currentFilePath)
+      if (currentItemData !== null) {
+        const relativePath = path.relative(process.cwd(), currentItemData.path)
         result[relativePath] = targetResult
         resultData[relativePath] = targetResultData
 
@@ -86,40 +89,38 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
       }
     }
 
+    const worker = makeWorker(childFile, {
+      ...options,
+      targetFiles,
+    })
+
     const server = http
-      .createServer(async (req, res) => {
+      .createServer((req, res) => {
         if (req.method === 'POST') {
           if (req.url === '/upload') {
-            let body = ''
+            let screenshotData = ''
 
             req
               .on('data', (chunk) => {
-                body += chunk
+                screenshotData += chunk
               })
               .on('end', async () => {
                 try {
-                  const { data, path: filePath, id, serializedElement } = JSON.parse(body)
-
-                  if (currentFilePath !== filePath) {
-                    await onFileDone()
-                    await closeCurrentTar()
+                  if (currentItemData === null) {
+                    throw new Error('Invalid item data')
                   }
-
-                  currentFilePath = filePath
-                  screenshotsTakenNames.push(id)
 
                   if (currentTar === null) {
-                    const screenshotsDir = path.join(path.dirname(filePath), '__data__')
-                    const screenshotsTarPath = path.join(screenshotsDir, `${options.platform}-screenshots.tar.gz`)
-
-                    currentTar = await TarFs(screenshotsTarPath)
+                    throw new Error('Invalid tar')
                   }
 
-                  const screenshot = Buffer.from(data, 'base64')
-                  const action = await checkScreenshot(screenshot, currentTar, id)
+                  screenshotsTakenNames.push(currentItemData.id)
+
+                  const screenshot = Buffer.from(screenshotData, 'base64')
+                  const action = await checkScreenshot(screenshot, currentTar, currentItemData.id)
 
                   if (shouldBailout && (action.type === 'DIFF' || action.type === 'NEW')) {
-                    throw new Error(`${path.relative(process.cwd(), filePath)}:${id}`)
+                    throw new Error(`${path.relative(process.cwd(), currentItemData.path)}:${currentItemData.id}`)
                   }
 
                   // switch
@@ -130,18 +131,18 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
                       break
                     }
                     case 'DIFF': {
-                      targetResult.old[id] = {
-                        serializedElement,
+                      targetResult.old[currentItemData.id] = {
+                        serializedElement: currentItemData.serializedElement,
                         width: dpr(action.old.width),
                         height: dpr(action.old.height),
                       }
-                      targetResult.new[id] = {
-                        serializedElement,
+                      targetResult.new[currentItemData.id] = {
+                        serializedElement: currentItemData.serializedElement,
                         width: dpr(action.new.width),
                         height: dpr(action.new.height),
                       }
-                      targetResultData.old[id] = action.old.data
-                      targetResultData.new[id] = action.new.data
+                      targetResultData.old[currentItemData.id] = action.old.data
+                      targetResultData.new[currentItemData.id] = action.new.data
 
                       hasBeenChanged = true
 
@@ -150,12 +151,12 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
                       break
                     }
                     case 'NEW': {
-                      targetResult.new[id] = {
-                        serializedElement,
+                      targetResult.new[currentItemData.id] = {
+                        serializedElement: currentItemData.serializedElement,
                         width: dpr(action.width),
                         height: dpr(action.height),
                       }
-                      targetResultData.new[id] = action.data
+                      targetResultData.new[currentItemData.id] = action.data
 
                       hasBeenChanged = true
 
@@ -171,6 +172,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
                   res.writeHead(500)
                   res.end()
 
+                  worker.kill()
                   await closeCurrentTar()
 
                   return server.close(() => screenshotsReject(e))
@@ -184,38 +186,76 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
                 body += chunk
               })
               .on('end', async () => {
-                console.error(body)
-
-                res.writeHead(500)
+                res.writeHead(200)
                 res.end()
 
+                worker.kill()
                 await closeCurrentTar()
 
-                return server.close(() => screenshotsReject(null)) // eslint-disable-line
+                return server.close(() => screenshotsReject(body)) // eslint-disable-line
               })
           }
-        } else {
-          res.writeHead(200)
-          res.end()
+        } else if (req.method === 'GET') {
+          if (req.url === '/next') {
+            worker.once('message', async (payload: TWorkerResult) => {
+              switch (payload.type) {
+                case 'NEXT': {
+                  if (currentItemData !== null && currentItemData.path !== payload.path) {
+                    await onFileDone()
+                    await closeCurrentTar()
+                  }
 
-          if (req.url === '/done') {
-            await onFileDone()
-            await closeCurrentTar()
+                  currentItemData = payload
 
-            console.log(`ok: ${okCount}`)
-            console.log(`new: ${newCount}`)
-            console.log(`deleted: ${deletedCount}`)
-            console.log(`diff: ${diffCount}`)
+                  if (currentTar === null) {
+                    const screenshotsDir = path.join(path.dirname(currentItemData.path), '__data__')
+                    const screenshotsTarPath = path.join(screenshotsDir, `${options.platform}-screenshots.tar.gz`)
 
-            if (isNumber(startTime)) {
-              console.log(`done in ${prettyMs(Date.now() - startTime)}`)
-            }
+                    currentTar = await TarFs(screenshotsTarPath)
+                  }
 
-            server.close(() => screenshotsResolve({
-              result,
-              resultData,
-              hasBeenChanged,
-            }))
+                  res.end(payload.html)
+
+                  return
+                }
+                case 'DONE': {
+                  await onFileDone()
+                  await closeCurrentTar()
+
+                  console.log(`ok: ${okCount}`)
+                  console.log(`new: ${newCount}`)
+                  console.log(`deleted: ${deletedCount}`)
+                  console.log(`diff: ${diffCount}`)
+
+                  if (isNumber(startTime)) {
+                    console.log(`done in ${prettyMs(Date.now() - startTime)}`)
+                  }
+
+                  res.writeHead(204)
+                  res.end()
+
+                  return server.close(() => screenshotsResolve({
+                    result,
+                    resultData,
+                    hasBeenChanged,
+                  }))
+                }
+                case 'ERROR': {
+                  if (currentTar !== null) {
+                    await currentTar.close()
+                  }
+
+                  console.error(payload.data)
+
+                  res.writeHead(500)
+                  res.end()
+
+                  return server.close(() => screenshotsReject(null)) // eslint-disable-line
+                }
+              }
+            })
+
+            worker.send('next')
           }
         }
       })

@@ -33,7 +33,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
       }
       const worker = makeWorker(childFile, options)
 
-      worker.on('message', async (action: TScreenshotsItemResult) => {
+      worker.on('message', (action: TScreenshotsItemResult) => {
         switch (action.type) {
           case 'INIT': {
             worker.send({
@@ -97,8 +97,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
             break
           }
           case 'BAILOUT': {
-            await Promise.all(workers.map((worker) => worker.kill()))
-
+            workers.forEach((worker) => worker.kill())
             reject(`${path.relative(process.cwd(), action.path)}:${action.id}`)
 
             break
@@ -149,6 +148,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
             break
           }
           case 'ERROR': {
+            workers.forEach((worker) => worker.kill())
             reject(action.data)
           }
         }

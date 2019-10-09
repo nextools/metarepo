@@ -10,11 +10,13 @@ import tape from '@start/plugin-lib-tape'
 import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
 // @ts-ignore
 import tapDiff from 'tap-diff'
-import xRayChromeScreenshots from './plugins/chrome-screenshots-plugin'
-import xRayFirefoxScreenshots from './plugins/firefox-screenshots-plugin'
-import xRayIosScreenshots from './plugins/ios-screenshots-plugin'
-import xRayAndroidScreenshots from './plugins/android-screenshots-plugin'
-import xRaySnapshots from './plugins/snapshots-plugin'
+import xRaySnapshots from './plugins/snapshots'
+import xRayChromeScreenshots from './plugins/chrome-screenshots'
+import xRayFirefoxScreenshots from './plugins/firefox-screenshots'
+import xRayIosScreenshots from './plugins/ios-screenshots'
+import xRayAndroidScreenshots from './plugins/android-screenshots'
+import xRayIosWebScreenshots from './plugins/ios-web-screenshots'
+import xRayAndroidWebScreenshots from './plugins/android-web-screenshots'
 import withChromium from './plugins/with-chromium'
 import waitForChromium from './plugins/wait-for-chromium'
 import waitForFirefox from './plugins/wait-for-firefox'
@@ -120,6 +122,22 @@ export const CheckAndroidScreenshots = (fontsDir?: string) => (component = '**')
     find(`packages/${component}/x-ray/screenshots.tsx`),
     env({ NODE_ENV: 'production' }),
     xRayAndroidScreenshots(fontsDir)
+  )
+}
+
+export const CheckIosWebScreenshots = (fontsDir?: string) => (component = '**') => {
+  return sequence(
+    find(`packages/${component}/x-ray/screenshots.tsx`),
+    env({ NODE_ENV: 'production' }),
+    xRayIosWebScreenshots(fontsDir)
+  )
+}
+
+export const CheckAndroidWebScreenshots = (fontsDir?: string) => (component = '**') => {
+  return sequence(
+    find(`packages/${component}/x-ray/screenshots.tsx`),
+    env({ NODE_ENV: 'production' }),
+    xRayAndroidWebScreenshots(fontsDir)
   )
 }
 
