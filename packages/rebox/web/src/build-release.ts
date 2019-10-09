@@ -41,7 +41,7 @@ export const buildRelease = (options: TBuildJsBundleOptions) => {
       path: path.resolve(options.outputPath),
       filename: 'js/[name].[chunkhash].js',
       chunkFilename: 'js/[name].[chunkhash].js',
-      pathinfo: true,
+      pathinfo: false,
     },
     resolve: {
       extensions: [
