@@ -1,3 +1,7 @@
+## v0.1.5
+
+* 🐞 remove try-catch block to propagate error to parent Component
+
 ## v0.1.4
 
 * 🐞 handle `shouldWaitForImage` option

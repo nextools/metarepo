@@ -1,3 +1,8 @@
+## v0.2.7
+
+* 🐞 ensure server close on exit
+* 🐞 ensure workers kill on exit
+
 ## v0.2.6
 
 * 🐞 add `shouldWaitForImages` flag to `TMeta`

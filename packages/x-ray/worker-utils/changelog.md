@@ -1,3 +1,7 @@
+## v0.1.2
+
+* 🐞 add missing `require.resolve`
+
 ## v0.1.1
 
 * 🐞 refactor using latest babel/preset-env

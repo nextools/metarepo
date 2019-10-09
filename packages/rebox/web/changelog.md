@@ -1,3 +1,8 @@
+## v0.4.4
+
+* 🐞 re-enable `minimize` option for `buildRelease`
+* 🐞 bring back `isQuiet` option to `run()`
+
 ## v0.4.3
 
 * 🐞 handle more image types

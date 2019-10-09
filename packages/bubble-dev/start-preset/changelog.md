@@ -1,3 +1,9 @@
+## v0.13.0
+
+* 🌱 add `CheckIosScreenshots` and `CheckAndroidScreenshots` task factories
+* 🐞 reanimate `buildSandbox` task
+* ♻️ update dependencies: `@x-ray/web-mobile-screenshots`, `@x-ray/web-mobile-screenshots-app`
+
 ## v0.12.0
 
 * 🌱 add `sandbox` support

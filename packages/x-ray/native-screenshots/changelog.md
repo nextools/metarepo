@@ -1,3 +1,7 @@
+## v0.3.9
+
+* 🐞 ensure tar file always close on exit
+
 ## v0.3.8
 
 * 🐞 add gzip compression to tar-fs
