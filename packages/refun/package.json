@@ -22,6 +22,6 @@
     "react-test-renderer": "^16.9.0",
     "redux": "^4.0.0",
     "spyfn": "^0.2.0",
-    "spyt": "^0.1.0"
+    "spyt": "^0.2.0"
   }
 }
