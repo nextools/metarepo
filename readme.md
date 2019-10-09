@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.org/bubble-dev/_"><img src="https://flat.badgen.net/travis/bubble-dev/_/master?label=tests"/></a>  <a href="https://codecov.io/github/bubble-dev/_"><img src="https://flat.badgen.net/codecov/c/github/bubble-dev/_/master"/></a>
+  <a href="https://travis-ci.org/bubble-dev/_"><img src="https://flat.badgen.net/travis/bubble-dev/_/master?label=tests"/></a> <a href="https://codecov.io/github/bubble-dev/_"><img src="https://flat.badgen.net/codecov/c/github/bubble-dev/_/master"/></a> <a href="https://t.me/joinchat/HEiFoBOD3u0of_nkCB6huQ"><img src="https://flat.badgen.net/badge/chat/telegram/blue"/></a>
 </p>
 
 > But what is a _Metarepo_? Isn't this just a monorepo? And if so, why are there so many unrelated packages here?
