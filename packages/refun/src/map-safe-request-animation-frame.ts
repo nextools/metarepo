@@ -1,6 +1,5 @@
-import { useRef } from 'react'
-import { TExtend, requestAnimationFrame, cancelAnimationFrame, UNDEFINED, EMPTY_ARRAY, EMPTY_OBJECT } from 'tsfn'
-import { useEffectFn } from './utils'
+import { useRef, useEffect } from 'react'
+import { TExtend, requestAnimationFrame, cancelAnimationFrame, UNDEFINED, EMPTY_ARRAY, EMPTY_OBJECT, NOOP } from 'tsfn'
 
 export type TSafeRequestAnimationFrame = (cb: () => void) => () => void
 
@@ -34,7 +33,7 @@ export const mapSafeRequestAnimationFrameFactory = (requestAnimationFrameFn: Fun
         }
       }
 
-      useEffectFn(useEffectFnRef.current!, EMPTY_ARRAY)
+      useEffect(useEffectFnRef.current!, EMPTY_ARRAY)
 
       // FIXME https://github.com/microsoft/TypeScript/issues/13948
       return {

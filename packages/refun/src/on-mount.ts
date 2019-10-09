@@ -1,6 +1,5 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { EMPTY_ARRAY, EMPTY_OBJECT, NOOP } from 'tsfn'
-import { useEffectFn } from './utils'
 
 export const onMount = <P extends {}> (onMountFn: (props: P) => Promise<void> | void) => (props: P): P => {
   const propsRef = useRef<P>(EMPTY_OBJECT)
@@ -14,7 +13,7 @@ export const onMount = <P extends {}> (onMountFn: (props: P) => Promise<void> | 
 
   propsRef.current = props
 
-  useEffectFn(onMountRef.current, EMPTY_ARRAY)
+  useEffect(onMountRef.current, EMPTY_ARRAY)
 
   return props
 }

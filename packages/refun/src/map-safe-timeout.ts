@@ -1,6 +1,5 @@
-import { useRef } from 'react'
-import { TExtend, UNDEFINED, EMPTY_OBJECT, EMPTY_ARRAY } from 'tsfn'
-import { useEffectFn } from './utils'
+import { useRef, useEffect } from 'react'
+import { TExtend, UNDEFINED, EMPTY_OBJECT, EMPTY_ARRAY, NOOP } from 'tsfn'
 
 export type TSetSafeTimeout = (cb: () => void, delay: number) => () => void
 
@@ -33,7 +32,7 @@ export const mapSafeTimeoutFactory = (setTimeoutFn: Function, clearTimeoutFn: Fu
       }
     }
 
-    useEffectFn(useEffectFnRef.current!, EMPTY_ARRAY)
+    useEffect(useEffectFnRef.current!, EMPTY_ARRAY)
 
     // FIXME https://github.com/microsoft/TypeScript/issues/13948
     return {

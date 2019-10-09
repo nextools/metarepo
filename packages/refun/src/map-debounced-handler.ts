@@ -1,6 +1,5 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { isFunction, UNDEFINED, EMPTY_ARRAY } from 'tsfn'
-import { useEffectFn } from './utils'
 
 export const mapDebouncedHandlerFactory = (setFn: Function, clearFn: Function) =>
   <P extends {}> (handlerName: keyof P, ...setFnArgs: any[]) =>
@@ -46,7 +45,7 @@ export const mapDebouncedHandlerFactory = (setFn: Function, clearFn: Function) =
         }
       }
 
-      useEffectFn(onUnmountRef.current!, EMPTY_ARRAY)
+      useEffect(onUnmountRef.current!, EMPTY_ARRAY)
 
       return {
         ...props,
