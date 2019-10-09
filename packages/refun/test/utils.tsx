@@ -1,4 +1,3 @@
-import React from 'react'
 import test from 'blue-tape'
 import { shallowEqualByKeys } from '../src'
 

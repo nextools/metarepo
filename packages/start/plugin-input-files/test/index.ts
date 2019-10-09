@@ -17,7 +17,7 @@ test('plugin-input-files: export', (t) => {
 
 test('plugin-input-files: simple', async (t) => {
   const reporter = new EventEmitter()
-  const pluginSpy = createSpy(() => ({ foo: true }))
+  const pluginSpy = createSpy(() => Promise.resolve({ foo: true }))
   const targetPluginSpy = createSpy(() => pluginSpy)
   const files = [
     '../src/index.ts',
@@ -52,7 +52,7 @@ test('plugin-input-files: simple', async (t) => {
 
 test('plugin-input-files: async plugin', async (t) => {
   const reporter = new EventEmitter()
-  const targetSpy = createSpy(() => ({ foo: true }))
+  const targetSpy = createSpy(() => Promise.resolve({ foo: true }))
   const targetPluginSpy = createSpy(() => targetSpy)
   const targetPluginPromise = Promise.resolve(targetPluginSpy)
   const files = [

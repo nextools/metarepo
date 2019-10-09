@@ -6,7 +6,7 @@ import { component, startWithType, onMount } from '../src'
 
 test('onMount: sync function', (t) => {
   const unmountSpy = createSpy(() => null)
-  const mountSpy = createSpy(() => unmountSpy)
+  const mountSpy = createSpy(() => unmountSpy) as () => void
   const compSpy = createSpy(() => null)
   const getNumRenders = () => getSpyCalls(compSpy).length
   const MyComp = component(
