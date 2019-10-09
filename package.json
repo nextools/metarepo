@@ -47,6 +47,7 @@
     "@sandbox/ui": "*",
     "@types/node": "^11.13.10",
     "colorido": "^0.1.0",
+    "core-js": "^3.2.1",
     "eslint": "^6.1.0",
     "react": "^16.8.6",
     "react-native": "0.60.5",

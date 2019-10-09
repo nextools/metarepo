@@ -1,6 +1,8 @@
 import sequence from '@start/plugin-sequence'
 import env from '@start/plugin-env'
 import plugin from '@start/plugin'
+import find from '@start/plugin-find'
+import remove from '@start/plugin-remove'
 import syncState from './plugins/sync-state'
 import concurrent from './plugins/concurrent'
 
@@ -54,3 +56,18 @@ export const Sandbox = ({ entryPointPath, htmlTemplatePath, assetsPath, fontsDir
     )
   )
 }
+
+export const buildSandbox = () =>
+  sequence(
+    find('.rebox/Sandbox/'),
+    remove,
+    plugin('web', () => async () => {
+      const { buildRelease } = await import('@rebox/web')
+
+      await buildRelease({
+        entryPointPath: 'tasks/sandbox/index.tsx',
+        outputPath: '.rebox/Sandbox',
+        htmlTemplatePath: 'tasks/sandbox/templates/build.html',
+      })
+    })
+  )
