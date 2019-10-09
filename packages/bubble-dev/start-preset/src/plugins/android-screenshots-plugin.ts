@@ -47,6 +47,7 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
       const closeReboxServer = await runWeb({
         entryPointPath,
         htmlTemplatePath,
+        isQuiet: true,
       })
 
       console.log('open http://localhost:3000/ to approve or discard changes')
