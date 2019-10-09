@@ -13,13 +13,15 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "shallowequal": "^1.1.0",
     "tsfn": "^0.2.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
-    "@types/shallowequal": "^1.1.0",
+    "blue-tape": "^1.0.0",
     "react": "^16.8.6",
-    "redux": "^4.0.0"
+    "react-test-renderer": "^16.9.0",
+    "redux": "^4.0.0",
+    "spyfn": "^0.2.0",
+    "spyt": "^0.1.0"
   }
 }
