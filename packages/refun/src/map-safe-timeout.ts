@@ -13,6 +13,11 @@ export const mapSafeTimeoutFactory = (setTimeoutFn: Function, clearTimeoutFn: Fu
       timerIdsRef.current = new Set()
 
       setSafeTimeoutRef.current = (cb, delay) => {
+        // check if component has been unmounted
+        if (timerIdsRef.current === EMPTY_OBJECT) {
+          return NOOP
+        }
+
         const timerId = setTimeoutFn(() => {
           timerIdsRef.current.delete(timerId)
           cb()
@@ -29,6 +34,8 @@ export const mapSafeTimeoutFactory = (setTimeoutFn: Function, clearTimeoutFn: Fu
       useEffectFnRef.current = () => () => {
         timerIdsRef.current.forEach((id) => clearTimeoutFn(id))
         timerIdsRef.current.clear()
+        // indicates that component has been unmounted
+        timerIdsRef.current = EMPTY_OBJECT
       }
     }
 

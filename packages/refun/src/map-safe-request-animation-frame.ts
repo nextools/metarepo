@@ -14,6 +14,11 @@ export const mapSafeRequestAnimationFrameFactory = (requestAnimationFrameFn: Fun
         timerIdsRef.current = new Set()
 
         setSafeRafRef.current = ((cb) => {
+          // check if component has been unmounted
+          if (timerIdsRef.current === EMPTY_OBJECT) {
+            return NOOP
+          }
+
           const timerId = requestAnimationFrameFn(() => {
             timerIdsRef.current.delete(timerId)
             cb()
@@ -30,6 +35,8 @@ export const mapSafeRequestAnimationFrameFactory = (requestAnimationFrameFn: Fun
         useEffectFnRef.current = () => () => {
           timerIdsRef.current.forEach((id) => cancelAnimationFrameFn(id))
           timerIdsRef.current.clear()
+          // indicates that component has been unmounted
+          timerIdsRef.current = EMPTY_OBJECT
         }
       }
 
