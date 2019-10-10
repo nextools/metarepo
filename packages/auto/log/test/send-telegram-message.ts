@@ -14,9 +14,11 @@ const workspacesOptions: TWorkspacesOptions = {
 }
 
 test('sendTelegramMessage', async (t) => {
-  const spy = createSpy(() => Promise.resolve({
-    ok: true,
-  }))
+  const spy = createSpy(() => Promise.resolve(
+    JSON.stringify({
+      ok: true,
+    })
+  ))
 
   const unmock = mock('../src/send-telegram-message', {
     'request-promise-native': {
@@ -86,9 +88,11 @@ test('sendTelegramMessage', async (t) => {
 })
 
 test('sendTelegramMessage: truncate too long message', async (t) => {
-  const spy = createSpy(() => Promise.resolve({
-    ok: true,
-  }))
+  const spy = createSpy(() => Promise.resolve(
+    JSON.stringify({
+      ok: true,
+    })
+  ))
 
   const unmock = mock('../src/send-telegram-message', {
     'request-promise-native': {
@@ -162,9 +166,11 @@ test('sendTelegramMessage: truncate too long message', async (t) => {
 })
 
 test('sendTelegramMessage: throws if there is no token', async (t) => {
-  const spy = createSpy(() => Promise.resolve({
-    ok: true,
-  }))
+  const spy = createSpy(() => Promise.resolve(
+    JSON.stringify({
+      ok: true,
+    })
+  ))
 
   const unmock = mock('../src/send-telegram-message', {
     'request-promise-native': {
@@ -236,10 +242,12 @@ test('sendTelegramMessage: throws if there is no token', async (t) => {
 })
 
 test('sendTelegramMessage: throws if there was an API request error', async (t) => {
-  const spy = createSpy(() => Promise.resolve({
-    ok: false,
-    description: 'oops',
-  }))
+  const spy = createSpy(() => Promise.resolve(
+    JSON.stringify({
+      ok: false,
+      description: 'oops',
+    })
+  ))
 
   const unmock = mock('../src/send-telegram-message', {
     'request-promise-native': {

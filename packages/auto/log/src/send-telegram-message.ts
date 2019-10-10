@@ -30,17 +30,19 @@ export const sendTelegramMessage = async (logs: TLog[], prefixes: TPrefixes, wor
     data = `${data.slice(0, TELEGRAM_MESSAGE_MAX_LENGTH - 1)}…`
   }
 
-  const response = await request({
-    url: `${TELEGRAM_API_URL}bot${telegramOptions.token}/sendMessage`,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      chat_id: telegramOptions.chatId,
-      parse_mode: 'markdown',
-      text: data,
-    }),
-  })
+  const response = JSON.parse(
+    await request({
+      url: `${TELEGRAM_API_URL}bot${telegramOptions.token}/sendMessage`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_id: telegramOptions.chatId,
+        parse_mode: 'markdown',
+        text: data,
+      }),
+    })
+  )
 
   if (!response.ok) {
     throw new Error(response.description)
