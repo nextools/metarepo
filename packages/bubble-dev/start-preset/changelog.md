@@ -1,3 +1,8 @@
+## v0.14.0
+
+* 🌱 send message to Telegram in `publish` task with `shouldSendTelegramMessage` option
+* ♻️ update dependencies: `@auto/start-plugin`, `@auto/log`
+
 ## v0.13.0
 
 * 🌱 add `CheckIosScreenshots` and `CheckAndroidScreenshots` task factories

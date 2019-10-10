@@ -1,3 +1,8 @@
+## v0.6.0
+
+* 🌱 add `sendTelegramMessage` plugin
+* ♻️ update dependencies: `@auto/log`
+
 ## v0.5.2
 
 * 🐞 cleanup and fix deps

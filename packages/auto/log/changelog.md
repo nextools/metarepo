@@ -1,3 +1,7 @@
+## v0.4.0
+
+* 🌱 add `sendTelegramMessage` method
+
 ## v0.3.2
 
 * 🐞 skip other messages on initial bump
