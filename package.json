@@ -72,6 +72,7 @@
       "shouldMakeGitTags": true,
       "shouldMakeGitHubReleases": false,
       "shouldSendSlackMessage": false,
+      "shouldSendTelegramMessage": true,
       "shouldWriteChangelogFiles": true
     }
   },

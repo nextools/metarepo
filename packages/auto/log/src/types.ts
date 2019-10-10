@@ -12,6 +12,11 @@ export type TSlackOptions = {
   },
 }
 
+export type TTelegramOptions = {
+  token: string,
+  chatId: string,
+}
+
 export type TGithubOptions = {
   token: string,
   username: string,

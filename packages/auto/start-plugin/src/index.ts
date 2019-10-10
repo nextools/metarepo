@@ -4,7 +4,7 @@ import { TGitBump, TPackageBump, TPrefixes, TWorkspacesOptions } from '@auto/uti
 import { TGitOptions } from '@auto/git'
 import { TBumpOptions } from '@auto/bump'
 import { TNpmOptions } from '@auto/npm'
-import { TSlackOptions, TGithubOptions, TLog } from '@auto/log'
+import { TSlackOptions, TTelegramOptions, TGithubOptions, TLog } from '@auto/log'
 
 export const pushCommitsAndTags = plugin<any, any>('pushCommitsAndTags', () => async () => {
   const { pushCommitsAndTags: push } = await import('@auto/git')
@@ -158,6 +158,19 @@ export const sendSlackMessage = (prefixes: TPrefixes, Options: TWorkspacesOption
     }
 
     await send(logs, prefixes, Options, slackOptions)
+  })
+
+export const sendTelegramMessage = (prefixes: TPrefixes, Options: TWorkspacesOptions, telegramOptions: TTelegramOptions, transformFn?: (logs: TLog[]) => TLog[]) =>
+  plugin<TPluginData, any>('sendSlackMessage', () => async ({ packagesBumps, gitBumps }) => {
+    const { getLog, sendTelegramMessage: send } = await import('@auto/log')
+
+    let logs = getLog(packagesBumps, gitBumps)
+
+    if (typeof transformFn === 'function') {
+      logs = transformFn(logs)
+    }
+
+    await send(logs, prefixes, Options, telegramOptions)
   })
 
 export const makeGithubReleases = (prefixes: TPrefixes, Options: TWorkspacesOptions, githubOptions: TGithubOptions) =>

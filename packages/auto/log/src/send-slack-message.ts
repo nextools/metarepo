@@ -1,6 +1,6 @@
 import request from 'request-promise-native'
 import { TPrefixes, TWorkspacesOptions, removeAutoNamePrefix } from '@auto/utils'
-import { SLACK_HOOKS_URL, MAX_ATTACHMENTS } from './utils'
+import { SLACK_HOOKS_URL, SLACK_MAX_ATTACHMENTS } from './utils'
 import { TSlackOptions, TLog } from './types'
 
 export const sendSlackMessage = async (logs: TLog[], prefixes: TPrefixes, workspacesOptions: TWorkspacesOptions, slackOptions: TSlackOptions) => {
@@ -29,7 +29,7 @@ export const sendSlackMessage = async (logs: TLog[], prefixes: TPrefixes, worksp
       ],
     }
   })
-  const numIterations = Math.ceil(allAttachments.length / MAX_ATTACHMENTS)
+  const numIterations = Math.ceil(allAttachments.length / SLACK_MAX_ATTACHMENTS)
   const attachmentsInIteration = Math.ceil(allAttachments.length / numIterations)
 
   for (let i = 0; i < numIterations; ++i) {
