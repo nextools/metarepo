@@ -1,3 +1,7 @@
+## v0.6.1
+
+* 🐞 fix `sendTelegramMessage` plugin description
+
 ## v0.6.0
 
 * 🌱 add `sendTelegramMessage` plugin
