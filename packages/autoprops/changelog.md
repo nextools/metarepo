@@ -1,3 +1,7 @@
+## v0.6.8
+
+* 🐞 enhance meta types
+
 ## v0.6.6
 
 * 🐞 allow children keys in props mutexes
