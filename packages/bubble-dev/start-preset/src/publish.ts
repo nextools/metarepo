@@ -16,9 +16,10 @@ import {
   writePublishTags,
   makeGithubReleases,
   sendSlackMessage,
+  sendTelegramMessage,
   writeChangelogFiles,
 } from '@auto/start-plugin'
-import { TGithubOptions, TSlackOptions } from '@auto/log'
+import { TGithubOptions, TSlackOptions, TTelegramOptions } from '@auto/log'
 import { TGitOptions } from '@auto/git'
 import { TWorkspacesOptions } from '@auto/utils'
 import { TBumpOptions } from '@auto/bump'
@@ -61,6 +62,7 @@ export const publish = async () => {
       shouldMakeGitTags,
       shouldMakeGitHubReleases,
       shouldSendSlackMessage,
+      shouldSendTelegramMessage,
       shouldWriteChangelogFiles,
     },
   } = await getStartOptions()
@@ -93,6 +95,10 @@ export const publish = async () => {
       patch: process.env.AUTO_SLACK_COLOR_PATCH as string,
     },
   }
+  const telegramOptions: TTelegramOptions = {
+    token: process.env.AUTO_TELEGRAM_TOKEN as string,
+    chatId: process.env.AUTO_TELEGRAM_CHAT_ID as string,
+  }
 
   return sequence(
     getPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
@@ -108,7 +114,8 @@ export const publish = async () => {
     publishPackagesBumps(npmOptions),
     pushCommitsAndTags,
     shouldMakeGitHubReleases && makeGithubReleases(prefixes, workspacesOptions, githubOptions),
-    shouldSendSlackMessage && sendSlackMessage(prefixes, workspacesOptions, slackOptions)
+    shouldSendSlackMessage && sendSlackMessage(prefixes, workspacesOptions, slackOptions),
+    shouldSendTelegramMessage && sendTelegramMessage(prefixes, workspacesOptions, telegramOptions)
   )
 }
 

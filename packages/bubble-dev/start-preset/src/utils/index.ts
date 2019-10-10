@@ -55,6 +55,7 @@ export type TStartOptions = {
     shouldMakeGitTags: boolean,
     shouldMakeGitHubReleases: boolean,
     shouldSendSlackMessage: boolean,
+    shouldSendTelegramMessage: boolean,
     shouldWriteChangelogFiles: boolean,
   },
 }
