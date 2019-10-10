@@ -167,13 +167,17 @@ test('sendSlackMessage: throws if there is no token', async (t) => {
 
     t.fail('should not get here')
   } catch (e) {
-    t.equals(e.message, 'Slack token is required')
+    t.equals(
+      e.message,
+      'Slack token is required',
+      'should throw correct error'
+    )
   }
 
   unmock()
 })
 
-test('sendSlackMessage', async (t) => {
+test('sendSlackMessage: multiple messages', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
   const unmock = mock('../src/send-slack-message', {
@@ -182,7 +186,7 @@ test('sendSlackMessage', async (t) => {
     },
     './utils': {
       SLACK_HOOKS_URL: 'https://hooks.slack.com/services/',
-      MAX_ATTACHMENTS: 3,
+      SLACK_MAX_ATTACHMENTS: 3,
     },
   })
 
@@ -321,7 +325,7 @@ test('sendSlackMessage', async (t) => {
         },
       }],
     ],
-    'should make request'
+    'should make multiple requests'
   )
 
   unmock()
