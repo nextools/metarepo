@@ -1,3 +1,7 @@
+## v0.3.1
+
+* 🐞 use own `getElementName` and `getComponentName`
+
 ## v0.3.0
 
 * 🌱 add `copyImportPackageName` option
