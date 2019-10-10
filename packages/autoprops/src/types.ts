@@ -8,24 +8,24 @@ export type TMetaFile<T = any> = {
   childrenConfig?: TChildrenConfig,
 }
 
-export type TChildrenConfig = {
+export type TChildrenConfig<ChildrenKeys extends string = string> = {
   meta: {
-    [K in string]: TMetaFile
+    [K in ChildrenKeys]: TMetaFile
   },
-  children: string[],
-  mutex?: string[][],
-  mutin?: string[][],
-  required?: string[],
+  children: ChildrenKeys[],
+  mutex?: ChildrenKeys[][],
+  mutin?: ChildrenKeys[][],
+  required?: ChildrenKeys[],
 }
 
-export type TComponentConfig<T = TAnyObject> = {
+export type TComponentConfig<T = TAnyObject, ChildrenKeys extends string = never> = {
   props: {
     [k in Exclude<TRequiredKeys<T>, 'children'>]: T[k][];
   } & {
     [k in TOptionalKeys<T> | Extract<keyof T, 'children'>]?: (Exclude<T[k], undefined>)[];
   },
   required?: TRequiredKeys<T>[],
-  mutex?: string[][],
+  mutex?: (TKeyOf<T> | ChildrenKeys)[][],
   mutin?: TKeyOf<T>[][],
 }
 
