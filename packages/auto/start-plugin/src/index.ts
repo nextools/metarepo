@@ -161,7 +161,7 @@ export const sendSlackMessage = (prefixes: TPrefixes, Options: TWorkspacesOption
   })
 
 export const sendTelegramMessage = (prefixes: TPrefixes, Options: TWorkspacesOptions, telegramOptions: TTelegramOptions, transformFn?: (logs: TLog[]) => TLog[]) =>
-  plugin<TPluginData, any>('sendSlackMessage', () => async ({ packagesBumps, gitBumps }) => {
+  plugin<TPluginData, any>('sendTelegramMessage', () => async ({ packagesBumps, gitBumps }) => {
     const { getLog, sendTelegramMessage: send } = await import('@auto/log')
 
     let logs = getLog(packagesBumps, gitBumps)
