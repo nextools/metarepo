@@ -1,3 +1,8 @@
+## v0.15.0
+
+* 🌱 handle custom fonts for "mobile web" screenshots
+* ♻️ update dependencies: `@x-ray/web-mobile-screenshots-app`, `@x-ray/web-mobile-screenshots`
+
 ## v0.14.0
 
 * 🌱 send message to Telegram in `publish` task with `shouldSendTelegramMessage` option
