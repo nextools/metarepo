@@ -22,6 +22,7 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
       '.tsx',
     ],
     entryPointField: 'main',
+    fontsDir,
   })
 
   let killAndroid = null

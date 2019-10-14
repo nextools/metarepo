@@ -5,6 +5,7 @@ export type TOptions = {
   dpr: number,
   extensions: string[],
   entryPointField: string,
+  fontsDir?: string,
 }
 
 export type TChildOptions = {
