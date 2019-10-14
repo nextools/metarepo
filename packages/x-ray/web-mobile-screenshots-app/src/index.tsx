@@ -4,16 +4,40 @@ import { View, Platform } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { captureRef } from 'react-native-view-shot' // eslint-disable-line
 
+type TSize = {
+  width: number,
+  height: number,
+}
+
+type TFonts = {
+  file: string,
+  name: string,
+  weight: number,
+  isItalic: boolean,
+}[]
+
 let htmlIndex = 0
 
-const makeHtml = (element: string) => `
+// https://stackoverflow.com/questions/27048427/hide-scrollbar-in-chrome-for-android
+const makeHtml = (element: string, fonts: TFonts) => `
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
   <style>
     html, body {
       margin: 0;
       padding: 0;
+      overflow: auto;
     }
+${
+  fonts
+    .map((font) => `@font-face {
+      font-family: "${font.name}";
+      font-weight: ${font.weight};
+      font-style: ${font.isItalic ? 'italic' : 'normal'};
+      src: url("${Platform.OS === 'android' ? `file:///android_asset/fonts/${font.file}` : font.file}");
+    }`)
+    .join('\n')
+}
   </style>
 </head>
 <body>
@@ -44,15 +68,6 @@ ${element}
 </body>
 `
 
-type TSize = {
-  width: number,
-  height: number,
-}
-
-type TConfig = {
-  dpr: number,
-}
-
 export class App extends Component {
   componentDidCatch(error: any) {
     console.log(error)
@@ -73,8 +88,15 @@ export class App extends Component {
 const Main = component(
   startWithType<{}>(),
   mapState('html', 'setHtml', () => null as string | null, []),
-  onMount(({ setHtml }) => {
+  mapRef('fonts', [] as TFonts),
+  onMount(({ setHtml, fonts }) => {
     (async () => {
+      const fontRes = await fetch('http://localhost:3002/fonts')
+
+      if (fontRes.status === 200) {
+        fonts.current = await fontRes.json() as TFonts
+      }
+
       const htmlRes = await fetch('http://localhost:3002/next', {
         keepalive: true,
       })
@@ -85,7 +107,7 @@ const Main = component(
 
       const html = await htmlRes.text()
 
-      setHtml(makeHtml(html))
+      setHtml(makeHtml(html, fonts.current))
     })()
   }),
   mapState('size', 'setSize', () => null as null | TSize, []),
@@ -104,7 +126,7 @@ const Main = component(
       })
     },
   }),
-  onUpdate(async ({ size, viewShotRef, setHtml }) => {
+  onUpdate(async ({ size, viewShotRef, setHtml, fonts }) => {
     if (size === null) {
       return
     }
@@ -139,7 +161,7 @@ const Main = component(
 
     const html = await res.text()
 
-    setHtml(makeHtml(html))
+    setHtml(makeHtml(html, fonts.current))
   }, ['size']),
   mapWithProps(({ size }) => {
     if (size !== null) {
@@ -187,7 +209,7 @@ const Main = component(
       <WebView
         style={{ width, height }}
         originWhitelist={['*']}
-        source={{ html }}
+        source={{ baseUrl: '', html }}
         cacheEnabled={false}
         scalesPageToFit={false}
         bounces={false}

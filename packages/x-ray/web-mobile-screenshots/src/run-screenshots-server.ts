@@ -1,16 +1,27 @@
 import path from 'path'
 import http from 'http'
+import { readdir } from 'pifs'
+import pAll from 'p-all'
 import upng from 'upng-js'
 import { checkScreenshot, TScreenshotsResultData, TScreenshotsFileResultData, TRunScreesnotsResult, TScreenshotsResult, TScreenshotsFileResult } from '@x-ray/screenshot-utils'
 import { TarFs, TTarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
-import { isNumber } from 'tsfn'
+import { isNumber, isString } from 'tsfn'
 import { TLineElement } from 'syntx'
 import prettyMs from 'pretty-ms'
 import { makeWorker } from '@x-ray/worker-utils'
+import { Font, load as loadFont } from 'opentype.js'
 import { TOptions, TWorkerHtmlResult, TWorkerResult } from './types'
 
 const childFile = require.resolve('./child')
-
+const pLoadFont = (fontFile: string) => new Promise<Font>((resolve, reject) => {
+  loadFont(fontFile, (err, font) => {
+    if (err) {
+      reject(err)
+    } else {
+      resolve(font)
+    }
+  })
+})
 const shouldBailout = Boolean(process.env.XRAY_CI)
 const dprSize = (dpr: number) => (size: number): number => Math.round(size / dpr * 100) / 100
 
@@ -95,7 +106,7 @@ export const runScreenshotsServer = (targetFiles: string[], options: TOptions) =
     })
 
     const server = http
-      .createServer((req, res) => {
+      .createServer(async (req, res) => {
         if (req.method === 'POST') {
           if (req.url === '/upload') {
             let screenshotData = ''
@@ -196,7 +207,35 @@ export const runScreenshotsServer = (targetFiles: string[], options: TOptions) =
               })
           }
         } else if (req.method === 'GET') {
-          if (req.url === '/next') {
+          if (req.url === '/fonts') {
+            if (!isString(options.fontsDir)) {
+              res.writeHead(204)
+              res.end()
+            } else {
+              const allFiles = await readdir(options.fontsDir)
+              const fontFiles = allFiles.filter((file) => file.endsWith('.otf') || file.endsWith('.ttf'))
+
+              const result = await pAll(
+                fontFiles.map((fontFile) => async () => {
+                  const fontFilePath = path.join(options.fontsDir!, fontFile)
+                  const fontInfo = await pLoadFont(fontFilePath)
+                  const fontFamily = Object.values((fontInfo.names as any).preferredFamily as string || fontInfo.names.fontFamily)[0]
+                  const fontWeight = fontInfo.tables.os2.usWeightClass
+                  const isItalic = fontInfo.tables.cff.topDict.italicAngle !== 0
+
+                  return {
+                    file: fontFile,
+                    name: fontFamily,
+                    weight: fontWeight,
+                    isItalic,
+                  }
+                }),
+                { concurrency: 10 }
+              )
+
+              res.end(JSON.stringify(result))
+            }
+          } else if (req.url === '/next') {
             worker.once('message', async (payload: TWorkerResult) => {
               switch (payload.type) {
                 case 'NEXT': {
