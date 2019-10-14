@@ -18,6 +18,7 @@ type TFonts = {
 
 let htmlIndex = 0
 
+// https://stackoverflow.com/questions/27048427/hide-scrollbar-in-chrome-for-android
 const makeHtml = (element: string, fonts: TFonts) => `
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
@@ -25,6 +26,7 @@ const makeHtml = (element: string, fonts: TFonts) => `
     html, body {
       margin: 0;
       padding: 0;
+      overflow: auto;
     }
 ${
   fonts
