@@ -50,6 +50,7 @@ export default async (options: TOptions) => {
 
                       await processSend<TScreenshotsItemResult>({
                         type: 'BAILOUT',
+                        reason: message.type,
                         id: item.id,
                         path: action.path,
                       })

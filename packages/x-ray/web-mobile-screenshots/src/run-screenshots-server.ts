@@ -131,7 +131,7 @@ export const runScreenshotsServer = (targetFiles: string[], options: TOptions) =
                   const action = await checkScreenshot(screenshot, currentTar, currentItemData.id)
 
                   if (shouldBailout && (action.type === 'DIFF' || action.type === 'NEW')) {
-                    throw new Error(`${path.relative(process.cwd(), currentItemData.path)}:${currentItemData.id}`)
+                    throw new Error(`${path.relative(process.cwd(), currentItemData.path)}:${currentItemData.id}:${action.type}`)
                   }
 
                   // switch
