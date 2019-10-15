@@ -152,7 +152,7 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
           case 'BAILOUT': {
             await Promise.all(workers.map((worker) => worker.kill()))
 
-            reject(`${path.relative(process.cwd(), action.path)}:${action.id}`)
+            reject(`${path.relative(process.cwd(), action.path)}:${action.id}:${action.reason}`)
 
             break
           }

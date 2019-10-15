@@ -118,6 +118,7 @@ export type TScreenshotsItemResult =
   } |
   {
     type: 'BAILOUT',
+    reason: 'NEW' | 'DIFF',
     id: string,
     path: string,
   } | {

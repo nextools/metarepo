@@ -60,6 +60,7 @@ export type TSnapshotsItemResult =
   } |
   {
     type: 'BAILOUT',
+    reason: 'NEW' | 'DIFF',
     id: string,
     path: string,
   } |

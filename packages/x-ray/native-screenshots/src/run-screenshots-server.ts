@@ -119,7 +119,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
                   const action = await checkScreenshot(screenshot, currentTar, id)
 
                   if (shouldBailout && (action.type === 'DIFF' || action.type === 'NEW')) {
-                    throw new Error(`${path.relative(process.cwd(), filePath)}:${id}`)
+                    throw new Error(`${path.relative(process.cwd(), filePath)}:${id}:${action.type}`)
                   }
 
                   // switch

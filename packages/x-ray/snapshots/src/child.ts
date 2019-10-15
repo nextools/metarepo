@@ -40,6 +40,7 @@ export default async (options: TOptions) => {
                       case 'NEW': {
                         await processSend<TSnapshotsItemResult>({
                           type: 'BAILOUT',
+                          reason: message.type,
                           id: item.id,
                           path: action.path,
                         })
