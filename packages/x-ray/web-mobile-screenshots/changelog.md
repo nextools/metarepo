@@ -1,3 +1,7 @@
+## v0.2.1
+
+* 🐞 clarify CI bailout error message
+
 ## v0.2.0
 
 * 🌱 handle custom fonts for "mobile web" screenshots

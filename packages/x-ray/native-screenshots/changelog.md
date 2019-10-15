@@ -1,3 +1,7 @@
+## v0.3.10
+
+* 🐞 clarify CI bailout error message
+
 ## v0.3.9
 
 * 🐞 ensure tar file always close on exit

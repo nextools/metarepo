@@ -1,3 +1,7 @@
+## v0.2.8
+
+* 🐞 clarify CI bailout error message
+
 ## v0.2.7
 
 * 🐞 ensure server close on exit

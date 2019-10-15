@@ -1,3 +1,7 @@
+## v0.3.4
+
+* 🐞 clarify CI bailout error message
+
 ## v0.3.3
 
 * 🐞 add gzip compression to tar-fs

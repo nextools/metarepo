@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/native-screenshots",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
