@@ -1,27 +1,26 @@
-export type TPathSegment = {
-  name: string,
-  index: number,
+export type TMeta = {
+  readonly value: any,
+  readonly children?: readonly TMeta[],
 }
 
-export type TPath = TPathSegment[]
-
 export type TLineElement = {
-  type: string,
-  value: string,
+  readonly type: string,
+  readonly value: string,
 }
 
 export type TLine = {
-  path: TPath,
-  elements: TLineElement[],
+  readonly meta?: any,
+  readonly elements: readonly TLineElement[],
 }
 
 // no body - no tail
 export type TSerializedElement = {
-  head: TLineElement[], // shared old line
-  body: TLine[], // self added line(s)
-  tail: TLineElement[], // shared new line
+  readonly head: readonly TLineElement[], // shared old line
+  readonly body: readonly TLine[], // self added line(s)
+  readonly tail: readonly TLineElement[], // shared new line
 }
 
 export type TConfig = {
-  indent: number,
+  readonly indent: number,
+  readonly meta?: TMeta,
 }

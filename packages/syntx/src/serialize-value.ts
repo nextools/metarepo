@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { isValidElement } from 'react'
-import { TConfig, TSerializedElement, TPath } from './types'
+import { TConfig, TSerializedElement, TMeta } from './types'
 import { serializeObject } from './serialize-object'
 import { serializeArray } from './serialize-array'
 import { serializeElement } from './serialize-element'
@@ -11,19 +11,17 @@ export type TSerializeValue = {
   value: any,
   currentIndent: number,
   config: TConfig,
-  path: TPath,
-  getNameIndex: (name: string) => number,
+  meta?: TMeta,
 }
 
-export const serializeValue = ({ value, currentIndent, config, path, getNameIndex }: TSerializeValue): TSerializedElement => {
+export const serializeValue = ({ value, currentIndent, meta, config }: TSerializeValue): TSerializedElement => {
   if (isValidElement(value)) {
     return serializeElement({
       name: getElementName(value),
       props: value.props,
       currentIndent,
+      meta,
       config,
-      path,
-      getNameIndex,
     })
   }
 
@@ -32,7 +30,7 @@ export const serializeValue = ({ value, currentIndent, config, path, getNameInde
       obj: value,
       currentIndent,
       config,
-      path,
+      meta,
     })
   }
 
@@ -41,7 +39,7 @@ export const serializeValue = ({ value, currentIndent, config, path, getNameInde
       arr: value,
       currentIndent,
       config,
-      path,
+      meta,
     })
   }
 

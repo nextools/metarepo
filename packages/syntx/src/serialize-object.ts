@@ -1,20 +1,19 @@
 /* eslint-disable import/no-cycle */
-import { TConfig, TSerializedElement, TPath } from './types'
+import { TConfig, TSerializedElement, TMeta } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'
-import { isUndefined, sanitizeLines, createGetNameIndex } from './utils'
+import { isUndefined, sanitizeLines, optMetaValue } from './utils'
 import { TYPE_OBJECT_BRACE, TYPE_OBJECT_COMMA, TYPE_WHITESPACE, TYPE_OBJECT_COLON, TYPE_OBJECT_KEY } from './constants'
 
 export type TSerializeObject = {
   obj: any,
   currentIndent: number,
   config: TConfig,
-  path: TPath,
+  meta?: TMeta,
 }
 
-export const serializeObject = ({ obj, currentIndent, config, path }: TSerializeObject): TSerializedElement => {
+export const serializeObject = ({ obj, currentIndent, meta, config }: TSerializeObject): TSerializedElement => {
   const { indent } = config
-  const getNameIndex = createGetNameIndex()
 
   if (Object.keys(obj).length === 0) {
     return {
@@ -34,14 +33,13 @@ export const serializeObject = ({ obj, currentIndent, config, path }: TSerialize
             value,
             currentIndent: currentIndent + indent,
             config,
-            path,
-            getNameIndex,
+            meta,
           })
 
           return [
             {
-              path,
-              children: [
+              meta: optMetaValue(meta),
+              elements: [
                 serializeIndent(currentIndent),
                 { type: TYPE_OBJECT_KEY, value: key },
                 { type: TYPE_OBJECT_COLON, value: ':' },
@@ -52,8 +50,8 @@ export const serializeObject = ({ obj, currentIndent, config, path }: TSerialize
             },
             ...body,
             tail.length > 0 && ({
-              path,
-              children: [
+              meta: optMetaValue(meta),
+              elements: [
                 serializeIndent(currentIndent),
                 ...tail,
                 i < entries.length - 1 && ({ type: TYPE_OBJECT_COMMA, value: ',' }),
