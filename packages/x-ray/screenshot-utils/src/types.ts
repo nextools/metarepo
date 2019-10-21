@@ -1,10 +1,9 @@
 import { ReactElement } from 'react' // eslint-disable-line
-import { TLineElement } from 'syntx'
-import { TItem } from '@x-ray/common-utils'
+import { TItem, TSyntxLines } from '@x-ray/common-utils'
 
 export type TMeta = {
   id: string,
-  serializedElement: TLineElement[][],
+  serializedElement: TSyntxLines,
   element: ReactElement<any>,
   options: {
     hasOwnWidth?: boolean,
@@ -90,7 +89,7 @@ export type TScreenshotsItemResult =
       height: number,
     },
     id: string,
-    serializedElement: TLineElement[][],
+    serializedElement: TSyntxLines,
   } |
   {
     type: 'NEW',
@@ -98,7 +97,7 @@ export type TScreenshotsItemResult =
     width: number,
     height: number,
     id: string,
-    serializedElement: TLineElement[][],
+    serializedElement: TSyntxLines,
   } |
   {
     type: 'DELETED',
@@ -106,7 +105,7 @@ export type TScreenshotsItemResult =
     width: number,
     height: number,
     id: string,
-    serializedElement: TLineElement[][],
+    serializedElement: TSyntxLines,
   } |
   {
     type: 'DONE',

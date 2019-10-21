@@ -24,7 +24,6 @@
     "p-all": "^2.0.0",
     "pkg-dir": "^4.2.0",
     "pretty-ms": "^5.0.0",
-    "syntx": "^0.4.0",
     "tsfn": "^0.2.0"
   },
   "devDependencies": {

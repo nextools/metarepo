@@ -1,4 +1,4 @@
-import { TLineElement } from 'syntx'
+import { TSyntxLines } from '@x-ray/common-utils'
 
 export type TOptions = {
   platform: 'ios-web' | 'android-web',
@@ -24,7 +24,7 @@ export type TWorkerError = {
 export type TWorkerHtmlResult = {
   type: 'NEXT',
   id: string,
-  serializedElement: TLineElement[][],
+  serializedElement: TSyntxLines,
   path: string,
   html: string,
 }

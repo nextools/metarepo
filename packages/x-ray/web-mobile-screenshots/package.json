@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
+    "@x-ray/common-utils": "^0.2.0",
     "@x-ray/screenshot-utils": "^0.2.0",
     "@x-ray/tar-fs": "^0.1.0",
     "@x-ray/worker-utils": "^0.1.1",
@@ -19,7 +20,6 @@
     "pifs": "^0.1.1",
     "pretty-ms": "^5.0.0",
     "react-dom": "^16.6.0",
-    "syntx": "^0.4.0",
     "tsfn": "^0.2.0",
     "upng-js": "^2.1.0"
   },
