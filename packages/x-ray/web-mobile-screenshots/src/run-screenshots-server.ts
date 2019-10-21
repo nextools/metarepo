@@ -1,6 +1,6 @@
 import path from 'path'
 import http from 'http'
-import { readdir } from 'pifs'
+import { readdir, readFile } from 'pifs'
 import pAll from 'p-all'
 import upng from 'upng-js'
 import { checkScreenshot, TScreenshotsResultData, TScreenshotsFileResultData, TRunScreesnotsResult, TScreenshotsResult, TScreenshotsFileResult } from '@x-ray/screenshot-utils'
@@ -222,9 +222,11 @@ export const runScreenshotsServer = (targetFiles: string[], options: TOptions) =
                   const fontFamily = Object.values((fontInfo.names as any).preferredFamily as string || fontInfo.names.fontFamily)[0]
                   const fontWeight = fontInfo.tables.os2.usWeightClass
                   const isItalic = fontInfo.tables.cff.topDict.italicAngle !== 0
+                  const data = await readFile(fontFilePath, { encoding: 'base64' })
 
                   return {
                     file: fontFile,
+                    data,
                     name: fontFamily,
                     weight: fontWeight,
                     isItalic,

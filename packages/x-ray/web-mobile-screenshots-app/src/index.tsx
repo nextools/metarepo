@@ -11,6 +11,7 @@ type TSize = {
 
 type TFonts = {
   file: string,
+  data: string,
   name: string,
   weight: number,
   isItalic: boolean,
@@ -34,7 +35,7 @@ ${
       font-family: "${font.name}";
       font-weight: ${font.weight};
       font-style: ${font.isItalic ? 'italic' : 'normal'};
-      src: url("${Platform.OS === 'android' ? `file:///android_asset/fonts/${font.file}` : font.file}");
+      src: url("data:${font.file.endsWith('.ttf') ? 'application/x-font-truetype' : 'application/x-font-opentype'};charset=utf-8;base64,${font.data}");
     }`)
     .join('\n')
 }
