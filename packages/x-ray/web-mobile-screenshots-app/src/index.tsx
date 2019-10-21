@@ -27,7 +27,7 @@ const makeHtml = (element: string, fonts: TFonts) => `
     html, body {
       margin: 0;
       padding: 0;
-      overflow: auto;
+      ${Platform.OS === 'android' ? 'overflow: auto;' : ''}
     }
 ${
   fonts
@@ -57,6 +57,8 @@ ${element}
 
       await new Promise((resolve) => requestAnimationFrame(resolve))
     }
+
+    await new Promise((resolve) => setTimeout(resolve, 50))
 
     window.ReactNativeWebView.postMessage(
       JSON.stringify({
@@ -135,10 +137,6 @@ const Main = component(
     if (viewShotRef.current === null) {
       throw new Error('invalid viewShotRef')
     }
-
-    // avoid blank screenshots
-    await new Promise((resolve) => requestAnimationFrame(resolve))
-    await new Promise((resolve) => requestAnimationFrame(resolve))
 
     const data = await captureRef(viewShotRef, { result: 'base64' })
 
