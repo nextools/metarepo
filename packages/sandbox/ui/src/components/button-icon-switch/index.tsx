@@ -9,15 +9,13 @@ import {
   mapKeyboardFocused,
   TMapKeyboardFocused,
   component,
-  mapContext,
 } from 'refun'
 import { Checkbox } from '@primitives/checkbox'
 import { Background } from '../background'
 import { Border } from '../border'
 import { Block } from '../block'
 import { TPosition } from '../../types'
-import { mapStoreState } from '../../store'
-import { ThemeContext } from '../themes'
+import { mapTheme } from '../themes'
 
 const ICON_SIZE = 20
 const SIZE = 30
@@ -42,43 +40,38 @@ export type TButtonIconSwitch = {
 
 export const ButtonIconSwitch = component(
   startWithType<TButtonIconSwitch>(),
-  mapContext(ThemeContext),
-  mapStoreState(({ themeName }) => ({ themeName }), ['themeName']),
+  mapTheme(),
   mapDefaultProps({
     accessibilityLabel: '',
   }),
   mapHovered,
   mapKeyboardFocused,
-  mapWithProps(({ theme, themeName, isChecked, isHovered, isKeyboardFocused }) => {
-    const selectedTheme = theme[themeName]
-
-    return {
-      backgroundColor: elegir(
-        isChecked && isHovered,
-        selectedTheme.foregroundActiveHover,
-        isChecked,
-        selectedTheme.foregroundActive,
-        isHovered,
-        selectedTheme.foregroundHover,
-        true,
-        selectedTheme.foreground
-      ),
-      borderColor: elegir(
-        isKeyboardFocused && isChecked,
-        selectedTheme.outlineActiveFocus,
-        isKeyboardFocused,
-        selectedTheme.outlineIdleFocus,
-        true,
-        selectedTheme.foregroundTransparent
-      ),
-      iconColor: elegir(
-        isChecked,
-        selectedTheme.textInverted,
-        true,
-        selectedTheme.text
-      ),
-    }
-  })
+  mapWithProps(({ theme, isChecked, isHovered, isKeyboardFocused }) => ({
+    backgroundColor: elegir(
+      isChecked && isHovered,
+      theme.foregroundActiveHover,
+      isChecked,
+      theme.foregroundActive,
+      isHovered,
+      theme.foregroundHover,
+      true,
+      theme.foreground
+    ),
+    borderColor: elegir(
+      isKeyboardFocused && isChecked,
+      theme.outlineActiveFocus,
+      isKeyboardFocused,
+      theme.outlineIdleFocus,
+      true,
+      theme.foregroundTransparent
+    ),
+    iconColor: elegir(
+      isChecked,
+      theme.textInverted,
+      true,
+      theme.text
+    ),
+  }))
 )(({
   left,
   top,

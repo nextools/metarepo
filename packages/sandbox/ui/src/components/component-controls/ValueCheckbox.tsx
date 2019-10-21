@@ -4,9 +4,9 @@ import { Switch, switchHeight } from '../switch'
 import { TPosition } from '../../types'
 
 export type TValueCheckboxProps = {
-  propPath: string[],
+  propPath: readonly string[],
   propValue: boolean,
-  onChange: (propPath: string[], propValue: boolean) => void,
+  onChange: (propPath: readonly string[], propValue: boolean) => void,
 } & TPosition
 
 export const valueCheckboxHeight = switchHeight

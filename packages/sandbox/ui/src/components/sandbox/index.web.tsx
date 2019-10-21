@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapWithProps, mapHandlers, mapContext } from 'refun'
+import { component, startWithType, mapWithProps, mapHandlers } from 'refun'
 import { Background } from '../background'
 import { Block } from '../block'
 import { mapStoreState, mapStoreDispatch } from '../../store'
@@ -11,8 +11,9 @@ import { toggleControls } from '../../actions'
 import { buttonIconSize, buttonIconSizeOverflow, ButtonIcon } from '../button-icon'
 import { IconChevronRight, IconChevronLeft } from '../icons'
 import { ComponentSelect } from '../component-select'
-import { mapImportedComponent } from '../../utils/map-imported-component'
-import { ThemeContext } from '../themes'
+import { mapTheme } from '../themes'
+import { getComponentName } from '../../utils'
+import { mapImportedComponent } from './map-imported-component'
 
 const CONTROLS_WIDTH = 500
 const TOP_BAR_HEIGHT = 60
@@ -24,26 +25,21 @@ export type TSandbox = {
 
 export const Sandbox = component(
   startWithType<TSandbox>(),
-  mapContext(ThemeContext),
-  mapStoreState(({ themeName, isVisibleControls, componentKey, selectedSetIndex }) => ({
-    themeName,
+  mapTheme(),
+  mapStoreState(({ isVisibleControls, componentKey, selectedSetIndex }) => ({
     isVisibleControls,
     componentKey,
     selectedSetIndex,
-  }), ['themeName', 'isVisibleControls', 'componentKey', 'selectedSetIndex']),
+  }), ['isVisibleControls', 'componentKey', 'selectedSetIndex']),
   mapStoreDispatch,
   mapHandlers({
     onToggleControls: ({ dispatch }) => () => dispatch(toggleControls()),
   }),
-  mapWithProps(({ theme, themeName }) => {
-    const selectedTheme = theme[themeName]
-
-    return {
-      backgroundColor: selectedTheme.background,
-      borderColor: selectedTheme.border,
-      textColor: selectedTheme.text,
-    }
-  }),
+  mapWithProps(({ theme }) => ({
+    backgroundColor: theme.background,
+    borderColor: theme.border,
+    textColor: theme.text,
+  })),
   mapImportedComponent(),
   mapWithProps(({ left, top, width, height, isVisibleControls }) => ({
     sidebarTop: top,
@@ -94,9 +90,10 @@ export const Sandbox = component(
   borderColor,
   backgroundColor,
   components,
+  Component,
+  componentConfig,
   componentProps,
   componentPropsChildrenMap,
-  componentMetaFile,
   onToggleControls,
 }) => (
   <Block width={width} height={height}>
@@ -109,8 +106,10 @@ export const Sandbox = component(
       height={demoAreaHeight}
       left={demoAreaLeft}
       top={demoAreaTop}
-      Component={componentMetaFile && componentMetaFile.Component}
+      Component={Component}
       componentProps={componentProps}
+      componentPropsChildrenMap={componentPropsChildrenMap}
+      componentConfig={componentConfig}
     />
 
     {isVisibleControls && (
@@ -123,24 +122,31 @@ export const Sandbox = component(
           height={componentSelectHeight}
         />
 
-        <SourceCode
-          width={sidebarWidth}
-          height={sourceCodeHeight}
-          left={sidebarLeft}
-          top={sourceCodeTop}
-          componentProps={componentProps}
-          componentMetaFile={componentMetaFile}
-          copyImportPackageName={copyImportPackageName}
-        />
+        {Component && componentConfig && componentProps && componentPropsChildrenMap && (
+          <Fragment>
+            <SourceCode
+              width={sidebarWidth}
+              height={sourceCodeHeight}
+              left={sidebarLeft}
+              top={sourceCodeTop}
+              Component={Component}
+              componentConfig={componentConfig}
+              componentProps={componentProps}
+              componentPropsChildrenMap={componentPropsChildrenMap}
+              copyImportPackageName={copyImportPackageName}
+            />
 
-        <ComponentControls
-          width={sidebarWidth}
-          height={controlsHeight}
-          left={sidebarLeft}
-          top={controlsTop}
-          componentPropsChildrenMap={componentPropsChildrenMap}
-          componentMetaFile={componentMetaFile}
-        />
+            <ComponentControls
+              width={sidebarWidth}
+              height={controlsHeight}
+              left={sidebarLeft}
+              top={controlsTop}
+              componentPropsChildrenMap={componentPropsChildrenMap}
+              componentName={getComponentName(Component)}
+              componentConfig={componentConfig}
+            />
+          </Fragment>
+        )}
 
         <Block
           width={sidebarWidth}

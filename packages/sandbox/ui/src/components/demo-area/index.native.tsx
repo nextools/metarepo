@@ -7,7 +7,6 @@ import {
   mapState,
   mapHandlers,
   mapWithPropsMemo,
-  mapContext,
 } from 'refun'
 import { Transform } from '@primitives/transform'
 import { Size } from '@primitives/size'
@@ -20,7 +19,7 @@ import { mapStoreState, mapStoreDispatch } from '../../store'
 import { Grid } from '../grid'
 import { TRect, TTransform } from '../../types'
 import { setTransform } from '../../actions'
-import { ThemeContext } from '../themes'
+import { mapTheme } from '../themes'
 import { mapTransform } from './map-transform'
 import { PureComponent } from './pure-component'
 
@@ -29,40 +28,37 @@ const round10 = (num: number) => Math.round(num / 10) * 10
 
 export type TDemoArea = {
   Component?: FC<any>,
-  componentProps?: TAnyObject,
+  componentProps?: Readonly<TAnyObject>,
 } & TRect
 
 export const DemoArea = pureComponent(
   startWithType<TDemoArea>(),
-  mapContext(ThemeContext),
-  mapStoreState(({ width, height, hasGrid, shouldStretch, transform, themeName }) => ({
+  mapTheme(),
+  mapStoreState(({ width, height, hasGrid, shouldStretch, transform }) => ({
     canvasWidth: width,
     canvasHeight: height,
     shouldStretch,
     hasGrid,
     transform,
-    themeName,
-  }), ['width', 'height', 'hasGrid', 'shouldStretch', 'transform', 'themeName']),
+  }), ['width', 'height', 'hasGrid', 'shouldStretch', 'transform']),
   mapStoreDispatch,
   mapHandlers({
     dispatchTransform: ({ dispatch }) => (transform: TTransform) => dispatch(setTransform(transform)),
   }),
   mapDebouncedHandlerTimeout('dispatchTransform', 150),
-  mapWithProps(({ theme, themeName }) => {
-    const selectedTheme = theme[themeName]
-
-    return {
-      backgroundColor: selectedTheme.background,
-      borderColor: selectedTheme.border,
-      shadowColor: selectedTheme.border,
-    }
-  }),
+  mapWithProps(({ theme }) => ({
+    backgroundColor: theme.background,
+    borderColor: theme.border,
+    shadowColor: theme.border,
+  })),
   mapWithProps(({ canvasWidth, canvasHeight, width, height }) => ({
     canvasLeft: Math.max((width - canvasWidth) / 2, 0),
     canvasTop: Math.max((height - canvasHeight) / 2, 0),
   })),
   mapState('componentHeight', 'setComponentHeight', () => 0, []),
   mapWithPropsMemo(({ componentHeight, canvasWidth, canvasHeight, shouldStretch }) => {
+    const componentWidth = shouldStretch ? canvasWidth : COMPONENT_MIN_WIDTH
+
     if (componentHeight === 0) {
       return {
         componentLeft: 0,
@@ -70,8 +66,6 @@ export const DemoArea = pureComponent(
         componentWidth: COMPONENT_MIN_WIDTH,
       }
     }
-
-    const componentWidth = shouldStretch ? canvasWidth : COMPONENT_MIN_WIDTH
 
     return {
       componentLeft: shouldStretch ? 0 : round10((canvasWidth - componentWidth) / 2),
@@ -101,7 +95,7 @@ export const DemoArea = pureComponent(
   setComponentHeight,
   backgroundColor,
   shadowColor,
-  themeName,
+  isDarkTheme,
 }) => (
   <Block width={width} height={height} left={left} top={top} shouldHideOverflow>
     <Transform
@@ -126,7 +120,6 @@ export const DemoArea = pureComponent(
             <Transform x={componentLeft} y={componentTop} hOrigin="left" vOrigin="top" shouldUse3d>
               <Size
                 height={componentHeight}
-                valuesToWatch={[componentWidth, componentProps, canvasWidth, canvasHeight]}
                 onHeightChange={setComponentHeight}
               >
                 <PureComponent Component={Component} props={componentProps}/>
@@ -136,7 +129,12 @@ export const DemoArea = pureComponent(
         )}
 
         {hasGrid && (
-          <Grid width={canvasWidth} height={canvasHeight} shouldDegrade={isTransforming} themeName={themeName}/>
+          <Grid
+            width={canvasWidth}
+            height={canvasHeight}
+            shouldDegrade={isTransforming}
+            isDarkTheme={isDarkTheme}
+          />
         )}
       </Block>
     </Transform>

@@ -8,7 +8,9 @@ import { ComponentDropdown, componentDropdownHeight } from './ComponentDropdown'
 
 const SPACER_SIZE = 20
 
-export type TComponentSelect = { components: TComponents } & TRect
+export type TComponentSelect = {
+  components: TComponents,
+} & TRect
 
 export const ComponentSelect = pureComponent(
   startWithType<TComponentSelect>(),

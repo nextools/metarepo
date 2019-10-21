@@ -37,8 +37,7 @@
     "autoprops": "^0.6.6",
     "react": "^16.8.6",
     "react-native": "^0.60.5",
-    "typeon": "^0.3.0",
-    "utility-types": "^3.4.1"
+    "typeon": "^0.3.0"
   },
   "peerDependencies": {
     "react": "^16.8.6",

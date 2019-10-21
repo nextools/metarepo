@@ -1,6 +1,7 @@
+import { FC } from 'react'
+import { TComponentConfig } from 'autoprops'
 import { TJsonValue } from 'typeon'
 import { TExtend } from 'tsfn'
-import { TMetaFile } from 'autoprops'
 import { TColor } from 'colorido'
 import { TResolutionKey } from './resolutions'
 
@@ -10,8 +11,13 @@ export type TApp = {
   copyImportPackageName?: string,
 }
 
+export type TMetaFile = {
+  readonly Component: FC<any>,
+  readonly config: TComponentConfig,
+}
+
 export type TComponents = {
-  [k: string]: () => Promise<TMetaFile>,
+  readonly [k: string]: () => Promise<TMetaFile>,
 }
 
 export type TAnyAction = {
@@ -28,7 +34,7 @@ export type TActionWithPayload<T extends string, P extends TJsonValue> = TExtend
 export type TActionCreator <A extends TAnyAction> = () => A
 export type TActionWithPayloadCreator<A extends TAnyAction> = (payload: A['payload']) => A
 
-export type TState = {
+export type TState = Readonly<{
   width: number,
   height: number,
   hasGrid: boolean,
@@ -41,27 +47,27 @@ export type TState = {
   resolutionKey: TResolutionKey | null,
   isVisibleControls: boolean,
   transform: TTransform,
-}
+}>
 
 export type TPosition = {
-  left: number,
-  top: number,
+  readonly left: number,
+  readonly top: number,
 }
 
 export type TSize = {
-  width: number,
-  height: number,
+  readonly width: number,
+  readonly height: number,
 }
 
 export type TRect = TSize & TPosition
 
 export type TTransform = {
-  x: number,
-  y: number,
-  z: number,
+  readonly x: number,
+  readonly y: number,
+  readonly z: number,
 }
 
-export type TTheme = {
+export type TTheme = Readonly<{
   name: TThemeName,
   background: TColor,
   backgroundFocus: TColor,
@@ -103,10 +109,10 @@ export type TTheme = {
   textPlaceholderHover: TColor,
   textPlaceholderPressed: TColor,
   textPressed: TColor,
-}
+}>
 
 export type TThemeName = 'light' | 'dark'
 
 export type TThemes = {
-  [k in TThemeName]: TTheme
+  readonly [k in TThemeName]: TTheme
 }

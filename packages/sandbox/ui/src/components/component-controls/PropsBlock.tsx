@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react'
-import { getBaseName, isChildrenMap, makeIndexedNames, TMetaFile } from 'autoprops'
+import { isChildrenMap, TComponentConfig, getChildrenKeys } from 'autoprops'
 import { isUndefined, TAnyObject } from 'tsfn'
-import { component, startWithType, mapWithProps, mapWithPropsMemo, mapContext } from 'refun'
+import { component, startWithType, mapWithProps, mapWithPropsMemo } from 'refun'
 import { Background } from '../background'
 import { Text, textHeight } from '../text'
 import { Block } from '../block'
-import { TThemeName } from '../../types'
-import { ThemeContext } from '../themes'
+import { TTheme } from '../../types'
 import { getComponentName } from '../../utils'
 import { getRowWidth, getColumnWidth, SPACER_SIZE, ROW_HEIGHT, TEXT_SPACER_SIZE, TITLE_HEIGHT } from './calculate-size'
 import { getPropPairs } from './get-props-pairs'
@@ -14,51 +13,46 @@ import { ValueCheckbox } from './ValueCheckbox'
 import { ValueDropdown } from './ValueDropdown'
 import { ComponentSwitch, componentSwitchSize } from './ComponentSwitch'
 
-const isPropConfigBoolean = (propConfig: any[]) => propConfig.every((c) => isUndefined(c) || typeof c === 'boolean')
-const isPropConfigString = (propConfig: any[]) => propConfig.every((c) => isUndefined(c) || typeof c === 'string' || c === null)
-const isPropConfigNumber = (propConfig: any[]) => propConfig.every((c) => isUndefined(c) || typeof c === 'number')
-const isPropConfigFunction = (propConfig: any[]) => propConfig.every((c) => isUndefined(c) || typeof c === 'function')
-const isPropConfigSymbol = (propConfig: any[]) => propConfig.every((c) => isUndefined(c) || typeof c === 'symbol')
+const isCheckboxValues = (propConfig: readonly any[]) => propConfig.every((c) => isUndefined(c) || typeof c === 'boolean')
 
 export type TPropsBlock = {
-  componentMetaFile: TMetaFile,
-  componentProps: TAnyObject,
+  componentName: string,
+  componentConfig: TComponentConfig,
+  componentPropsChildrenMap: Readonly<TAnyObject>,
   left: number,
   top: number,
   width: number,
-  propPath: string[],
-  themeName: TThemeName,
-  onChange: (propPath: string[], propValue: any) => void,
+  propPath: readonly string[],
+  theme: TTheme,
+  onChange: (propPath: readonly string[], propValue: any) => void,
 }
 
 export const PropsBlock = component(
   startWithType<TPropsBlock>(),
-  mapContext(ThemeContext),
-  mapWithProps(({ theme, themeName }) => {
-    const selectedTheme = theme[themeName]
-
-    return {
-      textColor: selectedTheme.text,
-      borderColor: selectedTheme.border,
-      iconColor: selectedTheme.foreground,
-    }
-  }),
+  mapWithProps(({ theme }) => ({
+    textColor: theme.text,
+    borderColor: theme.border,
+    iconColor: theme.foreground,
+  })),
   mapWithProps(({ width }) => ({
     rowWidth: getRowWidth(width),
     columnWidth: getColumnWidth(width),
   })),
-  mapWithPropsMemo(({ componentMetaFile }) => ({
-    propPairs: componentMetaFile ? getPropPairs(componentMetaFile.config.props) : [],
-  }), ['componentMetaFile']),
-  mapWithProps(({ componentProps, componentMetaFile }) => ({
-    activeChildrenKeys: isChildrenMap(componentProps.children) ? Object.keys(componentProps.children) : [] as string[],
-    allChildrenIndexedKeys: !isUndefined(componentMetaFile.childrenConfig) ? makeIndexedNames(componentMetaFile.childrenConfig.children) : [] as string[],
+  mapWithPropsMemo(({ componentConfig }) => ({
+    propPairs: getPropPairs(componentConfig.props),
+    allChildrenKeys: getChildrenKeys(componentConfig) as readonly string[],
+  }), ['componentConfig']),
+  mapWithProps(({ componentPropsChildrenMap }) => ({
+    activeChildrenKeys: (isChildrenMap(componentPropsChildrenMap.children)
+      ? Object.keys(componentPropsChildrenMap.children)
+      : []) as readonly string[],
   }))
 )(({
-  componentMetaFile,
-  componentProps,
+  componentName,
+  componentConfig,
+  componentPropsChildrenMap,
   activeChildrenKeys,
-  allChildrenIndexedKeys,
+  allChildrenKeys,
   propPairs,
   propPath,
   left,
@@ -79,80 +73,64 @@ export const PropsBlock = component(
       width={rowWidth}
       height={textHeight}
     >
-      <Text color={textColor} isBold>{getComponentName(componentMetaFile.Component)}</Text>
+      <Text color={textColor} isBold>{componentName}</Text>
     </Block>
 
     {propPairs.map((row, rowIndex) => (
-      <Fragment key={rowIndex}>
-        {
-          row.map((propName, colIndex) => {
-            if (isUndefined(propName)) {
-              return null
-            }
-
-            const propPossibleValues = componentMetaFile.config.props[propName]
-            const isPropRequired = Array.isArray(componentMetaFile.config.required) && componentMetaFile.config.required.includes(propName)
-            const propValue = componentProps[propName]
-            const left = SPACER_SIZE + colIndex * (SPACER_SIZE + columnWidth)
-            const currentTop = TITLE_HEIGHT + rowIndex * ROW_HEIGHT
-            const propNamePath = [...propPath, propName]
-
-            if (isPropConfigBoolean(propPossibleValues)) {
-              return (
-                <Fragment key={`${rowIndex}-${colIndex}`}>
-                  <Block
-                    left={left}
-                    top={currentTop}
-                    width={columnWidth}
-                    height={textHeight}
-                  >
-                    <Text color={textColor} isBold>{propName}</Text>
-                  </Block>
-                  <ValueCheckbox
-                    left={left}
-                    top={currentTop + textHeight + TEXT_SPACER_SIZE}
-                    propPath={propNamePath}
-                    propValue={propValue}
-                    onChange={onChange}
-                  />
-                </Fragment>
-              )
-            }
-
-            if (propName === 'children' || isPropConfigNumber(propPossibleValues) || isPropConfigString(propPossibleValues) || isPropConfigFunction(propPossibleValues) || isPropConfigSymbol(propPossibleValues)) {
-              return (
-                <Fragment key={`${rowIndex}-${colIndex}`}>
-                  <Block
-                    left={left}
-                    top={currentTop}
-                    width={columnWidth}
-                    height={textHeight}
-                  >
-                    <Text color={textColor} isBold shouldHideOverflow>{propName}</Text>
-                  </Block>
-                  <ValueDropdown
-                    left={left}
-                    top={currentTop + textHeight + TEXT_SPACER_SIZE}
-                    width={columnWidth}
-                    propPossibleValues={propPossibleValues}
-                    isPropRequired={isPropRequired}
-                    propPath={propNamePath}
-                    propValue={propValue}
-                    onChange={onChange}
-                  />
-                </Fragment>
-              )
-            }
-          })
+      row.map((propName, colIndex) => {
+        if (isUndefined(propName)) {
+          return null
         }
-      </Fragment>
+
+        const propPossibleValues = componentConfig.props[propName]
+        const isPropRequired = Array.isArray(componentConfig.required) && componentConfig.required.includes(propName)
+        const propValue = componentPropsChildrenMap[propName]
+        const left = SPACER_SIZE + colIndex * (SPACER_SIZE + columnWidth)
+        const currentTop = TITLE_HEIGHT + rowIndex * ROW_HEIGHT
+        const propNamePath = [...propPath, propName]
+
+        return (
+          <Fragment key={`${rowIndex}-${colIndex}`}>
+            <Block
+              left={left}
+              top={currentTop}
+              width={columnWidth}
+              height={textHeight}
+            >
+              <Text color={textColor} isBold shouldHideOverflow>{propName}</Text>
+            </Block>
+            {isCheckboxValues(propPossibleValues)
+              ? (
+                <ValueCheckbox
+                  left={left}
+                  top={currentTop + textHeight + TEXT_SPACER_SIZE}
+                  propPath={propNamePath}
+                  propValue={propValue}
+                  onChange={onChange}
+                />
+              )
+              : (
+                <ValueDropdown
+                  left={left}
+                  top={currentTop + textHeight + TEXT_SPACER_SIZE}
+                  width={columnWidth}
+                  propPossibleValues={propPossibleValues}
+                  isPropRequired={isPropRequired}
+                  propPath={propNamePath}
+                  propValue={propValue}
+                  onChange={onChange}
+                />
+              )}
+          </Fragment>
+        )
+      })
     ))}
 
-    {allChildrenIndexedKeys.map((childIndexedKey, childIndex) => {
-      const childrenConfig = componentMetaFile.childrenConfig
+    {allChildrenKeys.map((childKey, childIndex) => {
+      const childrenConfig = componentConfig.children
 
       if (isUndefined(childrenConfig)) {
-        throw new Error(`Cannot get childrenConfig for ${getComponentName(componentMetaFile.Component)}`)
+        throw new Error(`Cannot get childrenConfig for ${componentName}`)
       }
 
       let prevSize = 0
@@ -161,13 +139,12 @@ export const PropsBlock = component(
         prevSize += TITLE_HEIGHT
       }
 
-      const childKey = getBaseName(childIndexedKey)
-      const childMetaFile = childrenConfig.meta[childKey]
+      const childMetaFile = childrenConfig[childKey]
       const childDisplayName = getComponentName(childMetaFile.Component)
       const currentTop = propPairs.length * ROW_HEIGHT + TITLE_HEIGHT + prevSize
-      const isChildActive = activeChildrenKeys.includes(childIndexedKey)
-      const isChildRequired = Array.isArray(childrenConfig.required) && childrenConfig.required.includes(childKey)
-      const propChildPath = [...propPath, 'children', childIndexedKey]
+      const isChildActive = activeChildrenKeys.includes(childKey)
+      const isChildRequired = Array.isArray(componentConfig.required) && componentConfig.required.includes(childKey)
+      const propChildPath = [...propPath, childKey]
 
       return (
         <Fragment key={childIndex}>
@@ -186,7 +163,7 @@ export const PropsBlock = component(
             width={rowWidth}
             height={textHeight}
           >
-            <Text color={textColor} isBold>{childDisplayName}</Text>
+            <Text color={textColor} isBold shouldHideOverflow>{childDisplayName}</Text>
           </Block>
           {!isChildRequired && (
             <ComponentSwitch

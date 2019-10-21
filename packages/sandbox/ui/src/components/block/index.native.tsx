@@ -2,7 +2,7 @@ import React, { Ref, ReactNode } from 'react'
 import { View, ViewProps } from 'react-native'
 import { TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
-import { isUndefined, isNumber } from 'tsfn'
+import { isNumber } from 'tsfn'
 import { TBlockCommon } from './types'
 
 export type TBlock = TBlockCommon & {
@@ -16,6 +16,7 @@ export const Block = component(
     shouldHideOverflow: false,
     shouldIgnorePointerEvents: false,
     shouldForceAcceleration: false,
+    shouldScroll: false,
   }),
   mapProps(
     ({
@@ -49,11 +50,11 @@ export const Block = component(
         children,
       }
 
-      if (!isUndefined(width)) {
+      if (isNumber(width)) {
         styles.width = width
       }
 
-      if (!isUndefined(height)) {
+      if (isNumber(height)) {
         styles.height = height
       }
 
@@ -61,23 +62,23 @@ export const Block = component(
         styles.maxWidth = maxWidth
       }
 
-      if (!isUndefined(minWidth)) {
+      if (isNumber(minWidth)) {
         styles.minWidth = minWidth
       }
 
-      if (!isUndefined(minHeight)) {
+      if (isNumber(minHeight)) {
         styles.minHeight = minHeight
       }
 
-      if (!isUndefined(left)) {
+      if (isNumber(left)) {
         styles.left = left
       }
 
-      if (!isUndefined(top)) {
+      if (isNumber(top)) {
         styles.top = top
       }
 
-      if (!isUndefined(floatingIndex)) {
+      if (isNumber(floatingIndex)) {
         styles.zIndex = floatingIndex
       }
 
@@ -97,7 +98,7 @@ export const Block = component(
         styles.overflow = 'scroll'
       }
 
-      if (!isUndefined(opacity)) {
+      if (isNumber(opacity)) {
         styles.opacity = opacity
       }
 

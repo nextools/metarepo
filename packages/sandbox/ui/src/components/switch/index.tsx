@@ -11,7 +11,6 @@ import {
   TMapKeyboardFocused,
   pureComponent,
   mapState,
-  mapContext,
 } from 'refun'
 import { Checkbox } from '@primitives/checkbox'
 import { Block } from '@primitives/block'
@@ -20,8 +19,7 @@ import { Background } from '../background'
 import { Border } from '../border'
 import { Text } from '../text'
 import { TPosition } from '../../types'
-import { mapStoreState } from '../../store'
-import { ThemeContext } from '../themes'
+import { mapTheme } from '../themes'
 
 const WIDTH = 44
 const HEIGHT = 34
@@ -43,53 +41,50 @@ export type TSwitch = {
 
 export const Switch = pureComponent(
   startWithType<TSwitch>(),
-  mapContext(ThemeContext),
-  mapStoreState(({ themeName }) => ({ themeName }), ['themeName']),
+  mapTheme(),
   mapHovered,
   mapPressed,
   mapKeyboardFocused,
-  mapWithProps(({ theme, themeName, isChecked, isHovered, isPressed, isKeyboardFocused }) => {
-    const selectedTheme = theme[themeName]
-
+  mapWithProps(({ theme, isChecked, isHovered, isPressed, isKeyboardFocused }) => {
     return {
       yesBackgroundColor: elegir(
         isPressed && isChecked,
-        selectedTheme.foregroundActivePressed,
+        theme.foregroundActivePressed,
         isPressed,
-        selectedTheme.foregroundPressed,
+        theme.foregroundPressed,
         isHovered && isChecked,
-        selectedTheme.foregroundActiveHover,
+        theme.foregroundActiveHover,
         isHovered,
-        selectedTheme.foregroundHover,
+        theme.foregroundHover,
         isChecked,
-        selectedTheme.foregroundActive,
+        theme.foregroundActive,
         true,
-        selectedTheme.foreground
+        theme.foreground
       ),
       noBackgroundColor: elegir(
         isPressed && !isChecked,
-        selectedTheme.foregroundActivePressed,
+        theme.foregroundActivePressed,
         isPressed,
-        selectedTheme.foregroundPressed,
+        theme.foregroundPressed,
         isHovered && !isChecked,
-        selectedTheme.foregroundActiveHover,
+        theme.foregroundActiveHover,
         isHovered,
-        selectedTheme.foregroundHover,
+        theme.foregroundHover,
         !isChecked,
-        selectedTheme.foregroundActive,
+        theme.foregroundActive,
         true,
-        selectedTheme.foreground
+        theme.foreground
       ),
       borderColor: elegir(
         isKeyboardFocused && isChecked,
-        selectedTheme.outlineActiveFocus,
+        theme.outlineActiveFocus,
         isKeyboardFocused,
-        selectedTheme.outlineIdleFocus,
+        theme.outlineIdleFocus,
         true,
-        selectedTheme.foregroundTransparent
+        theme.foregroundTransparent
       ),
-      yesTextColor: isChecked ? selectedTheme.textInverted : selectedTheme.text,
-      noTextColor: isChecked ? selectedTheme.text : selectedTheme.textInverted,
+      yesTextColor: isChecked ? theme.textInverted : theme.text,
+      noTextColor: isChecked ? theme.text : theme.textInverted,
     }
   }),
   mapState('yesSize', 'setYesSize', () => ({
@@ -111,9 +106,11 @@ export const Switch = pureComponent(
   top,
   yesLeft,
   yesTop,
+  yesSize,
   setYesSize,
   noLeft,
   noTop,
+  noSize,
   setNoSize,
   isChecked,
   yesBackgroundColor,
@@ -152,7 +149,7 @@ export const Switch = pureComponent(
     </Block>
 
     <Block isFloating left={yesLeft} top={yesTop}>
-      <Size onChange={setYesSize}>
+      <Size width={yesSize.width} height={yesSize.height} onChange={setYesSize}>
         <Text color={yesTextColor}>
           yes
         </Text>
@@ -168,7 +165,7 @@ export const Switch = pureComponent(
     </Block>
 
     <Block isFloating left={noLeft} top={noTop}>
-      <Size onChange={setNoSize}>
+      <Size width={noSize.width} height={noSize.height} onChange={setNoSize}>
         <Text color={noTextColor}>
           no
         </Text>

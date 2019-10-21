@@ -8,7 +8,6 @@ import {
   TMapFocused,
   mapFocused,
   mapWithPropsMemo,
-  mapContext,
 } from 'refun'
 import { elegir } from 'elegir'
 import { Select, TOption } from '@primitives/select'
@@ -18,9 +17,8 @@ import { Background } from '../background'
 import { Block } from '../block'
 import { Text } from '../text'
 import { TRect } from '../../types'
-import { mapStoreState } from '../../store'
 import { IconChevronDown } from '../icons'
-import { ThemeContext } from '../themes'
+import { mapTheme } from '../themes'
 
 const LINE_HEIGHT = 19
 const RADIUS = 5
@@ -29,7 +27,7 @@ const ICON_SIZE = 20
 
 export type TDropdown = {
   value: string,
-  options: TOption[],
+  options: readonly TOption[],
   onChange: (value: string) => void,
 } & TMapHovered
   & TMapFocused
@@ -37,8 +35,7 @@ export type TDropdown = {
 
 export const Dropdown = pureComponent(
   startWithType<TDropdown>(),
-  mapContext(ThemeContext),
-  mapStoreState(({ themeName }) => ({ themeName }), ['themeName']),
+  mapTheme(),
   mapHovered,
   mapFocused,
   mapWithPropsMemo(({ options, value }) => {
@@ -48,19 +45,15 @@ export const Dropdown = pureComponent(
       label: isUndefined(selectedOption) ? 'NOT_FOUND' : selectedOption.label,
     }
   }, ['options', 'value']),
-  mapWithProps(({ isHovered, isFocused, theme, themeName }) => {
-    const selectedTheme = theme[themeName]
-
-    return {
-      color: selectedTheme.text,
-      backgroundColor: elegir(
-        isHovered || isFocused,
-        selectedTheme.foregroundHover,
-        true,
-        selectedTheme.foreground
-      ),
-    }
-  })
+  mapWithProps(({ isHovered, isFocused, theme }) => ({
+    color: theme.text,
+    backgroundColor: elegir(
+      isHovered || isFocused,
+      theme.foregroundHover,
+      true,
+      theme.foreground
+    ),
+  }))
 )(({
   left,
   top,

@@ -3,7 +3,6 @@ import { elegir } from 'elegir'
 import { Surface, Group, Shape } from '@primitives/svg'
 import { startWithType, mapWithProps, pureComponent, mapWithPropsMemo } from 'refun'
 import { Block } from '../block'
-import { TThemeName } from '../../types'
 import * as Colors from './colors'
 
 const GRID_SIZE = 5
@@ -12,7 +11,7 @@ export type TGrid = {
   width: number,
   height: number,
   shouldDegrade: boolean,
-  themeName: TThemeName,
+  isDarkTheme: boolean,
 }
 
 export const Grid = pureComponent(
@@ -25,23 +24,23 @@ export const Grid = pureComponent(
       .fill(0)
       .map((_, i) => i * GRID_SIZE),
   }), ['width', 'height']),
-  mapWithProps(({ shouldDegrade, themeName }) => ({
+  mapWithProps(({ shouldDegrade, isDarkTheme }) => ({
     color: elegir(
-      shouldDegrade && themeName === 'dark',
+      shouldDegrade && isDarkTheme,
       Colors.GRID_COLOR_DEGRADE_DARK,
       shouldDegrade,
       Colors.GRID_COLOR_DEGRADE,
-      themeName === 'dark',
+      isDarkTheme,
       Colors.GRID_COLOR_DARK,
       true,
       Colors.GRID_COLOR
     ),
     colorSoft: elegir(
-      shouldDegrade && themeName === 'dark',
+      shouldDegrade && isDarkTheme,
       Colors.GRID_COLOR_DEGRADE_SOFT_DARK,
       shouldDegrade,
       Colors.GRID_COLOR_DEGRADE_SOFT,
-      themeName === 'dark',
+      isDarkTheme,
       Colors.GRID_COLOR_SOFT_DARK,
       true,
       Colors.GRID_COLOR_SOFT
