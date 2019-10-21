@@ -16,6 +16,7 @@ export type TRequiredKeys<T extends {}> = Exclude<{
     ? K
     : never
 }[keyof T], undefined>
+export type TWritable<T> = { -readonly [K in keyof T]: T[K] };
 export type TOmitKey<T extends {}, K extends PropertyKey> = Pick<T, Exclude<keyof T, K>>
 
 export const getObjectKeys = <T extends {}> (obj: T) => Object.keys(obj) as (keyof T)[]
