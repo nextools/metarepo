@@ -1,7 +1,5 @@
 /* eslint-disable import/export */
-import { TOmit } from './omit'
-
-export type TExtend<T1 extends {}, T2 extends {}> = TOmit<T1, T2> & T2
+export type TExtend<T1 extends {}, T2 extends {}> = Pick<T1, Exclude<keyof T1, keyof T2>> & T2
 export type TExtend3 <T1 extends {}, T2 extends {}, T3 extends {}> = TExtend<TExtend<T1, T2>, T3>
 export type TExtend4 <T1 extends {}, T2 extends {}, T3 extends {}, T4 extends {}> = TExtend<TExtend3<T1, T2, T3>, T4>
 export type TExtend5 <T1 extends {}, T2 extends {}, T3 extends {}, T4 extends {}, T5 extends {}> = TExtend<TExtend4<T1, T2, T3, T4>, T5>
