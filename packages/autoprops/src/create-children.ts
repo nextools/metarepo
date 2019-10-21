@@ -1,28 +1,37 @@
 import { ReactElement, createElement } from 'react'
 import { isUndefined, TAnyObject } from 'tsfn'
-import { getBaseName } from './get-indexed-name'
-import { TChildrenMap, TChildrenConfig } from './types'
+import { TChildrenMap, TComponentConfig } from './types'
 import { isChildrenMap } from './is-children-map'
+import { getChildrenKeys } from './get-keys'
 
-export const createChildren = (childrenConfig: TChildrenConfig, children: TChildrenMap): ReactElement | ReactElement[] => {
-  const childrenKeys = Object.keys(children)
+export const createChildren = <ChildrenKeys extends string>(componentConfig: TComponentConfig<any, ChildrenKeys>, childrenMap: TChildrenMap<ChildrenKeys>): ReactElement | ReactElement[] => {
+  const childrenConfig = componentConfig.children
+
+  if (isUndefined(childrenConfig)) {
+    throw new Error('Cannot get childrenConfig')
+  }
+
   const createdChildren: ReactElement[] = []
+  const childrenKeys = getChildrenKeys(componentConfig)
 
   for (let i = 0; i < childrenKeys.length; ++i) {
-    const childIndexedKey = childrenKeys[i]
-    const childKey = getBaseName(childIndexedKey)
-    const childrenProps = children[childIndexedKey] as TAnyObject
-    const childMeta = childrenConfig.meta[childKey]
+    const childKey = childrenKeys[i]
+    const childrenProps = childrenMap[childKey]
+    const childMeta = childrenConfig[childKey]
+
+    if (isUndefined(childrenProps)) {
+      continue
+    }
 
     if (isChildrenMap(childrenProps.children)) {
-      const { children, ...props } = childrenProps
-
-      if (isUndefined(childMeta.childrenConfig)) {
+      if (isUndefined(childMeta.config.children)) {
         throw new Error(`Cannot get childrenConfig for ${childMeta.Component.displayName}`)
       }
 
+      const { children, ...props } = childrenProps as TAnyObject
+
       createdChildren.push(
-        createElement(childMeta.Component, { ...props, key: i }, createChildren(childMeta.childrenConfig, children))
+        createElement(childMeta.Component, { ...props, key: i }, createChildren(childMeta.config, children))
       )
     } else {
       createdChildren.push(

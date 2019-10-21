@@ -7,9 +7,9 @@ test('getNumSkipMutin', (t) => {
     getNumSkipMutin(
       [I(0), I(1), I(1)],
       [I(2), I(2), I(2)],
-      ['a', 'b', 'c'],
-      ['a', 'c'],
-      0
+      ['a', 'b'],
+      ['c'],
+      ['a', 'c']
     ).toString(),
     '1',
     'left index case'
@@ -19,9 +19,9 @@ test('getNumSkipMutin', (t) => {
     getNumSkipMutin(
       [I(0), I(1), I(0), I(1)],
       [I(4), I(4), I(4), I(4)],
-      ['a', 'b', 'c', 'd'],
-      ['a', 'b', 'c'],
-      0
+      ['a', 'b'],
+      ['c', 'd'],
+      ['a', 'b', 'c']
     ).toString(),
     '12',
     'middle index case'
@@ -31,9 +31,9 @@ test('getNumSkipMutin', (t) => {
     getNumSkipMutin(
       [I(0), I(0), I(0), I(0), I(1)],
       [I(4), I(4), I(4), I(4), I(4)],
-      ['a', 'b', 'c', 'd', 'e'],
-      ['a', 'c', 'e'],
-      0
+      ['a', 'b', 'c'],
+      ['d', 'e'],
+      ['a', 'c', 'e']
     ).toString(),
     '17',
     'right index case'

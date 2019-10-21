@@ -1,20 +1,28 @@
 /* eslint-disable no-use-before-define */
 import { isValidElement, ReactElement, FC } from 'react'
-import { isFunction, isSymbol, isUndefined, isRegExp, TAnyObject, isString, isDefined } from 'tsfn'
+import { isFunction, isSymbol, isUndefined, isRegExp, TAnyObject, isString, isDefined, TWritable, isObject, isArray } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
-import { TMetaFile } from './types'
+import { TComponentConfig, TChildrenMap, TRequiredConfig } from './types'
 import { unpackPerm } from './unpack-perm'
-import { getIndexedName } from './get-indexed-name'
 
-const getElementName = (element: ReactElement<any>) => {
-  if (typeof element.type === 'string') {
+const getElementName = (element: ReactElement) => {
+  if (isString(element.type)) {
     return element.type
   }
 
-  return (element.type as FC<any>).displayName || element.type.name
+  if (isString((element.type as FC).displayName)) {
+    return (element.type as FC).displayName
+  }
+
+  // @ts-ignore
+  if (element.type === Symbol.for('react.fragment')) {
+    return 'Fragment'
+  }
+
+  return element.type.name
 }
 
-const getValue = (valueIndex: number, values: any[], key: string, required?: string[]): string | undefined => {
+const getValue = (valueIndex: number, values: readonly any[], key: string, required?: TRequiredConfig): string | undefined => {
   let index = -1
 
   if (isDefined(required) && required.includes(key)) {
@@ -23,83 +31,101 @@ const getValue = (valueIndex: number, values: any[], key: string, required?: str
     index = valueIndex - 1
   }
 
-  if (index >= 0) {
-    const value = values[index]
-
-    if (isFunction(value)) {
-      return value.name === ''
-        ? `[function(${index})]`
-        : `[function(${value.name}) (${index})]`
-    }
-
-    if (isSymbol(value)) {
-      return isUndefined(value.description)
-        ? `[symbol(${index})]`
-        : `[symbol(${value.description})]`
-    }
-
-    if (isRegExp(value)) {
-      return `[regexp(${value}) (${index})]`
-    }
-
-    if (isValidElement(value)) {
-      return `[react(${getElementName(value)}) (${index})]`
-    }
-
-    return `${value}`
+  if (index < 0) {
+    return
   }
+
+  const value = values[index]
+
+  if (isFunction(value)) {
+    return value.name === ''
+      ? `[function(${index})]`
+      : `[function(${value.name}) (${index})]`
+  }
+
+  if (isSymbol(value)) {
+    return isUndefined(value.description)
+      ? `[symbol(${index})]`
+      : `[symbol(${value.description})]`
+  }
+
+  if (isRegExp(value)) {
+    return `[regexp(${value}) (${index})]`
+  }
+
+  if (isValidElement(value)) {
+    return `[react(${getElementName(value)}) (${index})]`
+  }
+
+  if (isArray(value)) {
+    return `[array(${index})]`
+  }
+
+  if (isObject(value)) {
+    return `[object(${index})]`
+  }
+
+  return `${value}`
 }
 
-const getChildValue = (int: BigInteger, childMeta: TMetaFile, childKey: string, required?: string[]): any => {
+const getChildValue = (int: BigInteger, childConfig: TComponentConfig, childKey: string, required?: TRequiredConfig): TAnyObject | undefined => {
   if (isDefined(required) && required.includes(childKey)) {
-    return getPropsImpl(int, childMeta)
+    return getPropsImpl(childConfig, int)
   }
 
   if (!int.isZero()) {
-    return getPropsImpl(int.minus(BigInt.one), childMeta)
+    return getPropsImpl(childConfig, int.minus(BigInt.one))
   }
 }
 
-const getPropsImpl = (int: BigInteger, metaFile: TMetaFile): TAnyObject => {
+const getPropsImpl = (componentConfig: TComponentConfig, int: BigInteger): TAnyObject => {
   const result: TAnyObject = {}
-  const { values, propKeys } = unpackPerm(int, metaFile)
+  const { values, propKeys, childrenKeys } = unpackPerm(componentConfig, int)
 
   let i = 0
 
   for (; i < propKeys.length; ++i) {
     const propKey = propKeys[i]
     const valueIndex = values[i].toJSNumber()
-    const value = getValue(valueIndex, metaFile.config.props[propKey], propKey, metaFile.config.required)
+    const value = getValue(valueIndex, componentConfig.props[propKey], propKey, componentConfig.required)
 
     if (isString(value)) {
       result[propKey] = value
     }
   }
 
-  if (isDefined(metaFile.childrenConfig)) {
-    const childrenMap: TAnyObject = {}
-    const childrenKeys = metaFile.childrenConfig.children.sort((a, b) => a.localeCompare(b))
+  if (isDefined(componentConfig.children)) {
+    const childrenMap: TWritable<TChildrenMap> = {}
     let hasChildren = false
 
     for (; i < values.length; ++i) {
       const childIndex = i - propKeys.length
       const childKey = childrenKeys[childIndex]
       const valueIndex = values[i]
-      const value = getChildValue(valueIndex, metaFile.childrenConfig.meta[childKey], childKey, metaFile.childrenConfig.required)
+      const value = getChildValue(valueIndex, componentConfig.children[childKey].config, childKey, componentConfig.required)
 
       if (isDefined(value)) {
-        const childIndexedKey = getIndexedName(childrenKeys, childIndex)
-        childrenMap[childIndexedKey] = value
+        childrenMap[childKey] = value
         hasChildren = true
       }
     }
 
     if (hasChildren) {
-      result.children = childrenMap
+      const sortedChildrenKeys = childrenKeys.slice().sort((a, b) => a.localeCompare(b))
+      const sortedChildrenMap: TWritable<TChildrenMap> = {}
+
+      for (const key of sortedChildrenKeys) {
+        if (Reflect.has(childrenMap, key)) {
+          sortedChildrenMap[key] = childrenMap[key]
+        }
+      }
+
+      result.children = sortedChildrenMap
     }
   }
 
   return result
 }
 
-export const serializeProps = (int: BigInteger, metaFile: TMetaFile): string => JSON.stringify(getPropsImpl(int, metaFile))
+export const serializeProps = (componentConfig: TComponentConfig, int: BigInteger): string =>
+  JSON.stringify(getPropsImpl(componentConfig, int))

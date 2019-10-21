@@ -2,22 +2,29 @@
 import BigInt, { BigInteger } from 'big-integer'
 import { packPerm } from './pack-perm'
 
-const getGroupIndices = (propsKeys: string[], group: string[], indexOffset: number): number[] => {
+const getGroupIndices = (propsKeys: readonly string[], childrenKeys: readonly string[], group: readonly string[]): number[] => {
   const result: number[] = []
 
   for (let i = 0; i < propsKeys.length; ++i) {
     if (group.includes(propsKeys[i])) {
-      result.push(i + indexOffset)
+      result.push(i)
+    }
+  }
+
+  for (let i = 0; i < childrenKeys.length; ++i) {
+    if (group.includes(childrenKeys[i])) {
+      result.push(i + propsKeys.length)
     }
   }
 
   return result
 }
 
-export const getNumSkipMutin = (values: BigInteger[], length: BigInteger[], propsKeys: string[], group: string[], indexOffset: number): BigInteger => {
-  const mutinIndices = getGroupIndices(propsKeys, group, indexOffset)
+export const getNumSkipMutin = (values: readonly BigInteger[], length: readonly BigInteger[], propsKeys: readonly string[], childrenKeys: readonly string[], group: readonly string[]): BigInteger => {
+  const mutinIndices = getGroupIndices(propsKeys, childrenKeys, group)
   let changedIndex = 0
 
+  /* find changed value index in mutin group */
   for (let i = 0; i < mutinIndices.length; ++i) {
     changedIndex = mutinIndices[i]
 

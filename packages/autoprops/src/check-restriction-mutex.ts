@@ -1,15 +1,13 @@
 import { BigInteger } from 'big-integer'
+import { TMutexConfig } from './types'
 
-export const checkRestrictionMutexPropsChildren = (values: BigInteger[], keys: string[], childrenKeys: string[], mutexGroups: string[][]): boolean => {
-  const propKeysLength = keys.length
-
-  for (let i = 0; i < mutexGroups.length; ++i) {
-    const mutexGroup = mutexGroups[i]
+export const checkRestrictionMutex = (values: readonly BigInteger[], propKeys: readonly string[], childrenKeys: readonly string[], mutexGroups: TMutexConfig): boolean => {
+  for (const mutexGroup of mutexGroups) {
     let intersectCount = 0
 
     for (const mutexKey of mutexGroup) {
-      for (let k = 0; k < keys.length; ++k) {
-        if (!values[k].isZero() && mutexKey === keys[k]) {
+      for (let i = 0; i < propKeys.length; ++i) {
+        if (!values[i].isZero() && mutexKey === propKeys[i]) {
           ++intersectCount
         }
 
@@ -18,29 +16,8 @@ export const checkRestrictionMutexPropsChildren = (values: BigInteger[], keys: s
         }
       }
 
-      for (let k = 0; k < childrenKeys.length; ++k) {
-        if (!values[k + propKeysLength].isZero() && mutexKey === childrenKeys[k]) {
-          ++intersectCount
-        }
-
-        if (intersectCount > 1) {
-          return true
-        }
-      }
-    }
-  }
-
-  return false
-}
-
-export const checkRestrictionMutex = (values: BigInteger[], indexOffset: number, keys: string[], mutexGroups: string[][]): boolean => {
-  for (let i = 0; i < mutexGroups.length; ++i) {
-    const mutexGroup = mutexGroups[i]
-    let intersectCount = 0
-
-    for (const mutexKey of mutexGroup) {
-      for (let k = 0; k < keys.length; ++k) {
-        if (!values[k + indexOffset].isZero() && mutexKey === keys[k]) {
+      for (let i = 0; i < childrenKeys.length; ++i) {
+        if (!values[i + propKeys.length].isZero() && mutexKey === childrenKeys[i]) {
           ++intersectCount
         }
 

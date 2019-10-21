@@ -1,17 +1,16 @@
-import { isDefined } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
-import { TMetaFile, Permutation } from './types'
+import { Permutation, TComponentConfig } from './types'
 import { getValuesLength, getLength } from './get-length'
-import { getPropKeys } from './get-keys'
+import { getPropKeys, getChildrenKeys } from './get-keys'
 
-export const unpackPerm = (int: BigInteger, metaFile: TMetaFile): Permutation => {
+export const unpackPerm = (componentConfig: TComponentConfig, int: BigInteger): Permutation => {
   const permValues: BigInteger[] = []
   const permLength: BigInteger[] = []
-  const propKeys = getPropKeys(metaFile.config.props)
+  const propKeys = getPropKeys(componentConfig.props)
   let permValue = int
 
   for (const key of propKeys) {
-    const length = getValuesLength(BigInt(metaFile.config.props[key].length), key, metaFile.config.required)
+    const length = getValuesLength(BigInt(componentConfig.props[key].length), key, componentConfig.required)
     const { quotient, remainder } = permValue.divmod(length)
 
     permLength.push(length)
@@ -19,20 +18,21 @@ export const unpackPerm = (int: BigInteger, metaFile: TMetaFile): Permutation =>
     permValue = quotient
   }
 
-  if (isDefined(metaFile.childrenConfig)) {
-    for (const key of metaFile.childrenConfig.children) {
-      const length = getValuesLength(getLength(metaFile.childrenConfig.meta[key]), key, metaFile.childrenConfig.required)
-      const { quotient, remainder } = permValue.divmod(length)
+  const childrenKeys = getChildrenKeys(componentConfig)
 
-      permLength.push(length)
-      permValues.push(remainder)
-      permValue = quotient
-    }
+  for (const key of childrenKeys) {
+    const length = getValuesLength(getLength(componentConfig.children![key].config), key, componentConfig.required)
+    const { quotient, remainder } = permValue.divmod(length)
+
+    permLength.push(length)
+    permValues.push(remainder)
+    permValue = quotient
   }
 
   return {
     values: permValues,
     length: permLength,
     propKeys,
+    childrenKeys,
   }
 }

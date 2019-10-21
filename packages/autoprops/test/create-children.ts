@@ -1,6 +1,6 @@
 import test from 'blue-tape'
 import { mock } from 'mocku'
-import { TChildrenConfig } from '../src'
+import { TComponentConfig } from '../src/types'
 
 test('createChildren', async (t) => {
   const unmockCreateChildren = mock('../src/create-children', {
@@ -17,16 +17,15 @@ test('createChildren', async (t) => {
   const { createChildren } = await import('../src/create-children')
 
   const Comp = () => null
-  const config: TChildrenConfig = {
-    meta: {
+  const config: TComponentConfig = {
+    props: {},
+    children: {
       child: {
         config: {
           props: {
             a: [true],
           },
-        },
-        childrenConfig: {
-          meta: {
+          children: {
             child1: {
               config: {
                 props: {},
@@ -40,21 +39,25 @@ test('createChildren', async (t) => {
               Component: Comp,
             },
           },
-          children: ['child1', 'child2'],
         },
         Component: Comp,
       },
+      childNotCreated: {
+        config: {
+          props: {},
+        },
+        Component: () => null,
+      },
     },
-    children: ['child'],
   }
 
   t.deepEquals(
     createChildren(config, {
-      child__0: {
+      child: {
         a: true,
         children: {
-          child1__0: {},
-          child2__0: {},
+          child1: {},
+          child2: {},
         },
       },
     }),
@@ -83,27 +86,39 @@ test('createChildren', async (t) => {
 test('createChildren: errors', async (t) => {
   const { createChildren } = await import('../src/create-children')
 
-  const Comp = () => null
-  const config: TChildrenConfig = {
-    meta: {
-      child: {
-        config: {
-          props: {
-            a: [true],
-          },
-        },
-        Component: Comp,
-      },
-    },
-    children: ['child'],
-  }
-
   t.throws(
-    () => createChildren(config, {
-      child__0: {
+    () => createChildren({
+      props: {},
+      children: {
+        child: {
+          config: {
+            props: {
+              a: [true],
+            },
+          },
+          Component: () => null,
+        },
+      },
+    }, {
+      child: {
         a: true,
         children: {
-          child__0: {},
+          child: {},
+        },
+      },
+    }),
+    /childrenConfig/,
+    'should throw if childrenConfig is missing'
+  )
+
+  t.throws(
+    () => createChildren({
+      props: {},
+    }, {
+      child: {
+        a: true,
+        children: {
+          child: {},
         },
       },
     }),

@@ -1,6 +1,6 @@
 import BigInt, { BigInteger } from 'big-integer'
 
-export const packPerm = (values: BigInteger[], length: BigInteger[]): BigInteger => {
+export const packPerm = (values: readonly BigInteger[], length: readonly BigInteger[]): BigInteger => {
   let result = values[0]
   let multipliedLength = BigInt.one
 
