@@ -58,7 +58,7 @@ ${element}
       await new Promise((resolve) => requestAnimationFrame(resolve))
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => setTimeout(resolve, 100))
 
     window.ReactNativeWebView.postMessage(
       JSON.stringify({
@@ -206,7 +206,6 @@ const Main = component(
       ref={viewShotRef}
     >
       <WebView
-        style={{ width, height }}
         originWhitelist={['*']}
         source={{ baseUrl: '', html }}
         cacheEnabled={false}
