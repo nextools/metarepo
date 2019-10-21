@@ -1,3 +1,7 @@
+## v0.2.2
+
+* 🐞 fix custom fonts loading by inlining it as base64
+
 ## v0.2.1
 
 * 🐞 clarify CI bailout error message
