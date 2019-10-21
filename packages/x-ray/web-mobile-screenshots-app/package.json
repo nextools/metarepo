@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/web-mobile-screenshots-app",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "",
   "keywords": [],
   "react-native": "src/index.tsx",

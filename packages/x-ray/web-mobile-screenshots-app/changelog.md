@@ -1,3 +1,7 @@
+## v0.2.2
+
+* 🐞 another attempt to fix flaky iOS screenshots
+
 ## v0.2.1
 
 * 🐞 attempt to fix flaky iOS screenshots
