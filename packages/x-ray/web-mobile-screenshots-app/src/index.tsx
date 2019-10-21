@@ -11,6 +11,7 @@ type TSize = {
 
 type TFonts = {
   file: string,
+  data: string,
   name: string,
   weight: number,
   isItalic: boolean,
@@ -26,7 +27,7 @@ const makeHtml = (element: string, fonts: TFonts) => `
     html, body {
       margin: 0;
       padding: 0;
-      overflow: auto;
+      ${Platform.OS === 'android' ? 'overflow: auto;' : ''}
     }
 ${
   fonts
@@ -34,7 +35,7 @@ ${
       font-family: "${font.name}";
       font-weight: ${font.weight};
       font-style: ${font.isItalic ? 'italic' : 'normal'};
-      src: url("${Platform.OS === 'android' ? `file:///android_asset/fonts/${font.file}` : font.file}");
+      src: url("data:${font.file.endsWith('.ttf') ? 'application/x-font-truetype' : 'application/x-font-opentype'};charset=utf-8;base64,${font.data}");
     }`)
     .join('\n')
 }
@@ -56,6 +57,8 @@ ${element}
 
       await new Promise((resolve) => requestAnimationFrame(resolve))
     }
+
+    await new Promise((resolve) => setTimeout(resolve, 50))
 
     window.ReactNativeWebView.postMessage(
       JSON.stringify({
@@ -134,10 +137,6 @@ const Main = component(
     if (viewShotRef.current === null) {
       throw new Error('invalid viewShotRef')
     }
-
-    // avoid blank screenshots
-    await new Promise((resolve) => requestAnimationFrame(resolve))
-    await new Promise((resolve) => requestAnimationFrame(resolve))
 
     const data = await captureRef(viewShotRef, { result: 'base64' })
 
