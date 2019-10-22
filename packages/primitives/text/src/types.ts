@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import { TStyle } from 'stili'
 
 export type TTextProps = {
@@ -13,4 +14,5 @@ export type TTextProps = {
   shouldPreventWrap?: boolean,
   shouldPreventSelection?: boolean,
   shouldHideOverflow?: boolean,
+  children: ReactNode,
 }
