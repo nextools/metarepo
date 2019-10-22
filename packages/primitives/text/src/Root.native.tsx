@@ -7,10 +7,10 @@ import {
 } from 'refun'
 import { Text as NativeText, TextProps } from 'react-native'
 import { TStyle, normalizeStyle } from 'stili'
-import { TTextProps } from './types'
+import { TText } from './types'
 
 export const Text = component(
-  startWithType<TTextProps>(),
+  startWithType<TText>(),
   mapDefaultProps({
     shouldPreserveWhitespace: false,
     shouldPreventSelection: false,

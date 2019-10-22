@@ -7,10 +7,10 @@ import {
   startWithType,
 } from 'refun'
 import { isNumber } from 'tsfn'
-import { TTextProps } from './types'
+import { TText } from './types'
 
 export const Text = component(
-  startWithType<TTextProps>(),
+  startWithType<TText>(),
   mapDefaultProps({
     shouldPreserveWhitespace: false,
     shouldPreventSelection: false,

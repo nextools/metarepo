@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { TStyle } from 'stili'
 
-export type TTextProps = {
+export type TText = {
   id?: string,
   color?: string,
   fontFamily?: string,
