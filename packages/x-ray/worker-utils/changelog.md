@@ -1,3 +1,7 @@
+## v0.1.3
+
+* 🐞 upgrade `execa` to v3
+
 ## v0.1.2
 
 * 🐞 add missing `require.resolve`

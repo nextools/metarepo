@@ -1,3 +1,7 @@
+## v0.6.3
+
+* 🐞 upgrade `execa` to v3
+
 ## v0.6.2
 
 * 🐞 change app path to `.rebox`

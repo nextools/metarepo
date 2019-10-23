@@ -1,3 +1,7 @@
+## v0.5.2
+
+* 🐞 upgrade `execa` to v3
+
 ## v0.5.1
 
 * 🐞 fix execa stdout config

@@ -1,3 +1,7 @@
+## v0.3.1
+
+* 🐞 upgrade `execa` to v3
+
 ## v0.3.0
 
 * 🌱 add `access` to npm config

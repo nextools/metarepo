@@ -1,3 +1,7 @@
+## v0.15.1
+
+* 🐞 upgrade `execa` to v3
+
 ## v0.15.0
 
 * 🌱 handle custom fonts for "mobile web" screenshots
