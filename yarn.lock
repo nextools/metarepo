@@ -8785,11 +8785,6 @@ makeerror@1.0.x:
   dependencies:
     tmpl "1.0.x"
 
-makethen@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/makethen/-/makethen-0.3.0.tgz#96c40e5e6fb21fa54fd707f5bd40b96f662ed289"
-  integrity sha512-3+0ncLpU3ZYGME/HwjVqatZ5lhmXGXHqI1V5563/HsBFwp8x+uRMsWgJb7h3/CFDeT6iXfEZEFr7Ms4eTUNvMQ==
-
 mamacro@^0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/mamacro/-/mamacro-0.0.3.tgz#ad2c9576197c9f1abf308d0787865bd975a3f3e4"
