@@ -16,6 +16,7 @@
     "packages/fantasy-color/*",
     "packages/fixdeps",
     "packages/lada/*",
+    "packages/makethen",
     "packages/math-playground",
     "packages/mocku",
     "packages/move-path",
