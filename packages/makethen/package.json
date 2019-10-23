@@ -8,6 +8,8 @@
     "callback"
   ],
   "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
   "repository": "bubble-dev/_",
   "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
