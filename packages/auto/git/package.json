@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@auto/utils": "^0.2.0",
-    "execa": "^2.0.0",
+    "execa": "^3.0.0",
     "prompts": "^2.0.0"
   },
   "devDependencies": {
