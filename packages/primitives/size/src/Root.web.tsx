@@ -1,7 +1,9 @@
-import React, { useRef, useLayoutEffect } from 'react'
-import { component, startWithType, mapDefaultProps } from 'refun'
+import React from 'react'
+import { component, startWithType } from 'refun'
 import { normalizeStyle } from 'stili'
-import { isFunction } from 'tsfn'
+import { isFunction, isNumber } from 'tsfn'
+import { round } from './round'
+import { onLayout } from './on-layout'
 import { TSize } from './types'
 
 const style = normalizeStyle({
@@ -14,38 +16,26 @@ const style = normalizeStyle({
 
 export const Size = component(
   startWithType<TSize>(),
-  mapDefaultProps({
-    valuesToWatch: [],
-  }),
-  (props) => {
-    const ref = useRef<HTMLDivElement>(null)
+  onLayout('ref', (ref: HTMLDivElement, { width, height, onWidthChange, onHeightChange, onChange }) => {
+    // prevent hasWidthChanged if width is not a number
+    const newWidth = isNumber(width) ? round(ref.offsetWidth) : width!
+    // prevent hasHeightChaged if height is not a number
+    const newHeight = isNumber(height) ? round(ref.offsetHeight) : height!
+    const hasWidthChanged = width !== newWidth
+    const hasHeightChaged = height !== newHeight
 
-    useLayoutEffect(() => {
-      if (ref.current !== null) {
-        const width = Math.round(ref.current.offsetWidth * 1000) / 1000
-        const height = Math.round(ref.current.offsetHeight * 1000) / 1000
-        const hasWidthChanged = props.width !== width
-        const hasHeightChanged = props.height !== height
-
-        if (hasWidthChanged && isFunction(props.onWidthChange)) {
-          props.onWidthChange(width)
-        }
-
-        if (hasHeightChanged && isFunction(props.onHeightChange)) {
-          props.onHeightChange(height)
-        }
-
-        if ((hasWidthChanged || hasHeightChanged) && isFunction(props.onChange)) {
-          props.onChange({ width, height })
-        }
-      }
-    }, props.valuesToWatch)
-
-    return {
-      ...props,
-      ref,
+    if (hasWidthChanged && isFunction(onWidthChange)) {
+      onWidthChange(newWidth)
     }
-  }
+
+    if (hasHeightChaged && isFunction(onHeightChange)) {
+      onHeightChange(newHeight)
+    }
+
+    if ((hasWidthChanged || hasHeightChaged) && isFunction(onChange)) {
+      onChange({ width: newWidth, height: newHeight })
+    }
+  })
 )(({ ref, children }) => (
   <div style={style} ref={ref}>{children}</div>
 ))
