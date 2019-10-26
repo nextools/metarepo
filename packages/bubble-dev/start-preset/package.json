@@ -13,7 +13,7 @@
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
-    "node": ">=8.6.0"
+    "node": ">=10.13.0"
   },
   "dependencies": {
     "@auto/bump": "^0.4.0",

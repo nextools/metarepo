@@ -9,6 +9,9 @@
   "files": [
     "build/"
   ],
+  "engines": {
+    "node": ">=10.13.0"
+  },
   "dependencies": {
     "@primitives/animation": "^0.2.0",
     "@primitives/background": "^0.7.0",

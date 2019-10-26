@@ -10,7 +10,7 @@
   "react-native": "src/index.ts",
   "repository": "bubble-dev/_",
   "engines": {
-    "node": ">=8.6.0"
+    "node": ">=10.13.0"
   },
   "sideEffects": false,
   "devDependencies": {
