@@ -31,6 +31,10 @@ export const LayoutInFlow = component(
       if (width === 'stretch') {
         style.flexGrow = 1
         style.flexShrink = 1
+      } else if (width === 'equal') {
+        style.flexGrow = 1
+        style.flexShrink = 1
+        style.flexBasis = 0
       } else if (isNumber(width)) {
         style.width = width
       }

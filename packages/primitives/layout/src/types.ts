@@ -23,7 +23,7 @@ export type TLayout = {
 }
 
 export type TLayoutInFlow = {
-  width?: number | 'stretch',
+  width?: number | 'stretch' | 'equal',
   height?: number | 'stretch',
   minWidth?: number,
   maxWidth?: number,
