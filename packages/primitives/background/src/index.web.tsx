@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Block } from '@primitives/block'
-import { colorToString, TColor } from 'colorido'
+import { TColor } from 'colorido'
 
 export type TBackground = {
   color: TColor,
@@ -23,7 +23,7 @@ export const Background: FC<TBackground> = ({ topLeftRadius, topRightRadius, bot
       borderTopRightRadius: topRightRadius,
       borderBottomLeftRadius: bottomLeftRadius,
       borderBottomRightRadius: bottomRightRadius,
-      backgroundColor: colorToString(color),
+      backgroundColor: color,
     }}
   />
 )
