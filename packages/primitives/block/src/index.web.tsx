@@ -1,12 +1,17 @@
 import React, { Ref, HTMLProps } from 'react'
 import { normalizeStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
-import { isUndefined, isNumber } from 'tsfn'
+import { isUndefined, isNumber, TExtend } from 'tsfn'
+import { TColor, colorToString } from 'colorido'
 import { styleTransformArrayToText } from './styleTransformArrayToText'
 import { TBlockCommon } from './types'
 
 export type TBlock = TBlockCommon & {
-  style?: TStyle,
+  style?: TExtend<TStyle, {
+    backgroundColor?: TColor,
+    borderColor?: TColor,
+    color?: TColor,
+  }>,
   ref?: Ref<HTMLDivElement>,
 }
 
@@ -49,7 +54,7 @@ export const Block = component(
       onPointerUp,
       onPointerMove,
     }) => {
-      const styles: TStyle = {
+      const baseStyle: TStyle = {
         display: 'flex',
         flexDirection: 'row',
         boxSizing: 'border-box',
@@ -61,16 +66,43 @@ export const Block = component(
         flexShrink: 0,
         minWidth,
         minHeight,
-        ...style,
       }
 
-      if (!isUndefined(style) && isNumber(style.lineHeight)) {
-        styles.lineHeight = `${style.lineHeight}px`
+      if (isUndefined(style)) {
+        return baseStyle
+      }
+
+      const {
+        backgroundColor,
+        borderColor,
+        color,
+        ...restOfStyle
+      } = style
+
+      const styles: TStyle = {
+        ...baseStyle,
+        ...restOfStyle,
+      }
+
+      if (!isUndefined(backgroundColor)) {
+        styles.backgroundColor = colorToString(backgroundColor)
+      }
+
+      if (!isUndefined(borderColor)) {
+        styles.borderColor = colorToString(borderColor)
+      }
+
+      if (!isUndefined(color)) {
+        styles.color = colorToString(color)
+      }
+
+      if (isNumber(styles.lineHeight)) {
+        styles.lineHeight = `${styles.lineHeight}px`
       }
 
       // TODO: handle only arrays
-      if (!isUndefined(style) && style.transform) {
-        styles.transform = styleTransformArrayToText(style.transform)
+      if (styles.transform) {
+        styles.transform = styleTransformArrayToText(styles.transform)
       }
 
       if (isNumber(width)) {

@@ -1,12 +1,18 @@
+import { isUndefined } from 'util'
 import React, { Ref } from 'react'
 import { View, ViewProps } from 'react-native'
 import { TStyle, normalizeStyle } from 'stili'
 import { startWithType, component, mapDefaultProps, mapProps } from 'refun'
-import { isNumber } from 'tsfn'
+import { isNumber, TExtend } from 'tsfn'
+import { TColor, colorToString } from 'colorido'
 import { TBlockCommon } from './types'
 
 export type TBlock = TBlockCommon & {
-  style?: TStyle,
+  style?: TExtend<TStyle, {
+    backgroundColor?: TColor,
+    borderColor?: TColor,
+    color?: TColor,
+  }>,
   ref?: Ref<View>,
 }
 
@@ -44,7 +50,7 @@ export const Block = component(
       shouldIgnorePointerEvents,
       ref,
     }) => {
-      const styles: TStyle = {
+      const baseStyle: TStyle = {
         borderStyle: 'solid',
         borderWidth: 0,
         position: 'relative',
@@ -54,7 +60,34 @@ export const Block = component(
         alignSelf: 'flex-start',
         minWidth,
         minHeight,
-        ...style,
+      }
+
+      if (isUndefined(style)) {
+        return baseStyle
+      }
+
+      const {
+        backgroundColor,
+        borderColor,
+        color,
+        ...restOfStyle
+      } = style
+
+      const styles: TStyle = {
+        ...baseStyle,
+        ...restOfStyle,
+      }
+
+      if (!isUndefined(backgroundColor)) {
+        styles.backgroundColor = colorToString(backgroundColor)
+      }
+
+      if (!isUndefined(borderColor)) {
+        styles.borderColor = colorToString(borderColor)
+      }
+
+      if (!isUndefined(color)) {
+        styles.color = colorToString(color)
       }
 
       if (isNumber(width)) {

@@ -15,7 +15,8 @@
   "dependencies": {
     "stili": "^0.2.0",
     "refun": "^0.4.0",
-    "tsfn": "^0.2.0"
+    "tsfn": "^0.2.0",
+    "colorido": "^0.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
