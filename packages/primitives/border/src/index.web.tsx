@@ -1,7 +1,7 @@
 import React from 'react'
 import { Block } from '@primitives/block'
 import { component, mapDefaultProps, startWithType } from 'refun'
-import { TColor, colorToString } from 'colorido'
+import { TColor } from 'colorido'
 
 export type TBorder = {
   color: TColor,
@@ -62,7 +62,7 @@ export const Border = component(
       borderTopRightRadius: topRightRadius,
       borderBottomRightRadius: bottomRightRadius,
       borderBottomLeftRadius: bottomLeftRadius,
-      borderColor: colorToString(color),
+      borderColor: color,
       borderTopWidth: topWidth,
       borderRightWidth: rightWidth,
       borderBottomWidth: bottomWidth,
