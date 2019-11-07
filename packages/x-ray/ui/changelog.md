@@ -1,3 +1,7 @@
+## v0.2.0
+
+* ♻️ update dependencies: `@primitives/border`, `@x-ray/snapshots`, `@primitives/background`, `@primitives/checkbox`
+
 ## v0.1.5
 
 * 🐞 use new `onMount`

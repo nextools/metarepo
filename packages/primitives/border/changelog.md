@@ -1,3 +1,8 @@
+## v0.7.0
+
+* 🌱 use colorido TColor for color property sent to Block
+* ♻️ update dependencies: `@primitives/block`
+
 ## v0.6.0
 
 * ♻️ update dependencies: `@primitives/block`, `refun`

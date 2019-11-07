@@ -1,3 +1,8 @@
+## v0.4.0
+
+* 🌱 update colors sent to Block
+* ♻️ update dependencies: `@primitives/border`, `@primitives/background`, `@primitives/checkbox`, `@primitives/block`
+
 ## v0.3.1
 
 * 🐞 use own `getElementName` and `getComponentName`

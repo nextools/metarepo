@@ -1,3 +1,7 @@
+## v0.6.0
+
+* 🌱 support color properties as colorido TColor
+
 ## v0.5.1
 
 * 🐞 bump react-native

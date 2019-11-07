@@ -1,3 +1,7 @@
+## v0.2.0
+
+* ♻️ update dependencies: `@x-ray/ui`
+
 ## v0.1.4
 
 * 🐞 clarify CI bailout error message

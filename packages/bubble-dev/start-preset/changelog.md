@@ -1,3 +1,7 @@
+## v0.16.0
+
+* ♻️ update dependencies: `@x-ray/chrome-screenshots`, `@x-ray/firefox-screenshots`, `@x-ray/snapshots`
+
 ## v0.15.1
 
 * 🐞 upgrade `execa` to v3
