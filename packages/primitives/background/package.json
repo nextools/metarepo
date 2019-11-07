@@ -14,7 +14,7 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@primitives/block": "^0.5.0",
+    "@primitives/block": "^0.6.0",
     "colorido": "^0.1.0"
   },
   "devDependencies": {

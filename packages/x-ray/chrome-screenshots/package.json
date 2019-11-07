@@ -17,7 +17,7 @@
     "@x-ray/tar-fs": "^0.1.0",
     "@x-ray/worker-utils": "^0.1.0",
     "bro-resolve": "^0.1.0",
-    "@x-ray/ui": "^0.1.0",
+    "@x-ray/ui": "^0.2.0",
     "iterama": "^0.1.1",
     "p-all": "^2.0.0",
     "puppeteer-core": "^1.16.0",
