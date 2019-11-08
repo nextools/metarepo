@@ -7,6 +7,8 @@ import {
 } from 'refun'
 import { Text as NativeText, TextProps } from 'react-native'
 import { TStyle, normalizeStyle } from 'stili'
+import { isDefined } from 'tsfn'
+import { colorToString } from 'colorido'
 import { TText } from './types'
 
 export const Text = component(
@@ -32,12 +34,15 @@ export const Text = component(
   }) => {
     const style: TStyle = {
       backgroundColor: 'transparent',
-      color,
       lineHeight,
       fontFamily,
       fontWeight,
       fontSize,
       letterSpacing,
+    }
+
+    if (isDefined(color)) {
+      style.color = colorToString(color)
     }
 
     if (isUnderlined) {
