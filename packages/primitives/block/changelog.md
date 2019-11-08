@@ -1,3 +1,7 @@
+## v0.6.1
+
+* 🐞 fix styles leaking to props
+
 ## v0.6.0
 
 * 🌱 support color properties as colorido TColor
