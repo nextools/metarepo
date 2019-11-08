@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { TColor, colorToString } from 'colorido'
+import { TColor } from 'colorido'
 import { Text as PrimitiveText } from '@primitives/text'
 import { LINE_HEIGHT } from './constants'
 
@@ -12,7 +12,7 @@ export const Text: FC<TText> = ({ color, children }) => (
     fontFamily="monospace"
     fontSize={14}
     lineHeight={LINE_HEIGHT}
-    color={colorToString(color)}
+    color={color}
     shouldPreserveWhitespace
   >
     {children}
