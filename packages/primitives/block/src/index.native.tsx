@@ -1,9 +1,8 @@
-import { isUndefined } from 'util'
 import React, { Ref } from 'react'
 import { View, ViewProps } from 'react-native'
 import { TStyle, normalizeStyle } from 'stili'
 import { startWithType, component, mapDefaultProps, mapProps } from 'refun'
-import { isNumber, TExtend } from 'tsfn'
+import { isNumber, TExtend, isDefined } from 'tsfn'
 import { TColor, colorToString } from 'colorido'
 import { TBlockCommon } from './types'
 
@@ -50,7 +49,14 @@ export const Block = component(
       shouldIgnorePointerEvents,
       ref,
     }) => {
-      const baseStyle: TStyle = {
+      const {
+        backgroundColor,
+        borderColor,
+        color,
+        ...restOfStyle
+      } = style || {}
+
+      const styles: TStyle = {
         borderStyle: 'solid',
         borderWidth: 0,
         position: 'relative',
@@ -60,33 +66,18 @@ export const Block = component(
         alignSelf: 'flex-start',
         minWidth,
         minHeight,
-      }
-
-      if (isUndefined(style)) {
-        return baseStyle
-      }
-
-      const {
-        backgroundColor,
-        borderColor,
-        color,
-        ...restOfStyle
-      } = style
-
-      const styles: TStyle = {
-        ...baseStyle,
         ...restOfStyle,
       }
 
-      if (!isUndefined(backgroundColor)) {
+      if (isDefined(backgroundColor)) {
         styles.backgroundColor = colorToString(backgroundColor)
       }
 
-      if (!isUndefined(borderColor)) {
+      if (isDefined(borderColor)) {
         styles.borderColor = colorToString(borderColor)
       }
 
-      if (!isUndefined(color)) {
+      if (isDefined(color)) {
         styles.color = colorToString(color)
       }
 
