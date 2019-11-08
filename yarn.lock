@@ -13032,9 +13032,9 @@ typescript@bubble-dev/TypeScript#ext-3.6.2:
   version "3.6.2"
   resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/c52422154bd32171dd053f514ec9b387c3fc08ca"
 
-typescript@bubble-dev/TypeScript#fork-3.6.3:
-  version "3.6.3"
-  resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/1135ff5adc94091b16626fce7f7b3b88e6d03a98"
+typescript@bubble-dev/TypeScript#ext-3.7.2:
+  version "3.7.2"
+  resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/4bd9131fa6f1d460b0772d24f31847ac1a340392"
 
 ua-parser-js@^0.7.18:
   version "0.7.20"
