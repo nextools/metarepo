@@ -1,7 +1,7 @@
 import React, { Ref, HTMLProps } from 'react'
 import { normalizeStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
-import { isUndefined, isNumber, TExtend } from 'tsfn'
+import { isNumber, TExtend, isDefined } from 'tsfn'
 import { TColor, colorToString } from 'colorido'
 import { styleTransformArrayToText } from './styleTransformArrayToText'
 import { TBlockCommon } from './types'
@@ -54,7 +54,14 @@ export const Block = component(
       onPointerUp,
       onPointerMove,
     }) => {
-      const baseStyle: TStyle = {
+      const {
+        backgroundColor,
+        borderColor,
+        color,
+        ...restOfStyle
+      } = style || {}
+
+      const styles: TStyle = {
         display: 'flex',
         flexDirection: 'row',
         boxSizing: 'border-box',
@@ -66,33 +73,18 @@ export const Block = component(
         flexShrink: 0,
         minWidth,
         minHeight,
-      }
-
-      if (isUndefined(style)) {
-        return baseStyle
-      }
-
-      const {
-        backgroundColor,
-        borderColor,
-        color,
-        ...restOfStyle
-      } = style
-
-      const styles: TStyle = {
-        ...baseStyle,
         ...restOfStyle,
       }
 
-      if (!isUndefined(backgroundColor)) {
+      if (isDefined(backgroundColor)) {
         styles.backgroundColor = colorToString(backgroundColor)
       }
 
-      if (!isUndefined(borderColor)) {
+      if (isDefined(borderColor)) {
         styles.borderColor = colorToString(borderColor)
       }
 
-      if (!isUndefined(color)) {
+      if (isDefined(color)) {
         styles.color = colorToString(color)
       }
 
@@ -184,7 +176,7 @@ export const Block = component(
         props.id = id
       }
 
-      if (!isUndefined(ref)) {
+      if (isDefined(ref)) {
         props.ref = ref
       }
 
