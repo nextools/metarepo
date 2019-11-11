@@ -80,6 +80,9 @@ export const run = (options: TServeJsBundleOptions) => {
               require.resolve('@babel/preset-typescript'),
             ],
             plugins: [
+              require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+              require.resolve('@babel/plugin-proposal-optional-chaining'),
+              require.resolve('@babel/plugin-syntax-bigint'),
               require.resolve('@babel/plugin-syntax-dynamic-import'),
             ],
             cacheDirectory: true,

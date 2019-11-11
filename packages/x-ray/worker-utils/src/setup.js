@@ -102,6 +102,11 @@ const babelConfig = {
     require.resolve('@babel/preset-react'),
     require.resolve('@babel/preset-typescript'),
   ],
+  plugins: [
+    require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+    require.resolve('@babel/plugin-proposal-optional-chaining'),
+    require.resolve('@babel/plugin-syntax-bigint'),
+  ],
   extensions: options.extensions,
 }
 
