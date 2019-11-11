@@ -1558,44 +1558,6 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@primitives/background@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@primitives/background/-/background-0.5.0.tgz#8fc30e1086f6ce9c304a629840cc08e46955d52d"
-  integrity sha512-PvUuptKHkxEd/KBowWEEsYhGL/o77BasxQoc/65dRDE78c9IfI4i2yE331f7NFDvfAX8ds/0Nc+L83vlAWbm/A==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    "@primitives/block" "^0.5.0"
-    colorido "^0.1.0"
-
-"@primitives/block@^0.5.0":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@primitives/block/-/block-0.5.1.tgz#9b74cd514545e85208019b7e337e9f371099cfff"
-  integrity sha512-UDPeGd8ktpbWs9rFc1Mqi+0iRTqs2nNeXRCQScqzDl0I+BVJ5AEFr18GLdkyF62qdAdNuBH8znvVyhO+UWJQuQ==
-  dependencies:
-    refun "^0.4.0"
-    stili "^0.2.0"
-    tsfn "^0.2.0"
-
-"@primitives/border@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@primitives/border/-/border-0.6.0.tgz#f758adf1cb85dcbfd27932d87fc3e05f9e4a4208"
-  integrity sha512-CmP7unTjkouBouQscRasUT8n5+IAxw0uLkosNkCtqj6jMrCPO3qM4b6Q9O3/m9JTfK6Pjw/uZnKHqiuHSV2LIg==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    "@primitives/block" "^0.5.0"
-    colorido "^0.1.0"
-    refun "^0.4.0"
-
-"@primitives/checkbox@^0.5.0":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@primitives/checkbox/-/checkbox-0.5.1.tgz#bb0087fbdfff375920fcfbb27420e7506a382e66"
-  integrity sha512-aa+kyX0LwbKqqWBMdxh//jWSZJ5c5lWMq35j7dQ+NKzkgbZU336CBmilzzx4UEYPeXl3GCNJ9SLyuMqrxQRVhw==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    "@primitives/block" "^0.5.0"
-    refun "^0.4.0"
-    stili "^0.2.0"
-
 "@psxcode/compose@^0.1.2", "@psxcode/compose@^0.1.3":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@psxcode/compose/-/compose-0.1.3.tgz#187070a648724ab715824fd598d7c80deae5c136"
@@ -2577,60 +2539,6 @@
     strip-ansi "^4.0.0"
     text-table "^0.2.0"
     webpack-log "^1.1.2"
-
-"@x-ray/snapshots@^0.1.0":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@x-ray/snapshots/-/snapshots-0.1.4.tgz#f4dd17f7ca0acf7957976cef73eefe797d4e9324"
-  integrity sha512-lJeBwgcHahR31W/ZjQ7+w6kHGVV3fstFegUvgaaPXUfxcU05vTet0tA8i3nBjr+Psdjqevyzz+ePFs9f2CCDyA==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    "@rebox/web" "^0.4.0"
-    "@x-ray/common-utils" "^0.2.0"
-    "@x-ray/serialize-react-tree" "^0.3.0"
-    "@x-ray/tar-fs" "^0.1.0"
-    "@x-ray/ui" "^0.1.0"
-    "@x-ray/worker-utils" "^0.1.0"
-    bro-resolve "^0.1.0"
-    diff "^4.0.1"
-    iterama "^0.1.1"
-    make-dir "^3.0.0"
-    p-all "^2.0.0"
-    pkg-dir "^4.2.0"
-    pretty-ms "^5.0.0"
-    syntx "^0.4.0"
-    tsfn "^0.2.0"
-
-"@x-ray/ui@^0.1.0":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@x-ray/ui/-/ui-0.1.5.tgz#2c26368d665af7ee6e83ada4aa62c7c1eb2b10f0"
-  integrity sha512-ZP+92gjShGiguMq1pZsW8JV2tz4kTOLuvl/UoKKBAl9q8rVEJN5sZXcdY+wefLFQs9ptAsSEd+DnqYm8CtXDLA==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    "@primitives/animation" "^0.2.0"
-    "@primitives/background" "^0.5.0"
-    "@primitives/border" "^0.6.0"
-    "@primitives/button" "^0.5.0"
-    "@primitives/checkbox" "^0.5.0"
-    "@primitives/image" "^0.2.0"
-    "@primitives/root" "^0.4.0"
-    "@primitives/size" "^0.5.0"
-    "@primitives/svg" "^0.1.5"
-    "@primitives/text" "^0.8.0"
-    "@psxcode/compose" "^0.1.3"
-    "@x-ray/common-utils" "^0.2.0"
-    "@x-ray/screenshot-utils" "^0.2.0"
-    "@x-ray/snapshots" "^0.1.0"
-    bsc "^0.2.1"
-    colorido "^0.1.0"
-    elegir "^0.3.3"
-    react "^16.8.6"
-    redux "^4.0.1"
-    redux-thunk "^2.3.0"
-    refun "^0.4.0"
-    stili "^0.2.0"
-    syntx "^0.4.0"
-    tsfn "^0.2.0"
-    typeon "^0.3.0"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -4448,7 +4356,7 @@ core-js@^2.2.2, core-js@^2.4.0, core-js@^2.4.1:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.10.tgz#8a5b8391f8cc7013da703411ce5b585706300d7f"
   integrity sha512-I39t74+4t+zau64EN1fE5v2W31Adtc/REhzWN+gWRRXg6WH5qAsZm62DHpQ1+Yhe4047T55jvzz7MUqF/dBBlA==
 
-core-js@^3.1.4, core-js@^3.2.1, core-js@^3.4.0:
+core-js@^3.1.4, core-js@^3.2.1:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.4.0.tgz#29ea478601789c72f2978e9bb98f43546f89d3aa"
   integrity sha512-lQxb4HScV71YugF/X28LtePZj9AB7WqOpcB+YztYxusvhrgZiQXPmCYfPC5LHsw/+ScEtDbXU3xbqH3CjBRmYA==

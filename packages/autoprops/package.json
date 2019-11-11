@@ -23,7 +23,6 @@
     "@types/jssha": "^2.0.0",
     "@types/react": "^16.8.6",
     "blue-tape": "^1.0.0",
-    "core-js": "^3.4.0",
     "mocku": "^0.6.0",
     "react": "^16.8.6"
   }

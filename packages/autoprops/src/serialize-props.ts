@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { isValidElement, ReactElement, FC } from 'react'
-import { isFunction, isSymbol, isUndefined, isRegExp, TAnyObject, isString, isDefined, TWritable, isObject, isArray } from 'tsfn'
+import { isFunction, isSymbol, isRegExp, TAnyObject, isString, isDefined, TWritable, isObject, isArray } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
 import { TComponentConfig, TChildrenMap, TRequiredConfig } from './types'
 import { unpackPerm } from './unpack-perm'
@@ -44,9 +44,7 @@ const getValue = (valueIndex: number, values: readonly any[], key: string, requi
   }
 
   if (isSymbol(value)) {
-    return isUndefined(value.description)
-      ? `[symbol(${index})]`
-      : `[symbol(${value.description})]`
+    return `[${value.toString()} (${index})]`
   }
 
   if (isRegExp(value)) {
