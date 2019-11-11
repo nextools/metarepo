@@ -1,3 +1,7 @@
+## v0.5.0
+
+* 🌱 support Optional Chaining and Nullish Coalescing ES features
+
 ## v0.4.5
 
 * 🐞 fix too many extracted comments in `buildRelease`

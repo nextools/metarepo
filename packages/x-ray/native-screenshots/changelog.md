@@ -1,3 +1,7 @@
+## v0.4.0
+
+* ♻️ update dependencies: `@x-ray/screenshot-utils`
+
 ## v0.3.11
 
 * 🐞 use updated syntx lines

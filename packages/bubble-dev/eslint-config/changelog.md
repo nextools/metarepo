@@ -1,3 +1,7 @@
+## v0.3.3
+
+* 🐞 check for unused vars with TS instead of ESLint
+
 ## v0.3.2
 
 * 🐞 bump `typescript-eslint` deps

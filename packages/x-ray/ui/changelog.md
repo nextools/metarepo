@@ -1,3 +1,7 @@
+## v0.3.0
+
+* ♻️ update dependencies: `@x-ray/snapshots`, `@x-ray/screenshot-utils`
+
 ## v0.2.0
 
 * ♻️ update dependencies: `@primitives/border`, `@x-ray/snapshots`, `@primitives/background`, `@primitives/checkbox`

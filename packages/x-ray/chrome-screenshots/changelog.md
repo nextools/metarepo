@@ -1,3 +1,7 @@
+## v0.5.0
+
+* ♻️ update dependencies: `@rebox/web`, `@x-ray/ui`, `@x-ray/worker-utils`, `@x-ray/screenshot-utils`
+
 ## v0.4.1
 
 * 🐞 use updated syntx lines

@@ -1,3 +1,7 @@
+## v0.3.0
+
+* ♻️ update dependencies: `@x-ray/worker-utils`
+
 ## v0.2.9
 
 * 🐞 use updated syntx lines

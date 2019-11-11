@@ -1,6 +1,6 @@
 {
   "name": "@bubble-dev/eslint-config",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "",
   "keywords": [],
   "main": "src/index.js",

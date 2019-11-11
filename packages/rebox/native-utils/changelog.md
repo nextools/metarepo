@@ -1,3 +1,7 @@
+## v0.3.0
+
+* 🌱 support Optional Chaining and Nullish Coalescing ES features
+
 ## v0.2.2
 
 * 🐞 upgrade `execa` to v3

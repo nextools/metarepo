@@ -1,3 +1,8 @@
+## v0.17.0
+
+* 🌱 support Optional Chaining and Nullish Coalescing ES features
+* ♻️ update dependencies: `@rebox/ios`, `@rebox/android`, `@rebox/web`, `@x-ray/chrome-screenshots`, `@x-ray/firefox-screenshots`, `@x-ray/snapshots`, `@x-ray/screenshot-utils`, `@x-ray/native-screenshots`, `@x-ray/web-mobile-screenshots`
+
 ## v0.16.0
 
 * ♻️ update dependencies: `@x-ray/chrome-screenshots`, `@x-ray/firefox-screenshots`, `@x-ray/snapshots`

@@ -1,3 +1,7 @@
+## v0.7.0
+
+* ♻️ update dependencies: `@rebox/native-utils`
+
 ## v0.6.3
 
 * 🐞 upgrade `execa` to v3
