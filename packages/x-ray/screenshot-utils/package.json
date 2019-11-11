@@ -14,7 +14,7 @@
     "@types/react": "^16.8.6",
     "@x-ray/common-utils": "^0.2.0",
     "@x-ray/tar-fs": "^0.1.0",
-    "@x-ray/worker-utils": "^0.1.0",
+    "@x-ray/worker-utils": "^0.2.0",
     "imagemin-pngout": "^4.0.0",
     "make-dir": "^3.0.0",
     "p-all": "^2.1.0",

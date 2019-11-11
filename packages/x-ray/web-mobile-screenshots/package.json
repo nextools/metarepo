@@ -12,9 +12,9 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@x-ray/common-utils": "^0.2.0",
-    "@x-ray/screenshot-utils": "^0.2.0",
+    "@x-ray/screenshot-utils": "^0.3.0",
     "@x-ray/tar-fs": "^0.1.0",
-    "@x-ray/worker-utils": "^0.1.1",
+    "@x-ray/worker-utils": "^0.2.0",
     "opentype.js": "^1.1.0",
     "p-all": "^2.1.0",
     "pifs": "^0.1.1",
