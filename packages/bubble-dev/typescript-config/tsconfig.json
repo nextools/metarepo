@@ -9,6 +9,7 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
+    "noUnusedLocals": true,
     "skipLibCheck": true
   }
 }
