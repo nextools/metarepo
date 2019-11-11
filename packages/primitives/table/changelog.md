@@ -1,3 +1,7 @@
+## v0.6.0
+
+* 🌱 add "position" props for table cells
+
 ## v0.5.1
 
 * 🐞 add missing 'react-native' target in table
