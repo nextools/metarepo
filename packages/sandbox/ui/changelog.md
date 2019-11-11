@@ -1,3 +1,7 @@
+## v0.4.1
+
+* 🐞 use updated meta files format
+
 ## v0.4.0
 
 * 🌱 update colors sent to Block

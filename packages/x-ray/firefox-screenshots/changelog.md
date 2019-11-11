@@ -1,3 +1,7 @@
+## v0.4.1
+
+* 🐞 use updated syntx lines
+
 ## v0.4.0
 
 * ♻️ update dependencies: `@x-ray/ui`

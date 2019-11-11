@@ -1,3 +1,7 @@
+## v0.5.5
+
+* 🐞 fix rerender when size was not provided
+
 ## v0.5.4
 
 * 🐞 use ids in `SizeContext`

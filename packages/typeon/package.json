@@ -1,8 +1,13 @@
 {
   "name": "typeon",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Typed JSON parse and stringify for TypeScript",
-  "keywords": ["typescript", "json", "parse", "stringify"],
+  "keywords": [
+    "typescript",
+    "json",
+    "parse",
+    "stringify"
+  ],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",

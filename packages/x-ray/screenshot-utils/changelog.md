@@ -1,3 +1,7 @@
+## v0.2.9
+
+* 🐞 use updated syntx lines
+
 ## v0.2.8
 
 * 🐞 clarify CI bailout error message

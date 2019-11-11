@@ -1,3 +1,8 @@
+## v0.2.4
+
+* 🐞 add `TWritable` type
+* 🐞 remove `TOmit` type
+
 ## v0.2.3
 
 * 🐞 add `NOOP` function

@@ -1,3 +1,7 @@
+## v0.4.2
+
+* 🐞 append meta to each line
+
 ## v0.4.1
 
 * 🐞 change react element name index order

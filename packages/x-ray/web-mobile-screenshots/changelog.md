@@ -1,3 +1,7 @@
+## v0.2.3
+
+* 🐞 use updated syntx lines
+
 ## v0.2.2
 
 * 🐞 fix custom fonts loading by inlining it as base64
