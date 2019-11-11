@@ -1,3 +1,7 @@
+## v0.3.2
+
+* 🐞 add support for symbols
+
 ## v0.3.1
 
 * 🐞 refactor using `tsfn`

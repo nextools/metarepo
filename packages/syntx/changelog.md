@@ -1,3 +1,7 @@
+## v0.4.3
+
+* 🐞 fix serialize symbol
+
 ## v0.4.2
 
 * 🐞 append meta to each line
