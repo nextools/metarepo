@@ -34,7 +34,7 @@
     "tsfn": "^0.2.2"
   },
   "devDependencies": {
-    "autoprops": "^0.6.6",
+    "autoprops": "^0.7.0",
     "react": "^16.8.6",
     "react-native": "^0.60.5",
     "typeon": "^0.3.0"

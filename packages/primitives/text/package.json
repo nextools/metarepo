@@ -20,7 +20,7 @@
   "devDependencies": {
     "@types/react": "^16.8.6",
     "@types/react-native": "^0.60.13",
-    "autoprops": "^0.6.0",
+    "autoprops": "^0.7.0",
     "react": "^16.8.6",
     "react-native": "^0.60.5"
   }
