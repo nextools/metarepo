@@ -1,13 +1,14 @@
 import React, { ReactNode } from 'react'
 import { normalizeStyle } from 'stili'
 import { startWithType, component, mapDefaultProps, mapWithPropsMemo } from 'refun'
-import { TTableBorderStyle } from './types'
+import { TTableBorderStyle, TTableCellPosition } from './types'
 
 export type TTableBodyCell = {
   id?: string,
   children?: ReactNode,
   backgroundColor?: string,
 } & TTableBorderStyle
+  & TTableCellPosition
 
 export const TableBodyCell = component(
   startWithType<TTableBodyCell>(),
@@ -18,7 +19,16 @@ export const TableBodyCell = component(
     borderRightWidth: 0,
     borderStyle: 'solid',
   }),
-  mapWithPropsMemo(({ borderTopWidth, borderBottomWidth, borderLeftWidth, borderRightWidth, borderStyle, borderColor, backgroundColor }) => ({
+  mapWithPropsMemo(({
+    borderTopWidth,
+    borderBottomWidth,
+    borderLeftWidth,
+    borderRightWidth,
+    borderStyle,
+    borderColor,
+    backgroundColor,
+    position,
+  }) => ({
     style: normalizeStyle({
       padding: 0,
       borderColor,
@@ -28,8 +38,18 @@ export const TableBodyCell = component(
       borderLeftWidth: `${borderLeftWidth}px`,
       borderRightWidth: `${borderRightWidth}px`,
       borderStyle,
+      position,
     }),
-  }), ['borderTopWidth', 'borderLeftWidth', 'borderRightWidth', 'borderBottomWidth', 'borderStyle', 'borderColor', 'backgroundColor'])
+  }), [
+    'borderTopWidth',
+    'borderLeftWidth',
+    'borderRightWidth',
+    'borderBottomWidth',
+    'borderStyle',
+    'borderColor',
+    'backgroundColor',
+    'position',
+  ])
 )(({ id, style, children }) => (
   <td id={id} style={style}>
     {children}

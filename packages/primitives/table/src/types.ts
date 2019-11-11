@@ -6,3 +6,8 @@ export type TTableBorderStyle = {
   borderRightWidth?: number,
   borderStyle?: 'solid' | 'dotted' | 'dashed',
 }
+
+export type TTableCellPosition = {
+  position?: 'static' | 'relative' | 'absolute' | 'fixed',
+}
+
