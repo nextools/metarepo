@@ -76,8 +76,10 @@ export const serializeValue = ({ value, currentIndent, meta, config }: TSerializ
   }
 
   if (isSymbol(value)) {
+    const matched = value.toString().match(/^Symbol\((.+)\)$/)
+
     return {
-      head: [{ type: TYPE_VALUE_SYMBOL, value: value.description || 'symbol' }],
+      head: [{ type: TYPE_VALUE_SYMBOL, value: matched?.[1] ?? 'symbol' }],
       body: [],
       tail: [],
     }

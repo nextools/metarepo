@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react'
 import test from 'blue-tape'
 import I from 'big-integer'
-// @ts-ignore
-import 'core-js/features/symbol/description'
 import { TComponentConfig } from '../src/types'
 import { serializeProps } from '../src/serialize-props'
 
@@ -33,7 +31,7 @@ test('serializeProps: props', (t) => {
 
   t.deepEquals(
     serializeProps(config, index),
-    '{"arr":"[array(0)]","element":"[react(span) (0)]","elementComp":"[react(Comp) (0)]","elementComp2":"[react(Comp2) (0)]","num":"2","obj":"[object(0)]","regex":"[regexp(/reg/) (0)]","str":"value","symbolName":"[symbol(namedSymbol)]","symbolNoName":"[symbol(0)]","isOk":"true","onNamed":"[function(namedFn) (0)]","onUnnamed":"[function(0)]"}',
+    '{"arr":"[array(0)]","element":"[react(span) (0)]","elementComp":"[react(Comp) (0)]","elementComp2":"[react(Comp2) (0)]","num":"2","obj":"[object(0)]","regex":"[regexp(/reg/) (0)]","str":"value","symbolName":"[Symbol(namedSymbol) (0)]","symbolNoName":"[Symbol() (0)]","isOk":"true","onNamed":"[function(namedFn) (0)]","onUnnamed":"[function(0)]"}',
     'should serialize props'
   )
 
