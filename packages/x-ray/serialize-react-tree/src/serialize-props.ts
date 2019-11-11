@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle, no-use-before-define */
 import { isValidElement } from 'react'
-import { isObject, isArray, isFunction, isNull, isUndefined, isString, isNumber } from 'tsfn'
+import { isObject, isArray, isFunction, isNull, isUndefined, isString, isNumber, isSymbol } from 'tsfn'
 import serializeReactTree from './serialize-react-tree'
 import { makeIndent, nextIndent, prevIndent } from './make-indent'
 
@@ -63,6 +63,11 @@ const serializeArray = (array: any[], indent: number) => {
 
     if (isNumber(value)) {
       result += value
+      continue
+    }
+
+    if (isSymbol(value)) {
+      result += `'${value.toString()}'`
       continue
     }
 
@@ -141,6 +146,11 @@ const serializeObject = (obj: { [k: string]: any }, indent: number) => {
       continue
     }
 
+    if (isSymbol(value)) {
+      result += `'${value.toString()}'`
+      continue
+    }
+
     result += String(value)
   }
 
@@ -213,6 +223,11 @@ const serializeProps = (props: { [k: string]: any }, indent: number) => {
 
     if (isNumber(value)) {
       result += `{${value}}`
+      continue
+    }
+
+    if (isSymbol(value)) {
+      result += `"${value.toString()}"`
       continue
     }
 

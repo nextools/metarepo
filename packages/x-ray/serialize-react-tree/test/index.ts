@@ -30,6 +30,8 @@ test('serialize-react-tree', (t) => {
           e: true,
           f: null,
           g: undefined,
+          s: Symbol(),
+          sn: Symbol('named'),
         },
         i: [
           {
@@ -38,7 +40,11 @@ test('serialize-react-tree', (t) => {
           },
           'string',
           123,
+          Symbol(),
+          Symbol('named'),
         ],
+        s: Symbol(),
+        sn: Symbol('named'),
       })
     ),
     `<div
@@ -64,7 +70,9 @@ test('serialize-react-tree', (t) => {
     c: 'string',
     d: 123,
     e: true,
-    f: null
+    f: null,
+    s: 'Symbol()',
+    sn: 'Symbol(named)'
   }}
   i={[
     {
@@ -72,8 +80,12 @@ test('serialize-react-tree', (t) => {
       b: () => {}
     },
     'string',
-    123
+    123,
+    'Symbol()',
+    'Symbol(named)'
   ]}
+  s="Symbol()"
+  sn="Symbol(named)"
 />`,
     'props combinations'
   )
