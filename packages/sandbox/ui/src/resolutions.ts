@@ -41,7 +41,7 @@ export const resolutions = {
     width: 1600,
     height: 900,
   },
-}
+} as const
 
 export type TResolutionKey = keyof typeof resolutions
 

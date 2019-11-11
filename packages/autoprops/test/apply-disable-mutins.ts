@@ -2,16 +2,19 @@ import test from 'blue-tape'
 import I from 'big-integer'
 import { applyDisableMutins } from '../src/apply-disable-mutins'
 
-test('applyDisableMutins', (t) => {
-  const values = [I(0), I(0), I(1), I(1), I(1)]
-  const expected = [I(0), I(0), I(0), I(0), I(0)]
+test('applyDisableMutins: props and children', (t) => {
+  const values = [I(1), I(1), I(1), I(1), I(1)]
+  const expected = [I(0), I(0), I(1), I(0), I(0)]
 
   applyDisableMutins(
     values,
-    2,
+    'e',
     ['a', 'b', 'c'],
-    'c',
-    [['a', 'b'], ['b', 'c']]
+    ['d', 'e'],
+    [
+      ['a', 'b', 'd'],
+      ['d', 'e'],
+    ]
   )
 
   t.true(

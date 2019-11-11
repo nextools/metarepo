@@ -1,42 +1,32 @@
 /* eslint-disable import/no-cycle */
 import { isValidElement } from 'react'
-import { TConfig, TSerializedElement, TPath, TLineElement } from './types'
+import { TConfig, TSerializedElement, TLineElement, TMeta } from './types'
 import { serializeIndent } from './serialize-indent'
-import { isNumber, isString, getElementName, sanitizeLines, createGetNameIndex } from './utils'
+import { isNumber, isString, getElementName, sanitizeLines, optChildMeta, optMetaValue } from './utils'
 import { serializeElement } from './serialize-element'
-import { TYPE_VALUE_NUMBER, TYPE_VALUE_STRING } from './constants'
+import { TYPE_VALUE_STRING } from './constants'
 
 type TSerializeChildrenValue = {
   value: any,
   currentIndent: number,
   config: TConfig,
-  path: TPath,
-  getNameIndex: (name: string) => number,
+  meta?: TMeta,
 }
 
-const serializeChildrenValue = ({ value, currentIndent, config, path, getNameIndex }: TSerializeChildrenValue): TSerializedElement => {
+const serializeChildrenValue = ({ value, currentIndent, meta, config }: TSerializeChildrenValue): TSerializedElement => {
   if (isValidElement(value)) {
     return serializeElement({
       name: getElementName(value),
       props: value.props,
       currentIndent,
       config,
-      path,
-      getNameIndex,
+      meta,
     })
   }
 
-  if (isNumber(value)) {
+  if (isNumber(value) || isString(value)) {
     return {
-      head: [{ type: TYPE_VALUE_NUMBER, value: String(value) }],
-      body: [],
-      tail: [],
-    }
-  }
-
-  if (isString(value)) {
-    return {
-      head: [{ type: TYPE_VALUE_STRING, value }],
+      head: [{ type: TYPE_VALUE_STRING, value: String(value) }],
       body: [],
       tail: [],
     }
@@ -53,22 +43,21 @@ export type TSerializeChildren = {
   children: any,
   currentIndent: number,
   config: TConfig,
-  path: TPath,
+  meta?: TMeta,
 }
 
-export const serializeChildren = ({ children, currentIndent, config, path }: TSerializeChildren): TSerializedElement => {
+export const serializeChildren = ({ children, currentIndent, meta, config }: TSerializeChildren): TSerializedElement => {
   if (Array.isArray(children)) {
     const lines = []
     let lineElements: TLineElement[] = []
-    const getNameIndex = createGetNameIndex()
 
-    for (const child of children) {
+    for (let i = 0; i < children.length; i++) {
+      const childMeta = optChildMeta(i, meta)
       const { head, body } = serializeChildrenValue({
-        value: child,
+        value: children[i],
         currentIndent,
         config,
-        path,
-        getNameIndex,
+        meta: childMeta,
       })
 
       if (head.length > 0) {
@@ -76,9 +65,13 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
       }
 
       if (body.length > 0) {
+        // flush accumulated lines before body
         if (lineElements.length > 0) {
+          const prevChildIndex = Math.max(i - 1, 0)
+          const childMeta = optChildMeta(prevChildIndex, meta)
+
           lines.push({
-            path,
+            meta: optMetaValue(childMeta),
             elements: [
               serializeIndent(currentIndent),
               ...lineElements,
@@ -91,9 +84,13 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
       }
     }
 
+    // flush accumulated lines as last line
     if (lineElements.length > 0) {
+      const lastChildIndex = Math.max(children.length - 1, 0)
+      const childMeta = optChildMeta(lastChildIndex, meta)
+
       lines.push({
-        path,
+        meta: optMetaValue(childMeta),
         elements: [
           serializeIndent(currentIndent),
           ...lineElements,
@@ -112,15 +109,14 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
     value: children,
     currentIndent,
     config,
-    path,
-    getNameIndex: () => 0,
+    meta: optChildMeta(0, meta),
   })
 
   return {
     head: [],
     body: sanitizeLines([
       head.length > 0 && ({
-        path,
+        meta: optMetaValue(meta),
         elements: [
           serializeIndent(currentIndent),
           ...head,

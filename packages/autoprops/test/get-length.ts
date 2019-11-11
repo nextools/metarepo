@@ -1,53 +1,43 @@
 import test from 'blue-tape'
 import I from 'big-integer'
-import { TMetaFile } from '../src/types'
+import { TComponentConfig } from '../src/types'
 import { getLength } from '../src/get-length'
 
 test('autoprops: getLength', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-        b: [true],
-      },
-      required: ['a'],
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
+      b: [true],
     },
-    childrenConfig: {
-      meta: {
-        child1: {
-          config: {
-            props: {},
-          },
-          Component: () => null,
+    children: {
+      child1: {
+        config: {
+          props: {},
         },
-        child2: {
-          config: {
-            props: {},
-          },
-          childrenConfig: {
-            meta: {
-              child: {
-                config: {
-                  props: {
-                    a: [true],
-                  },
+        Component: () => null,
+      },
+      child2: {
+        config: {
+          props: {},
+          children: {
+            child: {
+              config: {
+                props: {
+                  a: [true],
                 },
-                Component: () => null,
               },
+              Component: () => null,
             },
-            children: ['child'],
           },
-          Component: () => null,
         },
+        Component: () => null,
       },
-      children: ['child1', 'child1', 'child2'],
-      required: ['child1'],
     },
-    Component: () => null,
+    required: ['a', 'child1'],
   }
 
   t.true(
-    getLength(meta).equals(I(8)),
+    getLength(config).equals(I(8)),
     'should return proper length'
   )
 

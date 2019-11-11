@@ -1,20 +1,17 @@
 import test from 'blue-tape'
-import { TMetaFile } from '../src/types'
+import { TComponentConfig } from '../src/types'
 import { getNumPerms } from '../src/get-num-perms'
 
 test('getNumPerms: simple case', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-        b: [true],
-      },
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
+      b: [true],
     },
-    Component: () => null,
   }
 
   t.equals(
-    getNumPerms(meta),
+    getNumPerms(config),
     4,
     'should return num perms'
   )
@@ -23,23 +20,20 @@ test('getNumPerms: simple case', (t) => {
 })
 
 test('getNumPerms: props mutex', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-        b: [true],
-        c: [true],
-      },
-      mutex: [
-        ['a', 'b'],
-        ['a', 'c'],
-      ],
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
+      b: [true],
+      c: [true],
     },
-    Component: () => null,
+    mutex: [
+      ['a', 'b'],
+      ['a', 'c'],
+    ],
   }
 
   t.equals(
-    getNumPerms(meta),
+    getNumPerms(config),
     5,
     'should return num perms'
   )
@@ -48,22 +42,19 @@ test('getNumPerms: props mutex', (t) => {
 })
 
 test('getNumPerms: props mutin', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-        b: [true],
-        c: [true],
-      },
-      mutin: [
-        ['a', 'c'],
-      ],
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
+      b: [true],
+      c: [true],
     },
-    Component: () => null,
+    mutin: [
+      ['a', 'c'],
+    ],
   }
 
   t.equals(
-    getNumPerms(meta),
+    getNumPerms(config),
     4,
     'should return num perms'
   )
@@ -72,35 +63,29 @@ test('getNumPerms: props mutin', (t) => {
 })
 
 test('getNumPerms: children', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
+    },
+    children: {
+      child: {
+        config: {
+          props: {},
+        },
+        Component: () => null,
+      },
+      child2: {
+        config: {
+          props: {},
+        },
+        Component: () => null,
       },
     },
-    childrenConfig: {
-      meta: {
-        child: {
-          config: {
-            props: {},
-          },
-          Component: () => null,
-        },
-        child2: {
-          config: {
-            props: {},
-          },
-          Component: () => null,
-        },
-      },
-      children: ['child', 'child2'],
-      required: ['child'],
-    },
-    Component: () => null,
+    required: ['child'],
   }
 
   t.equals(
-    getNumPerms(meta),
+    getNumPerms(config),
     4,
     'should return num perms'
   )

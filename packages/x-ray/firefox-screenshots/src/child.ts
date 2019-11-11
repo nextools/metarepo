@@ -4,9 +4,8 @@ import foxr from 'foxr'
 import upng from 'upng-js'
 import { checkScreenshot, TMeta, TScreenshotsItemResult } from '@x-ray/screenshot-utils'
 import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
-import { TCheckRequest } from '@x-ray/common-utils'
+import { TCheckRequest, TSyntxLines } from '@x-ray/common-utils'
 import { processSend } from '@x-ray/worker-utils'
-import { TLineElement } from 'syntx'
 import getScreenshot from './get'
 import { TOptions } from './types'
 
@@ -93,7 +92,7 @@ export default async (options: TOptions) => {
                   await processSend<TScreenshotsItemResult>({
                     type: 'DELETED',
                     id: filename,
-                    serializedElement: meta as TLineElement[][],
+                    serializedElement: meta as TSyntxLines,
                     data,
                     width,
                     height,

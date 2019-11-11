@@ -8,7 +8,6 @@ import {
   TMapFocused,
   mapFocused,
   mapHandlers,
-  mapContext,
 } from 'refun'
 import { elegir } from 'elegir'
 import { Input } from '@primitives/input'
@@ -18,8 +17,7 @@ import { Background } from '../background'
 import { AnimationColor } from '../animation-color'
 import { Block } from '../block'
 import { TRect } from '../../types'
-import { mapStoreState } from '../../store'
-import { ThemeContext } from '../themes'
+import { mapTheme } from '../themes'
 
 const FAMILY = `Helvetica, Arial, sans-serif`
 const WEIGHT = 400
@@ -38,23 +36,18 @@ export type TField = {
 
 export const Field = pureComponent(
   startWithType<TField>(),
-  mapContext(ThemeContext),
-  mapStoreState(({ themeName }) => ({ themeName }), ['themeName']),
+  mapTheme(),
   mapHovered,
   mapFocused,
-  mapWithProps(({ isHovered, isFocused, theme, themeName }) => {
-    const selectedTheme = theme[themeName]
-
-    return {
-      color: selectedTheme.text,
-      backgroundColor: elegir(
-        isHovered || isFocused,
-        selectedTheme.foregroundHover,
-        true,
-        selectedTheme.foreground
-      ),
-    }
-  }),
+  mapWithProps(({ isHovered, isFocused, theme }) => ({
+    color: theme.text,
+    backgroundColor: elegir(
+      isHovered || isFocused,
+      theme.foregroundHover,
+      true,
+      theme.foreground
+    ),
+  })),
   mapHandlers({
     onBlur: ({ onBlur, onSubmit }) => () => {
       onBlur()

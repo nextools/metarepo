@@ -6,11 +6,11 @@ import { Dropdown } from '../dropdown'
 import { printValue } from './print-value'
 
 export type TValueDropdownProps = {
-  propPath: string[],
+  propPath: readonly string[],
   propValue: any,
-  propPossibleValues: any[],
+  propPossibleValues: readonly any[],
   isPropRequired: boolean,
-  onChange: (propPath: string[], selectedValue: any) => void,
+  onChange: (propPath: readonly string[], selectedValue: any) => void,
 } & TOmitKey<TRect, 'height'>
 
 export const valueDropdownHeight = 34

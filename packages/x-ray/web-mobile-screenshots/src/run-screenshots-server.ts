@@ -6,10 +6,10 @@ import upng from 'upng-js'
 import { checkScreenshot, TScreenshotsResultData, TScreenshotsFileResultData, TRunScreesnotsResult, TScreenshotsResult, TScreenshotsFileResult } from '@x-ray/screenshot-utils'
 import { TarFs, TTarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { isNumber, isString } from 'tsfn'
-import { TLineElement } from 'syntx'
 import prettyMs from 'pretty-ms'
 import { makeWorker } from '@x-ray/worker-utils'
 import { Font, load as loadFont } from 'opentype.js'
+import { TSyntxLines } from '@x-ray/common-utils'
 import { TOptions, TWorkerHtmlResult, TWorkerResult } from './types'
 
 const childFile = require.resolve('./child')
@@ -72,7 +72,7 @@ export const runScreenshotsServer = (targetFiles: string[], options: TOptions) =
           targetResult.old[itemName] = {
             width: dpr(width),
             height: dpr(height),
-            serializedElement: meta as TLineElement[][],
+            serializedElement: meta as TSyntxLines,
           }
           targetResultData.old[itemName] = data
 

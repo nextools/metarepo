@@ -1,27 +1,15 @@
-import { TChildrenConfig, TComponentConfig } from 'autoprops'
-import { Text } from '@primitives/text'
+import { TComponentConfig } from 'autoprops'
+import * as TextMeta from '@primitives/text/meta'
 import { TButton } from './src/types'
-
-export const childrenConfig: TChildrenConfig = {
-  meta: {
-    text: {
-      config: {
-        props: {
-          children: ['Button'],
-        },
-        required: ['children'],
-      },
-      Component: Text,
-    },
-  },
-  children: ['text'],
-  required: ['text'],
-}
 
 export const config: TComponentConfig<TButton> = {
   props: {
     isDisabled: [true],
   },
+  children: {
+    text: TextMeta,
+  },
+  required: ['text'],
 }
 
 export { Button as Component } from './src'

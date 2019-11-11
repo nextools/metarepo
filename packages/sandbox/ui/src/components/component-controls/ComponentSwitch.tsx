@@ -6,10 +6,10 @@ import { buttonIconSwitchSize, ButtonIconSwitch } from '../button-icon-switch'
 import { IconMinus, IconPlus } from '../icons'
 
 export type TComponentSwitchProps = {
-  propPath: string[],
+  propPath: readonly string[],
   isChecked: boolean,
   color: TColor,
-  onChange: (propPath: string[], propValue: any) => void,
+  onChange: (propPath: readonly string[], propValue: any) => void,
 } & TPosition
 
 export const componentSwitchSize = buttonIconSwitchSize

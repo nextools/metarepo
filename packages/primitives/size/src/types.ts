@@ -4,7 +4,6 @@ export type TDimensions = {
 }
 
 export type TSize = {
-  valuesToWatch?: any[],
   width?: number,
   onWidthChange?: (width: number) => void,
   height?: number,

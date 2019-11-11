@@ -1,12 +1,11 @@
 /* eslint-disable no-use-before-define */
-import { TAnyObject, isDefined } from 'tsfn'
+import { TAnyObject, isDefined, TWritable } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
-import { TMetaFile } from './types'
+import { TComponentConfig, TChildrenMap, TRequiredConfig } from './types'
 import { unpackPerm } from './unpack-perm'
-import { getIndexedName } from './get-indexed-name'
 import { parseBigInt } from './parse-bigint'
 
-const getValue = (valueIndex: number, values: any[], key: string, required?: string[]): any => {
+const getValue = (valueIndex: number, values: readonly any[], key: string, required?: TRequiredConfig): any => {
   if (isDefined(required) && required.includes(key)) {
     return values[valueIndex]
   }
@@ -16,45 +15,43 @@ const getValue = (valueIndex: number, values: any[], key: string, required?: str
   }
 }
 
-const getChildValue = (int: BigInteger, childMeta: TMetaFile, childKey: string, required?: string[]): any => {
+const getChildValue = (childConfig: TComponentConfig, int: BigInteger, childKey: string, required?: TRequiredConfig): any => {
   if (isDefined(required) && required.includes(childKey)) {
-    return getPropsImpl(int, childMeta)
+    return getPropsImpl(childConfig, int)
   }
 
   if (!int.isZero()) {
-    return getPropsImpl(int.minus(BigInt.one), childMeta)
+    return getPropsImpl(childConfig, int.minus(BigInt.one))
   }
 }
 
-export const getPropsImpl = (int: BigInteger, metaFile: TMetaFile): TAnyObject => {
+export const getPropsImpl = (componentConfig: TComponentConfig, int: BigInteger): TAnyObject => {
   const result: TAnyObject = {}
-  const { values, propKeys } = unpackPerm(int, metaFile)
+  const { values, propKeys, childrenKeys } = unpackPerm(componentConfig, int)
 
   let i = 0
 
   for (; i < propKeys.length; ++i) {
     const propKey = propKeys[i]
     const valueIndex = values[i]
-    const value = getValue(valueIndex.toJSNumber(), metaFile.config.props[propKey], propKey, metaFile.config.required)
+    const value = getValue(valueIndex.toJSNumber(), componentConfig.props[propKey], propKey, componentConfig.required)
 
     if (isDefined(value)) {
       result[propKey] = value
     }
   }
 
-  if (isDefined(metaFile.childrenConfig)) {
-    const childrenMap: TAnyObject = {}
+  if (isDefined(componentConfig.children)) {
+    const childrenMap: TWritable<TChildrenMap> = {}
     let hasChildren = false
 
     for (; i < values.length; ++i) {
-      const childIndex = i - propKeys.length
-      const childKey = metaFile.childrenConfig.children[childIndex]
-      const valueIndex = values[i]
-      const value = getChildValue(valueIndex, metaFile.childrenConfig.meta[childKey], childKey, metaFile.childrenConfig.required)
+      const childKey = childrenKeys[i - propKeys.length]
+      const valueInt = values[i]
+      const value = getChildValue(componentConfig.children[childKey].config, valueInt, childKey, componentConfig.required)
 
       if (isDefined(value)) {
-        const childIndexedKey = getIndexedName(metaFile.childrenConfig.children, childIndex)
-        childrenMap[childIndexedKey] = value
+        childrenMap[childKey] = value
         hasChildren = true
       }
     }
@@ -67,6 +64,6 @@ export const getPropsImpl = (int: BigInteger, metaFile: TMetaFile): TAnyObject =
   return result
 }
 
-export const getProps = (intStr: string, metaFile: TMetaFile): TAnyObject => {
-  return getPropsImpl(parseBigInt(intStr), metaFile)
+export const getProps = (componentConfig: TComponentConfig, intStr: string): TAnyObject => {
+  return getPropsImpl(componentConfig, parseBigInt(intStr))
 }

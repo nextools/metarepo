@@ -1,7 +1,7 @@
 import { MutableRefObject } from 'react'
 import { pipe } from '@psxcode/compose'
 import { startWithType, mapContext, onMount, onUpdate, mapRef } from 'refun'
-import { isFunction, TExtend } from 'tsfn'
+import { isFunction, TExtend3 } from 'tsfn'
 import { SizeContext, TSizeContext } from './Context'
 import { TSize } from './types'
 
@@ -31,5 +31,5 @@ export const mapSizeUpdate = <P extends TSize> () => {
   }
 
   // same function type as above
-  return (props: P) => props as any as TExtend<TExtend<P, TSizeContext>, {sizeId: MutableRefObject<number>}>
+  return (props: P) => props as any as TExtend3<P, TSizeContext, {sizeId: MutableRefObject<number>}>
 }

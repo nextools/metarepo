@@ -1,10 +1,9 @@
 import { ReactElement } from 'react'
-import { TLineElement } from 'syntx'
-import { TItem } from '@x-ray/common-utils'
+import { TItem, TSyntxLines } from '@x-ray/common-utils'
 
 export type TMeta = {
   id: string,
-  serializedElement: TLineElement[][],
+  serializedElement: TSyntxLines,
   element: ReactElement<any>,
 }
 
@@ -36,19 +35,19 @@ export type TSnapshotsItemResult =
     oldData: Buffer,
     newData: Buffer,
     id: string,
-    serializedElement: TLineElement[][],
+    serializedElement: TSyntxLines,
   } |
   {
     type: 'NEW',
     data: Buffer,
     id: string,
-    serializedElement: TLineElement[][],
+    serializedElement: TSyntxLines,
   } |
   {
     type: 'DELETED',
     data: Buffer,
     id: string,
-    serializedElement: TLineElement[][],
+    serializedElement: TSyntxLines,
   } |
   {
     type: 'DONE',

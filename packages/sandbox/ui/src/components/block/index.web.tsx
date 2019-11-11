@@ -1,7 +1,7 @@
 import React, { Ref, HTMLProps } from 'react'
 import { normalizeStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
-import { isUndefined, isNumber } from 'tsfn'
+import { isNumber, isDefined } from 'tsfn'
 import { TBlockCommon } from './types'
 
 export type TBlock = TBlockCommon & {
@@ -15,6 +15,7 @@ export const Block = component(
     shouldHideOverflow: false,
     shouldIgnorePointerEvents: false,
     shouldForceAcceleration: false,
+    shouldScroll: false,
   }),
   mapProps(
     ({
@@ -46,15 +47,15 @@ export const Block = component(
         top: 0,
       }
 
-      if (!isUndefined(styles.lineHeight)) {
+      if (isNumber(styles.lineHeight)) {
         styles.lineHeight = `${styles.lineHeight}px`
       }
 
-      if (!isUndefined(width)) {
+      if (isNumber(width)) {
         styles.width = width
       }
 
-      if (!isUndefined(height)) {
+      if (isNumber(height)) {
         styles.height = height
       }
 
@@ -62,31 +63,31 @@ export const Block = component(
         styles.maxWidth = maxWidth
       }
 
-      if (!isUndefined(minWidth)) {
+      if (isDefined(minWidth)) {
         styles.minWidth = minWidth
       }
 
-      if (!isUndefined(minHeight)) {
+      if (isNumber(minHeight)) {
         styles.minHeight = minHeight
       }
 
-      if (!isUndefined(left)) {
+      if (isNumber(left)) {
         styles.left = left
       }
 
-      if (!isUndefined(top)) {
+      if (isNumber(top)) {
         styles.top = top
       }
 
-      if (!isUndefined(right)) {
+      if (isNumber(right)) {
         styles.right = right
       }
 
-      if (!isUndefined(bottom)) {
+      if (isNumber(bottom)) {
         styles.bottom = bottom
       }
 
-      if (!isUndefined(floatingIndex)) {
+      if (isNumber(floatingIndex)) {
         styles.zIndex = floatingIndex
       }
 
@@ -114,11 +115,11 @@ export const Block = component(
         styles.transform = 'translateZ(0)'
       }
 
-      if (!isUndefined(blendMode)) {
+      if (isDefined(blendMode)) {
         styles.mixBlendMode = blendMode
       }
 
-      if (!isUndefined(opacity)) {
+      if (isNumber(opacity)) {
         styles.opacity = opacity
       }
 
@@ -127,7 +128,7 @@ export const Block = component(
         children,
       }
 
-      if (!isUndefined(ref)) {
+      if (isDefined(ref)) {
         props.ref = ref
       }
 

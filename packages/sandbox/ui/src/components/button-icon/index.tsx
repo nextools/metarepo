@@ -11,15 +11,13 @@ import {
   mapPressed,
   TMapPressed,
   component,
-  mapContext,
 } from 'refun'
 import { Button } from '@primitives/button'
 import { Background } from '../background'
 import { Border } from '../border'
-import { mapStoreState } from '../../store'
 import { TPosition } from '../../types'
 import { Block } from '../block'
-import { ThemeContext } from '../themes'
+import { mapTheme } from '../themes'
 
 const SIZE = 30
 const ICON_SIZE = 20
@@ -35,8 +33,8 @@ export const buttonIconSizeOverflow = buttonIconSize + BORDER_OVERFLOW
 
 export type TButtonIcon = {
   accessibilityLabel?: string,
-  children: ReactElement<any>,
   isInverted?: boolean,
+  children: ReactElement<any>,
   onPress: () => void,
 } & TMapPressed
   & TMapHovered
@@ -45,8 +43,7 @@ export type TButtonIcon = {
 
 export const ButtonIcon = component(
   startWithType<TButtonIcon>(),
-  mapContext(ThemeContext),
-  mapStoreState(({ themeName }) => ({ themeName }), ['themeName']),
+  mapTheme(),
   mapDefaultProps({
     accessibilityLabel: '',
     isInverted: false,
@@ -54,59 +51,55 @@ export const ButtonIcon = component(
   mapPressed,
   mapHovered,
   mapKeyboardFocused,
-  mapWithProps(({ theme, themeName, isHovered, isPressed, isKeyboardFocused, isInverted }) => {
-    const selectedTheme = theme[themeName]
-
-    return {
-      backgroundColor: elegir(
-        isInverted,
-        elegir(
-          isPressed,
-          selectedTheme.foregroundActivePressed,
-          isHovered,
-          selectedTheme.foregroundActiveHover,
-          true,
-          selectedTheme.foregroundActive
-        ),
+  mapWithProps(({ theme, isHovered, isPressed, isKeyboardFocused, isInverted }) => ({
+    backgroundColor: elegir(
+      isInverted,
+      elegir(
+        isPressed,
+        theme.foregroundActivePressed,
+        isHovered,
+        theme.foregroundActiveHover,
         true,
-        elegir(
-          isPressed,
-          selectedTheme.foregroundActive,
-          isHovered,
-          selectedTheme.foregroundHover,
-          true,
-          selectedTheme.foreground
-        )
+        theme.foregroundActive
       ),
-      borderColor: elegir(
-        isInverted,
-        elegir(
-          isKeyboardFocused,
-          selectedTheme.outlineActiveFocus,
-          true,
-          selectedTheme.foregroundTransparent
-        ),
+      true,
+      elegir(
+        isPressed,
+        theme.foregroundActive,
+        isHovered,
+        theme.foregroundHover,
         true,
-        elegir(
-          isKeyboardFocused,
-          selectedTheme.outlineIdleFocus,
-          true,
-          selectedTheme.foregroundTransparent
-        )
-      ),
-      iconColor: elegir(
-        isInverted,
-        selectedTheme.textInverted,
+        theme.foreground
+      )
+    ),
+    borderColor: elegir(
+      isInverted,
+      elegir(
+        isKeyboardFocused,
+        theme.outlineActiveFocus,
         true,
-        elegir(
-          isPressed,
-          selectedTheme.textInverted,
-          true,
-          selectedTheme.text
-        )
+        theme.foregroundTransparent
       ),
-    }
-  })
+      true,
+      elegir(
+        isKeyboardFocused,
+        theme.outlineIdleFocus,
+        true,
+        theme.foregroundTransparent
+      )
+    ),
+    iconColor: elegir(
+      isInverted,
+      theme.textInverted,
+      true,
+      elegir(
+        isPressed,
+        theme.textInverted,
+        true,
+        theme.text
+      )
+    ),
+  }))
 )(({
   left,
   top,

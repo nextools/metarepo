@@ -1,12 +1,12 @@
 import React from 'react'
-import { component, startWithType, mapWithProps, mapContext } from 'refun'
+import { component, startWithType, mapWithProps } from 'refun'
 import { Background } from '../background'
 import { Block } from '../block'
 import { mapStoreState } from '../../store'
 import { TRect, TComponents } from '../../types'
 import { DemoArea } from '../demo-area'
-import { mapImportedComponent } from '../../utils/map-imported-component'
-import { ThemeContext } from '../themes'
+import { mapTheme } from '../themes'
+import { mapImportedComponent } from './map-imported-component'
 
 export type TSandbox = {
   components: TComponents,
@@ -15,19 +15,14 @@ export type TSandbox = {
 
 export const Sandbox = component(
   startWithType<TSandbox>(),
-  mapContext(ThemeContext),
-  mapStoreState(({ themeName, componentKey, selectedSetIndex }) => ({
-    themeName,
+  mapTheme(),
+  mapStoreState(({ componentKey, selectedSetIndex }) => ({
     componentKey,
     selectedSetIndex,
-  }), ['themeName', 'componentKey', 'selectedSetIndex']),
-  mapWithProps(({ theme, themeName }) => {
-    const selectedTheme = theme[themeName]
-
-    return {
-      backgroundColor: selectedTheme.background,
-    }
-  }),
+  }), ['componentKey', 'selectedSetIndex']),
+  mapWithProps(({ theme }) => ({
+    backgroundColor: theme.background,
+  })),
   mapImportedComponent(),
   mapWithProps(({ left, top, width, height }) => ({
     demoAreaWidth: width,
@@ -44,7 +39,7 @@ export const Sandbox = component(
   demoAreaTop,
   backgroundColor,
   componentProps,
-  componentMetaFile,
+  Component,
 }) => (
   <Block width={width} height={height}>
     <Block left={0} top={0} width={width} height={height}>
@@ -56,7 +51,7 @@ export const Sandbox = component(
       height={demoAreaHeight}
       left={demoAreaLeft}
       top={demoAreaTop}
-      Component={componentMetaFile && componentMetaFile.Component}
+      Component={Component}
       componentProps={componentProps}
     />
   </Block>

@@ -2,13 +2,12 @@
 import path from 'path'
 import puppeteer, { Page } from 'puppeteer-core'
 import pAll from 'p-all'
-import { TCheckRequest } from '@x-ray/common-utils'
+import { TCheckRequest, TSyntxLines } from '@x-ray/common-utils'
 import { checkScreenshot, TMeta, TScreenshotsItemResult } from '@x-ray/screenshot-utils'
 import upng from 'upng-js'
 import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { map } from 'iterama'
 import { processSend } from '@x-ray/worker-utils'
-import { TLineElement } from 'syntx'
 import getScreenshot from './get'
 import { TOptions } from './types'
 
@@ -110,7 +109,7 @@ export default async (options: TOptions) => {
                   await processSend<TScreenshotsItemResult>({
                     type: 'DELETED',
                     id: filename,
-                    serializedElement: meta as TLineElement[][],
+                    serializedElement: meta as TSyntxLines,
                     data,
                     width,
                     height,

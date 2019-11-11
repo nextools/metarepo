@@ -1,9 +1,10 @@
 import React from 'react'
 import { View, LayoutChangeEvent } from 'react-native'
 import { component, mapHandlers, startWithType } from 'refun'
-import { isFunction, isUndefined } from 'tsfn'
+import { isFunction, isUndefined, isNumber } from 'tsfn'
 import { normalizeStyle } from 'stili'
 import { mapSizeUpdate } from './map-size-update'
+import { round } from './round'
 import { TSize } from './types'
 
 const style = normalizeStyle({
@@ -18,8 +19,10 @@ export const Size = component(
   mapSizeUpdate(),
   mapHandlers({
     onLayout: ({ width, height, onWidthChange, onHeightChange, onChange, onSizeUpdate, sizeId }) => ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
-      const layoutWidth = Math.round(layout.width * 1000) / 1000
-      const layoutHeight = Math.round(layout.height * 1000) / 1000
+      // prevent hasWidthChanged if width is not a number
+      const layoutWidth = isNumber(width) ? round(layout.width) : width!
+      // prevent hasHeightChanged if height is not a number
+      const layoutHeight = isNumber(height) ? round(layout.height) : height!
       const hasWidthChanged = layoutWidth !== width
       const hasHeightChanged = layoutHeight !== height
 

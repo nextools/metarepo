@@ -1,23 +1,20 @@
 import test from 'blue-tape'
-import { TMetaFile } from '../src/types'
+import { TComponentConfig } from '../src/types'
 import { getNextPerm } from '../src/get-next-perm'
 
 test('getNextPerm: simple case', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-        b: [true],
-      },
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
+      b: [true],
     },
-    Component: () => null,
   }
 
   const decimals = ['0', '1', '2', '3']
   const expected = ['1', '2', '3', null]
 
   t.deepEquals(
-    decimals.map((value) => getNextPerm(value, meta)),
+    decimals.map((value) => getNextPerm(config, value)),
     expected,
     'should return next perm'
   )
@@ -26,26 +23,23 @@ test('getNextPerm: simple case', (t) => {
 })
 
 test('getNextPerm: props mutex', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-        b: [true],
-        c: [true],
-      },
-      mutex: [
-        ['a', 'b'],
-        ['a', 'c'],
-      ],
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
+      b: [true],
+      c: [true],
     },
-    Component: () => null,
+    mutex: [
+      ['a', 'b'],
+      ['a', 'c'],
+    ],
   }
 
   const decimals = ['0', '1', '2', '3', '4', '5', '6', '7']
   const expected = ['1', '2', '4', '4', '6', '6', null, null]
 
   t.deepEquals(
-    decimals.map((value) => getNextPerm(value, meta)),
+    decimals.map((value) => getNextPerm(config, value)),
     expected,
     'should return next perm'
   )
@@ -54,25 +48,22 @@ test('getNextPerm: props mutex', (t) => {
 })
 
 test('getNextPerm: props mutin', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-        b: [true],
-        c: [true],
-      },
-      mutin: [
-        ['a', 'c'],
-      ],
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
+      b: [true],
+      c: [true],
     },
-    Component: () => null,
+    mutin: [
+      ['a', 'c'],
+    ],
   }
 
   const decimals = ['0', '1', '2', '3', '4', '5', '6', '7']
   const expected = ['2', '2', '5', '5', '5', '7', '7', null]
 
   t.deepEquals(
-    decimals.map((value) => getNextPerm(value, meta)),
+    decimals.map((value) => getNextPerm(config, value)),
     expected,
     'should return next perm'
   )
@@ -81,38 +72,34 @@ test('getNextPerm: props mutin', (t) => {
 })
 
 test('getNextPerm: children', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
+  const config: TComponentConfig = {
+    props: {},
+    children: {
+      child: {
+        config: {
+          props: {
+            a: [true],
+          },
+        },
+        Component: () => null,
+      },
+      child2: {
+        config: {
+          props: {
+            a: [true],
+          },
+        },
+        Component: () => null,
       },
     },
-    childrenConfig: {
-      meta: {
-        child: {
-          config: {
-            props: {},
-          },
-          Component: () => null,
-        },
-        child2: {
-          config: {
-            props: {},
-          },
-          Component: () => null,
-        },
-      },
-      children: ['child', 'child2'],
-      required: ['child'],
-    },
-    Component: () => null,
+    required: ['child'],
   }
 
-  const decimals = ['0', '1', '2', '3']
-  const expected = ['1', '2', '3', null]
+  const decimals = ['0', '1', '2', '3', '4', '5']
+  const expected = ['1', '2', '3', '4', '5', null]
 
   t.deepEquals(
-    decimals.map((value) => getNextPerm(value, meta)),
+    decimals.map((value) => getNextPerm(config, value)),
     expected,
     'should return next perm'
   )
@@ -121,36 +108,31 @@ test('getNextPerm: children', (t) => {
 })
 
 test('getNextPerm: props mutex children', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-        b: [true],
-      },
-      mutex: [
-        ['a', 'b'],
-        ['a', 'child'],
-      ],
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
+      b: [true],
     },
-    childrenConfig: {
-      meta: {
-        child: {
-          config: {
-            props: {},
-          },
-          Component: () => null,
+    mutex: [
+      ['a', 'b'],
+      ['a', 'child'],
+    ],
+    children: {
+
+      child: {
+        config: {
+          props: {},
         },
+        Component: () => null,
       },
-      children: ['child'],
     },
-    Component: () => null,
   }
 
   const decimals = ['0', '1', '2', '3', '4', '5', '6', '7']
   const expected = ['1', '2', '4', '4', '6', '6', null, null]
 
   t.deepEquals(
-    decimals.map((value) => getNextPerm(value, meta)),
+    decimals.map((value) => getNextPerm(config, value)),
     expected,
     'should return next perm'
   )

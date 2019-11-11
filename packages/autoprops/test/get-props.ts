@@ -1,21 +1,18 @@
 import test from 'blue-tape'
-import { TMetaFile } from '../src/types'
+import { TComponentConfig } from '../src/types'
 import { getProps } from '../src'
 
 test('autoprops: getProps single prop', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-      },
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
     },
-    Component: () => null,
   }
 
   const decimals = ['0', '1', '2']
 
   t.deepEquals(
-    decimals.map((value) => getProps(value, meta)),
+    decimals.map((value) => getProps(config, value)),
     [
       {},
       {
@@ -30,19 +27,16 @@ test('autoprops: getProps single prop', (t) => {
 })
 
 test('autoprops: getProps required props', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-        b: [true],
-      },
-      required: ['a'],
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
+      b: [true],
     },
-    Component: () => null,
+    required: ['a'],
   }
 
   t.deepEquals(
-    getProps('0', meta),
+    getProps(config, '0'),
     {
       a: true,
     },
@@ -50,7 +44,7 @@ test('autoprops: getProps required props', (t) => {
   )
 
   t.deepEquals(
-    getProps('1', meta),
+    getProps(config, '1'),
     {
       a: true,
       b: true,
@@ -62,33 +56,27 @@ test('autoprops: getProps required props', (t) => {
 })
 
 test('autoprops: getProps empty childrenMap', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {},
-    },
-    childrenConfig: {
-      meta: {
-        child: {
-          config: {
-            props: {},
-          },
-          Component: () => null,
+  const config: TComponentConfig = {
+    props: {},
+    children: {
+      child: {
+        config: {
+          props: {},
         },
+        Component: () => null,
       },
-      children: ['child'],
     },
-    Component: () => null,
   }
 
   const decimals = ['0', '1']
 
   t.deepEquals(
-    decimals.map((value) => getProps(value, meta)),
+    decimals.map((value) => getProps(config, value)),
     [
       {},
       {
         children: {
-          child__0: {},
+          child: {},
         },
       },
     ],
@@ -99,48 +87,39 @@ test('autoprops: getProps empty childrenMap', (t) => {
 })
 
 test('autoprops: getProps children with required', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {},
-    },
-    childrenConfig: {
-      meta: {
-        child: {
-          config: {
-            props: {},
-          },
-          Component: () => null,
+  const config: TComponentConfig = {
+    props: {},
+    children: {
+      child: {
+        config: {
+          props: {},
         },
-        child2: {
-          config: {
-            props: {},
-          },
-          Component: () => null,
-        },
+        Component: () => null,
       },
-      children: ['child', 'child2'],
-      required: ['child'],
+      child2: {
+        config: {
+          props: {},
+        },
+        Component: () => null,
+      },
     },
-    Component: () => null,
+    required: ['child'],
   }
 
   const decimals = ['0', '1']
 
   t.deepEquals(
-    decimals.map((value) => getProps(value, meta)),
+    decimals.map((value) => getProps(config, value)),
     [
       {
         children: {
-
-          child__0: {},
-
+          child: {},
         },
       },
       {
         children: {
-
-          child__0: {},
-          child2__0: {},
+          child: {},
+          child2: {},
 
         },
       },
@@ -152,44 +131,44 @@ test('autoprops: getProps children with required', (t) => {
 })
 
 test('autoprops: getProps same child placed multiple times', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {},
-    },
-    childrenConfig: {
-      meta: {
-        child: {
-          config: {
-            props: {},
-          },
-          Component: () => null,
+  const config: TComponentConfig = {
+    props: {},
+    children: {
+      child0: {
+        config: {
+          props: {},
         },
+        Component: () => null,
       },
-      children: ['child', 'child'],
+      child1: {
+        config: {
+          props: {},
+        },
+        Component: () => null,
+      },
     },
-    Component: () => null,
   }
 
   const decimals = ['0', '1', '2', '3']
 
   t.deepEquals(
-    decimals.map((value) => getProps(value, meta)),
+    decimals.map((value) => getProps(config, value)),
     [
       {},
       {
         children: {
-          child__0: {},
+          child0: {},
         },
       },
       {
         children: {
-          child__1: {},
+          child1: {},
         },
       },
       {
         children: {
-          child__0: {},
-          child__1: {},
+          child0: {},
+          child1: {},
         },
       },
     ],

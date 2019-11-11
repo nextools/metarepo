@@ -7,12 +7,12 @@ import {
   mapState,
   mapHandlers,
   mapWithPropsMemo,
-  mapContext,
 } from 'refun'
 import { Pointer } from '@primitives/pointer'
 import { Transform } from '@primitives/transform'
-import { Size, TDimensions } from '@primitives/size'
+import { Size } from '@primitives/size'
 import { TAnyObject } from 'tsfn'
+import { TComponentConfig } from 'autoprops'
 import { Border } from '../border'
 import { Shadow } from '../shadow'
 import { Background } from '../background'
@@ -24,7 +24,7 @@ import { Grid } from '../grid'
 import { Controls } from '../controls'
 import { TRect, TTransform } from '../../types'
 import { setTransform } from '../../actions'
-import { ThemeContext } from '../themes'
+import { mapTheme } from '../themes'
 import { mapTransform } from './map-transform'
 import { PureComponent } from './pure-component'
 import { mapInspectRect } from './map-inspect-rect'
@@ -35,45 +35,42 @@ const round10 = (num: number) => Math.round(num / 10) * 10
 
 export type TDemoArea = {
   Component?: FC<any>,
-  componentProps?: TAnyObject,
+  componentProps?: Readonly<TAnyObject>,
+  componentPropsChildrenMap?: Readonly<TAnyObject>,
+  componentConfig?: TComponentConfig,
 } & TRect
 
 export const DemoArea = pureComponent(
   startWithType<TDemoArea>(),
-  mapContext(ThemeContext),
-  mapStoreState(({ width, height, hasGrid, shouldStretch, shouldInspect, transform, themeName, selectedElementPath }) => ({
+  mapTheme(),
+  mapStoreState(({ width, height, hasGrid, shouldStretch, shouldInspect, transform, selectedElementPath }) => ({
     canvasWidth: width,
     canvasHeight: height,
     shouldStretch,
     shouldInspect,
     hasGrid,
     transform,
-    themeName,
     selectedElementPath,
-  }), ['width', 'height', 'hasGrid', 'shouldStretch', 'shouldInspect', 'transform', 'themeName', 'selectedElementPath']),
+  }), ['width', 'height', 'hasGrid', 'shouldStretch', 'shouldInspect', 'transform', 'selectedElementPath']),
   mapStoreDispatch,
   mapHandlers({
     dispatchTransform: ({ dispatch }) => (transform: TTransform) => dispatch(setTransform(transform)),
   }),
   mapDebouncedHandlerTimeout('dispatchTransform', 150),
-  mapWithProps(({ theme, themeName }) => {
-    const selectedTheme = theme[themeName]
-
-    return {
-      backgroundColor: selectedTheme.background,
-      borderColor: selectedTheme.border,
-      shadowColor: selectedTheme.border,
-    }
-  }),
+  mapWithProps(({ theme }) => ({
+    backgroundColor: theme.background,
+    borderColor: theme.border,
+    shadowColor: theme.border,
+  })),
   mapWithProps(({ canvasWidth, canvasHeight, width, height }) => ({
     canvasLeft: Math.max((width - canvasWidth) / 2, 0),
     canvasTop: Math.max((height - canvasHeight - CONTROLS_HEIGHT) / 2, 0),
   })),
-  mapState('componentSize', 'setComponentSize', () => ({ width: 0, height: 0 }) as TDimensions, []),
-  mapWithPropsMemo(({ componentSize, canvasWidth, canvasHeight, shouldStretch }) => {
+  mapState('componentHeight', 'setComponentHeight', () => 0, []),
+  mapWithPropsMemo(({ componentHeight, canvasWidth, canvasHeight, shouldStretch }) => {
     const componentWidth = shouldStretch ? canvasWidth : COMPONENT_MIN_WIDTH
 
-    if (componentSize.height === 0) {
+    if (componentHeight === 0) {
       return {
         componentLeft: 0,
         componentTop: 0,
@@ -83,10 +80,10 @@ export const DemoArea = pureComponent(
 
     return {
       componentLeft: shouldStretch ? 0 : round10((canvasWidth - componentWidth) / 2),
-      componentTop: round10((canvasHeight - componentSize.height) / 2),
+      componentTop: round10((canvasHeight - componentHeight) / 2),
       componentWidth,
     }
-  }, ['componentSize', 'shouldStretch', 'canvasWidth', 'canvasHeight']),
+  }, ['componentHeight', 'shouldStretch', 'canvasWidth', 'canvasHeight']),
   mapInspectRect(),
   mapTransform(0, CONTROLS_HEIGHT)
 )(({
@@ -106,14 +103,14 @@ export const DemoArea = pureComponent(
   componentWidth,
   componentLeft,
   componentTop,
-  componentSize,
-  setComponentSize,
+  componentHeight,
+  setComponentHeight,
   backgroundColor,
   borderColor,
   shadowColor,
-  themeName,
   selectedInspectRect,
   setBlockNode,
+  isDarkTheme,
   onMove,
   onReset,
   onWheel,
@@ -152,10 +149,8 @@ export const DemoArea = pureComponent(
             {Component && (
               <Transform x={componentLeft} y={componentTop} hOrigin="left" vOrigin="top" shouldUse3d={!isSafari}>
                 <Size
-                  width={componentSize.width}
-                  height={componentSize.height}
-                  valuesToWatch={[componentWidth, componentProps, canvasWidth, canvasHeight]}
-                  onChange={setComponentSize}
+                  height={componentHeight}
+                  onHeightChange={setComponentHeight}
                 >
                   <BlockRef
                     ref={setBlockNode}
@@ -174,13 +169,19 @@ export const DemoArea = pureComponent(
                 top={selectedInspectRect.top + componentTop}
                 width={selectedInspectRect.width}
                 height={selectedInspectRect.height}
+                shouldIgnorePointerEvents
               >
                 <Background color={[255, 0, 0, 0.3]}/>
               </Block>
             )}
 
             {hasGrid && (
-              <Grid width={canvasWidth} height={canvasHeight} shouldDegrade={isTransforming} themeName={themeName}/>
+              <Grid
+                width={canvasWidth}
+                height={canvasHeight}
+                shouldDegrade={isTransforming}
+                isDarkTheme={isDarkTheme}
+              />
             )}
           </Block>
         </Transform>

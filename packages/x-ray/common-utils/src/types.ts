@@ -11,8 +11,10 @@ export type TOptions = {
   platform: string,
 }
 
+export type TSyntxLines = readonly(readonly TLineElement[])[]
+
 export type TItem = {
-  serializedElement: TLineElement[][],
+  serializedElement: TSyntxLines,
   width: number,
   height: number,
 }

@@ -3,10 +3,10 @@ import { mapPropsIterable } from 'autoprops'
 import { TMeta } from '@x-ray/snapshots'
 import { serializeElement } from '@x-ray/common-utils'
 import { Input } from '../src'
-import * as metaFile from '../meta'
+import { Component, config } from '../meta'
 
-export default mapPropsIterable(metaFile, ({ id, props }): TMeta => ({
+export default mapPropsIterable(config, ({ id, props }): TMeta => ({
   id,
-  serializedElement: serializeElement(metaFile.Component, props),
+  serializedElement: serializeElement(Component, props),
   element: <Input {...props}/>,
 }))

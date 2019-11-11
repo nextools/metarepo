@@ -1,14 +1,12 @@
 import React from 'react'
 import { startWithType, mapHandlers, mapWithProps, pureComponent } from 'refun'
 import { TOmitKey } from 'tsfn'
+import { TOption } from '@primitives/select'
 import { TRect } from '../../types'
 import { Dropdown } from '../dropdown'
 
 export type TComponentDropdownProps = {
-  options: {
-    value: string,
-    label: string,
-  }[],
+  options: readonly TOption[],
   value: string | null,
   onChange: (value: string | null) => void,
 } & TOmitKey<TRect, 'height'>

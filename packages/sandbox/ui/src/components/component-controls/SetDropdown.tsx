@@ -7,7 +7,7 @@ import { Dropdown } from '../dropdown'
 export type TSetDropdownProps = {
   value: number,
   onChange: (value: number) => void,
-  componentAllPropsNames: string[],
+  componentAllPropsNames: readonly string[],
 } & TOmitKey<TRect, 'height'>
 
 export const setDropdownHeight = 34

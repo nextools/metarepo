@@ -15,13 +15,12 @@
     "@x-ray/common-utils": "^0.2.0",
     "@x-ray/screenshot-utils": "^0.2.0",
     "@x-ray/tar-fs": "^0.1.0",
+    "@x-ray/ui": "^0.1.0",
     "@x-ray/worker-utils": "^0.1.0",
     "bro-resolve": "^0.1.0",
-    "@x-ray/ui": "^0.2.0",
     "foxr": "^0.10.0",
     "react": "^16.8.6",
     "react-dom": "^16.6.0",
-    "syntx": "^0.4.0",
     "upng-js": "^2.1.0"
   },
   "devDependencies": {

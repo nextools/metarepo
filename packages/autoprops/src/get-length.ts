@@ -1,21 +1,21 @@
-import { isUndefined } from 'tsfn'
+import { isUndefined, isDefined } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
-import { TMetaFile } from './types'
+import { TComponentConfig, TRequiredConfig } from './types'
 
-export const getValuesLength = (length: BigInteger, key: string, required?: string[]): BigInteger => {
+export const getValuesLength = (length: BigInteger, key: string, required?: TRequiredConfig): BigInteger => {
   return length.add((isUndefined(required) || !required.includes(key) ? BigInt.one : BigInt.zero))
 }
 
-export const getLength = (metaFile: TMetaFile): BigInteger => {
+export const getLength = (componentConfig: TComponentConfig): BigInteger => {
   let result = BigInt.one
 
-  for (const propKey of Object.keys(metaFile.config.props)) {
-    result = result.multiply(getValuesLength(BigInt(metaFile.config.props[propKey].length), propKey, metaFile.config.required))
+  for (const propKey of Object.keys(componentConfig.props)) {
+    result = result.multiply(getValuesLength(BigInt(componentConfig.props[propKey].length), propKey, componentConfig.required))
   }
 
-  if (!isUndefined(metaFile.childrenConfig)) {
-    for (const childKey of metaFile.childrenConfig.children) {
-      result = result.multiply(getValuesLength(getLength(metaFile.childrenConfig.meta[childKey]), childKey, metaFile.childrenConfig.required))
+  if (isDefined(componentConfig.children)) {
+    for (const childKey of Object.keys(componentConfig.children)) {
+      result = result.multiply(getValuesLength(getLength(componentConfig.children[childKey].config), childKey, componentConfig.required))
     }
   }
 

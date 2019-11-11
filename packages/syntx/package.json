@@ -14,6 +14,10 @@
   "sideEffects": false,
   "devDependencies": {
     "@types/react": "^16.8.6",
+    "blue-tape": "^1.0.0",
     "react": "^16.8.6"
+  },
+  "dependencies": {
+    "tsfn": "^0.2.3"
   }
 }

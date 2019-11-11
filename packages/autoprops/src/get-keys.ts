@@ -1,4 +1,6 @@
-import { TAnyObject } from 'tsfn'
+import { isUndefined } from 'util'
+import { TAnyObject, getObjectKeys } from 'tsfn'
+import { TComponentConfig } from './types'
 
 const isBoolean = (arg: string): boolean => {
   return arg.startsWith('is') || arg.startsWith('has') || arg.startsWith('should')
@@ -56,4 +58,12 @@ export const getPropKeys = (props: TAnyObject): string[] => {
 
     return a.localeCompare(b)
   })
+}
+
+export const getChildrenKeys = <ChildrenKeys extends string>(componentConfig: TComponentConfig<any, ChildrenKeys>): ChildrenKeys[] => {
+  if (isUndefined(componentConfig.children)) {
+    return []
+  }
+
+  return getObjectKeys(componentConfig.children)
 }

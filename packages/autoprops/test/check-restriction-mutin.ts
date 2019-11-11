@@ -7,32 +7,8 @@ test('checkRestrictionMutin', (t) => {
     ['a', 'b'],
     ['b', 'c'],
   ]
-  const keys = ['a', 'b', 'c']
-  const values = [
-    [I(0), I(0), I(0)],
-    [I(1), I(0), I(0)],
-    [I(0), I(1), I(0)],
-    [I(1), I(1), I(0)],
-    [I(0), I(0), I(1)],
-    [I(1), I(0), I(1)],
-    [I(0), I(1), I(1)],
-    [I(1), I(1), I(1)],
-  ]
-
-  t.deepEquals(
-    values.map((values) => checkRestrictionMutin(values, 0, keys, mutin)),
-    [-1, 0, 0, 1, 1, 0, 0, -1],
-    'should return proper restriction'
-  )
-
-  t.end()
-})
-
-test('checkRestrictionMutin: children', (t) => {
-  const mutin = [
-    ['a', 'b'],
-  ]
   const keys = ['a', 'b']
+  const childrenKeys = ['c']
   const values = [
     [I(0), I(0), I(0)],
     [I(1), I(0), I(0)],
@@ -45,8 +21,8 @@ test('checkRestrictionMutin: children', (t) => {
   ]
 
   t.deepEquals(
-    values.map((values) => checkRestrictionMutin(values, 1, keys, mutin)),
-    [-1, -1, 0, 0, 0, 0, -1, -1],
+    values.map((values) => checkRestrictionMutin(values, keys, childrenKeys, mutin)),
+    [-1, 0, 0, 1, 1, 0, 0, -1],
     'should return proper restriction'
   )
 
@@ -55,6 +31,7 @@ test('checkRestrictionMutin: children', (t) => {
 
 test('checkRestrictionMutin: nothing to do', (t) => {
   const keys = ['a', 'b']
+  const childrenKeys = ['c']
   const values = [
     [I(0), I(0), I(0)],
     [I(1), I(0), I(0)],
@@ -63,7 +40,7 @@ test('checkRestrictionMutin: nothing to do', (t) => {
   ]
 
   t.deepEquals(
-    values.map((values) => checkRestrictionMutin(values, 0, keys, [])),
+    values.map((values) => checkRestrictionMutin(values, keys, childrenKeys, [])),
     [-1, -1, -1, -1],
     'should return proper restriction'
   )

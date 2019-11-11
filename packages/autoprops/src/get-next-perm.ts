@@ -1,23 +1,23 @@
 /* eslint-disable no-use-before-define */
-import { isUndefined, isDefined } from 'tsfn'
+import { isDefined, isArray } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
-import { TMetaFile } from './types'
+import { TComponentConfig, TRequiredConfig } from './types'
 import { packPerm } from './pack-perm'
 import { unpackPerm } from './unpack-perm'
 import { parseBigInt } from './parse-bigint'
 import { stringifyBigInt } from './stringify-bigint'
 import { getNumSkipMutex } from './get-num-skip-mutex'
-import { checkRestrictionMutex, checkRestrictionMutexPropsChildren } from './check-restriction-mutex'
+import { checkRestrictionMutex } from './check-restriction-mutex'
 import { checkRestrictionMutin } from './check-restriction-mutin'
 import { getNumSkipMutin } from './get-num-skip-mutin'
 
-const getChildNextPerm = (int: BigInteger, childMeta: TMetaFile, childKey: string, required?: string[]): BigInteger | null => {
-  if (!isUndefined(required) && required.includes(childKey)) {
-    return getNextPermImpl(int, childMeta)
+const getChildNextPerm = (int: BigInteger, childConfig: TComponentConfig, childKey: string, required?: TRequiredConfig): BigInteger | null => {
+  if (isDefined(required) && required.includes(childKey)) {
+    return getNextPermImpl(childConfig, int)
   }
 
   if (!int.isZero()) {
-    const nextPerm = getNextPermImpl(int.minus(BigInt.one), childMeta)
+    const nextPerm = getNextPermImpl(childConfig, int.minus(BigInt.one))
 
     if (nextPerm === null) {
       return nextPerm
@@ -29,8 +29,8 @@ const getChildNextPerm = (int: BigInteger, childMeta: TMetaFile, childKey: strin
   return int.plus(BigInt.one)
 }
 
-export const getNextPermImpl = (int: BigInteger, metaFile: TMetaFile): BigInteger | null => {
-  const { values, length, propKeys } = unpackPerm(int, metaFile)
+export const getNextPermImpl = (componentConfig: TComponentConfig, int: BigInteger): BigInteger | null => {
+  const { values, length, propKeys, childrenKeys } = unpackPerm(componentConfig, int)
 
   if (values.length === 0) {
     return null
@@ -43,12 +43,11 @@ export const getNextPermImpl = (int: BigInteger, metaFile: TMetaFile): BigIntege
     if (i < propKeys.length) {
       values[i] = values[i].plus(BigInt.one)
     } else {
-      const childrenConfig = metaFile.childrenConfig!
-      const childKey = childrenConfig.children[i - propKeys.length]
-      const childNextPerm = getChildNextPerm(values[i], childrenConfig.meta[childKey], childKey, childrenConfig.required)
+      const childKey = childrenKeys[i - propKeys.length]
+      const childNextValue = getChildNextPerm(values[i], componentConfig.children![childKey].config, childKey, componentConfig.required)
 
       // handle child value overflow
-      values[i] = childNextPerm !== null ? childNextPerm : length[i]
+      values[i] = childNextValue !== null ? childNextValue : length[i]
     }
 
     // if done incrementing
@@ -66,49 +65,23 @@ export const getNextPermImpl = (int: BigInteger, metaFile: TMetaFile): BigIntege
   }
 
   /* check restrictions */
-  if (i < propKeys.length) {
-    if (metaFile.config.mutex) {
-      const isRestricted = isDefined(metaFile.childrenConfig)
-        ? checkRestrictionMutexPropsChildren(values, propKeys, metaFile.childrenConfig.children, metaFile.config.mutex)
-        : checkRestrictionMutex(values, 0, propKeys, metaFile.config.mutex)
+  if (isArray(componentConfig.mutex) && checkRestrictionMutex(values, propKeys, childrenKeys, componentConfig.mutex)) {
+    return getNextPermImpl(componentConfig, int.plus(getNumSkipMutex(values, length, i)))
+  }
 
-      if (isRestricted) {
-        return getNextPermImpl(int.plus(getNumSkipMutex(values, length, i)), metaFile)
-      }
-    }
+  if (isArray(componentConfig.mutin)) {
+    const mutinGroupIndex = checkRestrictionMutin(values, propKeys, childrenKeys, componentConfig.mutin)
 
-    if (metaFile.config.mutin) {
-      const mutinGroupIndex = checkRestrictionMutin(values, 0, propKeys, metaFile.config.mutin)
-
-      if (mutinGroupIndex >= 0) {
-        return getNextPermImpl(int.plus(getNumSkipMutin(values, length, propKeys, metaFile.config.mutin[mutinGroupIndex], 0)), metaFile)
-      }
-    }
-  } else {
-    const childrenConfig = metaFile.childrenConfig!
-
-    if (childrenConfig.mutex) {
-      const isRestricted = checkRestrictionMutex(values, propKeys.length, childrenConfig.children, childrenConfig.mutex)
-
-      if (isRestricted) {
-        return getNextPermImpl(int.plus(getNumSkipMutex(values, length, i)), metaFile)
-      }
-    }
-
-    if (childrenConfig.mutin) {
-      const mutinGroupIndex = checkRestrictionMutin(values, propKeys.length, childrenConfig.children, childrenConfig.mutin)
-
-      if (mutinGroupIndex >= 0) {
-        return getNextPermImpl(int.plus(getNumSkipMutin(values, length, childrenConfig.children, childrenConfig.mutin[mutinGroupIndex], propKeys.length)), metaFile)
-      }
+    if (mutinGroupIndex >= 0) {
+      return getNextPermImpl(componentConfig, int.plus(getNumSkipMutin(values, length, propKeys, childrenKeys, componentConfig.mutin[mutinGroupIndex])))
     }
   }
 
   return packPerm(values, length)
 }
 
-export const getNextPerm = (intStr: string, metaFile: TMetaFile): string | null => {
-  const result = getNextPermImpl(parseBigInt(intStr), metaFile)
+export const getNextPerm = (componentConfig: TComponentConfig, intStr: string): string | null => {
+  const result = getNextPermImpl(componentConfig, parseBigInt(intStr))
 
   if (result !== null) {
     return stringifyBigInt(result)

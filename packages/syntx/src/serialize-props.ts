@@ -1,19 +1,18 @@
 /* eslint-disable import/no-cycle */
-import { TConfig, TSerializedElement, TPath } from './types'
+import { TConfig, TSerializedElement, TMeta } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'
-import { isString, sanitizeLineElements, sanitizeLines, createGetNameIndex } from './utils'
+import { isString, sanitizeLineElements, sanitizeLines, optMetaValue } from './utils'
 import { TYPE_QUOTE, TYPE_VALUE_STRING, TYPE_PROPS_BRACE, TYPE_PROPS_KEY, TYPE_PROPS_EQUALS } from './constants'
 
 type TSerializePropertyValue = {
   value: any,
   currentIndent: number,
-  path: TPath,
   config: TConfig,
-  getNameIndex: (name: string) => number,
+  meta?: TMeta,
 }
 
-const serializePropertyValue = ({ value, currentIndent, config, path, getNameIndex }: TSerializePropertyValue): TSerializedElement => {
+const serializePropertyValue = ({ value, currentIndent, meta, config }: TSerializePropertyValue): TSerializedElement => {
   const { indent } = config
 
   if (isString(value)) {
@@ -40,8 +39,7 @@ const serializePropertyValue = ({ value, currentIndent, config, path, getNameInd
     value,
     currentIndent: currentIndent + indent,
     config,
-    getNameIndex,
-    path,
+    meta,
   })
 
   return {
@@ -53,7 +51,7 @@ const serializePropertyValue = ({ value, currentIndent, config, path, getNameInd
     body: sanitizeLines([
       ...body,
       body.length > 0 && ({
-        path,
+        meta: optMetaValue(meta),
         elements: [
           serializeIndent(currentIndent),
           ...tail,
@@ -68,13 +66,11 @@ const serializePropertyValue = ({ value, currentIndent, config, path, getNameInd
 export type TSerializeProps = {
   props: any,
   currentIndent: number,
-  path: TPath,
   config: TConfig,
+  meta?: TMeta,
 }
 
-export const serializeProps = ({ props, currentIndent, config, path }: TSerializeProps): TSerializedElement => {
-  const getNameIndex = createGetNameIndex()
-
+export const serializeProps = ({ props, currentIndent, meta, config }: TSerializeProps): TSerializedElement => {
   return {
     head: [],
     body: sanitizeLines(
@@ -84,13 +80,12 @@ export const serializeProps = ({ props, currentIndent, config, path }: TSerializ
             value,
             currentIndent,
             config,
-            path,
-            getNameIndex,
+            meta,
           })
 
           return [
             {
-              path,
+              meta: optMetaValue(meta),
               elements: [
                 serializeIndent(currentIndent),
                 { type: TYPE_PROPS_KEY, value: key },

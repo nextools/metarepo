@@ -3,10 +3,9 @@ import path from 'path'
 import pAll from 'p-all'
 import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import serialize from '@x-ray/serialize-react-tree'
-import { TCheckRequest, TOptions } from '@x-ray/common-utils'
+import { TCheckRequest, TOptions, TSyntxLines } from '@x-ray/common-utils'
 import { map } from 'iterama'
 import { processSend } from '@x-ray/worker-utils'
-import { TLineElement } from 'syntx'
 import { checkSnapshot } from './check-snapshot'
 import { TMeta, TSnapshotsItemResult } from './types'
 
@@ -84,7 +83,7 @@ export default async (options: TOptions) => {
                   await processSend<TSnapshotsItemResult>({
                     type: 'DELETED',
                     id: filename,
-                    serializedElement: meta as TLineElement[][],
+                    serializedElement: meta as TSyntxLines,
                     data,
                   })
                 }

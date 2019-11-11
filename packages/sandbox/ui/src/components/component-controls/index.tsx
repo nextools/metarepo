@@ -1,89 +1,71 @@
 import React from 'react'
-import { TMetaFile, applyPropValue } from 'autoprops'
+import { applyPropValue, TComponentConfig } from 'autoprops'
 import { mapWithProps, startWithType, pureComponent, mapHandlers, mapDebouncedHandlerTimeout } from 'refun'
-import { isUndefined, TAnyObject } from 'tsfn'
+import { TAnyObject } from 'tsfn'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { setComponent, setSelectedSetIndex } from '../../actions'
 import { Block } from '../block'
 import { TRect } from '../../types'
-import { getMetaByPath } from '../../utils'
-import { SPACER_SIZE, getPropsBlockHeight, TITLE_HEIGHT } from './calculate-size'
+import { mapTheme } from '../themes'
+import { mapChildConfigByPath } from './map-child-config-by-path'
+import { getPropsBlockHeight } from './calculate-size'
 import { PropsBlock } from './PropsBlock'
 
 export type TComponentControls = {
-  componentMetaFile?: TMetaFile,
-  componentPropsChildrenMap?: TAnyObject,
+  componentName: string,
+  componentConfig: TComponentConfig,
+  componentPropsChildrenMap: Readonly<TAnyObject>,
 } & TRect
 
 export const ComponentControls = pureComponent(
   startWithType<TComponentControls>(),
-  mapStoreState(({ componentKey, selectedSetIndex, selectedElementPath, themeName }) => ({
-    themeName,
+  mapTheme(),
+  mapStoreState(({ componentKey, selectedSetIndex, selectedElementPath }) => ({
     componentKey,
     selectedSetIndex,
     selectedElementPath,
-  }), ['componentKey', 'selectedSetIndex', 'selectedElementPath', 'themeName']),
+  }), ['componentKey', 'selectedSetIndex', 'selectedElementPath']),
   mapStoreDispatch,
   mapHandlers({
     onChangeComponentName: ({ dispatch }) => (value: string | null) => dispatch(setComponent(value)),
     onChangePropsSetIndex: ({ dispatch }) => (value: string) => dispatch(setSelectedSetIndex(value)),
   }),
   mapHandlers({
-    onChange: ({ componentMetaFile, selectedSetIndex, onChangePropsSetIndex }) => (propPath, propValue) => {
-      if (!isUndefined(componentMetaFile)) {
-        return onChangePropsSetIndex(applyPropValue(selectedSetIndex, componentMetaFile, propPath, propValue))
-      }
-    },
+    onChange: ({ componentConfig, selectedSetIndex, onChangePropsSetIndex }) => (propPath, propValue) =>
+      onChangePropsSetIndex(
+        applyPropValue(componentConfig, selectedSetIndex, propPath, propValue)
+      ),
   }),
   mapDebouncedHandlerTimeout('onChange', 50),
-  mapWithProps(({ componentMetaFile, componentPropsChildrenMap, selectedElementPath }) => {
-    if (isUndefined(componentMetaFile) || isUndefined(componentPropsChildrenMap)) {
-      return {
-        componentMetaFile: undefined,
-        componentProps: undefined,
-        propPath: [] as string[],
-      }
-    }
-
-    return getMetaByPath(componentMetaFile, componentPropsChildrenMap, selectedElementPath)
-  }),
-  mapWithProps(({ componentMetaFile }) => {
-    if (!isUndefined(componentMetaFile)) {
-      return {
-        totalHeight: getPropsBlockHeight(componentMetaFile) - TITLE_HEIGHT,
-      }
-    }
-
-    return {
-      totalHeight: 0,
-    }
-  })
+  mapChildConfigByPath(),
+  mapWithProps(({ childConfig }) => ({
+    totalHeight: getPropsBlockHeight(childConfig),
+  }))
 )(({
-  componentProps,
-  componentMetaFile,
+  childDisplayName,
+  childPropsChildrenMap,
+  childConfig,
+  childPath,
   width,
   height,
   top,
   left,
   totalHeight,
-  themeName,
-  propPath,
+  theme,
   onChange,
 }) => (
   <Block width={width} height={height} left={left} top={top} shouldScroll>
-    <Block shouldFlow height={totalHeight + SPACER_SIZE}/>
-
-    {componentMetaFile && componentProps && (
-      <PropsBlock
-        left={0}
-        top={0}
-        width={width}
-        componentMetaFile={componentMetaFile}
-        componentProps={componentProps}
-        propPath={propPath}
-        themeName={themeName}
-        onChange={onChange}
-      />
-    )}
+    <Block shouldFlow height={totalHeight}/>
+    <PropsBlock
+      left={0}
+      top={0}
+      width={width}
+      componentName={childDisplayName}
+      componentConfig={childConfig}
+      componentPropsChildrenMap={childPropsChildrenMap}
+      propPath={childPath}
+      theme={theme}
+      onChange={onChange}
+    />
   </Block>
 ))

@@ -1,6 +1,5 @@
 import { Reducer } from 'redux'
 import { isUndefined } from 'tsfn'
-import { DeepReadonly } from 'utility-types'
 import {
   isToggleStretchAction,
   isToggleInspectAction,
@@ -27,7 +26,7 @@ const filterHeight = (value: number) => Math.min(Math.max(value, 50), 10000)
 const filterZoom = (value: number) => Math.round(value * 100) / 100
 const filterOffset = (value: number) => (Math.round(value * 100) / 100)
 
-export const reducer: Reducer<DeepReadonly<TState>> = (state, action) => {
+export const reducer: Reducer<TState> = (state, action): TState => {
   if (isUndefined(state)) {
     return getInitialState()
   }

@@ -1,5 +1,6 @@
 import { ReactElement, ComponentClass, FC, isValidElement } from 'react'
-import { TLine, TLineElement } from './types'
+import { isDefined, TWritable } from 'tsfn'
+import { TLine, TLineElement, TMeta } from './types'
 
 export const hasKeys = (obj: any) => Object.keys(obj).length > 0
 
@@ -51,9 +52,9 @@ export const filterProps = (props: any): any => (
 )
 
 export const isValidChildren = (children: any): boolean => (
-  (Array.isArray(children) && children.length > 0) ||
+  isString(children) ||
   isValidElement(children) ||
-  isString(children)
+  (Array.isArray(children) && children.some((child) => isValidChildren(child)))
 )
 
 export const getElementName = (element: ReactElement<any>) => {
@@ -64,10 +65,10 @@ export const getElementName = (element: ReactElement<any>) => {
   return getDisplayName(element.type)
 }
 
-export const flatten = (array: any[]) => {
+export const flatten = (array: readonly any[]) => {
   const flattened: any[] = []
 
-  const flat = (array: any[]) => {
+  const flat = (array: readonly any[]) => {
     array.forEach((el) => {
       if (Array.isArray(el)) {
         flat(el)
@@ -90,34 +91,37 @@ export const isLineElement = (obj: any): obj is TLineElement => {
   return !isNull(obj) && !isBoolean(obj) && !isUndefined(obj)
 }
 
-export const sanitizeLineElements = (lineElements: any[]): TLineElement[] => {
+export const sanitizeLineElements = (lineElements: readonly any[]): readonly any[] => {
   return lineElements.filter(isLineElement)
 }
 
-export const sanitizeLines = (lines: any[]): TLine[] => {
+export const sanitizeLines = (lines: readonly any[]): TLine[] => {
   return flatten(lines)
-    .reduce((result, line) => {
+    .reduce((result: TLine[], line) => {
       if (isLine(line)) {
-        result.push({
-          ...line,
+        const sanLine: TWritable<TLine> = {
           elements: sanitizeLineElements(line.elements),
-        })
+        }
+
+        if (isDefined(line.meta)) {
+          sanLine.meta = line.meta
+        }
+
+        result.push(sanLine)
       }
 
       return result
-    }, [] as TLine[])
+    }, [])
 }
 
-export const createGetNameIndex = () => {
-  const nameMap = new Map<string, number>()
+export const optMetaValue = (meta?: TMeta): any | undefined => {
+  if (isDefined(meta)) {
+    return meta.value
+  }
+}
 
-  return (name: string) => {
-    const index = nameMap.has(name)
-      ? nameMap.get(name)! + 1
-      : 0
-
-    nameMap.set(name, index)
-
-    return index
+export const optChildMeta = (index: number, meta?: TMeta): TMeta | undefined => {
+  if (isDefined(meta)) {
+    return (isDefined(meta.children) && meta.children[index]) || { value: meta.value }
   }
 }

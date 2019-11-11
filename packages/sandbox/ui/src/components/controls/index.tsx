@@ -1,5 +1,5 @@
 import React from 'react'
-import { startWithType, pureComponent, mapWithProps, mapHandlers, mapContext } from 'refun'
+import { startWithType, pureComponent, mapWithProps, mapHandlers } from 'refun'
 import { TRect } from '../../types'
 import { Block } from '../block'
 import { ButtonIcon, buttonIconSize } from '../button-icon'
@@ -7,7 +7,7 @@ import { IconReset, IconTheme, IconStretch, IconGrid, IconInspect } from '../ico
 import { ButtonIconSwitch } from '../button-icon-switch'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { toggleTheme, toggleStretch, toggleGrid, toggleInspect } from '../../actions'
-import { ThemeContext } from '../themes'
+import { mapTheme } from '../themes'
 import { WidthField, widthFieldWidth } from './WidthField'
 import { HeightField, heightFieldWidth } from './HeightField'
 import { ResolutionDropdown, resolutionDropdownHeight, resolutionDropdownWidth } from './ResolutionDropdown'
@@ -22,14 +22,12 @@ const COMPONENTS_GROUP_HEIGHT = resolutionDropdownHeight
 
 export const Controls = pureComponent(
   startWithType<TControls>(),
-  mapContext(ThemeContext),
-  mapStoreState(({ themeName, shouldStretch, shouldInspect, hasGrid }) => ({
-    themeName,
-    isCheckedTheme: themeName === 'dark',
+  mapTheme(),
+  mapStoreState(({ shouldStretch, shouldInspect, hasGrid }) => ({
     isCheckedStretch: shouldStretch,
     isCheckedInspect: shouldInspect,
     isCheckedGrid: hasGrid,
-  }), ['themeName', 'shouldStretch', 'shouldInspect', 'hasGrid']),
+  }), ['shouldStretch', 'shouldInspect', 'hasGrid']),
   mapStoreDispatch,
   mapHandlers({
     onToggleTheme: ({ dispatch }) => () => dispatch(toggleTheme()),
@@ -37,8 +35,8 @@ export const Controls = pureComponent(
     onToggleInspect: ({ dispatch }) => () => dispatch(toggleInspect()),
     onToggleGrid: ({ dispatch }) => () => dispatch(toggleGrid()),
   }),
-  mapWithProps(({ theme, themeName }) => ({
-    iconColor: theme[themeName].foreground,
+  mapWithProps(({ theme }) => ({
+    iconColor: theme.foreground,
   })),
   mapWithProps(({ width, height }) => ({
     componentsGroupLeft: (width - COMPONENTS_GROUP_WIDTH) / 2,
@@ -80,7 +78,7 @@ export const Controls = pureComponent(
   themeCheckboxLeft,
   componentsGroupTop,
   iconColor,
-  isCheckedTheme,
+  isDarkTheme,
   isCheckedStretch,
   isCheckedInspect,
   isCheckedGrid,
@@ -106,7 +104,7 @@ export const Controls = pureComponent(
     <ButtonIconSwitch left={hasGridCheckboxLeft} top={componentsGroupTop} isChecked={isCheckedGrid} onToggle={onToggleGrid}>
       <IconGrid color={iconColor}/>
     </ButtonIconSwitch>
-    <ButtonIconSwitch left={themeCheckboxLeft} top={componentsGroupTop} isChecked={isCheckedTheme} onToggle={onToggleTheme}>
+    <ButtonIconSwitch left={themeCheckboxLeft} top={componentsGroupTop} isChecked={isDarkTheme} onToggle={onToggleTheme}>
       <IconTheme color={iconColor}/>
     </ButtonIconSwitch>
   </Block>

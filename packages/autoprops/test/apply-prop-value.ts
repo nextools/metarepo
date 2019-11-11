@@ -1,57 +1,54 @@
 import test from 'blue-tape'
-import { TMetaFile } from '../src/types'
+import { TComponentConfig } from '../src/types'
 import { applyPropValue } from '../src'
 
 test('applyPropValue: boolean case', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [false, true],
-        b: [false, true],
-      },
-      required: ['b'],
+  const config: TComponentConfig = {
+    props: {
+      a: [false, true],
+      b: [false, true],
     },
-    Component: () => null,
+    required: ['b'],
   }
 
   t.equals(
-    applyPropValue('0', meta, ['a'], true),
+    applyPropValue(config, '0', ['a'], true),
     '2',
     'undefined to true'
   )
 
   t.equals(
-    applyPropValue('2', meta, ['a'], false),
+    applyPropValue(config, '2', ['a'], false),
     '1',
     'true to false'
   )
 
   t.equals(
-    applyPropValue('1', meta, ['a'], undefined),
+    applyPropValue(config, '1', ['a'], undefined),
     '0',
     'false to undefined'
   )
 
   t.equals(
-    applyPropValue('0', meta, ['b'], true),
+    applyPropValue(config, '0', ['b'], true),
     '3',
     'required false to true'
   )
 
   t.equals(
-    applyPropValue('4', meta, ['b'], false),
+    applyPropValue(config, '4', ['b'], false),
     '1',
     'required true to false'
   )
 
   t.equals(
-    applyPropValue('4', meta, ['b'], undefined),
+    applyPropValue(config, '4', ['b'], undefined),
     '1',
     'required true to undefined'
   )
 
   t.equals(
-    applyPropValue('4', meta, ['b'], 'incorrect'),
+    applyPropValue(config, '4', ['b'], 'incorrect'),
     '1',
     'incorrect value'
   )
@@ -60,29 +57,26 @@ test('applyPropValue: boolean case', (t) => {
 })
 
 test('applyPropValue: non primitive values', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [() => {}, [1, 2], { a: 1 }],
-      },
+  const config: TComponentConfig = {
+    props: {
+      a: [() => {}, [1, 2], { a: 1 }],
     },
-    Component: () => null,
   }
 
   t.equals(
-    applyPropValue('0', meta, ['a'], meta.config.props.a[0]),
+    applyPropValue(config, '0', ['a'], config.props.a[0]),
     '1',
     'should find function'
   )
 
   t.equals(
-    applyPropValue('0', meta, ['a'], meta.config.props.a[1]),
+    applyPropValue(config, '0', ['a'], config.props.a[1]),
     '2',
     'should find array'
   )
 
   t.equals(
-    applyPropValue('0', meta, ['a'], meta.config.props.a[2]),
+    applyPropValue(config, '0', ['a'], config.props.a[2]),
     '3',
     'should find object'
   )
@@ -91,23 +85,20 @@ test('applyPropValue: non primitive values', (t) => {
 })
 
 test('applyPropValue: prop mutex', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-        b: [true],
-        c: [true],
-      },
-      mutex: [
-        ['a', 'b'],
-        ['a', 'c'],
-      ],
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
+      b: [true],
+      c: [true],
     },
-    Component: () => null,
+    mutex: [
+      ['a', 'b'],
+      ['a', 'c'],
+    ],
   }
 
   t.equals(
-    applyPropValue('1', meta, ['c'], true),
+    applyPropValue(config, '1', ['c'], true),
     '4',
     'disable prop by mutex'
   )
@@ -116,29 +107,26 @@ test('applyPropValue: prop mutex', (t) => {
 })
 
 test('applyPropValue: prop mutin', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-        b: [true],
-        c: [true],
-      },
-      mutin: [
-        ['a', 'b'],
-        ['b', 'c'],
-      ],
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
+      b: [true],
+      c: [true],
     },
-    Component: () => null,
+    mutin: [
+      ['a', 'b'],
+      ['b', 'c'],
+    ],
   }
 
   t.equals(
-    applyPropValue('0', meta, ['c'], true),
+    applyPropValue(config, '0', ['c'], true),
     '7',
     'enable props by mutin'
   )
 
   t.equals(
-    applyPropValue('7', meta, ['c'], false),
+    applyPropValue(config, '7', ['c'], false),
     '0',
     'disable props by mutin'
   )
@@ -147,42 +135,36 @@ test('applyPropValue: prop mutin', (t) => {
 })
 
 test('applyPropValue: boolean inside child', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-      },
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
     },
-    childrenConfig: {
-      meta: {
-        child: {
-          config: {
-            props: {
-              a: [true],
-            },
+    children: {
+      child: {
+        config: {
+          props: {
+            a: [true],
           },
-          Component: () => null,
         },
+        Component: () => null,
       },
-      children: ['child'],
     },
-    Component: () => null,
   }
 
   t.equals(
-    applyPropValue('2', meta, ['children', 'child__0', 'a'], true),
+    applyPropValue(config, '2', ['child', 'a'], true),
     '4',
     'child undefined to true'
   )
 
   t.equals(
-    applyPropValue('5', meta, ['children', 'child__0', 'a'], false),
+    applyPropValue(config, '5', ['child', 'a'], false),
     '3',
     'true to false'
   )
 
   t.equals(
-    applyPropValue('5', meta, ['children', 'child__0', 'a'], undefined),
+    applyPropValue(config, '5', ['child', 'a'], undefined),
     '3',
     'false to undefined'
   )
@@ -191,25 +173,24 @@ test('applyPropValue: boolean inside child', (t) => {
 })
 
 test('applyPropPath: enable disable child', (t) => {
-  const meta: TMetaFile = {
-    config: { props: {} },
-    childrenConfig: {
-      meta: {
-        child: { config: { props: {} }, Component: () => null },
+  const config: TComponentConfig = {
+    props: {},
+    children: {
+      child: {
+        config: { props: {} },
+        Component: () => null,
       },
-      children: ['child'],
     },
-    Component: () => null,
   }
 
   t.equals(
-    applyPropValue('0', meta, ['children', 'child__0'], {}),
+    applyPropValue(config, '0', ['child'], {}),
     '1',
     'should enable child'
   )
 
   t.equals(
-    applyPropValue('1', meta, ['children', 'child__0'], undefined),
+    applyPropValue(config, '1', ['child'], undefined),
     '0',
     'should disable child'
   )
@@ -218,31 +199,28 @@ test('applyPropPath: enable disable child', (t) => {
 })
 
 test('applyPropPath: child mutins', (t) => {
-  const meta: TMetaFile = {
-    config: { props: {} },
-    childrenConfig: {
-      meta: {
-        a: { config: { props: {} }, Component: () => null },
-        b: { config: { props: {} }, Component: () => null },
-        c: { config: { props: {} }, Component: () => null },
-      },
-      children: ['a', 'b', 'c'],
-      mutin: [
-        ['a', 'b'],
-        ['a', 'c'],
-      ],
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
     },
-    Component: () => null,
+    children: {
+      b: { config: { props: {} }, Component: () => null },
+      c: { config: { props: {} }, Component: () => null },
+    },
+    mutin: [
+      ['a', 'b'],
+      ['a', 'c'],
+    ],
   }
 
   t.equals(
-    applyPropValue('0', meta, ['children', 'c__0'], true),
+    applyPropValue(config, '0', ['c'], true),
     '7',
     'enable child by mutin'
   )
 
   t.equals(
-    applyPropValue('7', meta, ['children', 'c__0'], undefined),
+    applyPropValue(config, '7', ['c'], undefined),
     '0',
     'disable child by mutin'
   )
@@ -251,25 +229,22 @@ test('applyPropPath: child mutins', (t) => {
 })
 
 test('applyPropPath: child mutexes', (t) => {
-  const meta: TMetaFile = {
-    config: { props: {} },
-    childrenConfig: {
-      meta: {
-        a: { config: { props: {} }, Component: () => null },
-        b: { config: { props: {} }, Component: () => null },
-        c: { config: { props: {} }, Component: () => null },
-      },
-      children: ['a', 'b', 'c'],
-      mutex: [
-        ['a', 'b'],
-        ['a', 'c'],
-      ],
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
     },
-    Component: () => null,
+    children: {
+      b: { config: { props: {} }, Component: () => null },
+      c: { config: { props: {} }, Component: () => null },
+    },
+    mutex: [
+      ['a', 'b'],
+      ['a', 'c'],
+    ],
   }
 
   t.equals(
-    applyPropValue('1', meta, ['children', 'c__0'], {}),
+    applyPropValue(config, '1', ['c'], {}),
     '4',
     'should disable child by mutex'
   )
@@ -278,30 +253,30 @@ test('applyPropPath: child mutexes', (t) => {
 })
 
 test('applyPropPath: change required child prop', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {},
-    },
-    childrenConfig: {
-      meta: {
-        child: {
-          config: {
-            props: {
-              a: [true],
-            },
+  const config: TComponentConfig = {
+    props: {},
+    children: {
+      child: {
+        config: {
+          props: {
+            a: [true],
           },
-          Component: () => null,
         },
+        Component: () => null,
       },
-      children: ['child'],
-      required: ['child'],
     },
-    Component: () => null,
+    required: ['child'],
   }
 
   t.equals(
-    applyPropValue('0', meta, ['children', 'child__0', 'a'], true),
+    applyPropValue(config, '0', ['child', 'a'], true),
     '1',
+    'should enable prop in child'
+  )
+
+  t.equals(
+    applyPropValue(config, '1', ['child', 'a'], undefined),
+    '0',
     'should enable prop in child'
   )
 
@@ -309,42 +284,36 @@ test('applyPropPath: change required child prop', (t) => {
 })
 
 test('applyPropPath: errors', (t) => {
-  const meta: TMetaFile = {
-    config: {
-      props: {
-        a: [true],
-      },
+  const config: TComponentConfig = {
+    props: {
+      a: [true],
     },
-    childrenConfig: {
-      meta: {
-        child: {
-          config: {
-            props: {
-              a: [true],
-            },
+    children: {
+      child: {
+        config: {
+          props: {
+            a: [true],
           },
-          Component: () => null,
         },
+        Component: () => null,
       },
-      children: ['child'],
     },
-    Component: () => null,
   }
 
   t.throws(
-    () => applyPropValue('0', meta, ['children', 'child__0', 'a'], true),
+    () => applyPropValue(config, '0', ['child', 'a'], true),
     /was not enabled/,
     'should throw if previous state is not compatible with path'
   )
 
   t.throws(
-    () => applyPropValue('0', meta, ['b'], true),
-    /could not find prop/,
+    () => applyPropValue(config, '0', ['b'], true),
+    /incorrect path/,
     'should throw if path is incorrect'
   )
 
   t.throws(
-    () => applyPropValue('2', meta, ['children', 'child__0', 'a', 'a'], true),
+    () => applyPropValue(config, '2', ['child', 'a', 'a'], true),
     /incorrect path/,
     'should throw if children not exist'
   )

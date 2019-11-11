@@ -2,39 +2,34 @@ import { FC } from 'react'
 import { TAnyObject, TKeyOf, TRequiredKeys, TOptionalKeys } from 'tsfn'
 import { BigInteger } from 'big-integer'
 
-export type TMetaFile<T = any> = {
-  Component: FC<T>,
-  config: TComponentConfig<T>,
-  childrenConfig?: TChildrenConfig,
-}
+export type TRequiredConfig <TProps = any, TChildrenKeys extends string = string> = readonly (TRequiredKeys<TProps> | TChildrenKeys)[]
+export type TMutexConfig <TProps = any, TChildrenKeys extends string = string> = readonly (readonly (TKeyOf<TProps> | TChildrenKeys)[])[]
+export type TMutinConfig <TProps = any, TChildrenKeys extends string = string> = readonly (readonly (TKeyOf<TProps> | TChildrenKeys)[])[]
 
-export type TChildrenConfig<ChildrenKeys extends string = string> = {
-  meta: {
-    [K in ChildrenKeys]: TMetaFile
-  },
-  children: ChildrenKeys[],
-  mutex?: ChildrenKeys[][],
-  mutin?: ChildrenKeys[][],
-  required?: ChildrenKeys[],
-}
-
-export type TComponentConfig<T = TAnyObject, ChildrenKeys extends string = never> = {
-  props: {
-    [k in Exclude<TRequiredKeys<T>, 'children'>]: T[k][];
+export type TComponentConfig<TProps = any, TChildrenKeys extends string = string> = {
+  readonly props: {
+    readonly [k in Exclude<TRequiredKeys<TProps>, 'children'>]: readonly TProps[k][];
   } & {
-    [k in TOptionalKeys<T> | Extract<keyof T, 'children'>]?: (Exclude<T[k], undefined>)[];
+    readonly [k in TOptionalKeys<TProps> | Extract<keyof TProps, 'children'>]?: readonly (Exclude<TProps[k], undefined>)[];
   },
-  required?: TRequiredKeys<T>[],
-  mutex?: (TKeyOf<T> | ChildrenKeys)[][],
-  mutin?: TKeyOf<T>[][],
+  readonly children?: {
+    readonly [K in TChildrenKeys]: {
+      readonly Component: FC<any>,
+      readonly config: TComponentConfig,
+    }
+  },
+  readonly required?: TRequiredConfig<TProps, TChildrenKeys>,
+  readonly mutex?: TMutexConfig<TProps, TChildrenKeys>,
+  readonly mutin?: TMutinConfig<TProps, TChildrenKeys>,
 }
 
-export type TChildrenMap = {
-  [K in string]?: TAnyObject
+export type TChildrenMap<TChildrenKeys extends string = string> = {
+  readonly [K in TChildrenKeys]?: Readonly<TAnyObject>
 }
 
-export type Permutation = {
+export type Permutation = Readonly<{
   values: BigInteger[],
-  length: BigInteger[],
-  propKeys: string[],
-}
+  length: readonly BigInteger[],
+  propKeys: readonly string[],
+  childrenKeys: readonly string[],
+}>

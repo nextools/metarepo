@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
-import { TConfig, TSerializedElement, TPath } from './types'
-import { filterProps, hasKeys, isValidChildren, sanitizeLines } from './utils'
+import { TConfig, TSerializedElement, TMeta } from './types'
+import { filterProps, hasKeys, isValidChildren, sanitizeLines, optMetaValue } from './utils'
 import { serializeIndent } from './serialize-indent'
 import { serializeProps } from './serialize-props'
 import { serializeChildren } from './serialize-children'
@@ -11,27 +11,22 @@ export type TSerializeElement = {
   props: any,
   currentIndent: number,
   config: TConfig,
-  path: TPath,
-  getNameIndex: (name: string) => number,
+  meta?: TMeta,
 }
 
-export const serializeElement = ({ name, props, currentIndent, config, path, getNameIndex }: TSerializeElement): TSerializedElement => {
+export const serializeElement = ({ name, props, currentIndent, meta, config }: TSerializeElement): TSerializedElement => {
   const { indent } = config
   const { children, ...restProps } = props
   const hasChildren = isValidChildren(children)
   const filteredProps = filterProps(restProps)
   const hasProps = hasKeys(filteredProps)
-  const elementPath = [
-    ...path,
-    { name, index: getNameIndex(name) },
-  ]
 
   if (!hasProps && !hasChildren) {
     return {
       head: [],
       body: sanitizeLines([
         {
-          path: elementPath,
+          meta: optMetaValue(meta),
           elements: [
             serializeIndent(currentIndent),
             { type: TYPE_COMPONENT_BRACKET, value: '<' },
@@ -49,14 +44,14 @@ export const serializeElement = ({ name, props, currentIndent, config, path, get
       props: filteredProps,
       currentIndent: currentIndent + indent,
       config,
-      path: elementPath,
+      meta,
     })
 
     return {
       head: [],
       body: sanitizeLines([
         {
-          path: elementPath,
+          meta: optMetaValue(meta),
           elements: [
             serializeIndent(currentIndent),
             { type: TYPE_COMPONENT_BRACKET, value: '<' },
@@ -65,7 +60,7 @@ export const serializeElement = ({ name, props, currentIndent, config, path, get
         },
         ...body,
         {
-          path: elementPath,
+          meta: optMetaValue(meta),
           elements: [
             serializeIndent(currentIndent),
             { type: TYPE_COMPONENT_BRACKET, value: '/>' },
@@ -81,14 +76,14 @@ export const serializeElement = ({ name, props, currentIndent, config, path, get
       children,
       currentIndent: currentIndent + indent,
       config,
-      path: elementPath,
+      meta,
     })
 
     return {
       head: [],
       body: sanitizeLines([
         {
-          path: elementPath,
+          meta: optMetaValue(meta),
           elements: [
             serializeIndent(currentIndent),
             { type: TYPE_COMPONENT_BRACKET, value: '<' },
@@ -98,7 +93,7 @@ export const serializeElement = ({ name, props, currentIndent, config, path, get
         },
         ...body,
         {
-          path: elementPath,
+          meta: optMetaValue(meta),
           elements: [
             serializeIndent(currentIndent),
             { type: TYPE_COMPONENT_BRACKET, value: '</' },
@@ -115,20 +110,20 @@ export const serializeElement = ({ name, props, currentIndent, config, path, get
     props: filteredProps,
     currentIndent: currentIndent + indent,
     config,
-    path: elementPath,
+    meta,
   })
   const { body: childrenBody } = serializeChildren({
     children,
     currentIndent: currentIndent + indent,
     config,
-    path: elementPath,
+    meta,
   })
 
   return {
     head: [],
     body: sanitizeLines([
       {
-        path: elementPath,
+        meta: optMetaValue(meta),
         elements: [
           serializeIndent(currentIndent),
           { type: TYPE_COMPONENT_BRACKET, value: '<' },
@@ -137,7 +132,7 @@ export const serializeElement = ({ name, props, currentIndent, config, path, get
       },
       ...propsBody,
       {
-        path: elementPath,
+        meta: optMetaValue(meta),
         elements: [
           serializeIndent(currentIndent),
           { type: TYPE_COMPONENT_BRACKET, value: '>' },
@@ -145,7 +140,7 @@ export const serializeElement = ({ name, props, currentIndent, config, path, get
       },
       ...childrenBody,
       {
-        path: elementPath,
+        meta: optMetaValue(meta),
         elements: [
           serializeIndent(currentIndent),
           { type: TYPE_COMPONENT_BRACKET, value: '</' },
