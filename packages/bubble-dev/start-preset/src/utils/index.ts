@@ -13,19 +13,21 @@ export const makeRegExp = (input: string) => {
 }
 
 export const suggestFilter = (noPackageMessage: string | null) =>
-  (input: string, choices: TPrompt[]): TPrompt[] => {
+  (input: string, choices: TPrompt[]): Promise<TPrompt[]> => {
     if (input.includes('*')) {
       const regExp = makeRegExp(input)
       const filteredChoices = choices.filter((choice) => regExp.test(choice.value))
 
-      return [
+      return Promise.resolve([
         { title: `${input} (${filteredChoices.length})`, value: input },
         ...filteredChoices,
-      ]
+      ])
     }
 
     if (noPackageMessage === null) {
-      return choices.filter((choice) => choice.value.includes(input))
+      return Promise.resolve(
+        choices.filter((choice) => choice.value.includes(input))
+      )
     }
 
     let firstElement: TPrompt[] = []
@@ -34,10 +36,10 @@ export const suggestFilter = (noPackageMessage: string | null) =>
       firstElement = [{ title: noPackageMessage, value: '-' }]
     }
 
-    return [
+    return Promise.resolve([
       ...firstElement,
       ...choices.filter((choice) => choice.value.includes(input)),
-    ]
+    ])
   }
 
 export type TStartOptions = {

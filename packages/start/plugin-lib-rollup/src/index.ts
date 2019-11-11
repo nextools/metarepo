@@ -1,5 +1,6 @@
 import plugin from '@start/plugin'
 import { RollupOptions } from 'rollup'
+import { isArray } from 'tsfn'
 
 export default (config: RollupOptions) =>
   plugin('rollup', () => async () => {
@@ -11,5 +12,11 @@ export default (config: RollupOptions) =>
       throw new Error('config output is not defined')
     }
 
-    await bundle.write(config.output)
+    if (isArray(config.output)) {
+      for (const output of config.output) {
+        await bundle.write(output)
+      }
+    } else {
+      await bundle.write(config.output)
+    }
   })

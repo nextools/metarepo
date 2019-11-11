@@ -84,7 +84,7 @@ module.exports = {
     'wrap-iife': [2, 'inside'],
     yoda: 2,
     'no-delete-var': 2,
-    'no-undef': 2,
+    'no-undef': 0,
     'no-undef-init': 2,
     'no-use-before-define': 2,
     'handle-callback-err': 2,
