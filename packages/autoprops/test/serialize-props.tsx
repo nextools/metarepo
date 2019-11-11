@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import test from 'blue-tape'
 import I from 'big-integer'
+// @ts-ignore
+import 'core-js/features/symbol/description'
 import { TComponentConfig } from '../src/types'
 import { serializeProps } from '../src/serialize-props'
 
