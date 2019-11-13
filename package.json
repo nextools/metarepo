@@ -69,10 +69,7 @@
         "publishSubDirectory": "build",
         "access": "public"
       },
-      "shouldAlwaysBumpDependents": false,
       "shouldMakeGitTags": true,
-      "shouldMakeGitHubReleases": false,
-      "shouldSendSlackMessage": false,
       "shouldSendTelegramMessage": true,
       "shouldWriteChangelogFiles": true
     }

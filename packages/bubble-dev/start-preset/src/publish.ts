@@ -58,12 +58,12 @@ export const publish = async () => {
       autoNamePrefix,
       zeroBreakingChangeType,
       npm,
-      shouldAlwaysBumpDependents,
-      shouldMakeGitTags,
-      shouldMakeGitHubReleases,
-      shouldSendSlackMessage,
-      shouldSendTelegramMessage,
-      shouldWriteChangelogFiles,
+      shouldAlwaysBumpDependents = false,
+      shouldMakeGitTags = false,
+      shouldMakeGitHubReleases = false,
+      shouldSendSlackMessage = false,
+      shouldSendTelegramMessage = false,
+      shouldWriteChangelogFiles = false,
     },
   } = await getStartOptions()
   const { prefixes } = await import('./config/auto')
@@ -126,7 +126,7 @@ export const testPublish = async () => {
       autoNamePrefix,
       zeroBreakingChangeType,
       npm,
-      shouldAlwaysBumpDependents,
+      shouldAlwaysBumpDependents = false,
     },
   } = await getStartOptions()
   const { prefixes } = await import('./config/auto')
