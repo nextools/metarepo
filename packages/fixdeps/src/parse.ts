@@ -16,6 +16,8 @@ export const parse = (content: string): File => (
       'optionalCatchBinding',
       'throwExpressions',
       'bigInt',
+      'optionalChaining',
+      'nullishCoalescingOperator',
     ],
   })
 )
