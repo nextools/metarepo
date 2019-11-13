@@ -1,7 +1,7 @@
 import React from 'react'
 import { Block } from '@primitives/block'
 import { component, mapDefaultProps, startWithType } from 'refun'
-import { TColor } from 'colorido'
+import { TColor, colorToString } from 'colorido'
 import { AnimationColor } from '../animation-color'
 
 export type TShadow = {
@@ -52,7 +52,7 @@ export const Shadow = component(
           borderTopRightRadius: topRightRadius,
           borderBottomRightRadius: bottomRightRadius,
           borderBottomLeftRadius: bottomLeftRadius,
-          borderColor: color,
+          borderColor: colorToString(color),
           borderWidth: 1,
         }}
       />

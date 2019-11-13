@@ -1,17 +1,12 @@
 import React, { Ref, HTMLProps } from 'react'
 import { normalizeStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
-import { isNumber, TExtend, isDefined } from 'tsfn'
-import { TColor, colorToString } from 'colorido'
+import { isNumber, isDefined } from 'tsfn'
 import { styleTransformArrayToText } from './styleTransformArrayToText'
 import { TBlockCommon } from './types'
 
 export type TBlock = TBlockCommon & {
-  style?: TExtend<TStyle, {
-    backgroundColor?: TColor,
-    borderColor?: TColor,
-    color?: TColor,
-  }>,
+  style?: TStyle,
   ref?: Ref<HTMLDivElement>,
 }
 
@@ -54,13 +49,6 @@ export const Block = component(
       onPointerUp,
       onPointerMove,
     }) => {
-      const {
-        backgroundColor,
-        borderColor,
-        color,
-        ...restOfStyle
-      } = style || {}
-
       const styles: TStyle = {
         display: 'flex',
         flexDirection: 'row',
@@ -73,19 +61,7 @@ export const Block = component(
         flexShrink: 0,
         minWidth,
         minHeight,
-        ...restOfStyle,
-      }
-
-      if (isDefined(backgroundColor)) {
-        styles.backgroundColor = colorToString(backgroundColor)
-      }
-
-      if (isDefined(borderColor)) {
-        styles.borderColor = colorToString(borderColor)
-      }
-
-      if (isDefined(color)) {
-        styles.color = colorToString(color)
+        ...style,
       }
 
       if (isNumber(styles.lineHeight)) {
