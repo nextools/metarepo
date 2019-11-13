@@ -1,3 +1,7 @@
+## v0.6.1
+
+* 🐞 fix color properties
+
 ## v0.6.0
 
 * 🌱 use colorido TColor for color property sent to Block

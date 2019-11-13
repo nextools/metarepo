@@ -1,3 +1,7 @@
+## v0.6.2
+
+* 🐞 fix color properties
+
 ## v0.6.1
 
 * 🐞 fix styles leaking to props

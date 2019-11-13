@@ -1,3 +1,7 @@
+## v0.4.2
+
+* 🐞 fix shadow color property
+
 ## v0.4.1
 
 * 🐞 use updated meta files format

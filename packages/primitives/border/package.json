@@ -1,6 +1,6 @@
 {
   "name": "@primitives/border",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "",
   "keywords": [],
   "main": "src/index.web.tsx",

@@ -1,3 +1,7 @@
+## v0.5.3
+
+* 🐞 add support for latest syntax
+
 ## v0.5.2
 
 * 🐞 upgrade `execa` to v3
