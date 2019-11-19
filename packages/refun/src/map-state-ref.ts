@@ -11,7 +11,7 @@ export const mapStateRef = <SN extends string, SSN extends string, P extends {},
 
     if (prevProps.current === EMPTY_OBJECT) {
       stateFlushRef.current = () => {
-        useStateResult[1](stateRef.current)
+        useStateResult[1]({} as R)
       }
     }
 
