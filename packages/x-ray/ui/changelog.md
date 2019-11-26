@@ -1,3 +1,8 @@
+## v0.4.0
+
+* 🌱 pass a colorido color into Text
+* ♻️ update dependencies: `@x-ray/snapshots`, `@primitives/text`
+
 ## v0.3.0
 
 * ♻️ update dependencies: `@x-ray/snapshots`, `@x-ray/screenshot-utils`

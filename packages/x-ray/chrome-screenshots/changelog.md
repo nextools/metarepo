@@ -1,3 +1,7 @@
+## v0.6.0
+
+* ♻️ update dependencies: `@x-ray/ui`
+
 ## v0.5.0
 
 * ♻️ update dependencies: `@rebox/web`, `@x-ray/ui`, `@x-ray/worker-utils`, `@x-ray/screenshot-utils`

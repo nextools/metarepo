@@ -1,3 +1,8 @@
+## v0.5.0
+
+* 🌱 pass colorido colors into Text
+* ♻️ update dependencies: `@primitives/text`
+
 ## v0.4.2
 
 * 🐞 fix shadow color property

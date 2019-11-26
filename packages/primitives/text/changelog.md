@@ -1,3 +1,7 @@
+## v0.9.0
+
+* 🌱 use colorido for color prop type
+
 ## v0.8.3
 
 * 🐞 rename `TTextProps` to `TText`
