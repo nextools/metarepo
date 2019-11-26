@@ -1,0 +1,28 @@
+{
+  "name": "@primitives/vector-shape",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.web.ts",
+  "browser": "src/index.web.ts",
+  "react-native": "src/index.native.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@primitives/block": "0.6.2",
+    "@primitives/svg": "0.1.6",
+    "colorido": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.6",
+    "@x-ray/common-utils": "^0.2.0",
+    "@x-ray/screenshot-utils": "^0.3.0",
+    "@x-ray/snapshots": "^0.4.0",
+    "autoprops": "^0.7.0",
+    "react": "^16.8.6"
+  }
+}
