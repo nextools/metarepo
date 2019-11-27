@@ -4,12 +4,12 @@ import { Surface, Shape } from '@primitives/svg'
 import { colorToString } from 'colorido'
 import { TVectorShape } from './types'
 
-export const VectorShape: FC<TVectorShape> = ({ color, height, id, path, width }) => (
+export const VectorShape: FC<TVectorShape> = ({ color = [0, 0, 0, 1], height, id, path, width }) => (
   <Block shouldIgnorePointerEvents>
     <Surface id={id} height={height} width={width}>
       <Shape
         d={path}
-        fill={color !== undefined ? colorToString(color) : undefined}
+        fill={colorToString(color)}
       />
     </Surface>
   </Block>
