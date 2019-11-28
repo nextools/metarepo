@@ -1,3 +1,7 @@
+## v0.19.0
+
+* ♻️ update dependencies: `@x-ray/native-screenshots-app`, `@x-ray/chrome-screenshots`, `@x-ray/firefox-screenshots`, `@x-ray/snapshots`
+
 ## v0.18.0
 
 * ♻️ update dependencies: `@x-ray/chrome-screenshots`, `@x-ray/firefox-screenshots`, `@x-ray/snapshots`

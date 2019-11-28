@@ -1,3 +1,7 @@
+## v0.5.0
+
+* ♻️ update dependencies: `@primitives/image`, `@x-ray/snapshots`
+
 ## v0.4.0
 
 * 🌱 pass a colorido color into Text

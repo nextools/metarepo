@@ -1,3 +1,7 @@
+## v0.2.0
+
+* ♻️ update dependencies: `@primitives/image`
+
 ## v0.1.5
 
 * 🐞 remove try-catch block to propagate error to parent Component

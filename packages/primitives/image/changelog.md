@@ -1,3 +1,7 @@
+## v0.3.0
+
+* 🌱 normalize border radii api to match those of the Background and Border
+
 ## v0.2.3
 
 * 🐞 add `ImageContext`
