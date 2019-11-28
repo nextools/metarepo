@@ -15,7 +15,7 @@
     "@x-ray/common-utils": "^0.2.0",
     "@x-ray/serialize-react-tree": "^0.3.0",
     "@x-ray/tar-fs": "^0.1.0",
-    "@x-ray/ui": "^0.4.0",
+    "@x-ray/ui": "^0.5.0",
     "@x-ray/worker-utils": "^0.2.0",
     "bro-resolve": "^0.1.0",
     "diff": "^4.0.1",

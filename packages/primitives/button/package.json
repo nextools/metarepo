@@ -22,7 +22,7 @@
     "@types/react": "^16.8.6",
     "@x-ray/common-utils": "^0.2.0",
     "@x-ray/screenshot-utils": "^0.3.0",
-    "@x-ray/snapshots": "^0.4.0",
+    "@x-ray/snapshots": "^0.5.0",
     "autoprops": "^0.7.0",
     "react": "^16.8.6",
     "react-native": "^0.60.5"
