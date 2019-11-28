@@ -9,13 +9,25 @@ export const Image = component(
   mapDefaultProps({
     resizeMode: 'cover',
   }),
-  mapWithProps(({ borderRadius, resizeMode }) => {
+  mapWithProps(({ bottomLeftRadius, bottomRightRadius, topLeftRadius, topRightRadius, resizeMode }) => {
     const style: TStyle = {
       objectFit: resizeMode,
     }
 
-    if (isNumber(borderRadius)) {
-      style.borderRadius = `${borderRadius}px`
+    if (isNumber(bottomLeftRadius)) {
+      style.borderBottomLeftRadius = `${bottomLeftRadius}px`
+    }
+
+    if (isNumber(bottomRightRadius)) {
+      style.borderBottomRightRadius = `${bottomRightRadius}px`
+    }
+
+    if (isNumber(topLeftRadius)) {
+      style.borderTopLeftRadius = `${topLeftRadius}px`
+    }
+
+    if (isNumber(topRightRadius)) {
+      style.borderTopRightRadius = `${topRightRadius}px`
     }
 
     return {

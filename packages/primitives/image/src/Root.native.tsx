@@ -11,9 +11,12 @@ export const Image = component(
   mapDefaultProps({
     resizeMode: 'cover',
   }),
-  mapWithProps(({ borderRadius, resizeMode }) => ({
+  mapWithProps(({ bottomLeftRadius, bottomRightRadius, topLeftRadius, topRightRadius, resizeMode }) => ({
     style: normalizeStyle({
-      borderRadius,
+      borderBottomLeftRadius: bottomLeftRadius,
+      borderBottomRightRadius: bottomRightRadius,
+      borderTopLeftRadius: topLeftRadius,
+      borderTopRightRadius: topRightRadius,
       resizeMode,
     }),
   }))
