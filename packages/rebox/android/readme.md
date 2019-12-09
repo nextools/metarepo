@@ -6,7 +6,7 @@
 
 ```sh
 brew update
-brew tap caskroom/versions
+brew tap homebrew/cask-versions
 brew cask install adoptopenjdk8
 brew cask install android-sdk
 brew cask install intel-haxm
