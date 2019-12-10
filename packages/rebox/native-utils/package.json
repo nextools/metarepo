@@ -23,7 +23,7 @@
     "copie": "^0.3.0",
     "execa": "^3.0.0",
     "fast-glob": "^3.0.0",
-    "is-port-reachable": "^2.0.1",
+    "is-port-reachable": "^3.0.0",
     "make-dir": "^3.0.0",
     "metro-react-native-babel-preset": "0.56.0",
     "react-dom": "^16.8.6",
