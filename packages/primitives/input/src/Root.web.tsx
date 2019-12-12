@@ -2,6 +2,7 @@ import React, { KeyboardEvent } from 'react'
 import { normalizeStyle, TStyle } from 'stili'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { isNumber } from 'tsfn'
+import { colorToString, isColor } from 'colorido'
 import { TInput } from './types'
 
 export const Input = component(
@@ -30,7 +31,6 @@ export const Input = component(
       const style: TStyle = {
         backgroundColor: 'rgba(0, 0, 0, 0)',
         border: 0,
-        color,
         fontFamily,
         fontWeight,
         fontSize,
@@ -48,6 +48,10 @@ export const Input = component(
         paddingTop,
         maxWidth: '100%',
         minWidth: 0,
+      }
+
+      if (isColor(color)) {
+        style.color = colorToString(color)
       }
 
       if (isNumber(letterSpacing)) {

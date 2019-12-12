@@ -4,7 +4,7 @@ import { TInput } from './src/types'
 export const config: TComponentConfig<TInput> = {
   props: {
     isDisabled: [true],
-    color: ['#ff0000'],
+    color: [[0xff, 0x00, 0x00, 1]],
     fontSize: [24],
     fontFamily: ['Arial'],
     fontWeight: [700],

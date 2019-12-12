@@ -1,15 +1,9 @@
-import { TStyle } from 'stili'
+import { TThemeableText } from '@themeables/text'
 
 export type TInput = {
   id?: string,
   accessibilityLabel?: string,
   isDisabled?: boolean,
-  color?: string,
-  fontFamily?: string,
-  fontWeight?: TStyle['fontWeight'],
-  fontSize?: number,
-  lineHeight?: number,
-  letterSpacing?: number,
   paddingBottom?: number,
   paddingLeft?: number,
   paddingRight?: number,
@@ -21,4 +15,4 @@ export type TInput = {
   onBlur?: () => void,
   onPressIn?: () => void,
   onPressOut?: () => void,
-}
+} & TThemeableText

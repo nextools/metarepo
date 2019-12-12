@@ -1,7 +1,8 @@
 import React from 'react'
 import { TextInput } from 'react-native'
 import { component, mapWithProps, startWithType, mapHandlers, mapDefaultProps } from 'refun'
-import { normalizeStyle } from 'stili'
+import { normalizeStyle, TStyle } from 'stili'
+import { colorToString, isColor } from 'colorido'
 import { TInput } from './types'
 
 export const Input = component(
@@ -30,11 +31,10 @@ export const Input = component(
       paddingLeft,
       paddingRight,
       paddingTop,
-    }) => ({
-      style: normalizeStyle({
+    }) => {
+      const style: TStyle = {
         letterSpacing,
         lineHeight,
-        color,
         fontFamily,
         fontWeight,
         fontSize,
@@ -46,8 +46,16 @@ export const Input = component(
         flexShrink: 1,
         alignSelf: 'stretch',
         minWidth: 0,
-      }),
-    })
+      }
+
+      if (isColor(color)) {
+        style.color = colorToString(color)
+      }
+
+      return {
+        style: normalizeStyle(style),
+      }
+    }
   )
 )(({
   id,
