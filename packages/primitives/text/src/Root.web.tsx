@@ -6,8 +6,8 @@ import {
   mapWithProps,
   startWithType,
 } from 'refun'
-import { isNumber, isDefined } from 'tsfn'
-import { colorToString } from 'colorido'
+import { isNumber } from 'tsfn'
+import { colorToString, isColor } from 'colorido'
 import { TText } from './types'
 
 export const Text = component(
@@ -43,7 +43,7 @@ export const Text = component(
       maxWidth: '100%',
     }
 
-    if (isDefined(color)) {
+    if (isColor(color)) {
       style.color = colorToString(color)
     }
 
