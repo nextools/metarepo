@@ -1,9 +1,5 @@
-import { TColor } from 'colorido'
+import { TThemeableVectorShape } from '@themeables/vector-shape'
 
 export type TVectorShape = {
   id?: string,
-  height?: number,
-  path: string,
-  width?: number,
-  color?: TColor,
-}
+} & TThemeableVectorShape
