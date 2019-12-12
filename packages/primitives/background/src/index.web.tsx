@@ -1,14 +1,9 @@
 import React, { FC } from 'react'
 import { Block } from '@primitives/block'
-import { TColor, colorToString } from 'colorido'
+import { colorToString } from 'colorido'
+import { TThemeableBackground } from '@themeables/background'
 
-export type TBackground = {
-  color: TColor,
-  topLeftRadius?: number,
-  topRightRadius?: number,
-  bottomRightRadius?: number,
-  bottomLeftRadius?: number,
-}
+export type TBackground = TThemeableBackground
 
 export const Background: FC<TBackground> = ({ topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius, color }) => (
   <Block
