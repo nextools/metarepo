@@ -1,23 +1,10 @@
 import React from 'react'
 import { Block } from '@primitives/block'
 import { component, mapDefaultProps, startWithType } from 'refun'
-import { TColor, colorToString } from 'colorido'
+import { colorToString } from 'colorido'
+import { TThemeableBorder } from '@themeables/border'
 
-export type TBorder = {
-  color: TColor,
-  topLeftRadius?: number,
-  topRightRadius?: number,
-  bottomRightRadius?: number,
-  bottomLeftRadius?: number,
-  topWidth?: number,
-  rightWidth?: number,
-  bottomWidth?: number,
-  leftWidth?: number,
-  overflowBottom?: number,
-  overflowLeft?: number,
-  overflowRight?: number,
-  overflowTop?: number,
-}
+export type TBorder = TThemeableBorder
 
 export const Border = component(
   startWithType<TBorder>(),
