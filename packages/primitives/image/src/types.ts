@@ -1,3 +1,5 @@
+import { TThemeableImage } from '@themeables/image'
+
 export type TImage = {
   id?: string,
   alt?: string,
@@ -8,7 +10,6 @@ export type TImage = {
   topRightRadius?: number,
   bottomRightRadius?: number,
   bottomLeftRadius?: number,
-  resizeMode?: 'contain' | 'cover',
   onLoad?: () => void,
   onError?: () => void,
-}
+} & TThemeableImage
