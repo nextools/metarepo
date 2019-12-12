@@ -1,3 +1,7 @@
+## v0.3.0
+
+* ♻️ update dependencies: `@primitives/image`
+
 ## v0.2.0
 
 * ♻️ update dependencies: `@primitives/image`

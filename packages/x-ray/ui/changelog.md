@@ -1,3 +1,7 @@
+## v0.6.0
+
+* ♻️ update dependencies: `@primitives/text`, `@x-ray/snapshots`, `@primitives/image`, `@primitives/border`, `@primitives/background`, `colorido`
+
 ## v0.5.0
 
 * ♻️ update dependencies: `@primitives/image`, `@x-ray/snapshots`

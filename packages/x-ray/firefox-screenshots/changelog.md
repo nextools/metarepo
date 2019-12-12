@@ -1,3 +1,7 @@
+## v0.8.0
+
+* ♻️ update dependencies: `@x-ray/ui`
+
 ## v0.7.0
 
 * ♻️ update dependencies: `@x-ray/ui`

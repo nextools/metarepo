@@ -1,3 +1,8 @@
+## v0.10.0
+
+* 🌱 link the style types to themeables/text
+* ♻️ update dependencies: `@themeables/text`, `colorido`
+
 ## v0.9.0
 
 * 🌱 use colorido for color prop type

@@ -1,3 +1,8 @@
+## v0.7.0
+
+* 🌱 link the style types to themeables/background
+* ♻️ update dependencies: `@themeables/background`, `colorido`
+
 ## v0.6.1
 
 * 🐞 fix color properties

@@ -1,3 +1,8 @@
+## v0.8.0
+
+* 🌱 link the style types to themeables/border
+* ♻️ update dependencies: `@themeables/border`, `colorido`
+
 ## v0.7.1
 
 * 🐞 fix color properties

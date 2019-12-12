@@ -1,3 +1,7 @@
+## v0.3.1
+
+* 🐞 upgrade `is-port-reachable` dependency
+
 ## v0.3.0
 
 * 🌱 support Optional Chaining and Nullish Coalescing ES features

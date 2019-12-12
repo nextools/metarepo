@@ -1,3 +1,8 @@
+## v0.6.0
+
+* 🌱 update to latest primitives/input API
+* ♻️ update dependencies: `@primitives/text`, `@primitives/input`, `@primitives/border`, `@primitives/background`, `colorido`
+
 ## v0.5.0
 
 * 🌱 pass colorido colors into Text

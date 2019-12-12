@@ -1,3 +1,8 @@
+## v0.4.0
+
+* 🌱 link the style types to themeables/image
+* ♻️ update dependencies: `@themeables/image`
+
 ## v0.3.0
 
 * 🌱 normalize border radii api to match those of the Background and Border
