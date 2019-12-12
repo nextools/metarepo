@@ -11,7 +11,6 @@ import {
 } from 'refun'
 import { elegir } from 'elegir'
 import { Input } from '@primitives/input'
-import { colorToString } from 'colorido'
 import { Pointer } from '@primitives/pointer'
 import { Background } from '../background'
 import { AnimationColor } from '../animation-color'
@@ -94,7 +93,7 @@ export const Field = pureComponent(
               fontWeight={WEIGHT}
               fontSize={SIZE}
               lineHeight={LINE_HEIGHT}
-              color={colorToString(color)}
+              color={color}
               paddingLeft={INPUT_PADDING}
               paddingRight={INPUT_PADDING}
               value={value}
