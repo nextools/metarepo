@@ -1,14 +1,13 @@
 import { useContext, Context, useRef } from 'react'
-import { Dispatch } from 'redux'
 import { EMPTY_OBJECT, TExtend } from 'tsfn'
 import { shallowEqualByKeys } from './utils'
 
-export type TStoreContextValue<S, D extends Dispatch> = {
+export type TStoreContextValue<S, D> = {
   state: S,
   dispatch: D,
 }
 
-export const ReduxStateFactory = <S, D extends Dispatch>(context: Context<{state: S, dispatch: D}>) => <P extends {}, SP extends {}>(mapStateToProps: (state: S) => SP, stateKeysToWatch: (keyof S)[]) =>
+export const ReduxStateFactory = <S, D>(context: Context<TStoreContextValue<S, D>>) => <P extends {}, SP extends {}>(mapStateToProps: (state: S) => SP, stateKeysToWatch: (keyof S)[]) =>
   (props: P): TExtend<P, SP> => {
     const prevStateRef = useRef<S>(EMPTY_OBJECT)
     const prevStatePropsRef = useRef<SP>(EMPTY_OBJECT)
