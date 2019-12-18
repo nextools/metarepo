@@ -1,5 +1,19 @@
 import { TComponentConfig } from 'autoprops'
-import { TInput } from './src/types'
+import { component, startWithType, mapState, mapHandlers } from 'refun'
+import { Input, TInput } from './src'
+
+export const Component = component(
+  startWithType<TInput>(),
+  mapState('value', 'setValue', ({ value }) => value, ['value']),
+  mapHandlers({
+    onChange: ({ onChange, setValue }) => (value: string) => {
+      setValue(value)
+      onChange(value)
+    },
+  })
+)(Input)
+
+Component.displayName = 'Input'
 
 export const config: TComponentConfig<TInput> = {
   props: {
@@ -23,4 +37,4 @@ export const config: TComponentConfig<TInput> = {
   ],
 }
 
-export { Input as Component } from './src'
+export { default as packageJson } from './package.json'

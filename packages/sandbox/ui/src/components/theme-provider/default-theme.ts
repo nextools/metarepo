@@ -1,0 +1,128 @@
+import { TTheme } from '../../types'
+import { WHITE, TRANSPARENT } from '../../colors'
+
+export const defaultTheme: TTheme = {
+  navigationSidebarBackgroundColor: [0x2e, 0x2d, 0x2c, 1],
+  navigationSidebarActiveItemBackgroundColor: [0x45, 0x42, 0x3f, 1],
+  navigationSidebarActiveItemColor: WHITE,
+  navigationSidebarItemBackgroundColor: [0x25, 0x24, 0x24, 1],
+  navigationSidebarItemColor: [0x96, 0x93, 0x90, 1],
+  navigationSidebarPressedItemBackgroundColor: [0x2e, 0x2d, 0x2d, 1],
+  navigationSidebarPressedItemColor: [0xa1, 0x9e, 0x9c, 1],
+  navigationSidebarFocusedItemBackgroundColor: [0x2e, 0x2d, 0x2c, 1],
+  navigationSidebarFocusedItemColor: [0x96, 0x93, 0x90, 1],
+  navigationSidebarHoveredItemBackgroundColor: [0x38, 0x37, 0x37, 1],
+  navigationSidebarHoveredItemColor: [0xa6, 0xa4, 0xa2, 1],
+
+  searchFieldBackgroundColor: [0x45, 0x42, 0x3f, 1],
+  searchFieldPlaceholderColor: [0xb5, 0xb0, 0xaa, 1],
+  searchFieldColor: WHITE,
+  searchFieldClearIconColor: [0xab, 0xaa, 0xa9, 1],
+  searchFieldClearIconHoveredColor: [0xdf, 0xda, 0xd7, 1],
+  searchFieldClearIconPressedColor: [0xa1, 0x9f, 0x9d, 1],
+  searchFieldClearIconFocusedBorderColor: [0x97, 0x94, 0x93, 1],
+  searchFieldSearchIconColor: [0x96, 0x93, 0x91, 1],
+  searchFieldSearchIconActiveColor: WHITE,
+
+  controlsColor: WHITE,
+  controlsPlaceholderColor: [0x99, 0x93, 0x8d, 1],
+  controlsIconColor: WHITE,
+  controlsActionColor: WHITE,
+
+  popoverBackgroundColor: [0x2e, 0x2d, 0x2c, 1],
+
+  tabsColor: [0x99, 0x93, 0x8d, 1],
+  tabsActiveColor: WHITE,
+  tabsActiveBorderColor: WHITE,
+  tabsBorderColor: [0x61, 0x5d, 0x59, 1],
+  tabsDisabledColor: [0x99, 0x93, 0x8d, 0.6],
+  tabsCloseIconColor: WHITE,
+
+  fieldColor: WHITE,
+  fieldPlaceholderColor: [0x99, 0x93, 0x8d, 1],
+  fieldBorderColor: [0x85, 0x7f, 0x7a, 1],
+  fieldFocusedBorderColor: WHITE,
+
+  dropdownColor: WHITE,
+  dropdownChevronColor: WHITE,
+  dropdownFocusedBorderColor: WHITE,
+
+  demoAreaBackgroundColor: [0x21, 0x20, 0x20, 1],
+
+  controlsSidebarBackgroundColor: [0x21, 0x20, 0x20, 1],
+  controlsSidebarHoveredBackgroundColor: [0x38, 0x37, 0x37, 1],
+  controlsSidebarPressedBackgroundColor: [0x2e, 0x2d, 0x2d, 1],
+  controlsSidebarColor: WHITE,
+  controlsSidebarIconBackgroundColor: [0x42, 0x41, 0x40, 1],
+  controlsSidebarIconColor: WHITE,
+
+  toolbarBackgroundColor: [0x21, 0x20, 0x20, 1],
+  toolbarIconColor: WHITE,
+  toolbarIconHoveredColor: WHITE,
+  toolbarIconPressedColor: WHITE,
+  toolbarIconActiveColor: [0xa3, 0x66, 0x5f, 1],
+  toolbarIconActiveHoveredColor: [0xa3, 0x66, 0x5f, 1],
+  toolbarIconActivePressedColor: [0xa3, 0x66, 0x5f, 1],
+  toolbarIconFocusedBorderColor: WHITE,
+  toolbarIconActiveFocusedBorderColor: [0xa3, 0x66, 0x5f, 1],
+  toolbarTextColor: WHITE,
+
+  tooltipBackgroundColor: WHITE,
+  tooltipColor: [0x12, 0x11, 0x10, 1],
+
+  sourceCodeBaseWordColor: [0x99, 0x93, 0x8d, 1],
+  sourceCodeOperatorColor: [0xff, 0xff, 0xff, 1],
+  sourceCodeHtmlSyntaxColor: [0xa0, 0xa7, 0xd2, 1],
+  sourceCodeTagNameColor: [0xe9, 0xb1, 0x7e, 1],
+  sourceCodeAttributeColor: [0xf2, 0xcf, 0x63, 1],
+  sourceCodeKeywordColor: [0xff, 0xbf, 0xb7, 1],
+  sourceCodeStringColor: [0xcb, 0xd2, 0xf3, 1],
+  sourceCodeNumberColor: [0xbf, 0x8b, 0x78, 1],
+  sourceCodeBooleanColor: [0xea, 0x89, 0x7e, 1],
+  sourceCodeCommentColor: [0xbf, 0xbf, 0xbf, 1],
+  sourceCodeFunctionCallColor: [0xe7, 0xce, 0xa4, 1],
+
+  sourceCodeLineColor: [0x98, 0x92, 0x8c, 1],
+  sourceCodeActiveLineColor: WHITE,
+  sourceCodeLineBackgroundColor: [0x21, 0x20, 0x20, 1],
+  sourceCodeActiveLineBackgroundColor: [0x2e, 0x2d, 0x2c, 1],
+  sourceCodeHoveredLineBackgroundColor: [0x2e, 0x2d, 0x2c, 1],
+  sourceCodeActiveHoveredLineBackgroundColor: [0x2e, 0x2d, 0x2c, 1],
+  sourceCodePressedLineBackgroundColor: [0x2e, 0x2d, 0x2c, 1],
+  sourceCodeActivePressedLineBackgroundColor: [0x2e, 0x2d, 0x2c, 1],
+  sourceCodeCollapseIconColor: [0x78, 0x74, 0x71, 1],
+  sourceCodeCollapseIconHoveredColor: [0x78, 0x74, 0x71, 1],
+  sourceCodeCollapseIconPressedColor: [0x78, 0x74, 0x71, 1],
+  sourceCodeCollapseIconFocusedBorderColor: [0x78, 0x74, 0x71, 1],
+
+  linkColor: [0xc9, 0x81, 0x79, 1],
+
+  switchBackgroundColor: [0x78, 0x75, 0x73, 1],
+  switchActiveBackgroundColor: [0xa3, 0x66, 0x5f, 1],
+  switchKnobBackgroundColor: WHITE,
+  switchFocusedBorderColor: [0x78, 0x75, 0x73, 1],
+  switchActiveFocusedBorderColor: [0xa3, 0x66, 0x5f, 1],
+
+  checkmarkBackgroundColor: TRANSPARENT,
+  checkmarkActiveBackgroundColor: [0xa3, 0x66, 0x5f, 1],
+  checkmarkDisabledBackgroundColor: TRANSPARENT,
+  checkmarkActiveDisabledBackgroundColor: [0x85, 0x7f, 0x7a, 1],
+  checkmarkBorderColor: [0x85, 0x7f, 0x7a, 1],
+  checkmarkActiveBorderColor: [0xa3, 0x66, 0x5f, 1],
+  checkmarkDisabledBorderColor: [0x85, 0x7f, 0x7a, 1],
+  checkmarkActiveDisabledBorderColor: [0x85, 0x7f, 0x7a, 1],
+  checkmarkIconColor: WHITE,
+
+  notificationBackgroundColor: [0x61, 0x5d, 0x59, 1],
+  notificationColor: WHITE,
+  notificationCloseColor: WHITE,
+
+  alertBackgroundColor: [0x61, 0x5d, 0x59, 1],
+  alertColor: WHITE,
+  alertIconColor: WHITE,
+  alertCloseColor: WHITE,
+
+  inspectBackgroundColor: [0x9d, 0x73, 0xb6, 0.6],
+
+  sandboxBorderColor: [0x45, 0x42, 0x3f, 1],
+}

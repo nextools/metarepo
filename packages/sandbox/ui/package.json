@@ -9,34 +9,26 @@
   "files": [
     "build/"
   ],
-  "engines": {
-    "node": ">=10.13.0"
-  },
   "dependencies": {
-    "@primitives/animation": "^1.0.0",
-    "@primitives/background": "^1.0.0",
-    "@primitives/block": "^1.0.0",
-    "@primitives/border": "^1.0.0",
-    "@primitives/button": "^1.0.0",
-    "@primitives/checkbox": "^1.0.0",
-    "@primitives/input": "^1.0.0",
     "@primitives/pointer": "^1.0.0",
-    "@primitives/root": "^1.0.0",
-    "@primitives/select": "^1.0.0",
-    "@primitives/size": "^1.0.0",
     "@primitives/svg": "^1.0.0",
-    "@primitives/text": "^1.0.0",
     "@primitives/transform": "^1.0.0",
     "@psxcode/compose": "^0.1.3",
     "colorido": "^1.0.0",
     "elegir": "^1.0.0",
+    "leven": "^3.1.0",
+    "nanoid": "^2.1.7",
+    "query-string": "^6.8.3",
+    "react-dom": "^16.8.6",
     "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
     "refun": "^1.0.0",
     "stili": "^1.0.0",
     "syntx": "^1.0.0",
     "tsfn": "^1.0.0"
   },
   "devDependencies": {
+    "@types/nanoid": "^2.1.0",
     "autoprops": "^1.0.0",
     "react": "^16.8.6",
     "react-native": "^0.61.5",
@@ -44,6 +36,6 @@
   },
   "peerDependencies": {
     "react": "^16.8.6",
-    "react-native": ">=0.60.5"
+    "react-native": "^0.61.5"
   }
 }

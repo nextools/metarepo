@@ -30,62 +30,38 @@ export type TLineElement = {
 
 export const LineElement: FC<TLineElement> = ({ type, theme, children }) => {
   switch (type) {
-    case TYPE_ARRAY_BRACKET:
-      return <Text color={theme.sourceOperator}>{children}</Text>
-
-    case TYPE_ARRAY_COMMA:
-      return <Text color={theme.sourceOperator}>{children}</Text>
-
     case TYPE_COMPONENT_BRACKET:
-      return <Text color={theme.sourceHtmlSyntax}>{children}</Text>
+    case TYPE_ARRAY_BRACKET:
+    case TYPE_ARRAY_COMMA:
+    case TYPE_OBJECT_BRACE:
+    case TYPE_OBJECT_COLON:
+    case TYPE_OBJECT_COMMA:
+    case TYPE_PROPS_BRACE:
+    case TYPE_PROPS_EQUALS:
+    case TYPE_QUOTE:
+    case TYPE_WHITESPACE:
+      return <Text color={theme.sourceCodeOperatorColor}>{children}</Text>
 
     case TYPE_COMPONENT_NAME:
-      return <Text color={theme.sourceTagName}>{children}</Text>
-
-    case TYPE_OBJECT_BRACE:
-      return <Text color={theme.sourceOperator}>{children}</Text>
-
-    case TYPE_OBJECT_COLON:
-      return <Text color={theme.sourceOperator}>{children}</Text>
-
-    case TYPE_OBJECT_COMMA:
-      return <Text color={theme.sourceOperator}>{children}</Text>
+      return <Text color={theme.sourceCodeTagNameColor}>{children}</Text>
 
     case TYPE_OBJECT_KEY:
-      return <Text color={theme.sourceAttribute}>{children}</Text>
-
-    case TYPE_PROPS_BRACE:
-      return <Text color={theme.sourceOperator}>{children}</Text>
-
-    case TYPE_PROPS_EQUALS:
-      return <Text color={theme.sourceOperator}>{children}</Text>
-
     case TYPE_PROPS_KEY:
-      return <Text color={theme.sourceAttribute}>{children}</Text>
-
-    case TYPE_QUOTE:
-      return <Text color={theme.sourceOperator}>{children}</Text>
-
-    case TYPE_VALUE_BOOLEAN:
-      return <Text color={theme.sourceBoolean}>{children}</Text>
-
-    case TYPE_VALUE_FUNCTION:
-      return <Text color={theme.sourceFunctionCall}>{children}</Text>
+      return <Text color={theme.sourceCodeAttributeColor}>{children}</Text>
 
     case TYPE_VALUE_NULL:
-      return <Text color={theme.sourceBoolean}>{children}</Text>
+    case TYPE_VALUE_BOOLEAN:
+      return <Text color={theme.sourceCodeBooleanColor}>{children}</Text>
 
-    case TYPE_VALUE_NUMBER:
-      return <Text color={theme.sourceNumber}>{children}</Text>
-
-    case TYPE_VALUE_STRING:
-      return <Text color={theme.sourceString}>{children}</Text>
+    case TYPE_VALUE_FUNCTION:
+      return <Text color={theme.sourceCodeFunctionCallColor}>{children}</Text>
 
     case TYPE_VALUE_SYMBOL:
-      return <Text color={theme.sourceNumber}>{children}</Text>
+    case TYPE_VALUE_NUMBER:
+      return <Text color={theme.sourceCodeNumberColor}>{children}</Text>
 
-    case TYPE_WHITESPACE:
-      return <Text color={theme.foregroundTransparent}>{children}</Text>
+    case TYPE_VALUE_STRING:
+      return <Text color={theme.sourceCodeStringColor}>{children}</Text>
 
     default:
       return null

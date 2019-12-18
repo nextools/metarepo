@@ -3,10 +3,19 @@ import { startWithType, mapState, onUpdate } from 'refun'
 import { isFunction, isDefined, isUndefined, TAnyObject } from 'tsfn'
 import { TComponentConfig } from 'autoprops'
 import { pipe } from '@psxcode/compose'
-import { TRect, TPosition } from '../../types'
 import { getComponentName } from '../../utils'
 import { getElementPath } from '../../utils/get-element-path'
 import { getChildDisplayName } from './get-child-display-name'
+
+export type TPosition = {
+  readonly left: number,
+  readonly top: number,
+}
+
+export type TRect = TPosition & {
+  readonly width: number,
+  readonly height: number,
+}
 
 export type TMapInspectRect = {
   Component?: FC<any>,

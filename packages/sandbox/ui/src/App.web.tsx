@@ -1,22 +1,42 @@
-import React, { FC } from 'react'
-import { Root } from '@primitives/root'
+import React from 'react'
+import { component, startWithType, onChange } from 'refun'
+import { Root } from './components/root'
+import { ThemeProvider } from './components/theme-provider'
 import { Sandbox } from './components/sandbox'
-import { ThemeContext } from './components/themes'
-import { TApp } from './types'
+import { NotificationProvider } from './components/notification-provider'
+import { AlertProvider } from './components/alert-provider'
+import { PortalProvider } from './components/portal-provider'
+import { setComponentsList } from './store-meta'
+import { TComponents, TTheme, TThemeIcons } from './types'
+import { PluginProvider, TPlugin } from './components/plugin-provider'
 
-export const App: FC<TApp> = ({ components, theme, copyImportPackageName }) => (
+export type TApp = {
+  components: TComponents,
+  theme?: TTheme,
+  icons?: TThemeIcons,
+  copyImportPackageName?: string,
+  plugin?: TPlugin,
+}
+
+export const App = component(
+  startWithType<TApp>(),
+  onChange(({ components }) => {
+    setComponentsList(components)
+  }, ['components'])
+)(({ theme, icons, copyImportPackageName, plugin }) => (
   <Root>
-    {({ width, height }) => (
-      <ThemeContext.Provider value={{ theme }}>
-        <Sandbox
-          components={components}
-          copyImportPackageName={copyImportPackageName}
-          width={width}
-          height={height}
-          top={0}
-          left={0}
-        />
-      </ThemeContext.Provider>
-    )}
+    <ThemeProvider theme={theme} icons={icons}>
+      <PluginProvider plugin={plugin}>
+        <AlertProvider>
+          <NotificationProvider>
+            <PortalProvider>
+              <Sandbox
+                copyImportPackageName={copyImportPackageName}
+              />
+            </PortalProvider>
+          </NotificationProvider>
+        </AlertProvider>
+      </PluginProvider>
+    </ThemeProvider>
   </Root>
-)
+))

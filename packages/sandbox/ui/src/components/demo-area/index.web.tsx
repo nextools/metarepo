@@ -1,70 +1,73 @@
-import React, { FC } from 'react'
+import React from 'react'
 import {
   mapWithProps,
   startWithType,
   mapDebouncedHandlerTimeout,
-  pureComponent,
   mapState,
   mapHandlers,
   mapWithPropsMemo,
+  mapContext,
+  component,
 } from 'refun'
 import { Pointer } from '@primitives/pointer'
 import { Transform } from '@primitives/transform'
-import { Size } from '@primitives/size'
-import { TAnyObject } from 'tsfn'
-import { TComponentConfig } from 'autoprops'
-import { Border } from '../border'
-import { Shadow } from '../shadow'
-import { Background } from '../background'
-import { Block } from '../block'
-import { BlockRef } from '../block-ref'
-import { mapStoreState, mapStoreDispatch } from '../../store'
+import { isDefined } from 'tsfn'
+import { PrimitiveBackground } from '../primitive-background'
+import { PrimitiveBlock } from '../primitive-block'
+import { PrimitiveBlockRef } from '../primitive-block-ref'
+import { mapStoreState, setTransform } from '../../store'
 import { isSafari } from '../../utils/platform-id'
-import { Grid } from '../grid'
-import { Controls } from '../controls'
-import { TRect, TTransform } from '../../types'
-import { setTransform } from '../../actions'
-import { mapTheme } from '../themes'
+import { CanvasGrid } from '../canvas-grid'
+import { TTransform } from '../../types'
+import { ThemeContext } from '../theme-context'
+import { LayoutContext } from '../layout-context'
+import { SYMBOL_DEMO_AREA } from '../../symbols'
+import { SizeBlock } from '../size-block'
+import { BLACK, WHITE } from '../../colors'
+import { mapMetaStoreState } from '../../store-meta'
+import { PluginContext } from '../plugin-provider'
 import { mapTransform } from './map-transform'
 import { PureComponent } from './pure-component'
 import { mapInspectRect } from './map-inspect-rect'
+import { Size } from './Size'
 
-const CONTROLS_HEIGHT = 60
 const COMPONENT_MIN_WIDTH = 200
 const round10 = (num: number) => Math.round(num / 10) * 10
 
-export type TDemoArea = {
-  Component?: FC<any>,
-  componentProps?: Readonly<TAnyObject>,
-  componentPropsChildrenMap?: Readonly<TAnyObject>,
-  componentConfig?: TComponentConfig,
-} & TRect
+export type TDemoArea = {}
 
-export const DemoArea = pureComponent(
+export const DemoArea = component(
   startWithType<TDemoArea>(),
-  mapTheme(),
-  mapStoreState(({ width, height, hasGrid, shouldStretch, shouldInspect, transform, selectedElementPath }) => ({
+  mapContext(ThemeContext),
+  mapContext(LayoutContext),
+  mapContext(PluginContext),
+  mapStoreState(({ isCanvasDarkMode, width, height, hasGrid, shouldStretch, shouldInspect, transformX, transformY, transformZ, selectedElementPath }) => ({
     canvasWidth: width,
     canvasHeight: height,
     shouldStretch,
     shouldInspect,
     hasGrid,
-    transform,
+    transform: {
+      x: transformX,
+      y: transformY,
+      z: transformZ,
+    },
     selectedElementPath,
-  }), ['width', 'height', 'hasGrid', 'shouldStretch', 'shouldInspect', 'transform', 'selectedElementPath']),
-  mapStoreDispatch('dispatch'),
+    isCanvasDarkMode,
+  }), ['isCanvasDarkMode', 'width', 'height', 'hasGrid', 'shouldStretch', 'shouldInspect', 'transformX', 'transformY', 'transformZ', 'selectedElementPath']),
+  mapMetaStoreState(({ Component, componentProps, componentConfig, componentPropsChildrenMap }) => ({
+    Component,
+    componentProps,
+    componentPropsChildrenMap,
+    componentConfig,
+  }), ['Component', 'componentProps', 'componentPropsChildrenMap', 'componentConfig']),
   mapHandlers({
-    dispatchTransform: ({ dispatch }) => (transform: TTransform) => dispatch(setTransform(transform)),
+    dispatchTransform: () => (transform: TTransform) => setTransform(transform),
   }),
   mapDebouncedHandlerTimeout('dispatchTransform', 150),
-  mapWithProps(({ theme }) => ({
-    backgroundColor: theme.background,
-    borderColor: theme.border,
-    shadowColor: theme.border,
-  })),
-  mapWithProps(({ canvasWidth, canvasHeight, width, height }) => ({
-    canvasLeft: Math.max((width - canvasWidth) / 2, 0),
-    canvasTop: Math.max((height - canvasHeight - CONTROLS_HEIGHT) / 2, 0),
+  mapWithProps(({ canvasWidth, canvasHeight, _width, _height }) => ({
+    canvasLeft: Math.max((_width - canvasWidth) / 2, 0),
+    canvasTop: Math.max((_height - canvasHeight) / 2, 0),
   })),
   mapState('componentHeight', 'setComponentHeight', () => 0, []),
   mapWithPropsMemo(({ componentHeight, canvasWidth, canvasHeight, shouldStretch }) => {
@@ -85,12 +88,8 @@ export const DemoArea = pureComponent(
     }
   }, ['componentHeight', 'shouldStretch', 'canvasWidth', 'canvasHeight']),
   mapInspectRect(),
-  mapTransform(0, CONTROLS_HEIGHT)
+  mapTransform
 )(({
-  left,
-  top,
-  width,
-  height,
   canvasWidth,
   canvasHeight,
   canvasLeft,
@@ -99,95 +98,84 @@ export const DemoArea = pureComponent(
   componentProps,
   hasGrid,
   transform,
-  isTransforming,
   componentWidth,
   componentLeft,
   componentTop,
   componentHeight,
   setComponentHeight,
-  backgroundColor,
-  borderColor,
-  shadowColor,
   selectedInspectRect,
   setBlockNode,
-  isDarkTheme,
+  plugin,
+  theme,
+  isCanvasDarkMode,
+  isTransforming,
   onMove,
-  onReset,
   onWheel,
 }) => (
-  <Block width={width} height={height} left={left} top={top}>
-    <Controls
-      width={width}
-      height={CONTROLS_HEIGHT}
-      left={left}
-      top={top}
-      onResetTransform={onReset}
-    />
-    <Block width={width} height={1} left={left} top={CONTROLS_HEIGHT - 1}>
-      <Background color={borderColor}/>
-    </Block>
-
-    <Block left={0} top={CONTROLS_HEIGHT} width={width} height={height - CONTROLS_HEIGHT} shouldHideOverflow>
-      <Pointer onMove={onMove} onWheel={onWheel}>
-        <Transform
-          x={canvasLeft + transform.x}
-          y={canvasTop + transform.y}
-          scale={transform.z}
-          shouldUse3d={!isSafari}
+  <SizeBlock shouldHideOverflow>
+    <PrimitiveBackground color={theme.demoAreaBackgroundColor}/>
+    <Pointer onMove={onMove} onWheel={onWheel}>
+      <Transform
+        x={canvasLeft + transform.x}
+        y={canvasTop + transform.y}
+        scale={transform.z}
+        shouldUse3d={!isSafari}
+      >
+        <PrimitiveBlock
+          width={canvasWidth}
+          height={canvasHeight}
+          shouldFlow
         >
-          <Block
-            shouldFlow
-            width={canvasWidth}
-            height={canvasHeight}
-          >
-            <Block top={0} left={0} width={canvasWidth} height={canvasHeight}>
-              <Background color={backgroundColor}/>
-              {!isTransforming && <Shadow color={shadowColor} blurRadius={10} spreadRadius={1}/>}
-              {isTransforming && <Border color={shadowColor} topWidth={1} bottomWidth={1} leftWidth={1} rightWidth={1}/>}
-            </Block>
+          <PrimitiveBackground color={isCanvasDarkMode ? BLACK : WHITE}/>
 
-            {Component && (
-              <Transform x={componentLeft} y={componentTop} hOrigin="left" vOrigin="top" shouldUse3d={!isSafari}>
-                <Size
-                  height={componentHeight}
-                  onHeightChange={setComponentHeight}
-                >
-                  <BlockRef
-                    ref={setBlockNode}
-                    width={componentWidth}
-                    shouldFlow
-                  >
-                    <PureComponent Component={Component} props={componentProps}/>
-                  </BlockRef>
-                </Size>
-              </Transform>
-            )}
-
-            {selectedInspectRect !== null && (
-              <Block
-                left={selectedInspectRect.left + componentLeft}
-                top={selectedInspectRect.top + componentTop}
-                width={selectedInspectRect.width}
-                height={selectedInspectRect.height}
-                shouldIgnorePointerEvents
+          {Component && (
+            <Transform x={componentLeft} y={componentTop} hOrigin="left" vOrigin="top" shouldUse3d={!isSafari}>
+              <Size
+                height={componentHeight}
+                onHeightChange={setComponentHeight}
               >
-                <Background color={[255, 0, 0, 0.3]}/>
-              </Block>
-            )}
+                <PrimitiveBlockRef
+                  ref={setBlockNode}
+                  width={componentWidth}
+                  shouldFlow
+                >
+                  {isDefined(plugin)
+                    ? (
+                      <plugin.Provider Component={Component} props={componentProps}/>
+                    )
+                    : (
+                      <PureComponent Component={Component} props={componentProps}/>
+                    )}
+                </PrimitiveBlockRef>
+              </Size>
+            </Transform>
+          )}
 
-            {hasGrid && (
-              <Grid
-                width={canvasWidth}
-                height={canvasHeight}
-                shouldDegrade={isTransforming}
-                isDarkTheme={isDarkTheme}
-              />
-            )}
-          </Block>
-        </Transform>
-      </Pointer>
-    </Block>
-  </Block>
+          {selectedInspectRect !== null && (
+            <PrimitiveBlock
+              left={selectedInspectRect.left + componentLeft}
+              top={selectedInspectRect.top + componentTop}
+              width={selectedInspectRect.width}
+              height={selectedInspectRect.height}
+              shouldIgnorePointerEvents
+            >
+              <PrimitiveBackground color={theme.inspectBackgroundColor}/>
+            </PrimitiveBlock>
+          )}
+
+          {hasGrid && (
+            <CanvasGrid
+              width={canvasWidth}
+              height={canvasHeight}
+              shouldDegrade={isTransforming}
+              isCanvasDarkMode={isCanvasDarkMode}
+            />
+          )}
+        </PrimitiveBlock>
+      </Transform>
+    </Pointer>
+  </SizeBlock>
 ))
 
 DemoArea.displayName = 'DemoArea'
+DemoArea.componentSymbol = SYMBOL_DEMO_AREA

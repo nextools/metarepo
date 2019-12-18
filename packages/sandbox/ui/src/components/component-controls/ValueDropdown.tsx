@@ -1,8 +1,7 @@
 import React from 'react'
 import { startWithType, mapHandlers, mapWithProps, pureComponent, mapState, mapWithPropsMemo } from 'refun'
-import { TOmitKey } from 'tsfn'
-import { TRect } from '../../types'
 import { Dropdown } from '../dropdown'
+import { SYMBOL_DROPDOWN } from '../../symbols'
 import { printValue } from './print-value'
 
 export type TValueDropdownProps = {
@@ -11,9 +10,7 @@ export type TValueDropdownProps = {
   propPossibleValues: readonly any[],
   isPropRequired: boolean,
   onChange: (propPath: readonly string[], selectedValue: any) => void,
-} & TOmitKey<TRect, 'height'>
-
-export const valueDropdownHeight = 34
+}
 
 export const ValueDropdown = pureComponent(
   startWithType<TValueDropdownProps>(),
@@ -47,12 +44,8 @@ export const ValueDropdown = pureComponent(
       }
     },
   })
-)(({ value, options, width, left, top, onChange }) => (
+)(({ value, options, onChange }) => (
   <Dropdown
-    left={left}
-    top={top}
-    width={width}
-    height={valueDropdownHeight}
     options={options}
     value={value}
     onChange={onChange}
@@ -60,3 +53,4 @@ export const ValueDropdown = pureComponent(
 ))
 
 ValueDropdown.displayName = 'ValueDropdown'
+ValueDropdown.componentSymbol = SYMBOL_DROPDOWN
