@@ -11,14 +11,16 @@
   "typescript.tsc.autoDetect": "off",
   "javascript.format.enable": false,
   "eslint.enable": true,
-  "eslint.autoFixOnSave": true,
   "eslint.validate": [
-    { "language": "javascript", "autoFix": true },
-    { "language": "javascriptreact", "autoFix": true },
-    { "language": "typescript", "autoFix": true },
-    { "language": "typescriptreact", "autoFix": true }
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
   ],
   "eslint.run": "onSave",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   "search.exclude": {
@@ -31,5 +33,4 @@
     "tmp/": true
   },
   "search.followSymlinks": false,
-  "npm.autoDetect": "off"
 }
