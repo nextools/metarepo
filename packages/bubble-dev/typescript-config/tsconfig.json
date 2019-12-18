@@ -10,6 +10,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "noUnusedLocals": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
   }
 }
