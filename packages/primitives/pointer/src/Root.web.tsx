@@ -1,6 +1,6 @@
 import React, { HTMLProps, MouseEvent } from 'react'
 import { normalizeStyle } from 'stili'
-import { component, startWithType, mapProps, mapHandlers, mapRefLayout } from 'refun'
+import { component, startWithType, mapProps, mapHandlers, mapRefLayout, mapDefaultProps } from 'refun'
 import { isFunction } from 'tsfn'
 import { TPointer } from './types'
 
@@ -19,6 +19,9 @@ const style = normalizeStyle({
 
 export const Pointer = component(
   startWithType<TPointer>(),
+  mapDefaultProps({
+    isDisabled: false,
+  }),
   mapRefLayout('ref', (ref: HTMLDivElement, { onWheel }) => {
     if (ref !== null && isFunction(onWheel)) {
       ref.addEventListener('wheel', (e) => {
@@ -58,6 +61,7 @@ export const Pointer = component(
   mapProps(
     ({
       ref,
+      isDisabled,
       children,
       onEnter,
       onLeave,
@@ -72,20 +76,28 @@ export const Pointer = component(
         style,
         ref,
         children,
-        onMouseEnter: onEnter,
-        onMouseLeave: onLeave,
       }
 
-      if (isFunction(onDown)) {
-        props.onMouseDown = onMouseDown
-      }
+      if (!isDisabled) {
+        if (isFunction(onEnter)) {
+          props.onMouseEnter = onEnter
+        }
 
-      if (isFunction(onUp)) {
-        props.onMouseUp = onMouseUp
-      }
+        if (isFunction(onLeave)) {
+          props.onMouseLeave = onLeave
+        }
 
-      if (isFunction(onMove)) {
-        props.onMouseMove = onMouseMove
+        if (isFunction(onDown)) {
+          props.onMouseDown = onMouseDown
+        }
+
+        if (isFunction(onUp)) {
+          props.onMouseUp = onMouseUp
+        }
+
+        if (isFunction(onMove)) {
+          props.onMouseMove = onMouseMove
+        }
       }
 
       return props

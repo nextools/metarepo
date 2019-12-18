@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, TouchableWithoutFeedback, GestureResponderEvent, TouchableWithoutFeedbackProps } from 'react-native'
 import { normalizeStyle } from 'stili'
-import { component, startWithType, mapHandlers, mapWithProps } from 'refun'
+import { component, startWithType, mapHandlers, mapWithProps, mapDefaultProps } from 'refun'
 import { isFunction } from 'tsfn'
 import { TPointer } from './types'
 
@@ -14,6 +14,9 @@ const style = normalizeStyle({
 
 export const Pointer = component(
   startWithType<TPointer>(),
+  mapDefaultProps({
+    isDisabled: false,
+  }),
   mapHandlers({
     onDown: ({ onDown }) => (e: GestureResponderEvent) => {
       const { pageX, pageY } = e.nativeEvent
@@ -30,15 +33,17 @@ export const Pointer = component(
       }
     },
   }),
-  mapWithProps(({ onDown, onUp }) => {
+  mapWithProps(({ isDisabled, onDown, onUp }) => {
     const props: TouchableWithoutFeedbackProps = {}
 
-    if (isFunction(onDown)) {
-      props.onPressIn = onDown
-    }
+    if (!isDisabled) {
+      if (isFunction(onDown)) {
+        props.onPressIn = onDown
+      }
 
-    if (isFunction(onUp)) {
-      props.onPressOut = onUp
+      if (isFunction(onUp)) {
+        props.onPressOut = onUp
+      }
     }
 
     return props

@@ -10,6 +10,7 @@ export type TPointerEvent = {
 }
 
 export type TPointer = {
+  isDisabled?: boolean,
   children?: ReactNode,
   onEnter?: () => void,
   onLeave?: () => void,
