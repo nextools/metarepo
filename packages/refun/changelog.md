@@ -1,3 +1,9 @@
+## v0.4.5
+
+* 🐞 add `Context` to result of Redux factory
+* 🐞 remove `Dispatch` restriction from redux factories
+* 🐞 fix `mapStateRef` state setter
+
 ## v0.4.4
 
 * 🐞 rename `mapReduxState` to `ReduxStateFactory` and `mapReduxDispatch` to `ReduxDispatchFactory`
