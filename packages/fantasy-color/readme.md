@@ -77,6 +77,10 @@ type TLaba = TLab & TWithAlpha
 - [`@fantasy-color/rgba-to-hsva`](rgba-to-hsva): Transform `RGBA` objects to `HSVA` objects
 - [`@fantasy-color/rgba-to-rgb`](rgba-to-rgb): Transform `RGBA` objects to `RGB` objects
 
+#### Parametrizable color space transformations
+
+- [`@fantasy-color/map-color-space-polynomial`](map-color-space-polynomial): Transform a three-tuple from one color space into another passing the coefficients and degree of the transformation
+
 ### Normalization functions
 
 - [`@fantasy-color/normalize-rgb`](normalize-rgb): Transform from `RGB` objects from the 0-255 range to 0-1 decimal points

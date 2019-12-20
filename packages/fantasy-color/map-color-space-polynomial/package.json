@@ -1,0 +1,23 @@
+{
+  "name": "@fantasy-color/map-color-space-polynomial",
+  "version": "0.0.0",
+  "description": "Transform a three-tuple from one color space into another passing the coefficients and degree of the transformation",
+  "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/map-color-space-polynomial",
+  "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@fantasy-color/types": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "blue-tape": "^1.0.0"
+  }
+}
