@@ -31,7 +31,7 @@ export const Main = component(
     filteredFiles,
     isSaved,
   }), ['selectedItem', 'files', 'items', 'type', 'discardedItems', 'filteredFiles', 'isSaved']),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   onMount(({ dispatch }) => {
     dispatch(actionLoadList())
   }),

@@ -20,7 +20,7 @@ export type TSnapshotPreview = TRect & {
 
 export const SnapshotPreview = component(
   startWithType<TSnapshotPreview>(),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapState('state', 'setState', () => null as TFileResultLine[] | null, []),
   onMountAsync(async ({ setState, item, dispatch, isMountedRef }) => {
     try {

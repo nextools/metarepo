@@ -19,7 +19,7 @@ export type TToolbar = TOmitKey<TRect, 'height'> & {
 
 export const Toolbar = component(
   startWithType<TToolbar>(),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapStateRef('switchWidthsRef', 'flushSwitchWidths', ({ files }) => (Array.isArray(files) ? new Array(files.length).fill(0) : []) as number[], ['files']),
   mapHandlers({
     onSwitchWidthChange: ({ files, switchWidthsRef, flushSwitchWidths }) => (file: string, width: number) => {

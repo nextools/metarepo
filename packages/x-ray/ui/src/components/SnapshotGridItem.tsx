@@ -21,7 +21,7 @@ export type TSnapshotGridItem = TApiLoadSnapshotOpts & TRect & {
 
 export const SnapshotGridItem = pureComponent(
   startWithType<TSnapshotGridItem>(),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapState('state', 'setState', () => null as TFileResultLine[] | null, []),
   onMountAsync(async ({ setState, id, type, dispatch, isMountedRef }) => {
     try {
