@@ -1,5 +1,5 @@
 import React from 'react'
-import TestRenderer, { act } from 'react-test-renderer'
+import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { component, startWithType, mapWithAsyncProps } from '../src'
@@ -20,7 +20,7 @@ test('mapWithAsyncProps', async (t) => {
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -154,7 +154,7 @@ test('mapWithAsyncProps: null case', async (t) => {
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp

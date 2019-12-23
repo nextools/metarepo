@@ -1,5 +1,5 @@
 import React from 'react'
-import TestRenderer, { act } from 'react-test-renderer'
+import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { component, startWithType, onUpdate } from '../src'
@@ -14,7 +14,7 @@ test('onUpdate: sync function, empty watch keys', (t) => {
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -87,7 +87,7 @@ test('onUpdate: sync function, watch keys', (t) => {
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -196,7 +196,7 @@ test('onUpdate: async function, empty watch keys', (t) => {
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -271,7 +271,7 @@ test('onUpdate: async function, watch keys', (t) => {
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp

@@ -1,5 +1,5 @@
 import React, { createContext } from 'react'
-import TestRenderer, { act } from 'react-test-renderer'
+import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { component, ReduxStateFactory, startWithType } from '../src'
@@ -16,7 +16,7 @@ test('ReduxStateFactory', (t) => {
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
       <Context.Provider value={{ state: { a: 4, b: '' }, dispatch }}>
@@ -69,7 +69,7 @@ test('ReduxStateFactory', (t) => {
     'Update: should not call map function'
   )
 
-  /* Update Context unwatched values */
+  /* Update unwatched values */
   act(() => {
     testRenderer.update(
       <Context.Provider value={{ state: { a: 4, b: 'b' }, dispatch }}>
@@ -85,7 +85,7 @@ test('ReduxStateFactory', (t) => {
       [{ foo: 'bar', result: 8 }], // Update
       [{ foo: 'bar', result: 8 }], // Update Context unwatched values
     ],
-    'Update Context unwatched values: should pass props'
+    'Update unwatched values: should not rerender'
   )
 
   t.deepEquals(
@@ -93,7 +93,7 @@ test('ReduxStateFactory', (t) => {
     [
       [{ a: 4, b: '' }],
     ],
-    'Update Context unwatched values: should not call map function'
+    'Update unwatched values: should not call map function'
   )
 
   /* Update Context watched values */
@@ -113,7 +113,7 @@ test('ReduxStateFactory', (t) => {
       [{ foo: 'bar', result: 8 }], // Update Context unwatched values
       [{ foo: 'bar', result: 16 }], // Update Context watched values
     ],
-    'Update Context watched values: should pass props'
+    'Update watched values: should pass props'
   )
 
   t.deepEquals(
@@ -122,7 +122,7 @@ test('ReduxStateFactory', (t) => {
       [{ a: 4, b: '' }],
       [{ a: 8, b: 'b' }],
     ],
-    'Update Context watched values: should call map function'
+    'Update watched values: should call map function'
   )
 
   /* Unmount */

@@ -1,5 +1,5 @@
 import React, { createContext } from 'react'
-import TestRenderer, { act } from 'react-test-renderer'
+import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { component, mapContext, startWithType } from '../src'
@@ -13,7 +13,7 @@ test('mapContext', (t) => {
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
       <Context.Provider value={{ ctxA: 'foo', ctxB: 42 }}>

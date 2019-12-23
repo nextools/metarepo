@@ -1,5 +1,5 @@
 import React from 'react'
-import TestRenderer, { act } from 'react-test-renderer'
+import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
 import test from 'blue-tape'
 import { getSpyCalls, createSpy } from 'spyfn'
 import { component, mapDefaultProps, startWithType } from '../src'
@@ -19,7 +19,7 @@ test('mapDefaultProps', (t) => {
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp/>

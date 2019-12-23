@@ -1,5 +1,5 @@
 import React from 'react'
-import TestRenderer, { act } from 'react-test-renderer'
+import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { component, startWithType } from '../src'
@@ -10,7 +10,7 @@ test('component: props', (t) => {
   const MyComp = component(mapSpy)(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -112,7 +112,7 @@ test('component: multiple map functions', (t) => {
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp initial={2}/>
