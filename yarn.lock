@@ -13163,18 +13163,13 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.2.1:
+typescript@^3.2.1, typescript@bubble-dev/TypeScript#ext-3.7.3:
   version "3.7.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.3.tgz#b36840668a16458a7025b9eabfad11b66ab85c69"
-  integrity sha512-Mcr/Qk7hXqFBXMN7p7Lusj1ktCBydylfQM/FZCk5glCNQJrCUKPkMHdo9R0MTFWsC/4kPFvDS0fDPvukfCkFsw==
+  resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/e27f8bbeef0333d4635c9761e10308ecf2c1306f"
 
 typescript@bubble-dev/TypeScript#ext-3.6.2:
   version "3.6.2"
   resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/c52422154bd32171dd053f514ec9b387c3fc08ca"
-
-typescript@bubble-dev/TypeScript#ext-3.7.2:
-  version "3.7.2"
-  resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/4bd9131fa6f1d460b0772d24f31847ac1a340392"
 
 ua-parser-js@^0.7.18:
   version "0.7.20"
