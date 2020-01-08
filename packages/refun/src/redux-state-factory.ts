@@ -1,23 +1,38 @@
-import { useContext, Context, useRef } from 'react'
-import { EMPTY_OBJECT, TExtend } from 'tsfn'
+import { useContext, Context, useRef, useEffect, useState } from 'react'
+import { EMPTY_OBJECT, TExtend, EMPTY_ARRAY, NOOP } from 'tsfn'
+import { Store } from 'redux'
 import { shallowEqualByKeys } from './utils'
 
-export type TStoreContextValue<S, D> = {
-  state: S,
-  dispatch: D,
-}
-
-export const ReduxStateFactory = <S, D>(context: Context<TStoreContextValue<S, D>>) => <P extends {}, SP extends {}>(mapStateToProps: (state: S) => SP, stateKeysToWatch: (keyof S)[]) =>
+export const ReduxStateFactory = <S>(context: Context<Store<S>>) => <P extends {}, SP extends {}>(mapStateToProps: (state: S) => SP, stateKeysToWatch: (keyof S)[]) =>
   (props: P): TExtend<P, SP> => {
+    const [, rerender] = useState(EMPTY_OBJECT)
     const prevStateRef = useRef<S>(EMPTY_OBJECT)
     const prevStatePropsRef = useRef<SP>(EMPTY_OBJECT)
-    const { state } = useContext(context)
+    const store = useContext(context)
+    const onMountRef = useRef<() => void>(NOOP)
 
-    if (prevStatePropsRef.current === EMPTY_OBJECT || !shallowEqualByKeys(prevStateRef.current, state, stateKeysToWatch)) {
-      prevStatePropsRef.current = mapStateToProps(state)
+    if (prevStatePropsRef.current === EMPTY_OBJECT) {
+      const newState = store.getState()
+
+      prevStateRef.current = newState
+      prevStatePropsRef.current = mapStateToProps(newState)
     }
 
-    prevStateRef.current = state
+    if (onMountRef.current === NOOP) {
+      onMountRef.current = () => store.subscribe(() => {
+        const newState = store.getState()
+
+        if (!shallowEqualByKeys(prevStateRef.current, newState, stateKeysToWatch)) {
+          prevStatePropsRef.current = mapStateToProps(newState)
+
+          rerender({})
+        }
+
+        prevStateRef.current = newState
+      })
+    }
+
+    useEffect(onMountRef.current, EMPTY_ARRAY)
 
     return {
       ...props,
