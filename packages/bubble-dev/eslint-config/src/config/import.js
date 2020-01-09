@@ -1,4 +1,5 @@
 // https://github.com/benmosher/eslint-plugin-import
+// https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/FAQ.md#eslint-plugin-import
 module.exports = {
   settings: {
     'import/parsers': {
@@ -63,17 +64,10 @@ module.exports = {
         'worker_threads',
       ],
     }],
-    'import/named': 2,
-    'import/default': 2,
-    'import/namespace': 2,
     'import/no-absolute-path': 2,
     'import/no-dynamic-require': 2,
-    'import/no-self-import': 2,
-    'import/no-cycle': 2,
     'import/no-useless-path-segments': 2,
     'import/export': 2,
-    'import/no-named-as-default': 2,
-    'import/no-named-as-default-member': 2,
     'import/no-extraneous-dependencies': 2,
     'import/first': 2,
     'import/no-duplicates': 2,
