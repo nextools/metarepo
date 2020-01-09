@@ -19,6 +19,7 @@ export const Link: FC<TLink> = ({
   onPress,
   onPressIn,
   onPressOut,
+  rel,
 }) => (
   <a
     href={href}
@@ -33,6 +34,7 @@ export const Link: FC<TLink> = ({
     style={style}
     tabIndex={tabIndex}
     target={target}
+    rel={rel}
   >
     {children}
   </a>

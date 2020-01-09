@@ -19,6 +19,7 @@ export type TLink = {
   target?: string,
   tabIndex?: number,
   children?: ReactNode,
+  rel?: string,
   onPress?: () => void,
 } & TIsHoveredHandlers
   & TIsPressedHandlers
