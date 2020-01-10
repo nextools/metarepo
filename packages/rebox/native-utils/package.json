@@ -15,9 +15,9 @@
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
     "@babel/plugin-syntax-bigint": "^7.4.4",
     "@babel/runtime": "^7.4.3",
-    "@haul-bundler/cli": "^0.13.0",
-    "@haul-bundler/core": "^0.13.0",
-    "@haul-bundler/preset-0.60": "^0.13.0",
+    "@haul-bundler/cli": "^0.15.0",
+    "@haul-bundler/core": "^0.15.0",
+    "@haul-bundler/preset-0.60": "^0.15.0",
     "@psxcode/wait": "^0.1.1",
     "babel-loader": "^8.0.5",
     "copie": "^0.3.0",
@@ -25,7 +25,7 @@
     "fast-glob": "^3.0.0",
     "is-port-reachable": "^3.0.0",
     "make-dir": "^3.0.0",
-    "metro-react-native-babel-preset": "0.56.0",
+    "metro-react-native-babel-preset": "0.56.4",
     "react-dom": "^16.8.6",
     "request-promise-native": "^1.0.5",
     "request": "^2.87.0",
@@ -34,12 +34,12 @@
   "devDependencies": {
     "@types/request-promise-native": "^1.0.15",
     "react": "^16.8.0",
-    "react-native": "0.60.5",
+    "react-native": "^0.61.5",
     "react-native-svg": "^9.9.3"
   },
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-native": "^0.60.5",
+    "react-native": "^0.61.5",
     "react-native-svg": "^9.9.3"
   },
   "fixdeps": {

@@ -27,10 +27,10 @@
     "@types/opentype.js": "^0.7.2",
     "@types/react": "^16.8.6",
     "react": "^16.8.0",
-    "react-native": "^0.60.5"
+    "react-native": "^0.61.5"
   },
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-native": "^0.60.5"
+    "react-native": ">=0.60.5"
   }
 }

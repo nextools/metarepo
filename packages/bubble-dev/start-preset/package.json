@@ -73,7 +73,7 @@
     "fixdeps": "^0.5.0",
     "globby": "^10.0.0",
     "make-dir": "^3.0.0",
-    "metro-react-native-babel-preset": "0.56.0",
+    "metro-react-native-babel-preset": "0.56.4",
     "move-path": "^0.2.1",
     "pifs": "^0.1.0",
     "prompts": "^2.1.0",
