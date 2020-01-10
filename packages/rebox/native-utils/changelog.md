@@ -1,7 +1,7 @@
 ## v0.4.0
 
 * 💥 upgrade to Haul v0.15
-* 💥 upgrade to React Native v0.65
+* 💥 upgrade to React Native v0.61
 * 🐞 bump `metro-react-native-babel-preset`
 
 ## v0.3.1
