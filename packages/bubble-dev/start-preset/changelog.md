@@ -1,3 +1,8 @@
+## v0.21.0
+
+* 🐞 bump `metro-react-native-babel-preset`
+* ♻️ update dependencies: `@rebox/android`, `@rebox/ios`
+
 ## v0.20.0
 
 * ♻️ update dependencies: `@x-ray/chrome-screenshots`, `@x-ray/firefox-screenshots`, `@x-ray/snapshots`, `@x-ray/native-screenshots-app`

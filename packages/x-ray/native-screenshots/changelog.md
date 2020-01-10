@@ -1,3 +1,7 @@
+## v0.4.1
+
+* 🐞 fix peer-dependency version range for React Native
+
 ## v0.4.0
 
 * ♻️ update dependencies: `@x-ray/screenshot-utils`

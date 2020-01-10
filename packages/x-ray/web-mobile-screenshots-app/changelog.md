@@ -1,3 +1,7 @@
+## v0.2.3
+
+* 🐞 fix peer-dependency version range for React Native
+
 ## v0.2.2
 
 * 🐞 another attempt to fix flaky iOS screenshots

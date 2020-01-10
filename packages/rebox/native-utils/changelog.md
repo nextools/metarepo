@@ -1,3 +1,9 @@
+## v0.4.0
+
+* 💥 upgrade to Haul v0.15
+* 💥 upgrade to React Native v0.65
+* 🐞 bump `metro-react-native-babel-preset`
+
 ## v0.3.1
 
 * 🐞 upgrade `is-port-reachable` dependency
