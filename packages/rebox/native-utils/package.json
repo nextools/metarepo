@@ -34,12 +34,12 @@
   "devDependencies": {
     "@types/request-promise-native": "^1.0.15",
     "react": "^16.8.0",
-    "react-native": "0.60.5",
+    "react-native": "^0.61.5",
     "react-native-svg": "^9.9.3"
   },
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-native": "^0.60.5",
+    "react-native": "^0.61.5",
     "react-native-svg": "^9.9.3"
   },
   "fixdeps": {
