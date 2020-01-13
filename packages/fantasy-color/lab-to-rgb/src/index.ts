@@ -5,7 +5,7 @@ const t1 = 6 / 29
 const t2 = 3 * t1 * t1
 
 const lrgb2rgb = (x: number): number =>
-  Math.round(255 * (x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055))
+  Math.round(255 * (x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055)) || 0
 
 const lab2xyz = (t: number): number => (
   t > t1 ? t * t * t : t2 * (t - 4 / 29)

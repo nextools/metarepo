@@ -13,12 +13,10 @@ $ yarn add --dev @start/plugin-lib-istanbul
 ### Signature
 
 ```ts
-istanbulInstrument(options?: InstrumenterOptions, extensions?: string[])
+istanbulInstrument(extensions?: string[])
 ```
 
 #### `options`
-
-[Istanbul instrumenter options](https://github.com/istanbuljs/istanbuljs/blob/9f8aebf1f08159df20358d77fe98c809d2027c5f/packages/istanbul-lib-instrument/src/instrumenter.js#L11-L42)
 
 #### `extensions`
 
@@ -52,7 +50,7 @@ import tape from '@start/plugin-lib-tape'
 export const task = () =>
   sequence(
     find('src/**/*.js'),
-    istanbulInstrument({ esModules: true }),
+    istanbulInstrument(),
     find('test/**/*.js'),
     tape(),
     istanbulReport(['lcovonly', 'html', 'text-summary']),

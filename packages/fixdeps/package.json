@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "blue-tape": "^1.0.0",
-    "memfs": "^2.15.4",
+    "memfs": "^3.0.3",
     "mocku": "^0.6.0",
     "spyfn": "^0.2.0"
   }
