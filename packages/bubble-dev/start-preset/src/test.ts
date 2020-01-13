@@ -162,7 +162,7 @@ export const test = (packageDir: string = '**') =>
     find(`coverage/`),
     remove,
     find(`packages/${packageDir}/src/**/*.{ts,tsx}`),
-    istanbulInstrument({ esModules: true }, ['.ts', '.tsx']),
+    istanbulInstrument(['.ts', '.tsx']),
     find([
       `packages/${packageDir}/test/**/*.{ts,tsx}`,
       `!packages/${packageDir}/test/fixtures`,
