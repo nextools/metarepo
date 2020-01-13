@@ -1,3 +1,7 @@
+## v0.4.1
+
+* 🐞 fix `react-native-svg` dependency owner
+
 ## v0.4.0
 
 * 💥 upgrade to Haul v0.15

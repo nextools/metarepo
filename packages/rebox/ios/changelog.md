@@ -1,3 +1,7 @@
+## v0.8.1
+
+* 🐞 fix `react-native-svg` dependency owner
+
 ## v0.8.0
 
 * 💥 upgrade to React Native v0.61

@@ -1,3 +1,8 @@
+## v0.22.0
+
+* 🐞 fix `react-native-svg` dependency owner
+* ♻️ update dependencies: `@start/plugin-lib-istanbul`
+
 ## v0.21.0
 
 * 🐞 bump `metro-react-native-babel-preset`

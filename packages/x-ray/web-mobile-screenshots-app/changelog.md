@@ -1,3 +1,7 @@
+## v0.2.4
+
+* 🐞 bump `react-native-webview`
+
 ## v0.2.3
 
 * 🐞 fix peer-dependency version range for React Native

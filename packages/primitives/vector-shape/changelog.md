@@ -1,3 +1,7 @@
+## v0.2.1
+
+* ♻️ update dependencies: `@primitives/svg`
+
 ## v0.2.0
 
 * 🌱 link the style types to themeables/vector-shape
