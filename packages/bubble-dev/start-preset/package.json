@@ -88,7 +88,7 @@
   "devDependencies": {
     "@types/babel__core": "^7.1.1",
     "@types/ws": "^6.0.3",
-    "typescript": "bubble-dev/TypeScript#ext-3.6.2"
+    "typescript": "bubble-dev/TypeScript#ext-3.7.3"
   },
   "peerDependencies": {
     "typescript": "*"
