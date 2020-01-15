@@ -13,7 +13,7 @@ const getRel = (list?: TRel[], target?: TTarget) => {
     return [...nonDuplicatesList].reduce((finalValue, currentValue) => `${finalValue} ${currentValue}`, '')
   }
 
-  return target === '_blank' ? 'noreferrer' : ''
+  return target === '_blank' ? 'noreferrer' : undefined
 }
 
 export const Link: FC<TLink> = ({
