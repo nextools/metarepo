@@ -1,10 +1,20 @@
 import React, { FC } from 'react'
 import { normalizeStyle } from 'stili'
-import { TLink } from './types'
+import { TLink, TRel, TTarget } from './types'
 
 const style = normalizeStyle({
   textDecoration: 'none',
 })
+
+const getRel = (list?: TRel[], target?: TTarget) => {
+  if (Array.isArray(list)) {
+    const nonDuplicatesList = new Set(list)
+
+    return [...nonDuplicatesList].reduce((finalValue, currentValue) => `${finalValue} ${currentValue}`, '')
+  }
+
+  return target === '_blank' ? 'noreferrer' : ''
+}
 
 export const Link: FC<TLink> = ({
   id,
@@ -34,7 +44,7 @@ export const Link: FC<TLink> = ({
     style={style}
     tabIndex={tabIndex}
     target={target}
-    rel={rel}
+    rel={getRel(rel, target)}
   >
     {children}
   </a>
