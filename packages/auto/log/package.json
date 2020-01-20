@@ -12,8 +12,9 @@
   "dependencies": {
     "@auto/utils": "^0.2.0",
     "pifs": "^0.1.0",
+    "request-promise-native": "^1.0.5",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.5"
+    "tsfn": "^0.2.4"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",

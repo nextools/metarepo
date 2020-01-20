@@ -15,10 +15,12 @@ test('getMarkdownLog', (t) => {
             {
               type: 'minor',
               value: 'minor',
+              description: 'minor description',
             },
             {
               type: 'patch',
               value: 'patch',
+              description: 'patch description',
             },
           ],
         },
@@ -31,6 +33,7 @@ test('getMarkdownLog', (t) => {
             {
               type: 'minor',
               value: 'minor',
+              description: 'minor description',
             },
             {
               type: 'patch',
@@ -41,7 +44,7 @@ test('getMarkdownLog', (t) => {
       ],
       prefixes
     ),
-    '## a v0.1.2\n\n* 🌱 minor\n* 🐞 patch\n\n## b v1.2.3\n\n* 🌱 minor\n* 🐞 patch\n',
+    '## a v0.1.2\n\n* 🌱 minor\n\n  minor description\n\n* 🐞 patch\n\n  patch description\n\n## b v1.2.3\n\n* 🌱 minor\n\n  minor description\n\n* 🐞 patch\n',
     'should get markdown'
   )
 

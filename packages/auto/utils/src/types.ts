@@ -55,6 +55,7 @@ export type TGitMessageType = TBumpType | 'initial'
 export type TGitMessage = {
   type: TGitMessageType,
   value: string,
+  description?: string,
 }
 
 export type TGitBump = {

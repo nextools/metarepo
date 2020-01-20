@@ -26,6 +26,7 @@ export type TGithubOptions = {
 export type TLogMessage = {
   type: TBumpType | 'dependencies' | 'initial',
   value: string,
+  description?: string,
 }
 
 export type TLog = {
