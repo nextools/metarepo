@@ -10,8 +10,8 @@
     "node": ">=8.6.0"
   },
   "dependencies": {
-    "@auto/fs": "^0.2.0",
-    "@auto/utils": "^0.2.0",
+    "@auto/fs": "^0.3.0",
+    "@auto/utils": "^0.3.0",
     "execa": "^3.0.0"
   },
   "devDependencies": {

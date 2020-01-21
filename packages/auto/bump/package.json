@@ -10,8 +10,8 @@
     "node": ">=8.6.0"
   },
   "dependencies": {
-    "@auto/utils": "^0.2.0",
-    "@auto/workspaces": "^0.2.0",
+    "@auto/utils": "^0.3.0",
+    "@auto/workspaces": "^0.3.0",
     "semver": "^6.0.0"
   },
   "devDependencies": {

@@ -10,7 +10,7 @@
     "node": ">=8.6.0"
   },
   "dependencies": {
-    "@auto/utils": "^0.2.0",
+    "@auto/utils": "^0.3.0",
     "fast-glob": "^3.0.0",
     "p-all": "^2.0.0",
     "pifs": "^0.1.0"

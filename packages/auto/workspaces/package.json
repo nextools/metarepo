@@ -10,7 +10,7 @@
     "node": ">=8.6.0"
   },
   "dependencies": {
-    "@auto/utils": "^0.2.0"
+    "@auto/utils": "^0.3.0"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
