@@ -1,3 +1,9 @@
+## v0.3.0
+
+* 🌱 parse git commit descriptions and use it in changelog
+
+* ♻️ update dependencies: `@auto/utils`
+
 ## v0.2.2
 
 * 🐞 upgrade `execa` to v3

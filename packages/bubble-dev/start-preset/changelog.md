@@ -1,3 +1,7 @@
+## v0.23.0
+
+* ♻️ update dependencies: `@auto/start-plugin`, `@auto/git`, `@auto/log`, `@auto/bump`, `@auto/npm`, `@auto/fs`, `@auto/utils`
+
 ## v0.22.0
 
 * 🐞 fix `react-native-svg` dependency owner
