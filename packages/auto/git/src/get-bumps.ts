@@ -37,6 +37,7 @@ export const getBumps = async (packages: TPackages, prefixes: TPrefixes, gitOpti
           messages: [{
             type: parsed.type,
             value: parsed.message,
+            description: parsed.description,
           }],
         }
 
@@ -50,6 +51,7 @@ export const getBumps = async (packages: TPackages, prefixes: TPrefixes, gitOpti
         bump.messages.push({
           type: parsed.type,
           value: parsed.message,
+          description: parsed.description,
         })
 
         if (compareReleaseTypes(parsed.type, bump.type) > 0) {
@@ -62,6 +64,7 @@ export const getBumps = async (packages: TPackages, prefixes: TPrefixes, gitOpti
           messages: [{
             type: parsed.type,
             value: parsed.message,
+            description: parsed.description,
           }],
         }
       }

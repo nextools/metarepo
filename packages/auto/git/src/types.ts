@@ -8,6 +8,7 @@ export type TParsedMessageType = TBumpType | 'publish' | 'initial'
 
 export type TParsedMessage = {
   type: TParsedMessageType,
-  message: string,
   names: string[],
+  message: string,
+  description?: string,
 }
