@@ -1,0 +1,22 @@
+{
+  "name": "xrom",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "execa": "^4.0.0",
+    "request-promise-native": "^1.0.8",
+    "signal-exit": "^3.0.2",
+    "tsfn": "^0.2.4"
+  },
+  "devDependencies": {
+    "@types/request-promise-native": "^1.0.17",
+    "@types/signal-exit": "^3.0.0"
+  }
+}
