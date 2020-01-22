@@ -14,6 +14,7 @@ export type TBuildJsBundleOptions = {
   outputPath: string,
   htmlTemplatePath: string,
   isQuiet?: boolean,
+  shouldGenerateSourceMaps?: boolean,
 }
 
 const statsOptions: Stats.ToStringOptionsObject = {
@@ -37,6 +38,7 @@ const statsOptions: Stats.ToStringOptionsObject = {
 export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
   const options: TBuildJsBundleOptions = {
     isQuiet: false,
+    shouldGenerateSourceMaps: true,
     ...userOptions,
   }
   const config: WebpackConfig = {
@@ -59,7 +61,7 @@ export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
         '.json',
       ],
     },
-    devtool: 'source-map',
+    devtool: options.shouldGenerateSourceMaps ? 'source-map' : false,
     module: {
       rules: [
         {
