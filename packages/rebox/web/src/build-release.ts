@@ -13,6 +13,7 @@ export type TBuildJsBundleOptions = {
   entryPointPath: string,
   outputPath: string,
   htmlTemplatePath: string,
+  isQuiet?: boolean,
 }
 
 const statsOptions: Stats.ToStringOptionsObject = {
@@ -33,7 +34,11 @@ const statsOptions: Stats.ToStringOptionsObject = {
   warnings: true,
 }
 
-export const buildRelease = (options: TBuildJsBundleOptions) => {
+export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
+  const options: TBuildJsBundleOptions = {
+    isQuiet: false,
+    ...userOptions,
+  }
   const config: WebpackConfig = {
     mode: 'production',
     entry: path.resolve(options.entryPointPath),
@@ -176,7 +181,9 @@ export const buildRelease = (options: TBuildJsBundleOptions) => {
         return reject(err)
       }
 
-      console.log(stats.toString(statsOptions))
+      if (!options.isQuiet) {
+        console.log(stats.toString(statsOptions))
+      }
 
       resolve()
     })
