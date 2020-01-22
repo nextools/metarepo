@@ -6,6 +6,7 @@ import {
   CheckIosWebScreenshots,
   CheckAndroidWebScreenshots,
   Sandbox,
+  CheckChromePerfSnapshots,
 } from '@bubble-dev/start-preset'
 
 export * from '@bubble-dev/start-preset'
@@ -17,6 +18,7 @@ export const checkAndroidScreenshots = CheckAndroidScreenshots()
 export const checkIosScreenshots = CheckIosScreenshots()
 export const checkIosWebScreenshots = CheckIosWebScreenshots()
 export const checkAndroidWebScreenshots = CheckAndroidWebScreenshots()
+export const checkChromePerfSnapshots = CheckChromePerfSnapshots()
 
 export const sandbox = Sandbox({
   entryPointPath: './tasks/sandbox/index.tsx',
