@@ -17,6 +17,9 @@ export type TBuildJsBundleOptions = {
   globalConstants?: {
     [key: string]: string,
   },
+  globalAliases?: {
+    [key: string]: string,
+  },
   isQuiet?: boolean,
   shouldGenerateSourceMaps?: boolean,
   shouldGenerateBundleAnalyzerReport?: boolean,
@@ -189,6 +192,10 @@ export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
         logLevel: 'silent',
       })
     )
+  }
+
+  if (isObject(options.globalAliases)) {
+    config.resolve!.alias = options.globalAliases
   }
 
   if (isObject(options.globalConstants)) {
