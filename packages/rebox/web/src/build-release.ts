@@ -6,6 +6,7 @@ import InlineChunkWebpackPlugin from 'fixed-webpack4-html-webpack-inline-chunk-p
 import TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import { browsersList } from '@bubble-dev/browsers-list'
+import { isObject } from 'tsfn'
 
 const nodeModulesRegExp = /[\\/]node_modules[\\/]/
 
@@ -13,6 +14,15 @@ export type TBuildJsBundleOptions = {
   entryPointPath: string,
   outputPath: string,
   htmlTemplatePath: string,
+  globalConstants?: {
+    [key: string]: string,
+  },
+  globalAliases?: {
+    [key: string]: string,
+  },
+  isQuiet?: boolean,
+  shouldGenerateSourceMaps?: boolean,
+  shouldGenerateBundleAnalyzerReport?: boolean,
 }
 
 const statsOptions: Stats.ToStringOptionsObject = {
@@ -33,7 +43,13 @@ const statsOptions: Stats.ToStringOptionsObject = {
   warnings: true,
 }
 
-export const buildRelease = (options: TBuildJsBundleOptions) => {
+export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
+  const options: TBuildJsBundleOptions = {
+    isQuiet: false,
+    shouldGenerateSourceMaps: true,
+    shouldGenerateBundleAnalyzerReport: true,
+    ...userOptions,
+  }
   const config: WebpackConfig = {
     mode: 'production',
     entry: path.resolve(options.entryPointPath),
@@ -54,7 +70,7 @@ export const buildRelease = (options: TBuildJsBundleOptions) => {
         '.json',
       ],
     },
-    devtool: 'source-map',
+    devtool: options.shouldGenerateSourceMaps ? 'source-map' : false,
     module: {
       rules: [
         {
@@ -162,12 +178,30 @@ export const buildRelease = (options: TBuildJsBundleOptions) => {
         quiet: true,
         inlineChunks: ['runtime'],
       }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      }),
+    ],
+  }
+
+  if (options.shouldGenerateBundleAnalyzerReport) {
+    config.plugins!.push(
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         openAnalyzer: false,
         logLevel: 'silent',
-      }),
-    ],
+      })
+    )
+  }
+
+  if (isObject(options.globalAliases)) {
+    config.resolve!.alias = options.globalAliases
+  }
+
+  if (isObject(options.globalConstants)) {
+    config.plugins!.push(
+      new webpack.DefinePlugin(options.globalConstants)
+    )
   }
 
   return new Promise<void>((resolve, reject) => {
@@ -176,7 +210,9 @@ export const buildRelease = (options: TBuildJsBundleOptions) => {
         return reject(err)
       }
 
-      console.log(stats.toString(statsOptions))
+      if (!options.isQuiet) {
+        console.log(stats.toString(statsOptions))
+      }
 
       resolve()
     })

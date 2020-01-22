@@ -37,7 +37,8 @@
     "packages/themeables/*",
     "packages/tsfn",
     "packages/typeon",
-    "packages/x-ray/*"
+    "packages/x-ray/*",
+    "packages/xrom"
   ],
   "resolutions": {
     "react": "^16.8.6"
