@@ -6,6 +6,7 @@ import InlineChunkWebpackPlugin from 'fixed-webpack4-html-webpack-inline-chunk-p
 import TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import { browsersList } from '@bubble-dev/browsers-list'
+import { isObject } from 'tsfn'
 
 const nodeModulesRegExp = /[\\/]node_modules[\\/]/
 
@@ -13,6 +14,9 @@ export type TBuildJsBundleOptions = {
   entryPointPath: string,
   outputPath: string,
   htmlTemplatePath: string,
+  globalConstants?: {
+    [key: string]: string,
+  },
   isQuiet?: boolean,
   shouldGenerateSourceMaps?: boolean,
   shouldGenerateBundleAnalyzerReport?: boolean,
@@ -186,6 +190,11 @@ export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
       })
     )
   }
+
+  if (isObject(options.globalConstants)) {
+    config.plugins!.push(
+      new webpack.DefinePlugin(options.globalConstants)
+    )
   }
 
   return new Promise<void>((resolve, reject) => {
