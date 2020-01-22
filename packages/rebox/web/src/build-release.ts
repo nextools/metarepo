@@ -169,6 +169,9 @@ export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
         quiet: true,
         inlineChunks: ['runtime'],
       }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      }),
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         openAnalyzer: false,
