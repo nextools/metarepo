@@ -15,6 +15,7 @@ export type TBuildJsBundleOptions = {
   htmlTemplatePath: string,
   isQuiet?: boolean,
   shouldGenerateSourceMaps?: boolean,
+  shouldGenerateBundleAnalyzerReport?: boolean,
 }
 
 const statsOptions: Stats.ToStringOptionsObject = {
@@ -39,6 +40,7 @@ export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
   const options: TBuildJsBundleOptions = {
     isQuiet: false,
     shouldGenerateSourceMaps: true,
+    shouldGenerateBundleAnalyzerReport: true,
     ...userOptions,
   }
   const config: WebpackConfig = {
@@ -172,12 +174,18 @@ export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production'),
       }),
+    ],
+  }
+
+  if (options.shouldGenerateBundleAnalyzerReport) {
+    config.plugins!.push(
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         openAnalyzer: false,
         logLevel: 'silent',
-      }),
-    ],
+      })
+    )
+  }
   }
 
   return new Promise<void>((resolve, reject) => {
