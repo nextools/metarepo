@@ -13,6 +13,7 @@ import tapDiff from 'tap-diff'
 import xRaySnapshots from './plugins/snapshots'
 import xRayChromeScreenshots from './plugins/chrome-screenshots'
 import xRayFirefoxScreenshots from './plugins/firefox-screenshots'
+import xRayChromePerfSnapshots from './plugins/chrome-perf-snapshots'
 import xRayIosScreenshots from './plugins/ios-screenshots'
 import xRayAndroidScreenshots from './plugins/android-screenshots'
 import xRayIosWebScreenshots from './plugins/ios-web-screenshots'
@@ -108,6 +109,14 @@ export const CheckFirefoxScreenshots = (fontsDir?: string) => (component = '**')
     ),
     fontsDir
   )
+
+export const CheckChromePerfSnapshots = (fontsDir?: string) => (component = '**') => {
+  return sequence(
+    find(`packages/${component}/x-ray/perf-snapshots.tsx`),
+    env({ NODE_ENV: 'production' }),
+    xRayChromePerfSnapshots(fontsDir)
+  )
+}
 
 export const CheckIosScreenshots = (fontsDir?: string) => (component = '**') => {
   return sequence(
