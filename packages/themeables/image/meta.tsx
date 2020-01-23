@@ -12,6 +12,12 @@ type Mappings = {
 const defaultTheme: TThemeableImages<Mappings> = {
   demo: () => ({
     resizeMode: 'cover',
+    width: 100,
+    height: 100,
+    bottomLeftRadius: 20,
+    bottomRightRadius: 20,
+    topLeftRadius: 20,
+    topRightRadius: 20,
   }),
 }
 
@@ -22,6 +28,12 @@ const DemoThemeableImage = createThemeableImage<TImage>('demo', Image)
 const newTheme: TThemeableImages<Mappings> = {
   demo: () => ({
     resizeMode: 'contain',
+    width: 70,
+    height: 70,
+    bottomLeftRadius: 5,
+    bottomRightRadius: 5,
+    topLeftRadius: 5,
+    topRightRadius: 5,
   }),
 }
 

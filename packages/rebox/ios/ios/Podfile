@@ -2,9 +2,14 @@ platform :ios, '9.0'
 
 target 'rebox' do
   # Pods for rebox
+  pod 'FBLazyVector', :path => "../../../react-native/Libraries/FBLazyVector"
+  pod 'FBReactNativeSpec', :path => "../../../react-native/Libraries/FBReactNativeSpec"
+  pod 'RCTRequired', :path => "../../../react-native/Libraries/RCTRequired"
+  pod 'RCTTypeSafety', :path => "../../../react-native/Libraries/TypeSafety"
   pod 'React', :path => '../../../react-native/'
-  pod 'React-Core', :path => '../../../react-native/React'
-  pod 'React-DevSupport', :path => '../../../react-native/React'
+  pod 'React-Core', :path => '../../../react-native/'
+  pod 'React-CoreModules', :path => '../../../react-native/React/CoreModules'
+  pod 'React-Core/DevSupport', :path => '../../../react-native/'
   pod 'React-RCTActionSheet', :path => '../../../react-native/Libraries/ActionSheetIOS'
   pod 'React-RCTAnimation', :path => '../../../react-native/Libraries/NativeAnimation'
   pod 'React-RCTBlob', :path => '../../../react-native/Libraries/Blob'
@@ -14,13 +19,15 @@ target 'rebox' do
   pod 'React-RCTSettings', :path => '../../../react-native/Libraries/Settings'
   pod 'React-RCTText', :path => '../../../react-native/Libraries/Text'
   pod 'React-RCTVibration', :path => '../../../react-native/Libraries/Vibration'
-  pod 'React-RCTWebSocket', :path => '../../../react-native/Libraries/WebSocket'
+  pod 'React-Core/RCTWebSocket', :path => '../../../react-native/'
 
   pod 'React-cxxreact', :path => '../../../react-native/ReactCommon/cxxreact'
   pod 'React-jsi', :path => '../../../react-native/ReactCommon/jsi'
   pod 'React-jsiexecutor', :path => '../../../react-native/ReactCommon/jsiexecutor'
   pod 'React-jsinspector', :path => '../../../react-native/ReactCommon/jsinspector'
-  pod 'yoga', :path => '../../../react-native/ReactCommon/yoga'
+  pod 'ReactCommon/jscallinvoker', :path => "../../../react-native/ReactCommon"
+  pod 'ReactCommon/turbomodule/core', :path => "../../../react-native/ReactCommon"
+  pod 'Yoga', :path => '../../../react-native/ReactCommon/yoga'
 
   pod 'DoubleConversion', :podspec => '../../../react-native/third-party-podspecs/DoubleConversion.podspec'
   pod 'glog', :podspec => '../../../react-native/third-party-podspecs/glog.podspec'

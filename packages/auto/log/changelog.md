@@ -1,3 +1,9 @@
+## v0.5.0
+
+* 🌱 parse git commit descriptions and use it in changelog
+
+* ♻️ update dependencies: `@auto/utils`
+
 ## v0.4.1
 
 * 🐞 fix errors handling in `sendTelegramMessage`

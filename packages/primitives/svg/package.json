@@ -1,6 +1,6 @@
 {
   "name": "@primitives/svg",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "",
   "keywords": [],
   "main": "src/index.web.ts",
@@ -13,7 +13,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "react-native-svg": "^9.9.3"
+    "react-native-svg": "^10.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

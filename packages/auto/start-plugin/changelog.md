@@ -1,3 +1,7 @@
+## v0.7.0
+
+* ♻️ update dependencies: `@auto/git`, `@auto/log`, `@auto/bump`, `@auto/npm`, `@auto/fs`, `@auto/utils`
+
 ## v0.6.1
 
 * 🐞 fix `sendTelegramMessage` plugin description

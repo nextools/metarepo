@@ -1,6 +1,6 @@
 {
   "name": "@primitives/vector-shape",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "keywords": [],
   "main": "src/index.web.ts",
@@ -14,7 +14,7 @@
   "sideEffects": false,
   "dependencies": {
     "@primitives/block": "0.6.2",
-    "@primitives/svg": "0.1.6",
+    "@primitives/svg": "0.1.7",
     "@themeables/vector-shape": "^0.1.0",
     "colorido": "^0.2.0"
   },

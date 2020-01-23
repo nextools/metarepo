@@ -1,8 +1,7 @@
 /* eslint-disable no-sync */
 import plugin, { StartFilesProps } from '@start/plugin'
-import { InstrumenterOptions } from 'istanbul-lib-instrument'
 
-export default (options?: Partial<InstrumenterOptions>, extensions?: string[]) =>
+export default (extensions?: string[]) =>
   plugin('istanbulInstrument', ({ logMessage }) => async ({ files }: StartFilesProps) => {
     const Module = await import('module')
     const { fromSource: getSourceMapFromSource } = await import('convert-source-map')
@@ -12,7 +11,10 @@ export default (options?: Partial<InstrumenterOptions>, extensions?: string[]) =
     const { default: coverageVariable } = await import('./variable')
 
     const instrumenter = createInstrumenter({
-      ...options,
+      autoWrap: true,
+      esModules: true,
+      preserveComments: true,
+      produceSourceMap: false,
       coverageVariable,
     })
 

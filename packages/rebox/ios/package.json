@@ -1,6 +1,6 @@
 {
   "name": "@rebox/ios",
-  "version": "0.7.0",
+  "version": "0.8.1",
   "description": "",
   "keywords": [],
   "repository": "bubble-dev/_",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@rebox/native-utils": "^0.3.0",
+    "@rebox/native-utils": "^0.4.0",
     "copie": "^0.3.0",
     "cpy": "^7.2.0",
     "dleet": "^0.3.0",
@@ -28,12 +28,10 @@
   },
   "devDependencies": {
     "react": "^16.9.0",
-    "react-native": "0.60.5",
-    "react-native-svg": "^9.9.3"
+    "react-native": "^0.61.5"
   },
   "peerDependencies": {
     "react": "^16.9.0",
-    "react-native": "^0.60.0",
-    "react-native-svg": "^9.9.3"
+    "react-native": "^0.61.5"
   }
 }

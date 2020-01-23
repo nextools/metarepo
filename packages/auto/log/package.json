@@ -1,6 +1,6 @@
 {
   "name": "@auto/log",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
@@ -10,17 +10,18 @@
     "node": ">=8.6.0"
   },
   "dependencies": {
-    "@auto/utils": "^0.2.0",
+    "@auto/utils": "^0.3.0",
     "pifs": "^0.1.0",
+    "request-promise-native": "^1.0.5",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.5"
+    "tsfn": "^0.2.4"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
     "@types/request": "^2.47.1",
     "@types/request-promise-native": "^1.0.15",
     "blue-tape": "^1.0.0",
-    "memfs": "^2.15.4",
+    "memfs": "^3.0.3",
     "mocku": "^0.6.0",
     "spyfn": "^0.2.0"
   },

@@ -1,3 +1,7 @@
+## v0.6.1
+
+* 🐞 fix peer-dependency version range for React Native
+
 ## v0.6.0
 
 * 🌱 update to latest primitives/input API

@@ -1,3 +1,11 @@
+## v0.2.4
+
+* 🐞 bump `react-native-webview`
+
+## v0.2.3
+
+* 🐞 fix peer-dependency version range for React Native
+
 ## v0.2.2
 
 * 🐞 another attempt to fix flaky iOS screenshots

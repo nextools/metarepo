@@ -111,14 +111,17 @@ test('getLog', (t) => {
             {
               type: 'minor',
               value: 'minor',
+              description: 'minor',
             },
             {
               type: 'patch',
               value: 'patch',
+              description: 'patch',
             },
             {
               type: 'major',
               value: 'major',
+              description: 'major',
             },
           ],
         },
@@ -134,14 +137,17 @@ test('getLog', (t) => {
           {
             type: 'major',
             value: 'major',
+            description: 'major',
           },
           {
             type: 'minor',
             value: 'minor',
+            description: 'minor',
           },
           {
             type: 'patch',
             value: 'patch',
+            description: 'patch',
           },
           {
             type: 'dependencies',
@@ -173,14 +179,17 @@ test('getLog', (t) => {
             {
               type: 'minor',
               value: 'minor',
+              description: 'minor',
             },
             {
               type: 'patch',
               value: 'patch',
+              description: 'patch',
             },
             {
               type: 'major',
               value: 'major',
+              description: 'major',
             },
           ],
         },
@@ -196,14 +205,17 @@ test('getLog', (t) => {
           {
             type: 'major',
             value: 'major',
+            description: 'major',
           },
           {
             type: 'minor',
             value: 'minor',
+            description: 'minor',
           },
           {
             type: 'patch',
             value: 'patch',
+            description: 'patch',
           },
         ],
       },
@@ -233,14 +245,17 @@ test('getLog', (t) => {
             {
               type: 'patch',
               value: 'patch',
+              description: 'patch',
             },
             {
               type: 'initial',
-              value: 'init',
+              value: 'initial',
+              description: 'initial',
             },
             {
               type: 'minor',
               value: 'minor',
+              description: 'minor',
             },
           ],
         },
@@ -255,7 +270,8 @@ test('getLog', (t) => {
         messages: [
           {
             type: 'initial',
-            value: 'init',
+            value: 'initial',
+            description: 'initial',
           },
         ],
       },

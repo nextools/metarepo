@@ -36,10 +36,10 @@ test('git:getBumps single package', async (t) => {
   const unmock = mock('../src/get-bumps', {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
-        `${prefixes.required.patch.value} foo: patch 2`,
-        `${prefixes.required.patch.value} foo: patch 1`,
-        `${prefixes.required.publish.value} foo: v1.2.3`,
-        `${prefixes.required.initial.value} foo: initial`,
+        `${prefixes.required.patch.value} foo: patch 2\n\ndescription`,
+        `${prefixes.required.patch.value} foo: patch 1\n\ndescription`,
+        `${prefixes.required.publish.value} foo: v1.2.3\n\ndescription`,
+        `${prefixes.required.initial.value} foo: initial\n\ndescription`,
       ]),
     },
   })
@@ -54,9 +54,11 @@ test('git:getBumps single package', async (t) => {
       messages: [{
         type: 'patch',
         value: 'patch 2',
+        description: 'description',
       }, {
         type: 'patch',
         value: 'patch 1',
+        description: 'description',
       }],
     }] as TGitBump[],
     'bump as patch + patch'
@@ -87,9 +89,11 @@ test('git:getBumps single package', async (t) => {
       messages: [{
         type: 'minor',
         value: 'minor',
+        description: undefined,
       }, {
         type: 'patch',
         value: 'patch',
+        description: undefined,
       }],
     }] as TGitBump[],
     'bump as patch + minor'
@@ -120,9 +124,11 @@ test('git:getBumps single package', async (t) => {
       messages: [{
         type: 'patch',
         value: 'patch',
+        description: undefined,
       }, {
         type: 'minor',
         value: 'minor',
+        description: undefined,
       }],
     }] as TGitBump[],
     'bump as minor + patch'
@@ -154,12 +160,15 @@ test('git:getBumps single package', async (t) => {
       messages: [{
         type: 'major',
         value: 'major',
+        description: undefined,
       }, {
         type: 'minor',
         value: 'minor',
+        description: undefined,
       }, {
         type: 'patch',
         value: 'patch',
+        description: undefined,
       }],
     }] as TGitBump[],
     'bump as patch + minor + major'
@@ -191,13 +200,16 @@ test('git:getBumps single package', async (t) => {
       messages: [{
         type: 'minor',
         value: 'minor',
+        description: undefined,
 
       }, {
         type: 'major',
         value: 'major',
+        description: undefined,
       }, {
         type: 'patch',
         value: 'patch',
+        description: undefined,
       }],
     }] as TGitBump[],
     'bump as patch + major + minor'
@@ -229,12 +241,15 @@ test('git:getBumps single package', async (t) => {
       messages: [{
         type: 'minor',
         value: 'minor',
+        description: undefined,
       }, {
         type: 'patch',
         value: 'patch',
+        description: undefined,
       }, {
         type: 'major',
         value: 'major',
+        description: undefined,
       }],
     }] as TGitBump[],
     'bump as major + patch + minor'
@@ -269,6 +284,7 @@ test('git:getBumps multiple packages', async (t) => {
       messages: [{
         type: 'patch',
         value: 'patch',
+        description: undefined,
       }],
     }, {
       name: 'bar',
@@ -276,6 +292,7 @@ test('git:getBumps multiple packages', async (t) => {
       messages: [{
         type: 'patch',
         value: 'patch',
+        description: undefined,
       }],
     }] as TGitBump[],
     'bump as patch && patch'
@@ -309,9 +326,11 @@ test('git:getBumps multiple packages in one commit', async (t) => {
       messages: [{
         type: 'patch',
         value: 'patch',
+        description: undefined,
       }, {
         type: 'major',
         value: 'breaking',
+        description: undefined,
       }],
     }, {
       name: 'bar',
@@ -319,6 +338,7 @@ test('git:getBumps multiple packages in one commit', async (t) => {
       messages: [{
         type: 'patch',
         value: 'patch',
+        description: undefined,
       }],
     }] as TGitBump[],
     'bump as major && patch'
@@ -349,10 +369,12 @@ test('git:getBumps star symbol', async (t) => {
         {
           type: 'minor',
           value: 'minor',
+          description: undefined,
         },
         {
           type: 'patch',
           value: 'patch',
+          description: undefined,
         },
       ],
     }, {
@@ -362,10 +384,12 @@ test('git:getBumps star symbol', async (t) => {
         {
           type: 'minor',
           value: 'minor',
+          description: undefined,
         },
         {
           type: 'patch',
           value: 'patch',
+          description: undefined,
         },
       ],
     }, {
@@ -375,6 +399,7 @@ test('git:getBumps star symbol', async (t) => {
         {
           type: 'minor',
           value: 'minor',
+          description: undefined,
         },
       ],
     }] as TGitBump[],
@@ -389,7 +414,7 @@ test('git:getBumps string + star symbol', async (t) => {
     './get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.required.minor.value} ba*: minor`,
-        `${prefixes.required.patch.value} foo: patch`,
+        `${prefixes.required.patch.value} foo: patch\n\ndescription`,
       ]),
     },
   })
@@ -405,6 +430,7 @@ test('git:getBumps string + star symbol', async (t) => {
         {
           type: 'minor',
           value: 'minor',
+          description: undefined,
         },
       ],
     }, {
@@ -414,6 +440,7 @@ test('git:getBumps string + star symbol', async (t) => {
         {
           type: 'minor',
           value: 'minor',
+          description: undefined,
         },
       ],
     }, {
@@ -423,6 +450,7 @@ test('git:getBumps string + star symbol', async (t) => {
         {
           type: 'patch',
           value: 'patch',
+          description: 'description',
         },
       ],
     }] as TGitBump[],
@@ -458,9 +486,11 @@ test('git:getBumps skipped commits', async (t) => {
       messages: [{
         type: 'minor',
         value: 'minor',
+        description: undefined,
       }, {
         type: 'patch',
         value: 'patch',
+        description: undefined,
       }],
     }] as TGitBump[],
     'skip invalid commit messages'
@@ -496,6 +526,7 @@ test('git:getBumps multiple packages initial', async (t) => {
       messages: [{
         type: 'initial',
         value: 'initial',
+        description: undefined,
       }],
     }, {
       name: 'bar',
@@ -503,6 +534,7 @@ test('git:getBumps multiple packages initial', async (t) => {
       messages: [{
         type: 'patch',
         value: 'patch',
+        description: undefined,
       }],
     }, {
       name: 'baz',
@@ -510,6 +542,7 @@ test('git:getBumps multiple packages initial', async (t) => {
       messages: [{
         type: 'initial',
         value: 'initial',
+        description: undefined,
       }],
     }] as TGitBump[],
     'bump as patch && patch'

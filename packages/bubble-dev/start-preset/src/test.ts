@@ -13,6 +13,7 @@ import tapDiff from 'tap-diff'
 import xRaySnapshots from './plugins/snapshots'
 import xRayChromeScreenshots from './plugins/chrome-screenshots'
 import xRayFirefoxScreenshots from './plugins/firefox-screenshots'
+import xRayChromePerfSnapshots from './plugins/chrome-perf-snapshots'
 import xRayIosScreenshots from './plugins/ios-screenshots'
 import xRayAndroidScreenshots from './plugins/android-screenshots'
 import xRayIosWebScreenshots from './plugins/ios-web-screenshots'
@@ -109,6 +110,14 @@ export const CheckFirefoxScreenshots = (fontsDir?: string) => (component = '**')
     fontsDir
   )
 
+export const CheckChromePerfSnapshots = (fontsDir?: string) => (component = '**') => {
+  return sequence(
+    find(`packages/${component}/x-ray/perf-snapshots.tsx`),
+    env({ NODE_ENV: 'production' }),
+    xRayChromePerfSnapshots(fontsDir)
+  )
+}
+
 export const CheckIosScreenshots = (fontsDir?: string) => (component = '**') => {
   return sequence(
     find(`packages/${component}/x-ray/screenshots.tsx`),
@@ -141,11 +150,19 @@ export const CheckAndroidWebScreenshots = (fontsDir?: string) => (component = '*
   )
 }
 
-export const lint = () =>
-  sequence(
+export const lint = async () => {
+  const path = await import('path')
+  const packageJson = await import(path.resolve('package.json'))
+  const globs = packageJson.workspaces.reduce((acc: string[], glob: string) => (
+    acc.concat(
+      `${glob}/{src,test,x-ray}/**/*.{ts,tsx}`,
+      `${glob}/*.{ts,tsx}`
+    )
+  ), [] as string[])
+
+  return sequence(
     find([
-      'packages/*/{src,test,x-ray}/**/*.{ts,tsx}',
-      'packages/*/*/{src,test,x-ray}/**/*.{ts,tsx}',
+      ...globs,
       'tasks/**/*.ts',
     ]),
     read,
@@ -155,6 +172,7 @@ export const lint = () =>
     }),
     typescriptCheck()
   )
+}
 
 export const test = (packageDir: string = '**') =>
   sequence(
@@ -162,7 +180,7 @@ export const test = (packageDir: string = '**') =>
     find(`coverage/`),
     remove,
     find(`packages/${packageDir}/src/**/*.{ts,tsx}`),
-    istanbulInstrument({ esModules: true }, ['.ts', '.tsx']),
+    istanbulInstrument(['.ts', '.tsx']),
     find([
       `packages/${packageDir}/test/**/*.{ts,tsx}`,
       `!packages/${packageDir}/test/fixtures`,

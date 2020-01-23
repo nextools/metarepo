@@ -13,6 +13,7 @@ test('writeChangelogFiles', async (t) => {
       name: '@ns/a',
       version: '1.0.0',
     }),
+    [`${rootDir}/fakes/a/changelog.md`]: '## v1.0.0\n\n* 💥 major\n\n  description\n',
   })
   const fs = createFsFromVolume(vol)
 
@@ -36,10 +37,12 @@ test('writeChangelogFiles', async (t) => {
           {
             type: 'minor',
             value: 'minor',
+            description: 'description',
           },
           {
             type: 'patch',
             value: 'patch',
+            description: 'description',
           },
         ],
       },
@@ -51,9 +54,11 @@ test('writeChangelogFiles', async (t) => {
 
   t.equal(
     changelogData,
-    '## v0.1.0\n\n* 🌱 minor\n* 🐞 patch\n',
-    'should write a new changelog.md'
+    '## v0.1.0\n\n* 🌱 minor\n\n  description\n\n* 🐞 patch\n\n  description\n\n## v1.0.0\n\n* 💥 major\n\n  description\n',
+    'should prepend to an already existing changelog.md'
   )
+
+  fs.unlinkSync(`${rootDir}/fakes/a/changelog.md`)
 
   await writeChangelogFiles(
     [
@@ -77,8 +82,8 @@ test('writeChangelogFiles', async (t) => {
 
   t.equal(
     changelogData,
-    '## v0.2.1\n\n* 🐞 patch\n\n## v0.1.0\n\n* 🌱 minor\n* 🐞 patch\n',
-    'should prepend to an already existing changelog.md'
+    '## v0.2.1\n\n* 🐞 patch\n',
+    'should write a new changelog.md'
   )
 
   unmock()

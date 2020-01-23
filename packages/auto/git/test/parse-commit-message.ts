@@ -27,7 +27,7 @@ test('git:parseCommitMessage', (t) => {
 
   t.deepEquals(
     parseCommitMessage(
-      `${prefixes.required.publish.value} foo: publish\nnew line`,
+      `${prefixes.required.publish.value} foo: publish\n\ndescription\nline1\nline2`,
       ['foo'],
       prefixes,
       { autoNamePrefix: '@' }
@@ -35,14 +35,15 @@ test('git:parseCommitMessage', (t) => {
     {
       names: ['foo'],
       type: 'publish',
-      message: 'publish\nnew line',
+      message: 'publish',
+      description: 'description\nline1\nline2',
     },
-    'return `null` if nothing has been matched'
+    'parse description'
   )
 
   t.deepEquals(
     parseCommitMessage(
-      `${prefixes.required.major.value} foo: breaking change\nnew line`,
+      `${prefixes.required.major.value} foo: breaking change`,
       ['foo'],
       prefixes,
       { autoNamePrefix: '@' }
@@ -50,14 +51,14 @@ test('git:parseCommitMessage', (t) => {
     {
       names: ['foo'],
       type: 'major',
-      message: 'breaking change\nnew line',
+      message: 'breaking change',
     },
     'return major'
   )
 
   t.deepEquals(
     parseCommitMessage(
-      `${prefixes.required.major.value} ns/foo: breaking change\nnew line`,
+      `${prefixes.required.major.value} ns/foo: breaking change`,
       ['@ns/foo'],
       prefixes,
       { autoNamePrefix: '@' }
@@ -65,14 +66,14 @@ test('git:parseCommitMessage', (t) => {
     {
       names: ['@ns/foo'],
       type: 'major',
-      message: 'breaking change\nnew line',
+      message: 'breaking change',
     },
     'return major'
   )
 
   t.deepEquals(
     parseCommitMessage(
-      `${prefixes.required.minor.value} foo: minor change\nnew line`,
+      `${prefixes.required.minor.value} foo: minor change`,
       ['foo'],
       prefixes,
       { autoNamePrefix: '@' }
@@ -80,14 +81,14 @@ test('git:parseCommitMessage', (t) => {
     {
       names: ['foo'],
       type: 'minor',
-      message: 'minor change\nnew line',
+      message: 'minor change',
     },
     'return minor'
   )
 
   t.deepEquals(
     parseCommitMessage(
-      `${prefixes.required.patch.value} foo: patch change\nnew line`,
+      `${prefixes.required.patch.value} foo: patch change`,
       ['foo'],
       prefixes,
       { autoNamePrefix: '@' }
@@ -95,14 +96,14 @@ test('git:parseCommitMessage', (t) => {
     {
       names: ['foo'],
       type: 'patch',
-      message: 'patch change\nnew line',
+      message: 'patch change',
     },
     'return patch'
   )
 
   t.deepEquals(
     parseCommitMessage(
-      `${prefixes.required.initial.value} foo: initial change\nnew line`,
+      `${prefixes.required.initial.value} foo: initial change`,
       ['foo'],
       prefixes,
       { autoNamePrefix: '@' }
@@ -110,7 +111,7 @@ test('git:parseCommitMessage', (t) => {
     {
       names: ['foo'],
       type: 'initial',
-      message: 'initial change\nnew line',
+      message: 'initial change',
     },
     'return initial'
   )
@@ -242,11 +243,7 @@ test('git:parseCommitMessage', (t) => {
       prefixes,
       { autoNamePrefix: '@' }
     ),
-    {
-      names: ['foo'],
-      type: 'initial',
-      message: '',
-    },
+    null,
     'empty message'
   )
 

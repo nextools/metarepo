@@ -1,3 +1,17 @@
+## v0.23.0
+
+* ♻️ update dependencies: `@auto/start-plugin`, `@auto/git`, `@auto/log`, `@auto/bump`, `@auto/npm`, `@auto/fs`, `@auto/utils`
+
+## v0.22.0
+
+* 🐞 fix `react-native-svg` dependency owner
+* ♻️ update dependencies: `@start/plugin-lib-istanbul`
+
+## v0.21.0
+
+* 🐞 bump `metro-react-native-babel-preset`
+* ♻️ update dependencies: `@rebox/android`, `@rebox/ios`
+
 ## v0.20.0
 
 * ♻️ update dependencies: `@x-ray/chrome-screenshots`, `@x-ray/firefox-screenshots`, `@x-ray/snapshots`, `@x-ray/native-screenshots-app`

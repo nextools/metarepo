@@ -1,3 +1,7 @@
+## v0.4.0
+
+* ♻️ update dependencies: `@auto/fs`, `@auto/utils`
+
 ## v0.3.1
 
 * 🐞 upgrade `execa` to v3

@@ -1,8 +1,10 @@
 import { TPrefixes, makeRegExp, TWorkspacesOptions, removeAutoNamePrefix } from '@auto/utils'
 import { TParsedMessageType, TParsedMessage } from './types'
 
+const PARSE_REGEXP = /^(.+?)\s(.+?):\s([^\n]*)(?:\n\n)?(.*)$/s
+
 export const parseCommitMessage = (commitText: string, packageNames: string[], prefixes: TPrefixes, { autoNamePrefix }: TWorkspacesOptions): TParsedMessage | null => {
-  const matchResult = commitText.match(/^(.+?)\s(.+?):\s*([\s\S]*)$/)
+  const matchResult = commitText.match(PARSE_REGEXP)
 
   if (matchResult === null) {
     return null
@@ -74,6 +76,16 @@ export const parseCommitMessage = (commitText: string, packageNames: string[], p
     }, [] as string[])
 
   const message = matchResult[3].trim()
+  const description = matchResult[4].trim()
+
+  if (description.length > 0) {
+    return {
+      type,
+      names,
+      message,
+      description,
+    }
+  }
 
   return {
     type,

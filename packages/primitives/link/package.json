@@ -1,6 +1,6 @@
 {
   "name": "@primitives/link",
-  "version": "0.7.1",
+  "version": "0.9.0",
   "description": "",
   "keywords": [],
   "main": "src/index.web.ts",
@@ -21,6 +21,6 @@
   "devDependencies": {
     "@types/react": "^16.8.6",
     "react": "^16.8.6",
-    "react-native": "^0.60.5"
+    "react-native": "^0.61.5"
   }
 }

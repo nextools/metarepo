@@ -1,3 +1,8 @@
+## v0.3.4
+
+* 🐞 tweak `eslint-plugin-import` rules
+* 🐞 bump deps
+
 ## v0.3.3
 
 * 🐞 check for unused vars with TS instead of ESLint

@@ -22,7 +22,7 @@ export default (formats: string[] = ['lcovonly', 'text-summary']) =>
 
     const coverageMap = createCoverageMap(coverageMapData)
     const sourceMapStore = createSourceMapStore()
-    const remappedCoverageMap = sourceMapStore.transformCoverage(coverageMap).map
+    const remappedCoverageMap = await sourceMapStore.transformCoverage(coverageMap)
     const reporter = createReporter()
 
     logMessage(formats.join(', '))

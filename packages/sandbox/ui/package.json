@@ -1,6 +1,6 @@
 {
   "name": "@sandbox/ui",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "",
   "keywords": [],
   "main": "src/index.web.ts",
@@ -36,11 +36,11 @@
   "devDependencies": {
     "autoprops": "^0.7.0",
     "react": "^16.8.6",
-    "react-native": "^0.60.5",
+    "react-native": "^0.61.5",
     "typeon": "^0.3.0"
   },
   "peerDependencies": {
     "react": "^16.8.6",
-    "react-native": "^0.60.5"
+    "react-native": ">=0.60.5"
   }
 }

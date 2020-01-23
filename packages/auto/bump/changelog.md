@@ -1,3 +1,7 @@
+## v0.4.0
+
+* ♻️ update dependencies: `@auto/utils`, `@auto/workspaces`
+
 ## v0.3.1
 
 * 🐞 fix `shouldAlwaysBumpDependents` + bump by dev deps combination

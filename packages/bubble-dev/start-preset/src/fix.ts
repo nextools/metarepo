@@ -7,11 +7,19 @@ import eslint from '@start/plugin-lib-eslint'
 import { objectHas } from 'tsfn'
 import { TPackageJson } from 'fixdeps'
 
-export const fixLint = () =>
-  sequence(
+export const fixLint = async () => {
+  const path = await import('path')
+  const packageJson = await import(path.resolve('package.json'))
+  const globs = packageJson.workspaces.reduce((acc: string[], glob: string) => (
+    acc.concat(
+      `${glob}/{src,test,x-ray}/**/*.{ts,tsx}`,
+      `${glob}/*.{ts,tsx}`
+    )
+  ), [] as string[])
+
+  return sequence(
     find([
-      'packages/*/{src,test,x-ray}/**/*.{ts,tsx}',
-      'packages/*/*/{src,test,x-ray}/**/*.{ts,tsx}',
+      ...globs,
       'tasks/**/*.ts',
     ]),
     read,
@@ -22,6 +30,7 @@ export const fixLint = () =>
     }),
     overwrite
   )
+}
 
 export const fixDeps = () => plugin('fixDeps', ({ logPath, logMessage }) => async () => {
   const { fixdeps } = await import('fixdeps')
