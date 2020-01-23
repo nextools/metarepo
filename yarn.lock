@@ -1847,6 +1847,13 @@
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
+"@types/compression-webpack-plugin@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@types/compression-webpack-plugin/-/compression-webpack-plugin-2.0.1.tgz#4db78c398c8e973077cc530014d6513f1c693951"
+  integrity sha512-40oKg2aByfUPShpYBkldYwOcO34yaqOIPdlUlR1+F3MFl2WfpqYq2LFKOcgjU70d1r1L8r99XHkxYdhkGajHSw==
+  dependencies:
+    "@types/webpack" "*"
+
 "@types/connect-history-api-fallback@*":
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/@types/connect-history-api-fallback/-/connect-history-api-fallback-1.3.3.tgz#4772b79b8b53185f0f4c9deab09236baf76ee3b4"
@@ -4237,6 +4244,11 @@ colorette@^1.0.7:
   resolved "https://registry.yarnpkg.com/colorette/-/colorette-1.1.0.tgz#1f943e5a357fac10b4e0f5aaef3b14cdc1af6ec7"
   integrity sha512-6S062WDQUXi6hOfkO/sBPVwE5ASXY4G2+b4atvhJfSsuUUhIaUKlkjLe9692Ipyt5/a+IPF5aVTu3V5gvXq5cg==
 
+colorido@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/colorido/-/colorido-0.2.0.tgz#64de4c7f2bae97758ad54f9aa860fc25add1cfc3"
+  integrity sha512-9Cb/e9Y3HCjG58/WQNKhnr8X4UwJbF6wpdsIbm+2T7QpFx9s+l/cERxKd7yo0Xvg81FNw3EipMIJrec6qhWPjw==
+
 colors@^1.1.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.4.0.tgz#c50491479d4c1bdaed2c9ced32cf7c7dc2360f78"
@@ -4322,6 +4334,18 @@ compressible@~2.0.16:
   integrity sha512-AF3r7P5dWxL8MxyITRMlORQNaOA2IkAFaTr4k7BUumjPtRpGDTZpl0Pb1XCO6JeDCBdp126Cgs9sMxqSjgYyRg==
   dependencies:
     mime-db ">= 1.43.0 < 2"
+
+compression-webpack-plugin@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/compression-webpack-plugin/-/compression-webpack-plugin-3.1.0.tgz#9f510172a7b5fae5aad3b670652e8bd7997aeeca"
+  integrity sha512-iqTHj3rADN4yHwXMBrQa/xrncex/uEQy8QHlaTKxGchT/hC0SdlJlmL/5eRqffmWq2ep0/Romw6Ld39JjTR/ug==
+  dependencies:
+    cacache "^13.0.1"
+    find-cache-dir "^3.0.0"
+    neo-async "^2.5.0"
+    schema-utils "^2.6.1"
+    serialize-javascript "^2.1.2"
+    webpack-sources "^1.0.1"
 
 compression@^1.7.1, compression@^1.7.4:
   version "1.7.4"
@@ -6392,7 +6416,7 @@ find-cache-dir@^2.0.0, find-cache-dir@^2.1.0:
     make-dir "^2.0.0"
     pkg-dir "^3.0.0"
 
-find-cache-dir@^3.2.0:
+find-cache-dir@^3.0.0, find-cache-dir@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/find-cache-dir/-/find-cache-dir-3.2.0.tgz#e7fe44c1abc1299f516146e563108fd1006c1874"
   integrity sha512-1JKclkYYsf1q9WIJKLZa9S9muC+08RIjzAlLrK4QcYLJMS6mk9yombQ9qf+zJ7H9LS800k0s44L4sDq9VYzqyg==
@@ -9206,6 +9230,14 @@ memfs@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/memfs/-/memfs-3.0.3.tgz#31601d6d053db0b54ca0ab793b796794db6bcb52"
   integrity sha512-uElu3oR/dM4GeKu86Fqi73eKdafJmmAaxEHx3iSayN+/zvCA0PTcsa6r1QhpN75SqxqdC7rfHqKZzzq3pgKQ5g==
+  dependencies:
+    fast-extend "1.0.2"
+    fs-monkey "0.3.3"
+
+memfs@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/memfs/-/memfs-3.0.4.tgz#17997ec34d67d0a4756f6a34f2fefd13a8dbab08"
+  integrity sha512-OcZEzwX9E5AoY8SXjuAvw0DbIAYwUzV/I236I8Pqvrlv7sL/Y0E9aRCon05DhaV8pg1b32uxj76RgW0s5xjHBA==
   dependencies:
     fast-extend "1.0.2"
     fs-monkey "0.3.3"
@@ -13262,6 +13294,11 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
+typeon@^0.3.0:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/typeon/-/typeon-0.3.1.tgz#cf80f63f4054c26aa47a0018fe79eef9944f3748"
+  integrity sha512-1QHbHAWyswMnXLAtK5n4RHtGVScyb4TerI8g9eKGeKIsEiVqwWsTUX5EnzzZcwwSY1q1pdBFgcZWP4/C7dlYGw==
+
 typescript@^3.2.1:
   version "3.7.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.4.tgz#1743a5ec5fef6a1fa9f3e4708e33c81c73876c19"
@@ -13778,7 +13815,7 @@ webpack-serve@^2.0.3:
     v8-compile-cache "^2.0.0"
     webpack-log "^1.1.2"
 
-webpack-sources@^1.4.0, webpack-sources@^1.4.1, webpack-sources@^1.4.3:
+webpack-sources@^1.0.1, webpack-sources@^1.4.0, webpack-sources@^1.4.1, webpack-sources@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.4.3.tgz#eedd8ec0b928fbf1cbfe994e22d2d890f330a933"
   integrity sha512-lgTS3Xhv1lCOKo7SA5TjKXMjpSM4sBjNV5+q2bqesbSPs5FjGmU6jjtBSkX9b4qW87vDIsCIlUPOEhbZrMdjeQ==
