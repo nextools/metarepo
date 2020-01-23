@@ -38,7 +38,7 @@ export type TPopup = TRect & {
 
 export const Popup = component(
   startWithType<TPopup>(),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapWithProps(({ item, discardedItems }) => ({
     isDiscarded: discardedItems.includes(item.id),
   })),

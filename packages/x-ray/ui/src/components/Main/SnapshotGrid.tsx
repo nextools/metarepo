@@ -20,7 +20,7 @@ export type TSnapshotGrid = TRect & {
 
 export const SnapshotGrid = pureComponent(
   startWithType<TSnapshotGrid>(),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapWithPropsMemo(({ width, items, filteredFiles }) => {
     const colCount = Math.max(1, Math.floor((width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
     const gridWidth = (width - (COL_SPACE * (colCount + 1))) / colCount

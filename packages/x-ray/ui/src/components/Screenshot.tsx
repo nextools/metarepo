@@ -10,7 +10,7 @@ export type TScreenshot = TSize & TApiLoadScreenshotOpts
 
 export const Screenshot = component(
   startWithType<TScreenshot>(),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapState('src', 'setSrc', () => null as string | null, []),
   onMountAsync(async ({ isMountedRef, dispatch, setSrc, ...opts }) => {
     try {

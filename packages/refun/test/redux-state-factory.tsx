@@ -1,27 +1,39 @@
 import React, { createContext } from 'react'
-import TestRenderer, { act } from 'react-test-renderer'
+import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import { Store } from 'redux'
 import { component, ReduxStateFactory, startWithType } from '../src'
 
 test('ReduxStateFactory', (t) => {
   const dispatch = (_: any) => _
+  let subscriber: any
+  const unsubscribeSpy = createSpy(() => {})
+  const subscribeSpy = createSpy(({ args }) => {
+    subscriber = args[0]
+
+    return unsubscribeSpy
+  })
+  const stateValues = [
+    { a: 4, b: '' }, // initial value
+    { a: 4, b: 'bar' }, // update unwatched value
+    { a: 8, b: 'bar' }, // update watched value
+  ]
+  const getStateSpy = createSpy(({ index }) => stateValues[index])
   const mapStateSpy = createSpy(({ args }) => ({ result: args[0].a * 2 }))
   const compSpy = createSpy(() => null)
   const getNumRenders = () => getSpyCalls(compSpy).length
-  const Context = createContext({ state: { a: 4, b: '' }, dispatch })
+  const store = { dispatch, getState: getStateSpy, subscribe: subscribeSpy } as Store<{a: number, b: string}>
   const MyComp = component(
     startWithType<{ foo: string }>(),
-    ReduxStateFactory(Context)(mapStateSpy, ['a'])
+    ReduxStateFactory(createContext(store))(mapStateSpy, ['a'])
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
-      <Context.Provider value={{ state: { a: 4, b: '' }, dispatch }}>
-        <MyComp foo="foo"/>
-      </Context.Provider>
+      <MyComp foo="foo"/>
     )
   })
 
@@ -44,11 +56,9 @@ test('ReduxStateFactory', (t) => {
   /* Update */
   act(() => {
     testRenderer.update(
-      <Context.Provider value={{ state: { a: 4, b: '' }, dispatch }}>
-        <MyComp
-          foo="bar"
-        />
-      </Context.Provider>
+      <MyComp
+        foo="bar"
+      />
     )
   })
 
@@ -69,13 +79,9 @@ test('ReduxStateFactory', (t) => {
     'Update: should not call map function'
   )
 
-  /* Update Context unwatched values */
+  /* Update unwatched values */
   act(() => {
-    testRenderer.update(
-      <Context.Provider value={{ state: { a: 4, b: 'b' }, dispatch }}>
-        <MyComp foo="bar"/>
-      </Context.Provider>
-    )
+    subscriber()
   })
 
   t.deepEquals(
@@ -83,9 +89,8 @@ test('ReduxStateFactory', (t) => {
     [
       [{ foo: 'foo', result: 8 }], // Mount
       [{ foo: 'bar', result: 8 }], // Update
-      [{ foo: 'bar', result: 8 }], // Update Context unwatched values
     ],
-    'Update Context unwatched values: should pass props'
+    'Update unwatched values: should not rerender'
   )
 
   t.deepEquals(
@@ -93,16 +98,12 @@ test('ReduxStateFactory', (t) => {
     [
       [{ a: 4, b: '' }],
     ],
-    'Update Context unwatched values: should not call map function'
+    'Update unwatched values: should not call map function'
   )
 
-  /* Update Context watched values */
+  /* Update watched values */
   act(() => {
-    testRenderer.update(
-      <Context.Provider value={{ state: { a: 8, b: 'b' }, dispatch }}>
-        <MyComp foo="bar"/>
-      </Context.Provider>
-    )
+    subscriber()
   })
 
   t.deepEquals(
@@ -110,19 +111,18 @@ test('ReduxStateFactory', (t) => {
     [
       [{ foo: 'foo', result: 8 }], // Mount
       [{ foo: 'bar', result: 8 }], // Update
-      [{ foo: 'bar', result: 8 }], // Update Context unwatched values
-      [{ foo: 'bar', result: 16 }], // Update Context watched values
+      [{ foo: 'bar', result: 16 }], // Update watched values
     ],
-    'Update Context watched values: should pass props'
+    'Update watched values: should pass props'
   )
 
   t.deepEquals(
     getSpyCalls(mapStateSpy),
     [
       [{ a: 4, b: '' }],
-      [{ a: 8, b: 'b' }],
+      [{ a: 8, b: 'bar' }],
     ],
-    'Update Context watched values: should call map function'
+    'Update watched values: should call map function'
   )
 
   /* Unmount */
@@ -134,14 +134,14 @@ test('ReduxStateFactory', (t) => {
     getSpyCalls(mapStateSpy),
     [
       [{ a: 4, b: '' }],
-      [{ a: 8, b: 'b' }],
+      [{ a: 8, b: 'bar' }],
     ],
     'Unmount: should not call map function'
   )
 
   t.equals(
     getNumRenders(),
-    4,
+    3,
     'Render: should render component exact times'
   )
 

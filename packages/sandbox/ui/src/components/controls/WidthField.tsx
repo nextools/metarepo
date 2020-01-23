@@ -13,7 +13,7 @@ export const widthFieldHeight = 30
 export const WidthField = pureComponent(
   startWithType<TWidthField>(),
   mapStoreState(({ width }) => ({ canvasWidth: width }), ['width']),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapHandlers({
     dispatchValue: ({ dispatch }) => (value: number) => dispatch(setWidth(value)),
   }),

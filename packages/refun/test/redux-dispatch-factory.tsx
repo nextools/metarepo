@@ -1,33 +1,32 @@
 import React, { createContext } from 'react'
-import TestRenderer, { act } from 'react-test-renderer'
+import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import { Store } from 'redux'
 import { component, ReduxDispatchFactory, startWithType } from '../src'
 
 test('ReduxDispatchFactory', (t) => {
   const dispatch = (_: any) => _
   const compSpy = createSpy(() => null)
   const getNumRenders = () => getSpyCalls(compSpy).length
-  const Context = createContext({ state: {}, dispatch })
+  const store = { dispatch, getState: void 0 as any, subscribe: void 0 as any } as Store<{a: number, b: string}>
   const MyComp = component(
     startWithType<{ foo: string }>(),
-    ReduxDispatchFactory(Context)
+    ReduxDispatchFactory(createContext(store))('disp')
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer!: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
-      <Context.Provider value={{ state: {}, dispatch }}>
-        <MyComp foo="foo"/>
-      </Context.Provider>
+      <MyComp foo="foo"/>
     )
   })
 
   t.deepEquals(
     getSpyCalls(compSpy),
     [
-      [{ foo: 'foo', dispatch }], // Mount
+      [{ foo: 'foo', disp: dispatch }], // Mount
     ],
     'Mount: should pass props'
   )
@@ -35,19 +34,15 @@ test('ReduxDispatchFactory', (t) => {
   /* Update */
   act(() => {
     testRenderer.update(
-      <Context.Provider value={{ state: {}, dispatch }}>
-        <MyComp
-          foo="bar"
-        />
-      </Context.Provider>
+      <MyComp foo="bar"/>
     )
   })
 
   t.deepEquals(
     getSpyCalls(compSpy),
     [
-      [{ foo: 'foo', dispatch }], // Mount
-      [{ foo: 'bar', dispatch }], // Update
+      [{ foo: 'foo', disp: dispatch }], // Mount
+      [{ foo: 'bar', disp: dispatch }], // Update
     ],
     'Update: should pass props'
   )

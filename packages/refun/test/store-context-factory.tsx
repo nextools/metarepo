@@ -1,5 +1,5 @@
 import React from 'react'
-import TestRenderer, { act } from 'react-test-renderer'
+import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { Store } from 'redux'
@@ -22,24 +22,22 @@ test('StoreContextFactory', (t) => {
   const mapStateSpy = createSpy(({ args }) => ({ result: args[0].a * 2 }))
   const dispatch = (_: any) => _
   const store = { getState: getStateSpy, dispatch, subscribe: subscribeSpy } as Store<{a: number, b: string}>
-  const { StoreProvider, mapStoreState, mapStoreDispatch } = StoreContextFactory(store)
+  const { mapStoreState, mapStoreDispatch } = StoreContextFactory(store)
   const compSpy = createSpy(() => null)
   const getNumRenders = () => getSpyCalls(compSpy).length
   const MyComp = component(
     startWithType<{ foo: string }>(),
     mapStoreState(mapStateSpy, ['a']),
-    mapStoreDispatch
+    mapStoreDispatch('dispatch')
   )(compSpy)
 
   /* Mount */
-  let testRenderer: any
+  let testRenderer: ReactTestRenderer
   act(() => {
     testRenderer = TestRenderer.create(
-      <StoreProvider>
-        <MyComp
-          foo="foo"
-        />
-      </StoreProvider>
+      <MyComp
+        foo="foo"
+      />
     )
   })
   // subscribe called
@@ -84,11 +82,9 @@ test('StoreContextFactory', (t) => {
   /* Update */
   act(() => {
     testRenderer.update(
-      <StoreProvider>
-        <MyComp
-          foo="bar"
-        />
-      </StoreProvider>
+      <MyComp
+        foo="bar"
+      />
     )
   })
   // subscribe not called
@@ -173,9 +169,8 @@ test('StoreContextFactory', (t) => {
     [
       [{ foo: 'foo', result: 8, dispatch }], // Mount
       [{ foo: 'bar', result: 8, dispatch }], // Update
-      [{ foo: 'bar', result: 8, dispatch }], // Update Store unwatched value
     ],
-    'Update Store unwatched value: should pass props'
+    'Update Store unwatched value: should not rerender'
   )
 
   /* Store watched update */
@@ -222,10 +217,9 @@ test('StoreContextFactory', (t) => {
     [
       [{ foo: 'foo', result: 8, dispatch }], // Mount
       [{ foo: 'bar', result: 8, dispatch }], // Update
-      [{ foo: 'bar', result: 8, dispatch }], // Update Store unwatched value
       [{ foo: 'bar', result: 16, dispatch }], // Update Store watched value
     ],
-    'Update Store unwatched value: should pass props'
+    'Update Store watched value: should pass props'
   )
 
   /* Unmount */
@@ -270,121 +264,8 @@ test('StoreContextFactory', (t) => {
 
   t.equals(
     getNumRenders(),
-    4,
+    3,
     'Render: should render component exact times'
-  )
-
-  t.end()
-})
-
-test('StoreContextFactory: null state case', (t) => {
-  let subscriber: any
-  const unsubscribeSpy = createSpy(() => {})
-  const subscribeSpy = createSpy(({ args }) => {
-    subscriber = args[0]
-
-    return unsubscribeSpy
-  })
-  const getStateSpy = createSpy(() => null)
-  const dispatch = (_: any) => _
-  const store = { getState: getStateSpy as any, dispatch, subscribe: subscribeSpy } as Store<{}>
-  const { StoreProvider } = StoreContextFactory(store)
-  const compSpy = createSpy(() => null)
-  const MyComp = component((p) => p)(compSpy)
-
-  /* Mount */
-  let testRenderer: any
-  act(() => {
-    testRenderer = TestRenderer.create(
-      <StoreProvider>
-        <MyComp/>
-      </StoreProvider>
-    )
-  })
-
-  // subscribe called
-  t.deepEquals(
-    getSpyCalls(subscribeSpy),
-    [
-      [subscriber],
-    ],
-    'Mount: should call subscribe'
-  )
-
-  // unsubscribe not called
-  t.deepEquals(
-    getSpyCalls(unsubscribeSpy),
-    [],
-    'Mount: should not call unsubscribe'
-  )
-
-  // getState called
-  t.deepEquals(
-    getSpyCalls(getStateSpy),
-    [
-      [],
-    ],
-    'Mount: should call getState'
-  )
-
-  // component not rendered
-  t.deepEquals(
-    getSpyCalls(compSpy),
-    [],
-    'Mount: should not render component'
-  )
-
-  /* Update Store */
-  act(() => {
-    // kick subscriber
-    subscriber()
-  })
-
-  // subscribe not called
-  t.deepEquals(
-    getSpyCalls(subscribeSpy),
-    [
-      [subscriber],
-    ],
-    'Update Store: should call subscribe'
-  )
-
-  // unsubscribe not called
-  t.deepEquals(
-    getSpyCalls(unsubscribeSpy),
-    [],
-    'Update Store: should not call unsubscribe'
-  )
-
-  // getState called
-  t.deepEquals(
-    getSpyCalls(getStateSpy),
-    [
-      [],
-      [],
-    ],
-    'Update Store: should call getState'
-  )
-
-  // component not rendered
-  t.deepEquals(
-    getSpyCalls(compSpy),
-    [],
-    'Update Store: should not render component'
-  )
-
-  /* Unmount */
-  act(() => {
-    testRenderer.unmount()
-  })
-
-  // unsubscribe called
-  t.deepEquals(
-    getSpyCalls(unsubscribeSpy),
-    [
-      [],
-    ],
-    'Mount: should call unsubscribe'
   )
 
   t.end()

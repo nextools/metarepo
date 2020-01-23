@@ -1,12 +1,9 @@
 import { useContext, Context } from 'react'
+import { Store } from 'redux'
 import { TExtend } from 'tsfn'
-import { TStoreContextValue } from './redux-state-factory'
 
-export const ReduxDispatchFactory = <S, D>(context: Context<TStoreContextValue<S, D>>) => <P extends {}>(props: P): TExtend<P, { dispatch: D }> => {
-  const { dispatch } = useContext(context)
-
-  return {
+export const ReduxDispatchFactory = <STORE extends Store>(context: Context<STORE>) => <K extends string>(dispatchName: K) =>
+<P extends {}>(props: P): TExtend<P, { [k in K]: STORE['dispatch'] }> => ({
     ...props,
-    dispatch,
-  }
-}
+    [dispatchName]: useContext(context).dispatch,
+  }) as any

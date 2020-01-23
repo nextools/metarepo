@@ -25,7 +25,7 @@ export const ComponentControls = pureComponent(
     selectedSetIndex,
     selectedElementPath,
   }), ['componentKey', 'selectedSetIndex', 'selectedElementPath']),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapHandlers({
     onChangeComponentName: ({ dispatch }) => (value: string | null) => dispatch(setComponent(value)),
     onChangePropsSetIndex: ({ dispatch }) => (value: string) => dispatch(setSelectedSetIndex(value)),

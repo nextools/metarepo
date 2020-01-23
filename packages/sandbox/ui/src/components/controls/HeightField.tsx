@@ -13,7 +13,7 @@ export const heightFieldHeight = 30
 export const HeightField = pureComponent(
   startWithType<THeightField>(),
   mapStoreState(({ height }) => ({ canvasHeight: height }), ['height']),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapHandlers({
     dispatchValue: ({ dispatch }) => (value: number) => dispatch(setHeight(value)),
   }),

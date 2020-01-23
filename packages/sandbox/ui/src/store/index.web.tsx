@@ -37,6 +37,5 @@ if (process.env.NODE_ENV === 'development') {
 
 const StoreContext = StoreContextFactory(store)
 
-export const StoreProvider = StoreContext.StoreProvider
 export const mapStoreState = StoreContext.mapStoreState
 export const mapStoreDispatch = StoreContext.mapStoreDispatch

@@ -31,7 +31,7 @@ export const Sandbox = component(
     componentKey,
     selectedSetIndex,
   }), ['isVisibleControls', 'componentKey', 'selectedSetIndex']),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapHandlers({
     onToggleControls: ({ dispatch }) => () => dispatch(toggleControls()),
   }),
