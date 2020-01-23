@@ -41,7 +41,7 @@ export const DemoArea = pureComponent(
     hasGrid,
     transform,
   }), ['width', 'height', 'hasGrid', 'shouldStretch', 'transform']),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapHandlers({
     dispatchTransform: ({ dispatch }) => (transform: TTransform) => dispatch(setTransform(transform)),
   }),

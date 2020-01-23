@@ -20,7 +20,7 @@ export type TResolutionDropdown = TPosition
 export const ResolutionDropdown = pureComponent(
   startWithType<TResolutionDropdown>(),
   mapStoreState(({ resolutionKey }) => ({ resolutionKey }), ['resolutionKey']),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapHandlers({
     dispatchResolutionKey: ({ dispatch }) => (key: TResolutionKey | null) => dispatch(setResolution(key)),
   }),

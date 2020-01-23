@@ -21,7 +21,7 @@ export type TLine = {
 
 export const Line = component(
   startWithType<TLine>(),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapHovered,
   mapWithProps(({ theme, isHovered, selectedElementPath, line }) => ({
     backgroundColor: (isHovered || line.meta === selectedElementPath) ? theme.foreground : theme.foregroundTransparent,

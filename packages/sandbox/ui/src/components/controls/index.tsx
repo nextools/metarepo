@@ -28,7 +28,7 @@ export const Controls = pureComponent(
     isCheckedInspect: shouldInspect,
     isCheckedGrid: hasGrid,
   }), ['shouldStretch', 'shouldInspect', 'hasGrid']),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapHandlers({
     onToggleTheme: ({ dispatch }) => () => dispatch(toggleTheme()),
     onToggleStretch: ({ dispatch }) => () => dispatch(toggleStretch()),

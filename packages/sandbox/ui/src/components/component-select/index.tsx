@@ -17,7 +17,7 @@ export const ComponentSelect = pureComponent(
   mapStoreState(({ componentKey }) => ({
     componentKey,
   }), ['componentKey']),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapHandlers({
     onChangeComponentName: ({ dispatch }) => (value: string | null) => dispatch(setComponent(value)),
   }),

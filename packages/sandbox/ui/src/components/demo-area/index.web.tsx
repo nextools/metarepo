@@ -52,7 +52,7 @@ export const DemoArea = pureComponent(
     transform,
     selectedElementPath,
   }), ['width', 'height', 'hasGrid', 'shouldStretch', 'shouldInspect', 'transform', 'selectedElementPath']),
-  mapStoreDispatch,
+  mapStoreDispatch('dispatch'),
   mapHandlers({
     dispatchTransform: ({ dispatch }) => (transform: TTransform) => dispatch(setTransform(transform)),
   }),
