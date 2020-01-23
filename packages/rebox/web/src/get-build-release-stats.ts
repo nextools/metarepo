@@ -10,6 +10,8 @@ import CompressionPlugin from 'compression-webpack-plugin'
 const vol = Volume.fromJSON({})
 const fs = createFsFromVolume(vol) as any
 
+// https://github.com/webpack/memory-fs/issues/67
+// https://github.com/webpack/memory-fs/issues/72
 fs.join = joinPath
 
 const nodeModulesRegExp = /[\\/]node_modules[\\/]/
