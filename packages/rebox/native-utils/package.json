@@ -20,7 +20,7 @@
     "@haul-bundler/preset-0.60": "^0.15.0",
     "@psxcode/wait": "^0.1.1",
     "babel-loader": "^8.0.5",
-    "copie": "^0.3.0",
+    "copie": "^1.0.0",
     "execa": "^3.0.0",
     "fast-glob": "^3.0.0",
     "is-port-reachable": "^3.0.0",
@@ -29,7 +29,7 @@
     "react-dom": "^16.8.6",
     "request-promise-native": "^1.0.5",
     "request": "^2.87.0",
-    "tsfn": "^0.2.0"
+    "tsfn": "^1.0.0"
   },
   "devDependencies": {
     "@types/request-promise-native": "^1.0.15",

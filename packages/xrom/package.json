@@ -13,7 +13,7 @@
     "execa": "^4.0.0",
     "request-promise-native": "^1.0.8",
     "signal-exit": "^3.0.2",
-    "tsfn": "^0.2.4"
+    "tsfn": "^1.0.0"
   },
   "devDependencies": {
     "@types/request-promise-native": "^1.0.17",

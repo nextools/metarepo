@@ -13,7 +13,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "tsfn": "^0.2.0"
+    "tsfn": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
@@ -21,7 +21,7 @@
     "react": "^16.8.6",
     "react-test-renderer": "^16.9.0",
     "redux": "^4.0.0",
-    "spyfn": "^0.2.0",
-    "spyt": "^0.2.0"
+    "spyfn": "^1.0.0",
+    "spyt": "^1.0.0"
   }
 }

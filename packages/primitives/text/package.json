@@ -13,16 +13,16 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@themeables/text": "^0.1.0",
-    "colorido": "^0.2.0",
-    "stili": "^0.2.0",
-    "refun": "^0.4.0",
-    "tsfn": "^0.2.0"
+    "@themeables/text": "^1.0.0",
+    "colorido": "^1.0.0",
+    "stili": "^1.0.0",
+    "refun": "^1.0.0",
+    "tsfn": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
     "@types/react-native": "^0.60.13",
-    "autoprops": "^0.7.0",
+    "autoprops": "^1.0.0",
     "react": "^16.8.6",
     "react-native": "^0.61.5"
   }

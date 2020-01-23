@@ -10,13 +10,13 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
-    "@auto/bump": "^0.4.0",
-    "@auto/fs": "^0.3.0",
-    "@auto/git": "^0.3.0",
-    "@auto/log": "^0.5.0",
-    "@auto/npm": "^0.4.0",
-    "@auto/utils": "^0.3.0",
-    "@start/plugin": "^0.3.0",
+    "@auto/bump": "^1.0.0",
+    "@auto/fs": "^1.0.0",
+    "@auto/git": "^1.0.0",
+    "@auto/log": "^1.0.0",
+    "@auto/npm": "^1.0.0",
+    "@auto/utils": "^1.0.0",
+    "@start/plugin": "^1.0.0",
     "p-all": "^2.1.0",
     "prompts": "^2.0.0"
   },

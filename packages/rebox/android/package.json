@@ -14,13 +14,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@rebox/native-utils": "^0.4.0",
+    "@rebox/native-utils": "^1.0.0",
     "execa": "^3.0.0",
     "make-dir": "^3.0.0",
     "move-file": "^1.2.0",
-    "pifs": "^0.1.0",
-    "rn-fonts": "^0.1.2",
-    "tsfn": "^0.2.0"
+    "pifs": "^1.0.0",
+    "rn-fonts": "^1.0.0",
+    "tsfn": "^1.0.0"
   },
   "devDependencies": {
     "react": "^16.8.0",

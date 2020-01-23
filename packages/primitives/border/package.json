@@ -14,10 +14,10 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@primitives/block": "^0.6.0",
-    "@themeables/border": "^0.1.0",
-    "colorido": "^0.2.0",
-    "refun": "^0.4.0"
+    "@primitives/block": "^1.0.0",
+    "@themeables/border": "^1.0.0",
+    "colorido": "^1.0.0",
+    "refun": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

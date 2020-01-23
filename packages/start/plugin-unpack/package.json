@@ -20,7 +20,7 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
-    "@start/plugin": "^0.3.1",
+    "@start/plugin": "^1.0.0",
     "decompress": "^4.2.0"
   },
   "devDependencies": {

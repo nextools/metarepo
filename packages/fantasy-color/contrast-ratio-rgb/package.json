@@ -14,9 +14,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@fantasy-color/types": "^0.1.0",
-    "@fantasy-color/luminance-rgb": "^0.1.0",
-    "@fantasy-color/contrast-ratio-luminance": "^0.1.0"
+    "@fantasy-color/types": "^1.0.0",
+    "@fantasy-color/luminance-rgb": "^1.0.0",
+    "@fantasy-color/contrast-ratio-luminance": "^1.0.0"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",

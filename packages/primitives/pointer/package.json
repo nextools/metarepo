@@ -13,9 +13,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "stili": "^0.2.0",
-    "refun": "^0.4.0",
-    "tsfn": "^0.2.0"
+    "stili": "^1.0.0",
+    "refun": "^1.0.0",
+    "tsfn": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "pifs": "^0.1.0",
-    "tsfn": "^0.2.0"
+    "pifs": "^1.0.0",
+    "tsfn": "^1.0.0"
   }
 }

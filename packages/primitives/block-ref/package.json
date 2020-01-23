@@ -13,7 +13,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@primitives/block": "^0.6.0"
+    "@primitives/block": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
