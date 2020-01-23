@@ -66,7 +66,7 @@
     "auto": {
       "initialType": "minor",
       "autoNamePrefix": "@",
-      "zeroBreakingChangeType": "minor",
+      "zeroBreakingChangeType": "major",
       "npm": {
         "publishSubDirectory": "build",
         "access": "public"
@@ -102,6 +102,6 @@
     ]
   },
   "engines": {
-    "node": ">=8.6.0"
+    "node": ">=10.13.0"
   }
 }

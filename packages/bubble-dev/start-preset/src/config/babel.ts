@@ -8,7 +8,7 @@ const babelPresetReactNativeNoCompact = (...args: any[]) => ({
   compact: false,
 })
 
-const node = '8.6.0'
+const node = '10.13.0'
 
 const babelConfigCommon: BabelConfig = {
   babelrc: false,

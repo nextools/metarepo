@@ -14,7 +14,7 @@
   "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
   "engines": {
-    "node": ">=8.6.0"
+    "node": ">=10.13.0"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
