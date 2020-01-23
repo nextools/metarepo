@@ -1,5 +1,5 @@
 import path from 'path'
-import webpack, { Stats, Configuration as WebpackConfig } from 'webpack'
+import webpack, { Stats, Configuration as WebpackConfig, OutputFileSystem } from 'webpack'
 import TerserPlugin from 'terser-webpack-plugin'
 import { browsersList } from '@bubble-dev/browsers-list'
 import { isObject } from 'tsfn'
@@ -8,7 +8,7 @@ import joinPath from 'memory-fs/lib/join'
 import CompressionPlugin from 'compression-webpack-plugin'
 
 const vol = Volume.fromJSON({})
-const fs = createFsFromVolume(vol) as any
+const fs = createFsFromVolume(vol) as unknown as OutputFileSystem
 
 // https://github.com/webpack/memory-fs/issues/67
 // https://github.com/webpack/memory-fs/issues/72
