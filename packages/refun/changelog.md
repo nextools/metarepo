@@ -1,3 +1,17 @@
+## v1.0.0
+
+* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+
+* 💥 require explicit name for dispatch prop
+
+* 🌱 add `onLayout`
+
+* 🐞 fix props assignment in `onChange`
+
+* 🐞 subscribe to store on consumer side
+
+* ♻️ update dependencies: `tsfn`
+
 ## v0.4.5
 
 * 🐞 add `Context` to result of Redux factory

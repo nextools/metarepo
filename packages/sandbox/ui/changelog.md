@@ -1,3 +1,9 @@
+## v1.0.0
+
+* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+
+* ♻️ update dependencies: `@primitives/background`, `@primitives/border`, `@primitives/input`, `@primitives/text`, `colorido`, `elegir`, `@primitives/checkbox`, `@primitives/block`, `@primitives/button`, `@primitives/pointer`, `@primitives/root`, `@primitives/select`, `@primitives/size`, `@primitives/transform`, `refun`, `stili`, `syntx`, `@primitives/animation`, `tsfn`, `@primitives/svg`
+
 ## v0.6.1
 
 * 🐞 fix peer-dependency version range for React Native

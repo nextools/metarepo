@@ -1,3 +1,9 @@
+## v1.0.0
+
+* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+
+* ♻️ update dependencies: `colorido`, `@themeables/vector-shape`, `@primitives/block`, `@primitives/svg`
+
 ## v0.2.1
 
 * ♻️ update dependencies: `@primitives/svg`

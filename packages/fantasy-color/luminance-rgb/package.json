@@ -1,6 +1,6 @@
 {
   "name": "@fantasy-color/luminance-rgb",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "For a given RGB color (coded as an RGB object), return its relative luminance",
   "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/luminance-rgb",
   "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",

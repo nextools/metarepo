@@ -1,3 +1,9 @@
+## v1.0.0
+
+* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+
+* ♻️ update dependencies: `rn-fonts`, `@rebox/native-utils`, `copie`, `dleet`, `pifs`, `tsfn`
+
 ## v0.8.1
 
 * 🐞 fix `react-native-svg` dependency owner

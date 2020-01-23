@@ -1,6 +1,6 @@
 {
   "name": "@start/plugin-lib-rollup",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "description": "🏭 Bundle files using Rollup",
   "keywords": "tasks, runner, start, start-plugin, rollup",
   "repository": "deepsweet/start",

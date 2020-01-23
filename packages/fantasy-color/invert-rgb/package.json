@@ -1,6 +1,6 @@
 {
   "name": "@fantasy-color/invert-rgb",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Invert the RGB color object",
   "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/invert-rgb",
   "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",

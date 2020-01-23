@@ -1,6 +1,6 @@
 {
   "name": "@fantasy-color/contrast-ratio-luminance",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Calculate the contrast ratio of two relative luminances",
   "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/contrast-ratio-luminance",
   "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",

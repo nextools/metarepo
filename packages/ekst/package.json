@@ -1,8 +1,12 @@
 {
   "name": "ekst",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Append, prepend, replace or remove basename extensions",
-  "keywords": ["basename", "extname", "extension"],
+  "keywords": [
+    "basename",
+    "extname",
+    "extension"
+  ],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",

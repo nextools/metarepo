@@ -1,6 +1,6 @@
 {
   "name": "@fantasy-color/normalize-rgba",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Transform from RGBA objects from the 0-255 range to 0.1 decimal points",
   "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/normalize-rgba",
   "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",

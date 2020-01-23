@@ -1,3 +1,21 @@
+## v1.0.0
+
+* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+
+* 🌱 add `globalAliases` option to `buildRelease`
+
+* 🌱 add `globalConstants` option to `buildRelease`
+
+* 🌱 add `shouldGenerateBundleAnalyzerReport` option to `buildRelease`
+
+* 🌱 add `shouldGenerateSourceMaps` option to `buildRelease`
+
+* 🌱 add `isQuiet` option to `buildRelease`
+
+* 🐞 fix `NODE_ENV=production` in `buildRelease`
+
+* ♻️ update dependencies: `tsfn`, `@bubble-dev/browsers-list`
+
 ## v0.5.0
 
 * 🌱 support Optional Chaining and Nullish Coalescing ES features

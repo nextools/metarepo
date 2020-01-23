@@ -1,3 +1,9 @@
+## v1.0.0
+
+* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+
+* ♻️ update dependencies: `pifs`, `@x-ray/tar-fs`, `@x-ray/screenshot-utils`, `@x-ray/common-utils`, `tsfn`
+
 ## v0.4.1
 
 * 🐞 fix peer-dependency version range for React Native

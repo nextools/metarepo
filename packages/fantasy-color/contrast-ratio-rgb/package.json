@@ -1,6 +1,6 @@
 {
   "name": "@fantasy-color/contrast-ratio-rgb",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Calculate contrast ratio based on RGB input",
   "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/contrast-ratio-rgb",
   "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",

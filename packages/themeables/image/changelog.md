@@ -1,3 +1,9 @@
+## v1.0.0
+
+* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+
+* ♻️ update dependencies: `@themeables/core`, `refun`
+
 ## v0.1.2
 
 * 🐞 update package.json for image primitive and themeable (#207)

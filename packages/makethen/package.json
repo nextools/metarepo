@@ -1,6 +1,6 @@
 {
   "name": "makethen",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "description": "Promisify Node.js-style callbacks with native Promise",
   "keywords": [
     "promise",

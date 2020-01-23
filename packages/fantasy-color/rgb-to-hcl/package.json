@@ -1,6 +1,6 @@
 {
   "name": "@fantasy-color/rgb-to-hcl",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Transform RGB objects to HCL objects",
   "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/rgb-to-hcl",
   "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",

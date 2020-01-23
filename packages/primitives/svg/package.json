@@ -1,6 +1,6 @@
 {
   "name": "@primitives/svg",
-  "version": "0.1.7",
+  "version": "1.0.0",
   "description": "",
   "keywords": [],
   "main": "src/index.web.ts",

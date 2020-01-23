@@ -1,6 +1,6 @@
 {
   "name": "@primitives/input",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "",
   "keywords": [],
   "main": "src/index.web.ts",

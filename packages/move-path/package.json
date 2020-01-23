@@ -1,8 +1,13 @@
 {
   "name": "move-path",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Move path to destination folder",
-  "keywords": ["fs", "path", "move", "destination"],
+  "keywords": [
+    "fs",
+    "path",
+    "move",
+    "destination"
+  ],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",

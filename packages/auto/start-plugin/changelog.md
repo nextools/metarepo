@@ -1,3 +1,9 @@
+## v1.0.0
+
+* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+
+* ♻️ update dependencies: `@auto/log`, `@auto/npm`, `@auto/fs`, `@auto/bump`, `@auto/git`, `@auto/utils`, `@start/plugin`
+
 ## v0.7.0
 
 * ♻️ update dependencies: `@auto/git`, `@auto/log`, `@auto/bump`, `@auto/npm`, `@auto/fs`, `@auto/utils`

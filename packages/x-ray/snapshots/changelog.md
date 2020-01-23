@@ -1,3 +1,9 @@
+## v1.0.0
+
+* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+
+* ♻️ update dependencies: `bro-resolve`, `@x-ray/ui`, `@x-ray/tar-fs`, `@x-ray/common-utils`, `@rebox/web`, `tsfn`, `@x-ray/serialize-react-tree`, `@x-ray/worker-utils`
+
 ## v0.6.0
 
 * ♻️ update dependencies: `@x-ray/ui`

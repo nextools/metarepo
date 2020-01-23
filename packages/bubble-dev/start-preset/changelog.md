@@ -1,3 +1,15 @@
+## v1.0.0
+
+* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+
+* 🌱 add `CheckChromePerfSnapshots` task factory
+
+* 🐞 use workspaces to find files to fixLint
+
+* 🐞 use workspaces to find files to lint
+
+* ♻️ update dependencies: `bro-resolve`, `@x-ray/chrome-perf-snapshots`, `@x-ray/chrome-screenshots`, `@x-ray/firefox-screenshots`, `@x-ray/snapshots`, `@start/plugin-lib-codecov`, `@rebox/android`, `@rebox/ios`, `copie`, `@start/plugin-copy`, `dleet`, `@start/plugin-remove`, `fixdeps`, `move-path`, `@start/plugin-write`, `@auto/start-plugin`, `@auto/log`, `@auto/npm`, `@auto/fs`, `pifs`, `@start/plugin-overwrite`, `@start/plugin-read`, `@x-ray/native-screenshots`, `@x-ray/screenshot-utils`, `@x-ray/web-mobile-screenshots`, `@x-ray/native-screenshots-app`, `@x-ray/web-mobile-screenshots-app`, `rn-resolve`, `@x-ray/common-utils`, `tsfn`, `@rebox/web`, `@start/plugin-lib-istanbul`, `typeon`, `@auto/bump`, `@auto/git`, `@auto/utils`, `@bubble-dev/browsers-list`, `@start/plugin`, `@start/plugin-env`, `@start/plugin-find`, `@start/plugin-lib-babel`, `@start/plugin-lib-eslint`, `@start/plugin-lib-tape`, `@start/plugin-lib-typescript-check`, `@start/plugin-lib-typescript-generate`, `@start/plugin-parallel`, `@start/plugin-rename`, `@start/plugin-sequence`, `@start/reporter-verbose`
+
 ## v0.23.0
 
 * ♻️ update dependencies: `@auto/start-plugin`, `@auto/git`, `@auto/log`, `@auto/bump`, `@auto/npm`, `@auto/fs`, `@auto/utils`
