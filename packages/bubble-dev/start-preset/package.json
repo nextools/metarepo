@@ -79,7 +79,7 @@
     "pifs": "^1.0.0",
     "prompts": "^2.1.0",
     "react": "^16.9.0",
-    "react-native-svg": "^10.1.0",
+    "react-native-svg": "^11.0.1",
     "request-promise-native": "^1.0.7",
     "rn-resolve": "^1.0.0",
     "tap-diff": "^0.1.1",
