@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
-    "@types/react-native": "^0.60.13",
+    "@types/react-native": "^0.61.4",
     "@x-ray/common-utils": "^1.0.0",
     "@x-ray/screenshot-utils": "^1.0.0",
     "@x-ray/snapshots": "^1.0.0",
