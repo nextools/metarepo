@@ -12,7 +12,7 @@
   "dependencies": {
     "@auto/fs": "^1.0.0",
     "@auto/utils": "^1.0.0",
-    "execa": "^3.0.0"
+    "execa": "^4.0.0"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",

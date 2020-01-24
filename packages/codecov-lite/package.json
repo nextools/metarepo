@@ -20,7 +20,7 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.4.2",
-    "got": "^9.6.0"
+    "got": "^10.2.2"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",

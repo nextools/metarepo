@@ -19,7 +19,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.2",
     "@start/plugin": "^1.0.0",
-    "globby": "^10.0.0"
+    "globby": "^11.0.0"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
