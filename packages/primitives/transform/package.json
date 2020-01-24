@@ -13,12 +13,12 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "stili": "^1.0.0",
-    "refun": "^1.0.0"
+    "refun": "^1.0.0",
+    "stili": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
-    "@types/react-native": "^0.60.13",
+    "@types/react-native": "^0.61.4",
     "react": "^16.8.6",
     "react-native": "^0.61.5"
   }
