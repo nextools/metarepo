@@ -1,4 +1,4 @@
-import EventEmitter from 'events'
+import { EventEmitter } from 'events'
 import plugin from '@start/plugin'
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
