@@ -14,6 +14,7 @@ import xRaySnapshots from './plugins/snapshots'
 import xRayChromeScreenshots from './plugins/chrome-screenshots'
 import xRayFirefoxScreenshots from './plugins/firefox-screenshots'
 import xRayChromePerfSnapshots from './plugins/chrome-perf-snapshots'
+import xRayBundleSizeSnapshots from './plugins/bundle-size-snapshots'
 import xRayIosScreenshots from './plugins/ios-screenshots'
 import xRayAndroidScreenshots from './plugins/android-screenshots'
 import xRayIosWebScreenshots from './plugins/ios-web-screenshots'
@@ -115,6 +116,14 @@ export const CheckChromePerfSnapshots = (fontsDir?: string) => (component = '**'
     find(`packages/${component}/x-ray/perf-snapshots.tsx`),
     env({ NODE_ENV: 'production' }),
     xRayChromePerfSnapshots(fontsDir)
+  )
+}
+
+export const checkBundleSizeSnapshots = (component = '**') => {
+  return sequence(
+    find(`packages/${component}/x-ray/bundle-size-snapshots.tsx`),
+    env({ NODE_ENV: 'production' }),
+    xRayBundleSizeSnapshots()
   )
 }
 

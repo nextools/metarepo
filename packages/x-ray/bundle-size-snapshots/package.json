@@ -1,0 +1,38 @@
+{
+  "name": "@x-ray/bundle-size-snapshots",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "@rebox/web": "^1.0.0",
+    "@x-ray/common-utils": "^1.0.0",
+    "@x-ray/tar-fs": "^1.0.0",
+    "@x-ray/ui": "^1.0.0",
+    "@x-ray/worker-utils": "^1.0.0",
+    "bro-resolve": "^1.0.0",
+    "diff": "^4.0.1",
+    "make-dir": "^3.0.0",
+    "p-all": "^2.0.0",
+    "pkg-dir": "^4.2.0",
+    "pretty-ms": "^5.0.0",
+    "tsfn": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/diff": "^4.0.2",
+    "@types/react": "^16.8.6",
+    "react": "^16.8.6"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime",
+      "@x-ray/ui"
+    ]
+  }
+}
