@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 fix module resolver
+
 ## v1.0.1
 
 * 🐞 bump compatible deps

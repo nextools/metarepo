@@ -1,3 +1,9 @@
+## v1.0.2
+
+* 🐞 add ability to fix deps of a single package
+
+* 🐞 add `react-native-view-shot` dependency
+
 ## v1.0.1
 
 * 🐞 bump `react-native-svg` to v11
