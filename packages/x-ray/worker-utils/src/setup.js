@@ -45,7 +45,20 @@ const resolvePath = (value, basedir, { mocks, extensions, entryPointField }) => 
     return cache.get(value)
   }
 
-  const packageDir = pkgDir.sync(path.dirname(require.resolve(value)))
+  try {
+    if (require.resolve(value) === value) {
+      return null
+    }
+  } catch {
+    return null
+  }
+
+  const packageDir = pkgDir.sync(
+    resolve.sync(value, {
+      basedir,
+      extensions,
+    })
+  )
 
   if (!packageDir) {
     return null
