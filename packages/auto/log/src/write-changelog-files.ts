@@ -13,7 +13,7 @@ export const writeChangelogFiles = async (logs: TLog[], prefixes: TPrefixes) => 
       newLog += `* ${prefixes.required[message.type].value} ${message.value}\n`
 
       if (isString(message.description)) {
-        newLog += `\n  ${message.description}\n`
+        newLog += `\n  \`\`\`\n  ${message.description.replace(/\n/g, '\n  ')}\n  \`\`\`\n`
       }
 
       if (index < log.messages.length - 1) {
