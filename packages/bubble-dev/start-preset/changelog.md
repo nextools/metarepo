@@ -1,3 +1,9 @@
+## v1.1.1
+
+* 🐞 enhance `fixDeps` task reports
+
+* 🐞 fix deps
+
 ## v1.1.0
 
 * 🐞 refactor using shared Babel config
