@@ -1,6 +1,6 @@
 {
   "name": "@bubble-dev/babel-config",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
@@ -19,8 +19,7 @@
     "@bubble-dev/browsers-list": "^1.0.0",
     "metro-react-native-babel-preset": "0.56.4"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "fixdeps": {
     "ignoredPackages": [
       "@babel/preset-env",

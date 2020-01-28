@@ -1,3 +1,7 @@
+## v1.0.3
+
+* 🐞 tweak Babel config and deps
+
 ## v1.0.2
 
 * 🐞 fix module resolver

@@ -1,3 +1,9 @@
+## v1.1.0
+
+* 🐞 refactor using shared Babel config
+
+* ♻️ update dependencies: `@bubble-dev/babel-config`
+
 ## v1.0.1
 
 * 🐞 bump compatible deps
