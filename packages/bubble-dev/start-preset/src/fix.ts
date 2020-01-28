@@ -1,3 +1,4 @@
+import path from 'path'
 import plugin from '@start/plugin'
 import overwrite from '@start/plugin-overwrite'
 import sequence from '@start/plugin-sequence'
@@ -67,21 +68,21 @@ export const fixDeps = (packageDir?: string) => plugin('fixDeps', ({ logPath, lo
     })
 
     if (result !== null) {
-      logPath(dir)
+      logPath(`${path.basename(dir)}:`)
 
       const addedDeps = Object.keys(result.addedDeps)
       const addedDevDeps = Object.keys(result.addedDevDeps)
 
       if (addedDeps.length > 0) {
-        logMessage(`added deps: ${addedDeps.join(', ')}`)
+        logMessage(`- added deps: ${addedDeps.join(', ')}`)
       }
 
       if (addedDevDeps.length > 0) {
-        logMessage(`added devDeps: ${addedDevDeps.join(', ')}`)
+        logMessage(`- added devDeps: ${addedDevDeps.join(', ')}`)
       }
 
       if (result.removedDeps.length > 0) {
-        logMessage(`removed deps: ${result.removedDeps.join(', ')}`)
+        logMessage(`- removed deps: ${result.removedDeps.join(', ')}`)
       }
     }
   }
@@ -97,7 +98,12 @@ export const fixDeps = (packageDir?: string) => plugin('fixDeps', ({ logPath, lo
     fixPackageDir(resolvedPackageDir)
   } else {
     for (const dir of Object.values(packageDirs)) {
-      await fixPackageDir(dir)
+      try {
+        await fixPackageDir(dir)
+      } catch (e) {
+        logMessage(`${path.basename(dir)}:`)
+        logMessage(`- error: ${e.message}`)
+      }
     }
   }
 })
