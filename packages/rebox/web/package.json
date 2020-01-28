@@ -11,14 +11,7 @@
   "main": "src/index.ts",
   "dependencies": {
     "@babel/core": "^7.4.3",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.4.4",
-    "@babel/plugin-proposal-optional-chaining": "^7.6.0",
-    "@babel/plugin-syntax-bigint": "^7.4.4",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/preset-typescript": "^7.3.3",
-    "@bubble-dev/browsers-list": "^1.0.0",
+    "@bubble-dev/babel-config": "^0.0.0",
     "babel-loader": "^8.0.5",
     "core-js": "^3.1.4",
     "file-loader": "^5.0.2",
@@ -26,9 +19,9 @@
     "html-webpack-plugin": "^3.2.0",
     "terser-webpack-plugin": "^2.0.0",
     "tsfn": "^1.0.0",
-    "webpack": "^4.30.0",
     "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-dev-server": "^3.3.1"
+    "webpack-dev-server": "^3.3.1",
+    "webpack": "^4.30.0"
   },
   "devDependencies": {
     "@types/html-webpack-plugin": "^3.2.0",
