@@ -2,7 +2,7 @@ import path from 'path'
 import Webpack, { Configuration as TWebpackConfig, Stats } from 'webpack'
 import WebpackDevServer, { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
-import { browsersList } from '@bubble-dev/browsers-list'
+import { babelConfigWebLib } from '@bubble-dev/babel-config'
 import { isUndefined } from 'tsfn'
 
 const excludeNodeModulesRegExp = /[\\/]node_modules[\\/]/
@@ -65,26 +65,7 @@ export const run = (options: TServeJsBundleOptions) => {
           exclude: excludeNodeModulesRegExp,
           loader: require.resolve('babel-loader'),
           options: {
-            babelrc: false,
-            presets: [
-              [
-                require.resolve('@babel/preset-env'),
-                {
-                  targets: { browsers: browsersList },
-                  exclude: ['@babel/plugin-transform-regenerator'],
-                  ignoreBrowserslistConfig: true,
-                  modules: false,
-                },
-              ],
-              require.resolve('@babel/preset-react'),
-              require.resolve('@babel/preset-typescript'),
-            ],
-            plugins: [
-              require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
-              require.resolve('@babel/plugin-proposal-optional-chaining'),
-              require.resolve('@babel/plugin-syntax-bigint'),
-              require.resolve('@babel/plugin-syntax-dynamic-import'),
-            ],
+            ...babelConfigWebLib,
             cacheDirectory: true,
           },
         },
