@@ -1,3 +1,4 @@
+import plugin from '@start/plugin'
 import sequence from '@start/plugin-sequence'
 import find from '@start/plugin-find'
 import remove from '@start/plugin-remove'
@@ -10,6 +11,7 @@ import tape from '@start/plugin-lib-tape'
 import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
 // @ts-ignore
 import tapDiff from 'tap-diff'
+import { TPackageJson } from 'fixdeps'
 import xRaySnapshots from './plugins/snapshots'
 import xRayChromeScreenshots from './plugins/chrome-screenshots'
 import xRayFirefoxScreenshots from './plugins/firefox-screenshots'
@@ -150,6 +152,51 @@ export const CheckAndroidWebScreenshots = (fontsDir?: string) => (component = '*
   )
 }
 
+export const checkDeps = () => plugin('checkDeps', ({ logMessage }) => async () => {
+  const path = await import('path')
+  const { objectHas } = await import('tsfn')
+  const { hasDepsToModify } = await import('fixdeps')
+  const { getPackage, getPackageDirs } = await import('@auto/fs')
+  const packageDirs = await getPackageDirs()
+
+  const fixPackageDir = async (dir: string): Promise<boolean> => {
+    const json: TPackageJson = await getPackage(dir)
+    let ignoredPackages: string[] = ['@babel/runtime']
+    let dependenciesGlobs = ['src/**/*.{ts,tsx,js}']
+    let devDependenciesGlobs = ['{test,x-ray}/**/*.{ts,tsx,js}', 'meta.{ts,tsx}']
+
+    if (objectHas(json, 'fixdeps')) {
+      const options = json.fixdeps
+
+      if (objectHas(options, 'ignoredPackages')) {
+        ignoredPackages = options.ignoredPackages
+      }
+
+      if (objectHas(options, 'dependenciesGlobs')) {
+        dependenciesGlobs = options.dependenciesGlobs
+      }
+
+      if (objectHas(options, 'devDependenciesGlobs')) {
+        devDependenciesGlobs = options.devDependenciesGlobs
+      }
+    }
+
+    return hasDepsToModify({
+      ignoredPackages,
+      packagePath: dir,
+      dependenciesGlobs,
+      devDependenciesGlobs,
+    })
+  }
+
+  for (const dir of Object.values(packageDirs)) {
+    if (await fixPackageDir(dir)) {
+      logMessage(`"${path.basename(dir)}" has unfixed dependencies`)
+      throw null
+    }
+  }
+})
+
 export const lint = async () => {
   const path = await import('path')
   const packageJson = await import(path.resolve('package.json'))
@@ -170,7 +217,8 @@ export const lint = async () => {
       cache: true,
       cacheLocation: 'node_modules/.cache/eslint',
     }),
-    typescriptCheck()
+    typescriptCheck(),
+    checkDeps()
   )
 }
 
