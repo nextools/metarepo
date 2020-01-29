@@ -5,7 +5,7 @@ import { isNumber, TRequireKeys, isArray, isString } from 'tsfn'
 import request from 'request-promise-native'
 import { waitForChromium } from './wait-for-chromium'
 
-const CHROMIUM_VERSION = 77
+const CHROMIUM_VERSION = 79
 const DEBUGGER_ENDPOINT_HOST = 'localhost'
 const DEBUGGER_ENDPOINT_PORT = 9222
 
