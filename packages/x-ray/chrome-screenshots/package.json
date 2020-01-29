@@ -20,7 +20,7 @@
     "bro-resolve": "^1.0.0",
     "iterama": "^0.1.1",
     "p-all": "^2.0.0",
-    "puppeteer-core": "^1.16.0",
+    "puppeteer-core": "^2.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.6.0",
     "request": "^2.87.0",
@@ -28,7 +28,7 @@
     "upng-js": "^2.1.0"
   },
   "devDependencies": {
-    "@types/puppeteer-core": "^1.9.0",
+    "@types/puppeteer-core": "^2.0.0",
     "@types/react": "^16.8.6",
     "@types/react-dom": "^16.0.9",
     "@types/request-promise-native": "^1.0.15"
