@@ -1,3 +1,7 @@
+## v1.1.0
+
+* 🌱 add `hasDepsToModify` function
+
 ## v1.0.1
 
 * 🐞 bump compatible deps

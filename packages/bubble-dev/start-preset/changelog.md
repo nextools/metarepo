@@ -1,3 +1,9 @@
+## v1.2.0
+
+* 🌱 add `checkDeps` task
+
+* 🐞 bump dockerized Chromium to v79
+
 ## v1.1.1
 
 * 🐞 enhance `fixDeps` task reports
