@@ -1,5 +1,7 @@
 import plugin, { StartPlugin } from '@start/plugin'
 
+const CHROMIUM_VERSION = 79
+
 export default (target: StartPlugin<{}, void>, fontsDir?: string) =>
   plugin('with-chromium', ({ reporter }) => async () => {
     const { default: execa } = await import('execa')
@@ -30,7 +32,7 @@ export default (target: StartPlugin<{}, void>, fontsDir?: string) =>
             ]
             : []
           ),
-          'deepsweet/chromium-headless-remote:76',
+          `deepsweet/chromium-headless-remote:${CHROMIUM_VERSION}`,
         ],
         {
           stderr: process.stderr,
