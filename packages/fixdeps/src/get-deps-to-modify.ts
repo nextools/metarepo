@@ -1,24 +1,20 @@
-import path from 'path'
-import { readFile, writeFile } from 'pifs'
+import { readFile } from 'pifs'
 import fastGlob from 'fast-glob'
-import { TOptions, TDepsEntries, TResult } from './types'
-import { uniqueArray } from './unique-array'
 import { globalIgnoreList } from './global-ignore-list'
+import { TOptions, TGetDepsToModifyResult } from './types'
+import { uniqueArray } from './unique-array'
 import { getDependenciesInContent } from './get-dependencies-in-content'
 import { getDepsToRemove } from './get-deps-to-remove'
 import { getDepsToAdd } from './get-deps-to-add'
 import { getPeerDevDepsToAdd } from './get-peer-dev-deps-to-add'
-import { getDepsVersions } from './get-deps-versions'
-import { composeDependencies } from './compose-dependencies'
 import { getPackage } from './get-package-json'
-import { objectFromEntries } from './object-from-entries'
 
-export const fixdeps = async ({
+export const getDepsToModify = async ({
   packagePath,
   ignoredPackages,
   dependenciesGlobs,
   devDependenciesGlobs,
-}: TOptions): Promise<TResult> => {
+}: TOptions): Promise<TGetDepsToModifyResult> => {
   const fastGlobOptions = {
     ignore: ['node_modules/**'],
     deep: Infinity,
@@ -27,7 +23,6 @@ export const fixdeps = async ({
     absolute: true,
   }
 
-  const packageJsonPath = path.join(packagePath, 'package.json')
   const packageJson = await getPackage(packagePath)
   const dependencyFiles = await fastGlob(
     dependenciesGlobs.map((glob) => `${packagePath}/${glob}`),
@@ -68,37 +63,10 @@ export const fixdeps = async ({
   const devDepsToAdd = getDepsToAdd(packageJson, devDependencyList, allIgnoredPackages)
   const peerDevDepsToAdd = getPeerDevDepsToAdd(packageJson, devDependencyList, allIgnoredPackages)
 
-  const depsToAddWithVersions = await getDepsVersions(depsToAdd)
-  const devDepsToAddWithVersions = await getDepsVersions(devDepsToAdd)
-  const peerDevDepsToAddWithVersions = peerDevDepsToAdd.map((name) => [name, packageJson.peerDependencies![name]]) as TDepsEntries
-  const allDevDepsToAddWithVersions = [...devDepsToAddWithVersions, ...peerDevDepsToAddWithVersions]
-
-  const composedDependencies = composeDependencies(packageJson.dependencies, depsToAddWithVersions, depsToRemove)
-  const composedDevDependencies = composeDependencies(packageJson.devDependencies, allDevDepsToAddWithVersions, depsToRemove)
-
-  if (Object.keys(composedDependencies).length > 0) {
-    packageJson.dependencies = composedDependencies // eslint-disable-line
-  } else {
-    Reflect.deleteProperty(packageJson, 'dependencies')
+  return {
+    depsToAdd,
+    depsToRemove,
+    devDepsToAdd,
+    peerDevDepsToAdd,
   }
-
-  if (Object.keys(composedDevDependencies).length > 0) {
-    packageJson.devDependencies = composedDevDependencies // eslint-disable-line
-  } else {
-    Reflect.deleteProperty(packageJson, 'devDependencies')
-  }
-
-  if (depsToRemove.length > 0 || depsToAddWithVersions.length > 0 || allDevDepsToAddWithVersions.length > 0) {
-    const packageData = `${JSON.stringify(packageJson, null, 2)}\n`
-
-    await writeFile(packageJsonPath, packageData)
-
-    return {
-      addedDeps: objectFromEntries(depsToAddWithVersions),
-      addedDevDeps: objectFromEntries(allDevDepsToAddWithVersions),
-      removedDeps: depsToRemove,
-    }
-  }
-
-  return null
 }

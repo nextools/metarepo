@@ -28,6 +28,13 @@ export type TPackageJson = {
   },
 } & TJsonMap
 
+export type TGetDepsToModifyResult = {
+  depsToAdd: string[],
+  depsToRemove: string[],
+  devDepsToAdd: string[],
+  peerDevDepsToAdd: string[],
+}
+
 export type TResult = {
   addedDeps: TDepsObject,
   addedDevDeps: TDepsObject,
