@@ -22,9 +22,11 @@ test('fs:getPackageDirs workspaces[]', async (t) => {
       readFile: promisify(fs.readFile),
     },
   })
+
   deleteFromCache('fast-glob')
 
   const { getPackageDirs } = await import('../src/get-package-dirs')
+
   t.deepEquals(
     await getPackageDirs(),
     [
@@ -58,6 +60,7 @@ test('fs:getPackageDirs workspaces.packages[]', async (t) => {
   })
 
   const { getPackageDirs } = await import('../src/get-package-dirs')
+
   t.deepEquals(
     await getPackageDirs(),
     [

@@ -15,6 +15,7 @@ export const getLayoutHeight = (item: ReactElement): TLayoutSize => item.props.h
 export const getHeight = (item: ReactElement): number | undefined => item.props.height
 export const getMinHeight = (item: ReactElement): number | undefined => item.props.minHeight
 export const getMaxHeight = (item: ReactElement): number | undefined => item.props.maxHeight
+
 export const getNumLayoutParts = (layoutValue: TLayoutSize): number => {
   switch (layoutValue) {
     case LAYOUT_SIZE_1:
@@ -55,6 +56,7 @@ const clampValue = (currentValue: number, userDefinedValue?: number, userDefined
 export const clampWidth = (currentWidth: number, item: ReactElement): number => {
   return clampValue(currentWidth, item.props.width, item.props.minWidth, item.props.maxWidth)
 }
+
 export const clampHeight = (currentHeight: number, item: ReactElement): number => {
   return clampValue(currentHeight, item.props.height, item.props.minHeight, item.props.maxHeight)
 }
@@ -98,10 +100,12 @@ export const equalizeArrays = (
   const shouldReportSizeChange = isMeasureMode && itemMeasuredSizes.length > numItems
 
   itemPositions.length = numItems
+
   for (let i = itemMeasuredSizes.length; i < numItems; i++) {
     itemMeasuredSizes.push(0)
     itemRenderSizes.push(0)
   }
+
   itemMeasuredSizes.length = numItems
   itemRenderSizes.length = numItems
   onItemSizeChangeFunctions.length = numItems
@@ -151,6 +155,7 @@ export const calcMeasureMainAxisLayout = (
 
     while (needOneMorePass) {
       needOneMorePass = false
+
       const itemMaxPartSize = availablePixels / Math.max(numLayoutParts, 1)
 
       // console.log('---------------')
@@ -316,6 +321,7 @@ export const calcExplicitMainAxisLayout = (
 
   while (!isStabilized) {
     isStabilized = true
+
     const singlePartSize = getSinglePartSize(containerSize, preOccupiedPixels, totalLayoutParts)
 
     for (let i = 0; i < numItems; i++) {

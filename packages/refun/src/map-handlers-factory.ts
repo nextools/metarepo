@@ -6,10 +6,12 @@ export const mapHandlersFactory = <P extends {}, R extends THandlers<P>> (getHan
   (props: P): TExtend<P, TActualHandlers<R>> => {
     const actualHandlers = useRef<TActualHandlers<R>>(EMPTY_OBJECT)
     const propsRef = useRef<P>(props)
+
     propsRef.current = props
 
     if (actualHandlers.current === EMPTY_OBJECT) {
       const handlers = getHandlers(props)
+
       actualHandlers.current = getObjectKeys(handlers).reduce((result, key) => {
         result[key] = (...args) => handlers[key](propsRef.current)(...args)
 

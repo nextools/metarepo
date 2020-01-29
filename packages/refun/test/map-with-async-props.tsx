@@ -21,6 +21,7 @@ test('mapWithAsyncProps', async (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -155,6 +156,7 @@ test('mapWithAsyncProps: null case', async (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp

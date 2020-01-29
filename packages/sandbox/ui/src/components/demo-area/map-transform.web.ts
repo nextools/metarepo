@@ -30,10 +30,9 @@ export const mapTransform = <P extends TMapTransform>(props: P) => {
   const onMove = useRef<TPointer['onMove']>(NOOP)
   const onWheel = useRef<TPointer['onWheel']>(NOOP)
   const isTransformingRef = useRef(false)
-
   const isTransforming = isTransformingRef.current
-  isTransformingRef.current = false
 
+  isTransformingRef.current = false
   propsRef.current = props
   transformRef.current = transform
 

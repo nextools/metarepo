@@ -69,6 +69,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
       // target file DONE
       if (isString(currentFilePath)) {
         const relativePath = path.relative(process.cwd(), currentFilePath)
+
         result[relativePath] = targetResult
         resultData[relativePath] = targetResultData
 

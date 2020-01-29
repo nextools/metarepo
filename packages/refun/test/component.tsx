@@ -11,6 +11,7 @@ test('component: props', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -113,6 +114,7 @@ test('component: multiple map functions', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp initial={2}/>

@@ -13,6 +13,7 @@ export const mapHandlers = <P extends {}, R extends THandlers<P>> (handlers: R) 
   (props: P): TExtend<P, TActualHandlers<R>> => {
     const actualHandlers = useRef<TActualHandlers<R>>(EMPTY_OBJECT)
     const propsRef = useRef<P>(props)
+
     propsRef.current = props
 
     if (actualHandlers.current === EMPTY_OBJECT) {

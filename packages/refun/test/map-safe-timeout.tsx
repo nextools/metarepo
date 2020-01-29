@@ -21,6 +21,7 @@ test('mapSafeTimeout', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -55,6 +56,7 @@ test('mapSafeTimeout', (t) => {
 
   /* Call setTimeout */
   let unsub: any
+
   act(() => {
     setSafeTimeout(timeoutSpy1, 100)
     setSafeTimeout(timeoutSpy2, 70)

@@ -16,6 +16,7 @@ test('onMount: sync function', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -113,6 +114,7 @@ test('onMount: async function', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>

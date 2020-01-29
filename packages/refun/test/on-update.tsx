@@ -15,6 +15,7 @@ test('onUpdate: sync function, empty watch keys', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -88,6 +89,7 @@ test('onUpdate: sync function, watch keys', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -197,6 +199,7 @@ test('onUpdate: async function, empty watch keys', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -272,6 +275,7 @@ test('onUpdate: async function, watch keys', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp

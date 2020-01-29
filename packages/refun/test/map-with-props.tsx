@@ -15,6 +15,7 @@ test('mapWithProps', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo={2}/>
