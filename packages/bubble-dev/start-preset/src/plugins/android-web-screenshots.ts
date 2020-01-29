@@ -29,6 +29,7 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
 
   try {
     const entryPointPath = await rnResolve('@x-ray/web-mobile-screenshots-app')
+
     killAndroid = await runAndroid({
       appName: 'X-Ray-Mobile',
       appId: 'org.bubble_dev.xray_mobile',

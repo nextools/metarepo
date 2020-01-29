@@ -25,6 +25,7 @@ import {
 
 test('syntx: serializeComponent', (t) => {
   const Comp: FC<any> = () => null
+
   Comp.displayName = 'Comp'
 
   t.deepEquals(
@@ -704,6 +705,7 @@ test('syntx: serializeComponent', (t) => {
 
 test('syntx: serializeComponent meta', (t) => {
   const Comp: FC<any> = () => null
+
   Comp.displayName = 'Comp'
 
   t.deepEquals(

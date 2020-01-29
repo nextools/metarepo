@@ -20,6 +20,7 @@ test('fs:getPackage', async (t) => {
   })
 
   const { getPackage } = await import('../src/get-package')
+
   t.deepEquals(
     await getPackage(rootDir),
     {

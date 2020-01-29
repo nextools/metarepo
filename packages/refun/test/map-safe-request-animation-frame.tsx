@@ -21,6 +21,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -55,6 +56,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
 
   /* Call setTimeout */
   let unsub: any
+
   act(() => {
     raf(timeoutSpy1)
     raf(timeoutSpy2)

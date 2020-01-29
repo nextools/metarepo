@@ -17,6 +17,7 @@ export const collapseLines = (lines: readonly TLine[], collapsedMetas: readonly 
 
     // first collapsed line
     const lineMeta = line.meta
+
     resultLines.push(line)
     i++
 

@@ -33,6 +33,7 @@ test('shallowEqualByKeys', (t) => {
   )
 
   const obj = { a: 1, b: true }
+
   t.equals(
     shallowEqualByKeys(obj, obj, ['a']),
     true,

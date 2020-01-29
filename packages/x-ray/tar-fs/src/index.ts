@@ -145,6 +145,7 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
     await fs.read(fd, dataBuffer, 0, dataSize, 512)
 
     indexFile = JSON.parse(dataBuffer.toString())
+
     const indexFileInverted = Object.entries(indexFile).reduce((result, [key, value]) => {
       result[value.id] = key
 

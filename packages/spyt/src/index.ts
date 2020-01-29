@@ -19,6 +19,7 @@ export const createTimeoutSpy = () => {
     },
     setTimeout(cb: () => void, delay: number) {
       const id = lastId++
+
       timers.push({
         id,
         cb,
@@ -44,6 +45,7 @@ export const createTimeoutSpy = () => {
         if (timer.isCleared === false) {
           timer.cb()
         }
+
         timer.isCleared = true
       })
     },
@@ -70,6 +72,7 @@ export const createRafSpy = () => {
     },
     requestAnimationFrame(cb: () => void) {
       const id = lastId++
+
       timers.push({
         id,
         cb,
@@ -94,6 +97,7 @@ export const createRafSpy = () => {
         if (timer.isCleared === false) {
           timer.cb()
         }
+
         timer.isCleared = true
       })
     },

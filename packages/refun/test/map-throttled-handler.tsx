@@ -23,6 +23,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -284,6 +285,7 @@ test('mapThrottledHandler: Invalid handler', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp/>
@@ -372,6 +374,7 @@ test('mapThrottledHandler: Handler is removed during timeout period', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp handler={spy}/>

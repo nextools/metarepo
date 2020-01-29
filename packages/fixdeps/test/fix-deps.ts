@@ -58,6 +58,7 @@ test('fixdeps: all', async (t) => {
       getLocalPackageVersionYarn: () => '1.0.0',
     },
   })
+
   deleteFromCache('fast-glob')
 
   const { fixdeps } = await import('../src')
@@ -155,6 +156,7 @@ test('fixdeps: remove empty dependencies objects', async (t) => {
       getLocalPackageVersionYarn: () => '1.0.0',
     },
   })
+
   deleteFromCache('fast-glob')
 
   const { fixdeps } = await import('../src')
@@ -212,6 +214,7 @@ test('fixdeps: nothing to do', async (t) => {
       getLocalPackageVersionYarn: () => '1.0.0',
     },
   })
+
   deleteFromCache('fast-glob')
 
   const { fixdeps } = await import('../src')
@@ -272,6 +275,7 @@ test('fixdeps: create dependencies objects if was missing', async (t) => {
       getLocalPackageVersionYarn: () => '1.0.0',
     },
   })
+
   deleteFromCache('fast-glob')
 
   const { fixdeps } = await import('../src')
@@ -330,6 +334,7 @@ test('fixdeps: get remote version with npm', async (t) => {
       getRemotePackageVersionNpm: spy,
     },
   })
+
   deleteFromCache('fast-glob')
 
   const { fixdeps } = await import('../src')
