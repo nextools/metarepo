@@ -1,0 +1,20 @@
+{
+  "name": "perfa",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "dependencies": {
+    "@rebox/web": "^1.1.0",
+    "dleet": "^1.0.0",
+    "puppeteer-core": "^2.1.0",
+    "tempy": "^0.3.0",
+    "tsfn": "^1.0.0",
+    "xrom": "^1.0.1"
+  }
+}

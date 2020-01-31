@@ -21,6 +21,7 @@
     "packages/mocku",
     "packages/move-path",
     "packages/msked",
+    "packages/perfa",
     "packages/pifs",
     "packages/primitives/*",
     "packages/rebox/*",
