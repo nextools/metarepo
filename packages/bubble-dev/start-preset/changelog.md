@@ -1,3 +1,7 @@
+## v1.2.1
+
+* 🐞 format `fixDeps` task report
+
 ## v1.2.0
 
 * 🌱 add `checkDeps` task

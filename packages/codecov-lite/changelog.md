@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 increase timeout to 10s
+
 ## v1.0.1
 
 * 🐞 bump compatible deps
