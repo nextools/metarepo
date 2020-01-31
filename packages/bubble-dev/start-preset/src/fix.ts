@@ -1,11 +1,9 @@
-import path from 'path'
 import plugin from '@start/plugin'
 import overwrite from '@start/plugin-overwrite'
 import sequence from '@start/plugin-sequence'
 import find from '@start/plugin-find'
 import read from '@start/plugin-read'
 import eslint from '@start/plugin-lib-eslint'
-import { objectHas, isDefined } from 'tsfn'
 import { TPackageJson } from 'fixdeps'
 
 export const fixLint = async () => {
@@ -35,6 +33,7 @@ export const fixLint = async () => {
 
 export const fixDeps = (packageDir?: string) => plugin('fixDeps', ({ logPath, logMessage }) => async () => {
   const { fixdeps } = await import('fixdeps')
+  const { objectHas, isDefined } = await import('tsfn')
   const { getPackage, getPackageDirs } = await import('@auto/fs')
   const packageDirs = await getPackageDirs()
 
@@ -60,30 +59,35 @@ export const fixDeps = (packageDir?: string) => plugin('fixDeps', ({ logPath, lo
       }
     }
 
-    const result = await fixdeps({
-      ignoredPackages,
-      packagePath: dir,
-      dependenciesGlobs,
-      devDependenciesGlobs,
-    })
+    try {
+      const result = await fixdeps({
+        ignoredPackages,
+        packagePath: dir,
+        dependenciesGlobs,
+        devDependenciesGlobs,
+      })
 
-    if (result !== null) {
-      logPath(`${path.basename(dir)}:`)
+      if (result !== null) {
+        logPath(`${json.name}:`)
 
-      const addedDeps = Object.keys(result.addedDeps)
-      const addedDevDeps = Object.keys(result.addedDevDeps)
+        const addedDeps = Object.keys(result.addedDeps)
+        const addedDevDeps = Object.keys(result.addedDevDeps)
 
-      if (addedDeps.length > 0) {
-        logMessage(`- added deps: ${addedDeps.join(', ')}`)
+        if (addedDeps.length > 0) {
+          logMessage(`+ added deps: ${addedDeps.join(', ')}`)
+        }
+
+        if (addedDevDeps.length > 0) {
+          logMessage(`+ added devDeps: ${addedDevDeps.join(', ')}`)
+        }
+
+        if (result.removedDeps.length > 0) {
+          logMessage(`- removed deps: ${result.removedDeps.join(', ')}`)
+        }
       }
-
-      if (addedDevDeps.length > 0) {
-        logMessage(`- added devDeps: ${addedDevDeps.join(', ')}`)
-      }
-
-      if (result.removedDeps.length > 0) {
-        logMessage(`- removed deps: ${result.removedDeps.join(', ')}`)
-      }
+    } catch (e) {
+      logMessage(`${json.name}:`)
+      logMessage(`  error: ${e.message}`)
     }
   }
 
@@ -95,15 +99,10 @@ export const fixDeps = (packageDir?: string) => plugin('fixDeps', ({ logPath, lo
       throw new Error(`Cannot find package in dir "${packageDir}"`)
     }
 
-    fixPackageDir(resolvedPackageDir)
+    await fixPackageDir(resolvedPackageDir)
   } else {
     for (const dir of Object.values(packageDirs)) {
-      try {
-        await fixPackageDir(dir)
-      } catch (e) {
-        logMessage(`${path.basename(dir)}:`)
-        logMessage(`- error: ${e.message}`)
-      }
+      await fixPackageDir(dir)
     }
   }
 })
