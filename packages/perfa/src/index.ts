@@ -1,74 +1,49 @@
 import puppeteer from 'puppeteer-core'
 import { buildRelease } from '@rebox/web'
-import { isUndefined, getObjectEntries } from 'tsfn'
-import { TPerfResult } from './types'
-import { BUILD_FOLDER_PATH, INJECTED_BUILD_FOLDER_PATH, TRIES_COUNT } from './utils'
+import { getObjectEntries } from 'tsfn'
+import tempy from 'tempy'
+import dleet from 'dleet'
+import { runChromium } from 'xrom'
+import { getPerfPaintEntryValue } from './get-perf-paint-entry-value'
+import { getPerfMetricsEntryValue } from './get-perf-metrics-entry-value'
+import { getPercentile } from './get-percentile'
+import { TPerfResult, TPerfObserverEntry, TPerfPaint, TPerfMetrics } from './types'
 
-type TPerfPaint = {
-  name: 'first-paint' | 'first-contentful-paint',
-  startTime: number,
-}[]
+const TRIES_COUNT = 5
+const INJECTED_BUILD_FOLDER_PATH = '/home/chromium/html'
 
-type TPerfMetrics = {
-  metrics: {
-    name: string,
-    value: number,
-  }[],
-}
-
-type TPerfObserverEntry = {
-  renderTime?: number,
-  loadTime: number,
-}
-
-const getPerfPaintEntryValue = (perf: TPerfPaint, key: string): number => {
-  const entry = perf.find((entry) => entry.name === key)
-
-  if (isUndefined(entry)) {
-    return 0
-  }
-
-  return entry.startTime
-}
-
-const getPerfMetricsEntryValue = (perf: TPerfMetrics, key: string): number => {
-  const entry = perf.metrics.find((entry) => entry.name === key)
-
-  if (isUndefined(entry)) {
-    return 0
-  }
-
-  return entry.value
-}
-
-const getPercentile = (arr: number[], p: number): number => {
-  const index = (arr.length - 1) * p
-  const lower = Math.floor(index)
-  const upper = lower + 1
-  const weight = index % 1
-
-  if (upper >= arr.length) {
-    return arr[lower]
-  }
-
-  return arr[lower] * (1 - weight) + arr[upper] * weight
-}
-
-type TGetPerfDataOptions = {
+export type TGetPerfDataOptions = {
   entryPointPath: string,
-  browserWSEndpoint: string,
+  triesCount?: number,
+  fontsDir?: string,
+  isQuiet?: boolean,
 }
 
-export const getPerfData = async ({ entryPointPath, browserWSEndpoint }: TGetPerfDataOptions): Promise<TPerfResult> => {
+export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPerfResult> => {
+  const options = {
+    triesCount: TRIES_COUNT,
+    isQuiet: false,
+    ...userOptions,
+  }
+  const tempBuildDir = tempy.directory()
+  const browserWSEndpoint = await runChromium({
+    cpus: 1,
+    cpusetCpus: [1],
+    fontsDir: options.fontsDir,
+    mountVolumes: [
+      {
+        from: tempBuildDir,
+        to: INJECTED_BUILD_FOLDER_PATH,
+      },
+    ],
+    shouldCloseOnExit: true,
+  })
   const browser = await puppeteer.connect({ browserWSEndpoint })
 
   await buildRelease({
-    entryPointPath: require.resolve('./app-wrapper.tsx'),
-    outputPath: BUILD_FOLDER_PATH,
-    htmlTemplatePath: require.resolve('./demo.html'),
-    globalAliases: {
-      __XRAY_PERF_APP_PATH__: entryPointPath,
-    },
+    entryPointPath: options.entryPointPath,
+    outputPath: tempBuildDir,
+    htmlTemplatePath: require.resolve('./app.html'),
     isQuiet: true,
     shouldGenerateSourceMaps: false,
     shouldGenerateBundleAnalyzerReport: false,
@@ -86,8 +61,10 @@ export const getPerfData = async ({ entryPointPath, browserWSEndpoint }: TGetPer
     usedJsHeapSize: [] as number[],
   }
 
-  for (let i = 0; i < TRIES_COUNT; i++) {
-    console.log('tries:', `${i + 1}/${TRIES_COUNT}`)
+  for (let i = 0; i < options.triesCount; i++) {
+    if (!options.isQuiet) {
+      console.log('tries:', `${i + 1}/${TRIES_COUNT}`)
+    }
 
     const page = await browser.newPage()
     const client = await page.target().createCDPSession()
@@ -131,7 +108,8 @@ export const getPerfData = async ({ entryPointPath, browserWSEndpoint }: TGetPer
     await page.close()
   }
 
-  await browser.disconnect()
+  await browser.close()
+  await dleet(tempBuildDir)
 
   return getObjectEntries(result).reduce((acc, [key, value]) => {
     acc[key] = getPercentile(value.sort((a, b) => a - b), 0.5)

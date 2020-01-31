@@ -17,19 +17,16 @@
     "@x-ray/ui": "^1.0.0",
     "bro-resolve": "^1.0.0",
     "diff": "^4.0.1",
-    "dleet": "^1.0.0",
     "make-dir": "^3.0.0",
     "p-all": "^2.0.0",
+    "perfa": "^0.0.0",
     "pkg-dir": "^4.2.0",
     "pretty-ms": "^5.0.0",
-    "puppeteer-core": "^2.1.0",
     "react": "^16.8.6",
-    "tsfn": "^1.0.0",
-    "xrom": "^1.0.0"
+    "tsfn": "^1.0.0"
   },
   "devDependencies": {
     "@types/diff": "^4.0.2",
-    "@types/puppeteer-core": "^2.0.0",
     "@types/react": "^16.8.6",
     "react": "^16.8.6"
   },

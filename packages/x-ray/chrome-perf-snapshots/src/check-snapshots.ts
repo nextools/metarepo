@@ -3,15 +3,12 @@ import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { diffArrays } from 'diff'
 import prettyMs from 'pretty-ms'
 import { getObjectEntries } from 'tsfn'
-import dleet from 'dleet'
-import { runChromium } from 'xrom'
+import { getPerfData } from 'perfa'
 import { broResolve } from 'bro-resolve'
 import { run } from '@rebox/web'
-import { getPerfData } from './get-perf-data'
 import { compareSnapshots } from './compare-snapshots'
 import { getDataDimensions } from './get-data-dimensions'
 import { runServer } from './run-server'
-import { BUILD_FOLDER_PATH, INJECTED_BUILD_FOLDER_PATH } from './utils'
 import {
   TSnapshotsResultData,
   TSnapshotsFileResultData,
@@ -30,24 +27,11 @@ export const checkChromePerfSnapshots = async (options: TCheckChromePerfSnapshop
   const startTime = Date.now()
   let hasBeenChanged = false
 
-  const browserWSEndpoint = await runChromium({
-    cpus: 1,
-    cpusetCpus: [1],
-    fontsDir: options.fontsDir,
-    mountVolumes: [
-      {
-        from: path.resolve(BUILD_FOLDER_PATH),
-        to: INJECTED_BUILD_FOLDER_PATH,
-      },
-    ],
-    shouldCloseOnExit: true,
-  })
-
   console.log('measuring reference app')
 
   const referenceData = await getPerfData({
-    entryPointPath: require.resolve('./reference-app.tsx'),
-    browserWSEndpoint,
+    entryPointPath: require.resolve('./reference-app'),
+    fontsDir: options.fontsDir,
   })
 
   for (const targetFile of options.targetFiles) {
@@ -70,7 +54,7 @@ export const checkChromePerfSnapshots = async (options: TCheckChromePerfSnapshop
     const id = 'id'
     const perfData = await getPerfData({
       entryPointPath: targetFile,
-      browserWSEndpoint,
+      fontsDir: options.fontsDir,
     })
     const relativePerfData = getObjectEntries(perfData).reduce((acc, [key, value]) => {
       acc[key] = value / referenceData[key]
@@ -154,8 +138,6 @@ export const checkChromePerfSnapshots = async (options: TCheckChromePerfSnapshop
   }
 
   console.log(`done in ${prettyMs(Date.now() - startTime)}`)
-
-  await dleet(BUILD_FOLDER_PATH)
 
   if (hasBeenChanged) {
     const entryPointPath = await broResolve('@x-ray/ui')
