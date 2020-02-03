@@ -63,7 +63,7 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
 
   for (let i = 0; i < options.triesCount; i++) {
     if (!options.isQuiet) {
-      console.log('tries:', `${i + 1}/${TRIES_COUNT}`)
+      console.log('tries:', `${i + 1}/${options.triesCount}`)
     }
 
     const page = await browser.newPage()
