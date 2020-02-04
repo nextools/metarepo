@@ -1,3 +1,7 @@
+## v1.2.2
+
+* 🐞 fix building packages with CLI
+
 ## v1.2.1
 
 * 🐞 format `fixDeps` task report
