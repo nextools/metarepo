@@ -161,6 +161,10 @@ export const buildPackage = async (packageDir: string) => {
     tasks.push('buildReactNative')
   }
 
+  if (Reflect.has(packageJson, 'bin') && !tasks.includes('buildNode')) {
+    tasks.push('buildNode')
+  }
+
   if (Reflect.has(packageJson, 'buildAssets')) {
     tasks.push('buildAssets')
   }
