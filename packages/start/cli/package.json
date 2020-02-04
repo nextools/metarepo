@@ -10,7 +10,7 @@
     "build/"
   ],
   "bin": {
-    "start": "build/index.js"
+    "start": "src/index.js"
   },
   "publishConfig": {
     "access": "public"

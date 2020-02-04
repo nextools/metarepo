@@ -1,14 +1,13 @@
 import { resolve } from 'path'
 
-type Options = {
+type TStartOptions = {
   file?: string,
   preset?: string,
   reporter?: string,
-  // TODO: harden me
-  require?: (string | any[])[],
+  require?: (string | [string, { [k: string]: any }])[],
 }
 
-export default async (argv: string[], options: Options) => {
+export default async (argv: string[], options: TStartOptions) => {
   if (!options.reporter) {
     throw '`reporter` option is missing in your `package.json` → `start`'
   }
