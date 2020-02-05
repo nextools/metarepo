@@ -33,4 +33,5 @@
     "tmp/": true
   },
   "search.followSymlinks": false,
+  "debug.node.autoAttach": "on",
 }
