@@ -19,6 +19,7 @@
     "packages/lada/*",
     "packages/makethen",
     "packages/math-playground",
+    "packages/mnth",
     "packages/mocku",
     "packages/move-path",
     "packages/msked",

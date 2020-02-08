@@ -1,0 +1,26 @@
+{
+  "name": "mnth",
+  "version": "0.1.2",
+  "description": "Framework-agnostic base block to build calendars, datepickers, etc by rendering 2d array of Dates",
+  "keywords": ["date", "month", "calendar"],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@babel/runtime": "^7.8.0"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "blue-tape": "^1.0.0"
+  }
+}
