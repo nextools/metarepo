@@ -1,8 +1,13 @@
 {
   "name": "import-wasm",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Async/sync helpers to import `.wasm` modules in Node.js",
-  "keywords": ["wasm", "webassembly", "import", "modules"],
+  "keywords": [
+    "wasm",
+    "webassembly",
+    "import",
+    "modules"
+  ],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",

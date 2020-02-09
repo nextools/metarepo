@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 stop enforcing `newline-per-chained-call`
+
 ## v1.0.1
 
 * 🐞 tweak ESLint rules about padding lines

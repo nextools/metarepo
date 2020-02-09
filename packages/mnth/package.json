@@ -1,8 +1,12 @@
 {
   "name": "mnth",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Framework-agnostic base block to build calendars, datepickers, etc by rendering 2d array of Dates",
-  "keywords": ["date", "month", "calendar"],
+  "keywords": [
+    "date",
+    "month",
+    "calendar"
+  ],
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
