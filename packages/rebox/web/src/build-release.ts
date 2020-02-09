@@ -189,8 +189,14 @@ export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
         return reject(err)
       }
 
-      if (!options.isQuiet) {
+      const hasErrors = stats.hasErrors()
+
+      if (!options.isQuiet || hasErrors) {
         console.log(stats.toString(statsOptions))
+      }
+
+      if (hasErrors) {
+        return reject(null)
       }
 
       resolve()
