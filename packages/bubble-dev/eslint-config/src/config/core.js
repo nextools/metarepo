@@ -123,7 +123,6 @@ module.exports = {
     'multiline-comment-style': [2, 'separate-lines'],
     'multiline-ternary': [2, 'always-multiline'],
     'new-parens': 2,
-    'newline-per-chained-call': [2, { ignoreChainWithDepth: 2 }],
     'no-array-constructor': 2,
     'no-lonely-if': 2,
     'no-mixed-spaces-and-tabs': 2,
