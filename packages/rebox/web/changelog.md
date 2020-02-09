@@ -1,3 +1,9 @@
+## v1.1.1
+
+* 🐞 print errors even with `isQuiet: true` option in `buildRelease()`
+
+* 🐞 properly throw errors in `buildRelease()`
+
 ## v1.1.0
 
 * 🐞 refactor using shared Babel config
