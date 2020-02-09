@@ -15,6 +15,7 @@
     "packages/elegir",
     "packages/fantasy-color/*",
     "packages/fixdeps",
+    "packages/import-wasm",
     "packages/lada/*",
     "packages/makethen",
     "packages/math-playground",
