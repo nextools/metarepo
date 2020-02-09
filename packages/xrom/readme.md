@@ -30,6 +30,6 @@ runChromium(options: Options) => Promise<string>
 import { runChromium } from 'xrom'
 import puppeteer from 'puppeteer-core'
 
-const browserWSEndpoint = await runChromium({ shouldCloseOnExit: true, })
+const browserWSEndpoint = await runChromium({ shouldCloseOnExit: true })
 const browser = await puppeteer.connect({ browserWSEndpoint })
 ```
