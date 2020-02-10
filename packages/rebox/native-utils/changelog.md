@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 bump Haul stuff
+
 ## v1.0.1
 
 * 🐞 bump compatible deps
