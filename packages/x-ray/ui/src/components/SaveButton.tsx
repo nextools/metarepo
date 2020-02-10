@@ -54,7 +54,7 @@ export const SaveButton = component(
             fontFamily="sans-serif"
             shouldPreserveWhitespace
           >
-          Save
+            Save
           </Text>
         </Size>
       </Block>
