@@ -14,13 +14,17 @@ export default (userOptions?: CLIEngine.Options, formatter = '') =>
     const filesToCheck = files.filter((file) => !cli.isPathIgnored(file.path))
 
     const report: CLIEngine.LintReport = filesToCheck.reduce((acc, file) => {
-      const [result] = cli.executeOnText(file.data, file.path).results
+      const lintReport = cli.executeOnText(file.data, file.path)
 
-      acc.results.push(result)
-      acc.errorCount += result.errorCount
-      acc.warningCount += result.warningCount
-      acc.fixableErrorCount += result.fixableErrorCount
-      acc.fixableWarningCount += result.fixableWarningCount
+      for (const result of lintReport.results) {
+        acc.results.push(result)
+        acc.errorCount += result.errorCount
+        acc.warningCount += result.warningCount
+        acc.fixableErrorCount += result.fixableErrorCount
+        acc.fixableWarningCount += result.fixableWarningCount
+      }
+
+      acc.usedDeprecatedRules.push(...lintReport.usedDeprecatedRules)
 
       return acc
     }, {
@@ -29,6 +33,7 @@ export default (userOptions?: CLIEngine.Options, formatter = '') =>
       warningCount: 0,
       fixableErrorCount: 0,
       fixableWarningCount: 0,
+      usedDeprecatedRules: [] as CLIEngine.DeprecatedRuleUse[],
     })
 
     const format = cli.getFormatter(formatter)
