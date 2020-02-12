@@ -77,6 +77,7 @@
     "react-native-svg": "^11.0.1",
     "react-native-view-shot": "^3.1.1",
     "react": "^16.9.0",
+    "request": "^2.88.2",
     "request-promise-native": "^1.0.7",
     "rn-resolve": "^1.0.0",
     "tap-diff": "^0.1.1",
