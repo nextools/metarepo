@@ -59,8 +59,6 @@
     "ndb": "^1.1.5",
     "react": "^16.8.6",
     "react-native": "0.61.5",
-    "react-native-view-shot": "^3.0.2",
-    "react-native-webview": "^7.2.7",
     "typescript": "bubble-dev/TypeScript#ext-3.7.3"
   },
   "scripts": {
