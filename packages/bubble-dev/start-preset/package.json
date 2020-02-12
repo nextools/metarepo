@@ -94,6 +94,7 @@
     "ignoredPackages": [
       "@x-ray/native-screenshots-app",
       "@x-ray/web-mobile-screenshots-app",
+      "request",
       "react-native-svg",
       "react-native-view-shot",
       "@babel/core"

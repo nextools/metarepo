@@ -35,7 +35,9 @@
   "fixdeps": {
     "ignoredPackages": [
       "@babel/core",
-      "core-js"
+      "core-js",
+      "react",
+      "react-dom"
     ]
   }
 }

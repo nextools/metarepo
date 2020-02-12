@@ -43,6 +43,9 @@
       "react-dom",
       "react-hot-loader",
       "request",
+      "webpack",
+      "react",
+      "react-native",
       "@haul-bundler/cli",
       "@haul-bundler/core"
     ]
