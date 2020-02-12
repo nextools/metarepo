@@ -1,3 +1,7 @@
+## v1.0.3
+
+* 🐞 remove unnecessary peer deps
+
 ## v1.0.2
 
 * 🐞 stop enforcing `newline-per-chained-call`

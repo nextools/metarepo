@@ -1,3 +1,7 @@
+## v1.1.2
+
+* 🐞 rethink peer deps and fix missing deps
+
 ## v1.1.1
 
 * 🐞 print errors even with `isQuiet: true` option in `buildRelease()`

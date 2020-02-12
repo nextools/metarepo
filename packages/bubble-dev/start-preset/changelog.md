@@ -1,3 +1,9 @@
+## v1.2.3
+
+* 🐞 remove unnecessary peer deps
+
+* 🐞 fix missing deps
+
 ## v1.2.2
 
 * 🐞 fix building packages with CLI
