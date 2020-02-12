@@ -15,7 +15,7 @@ replaceStream(searchValue: RegExp | string, replaceValue: string) => Transform
 ```
 
 ```ts
-import { createReadStream } from 'fs'
+import { createReadStream, createWriteStream } from 'fs'
 import { replaceStream } from 'rplace'
 
 const readStream = createReadStream('./from.txt')
