@@ -1,4 +1,4 @@
-import request from 'request-promise-native'
+import fetch from 'node-fetch'
 import { TPrefixes, TWorkspacesOptions, removeAutoNamePrefix } from '@auto/utils'
 import { TELEGRAM_API_URL, TELEGRAM_MESSAGE_MAX_LENGTH } from './utils'
 import { TTelegramOptions, TLog } from './types'
@@ -30,9 +30,10 @@ export const sendTelegramMessage = async (logs: TLog[], prefixes: TPrefixes, wor
     data = `${data.slice(0, TELEGRAM_MESSAGE_MAX_LENGTH - 1)}…`
   }
 
-  const response = JSON.parse(
-    await request({
-      url: `${TELEGRAM_API_URL}bot${telegramOptions.token}/sendMessage`,
+  const response = await fetch(
+    `${TELEGRAM_API_URL}bot${telegramOptions.token}/sendMessage`,
+    {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -41,10 +42,10 @@ export const sendTelegramMessage = async (logs: TLog[], prefixes: TPrefixes, wor
         parse_mode: 'markdown',
         text: data,
       }),
-    })
+    }
   )
 
   if (!response.ok) {
-    throw new Error(response.description)
+    throw new Error(response.statusText)
   }
 }

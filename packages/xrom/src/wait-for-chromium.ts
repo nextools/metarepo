@@ -1,14 +1,13 @@
-import request from 'request-promise-native'
+import fetch from 'node-fetch'
 
 const TIMEOUT = 200
 
 const wait = async () => {
   try {
-    await request({
-      timeout: TIMEOUT,
-      uri: 'http://localhost:9222/json',
-      json: true,
-    })
+    await fetch(
+      'http://localhost:9222/json',
+      { timeout: TIMEOUT }
+    )
 
     return true
   } catch (e) {

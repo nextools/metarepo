@@ -72,13 +72,12 @@
     "globby": "^11.0.0",
     "make-dir": "^3.0.0",
     "move-path": "^1.0.0",
+    "node-fetch": "^2.6.0",
     "pifs": "^1.0.0",
     "prompts": "^2.1.0",
     "react": "^16.9.0",
     "react-native-svg": "^11.0.1",
     "react-native-view-shot": "^3.1.1",
-    "request": "^2.88.2",
-    "request-promise-native": "^1.0.7",
     "rn-resolve": "^1.0.0",
     "tap-diff": "^0.1.1",
     "tsfn": "^1.0.0",
@@ -87,6 +86,7 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.1",
+    "@types/node-fetch": "^2.5.4",
     "@types/ws": "^6.0.3",
     "typescript": "bubble-dev/TypeScript#ext-3.7.3"
   },
@@ -94,7 +94,6 @@
     "ignoredPackages": [
       "@x-ray/native-screenshots-app",
       "@x-ray/web-mobile-screenshots-app",
-      "request",
       "react-native-svg",
       "react-native-view-shot",
       "@babel/core"

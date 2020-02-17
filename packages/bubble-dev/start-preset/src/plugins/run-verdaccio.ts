@@ -12,7 +12,7 @@ const sleep = (timeout: number) => new Promise((resolve) => setTimeout(resolve, 
 export default (configPath: string) =>
   plugin<TPluginData, any>('run-verdaccio', ({ logMessage }) => async (props) => {
     const { default: execa } = await import('execa')
-    const { default: request } = await import('request-promise-native')
+    const { default: fetch } = await import('node-fetch')
 
     execa(
       'docker',
@@ -31,9 +31,7 @@ export default (configPath: string) =>
 
     const isVerdaccioUp = async () => {
       try {
-        await request({
-          url: URL,
-        })
+        await fetch(URL)
 
         return true
       } catch {

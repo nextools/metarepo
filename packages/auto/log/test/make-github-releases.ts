@@ -18,7 +18,7 @@ test('makeGithubReleases', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
   const unmock = mock('../src/make-github-releases', {
-    'request-promise-native': {
+    'node-fetch': {
       default: spy,
     },
   })
@@ -68,32 +68,38 @@ test('makeGithubReleases', async (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [{
-        uri: 'https://api.github.com/repos/username/repo/releases',
-        method: 'POST',
-        headers: {
-          Authorization: 'token token',
-          'User-Agent': 'auto-tools',
+      [
+        'https://api.github.com/repos/username/repo/releases',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'token token',
+            'User-Agent': 'auto-tools',
+          },
+          body: JSON.stringify({
+            tag_name: 'a@0.1.2',
+            name: 'a@0.1.2',
+            body: '* 🌱 minor\n* 🐞 patch',
+          }),
         },
-        json: {
-          tag_name: 'a@0.1.2',
-          name: 'a@0.1.2',
-          body: '* 🌱 minor\n* 🐞 patch',
+      ],
+      [
+        'https://api.github.com/repos/username/repo/releases',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'token token',
+            'User-Agent': 'auto-tools',
+          },
+          body: JSON.stringify({
+            tag_name: 'b@1.2.3',
+            name: 'b@1.2.3',
+            body: '* 🌱 minor\n* 🐞 patch',
+          }),
         },
-      }],
-      [{
-        uri: 'https://api.github.com/repos/username/repo/releases',
-        method: 'POST',
-        headers: {
-          Authorization: 'token token',
-          'User-Agent': 'auto-tools',
-        },
-        json: {
-          tag_name: 'b@1.2.3',
-          name: 'b@1.2.3',
-          body: '* 🌱 minor\n* 🐞 patch',
-        },
-      }],
+      ],
     ],
     'should make request'
   )
@@ -105,7 +111,7 @@ test('makeGithubReleases: throws if there is no token', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
   const unmock = mock('../src/make-github-releases', {
-    'request-promise-native': {
+    'node-fetch': {
       default: spy,
     },
   })
