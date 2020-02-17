@@ -19,25 +19,23 @@
     "@x-ray/worker-utils": "^1.0.0",
     "bro-resolve": "^1.0.0",
     "iterama": "^0.1.1",
+    "node-fetch": "^2.6.0",
     "p-all": "^2.0.0",
     "puppeteer-core": "^2.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.6.0",
-    "request": "^2.87.0",
-    "request-promise-native": "^1.0.5",
     "upng-js": "^2.1.0"
   },
   "devDependencies": {
+    "@types/node-fetch": "^2.5.4",
     "@types/puppeteer-core": "^2.0.0",
     "@types/react": "^16.8.6",
-    "@types/react-dom": "^16.0.9",
-    "@types/request-promise-native": "^1.0.15"
+    "@types/react-dom": "^16.0.9"
   },
   "fixdeps": {
     "ignoredPackages": [
       "@babel/runtime",
-      "@x-ray/ui",
-      "request"
+      "@x-ray/ui"
     ]
   }
 }

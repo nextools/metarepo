@@ -26,15 +26,11 @@
     "is-port-reachable": "^3.0.0",
     "make-dir": "^3.0.0",
     "metro-react-native-babel-preset": "0.56.4",
+    "node-fetch": "^2.6.0",
     "react": "^16.8.0",
     "react-native": "^0.61.5",
-    "request": "^2.87.0",
-    "request-promise-native": "^1.0.5",
     "tsfn": "^1.0.0",
     "webpack": "^4.30.0"
-  },
-  "devDependencies": {
-    "@types/request-promise-native": "^1.0.15"
   },
   "fixdeps": {
     "ignoredPackages": [
@@ -42,12 +38,14 @@
       "@babel/runtime",
       "react-dom",
       "react-hot-loader",
-      "request",
       "webpack",
       "react",
       "react-native",
       "@haul-bundler/cli",
       "@haul-bundler/core"
     ]
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.4"
   }
 }

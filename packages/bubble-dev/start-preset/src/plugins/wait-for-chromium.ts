@@ -1,15 +1,14 @@
-import request from 'request-promise-native'
+import fetch from 'node-fetch'
 import plugin from '@start/plugin'
 
 const TIMEOUT = 200
 
 const waitForChromium = async () => {
   try {
-    await request({
-      timeout: TIMEOUT,
-      uri: 'http://localhost:9222/json',
-      json: true,
-    })
+    await fetch(
+      'http://localhost:9222/json',
+      { timeout: TIMEOUT }
+    )
 
     return true
   } catch (e) {

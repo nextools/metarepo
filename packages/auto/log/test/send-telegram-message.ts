@@ -14,14 +14,10 @@ const workspacesOptions: TWorkspacesOptions = {
 }
 
 test('sendTelegramMessage', async (t) => {
-  const spy = createSpy(() => Promise.resolve(
-    JSON.stringify({
-      ok: true,
-    })
-  ))
+  const spy = createSpy(() => Promise.resolve({ ok: true }))
 
   const unmock = mock('../src/send-telegram-message', {
-    'request-promise-native': {
+    'node-fetch': {
       default: spy,
     },
   })
@@ -75,11 +71,18 @@ test('sendTelegramMessage', async (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [{
-        url: 'https://api.telegram.org/bottoken/sendMessage',
-        headers: { 'Content-Type': 'application/json' },
-        body: '{"chat_id":"chatId","parse_mode":"markdown","text":"*a v0.1.2*\\n\\n🌱 minor\\n🐞 patch\\n\\n*b v1.2.3*\\n\\n🌱 minor\\n🐞 patch\\n♻️ update dependencies: `c`"}',
-      }],
+      [
+        'https://api.telegram.org/bottoken/sendMessage',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: 'chatId',
+            parse_mode: 'markdown',
+            text: '*a v0.1.2*\n\n🌱 minor\n🐞 patch\n\n*b v1.2.3*\n\n🌱 minor\n🐞 patch\n♻️ update dependencies: `c`',
+          }),
+        },
+      ],
     ],
     'should make request'
   )
@@ -88,14 +91,10 @@ test('sendTelegramMessage', async (t) => {
 })
 
 test('sendTelegramMessage: truncate too long message', async (t) => {
-  const spy = createSpy(() => Promise.resolve(
-    JSON.stringify({
-      ok: true,
-    })
-  ))
+  const spy = createSpy(() => Promise.resolve({ ok: true }))
 
   const unmock = mock('../src/send-telegram-message', {
-    'request-promise-native': {
+    'node-fetch': {
       default: spy,
     },
     './utils': {
@@ -153,11 +152,18 @@ test('sendTelegramMessage: truncate too long message', async (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [{
-        url: 'https://api.telegram.org/bottoken/sendMessage',
-        headers: { 'Content-Type': 'application/json' },
-        body: '{"chat_id":"chatId","parse_mode":"markdown","text":"*a v0.1.2*\\n\\n🌱 mino…"}',
-      }],
+      [
+        'https://api.telegram.org/bottoken/sendMessage',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: 'chatId',
+            parse_mode: 'markdown',
+            text: '*a v0.1.2*\n\n🌱 mino…',
+          }),
+        },
+      ],
     ],
     'should make request'
   )
@@ -166,14 +172,10 @@ test('sendTelegramMessage: truncate too long message', async (t) => {
 })
 
 test('sendTelegramMessage: throws if there is no token', async (t) => {
-  const spy = createSpy(() => Promise.resolve(
-    JSON.stringify({
-      ok: true,
-    })
-  ))
+  const spy = createSpy(() => Promise.resolve({ ok: true }))
 
   const unmock = mock('../src/send-telegram-message', {
-    'request-promise-native': {
+    'node-fetch': {
       default: spy,
     },
   })
@@ -242,15 +244,13 @@ test('sendTelegramMessage: throws if there is no token', async (t) => {
 })
 
 test('sendTelegramMessage: throws if there was an API request error', async (t) => {
-  const spy = createSpy(() => Promise.resolve(
-    JSON.stringify({
-      ok: false,
-      description: 'oops',
-    })
-  ))
+  const spy = createSpy(() => Promise.resolve({
+    ok: false,
+    statusText: 'oops',
+  }))
 
   const unmock = mock('../src/send-telegram-message', {
-    'request-promise-native': {
+    'node-fetch': {
       default: spy,
     },
   })

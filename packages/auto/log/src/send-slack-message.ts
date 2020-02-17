@@ -1,4 +1,4 @@
-import request from 'request-promise-native'
+import fetch from 'node-fetch'
 import { TPrefixes, TWorkspacesOptions, removeAutoNamePrefix } from '@auto/utils'
 import { SLACK_HOOKS_URL, SLACK_MAX_ATTACHMENTS } from './utils'
 import { TSlackOptions, TLog } from './types'
@@ -33,20 +33,25 @@ export const sendSlackMessage = async (logs: TLog[], prefixes: TPrefixes, worksp
   const attachmentsInIteration = Math.ceil(allAttachments.length / numIterations)
 
   for (let i = 0; i < numIterations; ++i) {
-    await request({
-      uri: `${SLACK_HOOKS_URL}${slackOptions.token}`,
-      method: 'POST',
-      json: {
-        channel: slackOptions.channel,
-        username: slackOptions.username,
-        link_names: '1',
-        icon_emoji: slackOptions.iconEmoji,
-        unfurl_media: false,
-        attachments: allAttachments.slice(
-          i * attachmentsInIteration,
-          Math.min((i + 1) * attachmentsInIteration, allAttachments.length)
-        ),
-      },
-    })
+    await fetch(
+      `${SLACK_HOOKS_URL}${slackOptions.token}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          channel: slackOptions.channel,
+          username: slackOptions.username,
+          link_names: '1',
+          icon_emoji: slackOptions.iconEmoji,
+          unfurl_media: false,
+          attachments: allAttachments.slice(
+            i * attachmentsInIteration,
+            Math.min((i + 1) * attachmentsInIteration, allAttachments.length)
+          ),
+        }),
+      }
+    )
   }
 }

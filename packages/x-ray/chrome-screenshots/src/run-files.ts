@@ -1,6 +1,6 @@
 import path from 'path'
 import { cpus } from 'os'
-import request from 'request-promise-native'
+import fetch from 'node-fetch'
 import { run } from '@rebox/web'
 import { runServer, runScreenshots } from '@x-ray/screenshot-utils'
 import { broResolve } from 'bro-resolve'
@@ -17,11 +17,8 @@ const defaultOptions = {
 const childFile = require.resolve('./child')
 
 export const runFiles = async (targetFiles: string[], userOptions: TUserOptions) => {
-  const { body: { webSocketDebuggerUrl } } = await request({
-    uri: `http://${DEBUGGER_ENDPOINT_HOST}:${DEBUGGER_ENDPOINT_PORT}/json/version`,
-    json: true,
-    resolveWithFullResponse: true,
-  })
+  const response = await fetch(`http://${DEBUGGER_ENDPOINT_HOST}:${DEBUGGER_ENDPOINT_PORT}/json/version`)
+  const { webSocketDebuggerUrl } = await response.json() as { webSocketDebuggerUrl: string }
   const options: TOptions = {
     ...defaultOptions,
     ...userOptions,
