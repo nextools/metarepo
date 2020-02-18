@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@rebox/web": "^1.0.0",
+    "@rebox/web": "^1.1.2",
     "@x-ray/common-utils": "^1.0.0",
     "@x-ray/tar-fs": "^1.0.0",
     "@x-ray/ui": "^1.0.0",
@@ -22,6 +22,7 @@
     "p-all": "^2.0.0",
     "pkg-dir": "^4.2.0",
     "pretty-ms": "^5.0.0",
+    "siza": "^0.1.0",
     "tsfn": "^1.0.0"
   },
   "devDependencies": {

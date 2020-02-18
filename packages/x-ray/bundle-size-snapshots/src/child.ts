@@ -3,8 +3,7 @@ import path from 'path'
 import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { TCheckRequest, TSyntxLines } from '@x-ray/common-utils'
 import { processSend } from '@x-ray/worker-utils'
-import { getBuildReleaseStats } from '@rebox/web'
-// import { getBuildReleaseStats } from '@rebox/web/src/get-build-release-stats'
+import { getBundleSize } from 'siza'
 import { checkSnapshot } from './check-snapshot'
 import { TSnapshotsItemResult } from './types'
 
@@ -12,7 +11,6 @@ const shouldBailout = Boolean(process.env.XRAY_CI)
 
 export default async () => {
   try {
-    // const { platform } = options
     const filenames: string[] = []
 
     await new Promise((resolve, reject) => {
@@ -22,33 +20,11 @@ export default async () => {
             case 'FILE': {
               const snapshotsDir = path.join(path.dirname(action.path), '__data__')
               const tar = await TarFs(path.join(snapshotsDir, 'bundle-size-snapshots.tar.gz'))
-              const stats = await getBuildReleaseStats({
+              const bundleSize = await getBundleSize({
                 entryPointPath: action.path,
-                stats: {
-                  entrypoints: false,
-                  modules: false,
-                  assets: true,
-                  chunks: false,
-                  chunkModules: false,
-                  chunkOrigins: false,
-                  builtAt: false,
-                  children: false,
-                  timings: false,
-                  version: false,
-                  excludeAssets: [/\.html/, /LICENSE/],
-                },
               })
 
-              const snapshot = JSON.stringify({
-                vendor: {
-                  min: stats.assets!.find((asset) => asset.name === stats.assetsByChunkName!.vendor as unknown as string)!.size,
-                  minGzip: stats.assets!.find((asset) => asset.name === `${stats.assetsByChunkName!.vendor}.gz`)!.size,
-                },
-                main: {
-                  min: stats.assets!.find((asset) => asset.name === stats.assetsByChunkName!.main as unknown as string)!.size,
-                  minGzip: stats.assets!.find((asset) => asset.name === `${stats.assetsByChunkName!.main}.gz`)!.size,
-                },
-              }, null, 2)
+              const snapshot = JSON.stringify(bundleSize, null, 2)
               const id = 'id'
               const message = await checkSnapshot(Buffer.from(snapshot), tar, id)
 

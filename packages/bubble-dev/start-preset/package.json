@@ -52,6 +52,7 @@
     "@start/plugin-sequence": "^1.0.0",
     "@start/plugin-write": "^1.0.0",
     "@start/reporter-verbose": "^1.0.0",
+    "@x-ray/bundle-size-snapshots": "^0.0.0",
     "@x-ray/chrome-perf-snapshots": "^1.0.0",
     "@x-ray/chrome-screenshots": "^1.0.0",
     "@x-ray/common-utils": "^1.0.0",
