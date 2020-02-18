@@ -1,5 +1,5 @@
-import { TColor } from 'colorido'
+import { TIconOrientation } from '../icon'
 
 export type TIcon = {
-  color: TColor,
+  orientation?: TIconOrientation,
 }

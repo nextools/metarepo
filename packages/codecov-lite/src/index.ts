@@ -3,7 +3,7 @@ import got from 'got'
 import getConfig from './getConfig'
 
 const ENDPOINT = 'https://codecov.io/upload/v2'
-const TIMEOUT = 5000
+const TIMEOUT = 10000
 const RETRIES = 3
 
 export default async (data: string) => {

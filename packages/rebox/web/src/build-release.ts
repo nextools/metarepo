@@ -5,7 +5,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import InlineChunkWebpackPlugin from 'fixed-webpack4-html-webpack-inline-chunk-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import { browsersList } from '@bubble-dev/browsers-list'
+import { babelConfigWebApp } from '@bubble-dev/babel-config'
 import { isObject } from 'tsfn'
 
 const nodeModulesRegExp = /[\\/]node_modules[\\/]/
@@ -82,28 +82,7 @@ export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
           exclude: nodeModulesRegExp,
           loader: 'babel-loader',
           options: {
-            babelrc: false,
-            presets: [
-              [
-                require.resolve('@babel/preset-env'),
-                {
-                  targets: { browsers: browsersList },
-                  modules: false,
-                  useBuiltIns: 'usage',
-                  corejs: 3,
-                  ignoreBrowserslistConfig: true,
-                  exclude: ['@babel/plugin-transform-regenerator'],
-                },
-              ],
-              require.resolve('@babel/preset-react'),
-              require.resolve('@babel/preset-typescript'),
-            ],
-            plugins: [
-              require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
-              require.resolve('@babel/plugin-proposal-optional-chaining'),
-              require.resolve('@babel/plugin-syntax-bigint'),
-              require.resolve('@babel/plugin-syntax-dynamic-import'),
-            ],
+            ...babelConfigWebApp,
             cacheDirectory: false,
           },
         },
@@ -210,8 +189,14 @@ export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
         return reject(err)
       }
 
-      if (!options.isQuiet) {
+      const hasErrors = stats.hasErrors()
+
+      if (!options.isQuiet || hasErrors) {
         console.log(stats.toString(statsOptions))
+      }
+
+      if (hasErrors) {
+        return reject(null)
       }
 
       resolve()

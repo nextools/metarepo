@@ -23,7 +23,7 @@ export const buildAssets = async (dir: string) => {
 }
 
 export const buildWeb = async (dir: string) => {
-  const { babelConfigWeb } = await import('./config/babel')
+  const { babelConfigWebLib } = await import('@bubble-dev/babel-config')
 
   return sequence(
     find([
@@ -31,7 +31,7 @@ export const buildWeb = async (dir: string) => {
       `!${dir}/src/**/*.{node,native,ios,android}.{js,ts,tsx}`,
     ]),
     read,
-    babel(babelConfigWeb),
+    babel(babelConfigWebLib),
     rename((file) => file.replace(/(\.web)?\.(ts|tsx)$/, '.js')),
     write(`${dir}/build/web/`),
     find(`${dir}/src/index.{web.tsx,web.ts,tsx,ts}`),
@@ -51,7 +51,7 @@ export const buildWeb = async (dir: string) => {
 }
 
 export const buildReactNative = async (dir: string) => {
-  const { babelConfigReactNative } = await import('./config/babel')
+  const { babelConfigReactNative } = await import('@bubble-dev/babel-config')
 
   return sequence(
     find([
@@ -79,7 +79,7 @@ export const buildReactNative = async (dir: string) => {
 }
 
 export const buildNode = async (dir: string) => {
-  const { babelConfigNode } = await import('./config/babel')
+  const { babelConfigNode } = await import('@bubble-dev/babel-config')
 
   return sequence(
     find([
@@ -107,7 +107,7 @@ export const buildNode = async (dir: string) => {
 }
 
 export const buildWebNode = async (dir: string) => {
-  const { babelConfigNode } = await import('./config/babel')
+  const { babelConfigNode } = await import('@bubble-dev/babel-config')
 
   return sequence(
     find([
@@ -159,6 +159,10 @@ export const buildPackage = async (packageDir: string) => {
 
   if (Reflect.has(packageJson, 'react-native')) {
     tasks.push('buildReactNative')
+  }
+
+  if (Reflect.has(packageJson, 'bin') && !tasks.includes('buildNode')) {
+    tasks.push('buildNode')
   }
 
   if (Reflect.has(packageJson, 'buildAssets')) {

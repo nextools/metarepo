@@ -12,6 +12,7 @@ const permEquals = (a: Permutation, b: Permutation): boolean => {
     if (a.values[i].notEquals(b.values[i])) {
       return false
     }
+
     if (a.length[i].notEquals(b.length[i])) {
       return false
     }

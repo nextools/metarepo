@@ -1,6 +1,6 @@
 {
   "name": "@rebox/android",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "keywords": [],
   "repository": "bubble-dev/_",
@@ -15,7 +15,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.3",
     "@rebox/native-utils": "^1.0.0",
-    "execa": "^3.0.0",
+    "execa": "^4.0.0",
     "make-dir": "^3.0.0",
     "move-file": "^1.2.0",
     "pifs": "^1.0.0",

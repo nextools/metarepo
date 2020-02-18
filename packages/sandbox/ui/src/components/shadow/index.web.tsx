@@ -1,66 +1,33 @@
 import React from 'react'
-import { Block } from '@primitives/block'
-import { component, mapDefaultProps, startWithType } from 'refun'
-import { colorToString, TColor } from 'colorido'
-import { AnimationColor } from '../animation-color'
-
-export type TShadow = {
-  color: TColor,
-  topLeftRadius?: number,
-  topRightRadius?: number,
-  bottomRightRadius?: number,
-  bottomLeftRadius?: number,
-  blurRadius?: number,
-  spreadRadius?: number,
-  offsetX?: number,
-  offsetY?: number,
-  overflow?: number,
-}
+import { component, startWithType } from 'refun'
+import { PrimitiveShadow, TPrimitiveShadow } from '../primitive-shadow'
+import { AnimationColor } from '../animation'
 
 export const Shadow = component(
-  startWithType<TShadow>(),
-  mapDefaultProps({
-    topLeftRadius: 0,
-    topRightRadius: 0,
-    bottomRightRadius: 0,
-    bottomLeftRadius: 0,
-    offsetX: 0,
-    offsetY: 0,
-    blurRadius: 0,
-    spreadRadius: 0,
-    overflow: 0,
-  })
+  startWithType<TPrimitiveShadow>()
 )(({
-  topLeftRadius,
-  topRightRadius,
-  bottomRightRadius,
-  bottomLeftRadius,
+  color,
+  radius,
   blurRadius,
   spreadRadius,
   offsetX,
   offsetY,
-  color,
   overflow,
 }) => (
-  <AnimationColor values={color}>
+  <AnimationColor toColor={color}>
     {(color) => (
-      <Block
-        shouldIgnorePointerEvents
-        isFloating
-        top={-overflow}
-        right={-overflow}
-        bottom={-overflow}
-        left={-overflow}
-        style={{
-          borderTopLeftRadius: topLeftRadius,
-          borderTopRightRadius: topRightRadius,
-          borderBottomRightRadius: bottomRightRadius,
-          borderBottomLeftRadius: bottomLeftRadius,
-          boxShadow: `${offsetX}px ${offsetY}px ${blurRadius}px ${spreadRadius}px ${colorToString(color)}`,
-        }}
+      <PrimitiveShadow
+        color={color}
+        offsetX={offsetX}
+        offsetY={offsetY}
+        overflow={overflow}
+        radius={radius}
+        blurRadius={blurRadius}
+        spreadRadius={spreadRadius}
       />
     )}
   </AnimationColor>
 ))
 
 Shadow.displayName = 'Shadow'
+Shadow.componentSymbol = Symbol('SHADOW')

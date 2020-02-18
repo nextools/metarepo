@@ -1,33 +1,49 @@
-import React, { FC } from 'react'
-import { TColor } from 'colorido'
-import { Text as PrimitiveText } from '@primitives/text'
-import { AnimationColor } from '../animation-color'
-
-export const textHeight = 20
+import React from 'react'
+import { component, startWithType, mapContext } from 'refun'
+import { PrimitiveText } from '../primitive-text'
+import { AnimationColor } from '../animation'
+import { TextThemeContext } from '../theme-context'
 
 export type TText = {
-  color: TColor,
   shouldPreventWrap?: boolean,
   shouldHideOverflow?: boolean,
-  isBold?: boolean,
+  shouldPreventSelection?: boolean,
+  isUnderlined?: boolean,
 }
 
-export const Text: FC<TText> = ({ color, children, shouldPreventWrap, shouldHideOverflow, isBold }) => (
-  <AnimationColor values={color}>
+export const Text = component(
+  startWithType<TText>(),
+  mapContext(TextThemeContext)
+)(({
+  color,
+  fontFamily,
+  fontSize,
+  fontWeight,
+  lineHeight,
+  children,
+  shouldPreventWrap,
+  shouldHideOverflow,
+  shouldPreventSelection,
+  isUnderlined,
+}) => (
+  <AnimationColor toColor={color}>
     {(color) => (
       <PrimitiveText
-        fontFamily={'Helvetica, Arial, sans-serif'}
-        fontWeight={isBold ? 500 : 400}
-        fontSize={16}
-        lineHeight={20}
+        fontFamily={fontFamily}
+        fontWeight={fontWeight}
+        fontSize={fontSize}
+        lineHeight={lineHeight}
         color={color}
         shouldPreventWrap={shouldPreventWrap}
         shouldHideOverflow={shouldHideOverflow}
+        shouldPreventSelection={shouldPreventSelection}
+        isUnderlined={isUnderlined}
       >
         {children}
       </PrimitiveText>
     )}
   </AnimationColor>
-)
+))
 
 Text.displayName = 'Text'
+Text.componentSymbol = Symbol('SYMBOL_TEXT')

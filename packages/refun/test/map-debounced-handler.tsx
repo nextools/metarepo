@@ -24,6 +24,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -346,6 +347,7 @@ test('mapDebouncedHandler: Invalid handler', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp/>
@@ -427,6 +429,7 @@ test('mapDebouncedHandler: Handler is removed during timeout period', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp handler={spy}/>

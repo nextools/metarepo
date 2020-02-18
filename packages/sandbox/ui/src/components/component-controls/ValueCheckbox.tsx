@@ -1,32 +1,30 @@
 import React from 'react'
 import { startWithType, mapHandlers, pureComponent, mapState } from 'refun'
-import { Switch, switchHeight } from '../switch'
-import { TPosition } from '../../types'
+import { Switch } from '../switch'
+import { SYMBOL_SWITCH } from '../../symbols'
 
 export type TValueCheckboxProps = {
   propPath: readonly string[],
-  propValue: boolean,
-  onChange: (propPath: readonly string[], propValue: boolean) => void,
-} & TPosition
-
-export const valueCheckboxHeight = switchHeight
+  checkedPropValue: any,
+  propValue: any,
+  onChange: (propPath: readonly string[], propValue: any) => void,
+}
 
 export const ValueCheckbox = pureComponent(
   startWithType<TValueCheckboxProps>(),
-  mapState('value', 'setValue', ({ propValue }) => Boolean(propValue), ['propValue']),
+  mapState('isChecked', 'setIsChecked', ({ propValue }) => propValue !== false && propValue !== undefined, ['propValue']),
   mapHandlers({
-    onChange: ({ propPath, onChange, value, setValue }) => () => {
-      setValue(!value)
-      onChange(propPath, !value)
+    onChange: ({ propPath, checkedPropValue, onChange, isChecked, setIsChecked }) => () => {
+      setIsChecked(!isChecked)
+      onChange(propPath, isChecked ? undefined : checkedPropValue)
     },
   })
-)(({ left, top, value, onChange }) => (
+)(({ isChecked, onChange }) => (
   <Switch
-    left={left}
-    top={top}
-    isChecked={value}
+    isChecked={isChecked}
     onToggle={onChange}
   />
 ))
 
 ValueCheckbox.displayName = 'ValueCheckbox'
+ValueCheckbox.componentSymbol = SYMBOL_SWITCH

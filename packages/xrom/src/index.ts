@@ -2,10 +2,10 @@ import path from 'path'
 import execa from 'execa'
 import onExit from 'signal-exit'
 import { isNumber, TRequireKeys, isArray, isString } from 'tsfn'
-import request from 'request-promise-native'
+import fetch from 'node-fetch'
 import { waitForChromium } from './wait-for-chromium'
 
-const CHROMIUM_VERSION = 77
+const CHROMIUM_VERSION = 79
 const DEBUGGER_ENDPOINT_HOST = 'localhost'
 const DEBUGGER_ENDPOINT_PORT = 9222
 
@@ -74,11 +74,8 @@ export const runChromium = async (userOptions?: TRunChromiumOptions): Promise<st
 
   await waitForChromium()
 
-  const { body: { webSocketDebuggerUrl } } = await request({
-    uri: `http://${DEBUGGER_ENDPOINT_HOST}:${DEBUGGER_ENDPOINT_PORT}/json/version`,
-    json: true,
-    resolveWithFullResponse: true,
-  }) as { body: { webSocketDebuggerUrl: string } }
+  const response = await fetch(`http://${DEBUGGER_ENDPOINT_HOST}:${DEBUGGER_ENDPOINT_PORT}/json/version`)
+  const { webSocketDebuggerUrl } = await response.json() as { webSocketDebuggerUrl: string }
 
   return webSocketDebuggerUrl
 }

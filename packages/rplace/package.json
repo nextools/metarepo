@@ -1,0 +1,25 @@
+{
+  "name": "rplace",
+  "version": "0.1.0",
+  "description": "Transform stream by replacing strings on per-line basis",
+  "keywords": [
+    "stream",
+    "transform",
+    "replace"
+  ],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "blue-tape": "^1.0.0"
+  }
+}

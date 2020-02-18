@@ -15,6 +15,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -127,6 +128,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -249,6 +251,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -1392,6 +1395,7 @@ test('mapKeyboardFocused: external isKeyboardFocused', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp

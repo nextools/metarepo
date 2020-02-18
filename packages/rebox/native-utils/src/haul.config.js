@@ -9,7 +9,6 @@ export default makeConfig({
       entry: withPolyfills(appPath),
       transform({ env, config }) {
         config.module.rules = [
-          ...config.module.rules,
           {
             test: appPath,
             use: [

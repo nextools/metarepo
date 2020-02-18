@@ -2,6 +2,7 @@
 
 /* eslint-disable no-global-assign */
 /* eslint-disable no-process-exit */
+/* eslint-disable import/no-dynamic-require */
 const { resolve } = require('path')
 const { start: options } = require(resolve('./package.json'))
 

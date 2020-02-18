@@ -1,6 +1,6 @@
 {
   "name": "@themeables/vector-shape",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "keywords": [],
   "main": "src/index.web.ts",
@@ -16,15 +16,14 @@
     "@babel/runtime": "^7.1.2",
     "@primitives/vector-shape": "^1.0.0",
     "@themeables/core": "^1.0.0",
-    "colorido": "^1.0.0",
-    "refun": "^1.0.0"
+    "colorido": "^1.0.0"
   },
   "devDependencies": {
-    "autoprops": "^1.0.0",
     "@types/react": "^16.8.6",
     "@x-ray/common-utils": "^1.0.0",
     "@x-ray/screenshot-utils": "^1.0.0",
     "@x-ray/snapshots": "^1.0.0",
+    "autoprops": "^1.0.0",
     "react": "^16.8.6"
   }
 }

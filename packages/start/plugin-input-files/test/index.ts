@@ -1,5 +1,5 @@
 import { resolve } from 'path'
-import EventEmitter from 'events'
+import { EventEmitter } from 'events'
 import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { StartFile } from '@start/plugin'

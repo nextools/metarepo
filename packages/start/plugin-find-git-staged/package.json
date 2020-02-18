@@ -1,6 +1,6 @@
 {
   "name": "@start/plugin-find-git-staged",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "🔍 Find Git staged files and filter them using glob patterns",
   "keywords": "tasks, runner, glob, git, start, start-plugin",
   "repository": "deepsweet/start",
@@ -19,7 +19,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.2",
     "@start/plugin": "^1.0.0",
-    "execa": "^3.0.0",
+    "execa": "^4.0.0",
     "multimatch": "^4.0.0"
   },
   "devDependencies": {

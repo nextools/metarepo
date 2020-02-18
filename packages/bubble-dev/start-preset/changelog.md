@@ -1,3 +1,57 @@
+## v1.2.4
+
+* 🐞 switch from deprecated `request` to `node-fetch` dependency
+
+  ```
+  >As of Feb 11th 2020, request is fully deprecated. No new changes are expected to land. In fact, none have landed for some time.
+  
+  https://github.com/request/request/issues/3142
+  ```
+
+## v1.2.3
+
+* 🐞 remove unnecessary peer deps
+
+* 🐞 fix missing deps
+
+## v1.2.2
+
+* 🐞 fix building packages with CLI
+
+## v1.2.1
+
+* 🐞 format `fixDeps` task report
+
+## v1.2.0
+
+* 🌱 add `checkDeps` task
+
+* 🐞 bump dockerized Chromium to v79
+
+## v1.1.1
+
+* 🐞 enhance `fixDeps` task reports
+
+* 🐞 fix deps
+
+## v1.1.0
+
+* 🐞 refactor using shared Babel config
+
+* ♻️ update dependencies: `@bubble-dev/babel-config`
+
+## v1.0.2
+
+* 🐞 add ability to fix deps of a single package
+
+* 🐞 add `react-native-view-shot` dependency
+
+## v1.0.1
+
+* 🐞 bump `react-native-svg` to v11
+
+* 🐞 bump compatible deps
+
 ## v1.0.0
 
 * 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)

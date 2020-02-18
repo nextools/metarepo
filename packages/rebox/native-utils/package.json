@@ -1,6 +1,6 @@
 {
   "name": "@rebox/native-utils",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "",
   "keywords": [],
   "repository": "bubble-dev/_",
@@ -15,30 +15,22 @@
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
     "@babel/plugin-syntax-bigint": "^7.4.4",
     "@babel/runtime": "^7.4.3",
-    "@haul-bundler/cli": "^0.15.0",
-    "@haul-bundler/core": "^0.15.0",
-    "@haul-bundler/preset-0.60": "^0.15.0",
+    "@haul-bundler/cli": "^0.16.0",
+    "@haul-bundler/core": "^0.16.0",
+    "@haul-bundler/preset-0.60": "^0.16.0",
     "@psxcode/wait": "^0.1.1",
     "babel-loader": "^8.0.5",
     "copie": "^1.0.0",
-    "execa": "^3.0.0",
+    "execa": "^4.0.0",
     "fast-glob": "^3.0.0",
     "is-port-reachable": "^3.0.0",
     "make-dir": "^3.0.0",
     "metro-react-native-babel-preset": "0.56.4",
-    "react-dom": "^16.8.6",
-    "request-promise-native": "^1.0.5",
-    "request": "^2.87.0",
-    "tsfn": "^1.0.0"
-  },
-  "devDependencies": {
-    "@types/request-promise-native": "^1.0.15",
+    "node-fetch": "^2.6.0",
     "react": "^16.8.0",
-    "react-native": "^0.61.5"
-  },
-  "peerDependencies": {
-    "react": "^16.8.0",
-    "react-native": "^0.61.5"
+    "react-native": "^0.61.5",
+    "tsfn": "^1.0.0",
+    "webpack": "^4.30.0"
   },
   "fixdeps": {
     "ignoredPackages": [
@@ -46,9 +38,14 @@
       "@babel/runtime",
       "react-dom",
       "react-hot-loader",
-      "request",
+      "webpack",
+      "react",
+      "react-native",
       "@haul-bundler/cli",
       "@haul-bundler/core"
     ]
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.4"
   }
 }

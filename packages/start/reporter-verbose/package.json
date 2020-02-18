@@ -1,6 +1,6 @@
 {
   "name": "@start/reporter-verbose",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "📃 Verbose reporter",
   "keywords": "tasks, runner, start, start-reporter",
   "repository": "deepsweet/start",
@@ -19,7 +19,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.2",
     "chalk": "^3.0.0",
-    "stack-utils": "^1.0.2"
+    "stack-utils": "^2.0.1"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",

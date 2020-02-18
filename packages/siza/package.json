@@ -1,0 +1,43 @@
+{
+  "name": "siza",
+  "version": "0.1.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
+    "@bubble-dev/babel-config": "^0.1.0",
+    "babel-loader": "^8.0.6",
+    "compression-webpack-plugin": "^3.1.0",
+    "file-loader": "^5.0.2",
+    "memfs": "^3.1.1",
+    "memory-fs": "^0.5.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.6",
+    "terser-webpack-plugin": "^2.3.5",
+    "tsfn": "^1.0.0",
+    "webpack": "^4.41.6"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.33",
+    "@types/compression-webpack-plugin": "^2.0.1",
+    "@types/memory-fs": "^0.3.2",
+    "@types/terser-webpack-plugin": "^2.2.0",
+    "@types/webpack": "^4.41.6",
+    "blue-tape": "^1.0.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/core",
+      "@babel/runtime",
+      "react-dom"
+    ]
+  }
+}

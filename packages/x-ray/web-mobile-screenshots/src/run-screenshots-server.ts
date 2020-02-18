@@ -83,6 +83,7 @@ export const runScreenshotsServer = (targetFiles: string[], options: TOptions) =
       // target file DONE
       if (currentItemData !== null) {
         const relativePath = path.relative(process.cwd(), currentItemData.path)
+
         result[relativePath] = targetResult
         resultData[relativePath] = targetResultData
 

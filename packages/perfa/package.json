@@ -1,0 +1,29 @@
+{
+  "name": "perfa",
+  "version": "0.1.2",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "buildAssets": {
+    "src/*.html": "node/"
+  },
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.8.0",
+    "@rebox/web": "^1.1.0",
+    "dleet": "^1.0.0",
+    "puppeteer-core": "^2.1.0",
+    "tempy": "^0.3.0",
+    "tsfn": "^1.0.0",
+    "xrom": "^1.0.1"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime"
+    ]
+  }
+}

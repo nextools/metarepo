@@ -3,7 +3,7 @@ import { isUndefined } from 'tsfn'
 // @ts-ignore
 import isPortReachable from 'is-port-reachable'
 import { waitTimePromise } from '@psxcode/wait'
-import request from 'request-promise-native'
+import fetch from 'node-fetch'
 
 const REQUEST_TIMEOUT = 2 * 60 * 1000
 
@@ -48,9 +48,10 @@ export const serveJsBundle = async ({ port, entryPointPath, platform, isDev, sho
     await waitTimePromise(200)
   }
 
-  await request(`http://localhost:${port}/index.bundle?platform=${platform}&dev=${isDevString}&minify=${shouldMinifyString}`, {
-    timeout: REQUEST_TIMEOUT,
-  })
+  await fetch(
+    `http://localhost:${port}/index.bundle?platform=${platform}&dev=${isDevString}&minify=${shouldMinifyString}`,
+    { timeout: REQUEST_TIMEOUT }
+  )
 
   return () => proc.kill()
 }

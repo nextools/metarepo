@@ -33,7 +33,7 @@ test('codecov-lite', async (t) => {
             Accept: 'text/plain',
           },
           body: 'data',
-          timeout: 5000,
+          timeout: 10000,
           retry: 3,
         },
       ],

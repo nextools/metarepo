@@ -24,6 +24,7 @@ export default ({ targetFiles }: TChildOptions) => {
           }
 
           const { default: screenshots } = await import(targetFiles[fileIndex]) as { default: Iterable<TMeta> }
+
           iterator = screenshots[Symbol.iterator]()
         }
 

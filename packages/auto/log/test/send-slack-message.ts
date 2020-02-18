@@ -24,7 +24,7 @@ test('sendSlackMessage', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
   const unmock = mock('../src/send-slack-message', {
-    'request-promise-native': {
+    'node-fetch': {
       default: spy,
     },
   })
@@ -78,33 +78,38 @@ test('sendSlackMessage', async (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [{
-        uri: 'https://hooks.slack.com/services/token',
-        method: 'POST',
-        json: {
-          channel: 'channel',
-          username: 'username',
-          link_names: '1',
-          icon_emoji: 'emoji',
-          unfurl_media: false,
-          attachments: [
-            {
-              color: 'minor',
-              fields: [{
-                title: 'a v0.1.2',
-                value: `${prefixes.required.minor.value} minor\n${prefixes.required.patch.value} patch`,
-              }],
-            },
-            {
-              color: 'minor',
-              fields: [{
-                title: 'b v1.2.3',
-                value: `${prefixes.required.minor.value} minor\n${prefixes.required.patch.value} patch\n${prefixes.required.dependencies.value} update dependencies`,
-              }],
-            },
-          ],
+      [
+        'https://hooks.slack.com/services/token',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            channel: 'channel',
+            username: 'username',
+            link_names: '1',
+            icon_emoji: 'emoji',
+            unfurl_media: false,
+            attachments: [
+              {
+                color: 'minor',
+                fields: [{
+                  title: 'a v0.1.2',
+                  value: `${prefixes.required.minor.value} minor\n${prefixes.required.patch.value} patch`,
+                }],
+              },
+              {
+                color: 'minor',
+                fields: [{
+                  title: 'b v1.2.3',
+                  value: `${prefixes.required.minor.value} minor\n${prefixes.required.patch.value} patch\n${prefixes.required.dependencies.value} update dependencies`,
+                }],
+              },
+            ],
+          }),
         },
-      }],
+      ],
     ],
     'should make request'
   )
@@ -116,7 +121,7 @@ test('sendSlackMessage: throws if there is no token', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
   const unmock = mock('../src/send-slack-message', {
-    'request-promise-native': {
+    'node-fetch': {
       default: spy,
     },
   })
@@ -181,7 +186,7 @@ test('sendSlackMessage: multiple messages', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
   const unmock = mock('../src/send-slack-message', {
-    'request-promise-native': {
+    'node-fetch': {
       default: spy,
     },
     './utils': {
@@ -263,67 +268,78 @@ test('sendSlackMessage: multiple messages', async (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [{
-        uri: 'https://hooks.slack.com/services/token',
-        method: 'POST',
-        json: {
-          channel: 'channel',
-          username: 'username',
-          link_names: '1',
-          icon_emoji: 'emoji',
-          unfurl_media: false,
-          attachments: [
-            {
-              color: 'minor',
-              fields: [{
-                title: 'a v0.1.2',
-                value: `${prefixes.required.minor.value} minor`,
-              }],
-            },
-            {
-              color: 'minor',
-              fields: [{
-                title: 'b v1.2.3',
-                value: `${prefixes.required.minor.value} minor`,
-              }],
-            },
-            {
-              color: 'minor',
-              fields: [{
-                title: 'c v1.2.3',
-                value: `${prefixes.required.minor.value} minor`,
-              }],
-            },
-          ],
+      [
+
+        'https://hooks.slack.com/services/token',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            channel: 'channel',
+            username: 'username',
+            link_names: '1',
+            icon_emoji: 'emoji',
+            unfurl_media: false,
+            attachments: [
+              {
+                color: 'minor',
+                fields: [{
+                  title: 'a v0.1.2',
+                  value: `${prefixes.required.minor.value} minor`,
+                }],
+              },
+              {
+                color: 'minor',
+                fields: [{
+                  title: 'b v1.2.3',
+                  value: `${prefixes.required.minor.value} minor`,
+                }],
+              },
+              {
+                color: 'minor',
+                fields: [{
+                  title: 'c v1.2.3',
+                  value: `${prefixes.required.minor.value} minor`,
+                }],
+              },
+            ],
+          }),
         },
-      }],
-      [{
-        uri: 'https://hooks.slack.com/services/token',
-        method: 'POST',
-        json: {
-          channel: 'channel',
-          username: 'username',
-          link_names: '1',
-          icon_emoji: 'emoji',
-          unfurl_media: false,
-          attachments: [
-            {
-              color: 'minor',
-              fields: [{
-                title: 'd v1.2.3',
-                value: `${prefixes.required.minor.value} minor`,
-              }],
-            },
-            {
-              color: 'minor',
-              fields: [{
-                title: 'e v1.2.3',
-                value: `${prefixes.required.minor.value} minor`,
-              }],
-            },
-          ],
+      ],
+      [
+        'https://hooks.slack.com/services/token',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            channel: 'channel',
+            username: 'username',
+            link_names: '1',
+            icon_emoji: 'emoji',
+            unfurl_media: false,
+            attachments: [
+              {
+                color: 'minor',
+                fields: [{
+                  title: 'd v1.2.3',
+                  value: `${prefixes.required.minor.value} minor`,
+                }],
+              },
+              {
+                color: 'minor',
+                fields: [{
+                  title: 'e v1.2.3',
+                  value: `${prefixes.required.minor.value} minor`,
+                }],
+              },
+            ],
+          }),
         },
-      }],
+      ],
     ],
     'should make multiple requests'
   )

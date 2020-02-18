@@ -14,6 +14,7 @@ test('mapContext', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <Context.Provider value={{ ctxA: 'foo', ctxB: 42 }}>

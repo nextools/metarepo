@@ -18,6 +18,7 @@ test('mapWithPropsMemo', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp

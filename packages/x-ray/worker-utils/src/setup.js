@@ -45,7 +45,20 @@ const resolvePath = (value, basedir, { mocks, extensions, entryPointField }) => 
     return cache.get(value)
   }
 
-  const packageDir = pkgDir.sync(path.dirname(require.resolve(value)))
+  try {
+    if (require.resolve(value) === value) {
+      return null
+    }
+  } catch {
+    return null
+  }
+
+  const packageDir = pkgDir.sync(
+    resolve.sync(value, {
+      basedir,
+      extensions,
+    })
+  )
 
   if (!packageDir) {
     return null
@@ -97,14 +110,16 @@ const babelConfig = {
         },
         ignoreBrowserslistConfig: true,
         loose: true,
+        exclude: [
+          '@babel/plugin-transform-regenerator',
+          '@babel/plugin-transform-async-to-generator',
+        ],
       },
     ],
     require.resolve('@babel/preset-react'),
     require.resolve('@babel/preset-typescript'),
   ],
   plugins: [
-    require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
-    require.resolve('@babel/plugin-proposal-optional-chaining'),
     require.resolve('@babel/plugin-syntax-bigint'),
   ],
   extensions: options.extensions,

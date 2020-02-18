@@ -1,6 +1,6 @@
 {
   "name": "stili",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "keywords": [],
   "main": "src/index.web.ts",
@@ -13,11 +13,11 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@types/react": "^16.8.6",
-    "@types/react-native": "^0.60.13",
     "tsfn": "^1.0.0"
   },
   "devDependencies": {
+    "@types/react": "^16.8.6",
+    "@types/react-native": "^0.61.4",
     "react": "^16.8.6",
     "react-native": "^0.61.5"
   },

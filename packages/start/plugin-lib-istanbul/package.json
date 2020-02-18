@@ -1,6 +1,6 @@
 {
   "name": "@start/plugin-lib-istanbul",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "💯 Collect, report and check code coverage using Istanbul",
   "keywords": "tasks, runner, start, start-plugin, coverage, istanbul",
   "repository": "deepsweet/start",
@@ -34,7 +34,7 @@
     "@types/convert-source-map": "^1.5.1",
     "@types/istanbul-lib-coverage": "^2.0.0",
     "@types/istanbul-lib-hook": "^2.0.0",
-    "@types/istanbul-lib-report": "^1.1.0",
+    "@types/istanbul-lib-report": "^3.0.0",
     "@types/istanbul-lib-source-maps": "^1.2.1",
     "blue-tape": "^1.0.0"
   }

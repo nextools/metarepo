@@ -123,7 +123,6 @@ module.exports = {
     'multiline-comment-style': [2, 'separate-lines'],
     'multiline-ternary': [2, 'always-multiline'],
     'new-parens': 2,
-    'newline-per-chained-call': [2, { ignoreChainWithDepth: 2 }],
     'no-array-constructor': 2,
     'no-lonely-if': 2,
     'no-mixed-spaces-and-tabs': 2,
@@ -152,26 +151,6 @@ module.exports = {
       'error',
       {
         blankLine: 'always',
-        prev: 'import',
-        next: '*',
-      },
-      {
-        blankLine: 'never',
-        prev: 'import',
-        next: 'import',
-      },
-      {
-        blankLine: 'always',
-        prev: '*',
-        next: 'export',
-      },
-      {
-        blankLine: 'any',
-        prev: 'export',
-        next: 'export',
-      },
-      {
-        blankLine: 'always',
         prev: '*',
         next: 'return',
       },
@@ -183,6 +162,7 @@ module.exports = {
           'var',
         ],
         next: [
+          'expression',
           'block',
           'block-like',
         ],
@@ -190,6 +170,7 @@ module.exports = {
       {
         blankLine: 'always',
         prev: [
+          'expression',
           'block',
           'block-like',
         ],
@@ -209,6 +190,36 @@ module.exports = {
         ],
       },
       {
+        blankLine: 'always',
+        prev: [
+          'block',
+          'block-like',
+        ],
+        next: [
+          'expression',
+        ],
+      },
+      {
+        blankLine: 'always',
+        prev: [
+          '*',
+        ],
+        next: [
+          'block',
+          'block-like',
+        ],
+      },
+      {
+        blankLine: 'any',
+        prev: [
+          'case',
+        ],
+        next: [
+          'default',
+          'case',
+        ],
+      },
+      {
         blankLine: 'any',
         prev: [
           'const',
@@ -236,6 +247,26 @@ module.exports = {
           'block',
           'function',
         ],
+      },
+      {
+        blankLine: 'always',
+        prev: 'import',
+        next: '*',
+      },
+      {
+        blankLine: 'never',
+        prev: 'import',
+        next: 'import',
+      },
+      {
+        blankLine: 'always',
+        prev: '*',
+        next: 'export',
+      },
+      {
+        blankLine: 'any',
+        prev: 'export',
+        next: 'export',
       },
     ],
     'prefer-object-spread': 2,

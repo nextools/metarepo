@@ -1,6 +1,6 @@
 {
   "name": "@bubble-dev/typescript-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "keywords": [],
   "repository": "bubble-dev/_",
@@ -10,11 +10,5 @@
   },
   "engines": {
     "node": ">=10.13.0"
-  },
-  "peerDependencies": {
-    "typescript": "*"
-  },
-  "devDependencies": {
-    "typescript": "bubble-dev/TypeScript#ext-3.7.3"
   }
 }

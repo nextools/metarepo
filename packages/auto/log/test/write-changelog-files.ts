@@ -13,7 +13,7 @@ test('writeChangelogFiles', async (t) => {
       name: '@ns/a',
       version: '1.0.0',
     }),
-    [`${rootDir}/fakes/a/changelog.md`]: '## v1.0.0\n\n* 💥 major\n\n  description\n',
+    [`${rootDir}/fakes/a/changelog.md`]: '## v1.0.0\n\n* 💥 major\n',
   })
   const fs = createFsFromVolume(vol)
 
@@ -54,7 +54,7 @@ test('writeChangelogFiles', async (t) => {
 
   t.equal(
     changelogData,
-    '## v0.1.0\n\n* 🌱 minor\n\n  description\n\n* 🐞 patch\n\n  description\n\n## v1.0.0\n\n* 💥 major\n\n  description\n',
+    '## v0.1.0\n\n* 🌱 minor\n\n  ```\n  description\n  ```\n\n* 🐞 patch\n\n  ```\n  description\n  ```\n\n## v1.0.0\n\n* 💥 major\n',
     'should prepend to an already existing changelog.md'
   )
 

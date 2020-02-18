@@ -19,6 +19,7 @@ test('mapHandlers', (t) => {
 
   /* Mount */
   let testRenderer!: ReactTestRenderer
+
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -27,6 +28,7 @@ test('mapHandlers', (t) => {
       />
     )
   })
+
   const { onClick } = getProps(0)
 
   t.deepEquals(

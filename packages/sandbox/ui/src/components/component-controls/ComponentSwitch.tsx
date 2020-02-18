@@ -1,18 +1,14 @@
 import React from 'react'
 import { startWithType, mapHandlers, pureComponent, mapState } from 'refun'
-import { TColor } from 'colorido'
-import { TPosition } from '../../types'
-import { buttonIconSwitchSize, ButtonIconSwitch } from '../button-icon-switch'
-import { IconMinus, IconPlus } from '../icons'
+import { SYMBOL_CHECKBOX } from '../../symbols'
+import { Checkmark } from '../checkmark'
 
 export type TComponentSwitchProps = {
+  isDisabled?: boolean,
   propPath: readonly string[],
   isChecked: boolean,
-  color: TColor,
   onChange: (propPath: readonly string[], propValue: any) => void,
-} & TPosition
-
-export const componentSwitchSize = buttonIconSwitchSize
+}
 
 export const ComponentSwitch = pureComponent(
   startWithType<TComponentSwitchProps>(),
@@ -26,15 +22,13 @@ export const ComponentSwitch = pureComponent(
       )
     },
   })
-)(({ value, left, top, color, onToggle }) => (
-  <ButtonIconSwitch
-    left={left}
-    top={top}
+)(({ value, isDisabled, onToggle }) => (
+  <Checkmark
+    isDisabled={isDisabled}
     isChecked={value}
     onToggle={onToggle}
-  >
-    {value ? <IconMinus color={color}/> : <IconPlus color={color}/>}
-  </ButtonIconSwitch>
+  />
 ))
 
 ComponentSwitch.displayName = 'ComponentSwitch'
+ComponentSwitch.componentSymbol = SYMBOL_CHECKBOX

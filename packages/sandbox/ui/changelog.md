@@ -1,3 +1,16 @@
+## v2.0.0
+
+* 💥 redesign ui
+
+  ```
+  * dark mode
+  * new icons
+  * collapsible source code nodes
+  * "Console" and "About" tabs in Component sidebar
+  * popover-plugins for bottom toolbar
+  * left navigation sidebar
+  ```
+
 ## v1.0.0
 
 * 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)

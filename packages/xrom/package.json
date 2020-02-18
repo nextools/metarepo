@@ -1,6 +1,6 @@
 {
   "name": "xrom",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
@@ -10,13 +10,19 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.8.0",
     "execa": "^4.0.0",
-    "request-promise-native": "^1.0.8",
+    "node-fetch": "^2.6.0",
     "signal-exit": "^3.0.2",
     "tsfn": "^1.0.0"
   },
   "devDependencies": {
-    "@types/request-promise-native": "^1.0.17",
+    "@types/node-fetch": "^2.5.4",
     "@types/signal-exit": "^3.0.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime"
+    ]
   }
 }

@@ -6,7 +6,9 @@ import { serializeProps } from '../src/serialize-props'
 
 test('serializeProps: props', (t) => {
   const Comp = () => null
+
   Comp.displayName = 'Comp'
+
   const Comp2 = () => null
 
   const config: TComponentConfig = {

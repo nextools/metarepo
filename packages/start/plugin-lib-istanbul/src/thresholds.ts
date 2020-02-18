@@ -1,5 +1,6 @@
 import plugin from '@start/plugin'
 import { CoverageMapData } from 'istanbul-lib-coverage'
+import { ReportNode } from 'istanbul-lib-report'
 
 export type TOptions = {
   branches?: number,
@@ -12,7 +13,8 @@ export default (options: TOptions) =>
   plugin('istanbulThresholds', ({ logMessage }) => async () => {
     const { createCoverageMap } = await import('istanbul-lib-coverage')
     const { createSourceMapStore } = await import('istanbul-lib-source-maps')
-    const { summarizers } = await import('istanbul-lib-report')
+    // @ts-ignore
+    const { default: SummarizerFactory } = await import('istanbul-lib-report/lib/summarizer-factory')
     const { getObjectKeys } = await import('tsfn')
     const hooks = await import('./hooks')
     const { default: coverageVariable } = await import('./variable')
@@ -29,12 +31,11 @@ export default (options: TOptions) =>
 
     const coverageMap = createCoverageMap(coverageMapData)
     const sourceMapStore = createSourceMapStore()
-    const remappedCoverageMap = sourceMapStore.transformCoverage(coverageMap).map
+    const remappedCoverageMap = await sourceMapStore.transformCoverage(coverageMap)
 
-    const coverageSummary = summarizers
-      .flat(remappedCoverageMap)
-      .getRoot()
-      .getCoverageSummary(true)
+    const summarizer = new SummarizerFactory(remappedCoverageMap)
+    const reporterNode = summarizer.flat.getRoot() as ReportNode
+    const coverageSummary = reporterNode.getCoverageSummary(true).data
 
     const result = getObjectKeys(options).reduce((errors, key) => {
       const threshold = options[key] as number

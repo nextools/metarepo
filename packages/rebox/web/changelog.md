@@ -1,3 +1,23 @@
+## v1.1.2
+
+* 🐞 rethink peer deps and fix missing deps
+
+## v1.1.1
+
+* 🐞 print errors even with `isQuiet: true` option in `buildRelease()`
+
+* 🐞 properly throw errors in `buildRelease()`
+
+## v1.1.0
+
+* 🐞 refactor using shared Babel config
+
+* ♻️ update dependencies: `@bubble-dev/babel-config`
+
+## v1.0.1
+
+* 🐞 bump compatible deps
+
 ## v1.0.0
 
 * 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
