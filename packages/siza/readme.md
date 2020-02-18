@@ -39,7 +39,7 @@ getBundleSize(options: TOptions) => Promise<TOutput>
 import { getBundleSize } from 'siza'
 
 const result = await getBundleSize({
-  entryPointPath: ('./App.tsx')
+  entryPointPath: './App.tsx'
 })
 
 console.log(result)
