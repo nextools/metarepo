@@ -164,6 +164,7 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
           }
           case 'DONE': {
             const relativePath = path.relative(process.cwd(), action.path)
+
             result[relativePath] = targetResult
             resultData[relativePath] = targetResultData
 
