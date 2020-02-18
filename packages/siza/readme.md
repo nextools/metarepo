@@ -5,7 +5,7 @@ Get bundle size of a React application.
 ## Install
 
 ```sh
-$ yarn add xrom
+$ yarn add siza
 ```
 
 ## Usage
