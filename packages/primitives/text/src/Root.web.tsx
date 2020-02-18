@@ -8,6 +8,7 @@ import {
 } from 'refun'
 import { isNumber } from 'tsfn'
 import { colorToString, isColor } from 'colorido'
+import { elegir } from 'elegir'
 import { TText } from './types'
 
 export const Text = component(
@@ -18,6 +19,7 @@ export const Text = component(
     shouldPreventWrap: false,
     shouldHideOverflow: false,
     isUnderlined: false,
+    role: 'none',
   }),
   mapWithProps(({
     color,
@@ -31,6 +33,7 @@ export const Text = component(
     shouldPreventSelection,
     shouldPreventWrap,
     shouldHideOverflow,
+    role,
   }) => {
     const style: TStyle = {
       fontFamily,
@@ -80,12 +83,28 @@ export const Text = component(
       style.textDecoration = 'underline'
     }
 
+    if (role === 'paragraph') {
+      style.display = 'inline'
+    }
+
     return {
       style: normalizeStyle(style),
     }
   })
-)(({ children, style, id }) => (
-  <span id={id} style={style}>{children}</span>
+)(({ children, style, id, role }) => (
+  elegir(
+    role === 'paragraph',
+    <p id={id} style={style}>{children}</p>,
+
+    role === 'important',
+    <strong id={id} style={style}>{children}</strong>,
+
+    role === 'emphasis',
+    <em id={id} style={style}>{children}</em>,
+
+    role === 'none' || true,
+    <span id={id} style={style}>{children}</span>
+  )
 ))
 
 Text.displayName = 'Text'
