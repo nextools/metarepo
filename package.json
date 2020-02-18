@@ -57,15 +57,12 @@
     "colorido": "^1.0.0",
     "core-js": "^3.2.1",
     "eslint": "^6.1.0",
-    "ndb": "^1.1.5",
     "react": "^16.8.6",
     "react-native": "0.61.5",
     "typescript": "bubble-dev/TypeScript#ext-3.7.3"
   },
   "scripts": {
-    "start": "packages/bubble-dev/start-preset/src/cli/index.js",
-    "start-debug": "node --inspect-brk packages/bubble-dev/start-preset/src/cli/index.js",
-    "start-prof": "ndb --prof node packages/bubble-dev/start-preset/src/cli/index.js"
+    "start": "packages/bubble-dev/start-preset/src/cli/index.js"
   },
   "start": {
     "file": "tasks/",

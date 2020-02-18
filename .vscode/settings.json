@@ -32,6 +32,5 @@
     "packages/*/*/build/": true,
     "tmp/": true
   },
-  "search.followSymlinks": false,
-  "debug.node.autoAttach": "on",
+  "search.followSymlinks": false
 }

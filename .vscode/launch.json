@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Start",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/packages/bubble-dev/start-preset/src/cli/index.js",
+      "args": ["${input:startTaskName}", "${input:startTaskArg}"],
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ],
+      "autoAttachChildProcesses": true
+    },
+    {
+      "name": "Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "startTaskName",
+      "description": "Start task name",
+      "type": "promptString"
+    },
+    {
+      "id": "startTaskArg",
+      "description": "Start task argument",
+      "type": "promptString"
+    }
+  ]
+}
