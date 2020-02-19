@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-type TSupportedRoles = 'main' | 'header' | 'footer' | 'navigation' | 'section' | 'secondary' | 'primary' | 'none'
+export type TSupportedRoles = 'main' | 'header' | 'footer' | 'navigation' | 'section' | 'secondary' | 'primary' | 'none'
 
 export type TBlockCommon = {
   id?: string,
