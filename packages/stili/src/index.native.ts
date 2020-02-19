@@ -5,6 +5,7 @@ type TCssProps = TExtend<ImageStyle, TextStyle>
 
 export type TStyle = TExtend<TCssProps, {
   fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900,
+  fontSize?: number,
 }>
 
 export const normalizeStyle = (style: TStyle): TCssProps =>

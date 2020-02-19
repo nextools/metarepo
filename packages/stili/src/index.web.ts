@@ -5,6 +5,7 @@ export type TStyle = TExtend<CSSProperties, {
   fontSmoothing?: string,
   tapHighlightColor?: string,
   fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900,
+  fontSize?: number,
 }>
 
 type TCssProps = TExtend<CSSProperties, {

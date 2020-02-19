@@ -18,6 +18,8 @@ export const Text = component(
     shouldPreventWrap: false,
     shouldHideOverflow: false,
     isUnderlined: false,
+    isItalic: false,
+    role: 'none',
   }),
   mapWithProps(({
     color,
@@ -26,16 +28,19 @@ export const Text = component(
     fontFamily,
     fontWeight,
     fontSize,
+    isItalic,
     isUnderlined,
     shouldPreserveWhitespace,
     shouldPreventSelection,
     shouldPreventWrap,
     shouldHideOverflow,
+    role,
   }) => {
     const style: TStyle = {
       fontFamily,
       fontWeight,
       fontSize,
+      fontStyle: isItalic ? 'italic' : 'normal',
       fontSmoothing: 'antialiased',
       textRendering: 'geometricPrecision',
       textSizeAdjust: 'none',
@@ -80,12 +85,29 @@ export const Text = component(
       style.textDecoration = 'underline'
     }
 
+    if (role === 'paragraph') {
+      style.display = 'inline'
+    }
+
     return {
       style: normalizeStyle(style),
     }
   })
-)(({ children, style, id }) => (
-  <span id={id} style={style}>{children}</span>
-))
+)(({ children, style, id, role }) => {
+  switch (role) {
+    case 'paragraph':
+      return <p id={id} style={style}>{children}</p>
+
+    case 'important':
+      return <strong id={id} style={style}>{children}</strong>
+
+    case 'emphasis':
+      return <em id={id} style={style}>{children}</em>
+
+    case 'none':
+    default:
+      return <span id={id} style={style}>{children}</span>
+  }
+})
 
 Text.displayName = 'Text'
