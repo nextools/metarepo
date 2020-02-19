@@ -1,3 +1,7 @@
+## v1.1.0
+
+* 🌱 add support for fontStyle and adjust types
+
 ## v1.0.1
 
 * 🐞 fix deps

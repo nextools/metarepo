@@ -1,3 +1,9 @@
+## v1.1.0
+
+* 🌱 add support for fontStyle and adjust types
+
+* 🌱 add support for semantic roles
+
 ## v1.0.0
 
 * 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
