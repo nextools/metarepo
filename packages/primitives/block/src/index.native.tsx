@@ -43,6 +43,7 @@ export const Block = component(
       shouldHideOverflow,
       shouldIgnorePointerEvents,
       ref,
+      role,
     }) => {
       const styles: TStyle = {
         borderStyle: 'solid',
@@ -133,11 +134,21 @@ export const Block = component(
         style: normalizeStyle(styles),
         children,
         ref,
+        role,
       }
     }
   )
-)((props) => (
-  <View {...props}/>
-))
+)(({ role, ...props }) => {
+  switch (role) {
+    case 'navigation':
+      return <View accessibilityRole="menu" {...props}/>
+
+    case 'header':
+      return <View accessibilityRole="header" {...props}/>
+
+    default:
+      return <View {...props}/>
+  }
+})
 
 Block.displayName = 'Block'

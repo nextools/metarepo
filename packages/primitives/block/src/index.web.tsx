@@ -48,6 +48,7 @@ export const Block = component(
       onPointerDown,
       onPointerUp,
       onPointerMove,
+      role,
     }) => {
       const styles: TStyle = {
         display: 'flex',
@@ -159,8 +160,26 @@ export const Block = component(
       return props
     }
   )
-)((props) => (
-  <div {...props}/>
-))
+)((props) => {
+  switch (props.role) {
+    case 'main':
+      return <main {...props}/>
+    case 'header':
+      return <header {...props}/>
+    case 'footer':
+      return <footer {...props}/>
+    case 'navigation':
+      return <nav {...props}/>
+    case 'section':
+      return <section {...props}/>
+    case 'secondary':
+      return <aside {...props}/>
+    case 'primary':
+      return <article {...props}/>
+    case 'none':
+    default:
+      return <div {...props}/>
+  }
+})
 
 Block.displayName = 'Block'
