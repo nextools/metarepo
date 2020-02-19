@@ -18,6 +18,7 @@ export const Text = component(
     shouldPreventWrap: false,
     shouldHideOverflow: false,
     isUnderlined: false,
+    isItalic: false,
   }),
   mapWithProps(({
     color,
@@ -25,6 +26,7 @@ export const Text = component(
     lineHeight,
     fontFamily,
     fontWeight,
+    isItalic,
     fontSize,
     isUnderlined,
     shouldPreventSelection,
@@ -36,6 +38,7 @@ export const Text = component(
       lineHeight,
       fontFamily,
       fontWeight,
+      fontStyle: isItalic ? 'italic' : 'normal',
       fontSize,
       letterSpacing,
     }

@@ -8,7 +8,6 @@ import {
 } from 'refun'
 import { isNumber } from 'tsfn'
 import { colorToString, isColor } from 'colorido'
-import { elegir } from 'elegir'
 import { TText } from './types'
 
 export const Text = component(
@@ -19,6 +18,7 @@ export const Text = component(
     shouldPreventWrap: false,
     shouldHideOverflow: false,
     isUnderlined: false,
+    isItalic: false,
     role: 'none',
   }),
   mapWithProps(({
@@ -28,6 +28,7 @@ export const Text = component(
     fontFamily,
     fontWeight,
     fontSize,
+    isItalic,
     isUnderlined,
     shouldPreserveWhitespace,
     shouldPreventSelection,
@@ -39,6 +40,7 @@ export const Text = component(
       fontFamily,
       fontWeight,
       fontSize,
+      fontStyle: isItalic ? 'italic' : 'normal',
       fontSmoothing: 'antialiased',
       textRendering: 'geometricPrecision',
       textSizeAdjust: 'none',
@@ -91,20 +93,21 @@ export const Text = component(
       style: normalizeStyle(style),
     }
   })
-)(({ children, style, id, role }) => (
-  elegir(
-    role === 'paragraph',
-    <p id={id} style={style}>{children}</p>,
+)(({ children, style, id, role }) => {
+  switch (role) {
+    case 'paragraph':
+      return <p id={id} style={style}>{children}</p>
 
-    role === 'important',
-    <strong id={id} style={style}>{children}</strong>,
+    case 'important':
+      return <strong id={id} style={style}>{children}</strong>
 
-    role === 'emphasis',
-    <em id={id} style={style}>{children}</em>,
+    case 'emphasis':
+      return <em id={id} style={style}>{children}</em>
 
-    role === 'none' || true,
-    <span id={id} style={style}>{children}</span>
-  )
-))
+    case 'none':
+    default:
+      return <span id={id} style={style}>{children}</span>
+  }
+})
 
 Text.displayName = 'Text'
