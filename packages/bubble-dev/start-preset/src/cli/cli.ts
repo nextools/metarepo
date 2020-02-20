@@ -3,17 +3,30 @@ import Reporter from '@start/reporter-verbose'
 import { StartPlugin } from '@start/plugin'
 import { getStartOptions } from '../utils'
 
-(async () => {
+const TASK_NAME_REGEXP = /^[a-z]/
+
+type TTasks = {
+  [k: string]: (...args: any[]) => StartPlugin<any, any>,
+}
+
+;(async () => {
   try {
     const options = await getStartOptions()
     const tasksFile = options && options.file ? path.resolve(options.file) : require.resolve('..')
-    const tasks = await import(tasksFile)
+    const tasks = await import(tasksFile) as TTasks
+    const filteredTasks = Object.entries(tasks).reduce((acc, [key, value]) => {
+      if (TASK_NAME_REGEXP.test(key)) {
+        acc[key] = value
+      }
+
+      return acc
+    }, {} as TTasks)
     const taskName = process.argv[2]
-    const task = tasks[taskName] as (...args: any[]) => StartPlugin<any, any>
+    const task = filteredTasks[taskName]
 
     if (typeof taskName === 'undefined' || typeof task === 'undefined') {
       console.error('One of the following task names is required:')
-      console.error(`* ${Object.keys(tasks).join('\n* ')}`)
+      console.error(`* ${Object.keys(filteredTasks).join('\n* ')}`)
       process.exit(1)
     }
 
