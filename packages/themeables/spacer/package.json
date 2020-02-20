@@ -1,0 +1,30 @@
+{
+  "name": "@themeables/spacer",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.web.ts",
+  "browser": "src/index.web.ts",
+  "react-native": "src/index.native.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "@themeables/core": "^1.0.0",
+    "colorido": "^1.0.0"
+  },
+  "devDependencies": {
+    "@primitives/spacer": "^0.0.0",
+    "@primitives/block": "^1.0.0",
+    "@types/react": "^16.8.6",
+    "@x-ray/common-utils": "^1.0.0",
+    "@x-ray/screenshot-utils": "^1.0.0",
+    "@x-ray/snapshots": "^1.0.0",
+    "autoprops": "^1.0.0",
+    "react": "^16.8.6"
+  }
+}
