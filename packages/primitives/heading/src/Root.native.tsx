@@ -66,7 +66,7 @@ export const Heading = component(
   })
 )(({ id, children, style, numberOfLines, ellipsizeMode, selectable }) => (
   <NativeText
-    accessibilityRole='header'
+    accessibilityRole="header"
     testID={id}
     selectable={selectable}
     numberOfLines={numberOfLines}

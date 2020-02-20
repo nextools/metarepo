@@ -67,14 +67,14 @@ export const Component = ({ status, hasTheme }: TDemoComponent) => {
         <DemoThemeableText status={status}>
           Label
         </DemoThemeableText>
-        <DemoThemeableInput status={status} value='Label'/>
+        <DemoThemeableInput status={status} value="Label"/>
       </TextTheme.Provider>
     ) : (
       <>
         <DemoThemeableText status={status}>
           Label
         </DemoThemeableText>
-        <DemoThemeableInput status={status} value='Label'/>
+        <DemoThemeableInput status={status} value="Label"/>
       </>
     )
   )

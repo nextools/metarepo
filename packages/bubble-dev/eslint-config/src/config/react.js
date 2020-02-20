@@ -13,6 +13,7 @@ module.exports = {
     },
   },
   rules: {
+    'jsx-quotes': [2, 'prefer-double'],
     'react/boolean-prop-naming': [2, {
       rule: '^(is|has|should)[A-Z]([A-Za-z0-9]?)+',
     }],

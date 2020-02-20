@@ -44,14 +44,14 @@ export const Component = ({ hasTheme }: TDemoComponent) => {
     hasTheme ? (
       <ImageTheme.Provider value={newTheme}>
         <DemoThemeableImage
-          source='image.png'
+          source="image.png"
           height={200}
           width={200}
         />
       </ImageTheme.Provider>
     ) : (
       <DemoThemeableImage
-        source='image.png'
+        source="image.png"
         height={200}
         width={200}
       />
