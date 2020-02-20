@@ -7,6 +7,7 @@ import {
   CheckAndroidWebScreenshots,
   Sandbox,
   CheckChromePerfSnapshots,
+  Pkg,
 } from '@bubble-dev/start-preset'
 
 export * from '@bubble-dev/start-preset'
@@ -23,4 +24,12 @@ export const checkChromePerfSnapshots = CheckChromePerfSnapshots()
 export const sandbox = Sandbox({
   entryPointPath: './tasks/sandbox/index.tsx',
   htmlTemplatePath: './tasks/sandbox/templates/dev.html',
+})
+
+export const pkg = Pkg({
+  lib: {
+    $description$: null,
+    $exportedName$: null,
+    $year$: String(new Date().getFullYear()),
+  },
 })
