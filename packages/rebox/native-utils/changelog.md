@@ -1,3 +1,7 @@
+## v1.0.5
+
+* 🐞 bump Haul stuff
+
 ## v1.0.4
 
 * 🐞 switch from deprecated `request` to `node-fetch` dependency

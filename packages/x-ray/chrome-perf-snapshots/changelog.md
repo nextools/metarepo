@@ -1,3 +1,7 @@
+## v1.1.1
+
+* 🐞 bump `pretty-ms` dependency
+
 ## v1.1.0
 
 * 🐞 refactor using extracted `perfa` package

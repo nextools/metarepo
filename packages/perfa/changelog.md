@@ -1,3 +1,7 @@
+## v0.1.3
+
+* 🐞 bump `tempy` dependency
+
 ## v0.1.2
 
 * 🐞 fix tries count in logging function
