@@ -87,7 +87,7 @@
   "devDependencies": {
     "@types/babel__core": "^7.1.1",
     "@types/node-fetch": "^2.5.4",
-    "@types/ws": "^6.0.3",
+    "@types/ws": "^7.2.1",
     "typescript": "bubble-dev/TypeScript#ext-3.7.3"
   },
   "fixdeps": {
