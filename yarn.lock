@@ -1239,12 +1239,12 @@
   dependencies:
     concat-with-sourcemaps "^1.1.0"
 
-"@haul-bundler/cli@^0.16.0":
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/cli/-/cli-0.16.0.tgz#1c324ce3583b1169c58e321c4ce8fdb2415feef1"
-  integrity sha512-H0ssO0IzllQPQfCRRxwKvcmv3m+QKHGgrs+3JDW+vsXAa/JplAKYf6TNCqt+KudsxfH3Rl2rNgsy+ywMhh4qGQ==
+"@haul-bundler/cli@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@haul-bundler/cli/-/cli-0.17.0.tgz#715d2acada7a5099653b5a582d90635761ddef38"
+  integrity sha512-bvFPsL6SSlSbZ5loSm8B5D9vUrNfIfFdU5HWssS2ip5iahroqdi/OmA5LVtp6x3dY6DSgXprZ8HUxiiFYRkEFg==
   dependencies:
-    "@haul-bundler/core" "^0.16.0"
+    "@haul-bundler/core" "^0.17.0"
     "@haul-bundler/core-legacy" "^0.16.0"
     "@haul-bundler/inspector-events" "^0.16.0"
     ansi-fragments "^0.2.1"
@@ -1272,10 +1272,10 @@
     mkdirp "^0.5.1"
     ws "^7.2.1"
 
-"@haul-bundler/core@^0.16.0":
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/core/-/core-0.16.0.tgz#fef7c73c9be9e2119b7c49c31fe0ccbfcd210660"
-  integrity sha512-MgDxzdK9tcr5FUIkbqPPE4MhdrlzsWfIE2JfKjrwIe+hH0yt9KfGiaKZnSeYgwNWzFd5izSBU3UIsGofCGEyQQ==
+"@haul-bundler/core@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@haul-bundler/core/-/core-0.17.0.tgz#53fe8d3b6bb94bc0f82f986d5dea5b5ee8a52520"
+  integrity sha512-rG7VKwAT1rsCYeVptOAlFPxYlYv++jNcx88HR7U++7ZYgA7I3ElLM2U+xe17oeNIrnW7ZXN3THTuX21spMj3rQ==
   dependencies:
     "@babel/core" "7.4.0"
     "@babel/plugin-proposal-class-properties" "^7.7.0"
@@ -1289,9 +1289,10 @@
     "@haul-bundler/basic-bundle-webpack-plugin" "^0.16.0"
     "@haul-bundler/core-legacy" "^0.16.0"
     "@haul-bundler/inspector-events" "^0.16.0"
-    "@haul-bundler/ram-bundle-webpack-plugin" "^0.16.0"
+    "@haul-bundler/ram-bundle-webpack-plugin" "^0.17.0"
     ansi-fragments "^0.2.1"
     dedent "^0.7.0"
+    enhanced-resolve "^4.1.1"
     escape-string-regexp "^2.0.0"
     find-cache-dir "^3.2.0"
     hasha "^5.1.0"
@@ -1326,20 +1327,20 @@
   resolved "https://registry.yarnpkg.com/@haul-bundler/inspector-events/-/inspector-events-0.16.0.tgz#62c7191ee6d0a7d5bcabd29cef70a6e43c2e9343"
   integrity sha512-5G9CDbM5M5JOGWWRoYdUILvK6i6R+8XUUwBS/IUt4VnFtF+i6oHxc34fOT3JNmRsqINIGY92nJiCxEzTGWQJzw==
 
-"@haul-bundler/preset-0.60@^0.16.0":
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/preset-0.60/-/preset-0.60-0.16.0.tgz#9fe371eafaa77981caa06cf18ca049e1e76fad79"
-  integrity sha512-TN6QmoBELG1NRD3AQerpOamRoDb3IVVWMwCdchWUAwMhyMrQKF3QbWxlvSSsIRSfFuf2aTrB58qiJo0TUOm0XQ==
+"@haul-bundler/preset-0.60@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@haul-bundler/preset-0.60/-/preset-0.60-0.17.0.tgz#f5f1d4b0ca46cd7ca7bc98b927fdc3f3ea015c1e"
+  integrity sha512-Du9okQBrGtPM0soVPYrtXwkkIXFayh00cKUtpr43U4vweHkYaeN2cBbF+kIeGFJazHREW3l3pr1n1smFIm7BPA==
   dependencies:
     babel-loader "^8.0.6"
     case-sensitive-paths-webpack-plugin "^2.2.0"
     is-ci "^2.0.0"
     terser-webpack-plugin "^2.3.2"
 
-"@haul-bundler/ram-bundle-webpack-plugin@^0.16.0":
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/ram-bundle-webpack-plugin/-/ram-bundle-webpack-plugin-0.16.0.tgz#b704946c94b27926b378d255d428b9e6e13ff1d8"
-  integrity sha512-YG1LYhsG5Gy09VqLYbUOIqFP8gCJ1P2Sx3Cjg1QHM2YB0WipegRIRKcUBFMi5csaxXN+jNByg89pccKZdKgkLw==
+"@haul-bundler/ram-bundle-webpack-plugin@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@haul-bundler/ram-bundle-webpack-plugin/-/ram-bundle-webpack-plugin-0.17.0.tgz#2c5dc4ea5b80b1728cc6bdc8788982c884d41ec3"
+  integrity sha512-AK4FkO065Ks4PQLRGlubLancUXCUBPAar8BETic5Bt/nYQEYXBWMivYGp1SebyIXejdTib7lKtJKSKQ2UXqlmA==
   dependencies:
     jest-worker "^25.1.0"
 
@@ -5122,7 +5123,7 @@ engine.io@~3.2.0:
     engine.io-parser "~2.1.0"
     ws "~3.3.1"
 
-enhanced-resolve@^4.1.0:
+enhanced-resolve@^4.1.0, enhanced-resolve@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-4.1.1.tgz#2937e2b8066cd0fe7ce0990a98f0d71a35189f66"
   integrity sha512-98p2zE+rL7/g/DzMHMTF4zZlCgeVdJ7yr6xzEpJRYwFYrGi9ANdn5DnJURg6RpBkyk60XYDnWIv51VfIhfNGuA==
