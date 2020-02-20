@@ -15,7 +15,7 @@
     "@x-ray/screenshot-utils": "^1.0.0",
     "@x-ray/tar-fs": "^1.0.0",
     "pifs": "^1.0.0",
-    "pretty-ms": "^5.0.0",
+    "pretty-ms": "^6.0.0",
     "tsfn": "^1.0.0",
     "upng-js": "^2.1.0"
   },

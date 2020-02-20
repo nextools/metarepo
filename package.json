@@ -29,7 +29,6 @@
     "packages/rebox/*",
     "packages/refun",
     "packages/rn-fonts",
-    "packages/rn-link",
     "packages/rn-resolve",
     "packages/rplace",
     "packages/sandbox/*",

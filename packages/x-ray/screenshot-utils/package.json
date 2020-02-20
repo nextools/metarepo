@@ -20,7 +20,7 @@
     "p-all": "^2.1.0",
     "pixelmatch": "^5.0.0",
     "pkg-dir": "^4.2.0",
-    "pretty-ms": "^5.0.0",
+    "pretty-ms": "^6.0.0",
     "stili": "^1.0.0",
     "tsfn": "^1.0.0",
     "upng-js": "^2.1.0"
