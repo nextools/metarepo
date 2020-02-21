@@ -3,7 +3,7 @@ import { normalizeStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isNumber, isDefined } from 'tsfn'
 import { styleTransformArrayToText } from './styleTransformArrayToText'
-import { TBlockCommon } from './types'
+import { TBlockCommon, TSupportedRoles } from './types'
 
 export type TBlock = TBlockCommon & {
   style?: TStyle,
@@ -48,6 +48,7 @@ export const Block = component(
       onPointerDown,
       onPointerUp,
       onPointerMove,
+      role,
     }) => {
       const styles: TStyle = {
         display: 'flex',
@@ -138,7 +139,7 @@ export const Block = component(
         styles.opacity = opacity
       }
 
-      const props: HTMLProps<HTMLDivElement> = {
+      const props: HTMLProps<HTMLDivElement> & { role: TSupportedRoles} = {
         style: normalizeStyle(styles),
         children,
         onMouseEnter: onPointerEnter,
@@ -146,6 +147,7 @@ export const Block = component(
         onMouseDown: onPointerDown,
         onMouseUp: onPointerUp,
         onMouseMove: onPointerMove,
+        role: 'none',
       }
 
       if (typeof id === 'string') {
@@ -156,11 +158,33 @@ export const Block = component(
         props.ref = ref
       }
 
+      if (isDefined(role)) {
+        props.role = role
+      }
+
       return props
     }
   )
-)((props) => (
-  <div {...props}/>
-))
+)(({ role, ...props }) => {
+  switch (role) {
+    case 'main':
+      return <main {...props}/>
+    case 'header':
+      return <header {...props}/>
+    case 'footer':
+      return <footer {...props}/>
+    case 'navigation':
+      return <nav {...props}/>
+    case 'section':
+      return <section {...props}/>
+    case 'secondary':
+      return <aside {...props}/>
+    case 'primary':
+      return <article {...props}/>
+    case 'none':
+    default:
+      return <div {...props}/>
+  }
+})
 
 Block.displayName = 'Block'

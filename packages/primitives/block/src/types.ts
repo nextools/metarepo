@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
 
+export type TSupportedRoles = 'main' | 'header' | 'footer' | 'navigation' | 'section' | 'secondary' | 'primary' | 'none'
+
 export type TBlockCommon = {
   id?: string,
   width?: number,
@@ -20,6 +22,7 @@ export type TBlockCommon = {
   shouldScroll?: boolean,
   shouldHideOverflow?: boolean,
   children?: ReactNode,
+  role?: TSupportedRoles,
   onPointerEnter?: () => void,
   onPointerLeave?: () => void,
   onPointerDown?: () => void,
