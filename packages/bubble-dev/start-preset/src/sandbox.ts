@@ -19,14 +19,17 @@ export const Sandbox = ({ entryPointPath, htmlTemplatePath, assetsPath, fontsDir
   return sequence(
     env({ NODE_ENV: 'development' }),
     syncState,
-    platforms.includes('web') && plugin('web', () => async () => {
+    platforms.includes('web') && plugin('web', ({ logMessage }) => async () => {
       const { run } = await import('@rebox/web')
 
       await run({
         entryPointPath,
         htmlTemplatePath,
         assetsPath,
+        isQuiet: true,
       })
+
+      logMessage('http://localhost:3000/')
     }),
     concurrent(
       platforms.includes('ios') && plugin('ios', () => async () => {
