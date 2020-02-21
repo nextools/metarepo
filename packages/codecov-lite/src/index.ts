@@ -16,7 +16,10 @@ export default async (data: string) => {
       Accept: 'text/plain',
     },
     timeout: TIMEOUT,
-    retry: RETRIES,
+    retry: {
+      limit: RETRIES,
+      calculateDelay: ({ attemptCount }) => attemptCount * 3000,
+    },
     body: data,
   })
 
