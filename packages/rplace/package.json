@@ -1,6 +1,6 @@
 {
   "name": "rplace",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Transform stream by replacing strings on per-line basis",
   "keywords": [
     "stream",
