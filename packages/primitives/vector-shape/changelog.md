@@ -1,3 +1,7 @@
+## v1.1.0
+
+* ♻️ update dependencies: `@primitives/block`
+
 ## v1.0.1
 
 * ♻️ update dependencies: `@primitives/svg`
