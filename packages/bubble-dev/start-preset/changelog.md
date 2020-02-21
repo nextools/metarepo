@@ -1,3 +1,7 @@
+## v1.3.1
+
+* 🐞 make Sandbox task for web quiet by default
+
 ## v1.3.0
 
 * 🌱 add `Pkg` task factory
