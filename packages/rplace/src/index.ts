@@ -1,4 +1,13 @@
 import { Transform } from 'stream'
+import replaceString from 'replace-string'
+
+const replace = (str: string, searchValue: RegExp | string, replaceValue: string) => {
+  if (typeof searchValue === 'string') {
+    return replaceString(str, searchValue, replaceValue)
+  }
+
+  return str.replace(searchValue, replaceValue)
+}
 
 export const replaceStream = (searchValue: RegExp | string, replaceValue: string): Transform => {
   let tempString = ''
@@ -11,7 +20,7 @@ export const replaceStream = (searchValue: RegExp | string, replaceValue: string
       if (newlineIndex >= 0) {
         tempString += chunkString.substr(0, newlineIndex)
 
-        this.push(`${tempString.replace(searchValue, replaceValue)}\n`)
+        this.push(`${replace(tempString, searchValue, replaceValue)}\n`)
 
         tempString = ''
 
@@ -27,7 +36,7 @@ export const replaceStream = (searchValue: RegExp | string, replaceValue: string
 
     flush(callback) {
       if (tempString.length > 0) {
-        this.push(tempString.replace(searchValue, replaceValue))
+        this.push(replace(tempString, searchValue, replaceValue))
       }
 
       callback()

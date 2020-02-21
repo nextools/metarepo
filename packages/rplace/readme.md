@@ -14,6 +14,8 @@ $ yarn add rplace
 replaceStream(searchValue: RegExp | string, replaceValue: string) => Transform
 ```
 
+Note: don't forget `g` flag for RegExp
+
 ```ts
 import { createReadStream, createWriteStream } from 'fs'
 import { replaceStream } from 'rplace'
