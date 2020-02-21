@@ -2,10 +2,10 @@ import { Readable } from 'stream'
 import test from 'blue-tape'
 import { replaceStream } from '../src'
 
-test('rplace: no trailing newline (flush)', (t) => {
+test('rplace: regexp + no trailing newline (flush)', (t) => {
   const readable = new Readable({
     read() {
-      this.push('line 1\nline 2\nline 3')
+      this.push('replace 1 replace 2\nreplace 3\nreplace 4')
       this.push(null)
     },
   })
@@ -13,14 +13,15 @@ test('rplace: no trailing newline (flush)', (t) => {
   let tempBuffer = Buffer.alloc(0)
 
   readable
-    .pipe(replaceStream(/^line (\d)$/, '$1 line'))
+    .pipe(replaceStream(/replace (\d)/g, '$1 replace'))
+    .pipe(replaceStream('replace', 'done'))
     .on('data', (chunk) => {
       tempBuffer = Buffer.concat([tempBuffer, chunk])
     })
     .on('end', () => {
       t.equals(
         tempBuffer.toString('utf8'),
-        '1 line\n2 line\n3 line',
+        '1 done 2 done\n3 done\n4 done',
         'should replace'
       )
 
@@ -31,7 +32,7 @@ test('rplace: no trailing newline (flush)', (t) => {
 test('rplace: trailing newline', (t) => {
   const readable = new Readable({
     read() {
-      this.push('line 1\nline 2\nline 3\n')
+      this.push('replace 1 replace 2\nreplace 3\nreplace 4\n')
       this.push(null)
     },
   })
@@ -39,14 +40,15 @@ test('rplace: trailing newline', (t) => {
   let tempBuffer = Buffer.alloc(0)
 
   readable
-    .pipe(replaceStream(/^line (\d)$/, '$1 line'))
+    .pipe(replaceStream(/replace (\d)/g, '$1 replace'))
+    .pipe(replaceStream('replace', 'done'))
     .on('data', (chunk) => {
       tempBuffer = Buffer.concat([tempBuffer, chunk])
     })
     .on('end', () => {
       t.equals(
         tempBuffer.toString('utf8'),
-        '1 line\n2 line\n3 line\n',
+        '1 done 2 done\n3 done\n4 done\n',
         'should replace'
       )
 
@@ -57,9 +59,9 @@ test('rplace: trailing newline', (t) => {
 test('rplace: partialy chunked', (t) => {
   let index = 0
   const lines = [
-    'line ',
-    '1\nline 2\n',
-    'line 3',
+    'replace 1 repla',
+    'ce 2\nreplace 3\n',
+    'replace 4',
     '\n',
   ]
 
@@ -76,14 +78,15 @@ test('rplace: partialy chunked', (t) => {
   let tempBuffer = Buffer.alloc(0)
 
   readable
-    .pipe(replaceStream(/^line (\d)$/, '$1 line'))
+    .pipe(replaceStream(/replace (\d)/g, '$1 replace'))
+    .pipe(replaceStream('replace', 'done'))
     .on('data', (chunk) => {
       tempBuffer = Buffer.concat([tempBuffer, chunk])
     })
     .on('end', () => {
       t.equals(
         tempBuffer.toString('utf8'),
-        '1 line\n2 line\n3 line\n',
+        '1 done 2 done\n3 done\n4 done\n',
         'should replace'
       )
 
