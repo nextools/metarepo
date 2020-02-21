@@ -1,3 +1,13 @@
+## v1.3.0
+
+* 🌱 add `Pkg` task factory
+
+  ```
+  a task to copy package templates and replace special placeholders, see local ./tasks for live example
+  ```
+
+* 🐞 show and run only tasks with `/^[a-z]/` names
+
 ## v1.2.4
 
 * 🐞 switch from deprecated `request` to `node-fetch` dependency

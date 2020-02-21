@@ -1,3 +1,7 @@
+## v1.0.3
+
+* 🐞 progressively increase delay between retries
+
 ## v1.0.2
 
 * 🐞 increase timeout to 10s
