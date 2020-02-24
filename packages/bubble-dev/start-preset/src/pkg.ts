@@ -1,6 +1,7 @@
 import { Transform } from 'stream'
 import { ReadStream } from 'fs'
 import plugin from '@start/plugin'
+import { isString } from 'tsfn'
 
 const TEMPLATES_PATH = './tasks/pkg/'
 
@@ -17,8 +18,12 @@ export type TReplacers = {
   },
 }
 
-export const Pkg = (replacers?: TReplacers) => () =>
+export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
   plugin('template', ({ logPath, logMessage }) => async () => {
+    if (!isString(packagePath)) {
+      throw '<package path> argument is required'
+    }
+
     const { default: prompts } = await import('prompts')
     const path = await import('path')
     const { default: globby } = await import('globby')
@@ -120,9 +125,8 @@ export const Pkg = (replacers?: TReplacers) => () =>
       }
     )
 
-    const sanitizedName = name.replace('@', '')
     const templatePath = path.join(templatesPath, type)
-    const pkgPath = path.resolve(`./packages/${sanitizedName}/`)
+    const pkgPath = path.resolve(`./packages/${packagePath}/`)
 
     for (const filePath of files) {
       const newFilePath = filePath.replace(templatePath, pkgPath)
@@ -153,7 +157,7 @@ export const Pkg = (replacers?: TReplacers) => () =>
 
     const pkgJsonPath = path.resolve('./package.json')
     const pkgJson = JSON.parse(await readFile(pkgJsonPath, 'utf8'))
-    const pkgWorkspacePath = `packages/${sanitizedName}`
+    const pkgWorkspacePath = `packages/${packagePath}`
 
     if (!nanomatch.some(pkgWorkspacePath, pkgJson.workspaces)) {
       pkgJson.workspaces.push(pkgWorkspacePath)
