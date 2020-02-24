@@ -1,6 +1,6 @@
 {
   "name": "@themeables/spacer",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "keywords": [],
   "main": "src/index.web.ts",
@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@primitives/block": "^1.0.0",
-    "@primitives/spacer": "^0.0.0",
+    "@primitives/spacer": "^0.1.0",
     "@types/react": "^16.8.6",
     "@x-ray/common-utils": "^1.0.0",
     "@x-ray/screenshot-utils": "^1.0.0",
