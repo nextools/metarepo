@@ -1,3 +1,7 @@
+## v1.3.2
+
+* 🐞 propagate <package path> argument to `pkg` task
+
 ## v1.3.1
 
 * 🐞 make Sandbox task for web quiet by default
