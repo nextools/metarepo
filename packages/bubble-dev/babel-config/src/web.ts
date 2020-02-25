@@ -25,6 +25,7 @@ export const babelConfigWebLib: BabelConfig = {
 
 export const babelConfigWebApp: BabelConfig = {
   ...babelConfigCommon,
+  shouldPrintComment: (val) => val.startsWith(' webpackChunkName'),
   sourceMaps: true,
   presets: [
     [
