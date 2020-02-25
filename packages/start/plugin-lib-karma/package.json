@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
-    "@types/karma": "^3.0.2",
+    "@types/karma": "^4.4.0",
     "blue-tape": "^1.0.0"
   }
 }

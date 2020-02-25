@@ -6,12 +6,23 @@ test('siza', async (t) => {
     entryPointPath: require.resolve('./fixtures/App'),
   })
 
-  t.deepEquals(
-    result,
-    {
-      vendor: { min: 129231, minGzip: 40706 },
-      main: { min: 293, minGzip: 214 },
-    },
-    'should work'
+  t.true(
+    typeof result.vendor.min === 'number',
+    'vendor.min'
+  )
+
+  t.true(
+    typeof result.vendor.minGzip === 'number',
+    'vendor.minGzip'
+  )
+
+  t.true(
+    typeof result.main.min === 'number',
+    'main.min'
+  )
+
+  t.true(
+    typeof result.main.minGzip === 'number',
+    'main.minGzip'
   )
 })
