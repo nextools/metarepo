@@ -1,3 +1,7 @@
+## v2.0.1
+
+* 🐞 fix dynamic chunk names to be human-readable
+
 ## v2.0.0
 
 * 💥 redesign ui
