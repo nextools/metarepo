@@ -9,7 +9,7 @@ export const ThemeProvider = component(
   mapState('theme', 'setTheme', ({ theme }) => theme, ['theme']),
   onMount(async ({ theme, setTheme }) => {
     if (isUndefined(theme)) {
-      const { defaultTheme } = await import('./default-theme')
+      const { defaultTheme } = await import('./default-theme' /* webpackChunkName: "defaultTheme" */)
 
       setTheme(defaultTheme)
     }
@@ -17,7 +17,7 @@ export const ThemeProvider = component(
   mapState('icons', 'setIcons', ({ icons }) => icons, ['icons']),
   onMount(async ({ icons, setIcons }) => {
     if (isUndefined(icons)) {
-      const { defaultIcons } = await import('./default-icons')
+      const { defaultIcons } = await import('./default-icons' /* webpackChunkName: "defaultIcons" */)
 
       setIcons(defaultIcons)
     }

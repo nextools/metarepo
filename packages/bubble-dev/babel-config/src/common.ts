@@ -1,6 +1,5 @@
 export const babelConfigCommon = {
   babelrc: false,
-  shouldPrintComment: (val: string) => val.startsWith('#'),
   presets: [
     require.resolve('@babel/preset-react'),
     require.resolve('@babel/preset-typescript'),

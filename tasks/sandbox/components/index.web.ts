@@ -1,8 +1,8 @@
 import { TComponents } from '@sandbox/ui'
 
 export const components: TComponents = {
-  Button: () => import(/* webpackChunkName: "Button" */ '@primitives/button/meta'),
-  Input: () => import(/* webpackChunkName: "Input" */ '@primitives/input/meta'),
-  Checkbox: () => import(/* webpackChunkName: "Checkbox" */ '@primitives/checkbox/meta'),
+  Button: () => import('@primitives/button/meta' /* webpackChunkName: "Button" */),
+  Input: () => import('@primitives/input/meta' /* webpackChunkName: "Input" */),
+  Checkbox: () => import('@primitives/checkbox/meta' /* webpackChunkName: "Checkbox" */),
 }
 

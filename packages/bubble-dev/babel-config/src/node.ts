@@ -5,6 +5,7 @@ export const TARGET_NODE_VERSION = '10.13.0'
 
 export const babelConfigNode: BabelConfig = {
   ...babelConfigCommon,
+  shouldPrintComment: (val: string) => val.startsWith('#'),
   sourceMaps: false,
   presets: [
     [
