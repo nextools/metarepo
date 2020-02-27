@@ -31,6 +31,8 @@ export const realpath = promisify(fs.realpath)
 export const rename = promisify(fs.rename)
 export const rmdir = promisify(fs.rmdir)
 export const stat = promisify(fs.stat)
+export const symlink = promisify(fs.symlink)
+export const truncate = promisify(fs.truncate)
 export const unlink = promisify(fs.unlink)
 export const unwatchFile = fs.unwatchFile
 export const utimes = promisify(fs.utimes)
@@ -70,6 +72,8 @@ export default {
   rename,
   rmdir,
   stat,
+  symlink,
+  truncate,
   unlink,
   unwatchFile,
   utimes,
