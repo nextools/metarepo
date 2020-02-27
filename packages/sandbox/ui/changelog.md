@@ -1,3 +1,7 @@
+## v2.0.2
+
+* 🐞 export components required for plugins
+
 ## v2.0.1
 
 * 🐞 fix dynamic chunk names to be human-readable
