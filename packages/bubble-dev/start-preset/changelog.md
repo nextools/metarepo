@@ -1,3 +1,7 @@
+## v1.3.3
+
+* 🐞 recreate symlinks instead of hard-copying during the `pkg` task
+
 ## v1.3.2
 
 * 🐞 propagate <package path> argument to `pkg` task
