@@ -1,7 +1,6 @@
 import { Transform } from 'stream'
-import { ReadStream } from 'fs'
+import { ReadStream, Dirent, Stats } from 'fs'
 import plugin from '@start/plugin'
-import { isString } from 'tsfn'
 
 const TEMPLATES_PATH = './tasks/pkg/'
 
@@ -12,6 +11,13 @@ const unplaceholder = (str: string) => {
     .toLowerCase()
 }
 
+type TFileStats = {
+  name: string,
+  path: string,
+  dirent: Dirent,
+  stats: Stats,
+}
+
 export type TReplacers = {
   [k: string]: {
     [k: string]: string | null,
@@ -20,6 +26,8 @@ export type TReplacers = {
 
 export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
   plugin('template', ({ logPath, logMessage }) => async () => {
+    const { isString } = await import('tsfn')
+
     if (!isString(packagePath)) {
       throw '<package path> argument is required'
     }
@@ -28,7 +36,15 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
     const path = await import('path')
     const { default: globby } = await import('globby')
     const { default: makeDir } = await import('make-dir')
-    const { createReadStream, createWriteStream, readFile, writeFile, readdir } = await import('pifs')
+    const {
+      createReadStream,
+      createWriteStream,
+      readFile,
+      writeFile,
+      readdir,
+      symlink,
+      readlink,
+    } = await import('pifs')
     const { replaceStream } = await import('rplace')
     // @ts-ignore
     const nanomatch = await import('nanomatch')
@@ -114,27 +130,46 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
       $name$: name,
     }
 
-    const files = await globby(
-      [`${TEMPLATES_PATH}${type}/**/*`],
-      {
-        ignore: ['node_modules/**'],
-        deep: Infinity,
-        onlyFiles: true,
-        expandDirectories: false,
-        absolute: true,
-      }
-    )
-
     const templatePath = path.join(templatesPath, type)
     const pkgPath = path.resolve(`./packages/${packagePath}/`)
 
-    for (const filePath of files) {
-      const newFilePath = filePath.replace(templatePath, pkgPath)
-      const newFileDirPath = path.dirname(newFilePath)
+    const files = await globby(
+      `${TEMPLATES_PATH}${type}/**/*`,
+      {
+        ignore: ['node_modules/**'],
+        deep: Infinity,
+        onlyFiles: false,
+        expandDirectories: false,
+        absolute: true,
+        stats: true,
+        followSymbolicLinks: false,
+      }
+    ) as unknown as TFileStats[]
 
-      await makeDir(newFileDirPath)
+    // directories first
+    files.sort((file) => (file.stats.isDirectory() ? -1 : 1))
 
-      const readStream = createReadStream(filePath)
+    for (const file of files) {
+      const newFilePath = file.path.replace(templatePath, pkgPath)
+
+      if (file.stats.isSymbolicLink()) {
+        const symlinkTarget = await readlink(file.path)
+
+        // no 3rd argument – autodetect target 'file' | 'dir' type
+        await symlink(symlinkTarget, newFilePath)
+
+        logPath(newFilePath)
+
+        continue
+      }
+
+      if (file.stats.isDirectory()) {
+        await makeDir(newFilePath)
+
+        continue
+      }
+
+      const readStream = createReadStream(file.path)
       const writeStream = createWriteStream(newFilePath)
 
       await new Promise((resolve, reject) => {
