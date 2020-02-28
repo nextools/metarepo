@@ -1,3 +1,7 @@
+## v2.0.3
+
+* 🐞 fix nested d.ts processing during build
+
 ## v2.0.2
 
 * 🐞 export components required for plugins

@@ -1,3 +1,7 @@
+## v1.3.4
+
+* 🐞 fix nested d.ts processing during build
+
 ## v1.3.3
 
 * 🐞 recreate symlinks instead of hard-copying during the `pkg` task
