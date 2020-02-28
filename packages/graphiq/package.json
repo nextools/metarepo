@@ -1,0 +1,22 @@
+{
+  "name": "graphiq",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "devDependencies": {
+    "react": "^16.8.3"
+  },
+  "dependencies": {
+    "@primitives/animation": "^1.0.0",
+    "@primitives/root": "^1.0.0",
+    "colorido": "^1.0.0",
+    "refun": "^1.0.0"
+  }
+}

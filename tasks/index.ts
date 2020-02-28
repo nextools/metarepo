@@ -1,3 +1,4 @@
+import plugin from '@start/plugin'
 import {
   CheckChromeScreenshots,
   CheckFirefoxScreenshots,
@@ -33,3 +34,19 @@ export const pkg = Pkg({
     $year$: String(new Date().getFullYear()),
   },
 })
+
+export const graphiq = () => {
+  return plugin('demo', ({ logMessage }) => async () => {
+    const { run } = await import('@rebox/web')
+    const entryPointPath = './tasks/graphiq/index.tsx'
+    const htmlTemplatePath = './tasks/graphiq/index.html'
+
+    await run({
+      entryPointPath,
+      htmlTemplatePath,
+      isQuiet: true,
+    })
+
+    logMessage('http://localhost:3000/')
+  })
+}
