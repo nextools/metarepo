@@ -18,7 +18,7 @@ jest(argv?: ArgvOptions)
 
 #### `options`
 
-[Jest "argv" options](https://github.com/facebook/jest/blob/ac8c345f5318016d0789974fbc815d857fd70d99/packages/jest-types/src/Config.ts#L417-L504).
+[Jest "argv" options](https://github.com/facebook/jest/blob/cc5d630ec1cdbf8414ab78af800cb838d24ee63c/packages/jest-types/src/Config.ts#L358-L446).
 
 ### Example
 
