@@ -57,10 +57,10 @@
     "@types/node": "^13.5.0",
     "colorido": "*",
     "core-js": "^3.2.1",
-    "graphiq": "*",
     "eslint": "^6.1.0",
-    "react-native": "0.61.5",
+    "graphiq": "*",
     "react": "^16.8.6",
+    "react-native": "0.61.5",
     "tsfn": "*",
     "typescript": "bubble-dev/TypeScript#ext-3.7.3"
   },
