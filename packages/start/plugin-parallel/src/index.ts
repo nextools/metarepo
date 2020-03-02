@@ -1,5 +1,4 @@
 import plugin from '@start/plugin'
-import { Options as TExecaOptions } from 'execa'
 
 export type Options = {
   maxProcesses?: number,
@@ -7,34 +6,35 @@ export type Options = {
 
 export default (taskNames: string[], options: Options = {}) => (...args: string[]) =>
   plugin('parallel', () => async () => {
-    const { default: execa } = await import('execa')
+    const { Worker } = await import('worker_threads')
     const { default: pAll } = await import('p-all')
 
-    const spawnOptions: TExecaOptions = {
-      stdout: process.stdout,
-      stderr: process.stderr,
-      stripFinalNewline: false,
-      env: {
-        FORCE_COLOR: '1',
-      },
-    }
     const pAllOptions = {
       concurrency: options.maxProcesses || Infinity,
     }
 
     await pAll(
-      taskNames.map((taskName) => {
-        const spawnCommand = process.argv[0]
-        const spawnArgs = [process.argv[1], taskName, ...args]
+      taskNames.map((taskName) => () => new Promise((resolve, reject) => {
+        const worker = new Worker(require.resolve('./worker'), {
+          workerData: {
+            cliPath: process.argv[1],
+            taskName,
+            args,
+          },
+        })
 
-        return async () => {
-          try {
-            await execa(spawnCommand, spawnArgs, spawnOptions)
-          } catch (e) {
-            throw null
+        worker.on('error', () => {
+          reject(null)
+        })
+
+        worker.on('exit', (code) => {
+          if (code > 0) {
+            reject(null)
+          } else {
+            resolve()
           }
-        }
-      }),
+        })
+      })),
       pAllOptions
     )
   })
