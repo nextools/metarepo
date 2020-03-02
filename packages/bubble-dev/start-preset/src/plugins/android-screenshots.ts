@@ -6,14 +6,13 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
   }
 
   const path = await import('path')
-  const { rnResolve } = await import('rn-resolve')
-  const { broResolve } = await import('bro-resolve')
+  const { rsolve } = await import('rsolve')
   const { run: runAndroid } = await import('@rebox/android')
   const { run: runWeb } = await import('@rebox/web')
   const { runScreenshotsServer, prepareFiles } = await import('@x-ray/native-screenshots')
   const { runServer: runUiServer } = await import('@x-ray/screenshot-utils')
 
-  const entryPointPath = await rnResolve('@x-ray/native-screenshots-app')
+  const entryPointPath = await rsolve('@x-ray/native-screenshots-app', 'react-native')
 
   await prepareFiles(entryPointPath, files.map((file) => file.path))
 
@@ -41,7 +40,7 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
     killAll()
 
     if (hasBeenChanged) {
-      const entryPointPath = await broResolve('@x-ray/ui')
+      const entryPointPath = await rsolve('@x-ray/ui', 'browser')
       const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
 
       const closeReboxServer = await runWeb({

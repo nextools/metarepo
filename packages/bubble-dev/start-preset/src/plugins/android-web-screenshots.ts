@@ -2,8 +2,7 @@ import plugin, { StartFilesProps } from '@start/plugin'
 
 export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ logMessage }) => async ({ files }) => {
   const path = await import('path')
-  const { rnResolve } = await import('rn-resolve')
-  const { broResolve } = await import('bro-resolve')
+  const { rsolve } = await import('rsolve')
   const { run: runAndroid } = await import('@rebox/android')
   const { run: runWeb } = await import('@rebox/web')
   const { runScreenshotsServer } = await import('@x-ray/web-mobile-screenshots')
@@ -28,7 +27,7 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
   let killAndroid = null
 
   try {
-    const entryPointPath = await rnResolve('@x-ray/web-mobile-screenshots-app')
+    const entryPointPath = await rsolve('@x-ray/web-mobile-screenshots-app', 'react-native')
 
     killAndroid = await runAndroid({
       appName: 'X-Ray-Mobile',
@@ -50,7 +49,7 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
     killAndroid()
 
     if (hasBeenChanged) {
-      const entryPointPath = await broResolve('@x-ray/ui')
+      const entryPointPath = await rsolve('@x-ray/ui', 'browser')
       const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
 
       const closeReboxServer = await runWeb({

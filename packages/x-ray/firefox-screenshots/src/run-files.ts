@@ -1,7 +1,7 @@
 import path from 'path'
 import { runScreenshots, runServer } from '@x-ray/screenshot-utils'
 import { run } from '@rebox/web'
-import { broResolve } from 'bro-resolve'
+import { rsolve } from 'rsolve'
 import { TOptions, TUserOptions } from './types'
 
 const defaultOptions = {
@@ -20,7 +20,7 @@ export const runFiles = async (targetFiles: string[], userOptions: TUserOptions)
   const { result, resultData, hasBeenChanged } = await runScreenshots(childFile, targetFiles, 1, options)
 
   if (hasBeenChanged) {
-    const entryPointPath = await broResolve('@x-ray/ui')
+    const entryPointPath = await rsolve('@x-ray/ui', 'browser')
     const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
 
     const closeReboxServer = await run({
