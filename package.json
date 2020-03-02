@@ -33,6 +33,7 @@
     "packages/rn-fonts",
     "packages/rn-resolve",
     "packages/rplace",
+    "packages/rsolve",
     "packages/sandbox/*",
     "packages/siza",
     "packages/spyfn",

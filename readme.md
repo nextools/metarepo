@@ -38,6 +38,7 @@ Check the individual documentations for more details:
 * [rn-fonts](packages/rn-fonts): custom fonts linker for React Native (iOS/Android)
 * [rn-resolve](packages/rn-resolve): resolve a module from its `react-native` field in `package.json`
 * [rplace](packages/rplace): transform stream by replacing strings on per-line basis, especially efficient with large multiline text file formats
+* [rsolve](packages/rsolve): resolve module path with custom entry point `package.json` field relative to caller file
 * [@sandbox](packages/sandbox): React sandbox to show off components with all possible props and children combinations using [autoprops](packages/autoprops)
 * [siza](packages/siza): get bundle size of a React application
 * [spyfn](packages/spyfn): spy function
