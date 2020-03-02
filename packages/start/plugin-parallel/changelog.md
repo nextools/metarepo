@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 rewrite using `worker_threads`
+
 ## v1.0.1
 
 * 🐞 bump compatible deps
