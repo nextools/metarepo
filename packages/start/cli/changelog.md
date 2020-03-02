@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 add `--experimental-worker` Node.js flag by default
+
 ## v1.0.1
 
 * 🐞 fix missing files in package build

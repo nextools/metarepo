@@ -1,3 +1,7 @@
+## v1.3.5
+
+* 🐞 add `--experimental-worker` Node.js flag by default
+
 ## v1.3.4
 
 * 🐞 fix nested d.ts processing during build

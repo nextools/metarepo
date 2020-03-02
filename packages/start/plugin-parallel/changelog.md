@@ -1,3 +1,7 @@
+## v1.0.3
+
+* 🐞 workaround for missing `process.umask()` in Node.js v10 in a Worker thread
+
 ## v1.0.2
 
 * 🐞 rewrite using `worker_threads`
