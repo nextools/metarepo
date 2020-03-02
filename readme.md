@@ -14,7 +14,7 @@ Check the individual documentations for more details:
 * [autoprops](packages/autoprops): tool that generates all possible combinations of React props and children based on declarative config, respecting "mutex" and "mutin" features
 * [bro-resolve](packages/bro-resolve): resolve a module from its `browser` field in `package.json`
 * [bsc](packages/bsc): binary search with comparator
-* [@bubble-dev](packages/bubble-dev): [start][(packages/start) preset and various shared configs to develop, test, build and publish packages in this metarepo
+* [@bubble-dev](packages/bubble-dev): [start](packages/start) preset and various shared configs to develop, test, build and publish packages in this metarepo
 * [codecov-lite](packages/codecov-lite): LCOV (code coverage data) uploader for [codecov.io](https://codecov.io/) service.
 * [colorido](packages/colorido): set of helpers and types to work with RGBA rolors as `[number, number, number, number]` tuples
 * [copie](packages/copie): copy a file
