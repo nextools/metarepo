@@ -1,3 +1,7 @@
+## v0.2.0
+
+* 🌱 add `domInteractive` metric
+
 ## v0.1.3
 
 * 🐞 bump `tempy` dependency

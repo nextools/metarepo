@@ -1,3 +1,9 @@
+## v1.2.0
+
+* 🌱 add `domInteractive` metric
+
+* ♻️ update dependencies: `perfa`
+
 ## v1.1.1
 
 * 🐞 bump `pretty-ms` dependency
