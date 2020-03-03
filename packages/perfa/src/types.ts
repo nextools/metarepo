@@ -20,6 +20,7 @@ export type TPerfResult = {
   firstMeaningfulPaint: number,
   largestContentfulPaint: number,
   domContentLoaded: number,
+  domInteractive: number,
   threadTime: number,
   scriptDuration: number,
   layoutDuration: number,

@@ -54,6 +54,7 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
     firstMeaningfulPaint: [] as number[],
     largestContentfulPaint: [] as number[],
     domContentLoaded: [] as number[],
+    domInteractive: [] as number[],
     threadTime: [] as number[],
     scriptDuration: [] as number[],
     layoutDuration: [] as number[],
@@ -75,9 +76,8 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
     await page.goto(`file://${INJECTED_BUILD_FOLDER_PATH}/index.html`, { waitUntil: 'networkidle0' })
 
     // const pageMetrics = await page.metrics()
-    // const perfTiming = JSON.parse(await page.evaluate(() => JSON.stringify(window.performance.timing)))
+    const domInteractive = await page.evaluate(() => window.performance.timing.domInteractive - window.performance.timing.navigationStart) as number
     const perfPaint = JSON.parse(await page.evaluate(() => JSON.stringify(window.performance.getEntriesByType('paint')))) as TPerfPaint
-
     const perfMetrics = await client.send('Performance.getMetrics') as TPerfMetrics
 
     const largestContentfulPaint = await page.evaluate(() => new Promise((resolve) => {
@@ -91,14 +91,13 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
       observer.observe({ type: 'largest-contentful-paint', buffered: true })
     })) as number
 
+    const perfMetricsNavigationStart = getPerfMetricsEntryValue(perfMetrics, 'NavigationStart')
+
     result.firstContentfulPaint.push(getPerfPaintEntryValue(perfPaint, 'first-contentful-paint'))
-    result.firstMeaningfulPaint.push(
-      getPerfMetricsEntryValue(perfMetrics, 'FirstMeaningfulPaint') * 1000 - getPerfMetricsEntryValue(perfMetrics, 'NavigationStart') * 1000
-    )
+    result.firstMeaningfulPaint.push((getPerfMetricsEntryValue(perfMetrics, 'FirstMeaningfulPaint') - perfMetricsNavigationStart) * 1000)
     result.largestContentfulPaint.push(largestContentfulPaint)
-    result.domContentLoaded.push(
-      getPerfMetricsEntryValue(perfMetrics, 'DomContentLoaded') * 1000 - getPerfMetricsEntryValue(perfMetrics, 'NavigationStart') * 1000
-    )
+    result.domContentLoaded.push((getPerfMetricsEntryValue(perfMetrics, 'DomContentLoaded') - perfMetricsNavigationStart) * 1000)
+    result.domInteractive.push(domInteractive)
     result.threadTime.push(getPerfMetricsEntryValue(perfMetrics, 'ThreadTime') * 1000)
     result.scriptDuration.push(getPerfMetricsEntryValue(perfMetrics, 'ScriptDuration') * 1000)
     result.layoutDuration.push(getPerfMetricsEntryValue(perfMetrics, 'LayoutDuration') * 1000)
