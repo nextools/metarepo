@@ -86,15 +86,16 @@ export const buildReactNative = async (dir: string) => {
 }
 
 export const buildNode = async (dir: string) => {
-  const { babelConfigNode } = await import('@bubble-dev/babel-config')
+  const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
 
   return sequence(
     find([
       `${dir}/src/**/*.{js,ts,tsx}`,
       `!${dir}/src/**/*.{web,native,ios,android}.{js,ts,tsx}`,
+      `!${dir}/src/**/*.d.ts`,
     ]),
     read,
-    babel(babelConfigNode),
+    babel(babelConfigNodeBuild),
     rename((file) => file.replace(/(\.node)?\.(ts|tsx)$/, '.js')),
     write(`${dir}/build/node/`),
     find(`${dir}/src/index.{node.tsx,node.ts,tsx,ts}`),
@@ -116,7 +117,7 @@ export const buildNode = async (dir: string) => {
 }
 
 export const buildWebNode = async (dir: string) => {
-  const { babelConfigNode } = await import('@bubble-dev/babel-config')
+  const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
 
   return sequence(
     find([
@@ -125,7 +126,7 @@ export const buildWebNode = async (dir: string) => {
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
-    babel(babelConfigNode),
+    babel(babelConfigNodeBuild),
     rename((file) => file.replace(/(\.web)?\.(ts|tsx)$/, '.js')),
     write(`${dir}/build/node/`),
     find(`${dir}/src/index.{web.tsx,web.ts,tsx,ts}`),
