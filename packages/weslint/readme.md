@@ -1,0 +1,52 @@
+# weslint
+
+Worker Threads + ESlint.
+
+## Install
+
+```sh
+$ yarn add weslint
+```
+
+## Usage
+
+```ts
+type TWeslintOptions = {
+  files: string[],
+  maxThreadCount?: number,
+  filesPerThreadCount?: number,
+  formatter?: string,
+  eslint?: CLIEngine.Options,
+}
+
+type TWeslintResult = {
+  hasErrors: boolean,
+  hasWarnings: boolean,
+  formattedReport: string,
+}
+
+weslint(options: TWeslintOptions) => Promise<TWeslintResult>
+```
+
+* `files` – array of file paths
+* `maxThreadCount` – `cpus().length` by default
+* `filesPerThreadCount` – `5` by default
+* `formatter` – [ESLint formatter name](https://eslint.org/docs/developer-guide/nodejs-api#cliengine-getformatter)
+* `eslint` – [ESLint CLIEngine options](https://eslint.org/docs/developer-guide/nodejs-api#cliengine)
+
+
+```ts
+import { weslint } from 'weslint'
+
+const result = await weslint({
+  files: ['./file1.ts', './file2.ts']
+})
+
+if (result.hasErrors || result.hasWarnings) {
+  console.log(result.formattedReport)
+}
+
+if (result.hasErrors) {
+  throw new Error('oops')
+}
+```

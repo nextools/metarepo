@@ -9,6 +9,7 @@ import rename from '@start/plugin-rename'
 import write from '@start/plugin-write'
 import overwrite from '@start/plugin-overwrite'
 import remove from '@start/plugin-remove'
+import copy from '@start/plugin-copy'
 import parallel from '@start/plugin-parallel'
 import typescriptGenerate from '@start/plugin-lib-typescript-generate'
 import move from './plugins/move'
@@ -29,6 +30,7 @@ export const buildWeb = async (dir: string) => {
     find([
       `${dir}/src/**/*.{js,ts,tsx}`,
       `!${dir}/src/**/*.{node,native,ios,android}.{js,ts,tsx}`,
+      `!${dir}/src/**/*.d.ts`,
     ]),
     read,
     babel(babelConfigWebLib),
@@ -41,6 +43,8 @@ export const buildWeb = async (dir: string) => {
       preserveSymlinks: true,
       skipLibCheck: true,
     }),
+    find(`${dir}/src/**/*.d.ts`),
+    copy(`${dir}/build/web/`),
     find(`${dir}/build/web/**/*.web.d.ts`),
     move((file) => file.replace(/\.web\.d\.ts$/, '.d.ts')),
     find(`${dir}/build/web/**/*.d.ts`),
@@ -57,6 +61,7 @@ export const buildReactNative = async (dir: string) => {
     find([
       `${dir}/src/**/*.{js,ts,tsx}`,
       `!${dir}/src/**/*.{node,web}.{js,ts,tsx}`,
+      `!${dir}/src/**/*.d.ts`,
     ]),
     read,
     babel(babelConfigReactNative),
@@ -69,6 +74,8 @@ export const buildReactNative = async (dir: string) => {
       preserveSymlinks: true,
       skipLibCheck: true,
     }),
+    find(`${dir}/src/**/*.d.ts`),
+    copy(`${dir}/build/native/`),
     find(`${dir}/build/native/**/*.native.d.ts`),
     move((file) => file.replace(/\.native\.d\.ts$/, '.d.ts')),
     find(`${dir}/build/native/**/*.d.ts`),
@@ -79,15 +86,16 @@ export const buildReactNative = async (dir: string) => {
 }
 
 export const buildNode = async (dir: string) => {
-  const { babelConfigNode } = await import('@bubble-dev/babel-config')
+  const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
 
   return sequence(
     find([
       `${dir}/src/**/*.{js,ts,tsx}`,
       `!${dir}/src/**/*.{web,native,ios,android}.{js,ts,tsx}`,
+      `!${dir}/src/**/*.d.ts`,
     ]),
     read,
-    babel(babelConfigNode),
+    babel(babelConfigNodeBuild),
     rename((file) => file.replace(/(\.node)?\.(ts|tsx)$/, '.js')),
     write(`${dir}/build/node/`),
     find(`${dir}/src/index.{node.tsx,node.ts,tsx,ts}`),
@@ -97,6 +105,8 @@ export const buildNode = async (dir: string) => {
       preserveSymlinks: true,
       skipLibCheck: true,
     }),
+    find(`${dir}/src/**/*.d.ts`),
+    copy(`${dir}/build/node/`),
     find(`${dir}/build/node/**/*.node.d.ts`),
     move((file) => file.replace(/\.node\.d\.ts$/, '.d.ts')),
     find(`${dir}/build/node/**/*.d.ts`),
@@ -107,15 +117,16 @@ export const buildNode = async (dir: string) => {
 }
 
 export const buildWebNode = async (dir: string) => {
-  const { babelConfigNode } = await import('@bubble-dev/babel-config')
+  const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
 
   return sequence(
     find([
       `${dir}/src/**/*.{js,ts,tsx}`,
       `!${dir}/src/**/*.{native,ios,android}.{js,ts,tsx}`,
+      `!${dir}/src/**/*.d.ts`,
     ]),
     read,
-    babel(babelConfigNode),
+    babel(babelConfigNodeBuild),
     rename((file) => file.replace(/(\.web)?\.(ts|tsx)$/, '.js')),
     write(`${dir}/build/node/`),
     find(`${dir}/src/index.{web.tsx,web.ts,tsx,ts}`),
@@ -125,6 +136,8 @@ export const buildWebNode = async (dir: string) => {
       preserveSymlinks: true,
       skipLibCheck: true,
     }),
+    find(`${dir}/src/**/*.d.ts`),
+    copy(`${dir}/build/node/`),
     find(`${dir}/build/node/**/*.web.d.ts`),
     move((file) => file.replace(/\.web\.d\.ts$/, '.d.ts')),
     find(`${dir}/build/node/**/*.d.ts`),

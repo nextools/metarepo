@@ -65,7 +65,6 @@ module.exports = {
       ],
     }],
     'import/no-absolute-path': 2,
-    'import/no-dynamic-require': 2,
     'import/no-useless-path-segments': 2,
     'import/export': 2,
     'import/no-extraneous-dependencies': 2,
