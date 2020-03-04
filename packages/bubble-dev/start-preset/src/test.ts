@@ -4,7 +4,6 @@ import find from '@start/plugin-find'
 import remove from '@start/plugin-remove'
 import read from '@start/plugin-read'
 import env from '@start/plugin-env'
-import eslint from '@start/plugin-lib-eslint'
 import typescriptCheck from '@start/plugin-lib-typescript-check'
 import codecov from '@start/plugin-lib-codecov'
 import tape from '@start/plugin-lib-tape'
@@ -12,6 +11,7 @@ import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
 // @ts-ignore
 import tapDiff from 'tap-diff'
 import { TPackageJson } from 'fixdeps'
+import { weslint } from 'weslint'
 import xRaySnapshots from './plugins/snapshots'
 import xRayChromeScreenshots from './plugins/chrome-screenshots'
 import xRayFirefoxScreenshots from './plugins/firefox-screenshots'
@@ -212,10 +212,18 @@ export const lint = async () => {
       ...globs,
       'tasks/**/*.ts',
     ]),
-    read,
-    eslint({
-      cache: true,
-      cacheLocation: 'node_modules/.cache/eslint',
+    plugin('weslint', () => async ({ files }) => {
+      const result = await weslint({
+        files: files.map((file) => file.path),
+      })
+
+      if (result.hasErrors || result.hasWarnings) {
+        console.log(result.formattedReport)
+      }
+
+      if (result.hasErrors) {
+        throw null
+      }
     }),
     typescriptCheck(),
     checkDeps()
