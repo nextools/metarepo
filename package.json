@@ -42,6 +42,7 @@
     "packages/themeables/*",
     "packages/tsfn",
     "packages/typeon",
+    "packages/weslint",
     "packages/workerama",
     "packages/x-ray/*",
     "packages/xrom"
