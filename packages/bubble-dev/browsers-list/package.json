@@ -4,7 +4,7 @@
   "description": "",
   "keywords": [],
   "repository": "bubble-dev/_",
-  "main": "src/index.ts",
+  "main": "src/index.js",
   "license": "MIT",
   "engines": {
     "node": ">=10.13.0"

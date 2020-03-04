@@ -1,9 +1,7 @@
-import { TransformOptions as BabelConfig } from '@babel/core'
-import { browsersList } from '@bubble-dev/browsers-list'
-import { babelConfigCommon } from './common'
+const { browsersList } = require('@bubble-dev/browsers-list')
 
-export const babelConfigWebLib: BabelConfig = {
-  ...babelConfigCommon,
+exports.babelConfigWebLib = {
+  babelrc: false,
   sourceMaps: true,
   presets: [
     [
@@ -18,14 +16,20 @@ export const babelConfigWebLib: BabelConfig = {
         ],
       },
     ],
-    ...babelConfigCommon.presets,
+    require.resolve('@babel/preset-react'),
+    require.resolve('@babel/preset-typescript'),
   ],
-  plugins: babelConfigCommon.plugins,
+  plugins: [
+    [
+      require.resolve('@babel/plugin-transform-runtime'),
+      { regenerator: false },
+    ],
+    require.resolve('@babel/plugin-syntax-bigint'),
+  ],
 }
 
-export const babelConfigWebApp: BabelConfig = {
-  ...babelConfigCommon,
-  shouldPrintComment: (val) => val.startsWith(' webpackChunkName'),
+exports.babelConfigWebApp = {
+  babelrc: false,
   sourceMaps: true,
   presets: [
     [
@@ -42,7 +46,15 @@ export const babelConfigWebApp: BabelConfig = {
         ],
       },
     ],
-    ...babelConfigCommon.presets,
+    require.resolve('@babel/preset-react'),
+    require.resolve('@babel/preset-typescript'),
   ],
-  plugins: babelConfigCommon.plugins,
+  plugins: [
+    [
+      require.resolve('@babel/plugin-transform-runtime'),
+      { regenerator: false },
+    ],
+    require.resolve('@babel/plugin-syntax-bigint'),
+  ],
+  shouldPrintComment: (val) => val.startsWith(' webpackChunkName'),
 }
