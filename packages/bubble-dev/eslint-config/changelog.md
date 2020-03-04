@@ -1,3 +1,7 @@
+## v1.0.6
+
+* 🐞 allow `import/no-dynamic-require`
+
 ## v1.0.5
 
 * 🐞 allow empty `catch` block

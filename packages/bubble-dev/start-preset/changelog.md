@@ -1,3 +1,13 @@
+## v1.4.0
+
+* 🐞 refactor to use `weslint` in `lint` task
+
+* 🐞 reuse bubble-dev Babel config in preset CLI
+
+* 🐞 copy `.d.ts` files from `src/` to `build/` as is during the `build` task
+
+* ♻️ update dependencies: `weslint`
+
 ## v1.3.5
 
 * 🐞 add `--experimental-worker` Node.js flag by default

@@ -1,6 +1,6 @@
 {
   "name": "@bubble-dev/babel-worker",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Worker Threads wrapper that automatically applies `@babel/register` with our config",
   "keywords": [],
   "main": "src/index.ts",

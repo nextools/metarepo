@@ -1,6 +1,6 @@
 {
   "name": "weslint",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Worker Threads + ESlint",
   "keywords": [
     "workers",

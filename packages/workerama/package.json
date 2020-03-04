@@ -1,8 +1,12 @@
 {
   "name": "workerama",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Run sync/async function across Worker Threads",
-  "keywords": ["workers", "threads", "parallel"],
+  "keywords": [
+    "workers",
+    "threads",
+    "parallel"
+  ],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
