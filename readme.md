@@ -16,7 +16,7 @@ Check the individual documentations for more details:
 * [bsc](packages/bsc): binary search with comparator
 * [@bubble-dev](packages/bubble-dev): [start](packages/start) preset and various shared configs to develop, test, build and publish packages in this metarepo
 * [codecov-lite](packages/codecov-lite): LCOV (code coverage data) uploader for [codecov.io](https://codecov.io/) service.
-* [colorido](packages/colorido): set of helpers and types to work with RGBA rolors as `[number, number, number, number]` tuples
+* [colorido](packages/colorido): set of helpers and types to work with RGBA colors as `[number, number, number, number]` tuples
 * [copie](packages/copie): copy a file
 * [dleet](packages/dleet): delete directories and files
 * [ekst](packages/ekst): append, prepend, replace or remove file basename extensions
