@@ -2,6 +2,8 @@
 
 Worker Threads + ESlint.
 
+:warning: Node.js v10 needs an `--experimental-worker` flag.
+
 ## Install
 
 ```sh
