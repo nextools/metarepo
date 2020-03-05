@@ -7,17 +7,21 @@ import {
   mapWithPropsMemo,
   onMount,
   startWithType,
+  onUpdate,
 } from 'refun'
 import { Root } from '@primitives/root'
 import { Canvas } from './Canvas'
 import { Header, Footer } from './Controls/index'
 import { TApp } from './types'
+import { globalObject, getHash, updateHash } from './utils'
 import { PAGE_BACKGROUND, CONTROLS_HEIGHT_TOP, CONTROLS_HEIGHT_BOTTOM } from './constants'
 
 export const App = component(
   startWithType<TApp>(),
   mapState('scale', 'setScale', () => 0, []),
   mapState('monthsAgo', 'setMonthsAgo', () => 1, []),
+  mapState('selectedGraph', 'setSelectedGraph', ({ graphs }) => getHash(graphs), []),
+  mapState('hoveredGraph', 'setHoveredGraph', () => null as string | null, []),
   mapHandlers({
     onMonthsAgo: ({ setMonthsAgo }) => (months) => {
       setMonthsAgo(months)
@@ -25,15 +29,6 @@ export const App = component(
     onSliderChange: ({ setScale }) => (e) => {
       setScale(e.target.value)
     },
-  }),
-  onMount(({ setScale }) => {
-    setTimeout(() => {
-      setScale(50)
-    }, 200)
-  }),
-  mapState('selectedGraph', 'setSelectedGraph', () => null, []),
-  mapState('hoveredGraph', 'setHoveredGraph', () => null, []),
-  mapHandlers(({
     onSelectGraph: ({ selectedGraph, setSelectedGraph, setHoveredGraph }) => (name) => {
       if (selectedGraph !== name) {
         setSelectedGraph(name)
@@ -45,7 +40,23 @@ export const App = component(
         setHoveredGraph(id)
       }
     },
-  })),
+  }),
+  onMount(({ setScale, graphs, setSelectedGraph, setHoveredGraph }) => {
+    setTimeout(() => {
+      setScale(50)
+    }, 200)
+
+    globalObject.addEventListener('hashchange', () => {
+      const hash = getHash(graphs)
+
+      setHoveredGraph(hash)
+      setSelectedGraph(hash)
+      updateHash(hash)
+    })
+  }),
+  onUpdate(({ selectedGraph }) => {
+    updateHash(selectedGraph)
+  }, ['selectedGraph']),
   mapDebouncedHandlerTimeout('onHoverGraph', 100),
   mapWithPropsMemo(({ graphs }) => ({
     graphControls: graphs.map((graph) => {
