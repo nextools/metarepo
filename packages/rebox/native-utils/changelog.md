@@ -1,3 +1,7 @@
+## v1.0.6
+
+* 🐞 bump Haul stuff
+
 ## v1.0.5
 
 * 🐞 bump Haul stuff
