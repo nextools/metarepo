@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 align with Node.js v10 exports and automate tests for that
+
 ## v1.0.1
 
 * 🐞 add `symlink` and `truncate`
