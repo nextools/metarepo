@@ -47,9 +47,6 @@
     "packages/x-ray/*",
     "packages/xrom"
   ],
-  "resolutions": {
-    "react": "^16.8.6"
-  },
   "devDependencies": {
     "@bubble-dev/eslint-config": "*",
     "@bubble-dev/start-preset": "*",
