@@ -1,6 +1,8 @@
-const { promises: { readFile } } = require('fs')
+const fs = require('fs')
+const { promisify } = require('util')
 const { CLIEngine } = require('eslint')
 
+const readFile = promisify(fs.readFile)
 let cli = null
 
 exports.run = async (file, options) => {
