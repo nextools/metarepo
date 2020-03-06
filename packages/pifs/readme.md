@@ -2,10 +2,13 @@
 
 Promisified [graceful-fs](https://github.com/isaacs/node-graceful-fs).
 
+* aligned with Node.js v10
 * native `util.promisify()`
 * no sync methods
 * no deprecated methods like `exists`
-* non-callback methods like `createReadStream` are re-exported as is
+* no undocumented exports like `FileReadStream` or `F_OK`
+* no `promises` :)
+* non-callback methods like `createReadStream` or `watch` are re-exported as is
 * `constants` is re-exported as is
 
 ## Install
