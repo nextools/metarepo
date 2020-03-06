@@ -21,6 +21,7 @@ export const lchmod = promisify(fs.lchmod)
 export const lchown = promisify(fs.lchown)
 export const link = promisify(fs.link)
 export const lstat = promisify(fs.lstat)
+export const mkdir = promisify(fs.mkdir)
 export const mkdtemp = promisify(fs.mkdtemp)
 export const open = promisify(fs.open)
 export const read = promisify(fs.read)
@@ -40,6 +41,10 @@ export const watch = fs.watch
 export const watchFile = fs.watchFile
 export const write = promisify(fs.write)
 export const writeFile = promisify(fs.writeFile)
+export const Dirent = fs.Dirent
+export const Stats = fs.Stats
+export const ReadStream = fs.ReadStream
+export const WriteStream = fs.WriteStream
 
 export default {
   access,
@@ -62,6 +67,7 @@ export default {
   lchown,
   link,
   lstat,
+  mkdir,
   mkdtemp,
   open,
   read,
@@ -81,4 +87,8 @@ export default {
   watchFile,
   write,
   writeFile,
+  Dirent,
+  Stats,
+  ReadStream,
+  WriteStream,
 }
