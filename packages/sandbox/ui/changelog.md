@@ -1,3 +1,9 @@
+## v2.0.4
+
+* 🐞 export `Icon` component
+
+* 🐞 fix synchronous parent `setState` warning
+
 ## v2.0.3
 
 * 🐞 fix nested d.ts processing during build
