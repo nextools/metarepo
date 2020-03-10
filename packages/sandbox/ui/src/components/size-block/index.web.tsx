@@ -1,6 +1,7 @@
 import React from 'react'
-import { component, startWithType, mapContext, onChange, mapWithProps, mapDefaultProps } from 'refun'
+import { component, startWithType, mapContext, mapWithProps, mapDefaultProps } from 'refun'
 import { LayoutContext } from '../layout-context'
+import { onLayout } from '../layout'
 import { PrimitiveBlock } from '../primitive-block'
 
 export type TSizeBlock = {
@@ -21,10 +22,10 @@ export const SizeBlock = component(
     minHeight: 0,
   }),
   mapContext(LayoutContext),
-  onChange(({ width, minWidth, _onWidthChange }) => {
+  onLayout(({ width, minWidth, _onWidthChange }) => {
     _onWidthChange?.(width ?? minWidth)
   }, ['width', 'minWidth', '_onWidthChange']),
-  onChange(({ height, minHeight, _onHeightChange }) => {
+  onLayout(({ height, minHeight, _onHeightChange }) => {
     _onHeightChange?.(height ?? minHeight)
   }, ['height', 'minHeight', '_onHeightChange']),
   mapWithProps(({ _x, _y, left, _left, top, _top, width, _width, height, _height }) => ({

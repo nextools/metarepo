@@ -1,6 +1,7 @@
 import React from 'react'
-import { component, startWithType, mapContext, onChange } from 'refun'
+import { component, startWithType, mapContext } from 'refun'
 import { isFunction } from 'tsfn'
+import { onLayout } from '../layout'
 import { PrimitiveBlock } from '../primitive-block'
 import { LayoutContext } from '../layout-context'
 import { Size } from '../size'
@@ -19,7 +20,7 @@ export type TLine = {
 export const Line = component(
   startWithType<TLine>(),
   mapContext(LayoutContext),
-  onChange(({ _height, _onHeightChange }) => {
+  onLayout(({ _height, _onHeightChange }) => {
     if (_height !== LINE_HEIGHT && isFunction(_onHeightChange)) {
       _onHeightChange(LINE_HEIGHT)
     }
