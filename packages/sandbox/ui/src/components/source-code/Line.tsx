@@ -1,8 +1,9 @@
 import React from 'react'
-import { mapHovered, TMapHovered, component, mapHandlers, startWithType, mapWithProps, mapContext, onChange, mapPressed, TMapPressed, TMapKeyboardFocused, mapKeyboardFocused } from 'refun'
+import { mapHovered, TMapHovered, component, mapHandlers, startWithType, mapWithProps, mapContext, mapPressed, TMapPressed, TMapKeyboardFocused, mapKeyboardFocused } from 'refun'
 import { isDefined } from 'tsfn'
 import { TLine as TSyntxLine } from 'syntx'
 import { elegir } from 'elegir'
+import { onLayout } from '../layout'
 import { PrimitiveBackground } from '../primitive-background'
 import { PrimitiveButton } from '../primitive-button'
 import { PrimitiveBlock } from '../primitive-block'
@@ -35,8 +36,8 @@ export type TLine = {
 export const Line = component(
   startWithType<TLine>(),
   mapContext(LayoutContext),
-  onChange(({ _onHeightChange }) => {
-      _onHeightChange?.(LINE_HEIGHT)
+  onLayout(({ _onHeightChange }) => {
+    _onHeightChange?.(LINE_HEIGHT)
   }, []),
   mapHovered,
   mapPressed,

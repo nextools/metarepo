@@ -6,6 +6,7 @@ import { mapChildren, SYMBOL_CHILDREN_REST } from '../../map/children'
 import { SYMBOL_LAYOUT, SYMBOL_LAYOUT_ITEM } from '../../symbols'
 import { calcTotal, calcMax, calcExplicitMainAxisLayout, calcMeasureMainAxisLayout, calcMeasureCrossAxisLayout, calcExplicitCrossAxisLayout, TOnItemSizeChange, equalizeArrays, getWidth, getMinWidth, getMaxWidth, getLayoutWidth, getHeight, getMinHeight, getMaxHeight, getLayoutHeight } from './utils'
 import { LayoutItemContext } from './LayoutItemContext'
+import { onLayout } from './on-layout'
 import { TLayoutDirection } from './types'
 
 export type TLayout = {
@@ -49,32 +50,16 @@ export const Layout = component(
       maxHeights: Array(numItems).fill(0),
       onItemWidthChangeFns: Array(numItems) as (TOnItemSizeChange | undefined)[],
       onItemHeightChangeFns: Array(numItems) as (TOnItemSizeChange | undefined)[],
+      hasContainerWidthChanged: false,
+      hasContainerHeightChanged: false,
     }
   }, []),
   mapHandlers({
-    reportWidthChange: ({ direction, layoutRef, hPadding, spaceBetween, flushLayout, _onWidthChange }) => () => {
-      if (isFunction(_onWidthChange)) {
-        // console.log('ON WIDTH', layoutRef.current.renderedWidths)
-        _onWidthChange(
-          direction === 'horizontal'
-            ? calcTotal(layoutRef.current.renderedWidths, hPadding, spaceBetween)
-            : calcMax(layoutRef.current.renderedWidths) + hPadding * 2
-        )
-      } else {
-        flushLayout()
-      }
+    reportWidthChange: ({ layoutRef }) => () => {
+      layoutRef.current.hasContainerWidthChanged = true
     },
-    reportHeightChange: ({ direction, layoutRef, vPadding, spaceBetween, flushLayout, _onHeightChange }) => () => {
-      if (isFunction(_onHeightChange)) {
-        // console.log('ON HEIGHT', layoutRef.current.renderedHeights)
-        _onHeightChange(
-          direction === 'horizontal'
-            ? calcMax(layoutRef.current.renderedHeights) + vPadding * 2
-            : calcTotal(layoutRef.current.renderedHeights, vPadding, spaceBetween)
-        )
-      } else {
-        flushLayout()
-      }
+    reportHeightChange: ({ layoutRef }) => () => {
+      layoutRef.current.hasContainerHeightChanged = true
     },
   }),
   mapHandlers({
@@ -170,6 +155,40 @@ export const Layout = component(
       calcMeasureMainAxisLayout(items, tops, renderedHeights, measuredHeights, maxHeights, onItemHeightChangeFns, onItemHeightChange, getLayoutHeight, getHeight, getMinHeight, getMaxHeight, reportHeightChange, _maxHeight, vPadding, spaceBetween)
     } else {
       calcExplicitMainAxisLayout(items, tops, renderedHeights, measuredHeights, onItemHeightChangeFns, onItemHeightChange, getLayoutHeight, getMinHeight, getMaxHeight, _height, vPadding, spaceBetween)
+    }
+  }, ['items']),
+  onLayout(({ layoutRef, _onWidthChange, _onHeightChange, direction, hPadding, vPadding, spaceBetween }) => {
+    const {
+      hasContainerWidthChanged,
+      renderedWidths,
+      hasContainerHeightChanged,
+      renderedHeights,
+    } = layoutRef.current
+
+    if (hasContainerWidthChanged) {
+      layoutRef.current.hasContainerWidthChanged = false
+
+      if (isFunction(_onWidthChange)) {
+        // console.log('ON WIDTH', layoutRef.current.renderedWidths)
+        _onWidthChange(
+          direction === 'horizontal'
+            ? calcTotal(renderedWidths, hPadding, spaceBetween)
+            : calcMax(renderedWidths) + hPadding * 2
+        )
+      }
+    }
+
+    if (hasContainerHeightChanged) {
+      layoutRef.current.hasContainerHeightChanged = false
+
+      if (isFunction(_onHeightChange)) {
+        // console.log('ON HEIGHT', layoutRef.current.renderedHeights)
+        _onHeightChange(
+          direction === 'horizontal'
+            ? calcMax(renderedHeights) + vPadding * 2
+            : calcTotal(renderedHeights, vPadding, spaceBetween)
+        )
+      }
     }
   }, ['items'])
 )(({
