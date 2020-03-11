@@ -1,3 +1,7 @@
+## v1.0.7
+
+* 🐞 check for `await` + non-theneables
+
 ## v1.0.6
 
 * 🐞 allow `import/no-dynamic-require`
