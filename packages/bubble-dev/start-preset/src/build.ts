@@ -89,6 +89,7 @@ export const buildNode = async (dir: string) => {
   const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
 
   return sequence(
+    env({ BABEL_ENV: 'production' }),
     find([
       `${dir}/src/**/*.{js,ts,tsx}`,
       `!${dir}/src/**/*.{web,native,ios,android}.{js,ts,tsx}`,
@@ -120,6 +121,7 @@ export const buildWebNode = async (dir: string) => {
   const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
 
   return sequence(
+    env({ BABEL_ENV: 'production' }),
     find([
       `${dir}/src/**/*.{js,ts,tsx}`,
       `!${dir}/src/**/*.{native,ios,android}.{js,ts,tsx}`,
