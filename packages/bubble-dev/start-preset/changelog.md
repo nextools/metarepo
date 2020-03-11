@@ -1,3 +1,9 @@
+## v1.4.1
+
+* 🐞 split and parallelize "build" and "dts" parts of `build` task
+
+* 🐞 inline `BABEL_ENV` var during Node.js-target build
+
 ## v1.4.0
 
 * 🐞 refactor to use `weslint` in `lint` task
