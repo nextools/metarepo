@@ -8,10 +8,7 @@ import typescriptCheck from '@start/plugin-lib-typescript-check'
 import codecov from '@start/plugin-lib-codecov'
 import tape from '@start/plugin-lib-tape'
 import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
-// @ts-ignore
-import tapDiff from 'tap-diff'
 import { TPackageJson } from 'fixdeps'
-import { weslint } from 'weslint'
 import xRaySnapshots from './plugins/snapshots'
 import xRayChromeScreenshots from './plugins/chrome-screenshots'
 import xRayFirefoxScreenshots from './plugins/firefox-screenshots'
@@ -198,6 +195,7 @@ export const checkDeps = () => plugin('checkDeps', ({ logMessage }) => async () 
 })
 
 export const lint = async () => {
+  const { weslint } = await import('weslint')
   const path = await import('path')
   const packageJson = await import(path.resolve('package.json'))
   const globs = packageJson.workspaces.reduce((acc: string[], glob: string) => (
@@ -230,8 +228,11 @@ export const lint = async () => {
   )
 }
 
-export const test = (packageDir: string = '**') =>
-  sequence(
+export const test = async (packageDir: string = '**') => {
+  // @ts-ignore
+  const { default: tapDiff } = await import('tap-diff')
+
+  return sequence(
     env({ NODE_ENV: 'test' }),
     find(`coverage/`),
     remove,
@@ -244,6 +245,7 @@ export const test = (packageDir: string = '**') =>
     tape(tapDiff),
     istanbulReport(['lcovonly', 'html', 'text-summary'])
   )
+}
 
 export const ci = () =>
   sequence(

@@ -1,11 +1,26 @@
 import plugin, { StartDataFilesProps } from '@start/plugin'
-import { Node, TransformationContext, SourceFile, StringLiteral } from 'typescript'
+import {
+  Node,
+  TransformationContext,
+  SourceFile,
+  StringLiteral,
+} from 'typescript'
 
 export type TBuildType = 'node' | 'web' | 'native'
 
 export default (buildType: TBuildType) =>
   plugin<StartDataFilesProps, StartDataFilesProps>('transform-dts', ({ logMessage }) => async ({ files }) => {
-    const { createPrinter, createSourceFile, createStringLiteral, ScriptTarget, ScriptKind, SyntaxKind, visitEachChild, visitNode, transform } = await import('typescript')
+    const {
+      createPrinter,
+      createSourceFile,
+      createStringLiteral,
+      visitEachChild,
+      visitNode,
+      transform,
+      ScriptTarget,
+      ScriptKind,
+      SyntaxKind,
+    } = await import('typescript')
     const { getPackages } = await import('@auto/fs')
 
     const packages = await getPackages()

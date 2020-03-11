@@ -1,14 +1,10 @@
-const babelPresetReactNative = require('metro-react-native-babel-preset')
-
-const babelPresetReactNativeNoCompact = (...args) => ({
-  ...babelPresetReactNative(...args),
-  compact: false,
-})
-
 exports.babelConfigReactNative = {
   babelrc: false,
   sourceMaps: true,
-  presets: [babelPresetReactNativeNoCompact],
+  compact: false,
+  presets: [
+    require.resolve('metro-react-native-babel-preset'),
+  ],
   plugins: [
     [
       require.resolve('@babel/plugin-transform-runtime'),
