@@ -35,7 +35,12 @@ export const buildWeb = async (dir: string) => {
     read,
     babel(babelConfigWebLib),
     rename((file) => file.replace(/(\.web)?\.(ts|tsx)$/, '.js')),
-    write(`${dir}/build/web/`),
+    write(`${dir}/build/web/`)
+  )
+}
+
+export const buildDtsWeb = (dir: string) =>
+  sequence(
     find(`${dir}/src/index.{web.tsx,web.ts,tsx,ts}`),
     typescriptGenerate(`${dir}/build/web/`, {
       strict: true,
@@ -52,7 +57,6 @@ export const buildWeb = async (dir: string) => {
     transformDts('web'),
     overwrite
   )
-}
 
 export const buildReactNative = async (dir: string) => {
   const { babelConfigReactNative } = await import('@bubble-dev/babel-config')
@@ -66,7 +70,12 @@ export const buildReactNative = async (dir: string) => {
     read,
     babel(babelConfigReactNative),
     rename((file) => file.replace(/(\.native)?\.(ts|tsx)$/, '.js')),
-    write(`${dir}/build/native/`),
+    write(`${dir}/build/native/`)
+  )
+}
+
+export const buildDtsReactNative = (dir: string) =>
+  sequence(
     find(`${dir}/src/index.{native.tsx,native.ts,ios.tsx,ios.ts,android.tsx,android.ts,tsx,ts}`),
     typescriptGenerate(`${dir}/build/native/`, {
       strict: true,
@@ -83,7 +92,6 @@ export const buildReactNative = async (dir: string) => {
     transformDts('native'),
     overwrite
   )
-}
 
 export const buildNode = async (dir: string) => {
   const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
@@ -98,7 +106,12 @@ export const buildNode = async (dir: string) => {
     read,
     babel(babelConfigNodeBuild),
     rename((file) => file.replace(/(\.node)?\.(ts|tsx)$/, '.js')),
-    write(`${dir}/build/node/`),
+    write(`${dir}/build/node/`)
+  )
+}
+
+export const buildDtsNode = (dir: string) =>
+  sequence(
     find(`${dir}/src/index.{node.tsx,node.ts,tsx,ts}`),
     typescriptGenerate(`${dir}/build/node/`, {
       strict: true,
@@ -115,7 +128,6 @@ export const buildNode = async (dir: string) => {
     transformDts('node'),
     overwrite
   )
-}
 
 export const buildWebNode = async (dir: string) => {
   const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
@@ -130,7 +142,12 @@ export const buildWebNode = async (dir: string) => {
     read,
     babel(babelConfigNodeBuild),
     rename((file) => file.replace(/(\.web)?\.(ts|tsx)$/, '.js')),
-    write(`${dir}/build/node/`),
+    write(`${dir}/build/node/`)
+  )
+}
+
+export const buildDtsWebNode = (dir: string) =>
+  sequence(
     find(`${dir}/src/index.{web.tsx,web.ts,tsx,ts}`),
     typescriptGenerate(`${dir}/build/node/`, {
       strict: true,
@@ -147,7 +164,6 @@ export const buildWebNode = async (dir: string) => {
     transformDts('node'),
     overwrite
   )
-}
 
 export const buildPackage = async (packageDir: string) => {
   const dir = path.join('packages', packageDir)
@@ -165,19 +181,23 @@ export const buildPackage = async (packageDir: string) => {
     })
 
     // "node" is "web" if there are no `.node.{ts,tsx}` files
-    tasks.push(nodeFiles.length > 0 ? 'buildNode' : 'buildWebNode')
+    if (nodeFiles.length > 0) {
+      tasks.push('buildNode', 'buildDtsNode')
+    } else {
+      tasks.push('buildWebNode', 'buildDtsWebNode')
+    }
   }
 
   if (Reflect.has(packageJson, 'browser')) {
-    tasks.push('buildWeb')
+    tasks.push('buildWeb', 'buildDtsWeb')
   }
 
   if (Reflect.has(packageJson, 'react-native')) {
-    tasks.push('buildReactNative')
+    tasks.push('buildReactNative', 'buildDtsReactNative')
   }
 
   if (Reflect.has(packageJson, 'bin') && !tasks.includes('buildNode')) {
-    tasks.push('buildNode')
+    tasks.push('buildNode', 'buildDtsNode')
   }
 
   if (Reflect.has(packageJson, 'buildAssets')) {
