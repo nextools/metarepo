@@ -26,7 +26,7 @@ test('plugin-sequence: ok / sync plugin / sync return', async (t) => {
   const plugin3Spy = createSpy(() => plugin3CallbackSpy)
   const plugin3 = plugin('plugin3', plugin3Spy)
 
-  const run = await sequence(plugin1, plugin2, plugin3)
+  const run = sequence(plugin1, plugin2, plugin3)
 
   await run(reporter)({ foo: true })
 
@@ -79,7 +79,7 @@ test('plugin-sequence: ok / async plugin / async return', async (t) => {
   const plugin3Spy = createSpy(() => plugin3CallbackSpy)
   const plugin3 = Promise.resolve(plugin('plugin3', plugin3Spy))
 
-  const run = await sequence(plugin1, plugin2, plugin3)
+  const run = sequence(plugin1, plugin2, plugin3)
 
   await run(reporter)({ foo: true })
 
@@ -131,7 +131,7 @@ test('plugin-sequence: error / throw', async (t) => {
   const plugin2Spy = createSpy(() => plugin2CallbackSpy)
   const plugin2 = plugin('plugin2', plugin2Spy)
 
-  const run = await sequence(plugin1, plugin2)
+  const run = sequence(plugin1, plugin2)
 
   reporter.on('error', () => {})
 
@@ -157,7 +157,7 @@ test('plugin-sequence: error / reject', async (t) => {
   const plugin2Spy = createSpy(() => plugin2CallbackSpy)
   const plugin2 = plugin('plugin2', plugin2Spy)
 
-  const run = await sequence(plugin1, plugin2)
+  const run = sequence(plugin1, plugin2)
 
   reporter.on('error', () => {})
 
@@ -181,7 +181,7 @@ test('plugin-sequence: `false` as a plugin', async (t) => {
   const plugin2Spy = createSpy(() => plugin2CallbackSpy)
   const plugin2 = plugin('plugin2', plugin2Spy)
 
-  const run = await sequence(plugin1, plugin2)
+  const run = sequence(plugin1, plugin2)
 
   await run(reporter)({ foo: true })
 

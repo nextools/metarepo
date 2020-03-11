@@ -1,10 +1,10 @@
 import test from 'blue-tape'
 import fromRGBA from '../src'
 
-test('from-rgba: valid', async (t) => {
+test('from-rgba: valid', (t) => {
   const color = fromRGBA('   rgba(  255, 03,   4 , 0.5  )')
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 255,
@@ -14,14 +14,18 @@ test('from-rgba: valid', async (t) => {
     },
     'must parse into object'
   )
+
+  t.end()
 })
 
-test('from-rgba: invalid', async (t) => {
+test('from-rgba: invalid', (t) => {
   const color = fromRGBA('asdf00')
 
-  await t.equals(
+  t.equals(
     color,
     null,
     'must not parse'
   )
+
+  t.end()
 })

@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import contrastRatioRgb from '../src'
 
-test('fantasy-color:contrast-ratio-rgb', async (t) => {
+test('fantasy-color:contrast-ratio-rgb', (t) => {
   const contrastRatio = contrastRatioRgb(
     {
       red: 255,
@@ -15,9 +15,11 @@ test('fantasy-color:contrast-ratio-rgb', async (t) => {
     }
   )
 
-  await t.deepEquals(
+  t.deepEquals(
     contrastRatio,
     5.252,
     'must give contrast ratio'
   )
+
+  t.end()
 })

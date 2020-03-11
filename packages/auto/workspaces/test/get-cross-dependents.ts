@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import { getCrossDependents } from '../src/get-cross-dependents'
 
-test('workspaces:getCrossDependents no cross dependencies', async (t) => {
+test('workspaces:getCrossDependents no cross dependencies', (t) => {
   const packages = {
     a: {
       dir: '/fakes/a',
@@ -33,13 +33,15 @@ test('workspaces:getCrossDependents no cross dependencies', async (t) => {
   }
 
   t.deepEquals(
-    await getCrossDependents(packages),
+    getCrossDependents(packages),
     {},
     'empty object when there is no cross dependencies'
   )
+
+  t.end()
 })
 
-test('workspaces:getCrossDependents one cross dependency', async (t) => {
+test('workspaces:getCrossDependents one cross dependency', (t) => {
   const packages = {
     'ns/a': {
       dir: '/fakes/a',
@@ -69,15 +71,17 @@ test('workspaces:getCrossDependents one cross dependency', async (t) => {
   }
 
   t.deepEquals(
-    await getCrossDependents(packages),
+    getCrossDependents(packages),
     {
       'ns/a': [{ name: 'ns/b', range: '^0.1.0', devRange: null }],
     },
     'single cross dependency'
   )
+
+  t.end()
 })
 
-test('workspaces:getCrossDependents multiple cross dependencies', async (t) => {
+test('workspaces:getCrossDependents multiple cross dependencies', (t) => {
   const packages = {
     'ns/a': {
       dir: '/fakes/a',
@@ -109,7 +113,7 @@ test('workspaces:getCrossDependents multiple cross dependencies', async (t) => {
   }
 
   t.deepEquals(
-    await getCrossDependents(packages),
+    getCrossDependents(packages),
     {
       'ns/a': [
         { name: 'ns/b', range: '^0.1.0', devRange: null },
@@ -118,9 +122,11 @@ test('workspaces:getCrossDependents multiple cross dependencies', async (t) => {
     },
     'multiple cross dependencies'
   )
+
+  t.end()
 })
 
-test('workspaces:getCrossDependents circular dependencies', async (t) => {
+test('workspaces:getCrossDependents circular dependencies', (t) => {
   const packages = {
     'ns/a': {
       dir: '/fakes/a',
@@ -152,7 +158,7 @@ test('workspaces:getCrossDependents circular dependencies', async (t) => {
   }
 
   t.deepEquals(
-    await getCrossDependents(packages),
+    getCrossDependents(packages),
     {
       'ns/a': [{ name: 'ns/b', range: '^0.1.0', devRange: null }],
       'ns/b': [{ name: 'ns/c', range: '^0.2.0', devRange: null }],
@@ -160,9 +166,11 @@ test('workspaces:getCrossDependents circular dependencies', async (t) => {
     },
     'circular cross dependencies'
   )
+
+  t.end()
 })
 
-test('workspaces:getCrossDependents multiple cross dependencies', async (t) => {
+test('workspaces:getCrossDependents multiple cross dependencies', (t) => {
   const packages = {
     a: {
       dir: '/fakes/a',
@@ -194,7 +202,7 @@ test('workspaces:getCrossDependents multiple cross dependencies', async (t) => {
   }
 
   t.deepEquals(
-    await getCrossDependents(packages),
+    getCrossDependents(packages),
     {
       a: [
         { name: 'ns/b', range: '^0.1.0', devRange: null },
@@ -203,4 +211,6 @@ test('workspaces:getCrossDependents multiple cross dependencies', async (t) => {
     },
     'multiple cross dependencies'
   )
+
+  t.end()
 })

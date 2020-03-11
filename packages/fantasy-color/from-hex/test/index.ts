@@ -1,10 +1,10 @@
 import test from 'blue-tape'
 import fromHEX from '../src'
 
-test('from-hex: valid', async (t) => {
+test('from-hex: valid', (t) => {
   const color = fromHEX('#FF0200')
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 255,
@@ -13,14 +13,18 @@ test('from-hex: valid', async (t) => {
     },
     'must parse into object'
   )
+
+  t.end()
 })
 
-test('from-hex: invalid', async (t) => {
+test('from-hex: invalid', (t) => {
   const color = fromHEX('asdf00')
 
-  await t.equals(
+  t.equals(
     color,
     null,
     'must not parse'
   )
+
+  t.end()
 })

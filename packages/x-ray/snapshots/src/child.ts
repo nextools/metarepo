@@ -28,7 +28,7 @@ export default async (options: TOptions) => {
 
               await pAll(
                 map((item: TMeta) => async () => {
-                  const snapshot = await serialize(item.element)
+                  const snapshot = serialize(item.element)
                   const message = await checkSnapshot(Buffer.from(snapshot), tar, item.id)
 
                   filenames.push(item.id)

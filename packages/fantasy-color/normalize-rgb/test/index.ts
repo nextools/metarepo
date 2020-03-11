@@ -1,14 +1,14 @@
 import test from 'blue-tape'
 import normalizeRgb from '../src'
 
-test('normalize-rgb', async (t) => {
+test('normalize-rgb', (t) => {
   const color = normalizeRgb({
     red: 255,
     green: 70,
     blue: 50,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 1,
@@ -17,4 +17,6 @@ test('normalize-rgb', async (t) => {
     },
     'must normalize the values'
   )
+
+  t.end()
 })
