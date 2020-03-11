@@ -25,6 +25,12 @@ exports.babelConfigNodeBuild = {
       { regenerator: false },
     ],
     require.resolve('@babel/plugin-syntax-bigint'),
+    [
+      require.resolve('babel-plugin-transform-inline-environment-variables'),
+      {
+        include: ['BABEL_ENV'],
+      },
+    ],
   ],
   shouldPrintComment: (val) => val.startsWith('#'),
   sourceMaps: false,
