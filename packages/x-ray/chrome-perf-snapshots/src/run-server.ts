@@ -44,7 +44,7 @@ export const runServer = ({ result, resultData }: TRunServer) => new Promise((re
             res.end(JSON.stringify({
               type: 'text',
               files: shortPaths,
-              items: await Object.keys(result).reduce((acc, longPath) => {
+              items: Object.keys(result).reduce((acc, longPath) => {
                 return Object.entries(result[longPath]).reduce((acc, [type, items]) => {
                   return Object.entries(items).reduce((acc, [id, item]) => {
                     const shortPath = pathMap.get(longPath)!

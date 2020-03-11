@@ -1,14 +1,14 @@
 import test from 'blue-tape'
 import rgbToRgba from '../src'
 
-test('rgbToRgba', async (t) => {
+test('rgbToRgba', (t) => {
   const color = rgbToRgba({
     red: 60,
     green: 32,
     blue: 23,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 60,
@@ -18,4 +18,6 @@ test('rgbToRgba', async (t) => {
     },
     'must add alpha 1'
   )
+
+  t.end()
 })

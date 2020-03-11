@@ -1,14 +1,14 @@
 import test from 'blue-tape'
 import rgbToSrgb from '../src'
 
-test('rgbToSrgb: below 9 values', async (t) => {
+test('rgbToSrgb: below 9 values', (t) => {
   const color = rgbToSrgb({
     red: 7,
     green: 6,
     blue: 2,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 0.0021246888848418626,
@@ -17,16 +17,18 @@ test('rgbToSrgb: below 9 values', async (t) => {
     },
     'must map to sRGB'
   )
+
+  t.end()
 })
 
-test('rgbToSrgb: above 9 values', async (t) => {
+test('rgbToSrgb: above 9 values', (t) => {
   const color = rgbToSrgb({
     red: 78,
     green: 63,
     blue: 22,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 0.07618538148130785,
@@ -35,4 +37,6 @@ test('rgbToSrgb: above 9 values', async (t) => {
     },
     'must map to sRGB'
   )
+
+  t.end()
 })

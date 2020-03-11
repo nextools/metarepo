@@ -60,7 +60,7 @@ export default async (options: TOptions) => {
                     switch (message.type) {
                       case 'DIFF':
                       case 'NEW': {
-                        await browser.disconnect()
+                        browser.disconnect()
 
                         await processSend<TScreenshotsItemResult>({
                           type: 'BAILOUT',
@@ -127,7 +127,7 @@ export default async (options: TOptions) => {
               break
             }
             case 'DONE': {
-              await browser.disconnect()
+              browser.disconnect()
               resolve()
             }
           }

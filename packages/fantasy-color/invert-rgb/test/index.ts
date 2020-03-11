@@ -1,14 +1,14 @@
 import test from 'blue-tape'
 import invertRgb from '../src'
 
-test('invertRgb', async (t) => {
+test('invertRgb', (t) => {
   const color = invertRgb({
     red: 127,
     green: 255,
     blue: 60,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 128,
@@ -17,4 +17,6 @@ test('invertRgb', async (t) => {
     },
     'must invert the RGB'
   )
+
+  t.end()
 })

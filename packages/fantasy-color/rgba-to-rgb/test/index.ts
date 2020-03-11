@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import rgbaToRgb from '../src'
 
-test('rgbaToRgb: standalone', async (t) => {
+test('rgbaToRgb: standalone', (t) => {
   const color = rgbaToRgb({
     red: 60,
     green: 32,
@@ -9,7 +9,7 @@ test('rgbaToRgb: standalone', async (t) => {
     alpha: 0.4,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 60,
@@ -18,6 +18,8 @@ test('rgbaToRgb: standalone', async (t) => {
     },
     'must remove alpha'
   )
+
+  t.end()
 })
 
 // test('rgbaToRgb: with background')

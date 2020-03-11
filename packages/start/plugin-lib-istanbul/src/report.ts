@@ -22,6 +22,7 @@ export default (formats: string[] = ['lcovonly', 'text-summary']) =>
 
     const coverageMap = createCoverageMap(coverageMapData)
     const sourceMapStore = createSourceMapStore()
+    // eslint-disable-next-line @typescript-eslint/await-thenable
     const remappedCoverageMap = await sourceMapStore.transformCoverage(coverageMap)
     const reporter = createReporter()
 

@@ -1,14 +1,14 @@
 import test from 'blue-tape'
 import labToHcl from '../src'
 
-test('labToHcl: white', async (t) => {
+test('labToHcl: white', (t) => {
   const color = labToHcl({
     luminance: 100,
     a: 0,
     b: 0,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 0,
@@ -17,16 +17,18 @@ test('labToHcl: white', async (t) => {
     },
     'must turn to HCL'
   )
+
+  t.end()
 })
 
-test('labToHcl: gray', async (t) => {
+test('labToHcl: gray', (t) => {
   const color = labToHcl({
     luminance: 53.19277745493915,
     a: 0,
     b: 0,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 0,
@@ -35,16 +37,18 @@ test('labToHcl: gray', async (t) => {
     },
     'must turn to HCL'
   )
+
+  t.end()
 })
 
-test('labToHcl: black', async (t) => {
+test('labToHcl: black', (t) => {
   const color = labToHcl({
     luminance: 0,
     a: 0,
     b: 0,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 0,
@@ -53,16 +57,18 @@ test('labToHcl: black', async (t) => {
     },
     'must turn to HCL'
   )
+
+  t.end()
 })
 
-test('labToHcl: red', async (t) => {
+test('labToHcl: red', (t) => {
   const color = labToHcl({
     luminance: 54.29173376861782,
     a: 80.8124553179771,
     b: 69.88504032350531,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 40.85261277607024,
@@ -71,16 +77,18 @@ test('labToHcl: red', async (t) => {
     },
     'must turn to HCL'
   )
+
+  t.end()
 })
 
-test('labToHcl: dark red', async (t) => {
+test('labToHcl: dark red', (t) => {
   const color = labToHcl({
     luminance: 24.29173376861782,
     a: 80.8124553179771,
     b: 69.88504032350531,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 40.85261277607024,
@@ -89,16 +97,18 @@ test('labToHcl: dark red', async (t) => {
     },
     'must turn to HCL'
   )
+
+  t.end()
 })
 
-test('labToHcl: green', async (t) => {
+test('labToHcl: green', (t) => {
   const color = labToHcl({
     luminance: 87.81812823940444,
     a: -79.28728092989567,
     b: 80.99025618375525,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 134.39124580493436,
@@ -107,16 +117,18 @@ test('labToHcl: green', async (t) => {
     },
     'must turn to HCL'
   )
+
+  t.end()
 })
 
-test('labToHcl: blue', async (t) => {
+test('labToHcl: blue', (t) => {
   const color = labToHcl({
     luminance: 29.567572863553245,
     a: 68.29865326565671,
     b: -112.02942991288025,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 301.368540512089,
@@ -125,16 +137,18 @@ test('labToHcl: blue', async (t) => {
     },
     'must turn to HCL'
   )
+
+  t.end()
 })
 
-test('labToHcl: purple', async (t) => {
+test('labToHcl: purple', (t) => {
   const color = labToHcl({
     luminance: 60.16969588191749,
     a: 93.55002493980824,
     b: -60.498555897447304,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 327.1093569922719,
@@ -143,16 +157,18 @@ test('labToHcl: purple', async (t) => {
     },
     'must turn to HCL'
   )
+
+  t.end()
 })
 
-test('labToHcl: some color', async (t) => {
+test('labToHcl: some color', (t) => {
   const color = labToHcl({
     luminance: 15.966897718378611,
     a: 13.086860007892998,
     b: 12.202929512042749,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 42.99820879411349,
@@ -161,4 +177,6 @@ test('labToHcl: some color', async (t) => {
     },
     'must turn to HCL'
   )
+
+  t.end()
 })

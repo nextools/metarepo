@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import rgbaToHsva from '../src'
 
-test('rgbaToHsva: white', async (t) => {
+test('rgbaToHsva: white', (t) => {
   const color = rgbaToHsva({
     red: 255,
     green: 255,
@@ -9,7 +9,7 @@ test('rgbaToHsva: white', async (t) => {
     alpha: 0.5,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 0,
@@ -19,9 +19,11 @@ test('rgbaToHsva: white', async (t) => {
     },
     'must turn to HSVA'
   )
+
+  t.end()
 })
 
-test('rgbaToHsva: gray', async (t) => {
+test('rgbaToHsva: gray', (t) => {
   const color = rgbaToHsva({
     red: 127,
     green: 127,
@@ -29,7 +31,7 @@ test('rgbaToHsva: gray', async (t) => {
     alpha: 0.5,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 0,
@@ -39,9 +41,11 @@ test('rgbaToHsva: gray', async (t) => {
     },
     'must turn to HSVA'
   )
+
+  t.end()
 })
 
-test('rgbaToHsva: black', async (t) => {
+test('rgbaToHsva: black', (t) => {
   const color = rgbaToHsva({
     red: 0,
     green: 0,
@@ -49,7 +53,7 @@ test('rgbaToHsva: black', async (t) => {
     alpha: 0.5,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 0,
@@ -59,9 +63,11 @@ test('rgbaToHsva: black', async (t) => {
     },
     'must turn to HSVA'
   )
+
+  t.end()
 })
 
-test('rgbaToHsva: red', async (t) => {
+test('rgbaToHsva: red', (t) => {
   const color = rgbaToHsva({
     red: 255,
     green: 0,
@@ -69,7 +75,7 @@ test('rgbaToHsva: red', async (t) => {
     alpha: 0.5,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 0,
@@ -79,9 +85,11 @@ test('rgbaToHsva: red', async (t) => {
     },
     'must turn to HSVA'
   )
+
+  t.end()
 })
 
-test('rgbaToHsva: green', async (t) => {
+test('rgbaToHsva: green', (t) => {
   const color = rgbaToHsva({
     red: 0,
     green: 255,
@@ -89,7 +97,7 @@ test('rgbaToHsva: green', async (t) => {
     alpha: 0.5,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 120,
@@ -99,9 +107,11 @@ test('rgbaToHsva: green', async (t) => {
     },
     'must turn to HSVA'
   )
+
+  t.end()
 })
 
-test('rgbaToHsva: blue', async (t) => {
+test('rgbaToHsva: blue', (t) => {
   const color = rgbaToHsva({
     red: 0,
     green: 0,
@@ -109,7 +119,7 @@ test('rgbaToHsva: blue', async (t) => {
     alpha: 0.5,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 240,
@@ -119,9 +129,11 @@ test('rgbaToHsva: blue', async (t) => {
     },
     'must turn to HSVA'
   )
+
+  t.end()
 })
 
-test('rgbaToHsva: purple', async (t) => {
+test('rgbaToHsva: purple', (t) => {
   const color = rgbaToHsva({
     red: 255,
     green: 0,
@@ -129,7 +141,7 @@ test('rgbaToHsva: purple', async (t) => {
     alpha: 0.5,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 300,
@@ -139,9 +151,11 @@ test('rgbaToHsva: purple', async (t) => {
     },
     'must turn to HSVA'
   )
+
+  t.end()
 })
 
-test('rgbaToHsva: some color', async (t) => {
+test('rgbaToHsva: some color', (t) => {
   const color = rgbaToHsva({
     red: 60,
     green: 32,
@@ -149,7 +163,7 @@ test('rgbaToHsva: some color', async (t) => {
     alpha: 0.5,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 15,
@@ -159,4 +173,6 @@ test('rgbaToHsva: some color', async (t) => {
     },
     'must turn to HSVA'
   )
+
+  t.end()
 })

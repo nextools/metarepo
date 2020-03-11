@@ -1,14 +1,14 @@
 import test from 'blue-tape'
 import hsvToRgb from '../src'
 
-test('hsvToRgb: white', async (t) => {
+test('hsvToRgb: white', (t) => {
   const color = hsvToRgb({
     hue: 0,
     saturation: 0,
     value: 100,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 255,
@@ -17,16 +17,18 @@ test('hsvToRgb: white', async (t) => {
     },
     'must turn to RGB'
   )
+
+  t.end()
 })
 
-test('hsvToRgb: gray', async (t) => {
+test('hsvToRgb: gray', (t) => {
   const color = hsvToRgb({
     hue: 0,
     saturation: 0,
     value: 50,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 128,
@@ -35,16 +37,18 @@ test('hsvToRgb: gray', async (t) => {
     },
     'must turn to RGB'
   )
+
+  t.end()
 })
 
-test('hsvToRgb: black', async (t) => {
+test('hsvToRgb: black', (t) => {
   const color = hsvToRgb({
     hue: 0,
     saturation: 0,
     value: 0,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 0,
@@ -53,16 +57,18 @@ test('hsvToRgb: black', async (t) => {
     },
     'must turn to RGB'
   )
+
+  t.end()
 })
 
-test('hsvToRgb: red', async (t) => {
+test('hsvToRgb: red', (t) => {
   const color = hsvToRgb({
     hue: 0,
     saturation: 100,
     value: 100,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 255,
@@ -71,16 +77,18 @@ test('hsvToRgb: red', async (t) => {
     },
     'must turn to RGB'
   )
+
+  t.end()
 })
 
-test('hsvToRgb: yellow', async (t) => {
+test('hsvToRgb: yellow', (t) => {
   const color = hsvToRgb({
     hue: 60,
     saturation: 100,
     value: 100,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 255,
@@ -89,16 +97,18 @@ test('hsvToRgb: yellow', async (t) => {
     },
     'must turn to RGB'
   )
+
+  t.end()
 })
 
-test('hsvToRgb: green', async (t) => {
+test('hsvToRgb: green', (t) => {
   const color = hsvToRgb({
     hue: 120,
     saturation: 100,
     value: 100,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 0,
@@ -107,16 +117,18 @@ test('hsvToRgb: green', async (t) => {
     },
     'must turn to RGB'
   )
+
+  t.end()
 })
 
-test('hsvToRgb: cyan', async (t) => {
+test('hsvToRgb: cyan', (t) => {
   const color = hsvToRgb({
     hue: 180,
     saturation: 100,
     value: 100,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 0,
@@ -125,16 +137,18 @@ test('hsvToRgb: cyan', async (t) => {
     },
     'must turn to RGB'
   )
+
+  t.end()
 })
 
-test('hsvToRgb: blue', async (t) => {
+test('hsvToRgb: blue', (t) => {
   const color = hsvToRgb({
     hue: 240,
     saturation: 100,
     value: 100,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 0,
@@ -143,16 +157,18 @@ test('hsvToRgb: blue', async (t) => {
     },
     'must turn to RGB'
   )
+
+  t.end()
 })
 
-test('hsvToRgb: purple', async (t) => {
+test('hsvToRgb: purple', (t) => {
   const color = hsvToRgb({
     hue: 300,
     saturation: 100,
     value: 100,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 255,
@@ -161,16 +177,18 @@ test('hsvToRgb: purple', async (t) => {
     },
     'must turn to RGB'
   )
+
+  t.end()
 })
 
-test('hsvToRgb: some color', async (t) => {
+test('hsvToRgb: some color', (t) => {
   const color = hsvToRgb({
     hue: 0,
     saturation: 50,
     value: 30,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       red: 77,
@@ -179,4 +197,6 @@ test('hsvToRgb: some color', async (t) => {
     },
     'must turn to RGB'
   )
+
+  t.end()
 })

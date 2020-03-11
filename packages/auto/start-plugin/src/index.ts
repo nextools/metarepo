@@ -40,7 +40,7 @@ export const getPackagesBumps = (prefixes: TPrefixes, gitOptions: TGitOptions, b
       throw new Error('No bumps')
     }
 
-    const packagesBumps = await getPackagesBumps(packages, gitBumps, bumpOptions)
+    const packagesBumps = getPackagesBumps(packages, gitBumps, bumpOptions)
 
     return {
       packagesBumps,

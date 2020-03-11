@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import { getDependentsOf } from '../src/get-dependents-of'
 
-test('workspaces:getDependentsOf circular cross dependencies', async (t) => {
+test('workspaces:getDependentsOf circular cross dependencies', (t) => {
   const packages = {
     a: {
       dir: '/fakes/a',
@@ -39,13 +39,15 @@ test('workspaces:getDependentsOf circular cross dependencies', async (t) => {
   }
 
   t.deepEquals(
-    await getDependentsOf(crossDependents, packages, 'a'),
+    getDependentsOf(crossDependents, packages, 'a'),
     [{ name: 'b', range: '^0.1.0', devRange: null }],
     'circular cross dependencies'
   )
+
+  t.end()
 })
 
-test('workspaces:getDependentsOf no dependents', async (t) => {
+test('workspaces:getDependentsOf no dependents', (t) => {
   const packages = {
     a: {
       dir: '/fakes/a',
@@ -73,8 +75,10 @@ test('workspaces:getDependentsOf no dependents', async (t) => {
   const crossDependents = {}
 
   t.deepEquals(
-    await getDependentsOf(crossDependents, packages, 'a'),
+    getDependentsOf(crossDependents, packages, 'a'),
     null,
     'no dependents'
   )
+
+  t.end()
 })

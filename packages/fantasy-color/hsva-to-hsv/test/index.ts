@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import hsvaToHsv from '../src'
 
-test('hsvaToHsv: standalone', async (t) => {
+test('hsvaToHsv: standalone', (t) => {
   const color = hsvaToHsv({
     hue: 60,
     saturation: 32,
@@ -9,7 +9,7 @@ test('hsvaToHsv: standalone', async (t) => {
     alpha: 0.4,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 60,
@@ -18,6 +18,8 @@ test('hsvaToHsv: standalone', async (t) => {
     },
     'must remove alpha'
   )
+
+  t.end()
 })
 
 // test('hsvaToHsv: with background')

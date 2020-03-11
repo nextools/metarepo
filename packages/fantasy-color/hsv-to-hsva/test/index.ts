@@ -1,14 +1,14 @@
 import test from 'blue-tape'
 import hsvToHsva from '../src'
 
-test('hsvToHsva', async (t) => {
+test('hsvToHsva', (t) => {
   const color = hsvToHsva({
     hue: 60,
     saturation: 32,
     value: 23,
   })
 
-  await t.deepEquals(
+  t.deepEquals(
     color,
     {
       hue: 60,
@@ -18,4 +18,6 @@ test('hsvToHsva', async (t) => {
     },
     'must add alpha 1'
   )
+
+  t.end()
 })
