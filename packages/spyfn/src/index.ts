@@ -7,7 +7,7 @@ type TProps <T extends any[]> = {
 type TCalls <T extends any> = T[]
 type TSpy <T extends any[], R> = (...args: T) => R
 
-export const createSpy = <T extends any[], R>(getResult: (props: TProps<T>) => R) => {
+export const createSpy = <T extends any[], R>(getResult: (props: TProps<T>) => R): TSpy<T, R> => {
   const calls: TCalls<T> = []
 
   const spy: TSpy<T, R> = (...args) => {

@@ -1,4 +1,3 @@
-/* eslint-disable space-infix-ops */
 export type MaybeObject = void | {}
 
 export type StartReporter = NodeJS.EventEmitter

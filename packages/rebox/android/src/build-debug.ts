@@ -10,7 +10,7 @@ export type TBuildDebugOptions = {
   appId: string,
 }
 
-export const buildDebug = async (options: TBuildDebugOptions) => {
+export const buildDebug = async (options: TBuildDebugOptions): Promise<void> => {
   await execa(
     path.resolve(options.projectPath, 'gradlew'),
     [

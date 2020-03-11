@@ -15,7 +15,7 @@ export type TServeJsBundleOptions = {
   shouldMinify?: boolean,
 }
 
-export const serveJsBundle = async ({ port, entryPointPath, platform, isDev, shouldMinify }: TServeJsBundleOptions) => {
+export const serveJsBundle = async ({ port, entryPointPath, platform, isDev, shouldMinify }: TServeJsBundleOptions): Promise<() => void> => {
   const isDevString = isUndefined(isDev) ? 'true' : String(isDev)
   const shouldMinifyString = isUndefined(shouldMinify) ? 'false' : String(shouldMinify)
 

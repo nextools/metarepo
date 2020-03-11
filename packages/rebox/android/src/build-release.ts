@@ -12,7 +12,7 @@ export type TBuildReleaseOptions = {
   outputPath: string,
 }
 
-export const buildRelease = async (options: TBuildReleaseOptions) => {
+export const buildRelease = async (options: TBuildReleaseOptions): Promise<void> => {
   await buildJsBundle({
     entryPointPath: options.entryPointPath,
     outputPath: path.join(options.projectPath, 'app', 'src', 'main', 'assets'),

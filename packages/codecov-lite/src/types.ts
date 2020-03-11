@@ -12,3 +12,8 @@ export type TServiceConfig = {
   flags?: string,
   pr?: string,
 } | null
+
+export type TConfig = TServiceConfig & {
+  package: string,
+  token?: string,
+}

@@ -24,10 +24,10 @@ export type TRunIosOptions = {
   logMessage?: (msg: string) => void,
 }
 
-export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir, dependencyNames, logMessage, isHeadless }: TRunIosOptions) => {
+export const run = async ({ entryPointPath, appName, appId, iOSVersion, fontsDir, dependencyNames, logMessage, isHeadless }: TRunIosOptions): Promise<() => void> => {
   const projectPath = getProjectPath(appName)
   const appPath = getAppPath(appName)
-  const log = (message: string) => {
+  const log = (message: string): void => {
     if (isFunction(logMessage)) {
       logMessage(message)
     }

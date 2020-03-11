@@ -25,10 +25,10 @@ export type TOptions = {
   logMessage?: (msg: string) => void,
 }
 
-export const run = async ({ appId, appName, entryPointPath, portsToForward, fontsDir, dependencyNames, logMessage, isHeadless }: TOptions) => {
+export const run = async ({ appId, appName, entryPointPath, portsToForward, fontsDir, dependencyNames, logMessage, isHeadless }: TOptions): Promise<() => void> => {
   const projectPath = getProjectPath(appName)
   const appPath = getAppPath(appName)
-  const log = (message: string) => {
+  const log = (message: string): void => {
     if (isFunction(logMessage)) {
       logMessage(message)
     }
