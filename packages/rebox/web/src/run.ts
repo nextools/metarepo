@@ -33,7 +33,7 @@ export type TServeJsBundleOptions = {
   shouldOpenBrowser?: boolean,
 }
 
-export const run = (options: TServeJsBundleOptions) => {
+export const run = (options: TServeJsBundleOptions): Promise<() => Promise<void>> => {
   const config: TWebpackConfig = {
     mode: 'development',
     entry: path.resolve(options.entryPointPath),

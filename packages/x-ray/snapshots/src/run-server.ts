@@ -17,7 +17,7 @@ export type TRunServer = {
   resultData: TSnapshotsResultData,
 }
 
-export const runServer = ({ platform, result, resultData }: TRunServer) => new Promise((resolve, reject) => {
+export const runServer = ({ platform, result, resultData }: TRunServer): Promise<void> => new Promise((resolve, reject) => {
   const pathMap = new Map<string, string>()
 
   const server = http
@@ -189,7 +189,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
             )
 
             res.end()
-            server.close(resolve)
+            server.close(() => resolve())
           }
         }
       } catch (e) {

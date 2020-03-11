@@ -6,7 +6,7 @@ export type TLinkDependency = {
   dependencyName: string,
 }
 
-export const linkDependency = async ({ projectPath, dependencyName }: TLinkDependency) => {
+export const linkDependency = async ({ projectPath, dependencyName }: TLinkDependency): Promise<void> => {
   const dependencyPath = path.join('node_modules', dependencyName)
 
   // settings.gradle

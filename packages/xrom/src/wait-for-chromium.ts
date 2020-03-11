@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 
 const TIMEOUT = 200
 
-const wait = async () => {
+const wait = async (): Promise<boolean> => {
   try {
     await fetch(
       'http://localhost:9222/json',
@@ -15,9 +15,9 @@ const wait = async () => {
   }
 }
 
-const sleep = (timeout: number) => new Promise((resolve) => setTimeout(resolve, timeout))
+const sleep = (timeout: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, timeout))
 
-export const waitForChromium = async () => {
+export const waitForChromium = async (): Promise<void> => {
   while (!(await wait())) {
     await sleep(TIMEOUT)
   }

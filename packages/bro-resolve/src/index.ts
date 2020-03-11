@@ -6,7 +6,7 @@ const resolver = resolve.create({
   mainFields: ['browser'],
 })
 
-export const broResolve = (target: string) => new Promise<string>((resolve, reject) => {
+export const broResolve = (target: string): Promise<string> => new Promise<string>((resolve, reject) => {
   const callerDir = path.dirname(getCallerFile(4))
 
   resolver(callerDir, target, (err, result) => {

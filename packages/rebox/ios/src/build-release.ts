@@ -23,7 +23,7 @@ export type TBuildReleaseOptions = {
   outputPath: string,
 }
 
-export const buildRelease = async (options: TBuildReleaseOptions) => {
+export const buildRelease = async (options: TBuildReleaseOptions): Promise<void> => {
   await execa(
     'xcodebuild',
     [

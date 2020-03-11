@@ -6,7 +6,7 @@ export type TLinkDependency = {
   dependencyName: string,
 }
 
-export const linkDependency = async ({ dependencyName, projectPath }: TLinkDependency) => {
+export const linkDependency = async ({ dependencyName, projectPath }: TLinkDependency): Promise<void> => {
   const dependencyPath = path.join('node_modules', dependencyName)
   const dependencyPodfilePath = path.relative(projectPath, dependencyPath)
   const packageDirFiles = await readdir(dependencyPath)

@@ -11,7 +11,7 @@ const plistBuildOptions = {
   offset: -1,
 }
 
-export const addFontsIos = async (projectPath: string, fontsPath: string) => {
+export const addFontsIos = async (projectPath: string, fontsPath: string): Promise<void> => {
   const fontPaths = await getFontPaths(fontsPath)
   const projectFiles = await readdir(projectPath)
   const xcodeProjectPath = projectFiles.find((file) => path.extname(file) === '.xcodeproj')

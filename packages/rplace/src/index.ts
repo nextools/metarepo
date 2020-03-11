@@ -1,7 +1,7 @@
 import { Transform } from 'stream'
 import replaceString from 'replace-string'
 
-const replace = (str: string, searchValue: RegExp | string, replaceValue: string) => {
+const replace = (str: string, searchValue: RegExp | string, replaceValue: string): string => {
   if (typeof searchValue === 'string') {
     return replaceString(str, searchValue, replaceValue)
   }

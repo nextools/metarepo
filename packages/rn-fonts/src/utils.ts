@@ -1,7 +1,7 @@
 import path from 'path'
 import { readdir } from 'pifs'
 
-export const getFontPaths = async (fontsPath: string) => {
+export const getFontPaths = async (fontsPath: string): Promise<string[]> => {
   const files = await readdir(fontsPath)
 
   return files
