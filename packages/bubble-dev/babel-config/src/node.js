@@ -16,8 +16,6 @@ exports.babelConfigNodeBuild = {
         ],
       },
     ],
-    require.resolve('@babel/preset-react'),
-    require.resolve('@babel/preset-typescript'),
   ],
   plugins: [
     [
@@ -31,6 +29,20 @@ exports.babelConfigNodeBuild = {
         include: ['BABEL_ENV'],
       },
     ],
+  ],
+  overrides: [
+    {
+      test: /\.(ts|tsx)$/,
+      presets: [
+        require.resolve('@babel/preset-typescript'),
+      ],
+    },
+    {
+      test: /\.tsx$/,
+      presets: [
+        require.resolve('@babel/preset-react'),
+      ],
+    },
   ],
   shouldPrintComment: (val) => val.startsWith('#'),
   sourceMaps: false,
@@ -50,11 +62,23 @@ exports.babelConfigNodeRegister = {
         ],
       },
     ],
-    require.resolve('@babel/preset-react'),
-    require.resolve('@babel/preset-typescript'),
   ],
   plugins: [
     require.resolve('@babel/plugin-syntax-bigint'),
+  ],
+  overrides: [
+    {
+      test: /\.(ts|tsx)$/,
+      presets: [
+        require.resolve('@babel/preset-typescript'),
+      ],
+    },
+    {
+      test: /\.tsx$/,
+      presets: [
+        require.resolve('@babel/preset-react'),
+      ],
+    },
   ],
   extensions: ['.ts', '.tsx', '.js'],
 }

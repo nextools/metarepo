@@ -16,8 +16,6 @@ exports.babelConfigWebLib = {
         ],
       },
     ],
-    require.resolve('@babel/preset-react'),
-    require.resolve('@babel/preset-typescript'),
   ],
   plugins: [
     [
@@ -25,6 +23,20 @@ exports.babelConfigWebLib = {
       { regenerator: false },
     ],
     require.resolve('@babel/plugin-syntax-bigint'),
+  ],
+  overrides: [
+    {
+      test: /\.(ts|tsx)$/,
+      presets: [
+        require.resolve('@babel/preset-typescript'),
+      ],
+    },
+    {
+      test: /\.tsx$/,
+      presets: [
+        require.resolve('@babel/preset-react'),
+      ],
+    },
   ],
 }
 
@@ -46,8 +58,6 @@ exports.babelConfigWebApp = {
         ],
       },
     ],
-    require.resolve('@babel/preset-react'),
-    require.resolve('@babel/preset-typescript'),
   ],
   plugins: [
     [
@@ -55,6 +65,20 @@ exports.babelConfigWebApp = {
       { regenerator: false },
     ],
     require.resolve('@babel/plugin-syntax-bigint'),
+  ],
+  overrides: [
+    {
+      test: /\.(ts|tsx)$/,
+      presets: [
+        require.resolve('@babel/preset-typescript'),
+      ],
+    },
+    {
+      test: /\.tsx$/,
+      presets: [
+        require.resolve('@babel/preset-react'),
+      ],
+    },
   ],
   shouldPrintComment: (val) => val.startsWith(' webpackChunkName'),
 }
