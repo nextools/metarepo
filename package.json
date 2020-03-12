@@ -54,6 +54,7 @@
     "@sandbox/ui": "*",
     "@start/plugin": "*",
     "@types/node": "^13.5.0",
+    "@x-ray/ui": "*",
     "colorido": "*",
     "core-js": "^3.2.1",
     "eslint": "^6.1.0",

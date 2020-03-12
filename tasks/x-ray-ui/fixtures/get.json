@@ -1,0 +1,38 @@
+[
+  {
+    "value": "{"
+  },
+  {
+    "value": "  \"firstContentfulPaint\": 2.44248962655592,"
+  },
+  {
+    "value": "  \"firstMeaningfulPaint\": 2.4424908934061675,"
+  },
+  {
+    "value": "  \"largestContentfulPaint\": 2.44248962655592,"
+  },
+  {
+    "value": "  \"domContentLoaded\": 7.4601836763833935,"
+  },
+  {
+    "value": "  \"domInteractive\": 7.4479768786127165,"
+  },
+  {
+    "value": "  \"threadTime\": 2.4158595205781337,"
+  },
+  {
+    "value": "  \"scriptDuration\": 8.127812568788901,"
+  },
+  {
+    "value": "  \"layoutDuration\": 1.2095252300762198,"
+  },
+  {
+    "value": "  \"recalcStyleDuration\": 1.4321215373264469,"
+  },
+  {
+    "value": "  \"usedJsHeapSize\": 3.631966703258935"
+  },
+  {
+    "value": "}"
+  }
+]
