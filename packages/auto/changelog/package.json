@@ -1,0 +1,29 @@
+{
+  "name": "@auto/changelog",
+  "version": "0.0.0",
+  "description": "Generate `changelog.md` files with Auto Tools",
+  "keywords": [
+    "monorepo",
+    "workspaces",
+    "auto",
+    "commits",
+    "changelog"
+  ],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "dependencies": {
+    "@auto/core": "^0.0.0",
+    "p-all": "^2.1.0",
+    "pifs": "^1.0.0",
+    "tsfn": "^1.0.0"
+  },
+  "devDependencies": {
+    "blue-tape": "^1.0.0",
+    "memfs": "^3.1.1",
+    "mocku": "^1.0.0"
+  }
+}
