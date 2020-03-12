@@ -2,15 +2,6 @@
 # yarn lockfile v1
 
 
-"@auto/bump@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@auto/bump/-/bump-1.0.1.tgz#6f4231db6f3aca0d751a7a60409aaecdd66b5ea5"
-  integrity sha512-5BtyjR/m6hGKwKPn1a2lzuEFwS0Sk/6srzyZd7iDKmC84glpb9bDnG+T45en2f1xsRa5ZIzW8i7cJNACvcfjCw==
-  dependencies:
-    "@auto/utils" "^1.0.0"
-    "@auto/workspaces" "^1.0.0"
-    semver "^7.1.1"
-
 "@auto/fs@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@auto/fs/-/fs-1.0.0.tgz#32b30fb07660c1f87b28d8577af9fc447a899221"
@@ -21,62 +12,12 @@
     p-all "^2.0.0"
     pifs "^1.0.0"
 
-"@auto/git@^1.0.0":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@auto/git/-/git-1.0.2.tgz#fceb4d893ade6f1ab85f52e25f8094869ed23187"
-  integrity sha512-gHH6orBVEBPdBY7bErOqCWxEKj6FlkF3wEeEbgsJQ2L2O0BMXFP9U9dEzItsfY26Bu/rRl19lzyyiFgyO+ED2w==
-  dependencies:
-    "@auto/utils" "^1.0.0"
-    execa "^4.0.0"
-    prompts "^2.0.0"
-
-"@auto/log@^1.0.0":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@auto/log/-/log-1.0.2.tgz#cae06e574661b72edaae35c4a239bfb6e434010d"
-  integrity sha512-l6t+wnUJ7Mx7YZ+Jg1ND6u+VC20L3pPnHInH0VAfwGY/8oSO1QwQ65TRvIH7lJOj/9Z+3/mfh6qvLmMBmespXA==
-  dependencies:
-    "@auto/utils" "^1.0.0"
-    node-fetch "^2.6.0"
-    pifs "^1.0.0"
-    tsfn "^1.0.0"
-
-"@auto/npm@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@auto/npm/-/npm-1.0.1.tgz#a0493eeb7a9e491c921aa8c4bb471640ef114676"
-  integrity sha512-a+em5lQndOISbDWA3oOvGgl5OrCsAx7PVtMUITC37TWducDeW6KQGjPG3C0GRAaZ3R3kHGGkI7VDndJsfh6Z0g==
-  dependencies:
-    "@auto/fs" "^1.0.0"
-    "@auto/utils" "^1.0.0"
-    execa "^4.0.0"
-
-"@auto/start-plugin@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@auto/start-plugin/-/start-plugin-1.0.0.tgz#a64ca8d7fa51fd1901d399aae16d5e0b34f41224"
-  integrity sha512-bb3tbuoxYbuXwJNw1BTWt0ScG7Mh5+j01RtAPZOZqg5qWvBBx1FTQqaY7lHT46IkZKGUBIZpMqNgLh8RnYi7/Q==
-  dependencies:
-    "@auto/bump" "^1.0.0"
-    "@auto/fs" "^1.0.0"
-    "@auto/git" "^1.0.0"
-    "@auto/log" "^1.0.0"
-    "@auto/npm" "^1.0.0"
-    "@auto/utils" "^1.0.0"
-    "@start/plugin" "^1.0.0"
-    p-all "^2.1.0"
-    prompts "^2.0.0"
-
 "@auto/utils@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@auto/utils/-/utils-1.0.0.tgz#2db61518ce7e46a4a40f5dbdcb64db82d3bbd32e"
   integrity sha512-QIFFmFe4aLIdchA3PdiZITqFy+3EgO3Myi/4NpBs66KKyVMoCr3/WM8Kur5iESV5UOHLDKFQ9hKcy46kCSMnLQ==
   dependencies:
     escape-string-regexp "^2.0.0"
-
-"@auto/workspaces@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@auto/workspaces/-/workspaces-1.0.0.tgz#d5ab10be17a36d444ca7bcbd64026ddef3a659d1"
-  integrity sha512-k+2vnbLZiyWPAFjckZvDhgTSCtu6cfphPcOekp0w9G6XTAG6wfZ2O2mcWaLwpwH6vbz2WFHGNBSIEcksxX1aYw==
-  dependencies:
-    "@auto/utils" "^1.0.0"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.8.3":
   version "7.8.3"
@@ -10769,7 +10710,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prompts@^2.0.0, prompts@^2.1.0:
+prompts@^2.1.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.3.1.tgz#b63a9ce2809f106fa9ae1277c275b167af46ea05"
   integrity sha512-qIP2lQyCwYbdzcqHIUi2HAxiWixhoM9OdLCWf8txXsapC/X9YdsCoeyRIXE/GP+Q0J37Q7+XN/MFqbUa7IzXNA==
@@ -11525,9 +11466,9 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     inherits "^2.0.1"
 
 rollup@^2.0.4:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.0.6.tgz#865d6bb15a28cff3429ea1dc57236013661cb9de"
-  integrity sha512-P42IlI6a/bxh52ed8hEXXe44LcHfep2f26OZybMJPN1TTQftibvQEl3CWeOmJrzqGbFxOA000QXDWO9WJaOQpA==
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.0.5.tgz#55b8c0d62360a095e322ac7425b13ac5a97edcb4"
+  integrity sha512-bECGz+RYpw3NYCvLnABu3REUROYbnZsfQZA37ekm/KlgKt/fyxBNN4waBnlLwzx4r6jNBs56SbTn7PEgJjw3fQ==
   optionalDependencies:
     fsevents "~2.1.2"
 

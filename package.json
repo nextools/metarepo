@@ -72,13 +72,6 @@
   "start": {
     "file": "tasks/",
     "auto": {
-      "initialType": "minor",
-      "autoNamePrefix": "@",
-      "zeroBreakingChangeType": "major",
-      "npm": {
-        "publishSubDirectory": "build",
-        "access": "public"
-      },
       "shouldMakeGitTags": true,
       "shouldSendTelegramMessage": true,
       "shouldWriteChangelogFiles": true
