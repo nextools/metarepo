@@ -1,17 +1,17 @@
-import {
-  ScriptTarget,
-  ModuleResolutionKind,
-  getPreEmitDiagnostics,
-  flattenDiagnosticMessageText,
-  CompilerOptions,
-  ModuleKind,
-} from 'typescript'
+import { CompilerOptions } from 'typescript'
 import plugin, { StartFile, StartFilesProps } from '@start/plugin'
 
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
 export default (outDirRelative: string, userOptions?: CompilerOptions) =>
   plugin('typescriptGenerate', ({ logPath }) => async ({ files }: StartFilesProps) => {
-    const { createProgram } = await import('typescript')
+    const {
+      ScriptTarget,
+      ModuleResolutionKind,
+      ModuleKind,
+      createProgram,
+      getPreEmitDiagnostics,
+      flattenDiagnosticMessageText,
+    } = await import('typescript')
     const path = await import('path')
     const options = {
       allowSyntheticDefaultImports: true,
