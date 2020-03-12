@@ -1,7 +1,8 @@
 exports.babelConfigReactNative = {
   babelrc: false,
-  sourceMaps: true,
   compact: false,
+  inputSourceMap: false,
+  sourceMaps: true,
   presets: [
     require.resolve('metro-react-native-babel-preset'),
   ],
