@@ -239,6 +239,7 @@ export const runScreenshotsServer = (targetFiles: string[], options: TOptions) =
               res.end(JSON.stringify(result))
             }
           } else if (req.url === '/next') {
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             worker.once('message', async (payload: TWorkerResult) => {
               switch (payload.type) {
                 case 'NEXT': {
