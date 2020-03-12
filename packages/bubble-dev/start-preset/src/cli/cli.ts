@@ -9,6 +9,7 @@ type TTasks = {
   [k: string]: (...args: any[]) => StartPlugin<any, any>,
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 ;(async () => {
   try {
     const options = await getStartOptions()
