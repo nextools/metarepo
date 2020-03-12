@@ -1,3 +1,7 @@
+## v1.4.2
+
+* 🐞 lazy import all the possible things
+
 ## v1.4.1
 
 * 🐞 split and parallelize "build" and "dts" parts of `build` task

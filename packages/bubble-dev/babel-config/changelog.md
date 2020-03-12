@@ -1,3 +1,9 @@
+## v0.1.3
+
+* 🐞 lazy import all the possible things
+
+* 🐞 use `overrides` to split presets by file extensions
+
 ## v0.1.2
 
 * 🐞 refactor using JS instead of TS to be able to require on low-levels
