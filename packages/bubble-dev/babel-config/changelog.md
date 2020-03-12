@@ -1,3 +1,7 @@
+## v0.1.4
+
+* 🐞 tweak and explicitly set `shouldPrintComment`, `compact`, `inputSourceMap` and `sourceMaps` options
+
 ## v0.1.3
 
 * 🐞 lazy import all the possible things
