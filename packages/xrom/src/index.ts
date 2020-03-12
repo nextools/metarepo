@@ -36,9 +36,13 @@ export const runChromium = async (userOptions?: TRunChromiumOptions): Promise<st
     })
   }
 
-  await execa('docker', ['stop', options.containerName], {
+  const stopProcess = await execa('docker', ['stop', `${options.containerName}`], {
     reject: false,
   })
+
+  if (stopProcess.exitCode > 0 && !stopProcess.stderr.includes('No such container')) {
+    throw new Error(stopProcess.stderr)
+  }
 
   await execa(
     'docker',
@@ -66,10 +70,7 @@ export const runChromium = async (userOptions?: TRunChromiumOptions): Promise<st
       '--name',
       options.containerName,
       `deepsweet/chromium-headless-remote:${CHROMIUM_VERSION}`,
-    ],
-    {
-      reject: false,
-    }
+    ]
   )
 
   await waitForChromium()
