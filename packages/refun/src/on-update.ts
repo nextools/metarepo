@@ -14,6 +14,7 @@ export const onUpdate = <P extends {}> (onUpdateFn: (props: P) => Promise<void> 
   if (useEffectFnRef.current === NOOP) {
     useEffectFnRef.current = () => {
       useEffectFnRef.current = () => {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         onUpdateFn(propsRef.current)
       }
     }

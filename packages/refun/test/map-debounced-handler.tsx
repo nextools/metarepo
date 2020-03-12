@@ -25,6 +25,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -68,6 +69,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -114,6 +116,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   )
 
   /* Update Handler */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handlerSpy = createSpy(() => null)
 
@@ -149,6 +152,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   )
 
   /* First Call */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler(42, 'foo')
   })
@@ -174,6 +178,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   )
 
   /* Second Call, interrupting first one */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler(13, 'bar')
   })
@@ -202,6 +207,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -232,6 +238,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   )
 
   /* Third Call, after completing secont call timeout */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler('third call')
   })
@@ -263,6 +270,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -295,6 +303,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   )
 
   /* Timeout Tick after Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -348,6 +357,7 @@ test('mapDebouncedHandler: Invalid handler', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp/>
@@ -363,6 +373,7 @@ test('mapDebouncedHandler: Invalid handler', (t) => {
   )
 
   /* Call handler */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler()
   })
@@ -380,6 +391,7 @@ test('mapDebouncedHandler: Invalid handler', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -397,6 +409,7 @@ test('mapDebouncedHandler: Invalid handler', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -430,6 +443,7 @@ test('mapDebouncedHandler: Handler is removed during timeout period', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp handler={spy}/>
@@ -439,6 +453,7 @@ test('mapDebouncedHandler: Handler is removed during timeout period', (t) => {
   const { handler } = getProps(0)
 
   /* Call Handler */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler()
   })
@@ -464,6 +479,7 @@ test('mapDebouncedHandler: Handler is removed during timeout period', (t) => {
   )
 
   /* Remove handler before Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp/>
@@ -491,6 +507,7 @@ test('mapDebouncedHandler: Handler is removed during timeout period', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -516,6 +533,7 @@ test('mapDebouncedHandler: Handler is removed during timeout period', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

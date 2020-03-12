@@ -6,6 +6,7 @@ export const onChange = <P extends {}>(getFn: (props: P) => Promise<void> | void
   const prevPropsRef = useRef<P>(EMPTY_OBJECT)
 
   if (prevPropsRef.current === EMPTY_OBJECT || !shallowEqualByKeys(prevPropsRef.current, props, watchKeys)) {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getFn(props)
   }
 

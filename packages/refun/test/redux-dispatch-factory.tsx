@@ -18,6 +18,7 @@ test('ReduxDispatchFactory', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -33,6 +34,7 @@ test('ReduxDispatchFactory', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>

@@ -16,6 +16,7 @@ test('mapFocused: no props', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -35,6 +36,7 @@ test('mapFocused: no props', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -53,6 +55,7 @@ test('mapFocused: no props', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -68,6 +71,7 @@ test('mapFocused: no props', (t) => {
   )
 
   /* Call onFocus again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -84,6 +88,7 @@ test('mapFocused: no props', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -101,6 +106,7 @@ test('mapFocused: no props', (t) => {
   )
 
   /* Call onBlur again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -141,6 +147,7 @@ test('mapFocused: external handlers', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -174,6 +181,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -206,6 +214,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -235,6 +244,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onFocus again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -266,6 +276,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -300,6 +311,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onBlur again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -339,6 +351,7 @@ test('mapFocused: external handlers', (t) => {
   const onFocusSpy1 = createSpy(() => {})
   const onBlurSpy1 = createSpy(() => {})
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -394,6 +407,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -431,6 +445,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -470,6 +485,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Remove handlers */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -530,6 +546,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -569,6 +586,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -608,6 +626,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -667,6 +686,7 @@ test('mapFocused: external isFocused', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -686,6 +706,7 @@ test('mapFocused: external isFocused', (t) => {
   )
 
   /* Provide external value */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -705,6 +726,7 @@ test('mapFocused: external isFocused', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -720,6 +742,7 @@ test('mapFocused: external isFocused', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })

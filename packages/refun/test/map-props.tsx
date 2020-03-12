@@ -18,6 +18,7 @@ test('mapProps', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -43,6 +44,7 @@ test('mapProps', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -70,6 +72,7 @@ test('mapProps', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

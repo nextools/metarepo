@@ -16,6 +16,7 @@ test('mapPressed: no props', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -35,6 +36,7 @@ test('mapPressed: no props', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -53,6 +55,7 @@ test('mapPressed: no props', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -68,6 +71,7 @@ test('mapPressed: no props', (t) => {
   )
 
   /* Call onPressIn again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -84,6 +88,7 @@ test('mapPressed: no props', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -101,6 +106,7 @@ test('mapPressed: no props', (t) => {
   )
 
   /* Call onPressOut again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -141,6 +147,7 @@ test('mapPressed: external handlers', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -174,6 +181,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -206,6 +214,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -235,6 +244,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressIn again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -266,6 +276,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -300,6 +311,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressOut again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -339,6 +351,7 @@ test('mapPressed: external handlers', (t) => {
   const onPressInSpy1 = createSpy(() => {})
   const onPressOutSpy1 = createSpy(() => {})
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -394,6 +407,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -431,6 +445,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -470,6 +485,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Remove handlers */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -530,6 +546,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -569,6 +586,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -608,6 +626,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -667,6 +686,7 @@ test('mapPressed: external isPressed', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -686,6 +706,7 @@ test('mapPressed: external isPressed', (t) => {
   )
 
   /* Provide exteranal value */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -705,6 +726,7 @@ test('mapPressed: external isPressed', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -720,6 +742,7 @@ test('mapPressed: external isPressed', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })

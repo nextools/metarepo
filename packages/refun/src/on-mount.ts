@@ -7,6 +7,7 @@ export const onMount = <P extends {}> (onMountFn: (props: P) => Promise<void> | 
 
   if (onMountRef.current === NOOP) {
     onMountRef.current = () => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       onMountFn(propsRef.current)
     }
   }

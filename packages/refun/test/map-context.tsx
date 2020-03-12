@@ -15,6 +15,7 @@ test('mapContext', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <Context.Provider value={{ ctxA: 'foo', ctxB: 42 }}>
@@ -32,6 +33,7 @@ test('mapContext', (t) => {
   )
 
   /* Update Context */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <Context.Provider value={{ ctxA: 'bar', ctxB: 1337 }}>

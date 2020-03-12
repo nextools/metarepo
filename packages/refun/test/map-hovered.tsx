@@ -16,6 +16,7 @@ test('mapHovered: no props', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -35,6 +36,7 @@ test('mapHovered: no props', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -53,6 +55,7 @@ test('mapHovered: no props', (t) => {
   )
 
   /* Call onPointerEnter */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerEnter()
   })
@@ -68,6 +71,7 @@ test('mapHovered: no props', (t) => {
   )
 
   /* Call onPointerEnter again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerEnter()
   })
@@ -84,6 +88,7 @@ test('mapHovered: no props', (t) => {
   )
 
   /* Call onPointerLeave */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerLeave()
   })
@@ -101,6 +106,7 @@ test('mapHovered: no props', (t) => {
   )
 
   /* Call onPointerLeave again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerLeave()
   })
@@ -141,6 +147,7 @@ test('mapHovered: external handlers', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -174,6 +181,7 @@ test('mapHovered: external handlers', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -206,6 +214,7 @@ test('mapHovered: external handlers', (t) => {
   )
 
   /* Call onPointerEnter */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerEnter()
   })
@@ -235,6 +244,7 @@ test('mapHovered: external handlers', (t) => {
   )
 
   /* Call onPointerEnter again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerEnter()
   })
@@ -266,6 +276,7 @@ test('mapHovered: external handlers', (t) => {
   )
 
   /* Call onPointerLeave */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerLeave()
   })
@@ -300,6 +311,7 @@ test('mapHovered: external handlers', (t) => {
   )
 
   /* Call onPointerLeave again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerLeave()
   })
@@ -339,6 +351,7 @@ test('mapHovered: external handlers', (t) => {
   const onPointerEnterSpy1 = createSpy(() => {})
   const onPointerLeaveSpy1 = createSpy(() => {})
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -394,6 +407,7 @@ test('mapHovered: external handlers', (t) => {
   )
 
   /* Call onPointerEnter */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerEnter()
   })
@@ -431,6 +445,7 @@ test('mapHovered: external handlers', (t) => {
   )
 
   /* Call onPointerLeave */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerLeave()
   })
@@ -470,6 +485,7 @@ test('mapHovered: external handlers', (t) => {
   )
 
   /* Remove handlers */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -530,6 +546,7 @@ test('mapHovered: external handlers', (t) => {
   )
 
   /* Call onPointerEnter */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerEnter()
   })
@@ -569,6 +586,7 @@ test('mapHovered: external handlers', (t) => {
   )
 
   /* Call onPointerLeave */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerLeave()
   })
@@ -608,6 +626,7 @@ test('mapHovered: external handlers', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -667,6 +686,7 @@ test('mapHovered: external isHovered', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -686,6 +706,7 @@ test('mapHovered: external isHovered', (t) => {
   )
 
   /* Provide exteranal value */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -705,6 +726,7 @@ test('mapHovered: external isHovered', (t) => {
   )
 
   /* Call onPointerEnter */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerEnter()
   })
@@ -720,6 +742,7 @@ test('mapHovered: external isHovered', (t) => {
   )
 
   /* Call onPointerLeave */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPointerLeave()
   })

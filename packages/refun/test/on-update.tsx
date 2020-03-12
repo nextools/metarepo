@@ -16,6 +16,7 @@ test('onUpdate: sync function, empty watch keys', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -37,6 +38,7 @@ test('onUpdate: sync function, empty watch keys', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -59,6 +61,7 @@ test('onUpdate: sync function, empty watch keys', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -87,9 +90,10 @@ test('onUpdate: sync function, watch keys', (t) => {
     onUpdate(updateSpy, ['foo'])
   )(compSpy)
 
-  /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  /* Mount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -114,6 +118,7 @@ test('onUpdate: sync function, watch keys', (t) => {
   )
 
   /* Update not watched prop */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -139,6 +144,7 @@ test('onUpdate: sync function, watch keys', (t) => {
   )
 
   /* Update watched prop */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -167,6 +173,7 @@ test('onUpdate: sync function, watch keys', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -197,9 +204,10 @@ test('onUpdate: async function, empty watch keys', (t) => {
     onUpdate(updateSpy, [])
   )(compSpy)
 
-  /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  /* Mount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -223,6 +231,7 @@ test('onUpdate: async function, empty watch keys', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -245,6 +254,7 @@ test('onUpdate: async function, empty watch keys', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -273,9 +283,10 @@ test('onUpdate: async function, watch keys', (t) => {
     onUpdate(updateSpy, ['foo'])
   )(compSpy)
 
-  /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  /* Mount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -300,6 +311,7 @@ test('onUpdate: async function, watch keys', (t) => {
   )
 
   /* Update not watched prop */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="foo" bar="baz"/>
@@ -322,6 +334,7 @@ test('onUpdate: async function, watch keys', (t) => {
   )
 
   /* Update watched prop */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar" bar="baz"/>
@@ -347,6 +360,7 @@ test('onUpdate: async function, watch keys', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

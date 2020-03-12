@@ -19,6 +19,7 @@ test('mapWithPropsMemo', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -44,6 +45,7 @@ test('mapWithPropsMemo', (t) => {
   )
 
   /* Update unwatched props */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo={3}/>
@@ -68,6 +70,7 @@ test('mapWithPropsMemo', (t) => {
   )
 
   /* Update watched props */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -97,6 +100,7 @@ test('mapWithPropsMemo', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

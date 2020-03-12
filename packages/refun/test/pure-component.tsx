@@ -12,6 +12,7 @@ test('pureComponent: props', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -34,6 +35,7 @@ test('pureComponent: props', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -59,6 +61,7 @@ test('pureComponent: props', (t) => {
   )
 
   /* Pure Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -85,6 +88,7 @@ test('pureComponent: props', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -113,6 +117,7 @@ test('pureComponent: multiple map functions', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp initial={2}/>
@@ -128,6 +133,7 @@ test('pureComponent: multiple map functions', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp initial={4}/>
@@ -144,6 +150,7 @@ test('pureComponent: multiple map functions', (t) => {
   )
 
   /* Pure Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp initial={4}/>

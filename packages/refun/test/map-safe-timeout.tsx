@@ -22,6 +22,7 @@ test('mapSafeTimeout', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -39,6 +40,7 @@ test('mapSafeTimeout', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -57,6 +59,7 @@ test('mapSafeTimeout', (t) => {
   /* Call setTimeout */
   let unsub: any
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     setSafeTimeout(timeoutSpy1, 100)
     setSafeTimeout(timeoutSpy2, 70)
@@ -98,6 +101,7 @@ test('mapSafeTimeout', (t) => {
   )
 
   /* Cancel setTimeout */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     unsub()
   })
@@ -111,6 +115,7 @@ test('mapSafeTimeout', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -137,6 +142,7 @@ test('mapSafeTimeout', (t) => {
     'Timeout Tick: should not call timeoutSpy3'
   )
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     /* Call setTimeout before Unmount */
     setSafeTimeout(timeoutSpy1, 30)
@@ -146,6 +152,7 @@ test('mapSafeTimeout', (t) => {
   })
 
   /* Call setTimeout after Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     setSafeTimeout(timeoutSpy2, 80)
   })
@@ -171,6 +178,7 @@ test('mapSafeTimeout', (t) => {
   )
 
   /* Timeout Tick after Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })

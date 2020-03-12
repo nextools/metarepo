@@ -22,6 +22,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -39,6 +40,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -54,9 +56,10 @@ test('mapSafeRequestAnimationFrame', (t) => {
     'Update: should pass props'
   )
 
-  /* Call setTimeout */
   let unsub: any
 
+  /* Call setTimeout */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     raf(timeoutSpy1)
     raf(timeoutSpy2)
@@ -98,6 +101,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   )
 
   /* Cancel setTimeout */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     unsub()
   })
@@ -111,6 +115,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -137,6 +142,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
     'Timeout Tick: should not call timeoutSpy3'
   )
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     /* Call setTimeout before Unmount */
     raf(timeoutSpy1)
@@ -146,6 +152,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   })
 
   /* Call setTimeout after Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     raf(timeoutSpy2)
   })
@@ -171,6 +178,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   )
 
   /* Timeout Tick after Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })

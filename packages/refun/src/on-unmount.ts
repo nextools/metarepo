@@ -7,6 +7,7 @@ export const onUnmount = <P extends {}> (onUnmountFn: (props: P) => Promise<void
 
   if (onUnmountRef.current === NOOP) {
     const unmountFn = () => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       onUnmountFn(propsRef.current)
     }
 

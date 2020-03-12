@@ -16,6 +16,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -35,6 +36,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -53,6 +55,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -67,6 +70,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -81,6 +85,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -95,6 +100,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -129,6 +135,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -148,6 +155,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -166,6 +174,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -181,6 +190,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -196,6 +206,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -212,6 +223,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -252,6 +264,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -299,6 +312,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -345,6 +359,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -384,6 +399,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -425,6 +441,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -469,6 +486,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -520,6 +538,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   const onPressInSpy1 = createSpy(() => {})
   const onPressOutSpy1 = createSpy(() => {})
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -599,6 +618,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -672,6 +692,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -747,6 +768,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -824,6 +846,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -903,6 +926,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Remove handlers */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -987,6 +1011,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -1067,6 +1092,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -1147,6 +1173,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -1227,6 +1254,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -1307,6 +1335,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -1396,6 +1425,7 @@ test('mapKeyboardFocused: external isKeyboardFocused', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -1415,6 +1445,7 @@ test('mapKeyboardFocused: external isKeyboardFocused', (t) => {
   )
 
   /* Provide external value */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -1434,6 +1465,7 @@ test('mapKeyboardFocused: external isKeyboardFocused', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -1449,6 +1481,7 @@ test('mapKeyboardFocused: external isKeyboardFocused', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
