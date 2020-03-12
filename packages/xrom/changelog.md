@@ -1,3 +1,7 @@
+## v1.0.4
+
+* 🐞 handle Docker errors more properly
+
 ## v1.0.3
 
 * 🐞 switch from deprecated `request` to `node-fetch` dependency
