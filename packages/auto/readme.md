@@ -1,10 +1,303 @@
 # auto
 
-Set of helpers for managing and developing (mono)repos.
+Set of helpers for monorepos based on [Yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) to automate:
 
-## Overview
+* customizable conventional Git commits
+* interactive CLI prompt to make commits and publish packages
+* managing cross-dependencies and syncing semver version ranges across the monorepo
+* building and preparing packages
+* making Git tags
+* making GitHub Releases
+* publishing to NPM
+* creating and updating `changelog.md`
+* sending messages to Slack
+* sending messages to Telegram
+* …any other feature that one can easily implement
 
-Let's say that there is the following monorepo structure using [Yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/):
+TOC:
+
+* [Conventional Git commits](#conventional-git-commits)
+* [Config](#config)
+  * [`prefixes`](#prefixes)
+  * [`bump`](#bump)
+  * [`npm`](#npm)
+* [Hooks](#hooks)
+* [Core API](#core-api)
+  * [`auto`](#auto-1)
+  * [`writeDependenciesCommit`](#writedependenciescommit)
+  * [`writePublishCommit`](#writepublishcommit)
+  * [`publishPackages`](#publishpackages)
+  * [`writePublishTags`](#writepublishtags)
+  * [`pushCommitsAndTags`](#pushcommitsandtags)
+* [Example](#example) 
+* [Additional functionality](#additional-functionality)
+    * [`@auto/commit-prompt`](#autocommit-prompt)
+    * [`@auto/tag`](#autotag)
+    * [`@auto/github`](#autogithub)
+    * [`@auto/changelog`](#autochangelog)
+    * [`@auto/slack`](#autoslack)
+    * [`@auto/telegram`](#autotelegram)
+
+## Conventional Git commits
+
+`auto` parses Git log to get the data about the package releases. Suchwise Git commit has to have a certain shape:
+
+```
+<prefix> <packageName>[, <packageName>]: commit message
+```
+
+Where:
+
+* `prefix` – any arbitrary string one would like to use as a marker of particular change type, for example `🐞` for bugfix or just `[fix]`
+* `packageName` – one or many package names (separated with `, ` delimiter) affected by the change in this commit; `@`-symbol for NPM scoped packages should be omitted
+
+Examples:
+
+```
+🐞 foo, bar: fix issue
+```
+
+```
+[feat] scope/baz: add feature
+```
+
+```
+[boom] foo: breaking changes
+```
+
+## Config
+
+`auto` stores its config in the root `package.json` of the monorepo under the `auto` key. 
+
+### `prefixes`
+
+The following prefixes are _required_, although one can defined any other ones:
+
+```json
+{
+  "auto": {
+    "prefixes": {
+      "major": "💥",
+      "minor": "🌱",
+      "patch": "🐞",
+      "initial": "🐣",
+      "dependencies": "♻️",
+      "publish": "📦"
+    }
+  }
+}
+```
+
+* `major` – prefix for a commit that contains breaking changes, according to [semver](https://semver.org/)
+* `minor` – … new feature, according to [semver](https://semver.org/)
+* `patch` – … bugfix, according to [semver](https://semver.org/)
+* `initial` – … new package initialization: it must be `0.0.0` version in its own `package.json` and `^0.0.0` range in its dependents `package.json`
+* `dependencies` – … package dependents semver range updates, `auto` uses this prefix automatically
+* `publish` – … package release version update, `auto` uses this prefix automatically
+
+As mentioned earlier, emojis are being used here only as an example, it's free to use any strings
+
+### `bump`
+
+General config to tweak `auto` behavior:
+
+```json
+{
+  "auto": {
+    "bump": {
+      "initialType": "major",
+      "zeroBreakingChangeType": "major",
+      "shouldAlwaysBumpDependents": false,
+    }
+  }
+}
+```
+
+Where:
+
+* `initialType` – `minor` by default – bump `patch | minor | major` type that should be used for `initial` prefix, for example one can control whether to start a package with "zero major semver", or to go with `v1` right away
+* `zeroBreakingChangeType` – `minor` by default – bump type that should be used for `major` prefix while package is in "zero major semver" state, i.e. either to bump `0.1.0` to `0.2.0` or to `1.0.0`
+* `shouldAlwaysBumpDependents` – `false` by default – makes package to always update dependents' version ranges and bump dependents, even if version range of a certain dependent satisfies package new release version; useful for monorepos where one would like to always expclicitly propagate and publish every patch and feature across all the packages
+
+It's possible to override any `bump` options in particular `package.json` allowing some packages to behave differently from the global monorepo config.
+
+### `npm`
+
+Config to control publishing to NPM phase:
+
+```json
+{
+  "auto": {
+    "registry": "https://",
+    "publishSubDirectory": "dir",
+    "access": "restricted"
+  }
+}
+```
+
+Where:
+
+* `registry` – `https://registry.npmjs.com/` by default – NPM compilant registry URL
+* `publishSubDirectory` – is a sub path which will be added to package directory during Publish phase, can be omitted
+* `access` – `restricted` by default – NPM [`access`](https://docs.npmjs.com/misc/config#access)
+
+## Hooks
+
+`auto` provides a lot of hooks which are called in particular order during the process. These hooks can be used to either prevent certain phases, or to do something during them.
+
+Hook is a function with the following signature:
+
+```ts
+type THookProps = {
+  config: TAutoConfig,
+  prefixes: TRequiredPrefixes,
+  packages: TPackageRelease[],
+}
+
+type THook = (props: THookProps) => Promise<void>
+```
+
+Hook gets special props – internal information to work with – and should return a promise. `auto` will wait for the promise to resolve and then continue further through the hooks flow. If promise rejects then `auto` stops the whole process to avoid any further wrong steps such as incorrent Git commits or even NPM publish.
+
+The following hooks are supported:
+
+```ts
+type THooks = {
+  preDepsCommit?: THook | false,
+  depsCommit?: THook | false,
+  postDepsCommit?: THook | false,
+  prePublishCommit?: THook | false,
+  publishCommit?: THook | false,
+  postPublishCommit?: THook | false,
+  preBuild?: THook | false,
+  build?: THook | false,
+  postBuild?: THook | false,
+  prePublish?: THook | false,
+  publish?: THook | false,
+  postPublish?: THook | false,
+  prePush?: THook | false,
+  push?: THook | false,
+  postPush?: THook | false,
+}
+```
+
+* each phase has its main, `pre` and `post` hook
+* if phase's main hook is not provided, `auto` will make default actions except the build phase, which is purely user responsibility
+* to completely skip certain phase, including default behavior, provide `false` value as a phase's main hook
+* `depsCommit` and `publishCommit` add all modified/deleted files (`git add -u`) to the commit, and it's possible to use `pre` hooks to modify and/or stage more files which will be commited during the main phase
+
+## Core API
+
+`@auto/core` entrypoint exports the following functions:
+
+```ts
+import {
+  auto,
+  writeDependenciesCommit,
+  writePublishCommit,
+  publishPackages,
+  pushCommitsAndTags,
+} from '@auto/core'
+```
+
+Default usage example would look like the following:
+
+```ts
+import { auto } from '@auto/core'
+
+await auto({
+  build: ({ packages }) => {
+    // build packages
+  },
+  prePublishCommit: ({ packages }) => {
+    // write changelogs
+    // files will be commited during publishCommit phase
+  },
+  prePublish: ({ packages }) => {
+    // prepare packages to be published
+  },
+  prePush: ({ packages }) => {
+    // make git tags
+    // tags will be pushed during push phase
+  },
+  postPush: ({ packages }) => {
+    // make Github releases
+    // publish message to Slack
+  }
+})
+```
+
+Or some kind of a "test" publish, for example to a local [Verdaccio](https://github.com/verdaccio/verdaccio) NPM registry:
+
+```js
+import { auto, publishPackages } from '@auto/core'
+
+await auto({
+  // don't make deps commit
+  depsCommit: false,    
+  // don't make publish commit
+  publishCommit: false, 
+  // don't push to remote
+  push: false,          
+  build: ({ packages }) => {
+    // build your packages
+  },
+  prepublish: ({ packages }) => {
+    // prepare packages to publish
+  },
+  // override main `publish` hook
+  publish: publishPackages({
+    registry: 'http://localhost:4873',
+  })
+})
+```
+
+### `auto`
+
+Main function which it iterates over hooks.
+
+```ts
+const auto: (hooks: TAutoHooks): Promise<void>
+```
+
+### `writeDependenciesCommit`
+
+Hook factory that writes dependencies commit, assigned to `depsCommit` hook by default.
+
+```ts
+const writeDependenciesCommit: () => THook
+```
+
+### `writePublishCommit`
+
+Hook factory that writes publish commit, assigned to `publishCommit` hook by default.
+
+```ts
+const writePublishCommit: () => THook
+```
+
+### `publishPackages`
+
+Hook factory that publishes to NPM, assigned to `publish` hook by default.
+
+```ts
+const publishPackages: (publishConfig: {
+  registry?: string,
+  onError?: (e: Error) => void
+}) => THook
+```
+
+### `pushCommitsAndTags`
+
+Hook factory that pushes Git commits and tags, assigned to `push` hook by default.
+
+```ts
+const publishPackages: () => THook
+```
+
+## Example
+
+Let's say there is the following monorepo structure:
 
 ```
 packages/
@@ -12,6 +305,33 @@ packages/
 ├── bar/
 └── baz/
 ```
+
+With such a root `package.json` config for `auto`:
+
+```json
+{
+  "workspaces": {
+    "packages/*"
+  },
+  "auto": {
+    "prefixes": {
+      "major": "💥",
+      "minor": "🌱",
+      "patch": "🐞",
+      "publish": "📦",
+      "dependencies": "♻️",
+      "initial": "🐣"
+    },
+    "bump": {
+      "initialType": "minor",
+      "zeroBreakingChangeType": "minor",
+      "shouldAlwaysBumpDependents": false, 
+    }
+  }
+}
+```
+
+And such packages dependency tree:
 
 ```json
 {
@@ -47,86 +367,101 @@ And the following Git commits:
 🐞 baz: some fix
 ```
 
-By running the following code there will be actions made automatically:
+And `auto` API has been invoked in all-defaults mode:
 
-* get workspaces packages
+```ts
+import { auto } from '@auto/core'
+
+await auto()
+```
+
+`auto` will:
+
+* gather workspace packages
 * parse Git commits and collect all the necessary "bumps" for certain packages, including:
   * patch for `@scope/baz`: `0.1.1`
   * minor for `@scope/bar`: `0.2.0`
   * minor for `@scope/foo` because of dependency on `@scope/bar`: `0.2.0`
-  * dependency range update of `@scope/bar` for `@scope/foo`
-  * dev dependency range update of `@scope/baz` for `@scope/foo`
+  * dependency range update of `@scope/bar` for `@scope/foo`, from `^0.1.0` to `^0.2.0`
+  * dev dependency range update of `@scope/baz` for `@scope/foo`, from `^0.1.0` to `^0.1.1`
+* interactively prompt to approve/discard all the above information
 * for each affected package:
-  * write dependencies bumps to `package.json` file
-  * make dependencies commit
+  * write new dependency ranges to `package.json` file
+  * make `♻️ upgrade dependencies` Git commit
   * write bumped version to `package.json` file
-  * make bumped version commit
-  * make bumped version tag
-  * publish to NPM
-* push commits and tags
-* make GitHub release with markdown for each published package
+  * make `📦 scope/foo, scope/bar, scope/baz: release` Git commit
+  * publish `@scope/foo`, `@scope/bar` and `@scope/baz` to NPM
+  * Git push everything
 
-```js
-(async () => {
-  const { getWorkspacesPackages } = await import('@auto/fs')
-  const { getWorkspacesBumps, pushCommitsAndTags } = await import('@auto/git')
-  const { getWorkspacesPackagesBumps } = await import('@auto/bump')
-  const { writePackageDependencies, writeWorkspacesPackageVersion } = await import('@auto/fs')
-  const { writeWorkspacesDependenciesCommit, writeWorkspacesPublishCommit, writeWorkspacesPublishTag } = await import('@auto/git')
-  const { getWorkspacesLog, makeWorkspacesGithubReleases } = await import('@auto/log')
+## Additional functionality
 
-  const prefixes = {
-    required: {
-      major: { title: 'Breaking change', value: '💥' },
-      minor: { title: 'New feature', value: '🌱' },
-      patch: { title: 'Bugfix', value: '🐞' },
-      publish: { title: 'New version', value: '📦' },
-      dependencies: { title: 'Dependencies', value: '♻️' },
-      initial: { title: 'Initial', value: '🐣' }
-    },
-    custom: [
-      { title: 'Docs', value: '📝' },
-      { title: 'Refactor', value: '🛠' },
-      { title: 'WIP', value: '🚧' }
-    ]
-  }
-  const bumpOptions = { zeroBreakingChangeType: 'minor' }
-  const workspacesOptions = { autoNamePrefix: '@scope/' }
-  const gitOptions = { initialType: 'minor' }
-  const githubOptions = {
-    username: 'username',
-    repo: 'repo',
-    token: process.env.MY_GITHUB_RELEASES_TOKEN
-  }
+`@auto` NPM scope also contains some additional packages:
 
-  const packages = await getWorkspacesPackages(workspacesOptions)
-  const gitBumps = await getWorkspacesBumps(packages, prefixes, gitOptions)
-  const packagesBumps = await getWorkspacesPackagesBumps(packages, gitBumps, bumpOptions, workspacesOptions)
-  const logs = getWorkspacesLog(packagesBumps, gitBumps)
+### `@auto/commit-prompt`
 
-  for (const bump of packagesBumps) {
-    console.log(`${bump.name}:`)
+Interactive prompt to make commits using `prefixes` defined in `auto` config.
 
-    await writePackageDependencies(bump, workspacesOptions)
-    console.log('write package dependencies')
+```ts
+const makeCommit: () => Promise<void>
+```
 
-    await writeWorkspacesDependenciesCommit(bump, prefixes)
-    console.log('write dependencies commit')
+### `@auto/tag`
 
-    await writeWorkspacesPackageVersion(bump)
-    console.log('write package version')
+Hook to make per-release Git tags.
 
-    await writeWorkspacesPublishCommit(bump, prefixes)
-    console.log('write publish commit')
+```ts
+const writePublishTags: THook
+```
 
-    await writeWorkspacesPublishTag(bump)
-    console.log('write publish tag')
+### `@auto/github`
 
-    await publishWorkspacesPackage(bump)
-    console.log('publish to NPM')
-  }
+Hook factory to make [GitHub releases](https://help.github.com/en/github/administering-a-repository/about-releases) with necessary changelog.
 
-  await pushCommitsAndTags()
-  await makeWorkspacesGithubReleases(logs, prefixes, githubOptions)
-})()
+```ts
+type TGithubConfig = {
+  token: string,
+  username: string,
+  repo: string,
+}
+
+const makeGithubReleases: (githubConfig: TGithubConfig) => THook
+```
+
+### `@auto/changelog`
+
+Hook factory to create and update per-package `changelog.md` file with necessary changes.
+
+```ts
+const writeChangelogFiles: THook
+```
+
+### `@auto/slack`
+
+Hook factory send [Slack](https://slack.com/) message with necessary changelog.
+
+```ts
+type TSlackConfig = {
+  token: string,
+  channel: string,
+  username: string,
+  iconEmoji: string,
+  colors: {
+    [k in 'major' | 'minor' | 'patch' | 'initial']: string
+  },
+}
+
+const sendSlackMessage: (slackConfig: TSlackConfig) => THook
+```
+
+### `@auto/telegram`
+
+Hook factory to send [Telegram](https://telegram.org/) message with necessary changelog.
+
+```ts
+type TTelegramConfig = {
+  token: string,
+  chatId: string,
+}
+
+const sendTelegramMessage: (telegramConfig: TTelegramConfig) => THook
 ```
