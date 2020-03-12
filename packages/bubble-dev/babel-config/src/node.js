@@ -4,6 +4,9 @@ exports.TARGET_NODE_VERSION = TARGET_NODE_VERSION
 
 exports.babelConfigNodeBuild = {
   babelrc: false,
+  compact: false,
+  inputSourceMap: false,
+  sourceMaps: false,
   presets: [
     [
       require.resolve('@babel/preset-env'),
@@ -45,11 +48,13 @@ exports.babelConfigNodeBuild = {
     },
   ],
   shouldPrintComment: (val) => val.startsWith('#'),
-  sourceMaps: false,
 }
 
 exports.babelConfigNodeRegister = {
   babelrc: false,
+  compact: false,
+  inputSourceMap: false,
+  sourceMaps: 'inline',
   presets: [
     [
       require.resolve('@babel/preset-env'),
@@ -81,4 +86,5 @@ exports.babelConfigNodeRegister = {
     },
   ],
   extensions: ['.ts', '.tsx', '.js'],
+  shouldPrintComment: (val) => val.startsWith('#'),
 }

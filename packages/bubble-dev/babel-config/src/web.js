@@ -2,7 +2,9 @@ const { browsersList } = require('@bubble-dev/browsers-list')
 
 exports.babelConfigWebLib = {
   babelrc: false,
+  inputSourceMap: false,
   sourceMaps: true,
+  compact: false,
   presets: [
     [
       require.resolve('@babel/preset-env'),
@@ -38,11 +40,14 @@ exports.babelConfigWebLib = {
       ],
     },
   ],
+  shouldPrintComment: (val) => val.startsWith('#'),
 }
 
 exports.babelConfigWebApp = {
   babelrc: false,
+  inputSourceMap: false,
   sourceMaps: true,
+  compact: false,
   presets: [
     [
       require.resolve('@babel/preset-env'),
