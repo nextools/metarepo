@@ -35,8 +35,8 @@ export const Header = pureComponent(
     componentName: isUndefined(Component) ? '' : getComponentName(Component),
   }), ['Component']),
   mapHandlers({
-    onCopyUrl: ({ sendNotification }) => () => {
-      navigator.clipboard.writeText(globalObject.location.href)
+    onCopyUrl: ({ sendNotification }) => async () => {
+      await navigator.clipboard.writeText(globalObject.location.href)
       sendNotification('Copied Url')
     },
   })

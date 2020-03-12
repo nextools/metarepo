@@ -23,9 +23,9 @@ export const CopyImportsButton = pureComponent(
     componentProps,
   }), ['Component', 'componentProps']),
   mapHandlers({
-    onCopyImports: ({ Component, componentProps, importPackageName, sendNotification }) => () => {
+    onCopyImports: ({ Component, componentProps, importPackageName, sendNotification }) => async () => {
       if (isDefined(Component) && isDefined(componentProps)) {
-        navigator.clipboard.writeText(
+        await navigator.clipboard.writeText(
           serializeImportsToText(Component, componentProps, importPackageName)
         )
         sendNotification('Copied to clipboard')
