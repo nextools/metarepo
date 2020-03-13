@@ -1,0 +1,26 @@
+{
+  "name": "@bubble-dev/remark-lint-preset",
+  "version": "0.0.0",
+  "description": "remark-lint preset",
+  "keywords": [],
+  "main": "src/index.js",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "remark-lint": "^6.0.5",
+    "remark-lint-blockquote-indentation": "^1.0.3",
+    "remark-lint-checkbox-character-style": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "blue-tape": "^1.0.0",
+    "unified": "^8.4.2"
+  }
+}

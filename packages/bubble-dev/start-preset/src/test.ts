@@ -7,6 +7,7 @@ import env from '@start/plugin-env'
 import typescriptCheck from '@start/plugin-lib-typescript-check'
 import codecov from '@start/plugin-lib-codecov'
 import tape from '@start/plugin-lib-tape'
+import remarkLint from '@start/plugin-lib-remark-lint'
 import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
 import { TPackageJson } from 'fixdeps'
 import xRaySnapshots from './plugins/snapshots'
@@ -225,6 +226,16 @@ export const lint = async () => {
     }),
     typescriptCheck(),
     checkDeps()
+  )
+}
+
+export const lintmd = async (packageDir: string = '**') => {
+  const preset = await import('@bubble-dev/remark-lint-preset')
+
+  return sequence(
+    find(`packages/${packageDir}/*.md`),
+    read,
+    remarkLint(preset)
   )
 }
 
