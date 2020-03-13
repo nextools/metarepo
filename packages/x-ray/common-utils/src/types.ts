@@ -14,7 +14,7 @@ export type TOptions = {
 export type TSyntxLines = readonly(readonly TLineElement[])[]
 
 export type TItem = {
-  serializedElement: TSyntxLines,
+  source?: TSyntxLines,
   width: number,
   height: number,
 }

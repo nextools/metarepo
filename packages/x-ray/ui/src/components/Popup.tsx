@@ -4,6 +4,7 @@ import { Animation, easeInOutCubic } from '@primitives/animation'
 import { Background } from '@primitives/background'
 import { Button } from '@primitives/button'
 import { Size } from '@primitives/size'
+import { objectHas } from 'tsfn'
 import { mapStoreDispatch } from '../store'
 import { TRect, TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
 import { actionDeselect, actionDiscardItem } from '../actions'
@@ -111,18 +112,20 @@ export const Popup = component(
   onMount(({ setState }) => {
     setState(STATE_OPENING)
   }),
-  mapWithProps(({ popupWidth, popupHeight }) => {
+  mapWithProps(({ popupWidth, popupHeight, item }) => {
     const halfWidth = popupWidth / 2
+    const hasSourceCode = objectHas(item, 'source')
 
     return ({
       sourceCodeWidth: halfWidth - POPUP_SPACING * 2,
       sourceCodeHeight: popupHeight - DISCARD_BUTTON_HEIGHT - POPUP_SPACING * 2,
       sourceCodeLeft: POPUP_SPACING,
       sourceCodeTop: DISCARD_BUTTON_HEIGHT + POPUP_SPACING,
-      previewWidth: halfWidth - POPUP_SPACING * 2,
+      previewWidth: hasSourceCode ? halfWidth - POPUP_SPACING * 2 : popupWidth - POPUP_SPACING * 2,
       previewHeight: popupHeight - DISCARD_BUTTON_HEIGHT - POPUP_SPACING * 2,
-      previewLeft: halfWidth + POPUP_SPACING,
+      previewLeft: hasSourceCode ? halfWidth + POPUP_SPACING : POPUP_SPACING,
       previewTop: DISCARD_BUTTON_HEIGHT + POPUP_SPACING,
+      hasSourceCode,
     })
   }),
   mapState('discardTextWidth', 'setDiscardTextWidth', () => 0, [])
@@ -152,6 +155,7 @@ export const Popup = component(
   setDiscardTextWidth,
   shouldNotAnimate,
   isDiscarded,
+  hasSourceCode,
   onDiscardToggle,
   onBackdropPress,
   onAnimationEnd,
@@ -209,13 +213,15 @@ export const Popup = component(
                     </Block>
                   </Button>
                 </Block>
-                <SourceCode
-                  top={sourceCodeTop}
-                  left={sourceCodeLeft}
-                  width={sourceCodeWidth}
-                  height={sourceCodeHeight}
-                  item={item}
-                />
+                {hasSourceCode && (
+                  <SourceCode
+                    top={sourceCodeTop}
+                    left={sourceCodeLeft}
+                    width={sourceCodeWidth}
+                    height={sourceCodeHeight}
+                    source={item.source!}
+                  />
+                )}
                 {isScreenshotGridItem(type, item) && (
                   <ScreenshotPreview
                     top={previewTop}

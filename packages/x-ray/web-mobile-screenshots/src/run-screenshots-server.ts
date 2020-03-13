@@ -72,7 +72,7 @@ export const runScreenshotsServer = (targetFiles: string[], options: TOptions) =
           targetResult.old[itemName] = {
             width: dpr(width),
             height: dpr(height),
-            serializedElement: meta as TSyntxLines,
+            source: meta as TSyntxLines,
           }
           targetResultData.old[itemName] = data
 
@@ -144,12 +144,12 @@ export const runScreenshotsServer = (targetFiles: string[], options: TOptions) =
                     }
                     case 'DIFF': {
                       targetResult.old[currentItemData.id] = {
-                        serializedElement: currentItemData.serializedElement,
+                        source: currentItemData.serializedElement,
                         width: dpr(action.old.width),
                         height: dpr(action.old.height),
                       }
                       targetResult.new[currentItemData.id] = {
-                        serializedElement: currentItemData.serializedElement,
+                        source: currentItemData.serializedElement,
                         width: dpr(action.new.width),
                         height: dpr(action.new.height),
                       }
@@ -164,7 +164,7 @@ export const runScreenshotsServer = (targetFiles: string[], options: TOptions) =
                     }
                     case 'NEW': {
                       targetResult.new[currentItemData.id] = {
-                        serializedElement: currentItemData.serializedElement,
+                        source: currentItemData.serializedElement,
                         width: dpr(action.width),
                         height: dpr(action.height),
                       }

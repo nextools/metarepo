@@ -161,7 +161,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer): Promise
                       const data = resultData[file].new[id].map(({ value }) => value).join('\n')
 
                       tar.write(id, {
-                        meta: result[file].new[id].serializedElement,
+                        meta: result[file].new[id].source ?? {},
                         data: Buffer.from(data),
                       })
                     })
@@ -177,7 +177,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer): Promise
                         .join('\n')
 
                       tar.write(id, {
-                        meta: result[file].diff[id].serializedElement,
+                        meta: result[file].diff[id].source ?? {},
                         data: Buffer.from(data),
                       })
                     })

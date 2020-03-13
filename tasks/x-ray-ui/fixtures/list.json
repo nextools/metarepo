@@ -6,7 +6,6 @@
   "items": {
     "primitives/button:id": {
       "type": "new",
-      "serializedElement": [],
       "width": 45,
       "height": 12
     }
