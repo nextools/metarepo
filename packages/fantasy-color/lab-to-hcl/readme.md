@@ -2,13 +2,13 @@
 
 Transform a `LAB` color object to a `HCL` color object.
 
-```typescript
+```ts
 type labToHcl = (color: LAB) => HCL
 ```
 
 Example usage:
 
-```javascript
+```js
 import labToHcl from '@fantasy-color/lab-to-hcl'
 
 labToHcl({

@@ -2,13 +2,13 @@
 
 Invert the `RGB` color object.
 
-```typescript
+```ts
 type invertRgb = (color: RGB) => RGB
 ```
 
 Example usage:
 
-```javascript
+```js
 import invertRgb from '@fantasy-color/invert-rgb'
 
 invertRgb({

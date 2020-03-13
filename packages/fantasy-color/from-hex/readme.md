@@ -2,13 +2,13 @@
 
 Parse a CSS HEX string into a `RGB` object.
 
-```typescript
+```ts
 type fromHex = (hex: string) => RGB
 ```
 
 Example usage:
 
-```javascript
+```js
 import fromHex from '@fantasy-color/from-hex'
 
 fromHex('#FFFF00')

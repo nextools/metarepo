@@ -2,13 +2,13 @@
 
 Transform a `RGBA` color object to a `RGB` color object.
 
-```typescript
+```ts
 type rgbaToRgb = (color: RGBA) => RGB
 ```
 
 Example usage:
 
-```javascript
+```js
 import rgbaToRgb from '@fantasy-color/rgba-to-rgb'
 
 rgbaToRgb({

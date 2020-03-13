@@ -16,11 +16,26 @@
   "dependencies": {
     "remark-lint": "^6.0.5",
     "remark-lint-blockquote-indentation": "^1.0.3",
-    "remark-lint-checkbox-character-style": "^1.0.3"
+    "remark-lint-checkbox-character-style": "^1.0.3",
+    "remark-lint-checkbox-content-indent": "^1.0.3",
+    "remark-lint-code-block-style": "^1.0.3",
+    "remark-lint-definition-case": "^1.0.4",
+    "remark-lint-definition-spacing": "^1.0.4",
+    "remark-lint-emphasis-marker": "^1.0.3",
+    "remark-lint-fenced-code-flag": "^1.0.3",
+    "remark-lint-fenced-code-marker": "^1.0.3",
+    "remark-lint-final-definition": "^1.0.3",
+    "remark-lint-final-newline": "^1.0.3",
+    "remark-lint-first-heading-level": "^1.1.4",
+    "remark-lint-hard-break-spaces": "^1.0.4",
+    "remark-lint-heading-increment": "^1.0.3",
+    "remark-lint-heading-style": "^1.0.3",
+    "remark-lint-link-title-style": "^1.0.4",
+    "remark-lint-list-item-bullet-indent": "^1.0.3",
+    "remark-lint-list-item-content-indent": "^1.0.3",
+    "remark-lint-list-item-indent": "^1.0.4"
   },
   "devDependencies": {
-    "@types/blue-tape": "^0.1.32",
-    "blue-tape": "^1.0.0",
     "unified": "^8.4.2"
   }
 }

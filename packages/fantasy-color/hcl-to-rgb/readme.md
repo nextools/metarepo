@@ -2,13 +2,13 @@
 
 Transform a `HCL` color object to a `RGB` color object.
 
-```typescript
+```ts
 type hclToRgb = (color: HCL) => RGB
 ```
 
 Example usage:
 
-```javascript
+```js
 import hclToRgb from '@fantasy-color/hcl-to-rgb'
 
 hclToRgb({
@@ -21,7 +21,7 @@ hclToRgb({
 
 Note that this transformation can yield results where the values of the colors are outside the 0-255 boundary. So for example, dark red:
 
-```javascript
+```js
 import hclToRgb from '@fantasy-color/hcl-to-rgb'
 
 hclToRgb({
@@ -40,6 +40,6 @@ hclToRgb({
 
 They will just get clipped to the range 0-255. The color specified above will be represented by the browser as:
 
-```javascript
+```js
 const color = { red: 157, green: 0, blue: 0 }
 ```

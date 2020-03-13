@@ -2,13 +2,13 @@
 
 Calculate the [relative luminance](../#relative-luminance) of an `RGB` color, coded as [sRGB](../#why-srgb)
 
-```typescript
+```ts
 type luminanceSrgb = (color: RGB) => number
 ```
 
 Example usage:
 
-```javascript
+```js
 import luminanceSrgb from '@fantasy-color/luminance-srgb'
 
 luminanceSrgb({

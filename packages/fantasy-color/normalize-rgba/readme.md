@@ -2,13 +2,13 @@
 
 Turn an `RGBA` color value from 0-255 to take a value from 0-1
 
-```typescript
+```ts
 type normalizeRgba = (color: RGBA) => RGBA
 ```
 
 Example usage:
 
-```javascript
+```js
 import normalizeRgba from '@fantasy-color/normalize-rgba'
 
 normalizeRgba({

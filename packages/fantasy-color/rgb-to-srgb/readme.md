@@ -2,13 +2,13 @@
 
 Transform a `RGB` color object from the RGB space in 0-255 to the sRGB color space. The object output type is still RGB
 
-```typescript
+```ts
 type rgbToSrgb = (color: RGB) => RGB
 ```
 
 Example usage:
 
-```javascript
+```js
 import rgbToSrgb from '@fantasy-color/rgb-to-srgb'
 
 rgbToSrgb({

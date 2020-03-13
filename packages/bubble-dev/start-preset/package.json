@@ -26,6 +26,7 @@
     "@babel/core": "^7.8.0",
     "@babel/register": "^7.8.0",
     "@bubble-dev/babel-config": "^0.1.0",
+    "@bubble-dev/remark-lint-preset": "^0.0.0",
     "@rebox/android": "^1.0.0",
     "@rebox/ios": "^1.0.0",
     "@rebox/web": "^1.0.0",

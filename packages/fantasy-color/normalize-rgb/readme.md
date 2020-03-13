@@ -2,13 +2,13 @@
 
 Turn an `RGB` color value from 0-255 to take a value from 0-1
 
-```typescript
+```ts
 type normalizeRgb = (color: RGB) => RGB
 ```
 
 Example usage:
 
-```javascript
+```js
 import normalizeRgb from '@fantasy-color/normalize-rgb'
 
 normalizeRgb({

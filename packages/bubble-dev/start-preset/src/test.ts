@@ -22,6 +22,7 @@ import withChromium from './plugins/with-chromium'
 import waitForChromium from './plugins/wait-for-chromium'
 import waitForFirefox from './plugins/wait-for-firefox'
 import withFirefox from './plugins/with-firefox'
+import { generateWorkspaceGlobs } from './utils'
 
 export const checkWebSnapshots = (component = '**') =>
   sequence(
@@ -197,20 +198,13 @@ export const checkDeps = () => plugin('checkDeps', ({ logMessage }) => async () 
 
 export const lint = async () => {
   const { weslint } = await import('weslint')
-  const path = await import('path')
-  const packageJson = await import(path.resolve('package.json'))
-  const globs = packageJson.workspaces.reduce((acc: string[], glob: string) => (
-    acc.concat(
-      `${glob}/{src,test,x-ray}/**/*.{ts,tsx}`,
-      `${glob}/*.{ts,tsx}`
-    )
-  ), [] as string[])
+  const globs = await generateWorkspaceGlobs([
+    '{src,test,x-ray}/**/*.{ts,tsx,js}',
+    '*.{ts,tsx,js}',
+  ])
 
   return sequence(
-    find([
-      ...globs,
-      'tasks/**/*.ts',
-    ]),
+    find([...globs, 'tasks/**/*.{ts,tsx,js}']),
     plugin('weslint', () => async ({ files }) => {
       const result = await weslint({
         files: files.map((file) => file.path),
@@ -229,11 +223,12 @@ export const lint = async () => {
   )
 }
 
-export const lintmd = async (packageDir: string = '**') => {
+export const lintmd = async (packageDir?: string) => {
+  const globs = await generateWorkspaceGlobs(['readme.md'], packageDir)
   const preset = await import('@bubble-dev/remark-lint-preset')
 
   return sequence(
-    find(`packages/${packageDir}/*.md`),
+    find(globs),
     read,
     remarkLint(preset)
   )

@@ -2,13 +2,13 @@
 
 Calculate the [contrast ratio](../#contrast-ratio) between two `RGB` objects.
 
-```typescript
+```ts
 type contrastRatioLuminance = (rgb1: RGB, rgb2: RGB) => number
 ```
 
 Example usage:
 
-```javascript
+```js
 import contrastRatioRgb from '@fantasy-color/contrast-ratio-rgb'
 
 contrastRatioRgb(

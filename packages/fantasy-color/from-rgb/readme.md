@@ -2,13 +2,13 @@
 
 Parse a CSS RGB string into a `RGB` object.
 
-```typescript
+```ts
 type fromRgb = (rgb: string) => RGB
 ```
 
 Example usage:
 
-```javascript
+```js
 import fromRgb from '@fantasy-color/from-rgb'
 
 fromRgb('rgb(0, 250, 10)')

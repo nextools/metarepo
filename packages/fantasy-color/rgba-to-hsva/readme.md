@@ -2,13 +2,13 @@
 
 Transform a `RGBA` color object to a `HSVA` color object.
 
-```typescript
+```ts
 type rgbaToHsva = (color: RGBA) => HSVA
 ```
 
 Example usage:
 
-```javascript
+```js
 import rgbaToHsva from '@fantasy-color/rgba-to-hsva'
 
 rgbaToHsva({

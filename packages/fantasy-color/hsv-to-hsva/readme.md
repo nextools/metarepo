@@ -2,13 +2,13 @@
 
 Transform a `HSV` color object to a `HSVA` color object.
 
-```typescript
+```ts
 type hsvToHsva = (color: HSV) => HSVA
 ```
 
 Example usage:
 
-```javascript
+```js
 import hsvToHsva from '@fantasy-color/hsv-to-hsva'
 
 hsvToHsva({

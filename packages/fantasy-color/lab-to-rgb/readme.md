@@ -2,13 +2,13 @@
 
 Transform a `LAB` color object to a `RGB` color object.
 
-```typescript
+```ts
 type labToRgb = (color: LAB) => RGB
 ```
 
 Example usage:
 
-```javascript
+```js
 import labToRgb from '@fantasy-color/lab-to-rgb'
 
 labToRgb({

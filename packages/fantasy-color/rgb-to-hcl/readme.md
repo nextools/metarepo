@@ -2,13 +2,13 @@
 
 Transform a `RGB` color object to a `HCL` color object.
 
-```typescript
+```ts
 type rgbToHcl = (color: RGB) => HCL
 ```
 
 Example usage:
 
-```javascript
+```js
 import rgbToHcl from '@fantasy-color/rgb-to-hcl'
 
 rgbToHcl({

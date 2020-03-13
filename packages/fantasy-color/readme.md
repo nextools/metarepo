@@ -10,7 +10,7 @@ Fantasy Color provides types for the various color formats. These types are used
 yarn add @fantasy-color/types
 ```
 
-```typescript
+```ts
 type TWithAlpha = {
   alpha: number,
 }

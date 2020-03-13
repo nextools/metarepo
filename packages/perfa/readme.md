@@ -46,31 +46,31 @@ const perfData = await getPerfData({
 
 ### `firstContentfulPaint`
 
->First Contentful Paint measures the time from navigation to the time when the browser renders the first bit of content from the DOM. This is an important milestone for users because it provides feedback that the page is actually loading.
+> First Contentful Paint measures the time from navigation to the time when the browser renders the first bit of content from the DOM. This is an important milestone for users because it provides feedback that the page is actually loading.
 
 https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint
 
 ### `firstMeaningfulPaint`
 
->First Meaningful Paint is essentially the paint after which the biggest above-the-fold layout change has happened, and web fonts have loaded.
+> First Meaningful Paint is essentially the paint after which the biggest above-the-fold layout change has happened, and web fonts have loaded.
 
 https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint
 
 ### `largestContentfulPaint`
 
->Largest Contentful Paint is an important, user-centric metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful.
+> Largest Contentful Paint is an important, user-centric metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful.
 
 https://web.dev/lcp/
 
 ### `domContentLoaded`
 
->The DOMContentLoaded event fires when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading.
+> The DOMContentLoaded event fires when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading.
 
 https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event
 
 ### `domInteractive`
 
->A timestamp representing the time value equal to the time immediately before the user agent sets the current document readiness of the current document to interactive.
+> A timestamp representing the time value equal to the time immediately before the user agent sets the current document readiness of the current document to interactive.
 
 ### `threadTime`
 
@@ -81,24 +81,24 @@ https://developer.mozilla.org/en-US/docs/Glossary/Main_thread
 
 ### `scriptDuration`
 
->Combined duration of JavaScript execution.
+> Combined duration of JavaScript execution.
 
 https://github.com/puppeteer/puppeteer/blob/v2.1.1/docs/api.md#pagemetrics
 
 ### `layoutDuration`
 
->Combined durations of all page layouts.
+> Combined durations of all page layouts.
 
 https://github.com/puppeteer/puppeteer/blob/v2.1.1/docs/api.md#pagemetrics
 
 ### `recalcStyleDuration`
 
->Combined duration of all page style recalculations.
+> Combined duration of all page style recalculations.
 
 https://github.com/puppeteer/puppeteer/blob/v2.1.1/docs/api.md#pagemetrics
 
 ### `usedJsHeapSize`
 
->usedJsHeapSize is the total amount of memory being used by JS objects including V8 internal objects.
+> usedJsHeapSize is the total amount of memory being used by JS objects including V8 internal objects.
 
 https://webplatform.github.io/docs/apis/timing/properties/memory/

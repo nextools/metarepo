@@ -2,13 +2,13 @@
 
 Transform a `RGB` color object to a `HSV` color object.
 
-```typescript
+```ts
 type rgbToHsv = (color: RGB) => HSV
 ```
 
 Example usage:
 
-```javascript
+```js
 import rgbToHsv from '@fantasy-color/rgb-to-hsv'
 
 rgbToHsv({

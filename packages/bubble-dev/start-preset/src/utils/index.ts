@@ -1,5 +1,7 @@
+import path from 'path'
 import escapeStringRegexp from 'escape-string-regexp'
 import { TBumpType } from '@auto/utils'
+import { isString } from 'tsfn'
 
 export type TPrompt = {
   title: string,
@@ -67,4 +69,25 @@ export const getStartOptions = async () => {
   const { start } = await import(path.resolve('./package.json'))
 
   return start as TStartOptions
+}
+
+export const generateWorkspaceGlobs = async (globsToAdd: string[], packageDir?: string): Promise<string[]> => {
+  if (isString(packageDir)) {
+    const globs = globsToAdd.map((glob) => `packages/${packageDir}/${glob}`)
+
+    return globs
+  }
+
+  const pkgJsonPath = path.join(process.cwd(), 'package.json')
+  const pkgJson = await import(pkgJsonPath)
+  const workspaceGlobs = pkgJson.workspaces as string[]
+  const globs = workspaceGlobs.reduce((acc, glob) => {
+    for (const globToAdd of globsToAdd) {
+      acc.push(`${glob}/${globToAdd}`)
+    }
+
+    return acc
+  }, [] as string[])
+
+  return globs
 }

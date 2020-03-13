@@ -2,13 +2,13 @@
 
 Parse a CSS RGBA string into a `RGBA` object.
 
-```typescript
+```ts
 type fromRgba = (rgb: string) => RGBA
 ```
 
 Example usage:
 
-```javascript
+```js
 import fromRgba from '@fantasy-color/from-rgba'
 
 fromRgba('rgb(0, 250, 10, 0.6)')

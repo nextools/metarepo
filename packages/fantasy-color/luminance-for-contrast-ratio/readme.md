@@ -2,13 +2,13 @@
 
 Calculate the [contrast ratio](../#contrast-ratio) between two [relative luminances](../#relative-luminance)
 
-```typescript
+```ts
 type luminanceForContrastRatio = (contrastRatio: number, luminance: number) => number
 ```
 
 Example usage:
 
-```javascript
+```js
 import luminanceForContrastRatio from '@fantasy-color/luminance-for-contrast-ratio'
 
 luminanceForContrastRatio(3, 0.8)

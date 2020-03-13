@@ -8,7 +8,7 @@ To use this function, the first step is to set up the coefficients and the degre
 
 In this example we are mapping the color from the standard L*a*b* to a variation of that space that was shifted so that all colors are slightly darker (useful for hover effects). The coefficients have been prepared for a polynomial of degree `2`.
 
-```typescript
+```ts
 import { mapColorSpace } from '@fantasy-color/map-color-space-polynomial'
 
 const coeffiecientsToMakeColorDarker = [
