@@ -1,3 +1,7 @@
+## v1.0.3
+
+* 🐞 fix leaking event listeners on browser page
+
 ## v1.0.2
 
 * 🐞 switch from deprecated `request` to `node-fetch` dependency
