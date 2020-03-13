@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 handle cases without source code
+
 ## v1.0.1
 
 * 🐞 bump `pretty-ms` dependency

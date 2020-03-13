@@ -1,3 +1,7 @@
+## v1.2.1
+
+* 🐞 handle cases without source code
+
 ## v1.2.0
 
 * 🌱 add `domInteractive` metric
