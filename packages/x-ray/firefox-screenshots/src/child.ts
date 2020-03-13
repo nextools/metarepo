@@ -37,6 +37,7 @@ export default async (options: TOptions) => {
               for (const item of items) {
                 const screenshot = await getScreenshot(page, item)
 
+                page.removeAllListeners()
                 filenames.push(item.id)
 
                 const message = await checkScreenshot(screenshot, tar, item.id)

@@ -6307,10 +6307,10 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
-foxr@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/foxr/-/foxr-0.10.0.tgz#17760225870f66fb1a9a735dcd07fe0e9542de9d"
-  integrity sha512-R9f1RWLuIP6bti5o/zVLS8P4ghvQ69Pm/BU3dMbFvXIG6D3vvW/iQbVQn0BOkwEx+4qLG0HpcQrIKqUHhkeJIQ==
+foxr@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/foxr/-/foxr-0.10.1.tgz#04effb9ff788ddc2d4ceb6e8a50ad1f796a912c3"
+  integrity sha512-38qNJLCINwxfDAz6mN6DQVgvuxod2+8ca58Q59oTvWS2MGNMXqeLc/yieANC6LGwV5XOYf7KrR/fi2HtTFhByw==
   dependencies:
     "@babel/runtime" "^7.4.5"
     execa "^1.0.0"
