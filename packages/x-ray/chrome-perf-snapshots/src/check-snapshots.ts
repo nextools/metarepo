@@ -103,10 +103,7 @@ export const checkChromePerfSnapshots = async (options: TCheckChromePerfSnapshop
           )
         }, [] as TFileResultLine[])
 
-        targetResult.diff[id] = {
-          serializedElement: [],
-          ...getDataDimensions(data),
-        }
+        targetResult.diff[id] = getDataDimensions(data)
         targetResultData.diff[id] = data
         hasBeenChanged = true
       }
@@ -123,10 +120,7 @@ export const checkChromePerfSnapshots = async (options: TCheckChromePerfSnapshop
           value: line,
         }))
 
-      targetResult.new[id] = {
-        serializedElement: [],
-        ...getDataDimensions(data),
-      }
+      targetResult.new[id] = getDataDimensions(data)
       targetResultData.new[id] = data
       hasBeenChanged = true
     }

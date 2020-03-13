@@ -175,7 +175,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                     .filter((id) => isDefined(resultData[file].new[id]))
                     .forEach((id) => {
                       tar.write(id, {
-                        meta: result[file].new[id].serializedElement,
+                        meta: result[file].new[id].source ?? {},
                         data: resultData[file].new[id],
                       })
                     })

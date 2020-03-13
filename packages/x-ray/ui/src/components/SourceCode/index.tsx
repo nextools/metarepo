@@ -1,17 +1,18 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
-import { TRect, TItem } from '../../types'
+import { TSyntxLines } from '@x-ray/common-utils'
+import { TRect } from '../../types'
 import { Block } from '../Block'
 import { LineElement } from './LineElement'
 import { LINE_HEIGHT } from './constants'
 
 export type TSourceCode = TRect & {
-  item: TItem,
+  source: TSyntxLines,
 }
 
 export const SourceCode = component(
   startWithType<TSourceCode>()
-)(({ top, left, width, height, item }) => (
+)(({ top, left, width, height, source }) => (
   <Block
     top={top}
     left={left}
@@ -20,8 +21,8 @@ export const SourceCode = component(
     shouldScrollX
     shouldScrollY
   >
-    <Block height={item.serializedElement.length * LINE_HEIGHT} shouldFlow/>
-    {item.serializedElement.map((line, i) => (
+    <Block height={source.length * LINE_HEIGHT} shouldFlow/>
+    {source.map((line, i) => (
       <Block
         key={i}
         left={0}

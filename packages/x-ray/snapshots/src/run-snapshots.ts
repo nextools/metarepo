@@ -98,7 +98,7 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
             }, [] as TFileResultLine[])
 
             targetResult.diff[action.id] = {
-              serializedElement: action.serializedElement,
+              source: action.serializedElement,
               ...getDataSize(data),
             }
             targetResultData.diff[action.id] = data
@@ -118,7 +118,7 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
               }))
 
             targetResult.new[action.id] = {
-              serializedElement: action.serializedElement,
+              source: action.serializedElement,
               ...getDataSize(data),
             }
             targetResultData.new[action.id] = data
@@ -138,7 +138,7 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
               }))
 
             targetResult.deleted[action.id] = {
-              serializedElement: action.serializedElement,
+              source: action.serializedElement,
               ...getDataSize(data),
             }
             targetResultData.deleted[action.id] = data

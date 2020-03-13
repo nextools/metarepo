@@ -50,12 +50,12 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
           }
           case 'DIFF': {
             targetResult.old[action.id] = {
-              serializedElement: action.serializedElement,
+              source: action.serializedElement,
               width: dpr(action.old.width),
               height: dpr(action.old.height),
             }
             targetResult.new[action.id] = {
-              serializedElement: action.serializedElement,
+              source: action.serializedElement,
               width: dpr(action.new.width),
               height: dpr(action.new.height),
             }
@@ -70,7 +70,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
           }
           case 'NEW': {
             targetResult.new[action.id] = {
-              serializedElement: action.serializedElement,
+              source: action.serializedElement,
               width: dpr(action.width),
               height: dpr(action.height),
             }
@@ -84,7 +84,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
           }
           case 'DELETED': {
             targetResult.old[action.id] = {
-              serializedElement: action.serializedElement,
+              source: action.serializedElement,
               width: dpr(action.width),
               height: dpr(action.height),
             }

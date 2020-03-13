@@ -50,6 +50,22 @@ export const graphiq = () =>
     logMessage('http://localhost:3000/')
   })
 
+export const xray = () =>
+  plugin('ui', ({ logMessage }) => async () => {
+    const { run } = await import('@rebox/web')
+    const { runXRayServer } = await import('./x-ray-ui/run-server')
+
+    await runXRayServer()
+
+    await run({
+      entryPointPath: './tasks/x-ray-ui/index.tsx',
+      htmlTemplatePath: './tasks/x-ray-ui/template.html',
+      isQuiet: true,
+    })
+
+    logMessage('http://localhost:3000/')
+  })
+
 export const run = (file: string) =>
   plugin('main', () => async () => {
     const { resolve } = await import('path')
