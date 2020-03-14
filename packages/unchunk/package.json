@@ -1,8 +1,12 @@
 {
   "name": "unchunk",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Unchunk readable stream into Promise",
-  "keywords": ["stream", "data", "chunk"],
+  "keywords": [
+    "stream",
+    "data",
+    "chunk"
+  ],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
