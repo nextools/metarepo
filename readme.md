@@ -47,6 +47,7 @@ Check the individual documentations for more details:
 * [@themeables](packages/themeables): themeable UI primitive set for building universal React/React Native design systems
 * [tsfn](packages/tsfn): set of strongly-typed helpers and various utility types
 * [typeon](packages/typeon): typed JSON parse and stringify for TypeScript
+* [unchunk](packages/unchunk): unchunk readable stream into Promise
 * [weslint](packages/weslint): Worker Threads + ESlint
 * [workerama](packages/workerama): run sync/async function across Worker Threads
 * [x-ray](packages/x-ray): extremely fast set of libraries for regressions testing of Chrome/Firefox/iOS/Android screenshots and Web/React Native snapshots
