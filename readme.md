@@ -43,6 +43,7 @@ Check the individual documentations for more details:
 * [spyt](packages/spyt): `setTimeout`/`requestAnimationFrame` spies
 * [@start](packages/start): functional, fast and shareable task runner
 * [stili](packages/stili): universal React/React Native styles normalizer
+* [stroki](packages/stroki): transform stream by reading it line by line
 * [syntx](packages/syntx): serialize React component into a flat array of typed elements to build a custom syntax highlighting
 * [@themeables](packages/themeables): themeable UI primitive set for building universal React/React Native design systems
 * [tsfn](packages/tsfn): set of strongly-typed helpers and various utility types
