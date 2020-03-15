@@ -45,6 +45,7 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
       symlink,
       readlink,
     } = await import('pifs')
+    const { lineStream } = await import('stroki')
     const { replaceStream } = await import('rplace')
     // @ts-ignore
     const nanomatch = await import('nanomatch')
@@ -177,6 +178,7 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
 
         for (const [key, value] of Object.entries(allReplacers)) {
           stream = stream
+            .pipe(lineStream())
             .pipe(replaceStream(key, value))
             .on('error', reject)
         }
