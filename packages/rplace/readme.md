@@ -1,6 +1,6 @@
 # rplace
 
-Transform stream by replacing strings on per-line basis, especially efficient with large multiline text file formats.
+Transform stream by replacing strings.
 
 ## Install
 
@@ -11,19 +11,21 @@ $ yarn add rplace
 ## Usage
 
 ```ts
-replaceStream(searchValue: RegExp | string, replaceValue: string) => Transform
+const replaceStream: (searchValue: RegExp | string, replaceValue: string) => Transform
 ```
 
 Note: don't forget `g` flag for RegExp
 
 ```ts
 import { createReadStream, createWriteStream } from 'fs'
+import { lineStream } from 'stroki'
 import { replaceStream } from 'rplace'
 
 const readStream = createReadStream('./from.txt')
 const writeStream = createWriteStream('./to.txt')
 
 readStream
-  .pipe(replaceStream(/Hi (\S+)/, 'Hey $1'))
+  .pipe(lineStream())
+  .pipe(replaceStream(/Hi (\S+)/g, 'Hey $1'))
   .pipe(writeStream)
 ```

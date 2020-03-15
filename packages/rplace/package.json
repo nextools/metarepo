@@ -1,7 +1,7 @@
 {
   "name": "rplace",
   "version": "0.1.1",
-  "description": "Transform stream by replacing strings on per-line basis",
+  "description": "Transform stream by replacing strings",
   "keywords": [
     "stream",
     "transform",
@@ -18,11 +18,12 @@
     "access": "public"
   },
   "sideEffects": false,
-  "devDependencies": {
-    "@types/tape": "^4.2.34",
-    "tape": "^5.0.0-next.5"
-  },
   "dependencies": {
     "replace-string": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0-next.5",
+    "unchunk": "^0.1.0"
   }
 }
