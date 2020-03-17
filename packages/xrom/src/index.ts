@@ -45,34 +45,31 @@ export const runChromium = async (userOptions?: TRunChromiumOptions): Promise<st
     throw new Error(stopProcess.stderr)
   }
 
-  await execa(
-    'docker',
-    [
-      'run',
-      '-d',
-      '--rm',
-      '-p',
-      '9222:9222',
-      isNumber(options.cpus) ? `--cpus=${options.cpus}` : '',
-      isArray(options.cpusetCpus) ? `--cpuset-cpus=${options.cpusetCpus.join(',')}` : '',
-      ...(isArray(options.mountVolumes)
-        ? options.mountVolumes.reduce((acc, vol) =>
-          acc.concat(
-            '-v',
-            `${path.resolve(vol.from)}:${vol.to}:delegated,ro`
-          ),
-        [] as string[])
-        : []
-      ),
-      ...(isString(options.fontsDir)
-        ? ['-v', `${path.resolve(options.fontsDir)}:/home/chromium/.fonts:delegated,ro`]
-        : []
-      ),
-      '--name',
-      options.containerName,
-      `deepsweet/chromium-headless-remote:${CHROMIUM_VERSION}`,
-    ]
+  const dockerArgs = [
+    'run',
+    '-d',
+    '--rm',
+    '-p',
+    '9222:9222',
+  ]
+
+  if (isArray(options.mountVolumes)) {
+    for (const volume of options.mountVolumes) {
+      dockerArgs.push('-v', `${path.resolve(volume.from)}:${volume.to}:delegated,ro`)
+    }
+  }
+
+  if (isString(options.fontsDir)) {
+    dockerArgs.push('-v', `${path.resolve(options.fontsDir)}:/home/chromium/.fonts:delegated,ro`)
+  }
+
+  dockerArgs.push(
+    '--name',
+    options.containerName,
+    `deepsweet/chromium-headless-remote:${CHROMIUM_VERSION}`
   )
+
+  await execa('docker', dockerArgs)
 
   await waitForChromium()
 

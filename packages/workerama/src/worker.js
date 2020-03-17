@@ -1,14 +1,21 @@
 const { workerData, parentPort } = require('worker_threads')
 
-const fn = require(workerData.fnFilePath)[workerData.fnName]
+const fnPromise = require(workerData.fnFilePath)[workerData.fnName](...workerData.fnArgs)
+
+const isObject = (value) => Object.prototype.toString.call(value) === '[object Object]'
 
 parentPort.on('message', async (items) => {
   try {
     await Promise.all(
       items.map(async (item) => {
-        const result = await fn(item, ...workerData.fnArgs)
+        const fn = await fnPromise
+        const result = await fn(item)
 
-        parentPort.postMessage({ type: 'data', value: result })
+        if (isObject(result) && Reflect.has(result, 'buffer') && result.buffer instanceof ArrayBuffer) {
+          parentPort.postMessage({ type: 'data', value: result }, [result.buffer])
+        } else {
+          parentPort.postMessage({ type: 'data', value: result })
+        }
       })
     )
 
