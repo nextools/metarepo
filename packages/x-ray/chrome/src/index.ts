@@ -16,7 +16,7 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
 
   await workerama({
     items: files,
-    itemsPerThreadCount: 2,
+    itemsPerThreadCount: 1,
     maxThreadCount: MAX_THREAD_COUNT,
     fnFilePath: WORKER_PATH,
     fnName: 'check',
