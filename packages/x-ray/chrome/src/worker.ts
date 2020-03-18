@@ -3,12 +3,13 @@ import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import puppeteer, { ElementHandle } from 'puppeteer-core'
 import pAll from 'p-all'
-import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
+import { access } from 'pifs'
+import { TTarDataWithMeta, TarFs, TTarFs } from '@x-ray/tar-fs'
 import { TCheckResult, TItem } from './types'
-import { compareScreenshots } from './compare-screenshots'
+import { hasScreenshotDiff } from './has-screenshot-diff'
 
 const SELECTOR = '[data-x-ray]'
-const PAGE_COUNT = 4
+const CONCURRENCY = 4
 
 export type TCheckOptions = {
   browserWSEndpoint: string,
@@ -17,14 +18,20 @@ export type TCheckOptions = {
 export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
   const browser = await puppeteer.connect({ browserWSEndpoint })
   const pages = await Promise.all(
-    new Array(PAGE_COUNT).fill(null).map(() => browser.newPage())
+    new Array(CONCURRENCY).fill(null).map(() => browser.newPage())
   )
 
-  return async (file: string) => {
-    const tarGzFilePath = path.join(path.dirname(file), 'chrome-screenshots.tar.gz')
-    const tarFs = await TarFs(tarGzFilePath)
+  return async (filePath: string) => {
+    const tarFilePath = path.join(path.dirname(filePath), 'chrome-screenshots.tar.gz')
+    let tarFs = null as null | TTarFs
 
-    const { items } = await import(file) as { items: TItem[] }
+    try {
+      await access(tarFilePath)
+
+      tarFs = await TarFs(tarFilePath)
+    } catch {}
+
+    const { items } = await import(filePath) as { items: TItem[] }
     const arrayBufferSet = new Set<ArrayBuffer>()
 
     const results = await pAll(
@@ -47,13 +54,13 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
         pages.push(page)
 
         // NEW
-        if (!tarFs.has(item.id)) {
+        if (tarFs === null || !tarFs.has(item.id)) {
           arrayBufferSet.add(newScreenshot.buffer)
 
           return {
             type: 'NEW',
             id: item.id,
-            path: file,
+            path: filePath,
             meta: item.meta,
             data: newScreenshot,
           }
@@ -62,13 +69,13 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
         const { data: origScreenshot, meta: origMeta } = await tarFs.read(item.id) as TTarDataWithMeta
 
         // DIFF
-        if (!compareScreenshots(origScreenshot, newScreenshot)) {
+        if (hasScreenshotDiff(origScreenshot, newScreenshot)) {
           arrayBufferSet.add(newScreenshot.buffer)
 
           return {
             type: 'DIFF',
             id: item.id,
-            path: file,
+            path: filePath,
             data: newScreenshot,
             meta: origMeta,
           }
@@ -78,13 +85,15 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
         return {
           type: 'OK',
           id: item.id,
-          path: file,
+          path: filePath,
         }
       }),
-      { concurrency: 4 }
+      { concurrency: CONCURRENCY }
     )
 
-    await tarFs.close()
+    if (tarFs !== null) {
+      await tarFs.close()
+    }
 
     return {
       value: results,
