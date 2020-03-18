@@ -1,16 +1,21 @@
 import { ReactElement } from 'react'
-import { TAnyObject } from 'tsfn'
+import { TJsonValue } from 'typeon'
 
 export type TItem = {
   id: string,
   element: ReactElement,
-  meta: TAnyObject,
+  meta: TJsonValue,
 }
 
-export type TCheckResult = {
-  type: 'NEW' | 'OK' | 'DIFF',
-  id: string,
-  path: string,
-  meta: TAnyObject,
-  data: Buffer,
-}
+export type TCheckResult =
+  {
+    type: 'OK',
+    id: string,
+    path: string,
+  } | {
+    type: 'NEW' | 'DIFF',
+    id: string,
+    path: string,
+    meta: TJsonValue,
+    data: Buffer,
+  }

@@ -1,6 +1,6 @@
 import { createGzip, createGunzip, constants } from 'zlib'
 import fs from 'pifs'
-import { TAnyObject } from 'tsfn'
+import { TJsonValue } from 'typeon'
 
 const HEADER_SIZE = 512
 
@@ -79,12 +79,12 @@ type TFileMeta = {
 }
 
 type TIndexFile = {
-  [id: string]: TAnyObject,
+  [id: string]: TJsonValue,
 }
 
 export type TTarDataWithMeta = {
   data: Buffer,
-  meta: TAnyObject,
+  meta: TJsonValue,
 }
 
 export type TTarFs = {
