@@ -1,17 +1,8 @@
-/* eslint-disable import/no-named-as-default-member */
-import path from 'path'
-import crypto from 'crypto'
 import { createGzip, createGunzip, constants } from 'zlib'
 import fs from 'pifs'
 import { TAnyObject } from 'tsfn'
 
 const HEADER_SIZE = 512
-
-const hash = (value: string): string =>
-  crypto
-    .createHash('sha1')
-    .update(value)
-    .digest('hex')
 
 const chksum = (block: Buffer): number => {
   let sum = 8 * 32
@@ -88,10 +79,7 @@ type TFileMeta = {
 }
 
 type TIndexFile = {
-  [longId: string]: {
-    id: string,
-    meta: TAnyObject,
-  },
+  [id: string]: TAnyObject,
 }
 
 export type TTarDataWithMeta = {
@@ -146,12 +134,6 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
 
     indexFile = JSON.parse(dataBuffer.toString())
 
-    const indexFileInverted = Object.entries(indexFile).reduce((result, [key, value]) => {
-      result[value.id] = key
-
-      return result
-    }, {} as { [k: string]: string })
-
     pos += HEADER_SIZE + dataSize + (HEADER_SIZE - dataSize % HEADER_SIZE)
 
     while (true) {
@@ -167,7 +149,7 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
 
       const dataSize = parseInt(sizeBuffer.toString(), 8)
 
-      files.set(indexFileInverted[hashedFileName], {
+      files.set(hashedFileName, {
         position: pos + HEADER_SIZE,
         size: dataSize,
       })
@@ -210,7 +192,7 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
 
       return {
         data: dataBuffer,
-        meta: indexFile[fileName].meta,
+        meta: indexFile[fileName],
       }
     },
     delete: (fileName) => {
@@ -237,10 +219,7 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
       }
 
       for (const fileName of filesToWrite.keys()) {
-        indexFile[fileName] = {
-          id: `${hash(fileName)}${path.extname(fileName)}`,
-          meta: filesToWrite.get(fileName)!.meta,
-        }
+        indexFile[fileName] = filesToWrite.get(fileName)!.meta
       }
 
       const indexFileBuffer = Buffer.from(JSON.stringify(indexFile))
@@ -258,7 +237,7 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
           if (filesToWrite.has(fileName)) {
             const { data: dataBuffer } = filesToWrite.get(fileName)!
             const dataBufferSize = dataBuffer.byteLength
-            const headerBuffer = generateHeader(indexFile[fileName].id, dataBufferSize)
+            const headerBuffer = generateHeader(fileName, dataBufferSize)
 
             await fs.write(tempFd, headerBuffer, 0, HEADER_SIZE, tempPos)
             await fs.write(tempFd, dataBuffer, 0, dataBufferSize, tempPos + HEADER_SIZE)
@@ -287,7 +266,8 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
         if (!files.has(filePath)) {
           const { data: dataBuffer } = filesToWrite.get(filePath)!
           const size = dataBuffer.byteLength
-          const headerBuffer = generateHeader(indexFile[filePath].id, size)
+
+          const headerBuffer = generateHeader(filePath, size)
 
           await fs.write(tempFd, headerBuffer, 0, HEADER_SIZE, tempPos)
           await fs.write(tempFd, dataBuffer, 0, size, tempPos + HEADER_SIZE)
