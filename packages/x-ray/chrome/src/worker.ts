@@ -1,10 +1,10 @@
-import path from 'path'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import puppeteer, { ElementHandle } from 'puppeteer-core'
 import pAll from 'p-all'
 import { access } from 'pifs'
 import { TTarDataWithMeta, TarFs, TTarFs } from '@x-ray/tar-fs'
+import { getTarFilePath } from './get-tar-file-path'
 import { TCheckResult, TItem } from './types'
 import { hasScreenshotDiff } from './has-screenshot-diff'
 
@@ -22,7 +22,7 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
   )
 
   return async (filePath: string) => {
-    const tarFilePath = path.join(path.dirname(filePath), 'chrome-screenshots.tar.gz')
+    const tarFilePath = getTarFilePath(filePath)
     let tarFs = null as null | TTarFs
 
     try {
