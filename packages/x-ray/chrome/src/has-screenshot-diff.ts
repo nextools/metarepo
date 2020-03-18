@@ -1,12 +1,12 @@
 import { PNG } from 'pngjs'
 import pixelmatch from 'pixelmatch'
 
-export const compareScreenshots = (a: Buffer, b: Buffer): boolean => {
+export const hasScreenshotDiff = (a: Buffer, b: Buffer): boolean => {
   const pngA = PNG.sync.read(a)
   const pngB = PNG.sync.read(b)
 
   if (pngA.width !== pngB.width || pngA.height !== pngB.height) {
-    return false
+    return true
   }
 
   const diffPixelAmount = pixelmatch(
@@ -17,5 +17,5 @@ export const compareScreenshots = (a: Buffer, b: Buffer): boolean => {
     pngB.height
   )
 
-  return diffPixelAmount === 0
+  return diffPixelAmount > 0
 }
