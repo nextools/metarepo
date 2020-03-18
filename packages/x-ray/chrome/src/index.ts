@@ -3,7 +3,7 @@ import path from 'path'
 import { runChromium } from 'xrom'
 import { workerama } from 'workerama'
 import { TarFs } from '@x-ray/tar-fs'
-import { TAnyObject } from 'tsfn'
+import { TJsonValue } from 'typeon'
 import { TCheckResult } from './types'
 
 // export type TCheckChomeScreenshotsOptions = {
@@ -19,7 +19,7 @@ type TResults = {
   [path: string]: {
     [id: string]: {
       data: Buffer,
-      meta: TAnyObject,
+      meta: TJsonValue,
     },
   },
 }
@@ -37,6 +37,12 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
     fnArgs: [{ browserWSEndpoint }],
     onItemResult: (checkResults: TCheckResult[]) => {
       for (const checkResult of checkResults) {
+        console.log(checkResult.id, checkResult.type)
+
+        if (checkResult.type === 'OK') {
+          continue
+        }
+
         if (!Reflect.has(results, checkResult.path)) {
           results[checkResult.path] = {}
         }

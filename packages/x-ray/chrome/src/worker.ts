@@ -2,11 +2,10 @@ import path from 'path'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import puppeteer, { ElementHandle } from 'puppeteer-core'
-import { PNG } from 'pngjs'
-import pixelmatch from 'pixelmatch'
 import pAll from 'p-all'
-import { TarFs } from '@x-ray/tar-fs'
+import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { TCheckResult, TItem } from './types'
+import { compareScreenshots } from './compare-screenshots'
 
 const SELECTOR = '[data-x-ray]'
 const PAGE_COUNT = 4
@@ -42,53 +41,50 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
         await page.setContent(html)
 
         const domElement = await page.$(SELECTOR) as ElementHandle
-        const screenshot = await domElement.screenshot({ encoding: 'binary' })
+        const newScreenshot = await domElement.screenshot({ encoding: 'binary' })
 
         page.removeAllListeners()
         pages.push(page)
 
-        arrayBufferSet.add(screenshot.buffer)
-
+        // NEW
         if (!tarFs.has(item.id)) {
+          arrayBufferSet.add(newScreenshot.buffer)
+
           return {
             type: 'NEW',
             id: item.id,
             path: file,
             meta: item.meta,
-            data: screenshot,
+            data: newScreenshot,
           }
         }
 
-        if (tarFs.has(item.id)) {
-          // const png = PNG.sync.read(screenshot)
-          console.log('COMPARE')
+        const { data: origScreenshot, meta: origMeta } = await tarFs.read(item.id) as TTarDataWithMeta
+
+        // DIFF
+        if (!compareScreenshots(origScreenshot, newScreenshot)) {
+          arrayBufferSet.add(newScreenshot.buffer)
+
+          return {
+            type: 'DIFF',
+            id: item.id,
+            path: file,
+            data: newScreenshot,
+            meta: origMeta,
+          }
         }
 
+        // OK
         return {
           type: 'OK',
           id: item.id,
           path: file,
-          meta: item.meta,
-          data: screenshot,
         }
       }),
       { concurrency: 4 }
     )
 
     await tarFs.close()
-
-    // const png0 = PNG.sync.read(screenshots[0])
-    // const png1 = PNG.sync.read(screenshots[1])
-
-    // console.log(
-    //   pixelmatch(
-    //     png0.data,
-    //     png1.data,
-    //     null,
-    //     png1.width,
-    //     png1.height
-    //   )
-    // )
 
     return {
       value: results,

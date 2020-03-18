@@ -21,12 +21,14 @@
   "dependencies": {
     "@babel/register": "^7.8.6",
     "@bubble-dev/babel-config": "^0.1.4",
+    "@x-ray/tar-fs": "^1.0.0",
     "p-all": "^2.1.0",
     "pixelmatch": "^5.1.0",
     "pngjs": "^3.4.0",
     "puppeteer-core": "^2.1.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "typeon": "^1.0.0",
     "workerama": "^0.1.0",
     "xrom": "^1.0.4"
   }
