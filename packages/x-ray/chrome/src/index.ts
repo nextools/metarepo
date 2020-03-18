@@ -1,9 +1,9 @@
 import { cpus } from 'os'
-import path from 'path'
 import { runChromium } from 'xrom'
 import { workerama } from 'workerama'
 import { TJsonValue } from 'typeon'
 import { TarFs } from '@x-ray/tar-fs'
+import { getTarFilePath } from './get-tar-file-path'
 import { TCheckResult } from './types'
 
 // export type TCheckChomeScreenshotsOptions = {
@@ -59,14 +59,13 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
   })
 
   for (const [filePath, result] of Object.entries(results)) {
-    const tarFilePath = path.join(path.dirname(filePath), 'chrome-screenshots.tar.gz')
-    const tarFs = await TarFs(tarFilePath)
+    const tarFs = await TarFs(getTarFilePath(filePath))
 
     for (const [id, value] of Object.entries(result)) {
-      tarFs!.write(id, value)
+      tarFs.write(id, value)
     }
 
-    await tarFs!.save()
+    await tarFs.save()
   }
 }
 
