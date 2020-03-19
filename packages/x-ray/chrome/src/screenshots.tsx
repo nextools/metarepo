@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const items = [
+export const examples = [
   {
     id: '1',
     element: <button key={1}>1</button>,

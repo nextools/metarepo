@@ -5,7 +5,7 @@ import pAll from 'p-all'
 import { access } from 'pifs'
 import { TTarDataWithMeta, TarFs, TTarFs } from '@x-ray/tar-fs'
 import { getTarFilePath } from './get-tar-file-path'
-import { TItem, TCheckResults, TWorkerResultInternal } from './types'
+import { TVariation, TCheckResults, TWorkerResultInternal } from './types'
 import { hasScreenshotDiff } from './has-screenshot-diff'
 import { bufferToPng } from './buffer-to-png'
 
@@ -32,17 +32,22 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
       tarFs = await TarFs(tarFilePath)
     } catch {}
 
-    const { items } = await import(filePath) as { items: TItem[] }
+    const { examples } = await import(filePath) as { examples: TVariation[] }
     const arrayBufferSet = new Set<ArrayBuffer>()
     const results = {} as TCheckResults<Buffer>
 
     await pAll(
-      items.map((item) => async (): Promise<void> => {
+      examples.map((example) => async (): Promise<void> => {
         const html = renderToStaticMarkup(
           createElement(
             'div',
-            { 'data-x-ray': true },
-            item.element
+            {
+              'data-x-ray': true,
+              style: {
+                display: 'inline-block',
+              },
+            },
+            example.element
           )
         )
         const page = pages.shift()!
@@ -56,14 +61,14 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
         pages.push(page)
 
         // NEW
-        if (tarFs === null || !tarFs.has(item.id)) {
+        if (tarFs === null || !tarFs.has(example.id)) {
           arrayBufferSet.add(newScreenshot.buffer)
 
           const png = bufferToPng(newScreenshot)
 
-          results[item.id] = {
+          results[example.id] = {
             type: 'NEW',
-            meta: item.meta,
+            meta: example.meta,
             data: newScreenshot,
             width: png.width,
             height: png.height,
@@ -72,7 +77,7 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
           return
         }
 
-        const { data: origScreenshot, meta: origMeta } = await tarFs.read(item.id) as TTarDataWithMeta
+        const { data: origScreenshot, meta: origMeta } = await tarFs.read(example.id) as TTarDataWithMeta
 
         const origPng = bufferToPng(origScreenshot)
         const newPng = bufferToPng(newScreenshot)
@@ -82,7 +87,7 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
           arrayBufferSet.add(origScreenshot.buffer)
           arrayBufferSet.add(newScreenshot.buffer)
 
-          results[item.id] = {
+          results[example.id] = {
             type: 'DIFF',
             origData: origScreenshot,
             origWidth: origPng.width,
@@ -97,7 +102,7 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
         }
 
         // OK
-        results[item.id] = {
+        results[example.id] = {
           type: 'OK',
         }
       }),

@@ -114,7 +114,8 @@ export const Popup = component(
   }),
   mapWithProps(({ popupWidth, popupHeight, item }) => {
     const halfWidth = popupWidth / 2
-    const hasSourceCode = objectHas(item, 'source')
+    const hasSourceCode = false
+    // const hasSourceCode = objectHas(item, 'source')
 
     return ({
       sourceCodeWidth: halfWidth - POPUP_SPACING * 2,
@@ -213,7 +214,7 @@ export const Popup = component(
                     </Block>
                   </Button>
                 </Block>
-                {hasSourceCode && (
+                {/* {hasSourceCode && (
                   <SourceCode
                     top={sourceCodeTop}
                     left={sourceCodeLeft}
@@ -221,7 +222,7 @@ export const Popup = component(
                     height={sourceCodeHeight}
                     source={item.source!}
                   />
-                )}
+                )} */}
                 {isScreenshotGridItem(type, item) && (
                   <ScreenshotPreview
                     top={previewTop}

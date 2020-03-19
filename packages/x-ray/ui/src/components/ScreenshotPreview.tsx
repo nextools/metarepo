@@ -25,7 +25,7 @@ const mapDiffState = <P extends {item: TScreenshotGridItem}>() => pipe(
       clearDiffTimeout.current = null
     }
 
-    if (item.type === 'diff') {
+    if (item.type === 'DIFF') {
       clearDiffTimeout.current = setSafeTimeout(toggleDiffState, DIFF_TIMEOUT)
     }
   }, ['diffState', 'item'])
@@ -51,7 +51,7 @@ export const ScreenshotPreview = component(
       height={height}
     >
       <Fragment>
-        {item.type === 'new' && (
+        {item.type === 'NEW' && (
           <ScreenshotNew
             key={item.id}
             top={halfHeight - item.height / 2}
@@ -63,15 +63,15 @@ export const ScreenshotPreview = component(
           />
         )}
 
-        {item.type === 'diff' && (
+        {item.type === 'DIFF' && (
           <Animation time={200} easing={easeInOutCubic} values={[diffState ? 1 : 0]}>
             {([alpha]) => (
               <ScreenshotDiff
                 key={item.id}
-                top={halfHeight - item.height / 2}
-                left={halfWidth - item.width / 2}
-                oldWidth={item.width + BORDER_SIZE * 2}
-                oldHeight={item.height + BORDER_SIZE * 2}
+                top={halfHeight - item.origHeight / 2}
+                left={halfWidth - item.origWidth / 2}
+                oldWidth={item.origWidth + BORDER_SIZE * 2}
+                oldHeight={item.origHeight + BORDER_SIZE * 2}
                 newWidth={item.newWidth + BORDER_SIZE * 2}
                 newHeight={item.newHeight + BORDER_SIZE * 2}
                 oldAlpha={1 - alpha}
@@ -83,7 +83,7 @@ export const ScreenshotPreview = component(
           </Animation>
         )}
 
-        {item.type === 'deleted' && (
+        {item.type === 'DELETED' && (
           <ScreenshotDeleted
             key={item.id}
             top={halfHeight - item.height / 2}

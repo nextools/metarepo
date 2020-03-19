@@ -1,8 +1,12 @@
 import { TSnapshotsListResult } from '@x-ray/snapshots'
-import { TScreenshotsListResult } from '@x-ray/screenshot-utils'
 import { HOST, PORT } from '../config'
+import { TItems } from '../../../chrome/src/types'
 
-export type TApiLoadListResult = TSnapshotsListResult | TScreenshotsListResult
+export type TApiLoadListResult = TSnapshotsListResult | {
+  type: 'image',
+  files: string[],
+  items: TItems,
+}
 
 export const apiLoadList = async (): Promise<TApiLoadListResult> => {
   const response = await fetch(`http://${HOST}:${PORT}/list`)

@@ -6,18 +6,19 @@ import { Border } from '@primitives/border'
 import { isUndefined } from 'tsfn'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectScreenshot } from '../../actions'
-import { TScreenshotGridItem, TScreenshotItems, TRect } from '../../types'
+import { TScreenshotGridItem, TRect } from '../../types'
 import { Block } from '../Block'
 import { ScreenshotNew } from '../ScreenshotNew'
 import { ScreenshotDeleted } from '../ScreenshotDeleted'
 import { ScreenshotDiff } from '../ScreenshotDiff'
 import { COL_SPACE, COL_WIDTH, BORDER_SIZE, COLOR_BLACK } from '../../config'
+import { TItems } from '../../../../chrome/src/types'
 import { mapDiffState } from './map-diff-state'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 
 export type TScreenshotGrid = TRect & {
-  items: TScreenshotItems,
+  items: TItems,
   discardedItems: string[],
   filteredFiles: string[],
   shouldAnimate: boolean,
@@ -25,7 +26,6 @@ export type TScreenshotGrid = TRect & {
 
 export const ScreenshotGrid = pureComponent(
   startWithType<TScreenshotGrid>(),
-  mapStoreDispatch('dispatch'),
   mapWithPropsMemo(({ width, items, filteredFiles }) => {
     const colCount = Math.max(1, Math.floor((width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
     const gridWidth = (width - (COL_SPACE * (colCount + 1))) / colCount
@@ -53,9 +53,9 @@ export const ScreenshotGrid = pureComponent(
 
       let gridHeight: number
 
-      if (item.type === 'diff') {
-        const largestWidth = item.width > item.newWidth ? item.width : item.newWidth
-        const largestHeight = item.height > item.newHeight ? item.height : item.newHeight
+      if (item.type === 'DIFF') {
+        const largestWidth = item.origWidth > item.newWidth ? item.origWidth : item.newWidth
+        const largestHeight = item.origHeight > item.newHeight ? item.origHeight : item.newHeight
 
         gridHeight = (gridWidth - BORDER_SIZE * 2) / largestWidth * largestHeight + BORDER_SIZE * 2
       } else {
@@ -90,6 +90,7 @@ export const ScreenshotGrid = pureComponent(
     }
   }, ['width', 'items', 'filteredFiles']),
   mapScrollState(),
+  mapStoreDispatch('dispatch'),
   mapHandlers({
     onPress: ({ top, dispatch, scrollTop, cols }) => (x: number, y: number) => {
       for (let colIndex = 0; colIndex < cols.length; ++colIndex) {
@@ -179,7 +180,7 @@ export const ScreenshotGrid = pureComponent(
                 if (isVisible) {
                   const isDiscarded = discardedItems.includes(item.id)
 
-                  if (item.type === 'new') {
+                  if (item.type === 'NEW') {
                     return (
                       <ScreenshotNew
                         key={item.id}
@@ -193,7 +194,7 @@ export const ScreenshotGrid = pureComponent(
                     )
                   }
 
-                  if (item.type === 'deleted') {
+                  if (item.type === 'DELETED') {
                     return (
                       <ScreenshotDeleted
                         key={item.id}
@@ -207,8 +208,8 @@ export const ScreenshotGrid = pureComponent(
                     )
                   }
 
-                  if (item.type === 'diff') {
-                    const largestWidth = item.width > item.newWidth ? item.width : item.newWidth
+                  if (item.type === 'DIFF') {
+                    const largestWidth = item.origWidth > item.newWidth ? item.origWidth : item.newWidth
                     const scale = item.gridWidth / largestWidth
 
                     return (
@@ -217,8 +218,8 @@ export const ScreenshotGrid = pureComponent(
                         id={item.id}
                         top={item.top}
                         left={item.left}
-                        oldWidth={item.width * scale}
-                        oldHeight={item.height * scale}
+                        oldWidth={item.origWidth * scale}
+                        oldHeight={item.origHeight * scale}
                         newWidth={item.newWidth * scale}
                         newHeight={item.newHeight * scale}
                         oldAlpha={1 - alpha}
