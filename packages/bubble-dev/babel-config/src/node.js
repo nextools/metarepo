@@ -54,7 +54,6 @@ exports.babelConfigNodeRegister = {
   babelrc: false,
   compact: false,
   inputSourceMap: false,
-  sourceMaps: 'inline',
   presets: [
     [
       require.resolve('@babel/preset-env'),
