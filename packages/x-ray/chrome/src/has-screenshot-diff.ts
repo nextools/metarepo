@@ -1,10 +1,7 @@
-import { PNG } from 'pngjs'
+import { PNGWithMetadata } from 'pngjs'
 import pixelmatch from 'pixelmatch'
 
-export const hasScreenshotDiff = (a: Buffer, b: Buffer): boolean => {
-  const pngA = PNG.sync.read(a)
-  const pngB = PNG.sync.read(b)
-
+export const hasScreenshotDiff = (pngA: PNGWithMetadata, pngB: PNGWithMetadata): boolean => {
   if (pngA.width !== pngB.width || pngA.height !== pngB.height) {
     return true
   }
