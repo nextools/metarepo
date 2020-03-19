@@ -12,6 +12,7 @@ import pAll from 'p-all'
 import { isUndefined, isDefined } from 'tsfn'
 import { run } from '@rebox/web'
 import { broResolve } from 'bro-resolve'
+import { unchunkJson } from 'unchunk'
 import { getTarFilePath } from './get-tar-file-path'
 import { TCheckResults, TWorkerResult, TItems } from './types'
 
@@ -50,111 +51,171 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
     },
   })
 
+  let closeRebox = null as null | (() => Promise<void>)
+
   await new Promise<void>((resolve, reject) => {
     const pathMap = new Map<string, string>()
 
-    http
+    const server = http
       .createServer(async (req, res) => {
         try {
           res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
 
-          if (req.method === 'GET' && isDefined(req.url)) {
-            if (req.url === '/list') {
-              const shortPaths = await pAll<string>(
-                Object.keys(results).map((longPath) => async () => {
-                  const packageDir = await pkgDir(path.dirname(longPath))
+          if (isDefined(req.url)) {
+            if (req.method === 'GET') {
+              if (req.url === '/list') {
+                const shortPaths = await pAll<string>(
+                  Object.keys(results).map((longPath) => async () => {
+                    const packageDir = await pkgDir(path.dirname(longPath))
 
-                  if (isUndefined(packageDir)) {
-                    throw new Error(`Cannot find package dir for "${longPath}"`)
-                  }
-
-                  const shortPath = path.relative(path.resolve('packages/'), packageDir)
-
-                  pathMap.set(shortPath, longPath)
-                  pathMap.set(longPath, shortPath)
-
-                  return shortPath
-                }),
-                { concurrency: PACKAGE_DIR_CONCURRENCY }
-              )
-
-              res.end(
-                JSON.stringify({
-                  type: 'image',
-                  files: shortPaths,
-                  items: Object.entries(results).reduce((acc, [longPath, value]) => {
-                    for (const [id, result] of Object.entries(value)) {
-                      const key = `${pathMap.get(longPath)}:${id}`
-
-                      switch (result.type) {
-                        case 'NEW': {
-                          acc[key] = {
-                            type: 'NEW',
-                            width: result.width,
-                            height: result.height,
-                          }
-
-                          break
-                        }
-                        case 'DIFF': {
-                          acc[key] = {
-                            type: 'DIFF',
-                            newWidth: result.newWidth,
-                            newHeight: result.newHeight,
-                            origWidth: result.origWidth,
-                            origHeight: result.origHeight,
-                          }
-
-                          break
-                        }
-                        case 'DELETED': {
-                          acc[key] = {
-                            type: 'DELETED',
-                            width: result.width,
-                            height: result.height,
-                          }
-
-                          break
-                        }
-                      }
+                    if (isUndefined(packageDir)) {
+                      throw new Error(`Cannot find package dir for "${longPath}"`)
                     }
 
-                    return acc
-                  }, {} as TItems),
-                })
-              )
-            }
+                    const shortPath = path.relative(path.resolve('packages/'), packageDir)
 
-            const urlData = url.parse(req.url, true)
+                    pathMap.set(shortPath, longPath)
+                    pathMap.set(longPath, shortPath)
 
-            if (urlData.pathname === '/get') {
-              const query = urlData.query as {
-                id: string,
-                type: 'ORIG' | 'NEW',
+                    return shortPath
+                  }),
+                  { concurrency: PACKAGE_DIR_CONCURRENCY }
+                )
+
+                res.end(
+                  JSON.stringify({
+                    type: 'image',
+                    files: shortPaths,
+                    items: Object.entries(results).reduce((acc, [longPath, value]) => {
+                      for (const [id, result] of Object.entries(value)) {
+                        const key = `${pathMap.get(longPath)}:${id}`
+
+                        switch (result.type) {
+                          case 'NEW': {
+                            acc[key] = {
+                              type: 'NEW',
+                              width: result.width,
+                              height: result.height,
+                            }
+
+                            break
+                          }
+                          case 'DIFF': {
+                            acc[key] = {
+                              type: 'DIFF',
+                              newWidth: result.newWidth,
+                              newHeight: result.newHeight,
+                              origWidth: result.origWidth,
+                              origHeight: result.origHeight,
+                            }
+
+                            break
+                          }
+                          case 'DELETED': {
+                            acc[key] = {
+                              type: 'DELETED',
+                              width: result.width,
+                              height: result.height,
+                            }
+
+                            break
+                          }
+                        }
+                      }
+
+                      return acc
+                    }, {} as TItems),
+                  })
+                )
               }
-              const { type } = query
-              const [shortPath, id] = query.id.split(':')
-              const longPath = pathMap.get(shortPath)!
-              const result = results[longPath][id]
 
-              // console.log(result, id, type)
+              const urlData = url.parse(req.url, true)
 
-              res.setHeader('Content-Type', 'image/png')
+              if (urlData.pathname === '/get') {
+                const query = urlData.query as {
+                  id: string,
+                  // TODO: extract this type and reuse in X-Ray UI
+                  type: 'ORIG' | 'NEW',
+                }
+                const { type } = query
+                const [shortPath, id] = query.id.split(':')
+                const longPath = pathMap.get(shortPath)!
+                const result = results[longPath][id]
 
-              if (result.type === 'NEW') {
-                res.end(Buffer.from(result.data), 'binary')
+                res.setHeader('Content-Type', 'image/png')
+
+                if (result.type === 'NEW') {
+                  res.end(Buffer.from(result.data), 'binary')
+                }
+
+                if (result.type === 'DELETED') {
+                  res.end(Buffer.from(result.data), 'binary')
+                }
+
+                if (result.type === 'DIFF' && type === 'ORIG') {
+                  res.end(Buffer.from(result.origData), 'binary')
+                }
+
+                if (result.type === 'DIFF' && type === 'NEW') {
+                  res.end(Buffer.from(result.newData), 'binary')
+                }
               }
+            } else if (req.method === 'POST') {
+              if (req.url === '/save') {
+                const keys = await unchunkJson<string[]>(req)
+                const saveMap = keys.reduce((acc, key) => {
+                  const [shortPath, id] = key.split(':')
+                  const longPath = pathMap.get(shortPath)!
 
-              if (result.type === 'DELETED') {
-                res.end(Buffer.from(result.data), 'binary')
-              }
+                  if (!Reflect.has(acc, longPath)) {
+                    acc[longPath] = []
+                  }
 
-              if (result.type === 'DIFF' && type === 'ORIG') {
-                res.end(Buffer.from(result.origData), 'binary')
-              }
+                  acc[longPath].push(id)
 
-              if (result.type === 'DIFF' && type === 'NEW') {
-                res.end(Buffer.from(result.newData), 'binary')
+                  return acc
+                }, {} as { [path: string]: string[] })
+
+                for (const [filePath, ids] of Object.entries(saveMap)) {
+                  const tarFs = await TarFs(getTarFilePath(filePath))
+
+                  for (const id of ids) {
+                    const result = results[filePath][id]
+
+                    switch (result.type) {
+                      case 'NEW': {
+                        tarFs.write(id, {
+                          data: Buffer.from(result.data),
+                          meta: result.meta,
+                        })
+
+                        break
+                      }
+                      case 'DIFF': {
+                        tarFs.write(id, {
+                          data: Buffer.from(result.newData),
+                          meta: result.meta,
+                        })
+
+                        break
+                      }
+                      case 'DELETED': {
+                        tarFs.delete(id)
+                      }
+                    }
+                  }
+
+                  await tarFs.save()
+                }
+
+                console.log('SAVE')
+
+                res.end()
+                server.close()
+
+                if (closeRebox !== null) {
+                  await closeRebox()
+                }
               }
             }
           }
@@ -172,7 +233,7 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
   const entryPointPath = await broResolve('@x-ray/ui')
   const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
 
-  await run({
+  closeRebox = await run({
     htmlTemplatePath,
     entryPointPath,
     isQuiet: true,

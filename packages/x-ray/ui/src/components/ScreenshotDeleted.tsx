@@ -28,7 +28,7 @@ export const ScreenshotDeleted = pureComponent(
     <Block left={BORDER_SIZE} top={BORDER_SIZE}>
       <Screenshot
         id={id}
-        type="old"
+        type="ORIG"
         width={width - BORDER_SIZE * 2}
         height={height - BORDER_SIZE * 2}
       />
