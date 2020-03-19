@@ -46,7 +46,7 @@ export const ScreenshotDiff = pureComponent(
       <Block left={BORDER_SIZE} top={BORDER_SIZE}>
         <Screenshot
           id={id}
-          type="old"
+          type="ORIG"
           width={oldWidth - BORDER_SIZE * 2}
           height={oldHeight - BORDER_SIZE * 2}
         />
@@ -72,7 +72,7 @@ export const ScreenshotDiff = pureComponent(
       <Block left={BORDER_SIZE} top={BORDER_SIZE}>
         <Screenshot
           id={id}
-          type="new"
+          type="NEW"
           width={newWidth - BORDER_SIZE * 2}
           height={newHeight - BORDER_SIZE * 2}
         />

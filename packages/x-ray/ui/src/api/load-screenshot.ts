@@ -5,7 +5,7 @@ const apiLoadScreenshotCache = new Map<string, Blob>()
 
 export type TApiLoadScreenshotOpts = {
   id: string,
-  type: TScreenshotResultType,
+  type: 'ORIG' | 'NEW',
 }
 
 export const apiLoadScreenshot = async (opts: TApiLoadScreenshotOpts): Promise<Blob> => {
