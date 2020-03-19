@@ -1,12 +1,7 @@
 import { TExtend } from 'tsfn'
 import { ThunkAction } from 'redux-thunk'
-import { TScreenshotItem, TScreenshotItems } from '@x-ray/screenshot-utils'
 import { TSnapshotItem, TSnapshotItems } from '@x-ray/snapshots'
-import { TItem } from '@x-ray/common-utils'
-
-export { TItem } from '@x-ray/common-utils'
-export { TSnapshotItem, TSnapshotItems } from '@x-ray/snapshots'
-export { TScreenshotItem, TScreenshotItems } from '@x-ray/screenshot-utils'
+import { TItems, TItem } from '../../chrome/src/types'
 
 export type TPosition = {
   top: number,
@@ -33,15 +28,13 @@ export type TActionAsync<A extends TAnyAction> = ThunkAction<Promise<void>, TSta
 
 export type TType = 'image' | 'text'
 
-export type TItemType = 'new' | 'deleted' | 'diff'
-
-export type TGridItem = TItem & TPosition & {
+export type TGridItem = TPosition & {
   id: string,
   gridWidth: number,
   gridHeight: number,
 }
 
-export type TScreenshotGridItem = TScreenshotItem & TGridItem
+export type TScreenshotGridItem = TItem & TGridItem
 
 export type TSnapshotGridItem = TSnapshotItem & TGridItem
 
@@ -58,6 +51,6 @@ export type TState = {
   selectedItem: TSnapshotGridItem | null,
 } | {
   type: 'image' | null,
-  items: TScreenshotItems,
+  items: TItems,
   selectedItem: TScreenshotGridItem | null,
 })

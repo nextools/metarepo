@@ -1,6 +1,7 @@
 import { cpus } from 'os'
 import http from 'http'
 import path from 'path'
+import url from 'url'
 import { runChromium } from 'xrom'
 import { workerama } from 'workerama'
 import pkgDir from 'pkg-dir'
@@ -8,9 +9,11 @@ import { TarFs } from '@x-ray/tar-fs'
 // @ts-ignore
 import imageminPngout from 'imagemin-pngout'
 import pAll from 'p-all'
-import { isUndefined } from 'tsfn'
+import { isUndefined, isDefined } from 'tsfn'
+import { run } from '@rebox/web'
+import { broResolve } from 'bro-resolve'
 import { getTarFilePath } from './get-tar-file-path'
-import { TCheckResults, TWorkerResult, THttpList } from './types'
+import { TCheckResults, TWorkerResult, TItems } from './types'
 
 // export type TCheckChomeScreenshotsOptions = {
 //   dpr?: number,
@@ -55,7 +58,7 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
         try {
           res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
 
-          if (req.method === 'GET') {
+          if (req.method === 'GET' && isDefined(req.url)) {
             if (req.url === '/list') {
               const shortPaths = await pAll<string>(
                 Object.keys(results).map((longPath) => async () => {
@@ -117,9 +120,42 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
                     }
 
                     return acc
-                  }, {} as THttpList),
+                  }, {} as TItems),
                 })
               )
+            }
+
+            const urlData = url.parse(req.url, true)
+
+            if (urlData.pathname === '/get') {
+              const query = urlData.query as {
+                id: string,
+                type: 'ORIG' | 'NEW',
+              }
+              const { type } = query
+              const [shortPath, id] = query.id.split(':')
+              const longPath = pathMap.get(shortPath)!
+              const result = results[longPath][id]
+
+              // console.log(result, id, type)
+
+              res.setHeader('Content-Type', 'image/png')
+
+              if (result.type === 'NEW') {
+                res.end(Buffer.from(result.data), 'binary')
+              }
+
+              if (result.type === 'DELETED') {
+                res.end(Buffer.from(result.data), 'binary')
+              }
+
+              if (result.type === 'DIFF' && type === 'ORIG') {
+                res.end(Buffer.from(result.origData), 'binary')
+              }
+
+              if (result.type === 'DIFF' && type === 'NEW') {
+                res.end(Buffer.from(result.newData), 'binary')
+              }
             }
           }
         } catch (e) {
@@ -128,8 +164,21 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
         }
       })
       .on('error', reject)
-      .listen(SERVER_PORT, SERVER_HOST)
+      .listen(SERVER_PORT, SERVER_HOST, () => {
+        resolve()
+      })
   })
+
+  const entryPointPath = await broResolve('@x-ray/ui')
+  const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
+
+  await run({
+    htmlTemplatePath,
+    entryPointPath,
+    isQuiet: true,
+  })
+
+  console.log('open http://localhost:3000/ to approve or discard changes')
 
   // SAVE
   // for (const [filePath, result] of Object.entries(results)) {

@@ -1,8 +1,7 @@
 import { ReactElement } from 'react'
 import { TJsonValue } from 'typeon'
-import { TOmitKey } from 'tsfn'
 
-export type TItem = {
+export type TVariation = {
   id: string,
   element: ReactElement,
   meta: TJsonValue,
@@ -45,20 +44,22 @@ export type TWorkerResultInternal<T> = {
   transferList?: (ArrayBuffer | SharedArrayBuffer)[],
 }
 
-export type THttpList = {
-  [id: string]: {
-    type: 'DELETED',
-    width: number,
-    height: number,
-  } | {
-    type: 'NEW',
-    width: number,
-    height: number,
-  } | {
-    type: 'DIFF',
-    newWidth: number,
-    newHeight: number,
-    origWidth: number,
-    origHeight: number,
-  },
+export type TItem = {
+  type: 'DELETED',
+  width: number,
+  height: number,
+} | {
+  type: 'NEW',
+  width: number,
+  height: number,
+} | {
+  type: 'DIFF',
+  newWidth: number,
+  newHeight: number,
+  origWidth: number,
+  origHeight: number,
+}
+
+export type TItems = {
+  [id: string]: TItem,
 }
