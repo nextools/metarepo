@@ -5,19 +5,24 @@ import pAll from 'p-all'
 import { access } from 'pifs'
 import { TTarDataWithMeta, TarFs, TTarFs } from '@x-ray/tar-fs'
 import { getTarFilePath } from './get-tar-file-path'
-import { TExample, TCheckResults, TWorkerResultInternal } from './types'
+import { TExample, TCheckResults, TWorkerResultInternal, TCheckOptions } from './types'
 import { hasScreenshotDiff } from './has-screenshot-diff'
 import { bufferToPng } from './buffer-to-png'
 import { SCREENSHOTS_CONCURRENCY } from './constants'
+import { ApplyDpr } from './apply-dpr'
 
 const SELECTOR = '[data-x-ray]'
 
-export type TCheckOptions = {
-  browserWSEndpoint: string,
-}
-
-export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
-  const browser = await puppeteer.connect({ browserWSEndpoint })
+export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
+  const applyDpr = ApplyDpr(dpr)
+  const browser = await puppeteer.connect({
+    browserWSEndpoint,
+    defaultViewport: {
+      deviceScaleFactor: dpr,
+      width: 1024,
+      height: 1024,
+    },
+  })
   const pages = await Promise.all(
     new Array(SCREENSHOTS_CONCURRENCY).fill(null).map(() => browser.newPage())
   )
@@ -80,8 +85,8 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
             type: 'NEW',
             meta: example.meta,
             data: newScreenshot,
-            width: png.width,
-            height: png.height,
+            width: applyDpr(png.width),
+            height: applyDpr(png.height),
           }
 
           return
@@ -100,11 +105,11 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
           results[example.id] = {
             type: 'DIFF',
             origData: origScreenshot,
-            origWidth: origPng.width,
-            origHeight: origPng.height,
+            origWidth: applyDpr(origPng.width),
+            origHeight: applyDpr(origPng.height),
             newData: newScreenshot,
-            newWidth: newPng.width,
-            newHeight: newPng.height,
+            newWidth: applyDpr(newPng.width),
+            newHeight: applyDpr(newPng.height),
             meta: origMeta,
           }
 
@@ -135,8 +140,8 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
             type: 'DELETED',
             data,
             meta,
-            width: deletedPng.width,
-            height: deletedPng.height,
+            width: applyDpr(deletedPng.width),
+            height: applyDpr(deletedPng.height),
           }
 
           status.deleted++
