@@ -3,14 +3,10 @@ import url, { UrlWithParsedQuery } from 'url'
 import { isDefined } from 'tsfn'
 import { unchunkJson } from 'unchunk'
 import { TResults, TGetResponseQuery } from '../types'
+import { UI_HOST, UI_PORT, SERVER_PORT, SERVER_HOST } from '../constants'
 import { getList } from './get-list'
 import { getBuffer } from './get-buffer'
 import { save } from './save'
-
-const SERVER_HOST = 'localhost'
-const SERVER_PORT = 3001
-const UI_HOST = 'localhost'
-const UI_PORT = 3000
 
 export const runServer = (results: TResults, onClose: () => Promise<void>) => new Promise<void>((resolve, reject) => {
   const pathMap = new Map<string, string>()
