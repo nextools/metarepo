@@ -34,6 +34,12 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
 
     const { examples } = await import(filePath) as { examples: TVariation[] }
     const arrayBufferSet = new Set<ArrayBuffer>()
+    const status = {
+      ok: 0,
+      new: 0,
+      diff: 0,
+      deleted: 0,
+    }
     const results = {} as TCheckResults<Buffer>
 
     await pAll(
@@ -65,6 +71,8 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
           arrayBufferSet.add(newScreenshot.buffer)
 
           const png = bufferToPng(newScreenshot)
+
+          status.new++
 
           results[example.id] = {
             type: 'NEW',
@@ -98,6 +106,8 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
             meta: origMeta,
           }
 
+          status.diff++
+
           return
         }
 
@@ -105,6 +115,8 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
         results[example.id] = {
           type: 'OK',
         }
+
+        status.ok++
       }),
       { concurrency: CONCURRENCY }
     )
@@ -122,6 +134,8 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
             width: deletedPng.width,
             height: deletedPng.height,
           }
+
+          status.deleted++
         }
       }
 
@@ -132,6 +146,7 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
       value: {
         filePath,
         results,
+        status,
       },
       transferList: Array.from(arrayBufferSet),
     }

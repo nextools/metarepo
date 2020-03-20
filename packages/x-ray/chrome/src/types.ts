@@ -37,6 +37,12 @@ export type TCheckResults<T> = {
 export type TWorkerResult<T> = {
   filePath: string,
   results: TCheckResults<T>,
+  status: {
+    ok: number,
+    new: number,
+    diff: number,
+    deleted: number,
+  },
 }
 
 export type TWorkerResultInternal<T> = {
@@ -62,4 +68,8 @@ export type TItem = {
 
 export type TItems = {
   [id: string]: TItem,
+}
+
+export type TResults = {
+  [filePath: string]: TCheckResults<Uint8Array>,
 }
