@@ -7,6 +7,11 @@ export type TExample = () => Promise<{
   meta: TJsonValue,
 }>
 
+export type TCheckOptions = {
+  browserWSEndpoint: string,
+  dpr: number,
+}
+
 export type TCheckResults<T> = {
   [id: string]: {
     type: 'OK',

@@ -4,9 +4,10 @@ import { workerama } from 'workerama'
 import prettyMs from 'pretty-ms'
 import { run as runRebox } from '@rebox/web'
 import { broResolve } from 'bro-resolve'
-import { TWorkerResult, TResults } from './types'
+import { TWorkerResult, TResults, TCheckOptions } from './types'
 import { runServer } from './server/run'
 import { MAX_THREAD_COUNT, WORKER_PATH, UI_HOST, UI_PORT } from './constants'
+import { } from './worker'
 
 // export type TCheckChomeScreenshotsOptions = {
 //   dpr?: number,
@@ -24,6 +25,10 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
   }
   const results = {} as TResults
   const startTime = Date.now()
+  const checkOptions: TCheckOptions = {
+    browserWSEndpoint,
+    dpr: 2,
+  }
 
   await workerama({
     items: files,
@@ -31,7 +36,7 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
     maxThreadCount: MAX_THREAD_COUNT,
     fnFilePath: WORKER_PATH,
     fnName: 'check',
-    fnArgs: [{ browserWSEndpoint }],
+    fnArgs: [checkOptions],
     onItemResult: (value: TWorkerResult<Uint8Array>) => {
       results[value.filePath] = value.results
 
@@ -75,9 +80,9 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
 export const main = async () => {
   await checkChromeScreenshots([
     require.resolve('./screenshots/button.tsx'),
-    require.resolve('./screenshots/input.tsx'),
-    require.resolve('./screenshots/title.tsx'),
-    require.resolve('./screenshots/paragraph.tsx'),
-    require.resolve('./screenshots/select.tsx'),
+    // require.resolve('./screenshots/input.tsx'),
+    // require.resolve('./screenshots/title.tsx'),
+    // require.resolve('./screenshots/paragraph.tsx'),
+    // require.resolve('./screenshots/select.tsx'),
   ])
 }
