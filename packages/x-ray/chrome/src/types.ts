@@ -1,13 +1,11 @@
 import { ReactElement } from 'react'
 import { TJsonValue } from 'typeon'
 
-export type TExampleData = {
+export type TExample = {
   id: string,
   element: ReactElement,
   meta: TJsonValue,
 }
-
-export type TExample = () => Promise<TExampleData> | TExampleData
 
 export type TCheckOptions = {
   browserWSEndpoint: string,

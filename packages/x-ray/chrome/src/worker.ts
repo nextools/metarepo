@@ -5,11 +5,12 @@ import pAll from 'p-all'
 import { access } from 'pifs'
 import { TTarDataWithMeta, TarFs, TTarFs } from '@x-ray/tar-fs'
 import { getTarFilePath } from './get-tar-file-path'
-import { TExample, TCheckResults, TWorkerResultInternal, TCheckOptions } from './types'
+import { TCheckResults, TWorkerResultInternal, TCheckOptions, TExample } from './types'
 import { hasScreenshotDiff } from './has-screenshot-diff'
 import { bufferToPng } from './buffer-to-png'
 import { SCREENSHOTS_CONCURRENCY } from './constants'
 import { ApplyDpr } from './apply-dpr'
+import { mapIterable } from './iterable'
 
 const SELECTOR = '[data-x-ray]'
 
@@ -37,7 +38,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
       tarFs = await TarFs(tarFilePath)
     } catch {}
 
-    const { examples } = await import(filePath) as { examples: TExample[] }
+    const { examples } = await import(filePath) as { examples: Iterable<TExample> }
     const arrayBufferSet = new Set<ArrayBuffer>()
     const status = {
       ok: 0,
@@ -48,9 +49,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
     const results = {} as TCheckResults<Buffer>
 
     await pAll(
-      examples.map((getExample) => async (): Promise<void> => {
-        const example = await getExample()
-
+      mapIterable(examples, (example) => async (): Promise<void> => {
         const html = renderToStaticMarkup(
           createElement(
             'div',
