@@ -58,12 +58,7 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
   }
 
   let closeRebox = null as null | (() => Promise<void>)
-
-  await runServer(results, async () => {
-    if (closeRebox !== null) {
-      await closeRebox()
-    }
-  })
+  const savePromise = await runServer(results)
 
   const entryPointPath = await broResolve('@x-ray/ui')
   const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
@@ -75,6 +70,12 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
   })
 
   console.log(`open http://${UI_HOST}:${UI_PORT}/ to approve or discard changes`)
+
+  try {
+    await savePromise()
+  } finally {
+    await closeRebox()
+  }
 }
 
 export const main = async () => {
