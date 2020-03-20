@@ -3,8 +3,7 @@ import pAll from 'p-all'
 import pkgDir from 'pkg-dir'
 import { isUndefined } from 'tsfn'
 import { TResults, TItems } from '../types'
-
-const PACKAGE_DIR_CONCURRENCY = 4
+import { SHORT_PATH_CONCURRENCY } from '../constants'
 
 export type TListResponse = {
   type: 'image',
@@ -28,7 +27,7 @@ export const getList = async (results: TResults, pathMap: Map<string, string>): 
 
       return shortPath
     }),
-    { concurrency: PACKAGE_DIR_CONCURRENCY }
+    { concurrency: SHORT_PATH_CONCURRENCY }
   )
 
   return {

@@ -1,11 +1,11 @@
 import { ReactElement } from 'react'
 import { TJsonValue } from 'typeon'
 
-export type TVariation = {
+export type TExample = () => Promise<{
   id: string,
   element: ReactElement,
   meta: TJsonValue,
-}
+}>
 
 export type TCheckResults<T> = {
   [id: string]: {

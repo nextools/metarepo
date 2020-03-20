@@ -1,4 +1,3 @@
-import { cpus } from 'os'
 import path from 'path'
 import { runChromium } from 'xrom'
 import { workerama } from 'workerama'
@@ -7,15 +6,13 @@ import { run as runRebox } from '@rebox/web'
 import { broResolve } from 'bro-resolve'
 import { TWorkerResult, TResults } from './types'
 import { runServer } from './server/run'
+import { MAX_THREAD_COUNT, WORKER_PATH, UI_HOST, UI_PORT } from './constants'
 
 // export type TCheckChomeScreenshotsOptions = {
 //   dpr?: number,
 //   width?: number,
 //   height?: number,
 // }
-
-const MAX_THREAD_COUNT = cpus().length - 1
-const WORKER_PATH = require.resolve('./worker-setup')
 
 const checkChromeScreenshots = async (files: string[]): Promise<void> => {
   const browserWSEndpoint = await runChromium({ shouldCloseOnExit: true })
@@ -72,7 +69,7 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
     isQuiet: true,
   })
 
-  console.log('open http://localhost:3000/ to approve or discard changes')
+  console.log(`open http://${UI_HOST}:${UI_PORT}/ to approve or discard changes`)
 }
 
 export const main = async () => {

@@ -5,12 +5,12 @@ import pAll from 'p-all'
 import { access } from 'pifs'
 import { TTarDataWithMeta, TarFs, TTarFs } from '@x-ray/tar-fs'
 import { getTarFilePath } from './get-tar-file-path'
-import { TVariation, TCheckResults, TWorkerResultInternal } from './types'
+import { TExample, TCheckResults, TWorkerResultInternal } from './types'
 import { hasScreenshotDiff } from './has-screenshot-diff'
 import { bufferToPng } from './buffer-to-png'
+import { SCREENSHOTS_CONCURRENCY } from './constants'
 
 const SELECTOR = '[data-x-ray]'
-const CONCURRENCY = 4
 
 export type TCheckOptions = {
   browserWSEndpoint: string,
@@ -19,7 +19,7 @@ export type TCheckOptions = {
 export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
   const browser = await puppeteer.connect({ browserWSEndpoint })
   const pages = await Promise.all(
-    new Array(CONCURRENCY).fill(null).map(() => browser.newPage())
+    new Array(SCREENSHOTS_CONCURRENCY).fill(null).map(() => browser.newPage())
   )
 
   return async (filePath: string): Promise<TWorkerResultInternal<Buffer>> => {
@@ -32,7 +32,7 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
       tarFs = await TarFs(tarFilePath)
     } catch {}
 
-    const { examples } = await import(filePath) as { examples: TVariation[] }
+    const { examples } = await import(filePath) as { examples: TExample[] }
     const arrayBufferSet = new Set<ArrayBuffer>()
     const status = {
       ok: 0,
@@ -43,7 +43,9 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
     const results = {} as TCheckResults<Buffer>
 
     await pAll(
-      examples.map((example) => async (): Promise<void> => {
+      examples.map((getExample) => async (): Promise<void> => {
+        const example = await getExample()
+
         const html = renderToStaticMarkup(
           createElement(
             'div',
@@ -118,7 +120,7 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
 
         status.ok++
       }),
-      { concurrency: CONCURRENCY }
+      { concurrency: SCREENSHOTS_CONCURRENCY }
     )
 
     if (tarFs !== null) {
@@ -126,6 +128,8 @@ export const check = async ({ browserWSEndpoint }: TCheckOptions) => {
         if (!Reflect.has(results, id)) {
           const { data, meta } = await tarFs.read(id) as TTarDataWithMeta
           const deletedPng = bufferToPng(data)
+
+          arrayBufferSet.add(data)
 
           results[id] = {
             type: 'DELETED',
