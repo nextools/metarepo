@@ -6,7 +6,7 @@ import prettyMs from 'pretty-ms'
 import { run as runRebox } from '@rebox/web'
 import { broResolve } from 'bro-resolve'
 import { TWorkerResult, TResults } from './types'
-import { runServer } from './run-server'
+import { runServer } from './server/run'
 
 // export type TCheckChomeScreenshotsOptions = {
 //   dpr?: number,

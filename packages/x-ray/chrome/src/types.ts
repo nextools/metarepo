@@ -73,3 +73,8 @@ export type TItems = {
 export type TResults = {
   [filePath: string]: TCheckResults<Uint8Array>,
 }
+
+export type TGetResponseQuery = {
+  id: string,
+  type: 'ORIG' | 'NEW',
+}
