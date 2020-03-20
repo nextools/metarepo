@@ -14,13 +14,14 @@ export type TListResponse = {
 export const getList = async (results: TResults, pathMap: Map<string, string>): Promise<TListResponse> => {
   const shortPaths = await pAll<string>(
     Object.keys(results).map((longPath) => async () => {
-      const packageDir = await pkgDir(path.dirname(longPath))
+      // const packageDir = await pkgDir(path.dirname(longPath))
 
-      if (isUndefined(packageDir)) {
-        throw new Error(`Cannot find package dir for "${longPath}"`)
-      }
+      // if (isUndefined(packageDir)) {
+      //   throw new Error(`Cannot find package dir for "${longPath}"`)
+      // }
 
-      const shortPath = path.relative(path.resolve('packages/'), packageDir)
+      // const shortPath = path.relative(path.resolve('packages/'), packageDir)
+      const shortPath = path.basename(longPath, '.tsx')
 
       pathMap.set(shortPath, longPath)
       pathMap.set(longPath, shortPath)

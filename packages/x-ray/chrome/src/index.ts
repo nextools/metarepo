@@ -74,6 +74,10 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
 
 export const main = async () => {
   await checkChromeScreenshots([
-    require.resolve('./screenshots.tsx'),
+    require.resolve('./screenshots/button.tsx'),
+    require.resolve('./screenshots/input.tsx'),
+    require.resolve('./screenshots/title.tsx'),
+    require.resolve('./screenshots/paragraph.tsx'),
+    require.resolve('./screenshots/select.tsx'),
   ])
 }

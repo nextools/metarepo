@@ -4,8 +4,7 @@ import pAll from 'p-all'
 import imageminPngout from 'imagemin-pngout'
 import { getTarFilePath } from '../get-tar-file-path'
 import { TResults } from '../types'
-
-const WRITE_RESULT_CONCURRENCY = 4
+import { WRITE_RESULT_CONCURRENCY } from '../constants'
 
 const optimizePng = imageminPngout({ strategy: 2 })
 
