@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { applyMask, getPositionInMasked, getPositionInValue, isLongerThanMask } from '..'
 
 test('msked: getPositionInMasked', (t) => {

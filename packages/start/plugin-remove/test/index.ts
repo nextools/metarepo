@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import remove from '../src'
 
 test('plugin-remove: export', (t) => {

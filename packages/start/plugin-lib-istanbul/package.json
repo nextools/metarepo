@@ -30,12 +30,12 @@
     "tsfn": "^1.0.0"
   },
   "devDependencies": {
-    "@types/blue-tape": "^0.1.32",
+    "@types/tape": "^4.2.34",
     "@types/convert-source-map": "^1.5.1",
     "@types/istanbul-lib-coverage": "^2.0.0",
     "@types/istanbul-lib-hook": "^2.0.0",
     "@types/istanbul-lib-report": "^3.0.0",
     "@types/istanbul-lib-source-maps": "^1.2.1",
-    "blue-tape": "^1.0.0"
+    "tape": "^5.0.0-next.5"
   }
 }

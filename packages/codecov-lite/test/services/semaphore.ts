@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import semaphore from '../../src/services/semaphore'
 
 test('services/semaphore', (t) => {

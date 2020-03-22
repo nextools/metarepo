@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { getCalendarMonth } from '../src'
 
 const formatMonth = (month: Date[][]): string[][] => month.map((week) =>

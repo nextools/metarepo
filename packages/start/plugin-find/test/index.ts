@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import find from '../src'
 
 test('plugin-find: export', (t) => {

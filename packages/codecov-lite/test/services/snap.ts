@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import snap from '../../src/services/snap'
 
 test('services/snap', (t) => {

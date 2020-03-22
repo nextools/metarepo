@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import findGitStaged from '../src'
 
 test('plugin-findGitStaged: export', (t) => {

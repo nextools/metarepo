@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import getConfig from '../src/getConfig'
 
 test('getConfig', (t) => {

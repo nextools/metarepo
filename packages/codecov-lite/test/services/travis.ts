@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import travis from '../../src/services/travis'
 
 test('services/travis', (t) => {

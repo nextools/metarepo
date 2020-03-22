@@ -1,5 +1,5 @@
 import { promisify } from 'util'
-import test from 'blue-tape'
+import test from 'tape'
 import { TPackageRelease, TAutoConfig } from '@auto/core'
 import { createFsFromVolume, Volume } from 'memfs'
 import { mock, deleteFromCache } from 'mocku'

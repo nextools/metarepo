@@ -1,6 +1,6 @@
 import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import test from 'tape'
 import { component, startWithType } from '../src'
 
 test('startWithType', (t) => {

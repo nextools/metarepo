@@ -14,7 +14,7 @@
   "sideEffects": false,
   "devDependencies": {
     "@types/react": "^16.8.6",
-    "blue-tape": "^1.0.0",
+    "tape": "^5.0.0-next.5",
     "react": "^16.8.6"
   },
   "dependencies": {

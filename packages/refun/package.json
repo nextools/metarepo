@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
-    "blue-tape": "^1.0.0",
+    "tape": "^5.0.0-next.5",
     "react": "^16.8.6",
     "react-test-renderer": "^16.9.0",
     "redux": "^4.0.0",

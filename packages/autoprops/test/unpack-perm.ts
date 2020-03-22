@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import I from 'big-integer'
 import { TComponentConfig, Permutation } from '../src/types'
 import { unpackPerm } from '../src/unpack-perm'

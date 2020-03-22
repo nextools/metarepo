@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import I from 'big-integer'
 import { stringifyBigInt } from '../src/stringify-bigint'
 

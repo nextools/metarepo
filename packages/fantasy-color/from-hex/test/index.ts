@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import fromHEX from '../src'
 
 test('from-hex: valid', (t) => {

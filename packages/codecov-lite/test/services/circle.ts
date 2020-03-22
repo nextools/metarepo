@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import appveyor from '../../src/services/circle'
 
 test('services/circle', (t) => {

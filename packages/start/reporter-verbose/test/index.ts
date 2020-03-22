@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import reporterVerbose from '../src'
 
 test('reporter-verbose: export', (t) => {

@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import wercker from '../../src/services/wercker'
 
 test('services/wercker', (t) => {

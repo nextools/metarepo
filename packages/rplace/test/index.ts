@@ -1,5 +1,5 @@
 import { Readable } from 'stream'
-import test from 'blue-tape'
+import test from 'tape'
 import { replaceStream } from '../src'
 
 test('rplace: regexp + no trailing newline (flush)', (t) => {

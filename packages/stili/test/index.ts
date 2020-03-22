@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { normalizeStyle as normalizeStyleWeb } from '../src/index.web'
 import { normalizeStyle as normalizeStyleNative } from '../src/index.native'
 

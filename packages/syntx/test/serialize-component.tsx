@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import test from 'blue-tape'
+import test from 'tape'
 import {
   serializeComponent,
   TYPE_COMPONENT_BRACKET,

@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import labToHcl from '../src'
 
 test('labToHcl: white', (t) => {

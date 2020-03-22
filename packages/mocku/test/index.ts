@@ -1,5 +1,5 @@
 import Module from 'module'
-import test from 'blue-tape'
+import test from 'tape'
 import { mock, deleteFromCache } from '../src'
 
 const _Module: any = Module
@@ -165,14 +165,14 @@ test('mocku: modules: deleteFromCache', async (t) => {
     'should delete absolute path target from cache'
   )
 
-  if (!Reflect.has(_Module._cache, require.resolve('blue-tape'))) {
+  if (!Reflect.has(_Module._cache, require.resolve('tape'))) {
     t.fail('should not get there')
   }
 
-  deleteFromCache('blue-tape')
+  deleteFromCache('tape')
 
   t.false(
-    Reflect.has(_Module._cache, require.resolve('blue-tape')),
+    Reflect.has(_Module._cache, require.resolve('tape')),
     'should delete module name target from cache'
   )
 })

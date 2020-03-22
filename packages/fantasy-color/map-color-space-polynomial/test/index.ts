@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { mapColorSpace } from '../src'
 import exampleCoefficientsMatrix from './exampleCoefficientsMatrix'
 

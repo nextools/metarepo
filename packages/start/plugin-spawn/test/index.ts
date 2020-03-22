@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import spawn from '../src'
 
 test('plugin-spawn: export', (t) => {

@@ -1,6 +1,6 @@
 /* eslint-disable no-sync */
 import { promisify } from 'util'
-import test from 'blue-tape'
+import test from 'tape'
 import { createFsFromVolume, Volume } from 'memfs'
 import { mock } from 'mocku'
 

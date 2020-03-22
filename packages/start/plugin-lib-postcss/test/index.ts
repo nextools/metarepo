@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import postcss from '../src'
 
 test('plugin-lib-postcss: export', (t) => {

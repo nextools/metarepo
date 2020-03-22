@@ -1,6 +1,6 @@
 import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { component, mapKeyboardFocused, startWithType, TMapKeyboardFocused } from '../src'
 

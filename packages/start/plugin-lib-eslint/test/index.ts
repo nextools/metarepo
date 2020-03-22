@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import eslint from '../src'
 
 test('plugin-lib-eslint: export', (t) => {

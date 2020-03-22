@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import luminanceSrgb from '../src'
 
 test('luminance-srgb: white', (t) => {

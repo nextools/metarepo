@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import contrastRatioLuminance from '../src'
 
 test('contrast-ratio-luminance: first bigger', (t) => {

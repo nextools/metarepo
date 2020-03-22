@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { suggestFilter } from '../src/suggest-filter'
 
 test('git:makeCommit: suggestFilter', async (t) => {

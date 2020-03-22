@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import shippable from '../../src/services/shippable'
 
 test('services/shippable', (t) => {

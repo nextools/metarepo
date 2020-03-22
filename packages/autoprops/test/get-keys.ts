@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { getPropKeys, getChildrenKeys } from '../src/get-keys'
 import { TComponentConfig } from '../src'
 
