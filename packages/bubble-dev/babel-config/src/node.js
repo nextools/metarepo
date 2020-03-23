@@ -13,10 +13,6 @@ exports.babelConfigNodeBuild = {
       {
         targets: { node: TARGET_NODE_VERSION },
         ignoreBrowserslistConfig: true,
-        exclude: [
-          '@babel/plugin-transform-regenerator',
-          '@babel/plugin-transform-async-to-generator',
-        ],
       },
     ],
   ],
@@ -47,7 +43,7 @@ exports.babelConfigNodeBuild = {
       ],
     },
   ],
-  shouldPrintComment: (val) => val.startsWith('#'),
+  shouldPrintComment: (val) => val.startsWith('#') || val.startsWith('bin/sh'),
 }
 
 exports.babelConfigNodeRegister = {
@@ -60,10 +56,6 @@ exports.babelConfigNodeRegister = {
       {
         targets: { node: 'current' },
         ignoreBrowserslistConfig: true,
-        exclude: [
-          '@babel/plugin-transform-regenerator',
-          '@babel/plugin-transform-async-to-generator',
-        ],
       },
     ],
   ],

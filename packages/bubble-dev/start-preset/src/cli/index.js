@@ -1,6 +1,6 @@
 #!/bin/sh
-':' //# comment; exec /usr/bin/env node --experimental-worker "$0" "$@"
-// http://sambal.org/2014/02/passing-options-node-shebang-line/
+//bin/sh -c :; exec /usr/bin/env node --experimental-worker "$0" "$@"
+// https://unix.stackexchange.com/questions/65235/universal-node-js-shebang#comment755057_65295
 
 require('dotenv/config')
 
