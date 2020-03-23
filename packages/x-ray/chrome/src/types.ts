@@ -1,10 +1,22 @@
 import { ReactElement } from 'react'
 import { TJsonValue } from 'typeon'
 
+export type TExampleOptions = {
+  hasOwnWidth?: boolean,
+  backgroundColor?: string,
+  maxWidth?: number,
+  overflow?: number,
+  overflowTop?: number,
+  overflowBottom?: number,
+  overflowLeft?: number,
+  overflowRight?: number,
+}
+
 export type TExample = {
   id: string,
   element: ReactElement,
-  meta: TJsonValue,
+  options?: TExampleOptions,
+  meta?: TJsonValue,
 }
 
 export type TCheckOptions = {
@@ -20,13 +32,13 @@ export type TCheckResults<T> = {
     data: T,
     width: number,
     height: number,
-    meta: TJsonValue,
+    meta?: TJsonValue,
   } | {
     type: 'NEW',
     data: T,
     width: number,
     height: number,
-    meta: TJsonValue,
+    meta?: TJsonValue,
   } | {
     type: 'DIFF',
     newData: T,
@@ -35,7 +47,7 @@ export type TCheckResults<T> = {
     origData: T,
     origWidth: number,
     origHeight: number,
-    meta: TJsonValue,
+    meta?: TJsonValue,
   },
 }
 
