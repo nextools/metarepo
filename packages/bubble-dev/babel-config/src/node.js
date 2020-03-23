@@ -43,7 +43,7 @@ exports.babelConfigNodeBuild = {
       ],
     },
   ],
-  shouldPrintComment: (val) => val.startsWith('#'),
+  shouldPrintComment: (val) => val.startsWith('#') || val.startsWith('bin/sh'),
 }
 
 exports.babelConfigNodeRegister = {
