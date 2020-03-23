@@ -24,32 +24,30 @@ export type TCheckOptions = {
   dpr: number,
 }
 
-export type TCheckResults<T> = {
-  [id: string]: {
-    type: 'OK',
-  } | {
-    type: 'DELETED',
-    data: T,
-    width: number,
-    height: number,
-    meta?: TJsonValue,
-  } | {
-    type: 'NEW',
-    data: T,
-    width: number,
-    height: number,
-    meta?: TJsonValue,
-  } | {
-    type: 'DIFF',
-    newData: T,
-    newWidth: number,
-    newHeight: number,
-    origData: T,
-    origWidth: number,
-    origHeight: number,
-    meta?: TJsonValue,
-  },
-}
+export type TCheckResults<T> = Map<string, {
+  type: 'OK',
+} | {
+  type: 'DELETED',
+  data: T,
+  width: number,
+  height: number,
+  meta?: TJsonValue,
+} | {
+  type: 'NEW',
+  data: T,
+  width: number,
+  height: number,
+  meta?: TJsonValue,
+} | {
+  type: 'DIFF',
+  newData: T,
+  newWidth: number,
+  newHeight: number,
+  origData: T,
+  origWidth: number,
+  origHeight: number,
+  meta?: TJsonValue,
+}>
 
 export type TWorkerResult<T> = {
   filePath: string,
@@ -83,13 +81,11 @@ export type TItem = {
   origHeight: number,
 }
 
-export type TItems = {
+export type TListItems = {
   [id: string]: TItem,
 }
 
-export type TResults = {
-  [filePath: string]: TCheckResults<Uint8Array>,
-}
+export type TResults = Map<string, TCheckResults<Uint8Array>>
 
 export type TGetResponseQuery = {
   id: string,

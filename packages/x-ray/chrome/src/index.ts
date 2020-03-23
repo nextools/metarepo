@@ -7,13 +7,6 @@ import { broResolve } from 'bro-resolve'
 import { TWorkerResult, TResults, TCheckOptions } from './types'
 import { runServer } from './server/run'
 import { MAX_THREAD_COUNT, WORKER_PATH, UI_HOST, UI_PORT } from './constants'
-import { } from './worker'
-
-// export type TCheckChomeScreenshotsOptions = {
-//   dpr?: number,
-//   width?: number,
-//   height?: number,
-// }
 
 const checkChromeScreenshots = async (files: string[]): Promise<void> => {
   const browserWSEndpoint = await runChromium({ shouldCloseOnExit: true })
@@ -23,7 +16,7 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
     diff: 0,
     deleted: 0,
   }
-  const results = {} as TResults
+  const results: TResults = new Map()
   const startTime = Date.now()
   const checkOptions: TCheckOptions = {
     browserWSEndpoint,
@@ -38,7 +31,7 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
     fnName: 'check',
     fnArgs: [checkOptions],
     onItemResult: (value: TWorkerResult<Uint8Array>) => {
-      results[value.filePath] = value.results
+      results.set(value.filePath, value.results)
 
       status.ok += value.status.ok
       status.new += value.status.new

@@ -12,11 +12,11 @@ import { Background } from '../Background'
 import { COL_SPACE, BORDER_SIZE, COLOR_GRAY } from '../../config'
 import { Toolbar, TOOLBAR_HEIGHT } from '../Toolbar'
 import { SaveButton, SAVE_BUTTON_HEIGHT } from '../SaveButton'
-import { TItems } from '../../../../chrome/src/types'
+import { TListItems } from '../../../../chrome/src/types'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
 
-const isScreenshots = (items: any, type: TType | null): items is TItems => type === 'image' && Object.keys(items).length > 0
+const isScreenshots = (items: any, type: TType | null): items is TListItems => type === 'image' && Object.keys(items).length > 0
 const isSnapshots = (items: any, type: TType | null): items is TSnapshotItems => type === 'text' && Object.keys(items).length > 0
 
 export type TMain = TSize

@@ -23,7 +23,7 @@ export const runServer = (results: TResults) => new Promise<() => Promise<void>>
             }
 
             if (req.method === 'GET' && urlData.pathname === '/list') {
-              const list = await getList(results, pathMap)
+              const list = getList(results, pathMap)
 
               res.end(JSON.stringify(list))
 

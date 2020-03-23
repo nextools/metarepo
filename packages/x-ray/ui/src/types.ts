@@ -1,7 +1,7 @@
 import { TExtend } from 'tsfn'
 import { ThunkAction } from 'redux-thunk'
 import { TSnapshotItem, TSnapshotItems } from '@x-ray/snapshots'
-import { TItems, TItem } from '../../chrome/src/types'
+import { TListItems, TItem } from '../../chrome/src/types'
 
 export type TPosition = {
   top: number,
@@ -51,6 +51,6 @@ export type TState = {
   selectedItem: TSnapshotGridItem | null,
 } | {
   type: 'image' | null,
-  items: TItems,
+  items: TListItems,
   selectedItem: TScreenshotGridItem | null,
 })
