@@ -1,6 +1,5 @@
 import { createGzip, createGunzip, constants } from 'zlib'
 import fs from 'pifs'
-import { TJsonValue } from 'typeon'
 
 const HEADER_SIZE = 512
 
@@ -78,21 +77,12 @@ type TFileMeta = {
   size: number,
 }
 
-type TIndexFile = {
-  [id: string]: TJsonValue,
-}
-
-export type TTarDataWithMeta = {
-  data: Buffer,
-  meta: TJsonValue,
-}
-
 export type TTarFs = {
   has: (fileName: string) => boolean,
   list: () => string[],
-  read: (fileName: string) => Promise<TTarDataWithMeta | null>,
+  read: (fileName: string) => Promise<Buffer | null>,
   delete: (fileName: string) => void,
-  write: (fileName: string, dataWithMeta: TTarDataWithMeta) => void,
+  write: (fileName: string, data: Buffer) => void,
   save: () => Promise<void>,
   close: () => Promise<void>,
 }
@@ -100,9 +90,8 @@ export type TTarFs = {
 export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
   let fd: number | null = null
   const files = new Map<string, TFileMeta>()
-  const filesToWrite = new Map<string, TTarDataWithMeta>()
+  const filesToWrite = new Map<string, Buffer>()
   const filesToDelete = new Set<string>()
-  let indexFile: TIndexFile = {}
   let pos = 0
   const nameBuffer = Buffer.alloc(100)
   const sizeBuffer = Buffer.alloc(12)
@@ -123,18 +112,6 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
         .on('finish', resolve)
     })
     fd = await fs.open(tempFilePath, 'r')
-
-    // read index file
-    await fs.read(fd, sizeBuffer, 0, 12, 124)
-
-    const dataSize = parseInt(sizeBuffer.toString(), 8)
-    const dataBuffer = Buffer.alloc(dataSize)
-
-    await fs.read(fd, dataBuffer, 0, dataSize, 512)
-
-    indexFile = JSON.parse(dataBuffer.toString())
-
-    pos += HEADER_SIZE + dataSize + (HEADER_SIZE - dataSize % HEADER_SIZE)
 
     while (true) {
       await fs.read(fd, nameBuffer, 0, 100, pos)
@@ -190,16 +167,13 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
 
       await fs.read(fd, dataBuffer, 0, size, position)
 
-      return {
-        data: dataBuffer,
-        meta: indexFile[fileName],
-      }
+      return dataBuffer
     },
     delete: (fileName) => {
       filesToDelete.add(fileName)
     },
-    write: (fileName, dataWithMeta) => {
-      filesToWrite.set(fileName, dataWithMeta)
+    write: (fileName, data) => {
+      filesToWrite.set(fileName, data)
     },
     save: async () => {
       if (filesToWrite.size === 0 && filesToDelete.size === 0) {
@@ -214,33 +188,16 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
       const tempFd = await fs.open(tempSaveFilePath, 'w')
       let tempPos = 0
 
-      for (const fileName of filesToDelete) {
-        Reflect.deleteProperty(indexFile, fileName)
-      }
-
-      for (const fileName of filesToWrite.keys()) {
-        indexFile[fileName] = filesToWrite.get(fileName)!.meta
-      }
-
-      const indexFileBuffer = Buffer.from(JSON.stringify(indexFile))
-      const indexFileBufferSize = indexFileBuffer.byteLength
-      const headerBuffer = generateHeader('_.json', indexFileBufferSize)
-
-      await fs.write(tempFd, headerBuffer, 0, HEADER_SIZE, 0)
-      await fs.write(tempFd, indexFileBuffer, 0, indexFileBufferSize, HEADER_SIZE)
-
-      tempPos += HEADER_SIZE + indexFileBufferSize + (HEADER_SIZE - indexFileBufferSize % HEADER_SIZE)
-
       if (fd !== null) {
         for (const fileName of files.keys()) {
           // updated file
           if (filesToWrite.has(fileName)) {
-            const { data: dataBuffer } = filesToWrite.get(fileName)!
-            const dataBufferSize = dataBuffer.byteLength
+            const data = filesToWrite.get(fileName)!
+            const dataBufferSize = data.byteLength
             const headerBuffer = generateHeader(fileName, dataBufferSize)
 
             await fs.write(tempFd, headerBuffer, 0, HEADER_SIZE, tempPos)
-            await fs.write(tempFd, dataBuffer, 0, dataBufferSize, tempPos + HEADER_SIZE)
+            await fs.write(tempFd, data, 0, dataBufferSize, tempPos + HEADER_SIZE)
 
             tempPos += HEADER_SIZE + dataBufferSize + (HEADER_SIZE - dataBufferSize % HEADER_SIZE)
           // deleted file
@@ -264,13 +221,13 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
       for (const filePath of filesToWrite.keys()) {
         // new file
         if (!files.has(filePath)) {
-          const { data: dataBuffer } = filesToWrite.get(filePath)!
-          const size = dataBuffer.byteLength
+          const data = filesToWrite.get(filePath)!
+          const size = data.byteLength
 
           const headerBuffer = generateHeader(filePath, size)
 
           await fs.write(tempFd, headerBuffer, 0, HEADER_SIZE, tempPos)
-          await fs.write(tempFd, dataBuffer, 0, size, tempPos + HEADER_SIZE)
+          await fs.write(tempFd, data, 0, size, tempPos + HEADER_SIZE)
 
           tempPos += HEADER_SIZE + size + (HEADER_SIZE - size % HEADER_SIZE)
         }

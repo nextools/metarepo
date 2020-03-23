@@ -3,7 +3,8 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import puppeteer, { ElementHandle } from 'puppeteer-core'
 import pAll from 'p-all'
 import { access } from 'pifs'
-import { TTarDataWithMeta, TarFs, TTarFs } from '@x-ray/tar-fs'
+import { TarFs, TTarFs } from '@x-ray/tar-fs'
+import { TJsonValue } from 'typeon'
 import { getTarFilePath } from './get-tar-file-path'
 import { TCheckResults, TWorkerResultInternal, TCheckOptions, TExample } from './types'
 import { hasScreenshotDiff } from './has-screenshot-diff'
@@ -11,6 +12,7 @@ import { bufferToPng } from './buffer-to-png'
 import { SCREENSHOTS_CONCURRENCY } from './constants'
 import { ApplyDpr } from './apply-dpr'
 import { mapIterable } from './iterable'
+import { getContainerStyle } from './get-container-style'
 
 const SELECTOR = '[data-x-ray]'
 
@@ -55,9 +57,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
             'div',
             {
               'data-x-ray': true,
-              style: {
-                display: 'inline-block',
-              },
+              style: getContainerStyle(example.options),
             },
             example.element
           )
@@ -91,7 +91,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
           return
         }
 
-        const { data: origScreenshot, meta: origMeta } = await tarFs.read(example.id) as TTarDataWithMeta
+        const origScreenshot = await tarFs.read(example.id) as Buffer
 
         const origPng = bufferToPng(origScreenshot)
         const newPng = bufferToPng(newScreenshot)
@@ -109,7 +109,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
             newData: newScreenshot,
             newWidth: applyDpr(newPng.width),
             newHeight: applyDpr(newPng.height),
-            meta: origMeta,
+            meta: example.meta,
           }
 
           status.diff++
@@ -130,8 +130,16 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
     if (tarFs !== null) {
       for (const id of tarFs.list()) {
         if (!Reflect.has(results, id)) {
-          const { data, meta } = await tarFs.read(id) as TTarDataWithMeta
+          const data = await tarFs.read(id) as Buffer
           const deletedPng = bufferToPng(data)
+          const metaId = `${id}-meta`
+          let meta
+
+          if (tarFs.has(metaId)) {
+            const metaBuffer = await tarFs.read(id) as Buffer
+
+            meta = JSON.parse(metaBuffer.toString('utf8')) as TJsonValue
+          }
 
           arrayBufferSet.add(data)
 
