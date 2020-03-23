@@ -48,7 +48,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
       diff: 0,
       deleted: 0,
     }
-    const results = {} as TCheckResults<Buffer>
+    const results: TCheckResults<Buffer> = new Map()
 
     await pAll(
       mapIterable(examples, (example) => async (): Promise<void> => {
@@ -80,13 +80,13 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
 
           status.new++
 
-          results[example.id] = {
+          results.set(example.id, {
             type: 'NEW',
             meta: example.meta,
             data: newScreenshot,
             width: applyDpr(png.width),
             height: applyDpr(png.height),
-          }
+          })
 
           return
         }
@@ -101,7 +101,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
           arrayBufferSet.add(origScreenshot.buffer)
           arrayBufferSet.add(newScreenshot.buffer)
 
-          results[example.id] = {
+          results.set(example.id, {
             type: 'DIFF',
             origData: origScreenshot,
             origWidth: applyDpr(origPng.width),
@@ -110,7 +110,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
             newWidth: applyDpr(newPng.width),
             newHeight: applyDpr(newPng.height),
             meta: example.meta,
-          }
+          })
 
           status.diff++
 
@@ -118,9 +118,9 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
         }
 
         // OK
-        results[example.id] = {
+        results.set(example.id, {
           type: 'OK',
-        }
+        })
 
         status.ok++
       }),
@@ -129,7 +129,11 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
 
     if (tarFs !== null) {
       for (const id of tarFs.list()) {
-        if (!Reflect.has(results, id)) {
+        if (id.endsWith('-meta')) {
+          continue
+        }
+
+        if (!results.has(id)) {
           const data = await tarFs.read(id) as Buffer
           const deletedPng = bufferToPng(data)
           const metaId = `${id}-meta`
@@ -143,13 +147,13 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
 
           arrayBufferSet.add(data)
 
-          results[id] = {
+          results.set(id, {
             type: 'DELETED',
             data,
             meta,
             width: applyDpr(deletedPng.width),
             height: applyDpr(deletedPng.height),
-          }
+          })
 
           status.deleted++
         }

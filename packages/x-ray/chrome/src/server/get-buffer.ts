@@ -3,7 +3,7 @@ import { TResults, TGetResponseQuery } from '../types'
 export const getBuffer = (results: TResults, pathMap: Map<string, string>, query: TGetResponseQuery): Buffer | null => {
   const [shortPath, id] = query.id.split(':')
   const longPath = pathMap.get(shortPath)!
-  const result = results[longPath][id]
+  const result = results.get(longPath)!.get(id)!
 
   if (result.type === 'NEW') {
     return Buffer.from(result.data)

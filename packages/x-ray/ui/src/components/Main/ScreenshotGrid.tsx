@@ -12,13 +12,13 @@ import { ScreenshotNew } from '../ScreenshotNew'
 import { ScreenshotDeleted } from '../ScreenshotDeleted'
 import { ScreenshotDiff } from '../ScreenshotDiff'
 import { COL_SPACE, COL_WIDTH, BORDER_SIZE, COLOR_BLACK } from '../../config'
-import { TItems } from '../../../../chrome/src/types'
+import { TListItems } from '../../../../chrome/src/types'
 import { mapDiffState } from './map-diff-state'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 
 export type TScreenshotGrid = TRect & {
-  items: TItems,
+  items: TListItems,
   discardedItems: string[],
   filteredFiles: string[],
   shouldAnimate: boolean,

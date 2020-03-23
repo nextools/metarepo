@@ -28,7 +28,7 @@ export const save = async (results: TResults, pathMap: Map<string, string>, keys
 
     await pAll(
       ids.map((id) => async () => {
-        const result = results[filePath][id]
+        const result = results.get(filePath)!.get(id)!
 
         switch (result.type) {
           case 'NEW': {
