@@ -27,7 +27,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
     },
   })
   const pages = await Promise.all(
-    new Array(SCREENSHOTS_CONCURRENCY).fill(null).map(() => browser.newPage())
+    Array.from({ length: SCREENSHOTS_CONCURRENCY }, () => browser.newPage())
   )
 
   return async (filePath: string): Promise<TWorkerResultInternal<Buffer>> => {
