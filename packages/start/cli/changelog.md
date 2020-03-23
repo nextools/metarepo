@@ -1,3 +1,7 @@
+## v1.0.3
+
+* 🐞 fix `bin` entry points with tricky shebang for running Node.js with flags
+
 ## v1.0.2
 
 * 🐞 add `--experimental-worker` Node.js flag by default

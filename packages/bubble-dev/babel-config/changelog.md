@@ -1,3 +1,11 @@
+## v0.1.5
+
+* 🐞 fix `bin` entry points with tricky shebang for running Node.js with flags
+
+* 🐞 remove unnecessary plugin excludes for Node.js v10+
+
+* 🐞 fix source maps for `babelConfigNodeRegister` config
+
 ## v0.1.4
 
 * 🐞 tweak and explicitly set `shouldPrintComment`, `compact`, `inputSourceMap` and `sourceMaps` options
