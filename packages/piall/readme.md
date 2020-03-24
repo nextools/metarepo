@@ -7,7 +7,7 @@ Promise-Iterable-All. Like [`Promise.all`](https://developer.mozilla.org/en-US/d
 * iterates in whatever comes first order
 * has `concurrency` option
 
-Consider using [p-all](https://github.com/sindresorhus/p-all) if you need just `Promise.all` with concurrency.
+Consider using [p-all](https://github.com/sindresorhus/p-all) if you need just `Promise.all` with `concurrency` option.
 
 ## Install
 
