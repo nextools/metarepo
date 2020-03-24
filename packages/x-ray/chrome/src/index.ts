@@ -23,24 +23,25 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
     dpr: 2,
   }
 
-  await workerama({
+  const resultsIterable = workerama<TWorkerResult<Uint8Array>>({
     items: files,
     itemsPerThreadCount: 1,
     maxThreadCount: MAX_THREAD_COUNT,
     fnFilePath: WORKER_PATH,
     fnName: 'check',
     fnArgs: [checkOptions],
-    onItemResult: (value: TWorkerResult<Uint8Array>) => {
-      console.log(value.filePath)
-
-      results.set(value.filePath, value.results)
-
-      status.ok += value.status.ok
-      status.new += value.status.new
-      status.diff += value.status.diff
-      status.deleted += value.status.deleted
-    },
   })
+
+  for await (const result of resultsIterable) {
+    console.log(result.filePath)
+
+    results.set(result.filePath, result.results)
+
+    status.ok += result.status.ok
+    status.new += result.status.new
+    status.diff += result.status.diff
+    status.deleted += result.status.deleted
+  }
 
   console.log(`ok: ${status.ok}`)
   console.log(`new: ${status.new}`)

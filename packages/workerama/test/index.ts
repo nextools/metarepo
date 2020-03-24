@@ -3,7 +3,7 @@ import test from 'tape'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 
-test('tommy-gun: `maxThreadCount`', async (t) => {
+test('workerama: `maxThreadCount`', async (t) => {
   const workerSpy = createSpy(() => {})
 
   class MyWorker extends Worker {
@@ -89,7 +89,7 @@ test('tommy-gun: `maxThreadCount`', async (t) => {
   unmockRequire()
 })
 
-test('tommy-gun: not more than needed', async (t) => {
+test('workerama: not more than needed', async (t) => {
   const workerSpy = createSpy(() => {})
 
   class MyWorker extends Worker {
@@ -165,7 +165,7 @@ test('tommy-gun: not more than needed', async (t) => {
   unmockRequire()
 })
 
-test('tommy-gun: throw about `itemsPerThreadCount`', async (t) => {
+test('workerama: throw about `itemsPerThreadCount`', async (t) => {
   const inputArray = new Array(10).fill(null).map((_, i) => i)
   const outputArray = [] as number[]
 
@@ -194,7 +194,7 @@ test('tommy-gun: throw about `itemsPerThreadCount`', async (t) => {
   }
 })
 
-test('tommy-gun: throw about `maxThreadCount`', async (t) => {
+test('workerama: throw about `maxThreadCount`', async (t) => {
   const inputArray = new Array(10).fill(null).map((_, i) => i)
   const outputArray = [] as number[]
 
@@ -223,7 +223,7 @@ test('tommy-gun: throw about `maxThreadCount`', async (t) => {
   }
 })
 
-test('tommy-gun: should propagate and throw errors from workers', async (t) => {
+test('workerama: should propagate and throw errors from workers', async (t) => {
   const inputArray = new Array(20).fill(null).map((_, i) => i)
   const { workerama } = await import('../src')
 

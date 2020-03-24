@@ -2,6 +2,7 @@ import path from 'path'
 import { Worker } from 'worker_threads'
 import getCallerFile from 'get-caller-file'
 import { piAll } from 'piall'
+import { iterableFinally } from './iterable'
 
 export type TWorkerama = {
   items: any[],
@@ -10,10 +11,9 @@ export type TWorkerama = {
   fnFilePath: string,
   fnName: string,
   fnArgs: any[],
-  onItemResult: (result: any, workerId: number) => void,
 }
 
-export const workerama = async (options: TWorkerama): Promise<void> => {
+export const workerama = <T>(options: TWorkerama): AsyncIterable<T> => {
   if (options.itemsPerThreadCount <= 0) {
     throw new Error('`itemsPerThreadCount` should be greater than zero')
   }
@@ -34,36 +34,36 @@ export const workerama = async (options: TWorkerama): Promise<void> => {
         fnFilePath: fullFnFilePath,
         fnName: options.fnName,
         fnArgs: options.fnArgs,
+        umask: process.umask(),
       },
     })
   })
 
-  const resultsIterable = piAll(
-    options.items.map((item) => () => {
-      const worker = workers.shift()!
+  const resultsIterable = iterableFinally(
+    piAll<T>(
+      options.items.map((item) => () => {
+        const worker = workers.shift()!
 
-      return new Promise((resolve, reject) => {
-        worker
-          .once('error', reject)
-          .on('message', (message) => {
-            worker.removeAllListeners()
-            workers.push(worker)
+        return new Promise((resolve, reject) => {
+          worker
+            .once('error', reject)
+            .on('message', (message) => {
+              worker.removeAllListeners()
+              workers.push(worker)
 
-            if (message.type === 'done') {
-              resolve(message.value)
-            } else if (message.type === 'error') {
-              reject(message.value)
-            }
-          })
-          .postMessage(item)
-      })
-    }),
-    threadCount
+              if (message.type === 'done') {
+                resolve(message.value)
+              } else if (message.type === 'error') {
+                reject(message.value)
+              }
+            })
+            .postMessage(item)
+        })
+      }),
+      threadCount
+    ),
+    () => Promise.all(workers.map((worker) => worker.terminate()))
   )
 
-  for await (const result of resultsIterable) {
-    options.onItemResult(result, 0)
-  }
-
-  await Promise.all(workers.map((worker) => worker.terminate()))
+  return resultsIterable
 }
