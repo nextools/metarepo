@@ -105,8 +105,6 @@ General config to tweak `auto` behavior:
 {
   "auto": {
     "bump": {
-      "initialType": "major",
-      "zeroBreakingChangeType": "major",
       "shouldAlwaysBumpDependents": false,
     }
   }
@@ -115,8 +113,6 @@ General config to tweak `auto` behavior:
 
 Where:
 
-* `initialType` – `minor` by default – bump `patch | minor | major` type that should be used for `initial` prefix, for example one can control whether to start a package with "zero major semver", or to go with `v1` right away
-* `zeroBreakingChangeType` – `minor` by default – bump type that should be used for `major` prefix while package is in "zero major semver" state, i.e. either to bump `0.1.0` to `0.2.0` or to `1.0.0`
 * `shouldAlwaysBumpDependents` – `false` by default – makes package to always update dependents' version ranges and bump dependents, even if version range of a certain dependent satisfies package new release version; useful for monorepos where one would like to always expclicitly propagate and publish every patch and feature across all the packages
 
 It's possible to override any `bump` options in particular `package.json` allowing some packages to behave differently from the global monorepo config.
@@ -323,8 +319,6 @@ With such a root `package.json` config for `auto`:
       "initial": "🐣"
     },
     "bump": {
-      "initialType": "minor",
-      "zeroBreakingChangeType": "minor",
       "shouldAlwaysBumpDependents": false, 
     }
   }
