@@ -1,6 +1,7 @@
 import path from 'path'
 import { Worker } from 'worker_threads'
 import getCallerFile from 'get-caller-file'
+import { piAll } from 'piall'
 
 export type TWorkerama = {
   items: any[],
@@ -24,64 +25,45 @@ export const workerama = async (options: TWorkerama): Promise<void> => {
   const workerPath = require.resolve('./worker')
   const callerDir = path.dirname(getCallerFile())
   const fullFnFilePath = require.resolve(path.resolve(callerDir, options.fnFilePath))
-  const workers = [] as Worker[]
   // not more than needed but max to maxTheadCount
   const threadCount = Math.min(Math.ceil(options.items.length / options.itemsPerThreadCount), options.maxThreadCount)
-  let itemsIndex = 0
 
-  await Promise.all(
-    new Array(threadCount).fill(null).map(() => {
-      return new Promise<void>((resolve, reject) => {
-        let hasFailed = false
-        const worker = new Worker(workerPath, {
-          workerData: {
-            fnFilePath: fullFnFilePath,
-            fnName: options.fnName,
-            fnArgs: options.fnArgs,
-          },
-        })
-
-        workers.push(worker)
-
-        worker.on('message', async ({ type, value }) => {
-          switch (type) {
-            case 'next': {
-              if (itemsIndex >= options.items.length) {
-                await worker.terminate()
-              } else {
-                worker.postMessage(options.items.slice(itemsIndex, itemsIndex + options.itemsPerThreadCount))
-                itemsIndex += options.itemsPerThreadCount
-              }
-
-              return
-            }
-
-            case 'error': {
-              hasFailed = true
-
-              await Promise.all(workers.map((worker) => worker.terminate()))
-
-              reject(value)
-
-              return
-            }
-
-            case 'data': {
-              options.onItemResult(value, worker.threadId)
-            }
-          }
-        })
-        worker.on('error', reject)
-        worker.on('exit', () => {
-          if (!hasFailed) {
-            resolve()
-          }
-        })
-
-        worker.postMessage(options.items.slice(itemsIndex, itemsIndex + options.itemsPerThreadCount))
-
-        itemsIndex += options.itemsPerThreadCount
-      })
+  const workers = Array.from({ length: threadCount }, () => {
+    return new Worker(workerPath, {
+      workerData: {
+        fnFilePath: fullFnFilePath,
+        fnName: options.fnName,
+        fnArgs: options.fnArgs,
+      },
     })
+  })
+
+  const resultsIterable = piAll(
+    options.items.map((item) => () => {
+      const worker = workers.shift()!
+
+      return new Promise((resolve, reject) => {
+        worker
+          .once('error', reject)
+          .on('message', (message) => {
+            worker.removeAllListeners()
+            workers.push(worker)
+
+            if (message.type === 'done') {
+              resolve(message.value)
+            } else if (message.type === 'error') {
+              reject(message.value)
+            }
+          })
+          .postMessage(item)
+      })
+    }),
+    threadCount
   )
+
+  for await (const result of resultsIterable) {
+    options.onItemResult(result, 0)
+  }
+
+  await Promise.all(workers.map((worker) => worker.terminate()))
 }

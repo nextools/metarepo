@@ -31,6 +31,8 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
     fnName: 'check',
     fnArgs: [checkOptions],
     onItemResult: (value: TWorkerResult<Uint8Array>) => {
+      console.log(value.filePath)
+
       results.set(value.filePath, value.results)
 
       status.ok += value.status.ok
@@ -74,9 +76,9 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
 export const main = async () => {
   await checkChromeScreenshots([
     require.resolve('./screenshots/button.tsx'),
-    // require.resolve('./screenshots/input.tsx'),
-    // require.resolve('./screenshots/title.tsx'),
-    // require.resolve('./screenshots/paragraph.tsx'),
-    // require.resolve('./screenshots/select.tsx'),
+    require.resolve('./screenshots/input.tsx'),
+    require.resolve('./screenshots/title.tsx'),
+    require.resolve('./screenshots/paragraph.tsx'),
+    require.resolve('./screenshots/select.tsx'),
   ])
 }
