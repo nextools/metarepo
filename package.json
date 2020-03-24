@@ -25,6 +25,7 @@
     "packages/move-path",
     "packages/msked",
     "packages/perfa",
+    "packages/piall",
     "packages/pifs",
     "packages/primitives/*",
     "packages/rebox/*",

@@ -30,6 +30,7 @@ Check the individual documentations for more details:
 * [mocku](packages/mocku): imports mocking library
 * [move-path](packages/move-path): move path to destination folder
 * [perfa](packages/perfa): measure React app performance using dockerized Chromium through [xrom](packages/xrom) lib
+* [piall](packages/piall): `Promise.all` and `Promise.allSettled` with concurrency option and async iterable result
 * [pifs](packages/pifs): promisified [graceful-fs](https://github.com/isaacs/node-graceful-fs)
 * [@primitives](packages/primitives): set of universal React/React Native base components
 * [@rebox](packages/rebox): set of helpers to dev and build React/React Native apps, completely abstracts out of `ios` and `android` folders
