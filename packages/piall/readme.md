@@ -87,3 +87,7 @@ for await (const result of asyncIterable) {
   // { status: 'fulfilled', value: 'a' }
 }
 ```
+
+## Thanks
+
+To [Artem Tyurin](https://github.com/agentcooper) for a [really nice trick](https://agentcooper.io/iterate-promise-all/) with `Promise.race`.
