@@ -1,10 +1,12 @@
 import React from 'react'
 import { TExample } from '../types'
+import { mapIterable, makeNumIterable } from '../iterable'
 
-export const examples: TExample[] = new Array(1000).fill(null).map((_, i) => {
-  return () => ({
-    id: String(i),
-    element: <p>{i}</p>,
-    meta: [i],
-  })
-})
+export const examples = mapIterable<number, TExample>(makeNumIterable(100), (i) => ({
+  id: String(i),
+  element: <p>{i}</p>,
+  options: {
+    hasOwnWidth: true,
+  },
+  meta: [i],
+}))
