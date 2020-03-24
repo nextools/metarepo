@@ -1,8 +1,13 @@
 {
   "name": "piall",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "`Promise.all` and `Promise.allSettled` with concurrency option and async iterable result",
-  "keywords": ["promise", "concurrency", "async", "iterable"],
+  "keywords": [
+    "promise",
+    "concurrency",
+    "async",
+    "iterable"
+  ],
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
