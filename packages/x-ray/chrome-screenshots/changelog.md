@@ -1,3 +1,9 @@
+## v1.0.4
+
+* 🐞 refactor to use `rsolve` package instead of `bro-resolve` and `rn-resolve`
+
+* ♻️ update dependencies `rsolve`
+
 ## v1.0.3
 
 * 🐞 fix leaking event listeners on browser page

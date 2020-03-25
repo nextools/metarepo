@@ -1,3 +1,9 @@
+## v1.2.2
+
+* 🐞 refactor to use `rsolve` package instead of `bro-resolve` and `rn-resolve`
+
+* ♻️ update dependencies `rsolve`
+
 ## v1.2.1
 
 * 🐞 handle cases without source code

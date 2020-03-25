@@ -1,3 +1,9 @@
+## v2.0.1
+
+* 🐞 refactor to use `rsolve` package instead of `bro-resolve` and `rn-resolve`
+
+* ♻️ update dependencies `@x-ray/chrome-perf-snapshots`, `@x-ray/chrome-screenshots`, `@x-ray/firefox-screenshots`, `@x-ray/snapshots`, `rsolve`
+
 ## v2.0.0
 
 * 🐞 refactor according to new `auto` api

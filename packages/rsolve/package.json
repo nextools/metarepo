@@ -1,8 +1,11 @@
 {
   "name": "rsolve",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Resolve module path with custom entry point `package.json` field relative to caller file",
-  "keywords": ["resolve", "path"],
+  "keywords": [
+    "resolve",
+    "path"
+  ],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
