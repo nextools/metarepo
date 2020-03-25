@@ -35,6 +35,7 @@ export const piAll = <T>(iterable: Iterable<() => TMaybePromise<any>>, concurren
           results.push(result)
 
           if (!isDone && !hasError) {
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             next()
           }
         } catch (err) {
@@ -46,6 +47,7 @@ export const piAll = <T>(iterable: Iterable<() => TMaybePromise<any>>, concurren
       }
 
       for (let i = 0; i < concurrency; i++) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         next()
 
         if (isDone || hasError) {

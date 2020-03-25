@@ -37,12 +37,14 @@ export const piAllSettled = <T>(iterable: Iterable<() => TMaybePromise<any>>, co
           pool.delete(maybePromise)
 
           if (!isDone) {
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             next()
           }
         }
       }
 
       for (let i = 0; i < concurrency; i++) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         next()
 
         if (isDone) {
