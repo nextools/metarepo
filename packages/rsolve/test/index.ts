@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { rsolve } from '../src'
 
 test('bro-resolve: ok', async (t) => {
