@@ -1,3 +1,7 @@
+## v2.0.5
+
+* 🐞 fix plugin on native
+
 ## v2.0.4
 
 * 🐞 export `Icon` component
