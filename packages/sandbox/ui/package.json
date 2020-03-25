@@ -25,7 +25,7 @@
     "refun": "^1.0.0",
     "stili": "^1.0.0",
     "syntx": "^1.0.0",
-    "tsfn": "^1.0.0"
+    "tsfn": "^1.1.0"
   },
   "devDependencies": {
     "@types/nanoid": "^2.1.0",

@@ -23,7 +23,7 @@
     "pkg-dir": "^4.2.0",
     "pretty-ms": "^6.0.0",
     "react": "^16.8.6",
-    "tsfn": "^1.0.0"
+    "tsfn": "^1.1.0"
   },
   "devDependencies": {
     "@types/diff": "^4.0.2",

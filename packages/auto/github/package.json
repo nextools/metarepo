@@ -16,10 +16,10 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
-    "@auto/core": "^0.0.0",
+    "@auto/core": "^0.1.0",
     "node-fetch": "^2.6.0",
     "p-all": "^2.1.0",
-    "tsfn": "^1.0.0"
+    "tsfn": "^1.1.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",

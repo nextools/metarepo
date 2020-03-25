@@ -16,7 +16,7 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
-    "@auto/core": "^0.0.0",
+    "@auto/core": "^0.1.0",
     "execa": "^4.0.0"
   },
   "devDependencies": {
