@@ -16,6 +16,6 @@ export const publishPackage = async (packageRelease: TReadonly<TPublishPackage>,
   ], {
     stdin: process.stdin,
     stdout: process.stdout,
-    stderr: 'ignore',
+    stderr: process.stderr,
   })
 }
