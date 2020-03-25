@@ -1,3 +1,9 @@
+## v2.0.0
+
+* 🐞 refactor according to new `auto` api
+
+* ♻️ update dependencies `@start/plugin-lib-tape`, `@auto/tag`, `@auto/core`, `@auto/commit-prompt`, `@auto/changelog`, `@auto/github`, `@auto/slack`, `@auto/telegram`, `tsfn`
+
 ## v1.4.3
 
 * 🐞 fix `bin` entry points with tricky shebang for running Node.js with flags

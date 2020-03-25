@@ -1,3 +1,7 @@
+## v1.0.8
+
+* 🐞 enable `no-floating-promises` rule
+
 ## v1.0.7
 
 * 🐞 check for `await` + non-theneables

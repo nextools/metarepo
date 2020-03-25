@@ -1,6 +1,6 @@
 {
   "name": "@auto/commit-prompt",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Interactive commit prompt for Auto Tools",
   "keywords": [
     "monorepo",
