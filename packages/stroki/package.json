@@ -14,8 +14,8 @@
   },
   "sideEffects": false,
   "devDependencies": {
-    "@types/blue-tape": "^0.1.32",
-    "blue-tape": "^1.0.0",
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0-next.5",
     "mocku": "^1.0.0",
     "spyfn": "^1.0.0"
   }

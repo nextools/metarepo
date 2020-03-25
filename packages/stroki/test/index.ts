@@ -1,5 +1,5 @@
 import { Readable } from 'stream'
-import test from 'blue-tape'
+import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { mock } from 'mocku'
 
