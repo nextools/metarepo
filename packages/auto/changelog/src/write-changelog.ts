@@ -1,5 +1,6 @@
 import path from 'path'
 import { readFile, writeFile } from 'pifs'
+import execa from 'execa'
 
 export const writeChangelog = async (log: string, dir: string) => {
   const logPath = path.join(dir, 'changelog.md')
@@ -10,5 +11,7 @@ export const writeChangelog = async (log: string, dir: string) => {
     await writeFile(logPath, `${log}\n${changelogData}`, 'utf8')
   } catch {
     await writeFile(logPath, log, 'utf8')
+
+    await execa('git', ['add', logPath])
   }
 }
