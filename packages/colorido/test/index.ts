@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { isColor, colorToString } from '../src'
 
 test('colorido: isColor', (t) => {

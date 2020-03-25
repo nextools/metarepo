@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import I from 'big-integer'
 import { TComponentConfig } from '../src/types'
 import { getLength } from '../src/get-length'

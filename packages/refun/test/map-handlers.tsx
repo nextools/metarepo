@@ -1,6 +1,6 @@
 import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { component, mapHandlers, startWithType } from '../src'
 
@@ -20,6 +20,7 @@ test('mapHandlers', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -52,6 +53,7 @@ test('mapHandlers', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -83,6 +85,7 @@ test('mapHandlers', (t) => {
   )
 
   /* Invoke Handler */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onClick(1, 2)
   })
@@ -104,6 +107,7 @@ test('mapHandlers', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

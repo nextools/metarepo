@@ -21,9 +21,9 @@ export const CopySourceButton = pureComponent(
     componentProps,
   }), ['Component', 'componentProps']),
   mapHandlers({
-    onCopySource: ({ Component, componentProps, sendNotification }) => () => {
+    onCopySource: ({ Component, componentProps, sendNotification }) => async () => {
       if (isDefined(Component) && isDefined(componentProps)) {
-        navigator.clipboard.writeText(
+        await navigator.clipboard.writeText(
           serializeComponentToText(Component, componentProps)
         )
         sendNotification('Copied to clipboard')

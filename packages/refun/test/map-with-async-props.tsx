@@ -1,6 +1,6 @@
 import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { component, startWithType, mapWithAsyncProps } from '../src'
 
@@ -22,6 +22,7 @@ test('mapWithAsyncProps', async (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -47,6 +48,7 @@ test('mapWithAsyncProps', async (t) => {
   )
 
   /* Update unwatched props */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -74,6 +76,7 @@ test('mapWithAsyncProps', async (t) => {
   )
 
   /* Update watched props */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -119,6 +122,7 @@ test('mapWithAsyncProps', async (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -157,6 +161,7 @@ test('mapWithAsyncProps: null case', async (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -182,6 +187,7 @@ test('mapWithAsyncProps: null case', async (t) => {
   )
 
   /* Update unwatched props */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -209,6 +215,7 @@ test('mapWithAsyncProps: null case', async (t) => {
   )
 
   /* Update watched props */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -253,6 +260,7 @@ test('mapWithAsyncProps: null case', async (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

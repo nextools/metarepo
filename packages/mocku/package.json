@@ -24,9 +24,9 @@
     "get-caller-file": "^2.0.5"
   },
   "devDependencies": {
-    "@types/blue-tape": "^0.1.32",
+    "@types/tape": "^4.2.34",
     "@types/get-caller-file": "^1.0.0",
-    "blue-tape": "^1.0.0"
+    "tape": "^5.0.0-next.5"
   },
   "fixdeps": {
     "devDependenciesGlobs": [

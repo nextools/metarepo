@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import write from '../src'
 
 test('plugin-write: export', (t) => {

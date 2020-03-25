@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import flowGenerate from '../src'
 
 test('plugin-lib-flow-generate: export', (t) => {

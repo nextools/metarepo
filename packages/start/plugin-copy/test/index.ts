@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import copy from '../src'
 
 test('plugin-copy: export', (t) => {

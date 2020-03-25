@@ -48,6 +48,7 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
       }
       const worker = makeWorker(childFile, options)
 
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       worker.on('message', async (action: TSnapshotsItemResult) => {
         switch (action.type) {
           case 'INIT': {

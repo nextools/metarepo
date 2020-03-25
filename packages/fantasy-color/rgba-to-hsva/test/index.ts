@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import rgbaToHsva from '../src'
 
 test('rgbaToHsva: white', (t) => {

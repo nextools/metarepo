@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import typescriptGenerate from '../src'
 
 test('plugin-lib-typescript-generate: export', (t) => {

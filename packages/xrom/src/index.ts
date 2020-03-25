@@ -30,6 +30,7 @@ export const runChromium = async (userOptions?: TRunChromiumOptions): Promise<st
 
   if (options.shouldCloseOnExit) {
     onExit(() => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       execa('docker', ['stop', options.containerName], {
         reject: false,
       })

@@ -9,6 +9,7 @@ export const onMountAsync = <P>(handler: (props: TExtend<P, { isMountedRef: Muta
   onMount((props) => {
     props.isMountedRef.current = true
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     handler(props)
   }),
   onUnmount(({ isMountedRef }) => {

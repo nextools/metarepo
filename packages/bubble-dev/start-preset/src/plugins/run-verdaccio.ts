@@ -1,7 +1,4 @@
-import plugin, { StartPlugin } from '@start/plugin'
-import { TPluginData } from '@auto/start-plugin'
-
-export type StartPluginOrFalse<P, R> = StartPlugin<P, R> | false
+import plugin from '@start/plugin'
 
 const PORT = 4873
 const URL = `http://localhost:${PORT}`
@@ -10,10 +7,11 @@ const RETRY_TIMEOUT = 500
 const sleep = (timeout: number) => new Promise((resolve) => setTimeout(resolve, timeout))
 
 export default (configPath: string) =>
-  plugin<TPluginData, any>('run-verdaccio', ({ logMessage }) => async (props) => {
+  plugin<{}, any>('run-verdaccio', ({ logMessage }) => async () => {
     const { default: execa } = await import('execa')
     const { default: fetch } = await import('node-fetch')
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     execa(
       'docker',
       [
@@ -44,6 +42,4 @@ export default (configPath: string) =>
     }
 
     logMessage(URL)
-
-    return props
   })

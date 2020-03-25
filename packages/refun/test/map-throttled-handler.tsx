@@ -1,6 +1,6 @@
 import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { createTimeoutSpy } from 'spyt'
 import { component, mapThrottledHandlerFactory, startWithType } from '../src'
@@ -24,6 +24,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -63,6 +64,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -101,6 +103,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Update Handler */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     spy = createSpy(() => null)
 
@@ -124,6 +127,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* First Call */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler(42, 'foo')
   })
@@ -149,6 +153,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Second Call, interrupting first one */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler(13, 'bar')
   })
@@ -172,6 +177,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -195,6 +201,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Third Call, after completing secont call timeout */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler('third call')
   })
@@ -218,6 +225,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -241,6 +249,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Timeout Tick after Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -286,6 +295,7 @@ test('mapThrottledHandler: Invalid handler', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp/>
@@ -301,6 +311,7 @@ test('mapThrottledHandler: Invalid handler', (t) => {
   )
 
   /* Call handler */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler()
   })
@@ -318,6 +329,7 @@ test('mapThrottledHandler: Invalid handler', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -335,6 +347,7 @@ test('mapThrottledHandler: Invalid handler', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -375,6 +388,7 @@ test('mapThrottledHandler: Handler is removed during timeout period', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp handler={spy}/>
@@ -384,6 +398,7 @@ test('mapThrottledHandler: Handler is removed during timeout period', (t) => {
   const { handler } = getProps(0)
 
   /* Call Handler */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler()
   })
@@ -409,6 +424,7 @@ test('mapThrottledHandler: Handler is removed during timeout period', (t) => {
   )
 
   /* Remove handler before Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp/>
@@ -436,6 +452,7 @@ test('mapThrottledHandler: Handler is removed during timeout period', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -461,6 +478,7 @@ test('mapThrottledHandler: Handler is removed during timeout period', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

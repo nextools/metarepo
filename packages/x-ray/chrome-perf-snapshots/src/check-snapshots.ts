@@ -71,7 +71,7 @@ export const checkChromePerfSnapshots = async (options: TCheckChromePerfSnapshop
       // diff
       if (!compareSnapshots(existingPerfData, relativePerfData)) {
         if (shouldBailout) {
-          tar.close()
+          await tar.close()
           throw `${relativePath}:diff`
         }
 
@@ -110,7 +110,7 @@ export const checkChromePerfSnapshots = async (options: TCheckChromePerfSnapshop
     // new
     } else {
       if (shouldBailout) {
-        tar.close()
+        await tar.close()
         throw `${relativePath}:new`
       }
 
@@ -128,7 +128,7 @@ export const checkChromePerfSnapshots = async (options: TCheckChromePerfSnapshop
     result[relativePath] = targetResult
     resultData[relativePath] = targetResultData
 
-    tar.close()
+    await tar.close()
   }
 
   console.log(`done in ${prettyMs(Date.now() - startTime)}`)

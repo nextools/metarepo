@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { shallowEqualByKeys } from '../src'
 
 test('shallowEqualByKeys', (t) => {

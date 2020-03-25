@@ -72,10 +72,10 @@ ${element}
 `
 
 export class App extends Component {
-  componentDidCatch(error: any) {
+  async componentDidCatch(error: any) {
     console.log(error)
 
-    fetch('http://localhost:3002/error', {
+    await fetch('http://localhost:3002/error', {
       method: 'POST',
       body: error.message,
     })
@@ -92,26 +92,24 @@ const Main = component(
   startWithType<{}>(),
   mapState('html', 'setHtml', () => null as string | null, []),
   mapRef('fonts', [] as TFonts),
-  onMount(({ setHtml, fonts }) => {
-    (async () => {
-      const fontRes = await fetch('http://localhost:3002/fonts')
+  onMount(async ({ setHtml, fonts }) => {
+    const fontRes = await fetch('http://localhost:3002/fonts')
 
-      if (fontRes.status === 200) {
-        fonts.current = await fontRes.json() as TFonts
-      }
+    if (fontRes.status === 200) {
+      fonts.current = await fontRes.json() as TFonts
+    }
 
-      const htmlRes = await fetch('http://localhost:3002/next', {
-        keepalive: true,
-      })
+    const htmlRes = await fetch('http://localhost:3002/next', {
+      keepalive: true,
+    })
 
-      if (!htmlRes.ok) {
-        return
-      }
+    if (!htmlRes.ok) {
+      return
+    }
 
-      const html = await htmlRes.text()
+    const html = await htmlRes.text()
 
-      setHtml(makeHtml(html, fonts.current))
-    })()
+    setHtml(makeHtml(html, fonts.current))
   }),
   mapState('size', 'setSize', () => null as null | TSize, []),
   mapRef('viewShotRef', null as View | null),

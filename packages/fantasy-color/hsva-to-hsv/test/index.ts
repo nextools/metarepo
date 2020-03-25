@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import hsvaToHsv from '../src'
 
 test('hsvaToHsv: standalone', (t) => {

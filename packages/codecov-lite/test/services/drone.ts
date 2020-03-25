@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import drone from '../../src/services/drone'
 
 test('services/drone', (t) => {

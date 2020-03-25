@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import luminanceRgb from '../src'
 
 const setDecimalPointPrecision = (precision: number) => (value: number): number =>

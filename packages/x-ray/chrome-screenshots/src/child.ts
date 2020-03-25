@@ -137,6 +137,7 @@ export default async (options: TOptions) => {
         }
       })
 
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       processSend<TScreenshotsItemResult>({
         type: 'INIT',
       })

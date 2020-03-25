@@ -20,8 +20,8 @@ export type TApp = {
 
 export const App = component(
   startWithType<TApp>(),
-  onChange(({ components }) => {
-    setComponentsList(components)
+  onChange(async ({ components }) => {
+    await setComponentsList(components)
   }, ['components'])
 )(({ theme, icons, copyImportPackageName, plugin }) => (
   <Root>

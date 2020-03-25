@@ -7,31 +7,44 @@ export default (dir: string) =>
     const { readFile, writeFile } = await import('pifs')
     const packageJsonPath = resolve(dir, 'package.json')
 
-    const packageJson = JSON.parse(await readFile(packageJsonPath, 'utf8')) as TJsonMap
+    const packageJson: TJsonMap = JSON.parse(await readFile(packageJsonPath, 'utf8'))
     const newPackageJsonPath = resolve(dir, 'build/package.json')
     const newPackageJson = Object.entries(packageJson).reduce((result, [key, value]) => {
-      if (key === 'devDependencies' || key === 'files' || key === 'buildAssets') {
-        return result
-      }
+      switch (key) {
+        case 'devDependencies':
+        case 'files':
+        case 'buildAssets': {
+          break
+        }
+        case 'main': {
+          result[key] = 'node/index.js'
 
-      if (key === 'main') {
-        result[key] = 'node/index.js'
-      } else if (key === 'browser') {
-        result[key] = 'web/index.js'
-      } else if (key === 'react-native') {
-        result[key] = 'native/index.js'
-      } else {
-        result[key] = value
-      }
+          break
+        }
+        case 'browser': {
+          result[key] = 'web/index.js'
 
-      if (key === 'bin') {
-        result[key] = Object.entries(value as TJsonMap).reduce((bins, [binKey, binValue]) => {
-          if (typeof binValue === 'string') {
-            bins[binKey] = binValue.replace('src/', 'node/').replace('.ts', '.js')
-          }
+          break
+        }
+        case 'react-native': {
+          result[key] = 'native/index.js'
 
-          return bins
-        }, {} as TJsonMap)
+          break
+        }
+        case 'bin': {
+          result[key] = Object.entries(value as TJsonMap).reduce((bins, [binKey, binValue]) => {
+            if (typeof binValue === 'string') {
+              bins[binKey] = binValue.replace('src/', 'node/').replace('.ts', '.js')
+            }
+
+            return bins
+          }, {} as TJsonMap)
+
+          break
+        }
+        default: {
+          result[key] = value
+        }
       }
 
       return result

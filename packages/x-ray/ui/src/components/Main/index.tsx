@@ -32,15 +32,15 @@ export const Main = component(
     isSaved,
   }), ['selectedItem', 'files', 'items', 'type', 'discardedItems', 'filteredFiles', 'isSaved']),
   mapStoreDispatch('dispatch'),
-  onMount(({ dispatch }) => {
-    dispatch(actionLoadList())
+  onMount(async ({ dispatch }) => {
+    await dispatch(actionLoadList())
   }),
   mapHandlers({
-    onSave: ({ type, items, discardedItems, dispatch }) => () => {
+    onSave: ({ type, items, discardedItems, dispatch }) => async () => {
       const itemKeys = Object.keys(items)
 
       if (type !== null && itemKeys.length > 0) {
-        dispatch(actionSave(itemKeys, discardedItems))
+        await dispatch(actionSave(itemKeys, discardedItems))
       }
     },
   }),

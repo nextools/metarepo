@@ -1,6 +1,6 @@
 import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { component, mapState, startWithType } from '../src'
 
@@ -20,6 +20,7 @@ test('mapState', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -47,6 +48,7 @@ test('mapState', (t) => {
   )
 
   /* Update unwatched props */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -80,6 +82,7 @@ test('mapState', (t) => {
   )
 
   /* Update watched props */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -110,6 +113,7 @@ test('mapState', (t) => {
   )
 
   /* Update state */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     setState([10])
   })
@@ -136,6 +140,7 @@ test('mapState', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

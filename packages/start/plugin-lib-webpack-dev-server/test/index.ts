@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import webpackDevServer from '../src'
 
 test('plugin-lib-webpack-dev-server: export', (t) => {

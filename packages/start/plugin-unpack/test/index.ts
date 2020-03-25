@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import decompress from '../src'
 
 test('plugin-decompress: export', (t) => {

@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import fromRGBA from '../src'
 
 test('from-rgba: valid', (t) => {

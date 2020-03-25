@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import gitlab from '../../src/services/gitlab'
 
 test('services/gitlab', (t) => {

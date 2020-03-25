@@ -16,7 +16,7 @@ export const SizeLink = component(
         const isSupported = await Linking.canOpenURL(href)
 
         if (isSupported) {
-          Linking.openURL(href)
+          await Linking.openURL(href)
         }
       }
     },

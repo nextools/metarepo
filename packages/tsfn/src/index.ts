@@ -16,8 +16,31 @@ export type TRequiredKeys<T extends {}> = Exclude<{
     ? K
     : never
 }[keyof T], undefined>
-export type TWritable<T> = { -readonly [K in keyof T]: T[K] };
+export type TWritable<T> = { -readonly [K in keyof T]: T[K] }
 export type TOmitKey<T extends {}, K extends PropertyKey> = Pick<T, Exclude<keyof T, K>>
+
+export type TPrimitive = string | number | boolean | bigint | symbol | undefined | null
+export type TBuiltin = TPrimitive | Function | Date | Error | RegExp
+
+export type TReadonly<T> = T extends TBuiltin
+  ? T
+  : T extends Map<infer K, infer V>
+    ? ReadonlyMap<TReadonly<K>, TReadonly<V>>
+    : T extends ReadonlyMap<infer K, infer V>
+      ? ReadonlyMap<TReadonly<K>, TReadonly<V>>
+      : T extends Set<infer U>
+        ? ReadonlySet<TReadonly<U>>
+        : T extends ReadonlySet<infer U>
+          ? ReadonlySet<TReadonly<U>>
+          : T extends Promise<infer U>
+            ? Promise<TReadonly<U>>
+            : T extends {}
+              ? { readonly [K in keyof T]: TReadonly<T[K]> }
+              : Readonly<T>
+
+export type TNonNullableObject<T extends {}> = {
+  [k in keyof T]: NonNullable<T[k]>
+}
 
 export const getObjectKeys = <T extends {}> (obj: T) => Object.keys(obj) as (keyof T)[]
 export const getObjectValues = <T extends {}> (obj: T): T[keyof T][] => Object.values(obj)

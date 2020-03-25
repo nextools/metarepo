@@ -1,6 +1,6 @@
 import React, { createContext } from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { component, mapContext, startWithType } from '../src'
 
@@ -15,6 +15,7 @@ test('mapContext', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <Context.Provider value={{ ctxA: 'foo', ctxB: 42 }}>
@@ -32,6 +33,7 @@ test('mapContext', (t) => {
   )
 
   /* Update Context */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <Context.Provider value={{ ctxA: 'bar', ctxB: 1337 }}>

@@ -1,6 +1,6 @@
 import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { Store } from 'redux'
 import { component, startWithType, StoreContextFactory } from '../src'
@@ -31,9 +31,10 @@ test('StoreContextFactory', (t) => {
     mapStoreDispatch('dispatch')
   )(compSpy)
 
-  /* Mount */
   let testRenderer: ReactTestRenderer
 
+  /* Mount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -81,6 +82,7 @@ test('StoreContextFactory', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -129,6 +131,7 @@ test('StoreContextFactory', (t) => {
   )
 
   /* Update Store unwatched value */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     // kick subscriber
     subscriber()
@@ -175,6 +178,7 @@ test('StoreContextFactory', (t) => {
   )
 
   /* Store watched update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     // kick subscriber
     subscriber()
@@ -224,6 +228,7 @@ test('StoreContextFactory', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

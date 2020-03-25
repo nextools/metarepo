@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import appveyor from '../../src/services/buildkite'
 
 test('services/buildkite', (t) => {

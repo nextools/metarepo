@@ -1,6 +1,6 @@
 import React, { createContext } from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { Store } from 'redux'
 import { component, ReduxStateFactory, startWithType } from '../src'
@@ -32,6 +32,7 @@ test('ReduxStateFactory', (t) => {
   /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -55,6 +56,7 @@ test('ReduxStateFactory', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -81,6 +83,7 @@ test('ReduxStateFactory', (t) => {
   )
 
   /* Update unwatched values */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     subscriber()
   })
@@ -103,6 +106,7 @@ test('ReduxStateFactory', (t) => {
   )
 
   /* Update watched values */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     subscriber()
   })
@@ -127,6 +131,7 @@ test('ReduxStateFactory', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

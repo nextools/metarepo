@@ -1,6 +1,6 @@
 import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import test from 'tape'
 import { component, startWithType } from '../src'
 
 test('startWithType', (t) => {
@@ -8,9 +8,10 @@ test('startWithType', (t) => {
     startWithType<{ foo: string }>()
   )((props) => <span {...props}/>)
 
-  /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  /* Mount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -26,6 +27,7 @@ test('startWithType', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>

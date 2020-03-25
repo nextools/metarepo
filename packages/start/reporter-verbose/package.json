@@ -22,8 +22,8 @@
     "stack-utils": "^2.0.1"
   },
   "devDependencies": {
-    "@types/blue-tape": "^0.1.32",
+    "@types/tape": "^4.2.34",
     "@types/stack-utils": "^1.0.1",
-    "blue-tape": "^1.0.0"
+    "tape": "^5.0.0-next.5"
   }
 }

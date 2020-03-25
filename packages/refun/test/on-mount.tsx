@@ -1,6 +1,6 @@
 import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { component, startWithType, onMount } from '../src'
 
@@ -14,9 +14,10 @@ test('onMount: sync function', (t) => {
     onMount(mountSpy)
   )(compSpy)
 
-  /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  /* Mount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -46,6 +47,7 @@ test('onMount: sync function', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -76,6 +78,7 @@ test('onMount: sync function', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -112,9 +115,10 @@ test('onMount: async function', (t) => {
     onMount(mountSpy)
   )(compSpy)
 
-  /* Mount */
   let testRenderer!: ReactTestRenderer
 
+  /* Mount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -138,6 +142,7 @@ test('onMount: async function', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -162,6 +167,7 @@ test('onMount: async function', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

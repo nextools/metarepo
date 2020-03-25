@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { TComponentConfig } from '../src/types'
 import { getProps } from '../src'
 

@@ -33,6 +33,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
       }
       const worker = makeWorker(childFile, options)
 
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       worker.on('message', (action: TScreenshotsItemResult) => {
         switch (action.type) {
           case 'INIT': {

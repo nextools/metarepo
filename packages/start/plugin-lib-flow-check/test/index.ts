@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import flowCheck from '../src'
 
 test('plugin-lib-flow-check: export', (t) => {

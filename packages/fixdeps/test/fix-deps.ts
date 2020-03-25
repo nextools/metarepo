@@ -1,6 +1,6 @@
 /* eslint-disable no-sync */
 import { promisify } from 'util'
-import test from 'blue-tape'
+import test from 'tape'
 import { mock, deleteFromCache } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
 import { createSpy, getSpyCalls } from 'spyfn'

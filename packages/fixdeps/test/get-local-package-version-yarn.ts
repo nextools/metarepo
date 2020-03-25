@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { mock } from 'mocku'
 import { createSpy, getSpyCalls } from 'spyfn'
 

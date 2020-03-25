@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import npmVersion from '../src'
 
 test('plugin-lib-npm-version: export', (t) => {

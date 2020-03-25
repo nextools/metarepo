@@ -12,6 +12,7 @@ import remove from '@start/plugin-remove'
 import copy from '@start/plugin-copy'
 import parallel from '@start/plugin-parallel'
 import typescriptGenerate from '@start/plugin-lib-typescript-generate'
+import { StartPlugin } from '@start/plugin'
 import move from './plugins/move'
 import transformDts from './plugins/transform-dts'
 import copyAssets from './plugins/copy-assets'
@@ -23,7 +24,7 @@ export const buildAssets = async (dir: string) => {
   return copyAssets(dir, packageJson.buildAssets)
 }
 
-export const buildWeb = async (dir: string) => {
+export const buildWeb = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   const { babelConfigWebLib } = await import('@bubble-dev/babel-config')
 
   return sequence(
@@ -39,7 +40,7 @@ export const buildWeb = async (dir: string) => {
   )
 }
 
-export const buildDtsWeb = (dir: string) =>
+export const buildDtsWeb = (dir: string): StartPlugin<{}, {}> =>
   sequence(
     find(`${dir}/src/index.{web.tsx,web.ts,tsx,ts}`),
     typescriptGenerate(`${dir}/build/web/`, {
@@ -58,7 +59,7 @@ export const buildDtsWeb = (dir: string) =>
     overwrite
   )
 
-export const buildReactNative = async (dir: string) => {
+export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   const { babelConfigReactNative } = await import('@bubble-dev/babel-config')
 
   return sequence(
@@ -74,7 +75,7 @@ export const buildReactNative = async (dir: string) => {
   )
 }
 
-export const buildDtsReactNative = (dir: string) =>
+export const buildDtsReactNative = (dir: string): StartPlugin<{}, {}> =>
   sequence(
     find(`${dir}/src/index.{native.tsx,native.ts,ios.tsx,ios.ts,android.tsx,android.ts,tsx,ts}`),
     typescriptGenerate(`${dir}/build/native/`, {
@@ -93,7 +94,7 @@ export const buildDtsReactNative = (dir: string) =>
     overwrite
   )
 
-export const buildNode = async (dir: string) => {
+export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
 
   return sequence(
@@ -110,7 +111,7 @@ export const buildNode = async (dir: string) => {
   )
 }
 
-export const buildDtsNode = (dir: string) =>
+export const buildDtsNode = (dir: string): StartPlugin<{}, {}> =>
   sequence(
     find(`${dir}/src/index.{node.tsx,node.ts,tsx,ts}`),
     typescriptGenerate(`${dir}/build/node/`, {
@@ -129,7 +130,7 @@ export const buildDtsNode = (dir: string) =>
     overwrite
   )
 
-export const buildWebNode = async (dir: string) => {
+export const buildWebNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
 
   return sequence(
@@ -146,7 +147,7 @@ export const buildWebNode = async (dir: string) => {
   )
 }
 
-export const buildDtsWebNode = (dir: string) =>
+export const buildDtsWebNode = (dir: string): StartPlugin<{}, {}> =>
   sequence(
     find(`${dir}/src/index.{web.tsx,web.ts,tsx,ts}`),
     typescriptGenerate(`${dir}/build/node/`, {
@@ -165,7 +166,7 @@ export const buildDtsWebNode = (dir: string) =>
     overwrite
   )
 
-export const buildPackage = async (packageDir: string) => {
+export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, {}>> => {
   const dir = path.join('packages', packageDir)
   const packageJsonPath = path.resolve(dir, 'package.json')
   const { default: packageJson } = await import(packageJsonPath)
@@ -216,7 +217,7 @@ export const buildPackage = async (packageDir: string) => {
   )
 }
 
-export const build = async (...packageDirs: string[]) => {
+export const build = async (...packageDirs: string[]): Promise<StartPlugin<{}, {}>> => {
   if (packageDirs.length > 0) {
     return sequence(
       // @ts-ignore

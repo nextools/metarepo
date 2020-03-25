@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import npmPublish from '../src'
 
 test('plugin-lib-npm-publish: export', (t) => {

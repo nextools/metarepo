@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import { TExtend, EMPTY_OBJECT } from 'tsfn'
 import { shallowEqualByKeys } from './utils'
 
-export const mapWithAsyncProps = <P extends {}, R extends {}> (mapper: (props: P) => Promise<R>, watchPropKeys: (keyof P)[]) =>
+export const mapWithAsyncProps = <P extends {}, R extends {}>(mapper: (props: P) => Promise<R>, watchPropKeys: (keyof P)[]) =>
   (props: P): TExtend<P, Partial<R>> => {
     const [result, setResult] = useState<R>()
     const prevPropsRef = useRef<P>(EMPTY_OBJECT)
@@ -12,13 +12,17 @@ export const mapWithAsyncProps = <P extends {}, R extends {}> (mapper: (props: P
       isLoadingRef.current = true
       prevPropsRef.current = props
 
-      mapper(props).then((result) => {
-        isLoadingRef.current = false
+      mapper(props)
+        .then((result) => {
+          isLoadingRef.current = false
 
-        if (result !== null) {
-          setResult(result)
-        }
-      })
+          if (result !== null) {
+            setResult(result)
+          }
+        })
+        .catch((e) => {
+          throw new Error(e)
+        })
     }
 
     if (isLoadingRef.current) {

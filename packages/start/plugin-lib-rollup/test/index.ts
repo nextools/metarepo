@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import rollup from '../src'
 
 test('plugin-lib-rollup: export', (t) => {

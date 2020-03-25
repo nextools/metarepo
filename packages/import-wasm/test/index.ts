@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { importWasm, importWasmSync } from '..'
 
