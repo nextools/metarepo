@@ -29,6 +29,7 @@ TOC:
   * [`publishPackages`](#publishpackages)
   * [`writePublishTags`](#writepublishtags)
   * [`pushCommitsAndTags`](#pushcommitsandtags)
+* [Prompt](#prompt)
 * [Example](#example) 
 * [Additional functionality](#additional-functionality)
     * [`@auto/commit-prompt`](#autocommit-prompt)
@@ -290,6 +291,44 @@ Hook factory that pushes Git commits and tags, assigned to `push` hook by defaul
 ```ts
 const publishPackages: () => THook
 ```
+
+## Prompt
+
+`auto` interactively prompts user to approve/discard all the changes which are about to happen.
+
+It has several options:
+
+### `yes`
+
+Proceed with the current changes, everything looks good.
+
+### `no`
+
+Abort current state and go back to the terminal. The intention of using `no` answer could be to go back to Git and manually rebase some commit messages, for example something is being "minor" by mistake but should become a "patch".
+
+### `edit`
+
+In some advanced cases user might want to manually tweak some of the _proposed_ by `auto` changes. `edit` answer will open a special temp file in default editor, just like `git commit` does, and `auto` will wait for it to be closed. After that there will be another prompt with a possibility to `yes`/`no`/`edit` again (and again).
+
+That special temp file contains JSON with the following keys:
+
+#### `dependencyBumps`
+
+How bump of some dependency affects its dependents. For example, if dependency `foo` got majorly bumped, from `1.0.0` to `2.0.0` and there are dependents with `"foo": "^1.0.0"` in their `package.json` then auto will _propose_ to majorly bump such dependents as well. In reality it's quite a wide guess and should be considered only as a default behavior and therefore carefully verified. One might already handled a situation like the above by making sure that dependents have a necessary patch because `foo` didn't actually break anything for them.
+
+User can only _delete_ entries, any other editing will be ignored.
+
+#### `initialTypes`
+
+Similar opinionated situation as with `dependencyBumps` – `auto` proposes to bump an initial `0.0.0` to `0.1.0` to start with. It's possible to change type of the initial bump to `patch | minor | major`.
+
+Any other editing such as deleting lines will be ignored.
+
+####  `zeroBreakingTypes`
+
+According to semver version `0.2.0` does _not_ satisfy a `^0.1.0` range, because "major zero" is a special case. By default `auto` proposes to bump `0.1.0` to `0.2.0` if there was a major bump somewhere in Git commits. It's possible to change that type to `patch | minor | major`, for example as if one want to jump from `0.1.0` to `1.0.0`.
+
+Any other editing such as deleting lines will be ignored.
 
 ## Example
 
