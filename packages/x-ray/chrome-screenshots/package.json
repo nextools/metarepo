@@ -23,7 +23,7 @@
     "puppeteer-core": "^2.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.6.0",
-    "rsolve": "^0.0.0",
+    "rsolve": "^0.1.0",
     "upng-js": "^2.1.0"
   },
   "devDependencies": {

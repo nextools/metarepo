@@ -22,7 +22,7 @@
     "pkg-dir": "^4.2.0",
     "pretty-ms": "^6.0.0",
     "react": "^16.8.6",
-    "rsolve": "^0.0.0",
+    "rsolve": "^0.1.0",
     "tsfn": "^1.1.0"
   },
   "devDependencies": {
