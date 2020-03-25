@@ -1,7 +1,7 @@
 import path from 'path'
 import execa from 'execa'
 import onExit from 'signal-exit'
-import { isNumber, TRequireKeys, isArray, isString } from 'tsfn'
+import { TRequireKeys, isArray, isString } from 'tsfn'
 import fetch from 'node-fetch'
 import { waitForChromium } from './wait-for-chromium'
 

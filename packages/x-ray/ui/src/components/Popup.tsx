@@ -4,14 +4,14 @@ import { Animation, easeInOutCubic } from '@primitives/animation'
 import { Background } from '@primitives/background'
 import { Button } from '@primitives/button'
 import { Size } from '@primitives/size'
-import { objectHas } from 'tsfn'
+// import { objectHas } from 'tsfn'
 import { mapStoreDispatch } from '../store'
 import { TRect, TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
 import { actionDeselect, actionDiscardItem } from '../actions'
 import { COLOR_RED, COLOR_GREEN } from '../config'
 import { onKeyDown } from '../maps/on-keydown'
 import { actionUndiscardItem } from '../actions/undiscard'
-import { SourceCode } from './SourceCode'
+// import { SourceCode } from './SourceCode'
 import { Block } from './Block'
 import { ScreenshotPreview } from './ScreenshotPreview'
 import { SnapshotPreview } from './SnapshotPreview'
@@ -112,7 +112,7 @@ export const Popup = component(
   onMount(({ setState }) => {
     setState(STATE_OPENING)
   }),
-  mapWithProps(({ popupWidth, popupHeight, item }) => {
+  mapWithProps(({ popupWidth, popupHeight }) => {
     const halfWidth = popupWidth / 2
     const hasSourceCode = false
     // const hasSourceCode = objectHas(item, 'source')
@@ -144,10 +144,10 @@ export const Popup = component(
   popupTop,
   popupWidth,
   popupHeight,
-  sourceCodeLeft,
-  sourceCodeTop,
-  sourceCodeWidth,
-  sourceCodeHeight,
+  // sourceCodeLeft,
+  // sourceCodeTop,
+  // sourceCodeWidth,
+  // sourceCodeHeight,
   previewLeft,
   previewTop,
   previewWidth,
@@ -156,7 +156,7 @@ export const Popup = component(
   setDiscardTextWidth,
   shouldNotAnimate,
   isDiscarded,
-  hasSourceCode,
+  // hasSourceCode,
   onDiscardToggle,
   onBackdropPress,
   onAnimationEnd,

@@ -1,1 +1,5 @@
-exports.test = (item, arg) => Promise.resolve(item + arg)
+exports.test = (arg) => async (item) => {
+  await Promise.resolve()
+
+  return { value: item + arg }
+}

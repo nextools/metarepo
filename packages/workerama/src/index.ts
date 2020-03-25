@@ -2,31 +2,32 @@ import path from 'path'
 import { Worker } from 'worker_threads'
 import getCallerFile from 'get-caller-file'
 import { piAll } from 'piall'
-import { iterableFinally } from './iterable'
+import { iterableFinally, iterableMap } from './iterable'
 
-export type TWorkerama = {
+type TMessage = {
+  type: 'done' | 'error',
+  value: any,
+}
+
+export type TWorkeramaOptions = {
   items: any[],
-  itemsPerThreadCount: number,
   maxThreadCount: number,
   fnFilePath: string,
   fnName: string,
   fnArgs: any[],
 }
 
-export const workerama = <T>(options: TWorkerama): AsyncIterable<T> => {
-  if (options.itemsPerThreadCount <= 0) {
-    throw new Error('`itemsPerThreadCount` should be greater than zero')
-  }
-
+export const workerama = <T>(options: TWorkeramaOptions): AsyncIterable<T> => {
   if (options.maxThreadCount <= 0) {
     throw new Error('`maxThreadCount` should be greater than zero (tip: pass Infinity to set no limits)')
   }
 
+  const umask = process.umask()
   const workerPath = require.resolve('./worker')
   const callerDir = path.dirname(getCallerFile())
   const fullFnFilePath = require.resolve(path.resolve(callerDir, options.fnFilePath))
   // not more than needed but max to maxTheadCount
-  const threadCount = Math.min(Math.ceil(options.items.length / options.itemsPerThreadCount), options.maxThreadCount)
+  const threadCount = Math.min(options.items.length, options.maxThreadCount)
 
   const workers = Array.from({ length: threadCount }, () => {
     return new Worker(workerPath, {
@@ -34,35 +35,45 @@ export const workerama = <T>(options: TWorkerama): AsyncIterable<T> => {
         fnFilePath: fullFnFilePath,
         fnName: options.fnName,
         fnArgs: options.fnArgs,
-        umask: process.umask(),
+        // https://github.com/nodejs/node/issues/25448
+        // https://github.com/nodejs/node/pull/25526
+        umask,
       },
     })
   })
+  const busyWorkerIds = new Set<number>()
 
   const resultsIterable = iterableFinally(
-    piAll<T>(
-      options.items.map((item) => () => {
-        const worker = workers.shift()!
+    piAll(
+      iterableMap((item) => () => {
+        const worker = workers.find(({ threadId }) => !busyWorkerIds.has(threadId))!
 
-        return new Promise((resolve, reject) => {
+        busyWorkerIds.add(worker.threadId)
+
+        return new Promise<T>((resolve, reject) => {
           worker
-            .once('error', reject)
-            .on('message', (message) => {
-              worker.removeAllListeners()
-              workers.push(worker)
+            .on('error', reject)
+            .on('message', (message: TMessage) => {
+              worker.removeAllListeners('error')
+              worker.removeAllListeners('message')
+
+              busyWorkerIds.delete(worker.threadId)
 
               if (message.type === 'done') {
                 resolve(message.value)
+              /* istanbul ignore else */
               } else if (message.type === 'error') {
                 reject(message.value)
               }
             })
             .postMessage(item)
         })
-      }),
+      }, options.items),
       threadCount
     ),
-    () => Promise.all(workers.map((worker) => worker.terminate()))
+    () => piAll(
+      iterableMap((worker) => () => worker.terminate(), workers)
+    )
   )
 
   return resultsIterable

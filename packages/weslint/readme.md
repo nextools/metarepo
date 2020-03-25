@@ -16,7 +16,6 @@ $ yarn add weslint
 type TWeslintOptions = {
   files: string[],
   maxThreadCount?: number,
-  filesPerThreadCount?: number,
   formatter?: string,
   eslint?: CLIEngine.Options,
 }
@@ -32,7 +31,6 @@ weslint(options: TWeslintOptions) => Promise<TWeslintResult>
 
 * `files` – array of file paths
 * `maxThreadCount` – `cpus().length` by default
-* `filesPerThreadCount` – `5` by default
 * `formatter` – [ESLint formatter name](https://eslint.org/docs/developer-guide/nodejs-api#cliengine-getformatter)
 * `eslint` – [ESLint CLIEngine options](https://eslint.org/docs/developer-guide/nodejs-api#cliengine)
 

@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, onMount, mapHandlers, mapState } from 'refun'
 import { Image } from '@primitives/image'
+import { TSnapshotItems } from '@x-ray/snapshots'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { actionLoadList, actionSave } from '../../actions'
-import { TSize, TType, TScreenshotItems, TSnapshotItems } from '../../types'
+import { TSize, TType } from '../../types'
 // @ts-ignore
 import noSignalImage from '../../images/no-signal.png'
 import { Popup } from '../Popup'
