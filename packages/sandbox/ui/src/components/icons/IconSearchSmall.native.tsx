@@ -1,0 +1,1 @@
+IconSearchSmall.web.tsx

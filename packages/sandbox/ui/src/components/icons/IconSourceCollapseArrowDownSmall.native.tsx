@@ -1,0 +1,1 @@
+IconSourceCollapseArrowDownSmall.web.tsx
