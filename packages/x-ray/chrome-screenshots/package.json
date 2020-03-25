@@ -17,13 +17,13 @@
     "@x-ray/tar-fs": "^1.0.0",
     "@x-ray/ui": "^1.0.0",
     "@x-ray/worker-utils": "^1.0.0",
-    "bro-resolve": "^1.0.0",
     "iterama": "^0.1.1",
     "node-fetch": "^2.6.0",
     "p-all": "^2.0.0",
     "puppeteer-core": "^2.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.6.0",
+    "rsolve": "^0.0.0",
     "upng-js": "^2.1.0"
   },
   "devDependencies": {

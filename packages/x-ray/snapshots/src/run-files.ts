@@ -2,7 +2,7 @@ import path from 'path'
 import { cpus } from 'os'
 import { TOptions } from '@x-ray/common-utils'
 import { run } from '@rebox/web'
-import { broResolve } from 'bro-resolve'
+import { rsolve } from 'rsolve'
 import { runSnapshots } from './run-snapshots'
 import { runServer } from './run-server'
 
@@ -13,7 +13,7 @@ export const runFiles = async (targetFiles: string[], options: TOptions) => {
   const { result, resultData, hasBeenChanged } = await runSnapshots(childFile, targetFiles, CONCURRENCY, options)
 
   if (hasBeenChanged) {
-    const entryPointPath = await broResolve('@x-ray/ui')
+    const entryPointPath = await rsolve('@x-ray/ui', 'browser')
     const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
 
     const closeReboxServer = await run({

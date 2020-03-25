@@ -4,7 +4,6 @@
   "workspaces": [
     "packages/auto/*",
     "packages/autoprops",
-    "packages/bro-resolve",
     "packages/bsc",
     "packages/bubble-dev/*",
     "packages/codecov-lite",
@@ -31,8 +30,8 @@
     "packages/rebox/*",
     "packages/refun",
     "packages/rn-fonts",
-    "packages/rn-resolve",
     "packages/rplace",
+    "packages/rsolve",
     "packages/sandbox/*",
     "packages/siza",
     "packages/spyfn",

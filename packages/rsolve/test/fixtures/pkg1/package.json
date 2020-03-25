@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "name": "fixture",
+  "main": "index.main.ts",
+  "browser": "index.browser.ts"
+}

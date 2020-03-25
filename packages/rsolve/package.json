@@ -1,8 +1,8 @@
 {
-  "name": "rn-resolve",
-  "version": "1.0.0",
-  "description": "",
-  "keywords": [],
+  "name": "rsolve",
+  "version": "0.0.0",
+  "description": "Resolve module path with custom entry point `package.json` field relative to caller file",
+  "keywords": ["resolve", "path"],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
@@ -17,6 +17,8 @@
   },
   "devDependencies": {
     "@types/enhanced-resolve": "^3.0.6",
-    "@types/get-caller-file": "^1.0.0"
+    "@types/get-caller-file": "^1.0.0",
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0-next.5"
   }
 }

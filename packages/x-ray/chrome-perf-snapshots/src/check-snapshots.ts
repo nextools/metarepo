@@ -4,7 +4,7 @@ import { diffArrays } from 'diff'
 import prettyMs from 'pretty-ms'
 import { getObjectEntries } from 'tsfn'
 import { getPerfData } from 'perfa'
-import { broResolve } from 'bro-resolve'
+import { rsolve } from 'rsolve'
 import { run } from '@rebox/web'
 import { compareSnapshots } from './compare-snapshots'
 import { getDataDimensions } from './get-data-dimensions'
@@ -134,7 +134,7 @@ export const checkChromePerfSnapshots = async (options: TCheckChromePerfSnapshop
   console.log(`done in ${prettyMs(Date.now() - startTime)}`)
 
   if (hasBeenChanged) {
-    const entryPointPath = await broResolve('@x-ray/ui')
+    const entryPointPath = await rsolve('@x-ray/ui', 'browser')
     const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
 
     const closeReboxServer = await run({
