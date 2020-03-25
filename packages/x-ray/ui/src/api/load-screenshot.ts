@@ -1,4 +1,3 @@
-import { TScreenshotResultType } from '@x-ray/screenshot-utils'
 import { HOST, PORT } from '../config'
 
 const apiLoadScreenshotCache = new Map<string, Blob>()

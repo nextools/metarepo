@@ -24,6 +24,7 @@
     "tape": "^5.0.0-next.5"
   },
   "dependencies": {
-    "get-caller-file": "^2.0.5"
+    "get-caller-file": "^2.0.5",
+    "piall": "^0.1.0"
   }
 }

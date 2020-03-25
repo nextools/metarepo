@@ -25,7 +25,6 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
 
   const resultsIterable = workerama<TWorkerResult<Uint8Array>>({
     items: files,
-    itemsPerThreadCount: 1,
     maxThreadCount: MAX_THREAD_COUNT,
     fnFilePath: WORKER_PATH,
     fnName: 'check',

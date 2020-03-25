@@ -13,11 +13,6 @@
     "access": "public"
   },
   "sideEffects": false,
-  "devDependencies": {
-    "@types/blue-tape": "^0.1.32",
-    "@types/pngjs": "^3.4.1",
-    "blue-tape": "^1.0.0"
-  },
   "dependencies": {
     "@babel/register": "^7.8.6",
     "@bubble-dev/babel-config": "^0.1.4",
@@ -28,7 +23,6 @@
     "p-all": "^2.1.0",
     "pifs": "^1.0.2",
     "pixelmatch": "^5.1.0",
-    "pkg-dir": "^4.2.0",
     "pngjs": "^3.4.0",
     "pretty-ms": "^6.0.1",
     "puppeteer-core": "^2.1.1",
@@ -39,5 +33,8 @@
     "unchunk": "^0.1.0",
     "workerama": "^0.1.0",
     "xrom": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/pngjs": "^3.4.1"
   }
 }
