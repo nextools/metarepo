@@ -37,7 +37,7 @@ test('resolveNpmConfig', async (t) => {
   t.deepEquals(
     await resolveNpmConfig(''),
     {
-      registry: 'https://registry.npmjs.org',
+      registry: 'https://registry.npmjs.org/',
       publishSubDirectory: '',
       access: 'restricted',
     },

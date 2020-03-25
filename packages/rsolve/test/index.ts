@@ -1,7 +1,7 @@
 import test from 'tape'
 import { rsolve } from '../src'
 
-test('bro-resolve: ok', async (t) => {
+test('rsolve: ok', async (t) => {
   const fixturePath = await rsolve('./fixtures/pkg1/', 'browser')
 
   t.equal(
@@ -11,7 +11,7 @@ test('bro-resolve: ok', async (t) => {
   )
 })
 
-test('bro-resolve: throw', async (t) => {
+test('rsolve: throw', async (t) => {
   try {
     await rsolve('./fixtures/pkg2/', 'browser')
     t.fail('should not get here')
