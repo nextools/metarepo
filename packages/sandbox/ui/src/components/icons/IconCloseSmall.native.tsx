@@ -1,0 +1,1 @@
+IconCloseSmall.web.tsx

@@ -10,6 +10,7 @@ import {
   mapContext,
 } from 'refun'
 import { Transform } from '@primitives/transform'
+import { isDefined } from 'tsfn'
 import { Size } from '../size'
 import { PrimitiveBackground } from '../primitive-background'
 import { PrimitiveBlock } from '../primitive-block'
@@ -22,6 +23,7 @@ import { SizeBlock } from '../size-block'
 import { BLACK, WHITE } from '../../colors'
 import { mapMetaStoreState } from '../../store-meta'
 import { SYMBOL_DEMO_AREA } from '../../symbols'
+import { PluginContext } from '../plugin-provider'
 import { PureComponent } from './pure-component'
 
 const COMPONENT_MIN_WIDTH = 200
@@ -33,6 +35,7 @@ export const DemoArea = pureComponent(
   startWithType<TDemoArea>(),
   mapContext(ThemeContext),
   mapContext(LayoutContext),
+  mapContext(PluginContext),
   mapStoreState(({ width, height, hasGrid, shouldStretch, isCanvasDarkMode, transformX, transformY, transformZ }) => ({
     canvasWidth: width,
     canvasHeight: height,
@@ -91,6 +94,7 @@ export const DemoArea = pureComponent(
   componentTop,
   componentHeight,
   setComponentHeight,
+  plugin,
   theme,
   isCanvasDarkMode,
 }) => (
@@ -116,7 +120,13 @@ export const DemoArea = pureComponent(
                 height={componentHeight}
                 onHeightChange={setComponentHeight}
               >
-                <PureComponent Component={Component} props={componentProps}/>
+                {isDefined(plugin)
+                  ? (
+                    <plugin.Provider Component={Component} props={componentProps}/>
+                  )
+                  : (
+                    <PureComponent Component={Component} props={componentProps}/>
+                  )}
               </Size>
             </Transform>
           </PrimitiveBlock>
