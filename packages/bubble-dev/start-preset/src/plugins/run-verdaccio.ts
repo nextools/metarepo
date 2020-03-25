@@ -24,7 +24,10 @@ export default (configPath: string) =>
         '-v',
         `${configPath}:/verdaccio/conf/config.yaml`,
         'verdaccio/verdaccio',
-      ]
+      ],
+      {
+        stderr: process.stderr,
+      }
     )
 
     const isVerdaccioUp = async () => {

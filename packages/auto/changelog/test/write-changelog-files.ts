@@ -3,6 +3,7 @@ import test from 'tape'
 import { TPackageRelease, TAutoConfig } from '@auto/core'
 import { createFsFromVolume, Volume } from 'memfs'
 import { mock, deleteFromCache } from 'mocku'
+import { createSpy, getSpyCalls } from 'spyfn'
 import { prefixes } from './prefixes'
 
 const rootDir = process.cwd()
@@ -34,11 +35,16 @@ test('writeChangelogFiles', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
+  const execaSpy = createSpy(() => Promise.resolve())
+
   const unmock = mock('../src/write-changelog-files', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
+    },
+    execa: {
+      default: execaSpy,
     },
   })
 
@@ -149,6 +155,14 @@ test('writeChangelogFiles', async (t) => {
     fs.readFileSync(`${rootDir}/fakes/c/changelog.md`, 'utf-8'),
     '## v1.1.0\n\n* ♻️ update dependencies `@ns/a`, `b`\n\n## v0.1.0\n\n* 🐞 patch\n',
     'should write changelog'
+  )
+
+  t.deepEqual(
+    getSpyCalls(execaSpy),
+    [
+      ['git', ['add', `${rootDir}/fakes/b/changelog.md`]],
+    ],
+    'should stage new changelog files to Git'
   )
 
   try {

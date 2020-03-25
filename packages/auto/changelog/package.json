@@ -17,13 +17,15 @@
   },
   "dependencies": {
     "@auto/core": "^0.0.0",
+    "execa": "^4.0.0",
     "p-all": "^2.1.0",
     "pifs": "^1.0.0",
     "tsfn": "^1.0.0"
   },
   "devDependencies": {
-    "tape": "^5.0.0-next.5",
     "memfs": "^3.1.1",
-    "mocku": "^1.0.0"
+    "mocku": "^1.0.0",
+    "spyfn": "^1.0.0",
+    "tape": "^5.0.0-next.5"
   }
 }
