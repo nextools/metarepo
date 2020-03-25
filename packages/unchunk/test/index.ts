@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events'
-import test from 'blue-tape'
+import test from 'tape'
 import { unchunkBuffer, unchunkString, unchunkJson } from '../src'
 
 test('unchunk: unchunkBuffer', (t) => {
