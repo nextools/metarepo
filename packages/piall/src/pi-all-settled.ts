@@ -1,13 +1,13 @@
 import { TFulfilled, TRejected, TMaybePromise } from './types'
 
-export const piAllSettled = <T>(iterable: Iterable<() => TMaybePromise<any>>, concurrency: number = Infinity): AsyncIterable<TFulfilled<T> | TRejected> => {
+export const piAllSettled = <T>(iterable: Iterable<() => TMaybePromise<T>>, concurrency: number = Infinity): AsyncIterable<TFulfilled<T> | TRejected> => {
   if ((!Number.isSafeInteger(concurrency) && concurrency !== Infinity) || concurrency < 1) {
     throw new TypeError('`concurrency` argument must be a number >= 1')
   }
 
   return {
     async *[Symbol.asyncIterator]() {
-      const pool = new Set<Promise<any>>()
+      const pool = new Set<TMaybePromise<T>>()
       const iterator = iterable[Symbol.iterator]()
       let results = [] as (TFulfilled<T> | TRejected)[]
       let isDone = false
@@ -21,7 +21,7 @@ export const piAllSettled = <T>(iterable: Iterable<() => TMaybePromise<any>>, co
           return
         }
 
-        let maybePromise
+        let maybePromise: TMaybePromise<T>
 
         try {
           maybePromise = iteration.value()
@@ -34,7 +34,7 @@ export const piAllSettled = <T>(iterable: Iterable<() => TMaybePromise<any>>, co
         } catch (error) {
           results.push({ status: 'rejected', reason: error })
         } finally {
-          pool.delete(maybePromise)
+          pool.delete(maybePromise!)
 
           if (!isDone) {
             // eslint-disable-next-line @typescript-eslint/no-floating-promises

@@ -18,7 +18,7 @@ $ yarn add piall
 ## Usage
 
 ```ts
-const piAll: <T>(iterable: Iterable<() => Promise<any> | any, concurrency?: number) => AsyncIterable<T>
+const piAll: <T>(iterable: Iterable<() => Promise<T> | T, concurrency?: number) => AsyncIterable<T>
 ```
 
 ```ts
@@ -32,7 +32,7 @@ export type TRejected = {
   reason: Error | string,
 }
 
-const piAllSettled: <T>(iterable: Iterable<() => Promise<any> | any, concurrency?: number) => AsyncIterable<TFulfilled<T> | TRejected>
+const piAllSettled: <T>(iterable: Iterable<() => Promise<T> | T, concurrency?: number) => AsyncIterable<TFulfilled<T> | TRejected>
 ```
 
 where:
