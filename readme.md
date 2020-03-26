@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.org/bubble-dev/_"><img src="https://flat.badgen.net/travis/bubble-dev/_/master?label=tests"/></a> <a href="https://codecov.io/github/bubble-dev/_"><img src="https://flat.badgen.net/codecov/c/github/bubble-dev/_/master"/></a> <a href="https://t.me/joinchat/HEiFoBOD3u0of_nkCB6huQ"><img src="https://flat.badgen.net/badge/chat/telegram/blue"/></a>
+  <a href="https://github.com/bubble-dev/_/actions?query=workflow%3ANode.js+event%3Apush"><img src="https://flat.badgen.net/github/checks/bubble-dev/_/master/?label=test"/></a> <a href="https://t.me/joinchat/HEiFoBOD3u0of_nkCB6huQ"><img src="https://flat.badgen.net/badge/chat/telegram/blue"/></a>
 </p>
 
 The _metarepo_ is a single repository that consists of many packages and various monorepos, a new concept that we are trying out to simplify the development process. Many of the projects presented here are dependencies of each other, so we can iterate in all at the same time and benefit from using [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/).
