@@ -1,3 +1,7 @@
+## v1.1.1
+
+* 🐞 fix TPackageJson types
+
 ## v1.1.0
 
 * 🌱 add `hasDepsToModify` function

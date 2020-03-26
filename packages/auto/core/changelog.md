@@ -1,3 +1,7 @@
+## v0.1.3
+
+* 🐞 fix TPackageJson types
+
 ## v0.1.2
 
 * 🐞 properly handle publish errors

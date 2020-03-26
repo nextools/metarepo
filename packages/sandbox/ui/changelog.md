@@ -1,3 +1,7 @@
+## v2.0.6
+
+* 🐞 fix TPackageJson types
+
 ## v2.0.5
 
 * 🐞 fix plugin on native

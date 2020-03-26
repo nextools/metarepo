@@ -1,6 +1,6 @@
 {
   "name": "typeon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Typed JSON parse and stringify for TypeScript",
   "keywords": [
     "typescript",
