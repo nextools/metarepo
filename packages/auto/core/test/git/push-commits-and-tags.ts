@@ -21,7 +21,7 @@ test('git:pushCommitsAndTags', async (t) => {
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
     [
-      ['git', ['push', '--follow-tags']],
+      ['git', ['push', '--quiet', '--follow-tags']],
     ],
     'should push'
   )
