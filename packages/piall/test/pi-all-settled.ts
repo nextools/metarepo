@@ -270,7 +270,7 @@ test('piAllSettled: sync', async (t) => {
   const resultSpy = createSpy(() => {})
   const asyncIterable = piAllSettled([
     () => 1,
-    () => 2,
+    () => 1,
     () => 3,
   ], 2)
 
@@ -282,7 +282,7 @@ test('piAllSettled: sync', async (t) => {
     getSpyCalls(resultSpy),
     [
       [{ status: 'fulfilled', value: 1 }],
-      [{ status: 'fulfilled', value: 2 }],
+      [{ status: 'fulfilled', value: 1 }],
       [{ status: 'fulfilled', value: 3 }],
     ],
     'should resolve in order'

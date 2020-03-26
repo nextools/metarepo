@@ -1,13 +1,13 @@
 import { TMaybePromise } from './types'
 
-export const piAll = <T>(iterable: Iterable<() => TMaybePromise<any>>, concurrency: number = Infinity): AsyncIterable<T> => {
+export const piAll = <T>(iterable: Iterable<() => TMaybePromise<T>>, concurrency: number = Infinity): AsyncIterable<T> => {
   if ((!Number.isSafeInteger(concurrency) && concurrency !== Infinity) || concurrency < 1) {
     throw new TypeError('`concurrency` argument must be a number >= 1')
   }
 
   return {
     async *[Symbol.asyncIterator]() {
-      const pool = new Set<Promise<any>>()
+      const pool = new Set<TMaybePromise<T>>()
       const iterator = iterable[Symbol.iterator]()
       let results = [] as T[]
       let isDone = false
@@ -23,7 +23,7 @@ export const piAll = <T>(iterable: Iterable<() => TMaybePromise<any>>, concurren
           return
         }
 
-        let maybePromise
+        let maybePromise: TMaybePromise<T>
 
         try {
           maybePromise = iteration.value()
@@ -42,7 +42,7 @@ export const piAll = <T>(iterable: Iterable<() => TMaybePromise<any>>, concurren
           hasError = true
           error = err
         } finally {
-          pool.delete(maybePromise)
+          pool.delete(maybePromise!)
         }
       }
 

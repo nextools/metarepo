@@ -245,7 +245,7 @@ test('piAll: sync', async (t) => {
   const resultSpy = createSpy(() => {})
   const asyncIterable = piAll<string | number>([
     () => 1,
-    () => 2,
+    () => 1,
     () => 3,
   ], 2)
 
@@ -255,7 +255,7 @@ test('piAll: sync', async (t) => {
 
   t.deepEqual(
     getSpyCalls(resultSpy),
-    [[1], [2], [3]],
+    [[1], [1], [3]],
     'should resolve in order'
   )
 })
