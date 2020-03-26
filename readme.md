@@ -2,10 +2,6 @@
   <img src="assets/logo.svg" width="240" height="240"/>
 </p>
 
-<p align="center">
-  <a href="https://github.com/nextools/metarepo/actions?query=workflow%3ANode.js+event%3Apush+branch%3Amaster"><img src="https://flat.badgen.net/github/checks/nextools/metarepo/master/?label=test"/></a> <a href="#"><img src="https://flat.badgen.net/badge/chat/telegram/blue"/></a>
-</p>
-
 The _metarepo_ is a single repository that consists of many packages and various monorepos, a new concept that we are trying out to simplify the development process. Many of the projects presented here are dependencies of each other, so we can iterate in all at the same time and benefit from using [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/).
 
 Check the individual documentations for more details:
