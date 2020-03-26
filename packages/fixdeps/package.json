@@ -18,13 +18,12 @@
     "fast-glob": "^3.0.3",
     "p-all": "^2.1.0",
     "pifs": "^1.0.0",
-    "tsfn": "^1.1.0",
-    "typeon": "^1.0.0"
+    "tsfn": "^1.1.0"
   },
   "devDependencies": {
-    "tape": "^5.0.0-next.5",
     "memfs": "^3.0.3",
     "mocku": "^1.0.0",
-    "spyfn": "^1.0.0"
+    "spyfn": "^1.0.0",
+    "tape": "^5.0.0-next.5"
   }
 }
