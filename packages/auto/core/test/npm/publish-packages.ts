@@ -85,7 +85,7 @@ test('npm:publishPackages: normal usecases', async (t) => {
   t.deepEquals(
     getSpyCalls(errorSpy).length,
     0,
-    'should call onError'
+    'should not call onError'
   )
 
   unmock()
@@ -177,7 +177,7 @@ test('npm:publishPackages: registry override', async (t) => {
 })
 
 test('npm:publishPackages: errors', async (t) => {
-  const execaSpy = createSpy(() => Promise.reject())
+  const execaSpy = createSpy(() => Promise.reject({ stderr: 'npm ERR!' }))
   const onErrorSpy = createSpy(() => {})
 
   const packageJsons: any = {
@@ -276,8 +276,99 @@ test('npm:publishPackages: errors', async (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(onErrorSpy).length,
-    3,
+    getSpyCalls(onErrorSpy),
+    [
+      ['npm ERR!'],
+      ['npm ERR!'],
+      ['npm ERR!'],
+    ],
+    'should call onError'
+  )
+
+  unmock()
+})
+
+test('npm:publishPackages: other errors', async (t) => {
+  const execaSpy = createSpy(() => Promise.reject({ stderr: 'other error' }))
+  const onErrorSpy = createSpy(() => {})
+
+  const packageJsons: any = {
+    'packages/a': {
+      auto: {
+        npm: {
+          registry: 'invalid',
+          access: 'public',
+          publishSubDirectory: '',
+        },
+      },
+    },
+    'packages/b': {
+      auto: {
+        npm: {
+          registry: 'http://registry',
+          access: 'invalid',
+          publishSubDirectory: '',
+        },
+      },
+    },
+  }
+
+  const unmock = mock('../../src/npm/publish-packages', {
+    execa: { default: execaSpy },
+    '../fs/read-package': {
+      readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
+    },
+    './log-error': {
+      logError: onErrorSpy,
+    },
+  })
+
+  const { publishPackages } = await import('../../src/npm/publish-packages')
+
+  await publishPackages({
+    onError: onErrorSpy,
+  })({
+    config: {},
+    packages: [{
+      name: 'a',
+      version: '0.0.1',
+      type: 'patch',
+      dir: 'packages/a',
+      json: {
+        name: 'a',
+        version: '0.0.1',
+      },
+      deps: null,
+      devDeps: null,
+      messages: null,
+    }, {
+      name: 'b',
+      version: '0.0.1',
+      type: 'patch',
+      dir: 'packages/b',
+      json: {
+        name: 'b',
+        version: '0.0.1',
+      },
+      deps: null,
+      devDeps: null,
+      messages: null,
+    }],
+    prefixes,
+  })
+
+  t.deepEquals(
+    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    [
+      ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
+      ['npm', ['publish', '--registry', 'http://registry', '--access', 'invalid', 'packages/b']],
+    ],
+    'should spawn NPM with necessary arguments'
+  )
+
+  t.deepEquals(
+    getSpyCalls(onErrorSpy),
+    [],
     'should call onError'
   )
 
