@@ -1,1 +1,0 @@
-IconDropdownChevronSmall.web.tsx

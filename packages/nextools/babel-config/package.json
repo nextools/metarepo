@@ -1,0 +1,34 @@
+{
+  "name": "@nextools/babel-config",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.js",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "dependencies": {
+    "@babel/plugin-syntax-bigint": "^7.8.0",
+    "@babel/plugin-transform-runtime": "^7.8.0",
+    "@babel/preset-env": "^7.8.0",
+    "@babel/preset-react": "^7.8.0",
+    "@babel/preset-typescript": "^7.8.0",
+    "@nextools/browsers-list": "^0.0.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "metro-react-native-babel-preset": "0.56.4"
+  },
+  "devDependencies": {
+    "@types/babel__core": "^7.1.6"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/core",
+      "@babel/preset-env",
+      "@babel/preset-react",
+      "@babel/preset-typescript",
+      "@types/babel__core"
+    ]
+  }
+}

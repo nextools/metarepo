@@ -9,7 +9,7 @@
     "modules"
   ],
   "main": "src/index.ts",
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
     "node": ">=10.13.0"

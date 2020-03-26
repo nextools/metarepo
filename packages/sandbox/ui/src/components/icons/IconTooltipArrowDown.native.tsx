@@ -1,1 +1,0 @@
-IconTooltipArrowDown.web.tsx

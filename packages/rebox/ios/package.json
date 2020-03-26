@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "description": "",
   "keywords": [],
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
     "node": ">=10.13.0"

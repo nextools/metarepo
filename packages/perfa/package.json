@@ -7,7 +7,7 @@
   "buildAssets": {
     "src/*.html": "node/"
   },
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
     "node": ">=10.13.0"

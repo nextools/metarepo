@@ -1,1 +1,0 @@
-IconInspect.web.tsx

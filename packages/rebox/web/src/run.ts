@@ -2,7 +2,7 @@ import path from 'path'
 import Webpack, { Configuration as TWebpackConfig, Stats } from 'webpack'
 import WebpackDevServer, { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
-import { babelConfigWebLib } from '@bubble-dev/babel-config'
+import { babelConfigWebLib } from '@nextools/babel-config'
 import { isUndefined } from 'tsfn'
 
 const excludeNodeModulesRegExp = /[\\/]node_modules[\\/]/

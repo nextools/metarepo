@@ -12,8 +12,6 @@
 
 * 🐞 refactor using shared Babel config
 
-* ♻️ update dependencies: `@bubble-dev/babel-config`
-
 ## v1.0.1
 
 * 🐞 bump compatible deps
@@ -34,7 +32,7 @@
 
 * 🐞 fix `NODE_ENV=production` in `buildRelease`
 
-* ♻️ update dependencies: `tsfn`, `@bubble-dev/browsers-list`
+* ♻️ update dependencies: `tsfn`
 
 ## v0.5.0
 

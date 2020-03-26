@@ -1,1 +1,0 @@
-IconCopySource.web.tsx

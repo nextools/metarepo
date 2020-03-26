@@ -1,46 +1,36 @@
 {
   "private": true,
-  "description": "_",
+  "description": "metarepo",
   "workspaces": [
     "packages/auto/*",
     "packages/autoprops",
     "packages/bsc",
-    "packages/bubble-dev/*",
     "packages/codecov-lite",
-    "packages/colorido",
     "packages/copie",
     "packages/dleet",
     "packages/ekst",
-    "packages/elegir",
-    "packages/fantasy-color/*",
     "packages/fixdeps",
     "packages/graphiq",
     "packages/import-wasm",
-    "packages/lada/*",
     "packages/makethen",
-    "packages/math-playground",
     "packages/mnth",
     "packages/mocku",
     "packages/move-path",
-    "packages/msked",
+    "packages/nextools/*",
     "packages/perfa",
     "packages/piall",
     "packages/pifs",
-    "packages/primitives/*",
     "packages/rebox/*",
     "packages/refun",
     "packages/rn-fonts",
     "packages/rplace",
     "packages/rsolve",
-    "packages/sandbox/*",
     "packages/siza",
     "packages/spyfn",
     "packages/spyt",
     "packages/start/*",
-    "packages/stili",
     "packages/stroki",
     "packages/syntx",
-    "packages/themeables/*",
     "packages/tsfn",
     "packages/typeon",
     "packages/unchunk",
@@ -50,10 +40,9 @@
     "packages/xrom"
   ],
   "devDependencies": {
-    "@bubble-dev/eslint-config": "*",
-    "@bubble-dev/start-preset": "*",
-    "@bubble-dev/typescript-config": "*",
-    "@sandbox/ui": "*",
+    "@nextools/eslint-config": "*",
+    "@nextools/start-preset": "*",
+    "@nextools/typescript-config": "*",
     "@start/plugin": "*",
     "@types/node": "^13.5.0",
     "@x-ray/ui": "*",
@@ -67,13 +56,13 @@
     "typescript": "bubble-dev/TypeScript#ext-3.7.3"
   },
   "scripts": {
-    "start": "packages/bubble-dev/start-preset/src/cli/index.js"
+    "start": "packages/nextools/start-preset/src/cli/index.js"
   },
   "start": {
     "file": "tasks/",
     "auto": {
       "shouldMakeGitTags": true,
-      "shouldSendTelegramMessage": true,
+      "shouldSendTelegramMessage": false,
       "shouldWriteChangelogFiles": true
     }
   },
@@ -115,7 +104,7 @@
     }
   },
   "eslintConfig": {
-    "extends": "@bubble-dev/eslint-config"
+    "extends": "@nextools/eslint-config"
   },
   "eslintIgnore": [
     "build/",

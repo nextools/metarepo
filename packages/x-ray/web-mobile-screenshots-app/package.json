@@ -4,7 +4,7 @@
   "description": "",
   "keywords": [],
   "react-native": "src/index.tsx",
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
     "node": ">=10.13.0"
@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
+    "@types/react-native": "^0.61.23",
     "react": "^16.8.0",
     "react-native": "^0.61.5"
   },

@@ -1,1 +1,0 @@
-IconStretch.web.tsx

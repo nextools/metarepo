@@ -5,7 +5,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import InlineChunkWebpackPlugin from 'fixed-webpack4-html-webpack-inline-chunk-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import { babelConfigWebApp } from '@bubble-dev/babel-config'
+import { babelConfigWebApp } from '@nextools/babel-config'
 import { isObject } from 'tsfn'
 
 const nodeModulesRegExp = /[\\/]node_modules[\\/]/

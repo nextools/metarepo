@@ -92,7 +92,7 @@ export const App = component(
   onMonthsAgo,
 }) => (
   <Root>
-    {({ width, height }) => (
+    {({ width, height }: { width: number, height: number }) => (
       <div style={{ background: PAGE_BACKGROUND, width, height, position: 'absolute' }}>
         <Header
           monthsAgo={monthsAgo}

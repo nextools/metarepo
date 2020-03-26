@@ -1,1 +1,0 @@
-IconResetTransform.web.tsx

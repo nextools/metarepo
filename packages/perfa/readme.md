@@ -1,6 +1,6 @@
 # perfa
 
-Measure React app performance using dockerized Chromium through [`xrom`](https://github.com/bubble-dev/_/tree/master/packages/xrom) lib.
+Measure React app performance using dockerized Chromium through [`xrom`](https://github.com/nextools/metarepo/tree/master/packages/xrom) lib.
 
 ## Install
 

@@ -5,7 +5,7 @@ import { isObject } from 'tsfn'
 import { Volume, createFsFromVolume } from 'memfs'
 import joinPath from 'memory-fs/lib/join'
 import CompressionPlugin from 'compression-webpack-plugin'
-import { babelConfigWebApp } from '@bubble-dev/babel-config'
+import { babelConfigWebApp } from '@nextools/babel-config'
 
 const vol = Volume.fromJSON({})
 const fs = createFsFromVolume(vol) as unknown as OutputFileSystem

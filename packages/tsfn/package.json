@@ -6,7 +6,7 @@
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "contributors": [
     "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
     "Alex Feinstein <psxcode@gmail.com> (https://github.com/psxcode)"

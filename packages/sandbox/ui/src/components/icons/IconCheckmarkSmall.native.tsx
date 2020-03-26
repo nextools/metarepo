@@ -1,1 +1,0 @@
-IconCheckmarkSmall.web.tsx

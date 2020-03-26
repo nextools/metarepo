@@ -1,5 +1,5 @@
 {
-  "extends": "@bubble-dev/typescript-config",
+  "extends": "@nextools/typescript-config",
   "exclude": [
     "node_modules/",
     "coverage/",

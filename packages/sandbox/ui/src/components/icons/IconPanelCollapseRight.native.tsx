@@ -1,1 +1,0 @@
-IconPanelCollapseRight.web.tsx

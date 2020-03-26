@@ -1,1 +1,0 @@
-IconTheme.web.tsx
