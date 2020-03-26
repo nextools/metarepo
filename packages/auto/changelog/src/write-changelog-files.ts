@@ -1,5 +1,4 @@
 import { THook, TPackageRelease, TMessage, TLogReleaseType } from '@auto/core'
-import pAll from 'p-all'
 import { TReadonly, isString } from 'tsfn'
 import { writeChangelog } from './write-changelog'
 
@@ -34,13 +33,11 @@ export const writeChangelogFiles: THook = async ({ packages, prefixes }) => {
     return `## v${pkg.version}\n\n${messagesStr}\n`
   }
 
-  await pAll(
-    packages
-      .filter((pkg) => pkg.type !== null && pkg.version !== null)
-      .map((pkg) => () => writeChangelog(
-        compileLog(pkg),
-        pkg.dir
-      )),
-    { concurrency: 4 }
-  )
+  for (const pkg of packages) {
+    if (pkg.type === null || pkg.version === null) {
+      continue
+    }
+
+    await writeChangelog(compileLog(pkg), pkg.dir)
+  }
 }
