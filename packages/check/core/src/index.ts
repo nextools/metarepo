@@ -1,8 +1,11 @@
 import util from 'util'
 import assert from 'assert'
 import { EventEmitter } from 'events'
+import path from 'path'
+import { readFile, writeFile, mkdir } from 'pifs'
 import StackUtils from 'stack-utils'
 import chalk from 'chalk'
+import getCallerFile from 'get-caller-file'
 
 const stackUtils = new StackUtils({
   cwd: process.cwd(),
@@ -36,7 +39,7 @@ reporter.on('error', (suiteName: string, testName: string, error: Error | string
 
 const inspect = (arg: any): string => util.inspect(arg, false, null, true)
 
-const equal = (a: any, b: any) => {
+const compare = (a: any, b: any) => {
   try {
     assert.deepEqual(a, b)
   } catch {
@@ -47,7 +50,7 @@ const equal = (a: any, b: any) => {
 type TVoidCallback = () => void | Promise<void>
 type TOnCallback = (() => TVoidCallback | Promise<TVoidCallback>)
 
-type TTestFn = (equal: (a: any, b: any) => void) => Promise<void>
+type TTestFn = (check: (value: any, message: string) => void) => Promise<void>
 type TTest = {
   test: (name: string, testFn: TTestFn) => void,
   onSuite: (callback: TOnCallback) => void,
@@ -60,11 +63,23 @@ type TSuiteResult = Promise<{
 }>
 
 export const suite = (suiteName: string, test: (test: TTest) => void) => async (reporter: EventEmitter): TSuiteResult => {
+  const checkDir = path.dirname(getCallerFile())
+  const snapshotDir = path.resolve(checkDir, '__check__')
+  const snapshotPath = path.resolve(snapshotDir, `${suiteName}.json`)
   const tests = [] as [string, TTestFn][]
   let onSuite = null as null | TOnCallback
   let onTest = null as null | TOnCallback
   let okCount = 0
   let errorCount = 0
+  let snapshot = {} as { [key: string]: any }
+
+  try {
+    const data = await readFile(snapshotPath, 'utf8')
+
+    snapshot = JSON.parse(data)
+  } catch {
+    await mkdir(snapshotDir)
+  }
 
   test({
     test: (name, body) => {
@@ -84,7 +99,15 @@ export const suite = (suiteName: string, test: (test: TTest) => void) => async (
     const afterTest = await onTest?.()
 
     try {
-      await testFn(equal)
+      await testFn((value: any, message: string) => {
+        try {
+          if (Reflect.has(snapshot, testName)) {
+            compare(snapshot[testName].value, value)
+          }
+        } finally {
+          snapshot[testName] = { message, value }
+        }
+      })
 
       okCount++
 
@@ -98,6 +121,7 @@ export const suite = (suiteName: string, test: (test: TTest) => void) => async (
     }
   }
 
+  await writeFile(snapshotPath, JSON.stringify(snapshot, null, 2))
   await afterSuite?.()
 
   return {
@@ -113,6 +137,7 @@ export const main = async () => {
       await Promise.resolve()
       // console.log('before suite')
 
+      //
       return async () => {
         await Promise.resolve()
       // console.log('after suite')
@@ -129,21 +154,21 @@ export const main = async () => {
       }
     })
 
-    test('test 1', async (equal) => {
+    test('test 1', async (check) => {
       await Promise.resolve()
 
-      equal(
+      check(
         { a: 2 },
-        { a: 1 }
+        'should be fine'
       )
     })
 
-    test('test 2', async (equal) => {
+    test('test 2', async (check) => {
       await Promise.resolve()
 
-      equal(
+      check(
         { a: 1 },
-        { a: 1 }
+        'should be fine'
       )
     })
   })

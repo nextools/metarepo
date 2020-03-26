@@ -1,0 +1,14 @@
+{
+  "test 1": {
+    "message": "should be fine",
+    "value": {
+      "a": 2
+    }
+  },
+  "test 2": {
+    "message": "should be fine",
+    "value": {
+      "a": 1
+    }
+  }
+}

@@ -7,6 +7,7 @@
     "packages/bro-resolve",
     "packages/bsc",
     "packages/bubble-dev/*",
+    "packages/check/*",
     "packages/codecov-lite",
     "packages/colorido",
     "packages/copie",
