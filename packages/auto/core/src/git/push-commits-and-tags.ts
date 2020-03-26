@@ -10,7 +10,7 @@ export const pushCommitsAndTags = (): THook => async () => {
     ],
     {
       stdout: 'ignore',
-      stderr: 'ignore',
+      stderr: process.stderr,
     }
   )
 }
