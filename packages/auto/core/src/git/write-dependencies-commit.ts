@@ -10,7 +10,7 @@ export const writeDependenciesCommit = (): THook => async ({ prefixes }) => {
     ],
     {
       stdout: 'ignore',
-      stderr: 'ignore',
+      stderr: process.stderr,
     }
   )
 
@@ -23,7 +23,7 @@ export const writeDependenciesCommit = (): THook => async ({ prefixes }) => {
     ],
     {
       stdout: 'ignore',
-      stderr: 'ignore',
+      stderr: process.stderr,
     }
   )
 }
