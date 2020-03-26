@@ -40,7 +40,6 @@
     "@start/plugin-env": "^1.0.0",
     "@start/plugin-find": "^1.0.0",
     "@start/plugin-lib-babel": "^1.0.0",
-    "@start/plugin-lib-codecov": "^1.0.0",
     "@start/plugin-lib-eslint": "^1.0.0",
     "@start/plugin-lib-istanbul": "^1.0.0",
     "@start/plugin-lib-tape": "^2.0.0",

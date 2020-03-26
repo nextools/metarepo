@@ -2,10 +2,8 @@ import plugin from '@start/plugin'
 import sequence from '@start/plugin-sequence'
 import find from '@start/plugin-find'
 import remove from '@start/plugin-remove'
-import read from '@start/plugin-read'
 import env from '@start/plugin-env'
 import typescriptCheck from '@start/plugin-lib-typescript-check'
-import codecov from '@start/plugin-lib-codecov'
 import tape from '@start/plugin-lib-tape'
 import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
 import { TPackageJson } from 'fixdeps'
@@ -223,8 +221,7 @@ export const lint = async () => {
         throw null
       }
     }),
-    typescriptCheck(),
-    checkDeps()
+    typescriptCheck()
   )
 }
 
@@ -251,7 +248,5 @@ export const ci = () =>
   sequence(
     lint(),
     test(),
-    find('coverage/lcov.info'),
-    read,
-    codecov
+    checkDeps()
   )
