@@ -1,8 +1,12 @@
 {
   "name": "stroki",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Read stream line by line",
-  "keywords": ["stream", "transform", "lines"],
+  "keywords": [
+    "stream",
+    "transform",
+    "lines"
+  ],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",

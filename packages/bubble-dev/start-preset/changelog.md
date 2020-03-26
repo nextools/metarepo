@@ -1,3 +1,11 @@
+## v2.0.2
+
+* 🐞 fix `pkg` task to use `stroki` + `rplace`
+
+* 🐞 drop `codecov` from running on CI and move `fixDeps` to `ci` task
+
+* ♻️ update dependencies `rplace`, `stroki`
+
 ## v2.0.1
 
 * 🐞 refactor to use `rsolve` package instead of `bro-resolve` and `rn-resolve`
