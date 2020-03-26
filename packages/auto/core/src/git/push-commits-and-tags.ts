@@ -6,6 +6,7 @@ export const pushCommitsAndTags = (): THook => async () => {
     'git',
     [
       'push',
+      '--quiet',
       '--follow-tags',
     ],
     {
