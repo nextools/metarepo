@@ -1,6 +1,6 @@
 {
   "name": "@auto/telegram",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Send Telegram messages with Auto Tools",
   "keywords": [
     "monorepo",
