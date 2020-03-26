@@ -87,7 +87,12 @@ test('sendSlackMessage', async (t) => {
         b: '^0.1.0',
       },
       devDeps: null,
-      messages: null,
+      messages: [
+        {
+          type: 'minor',
+          message: 'minor commit',
+        },
+      ],
     },
     {
       name: 'd',
@@ -147,7 +152,7 @@ test('sendSlackMessage', async (t) => {
                 color: 'minor',
                 fields: [{
                   title: 'c v1.1.0',
-                  value: '♻️ update dependencies `b`',
+                  value: '🌱 minor commit',
                 }],
               },
             ],
