@@ -160,7 +160,9 @@ test('writeChangelogFiles', async (t) => {
   t.deepEqual(
     getSpyCalls(execaSpy),
     [
+      ['git', ['add', `${rootDir}/fakes/a/changelog.md`]],
       ['git', ['add', `${rootDir}/fakes/b/changelog.md`]],
+      ['git', ['add', `${rootDir}/fakes/c/changelog.md`]],
     ],
     'should stage new changelog files to Git'
   )
