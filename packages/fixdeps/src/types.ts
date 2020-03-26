@@ -1,5 +1,3 @@
-import { TJsonMap } from 'typeon'
-
 export type TDepsEntries = [string, string][]
 
 export type TDepsObject = {[k: string]: string}
@@ -12,6 +10,8 @@ export type TOptions = {
 }
 
 export type TPackageJson = {
+  name: string,
+  version: string,
   dependencies?: {
     [k: string]: string,
   },
@@ -26,7 +26,7 @@ export type TPackageJson = {
     dependenciesGlobs?: string[],
     devDependenciesGlobs?: string[],
   },
-} & TJsonMap
+}
 
 export type TGetDepsToModifyResult = {
   depsToAdd: string[],
