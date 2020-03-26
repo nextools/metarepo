@@ -1,4 +1,3 @@
-import { TJsonMap } from 'typeon'
 import { TReadonly } from 'tsfn'
 
 export type TResolvedReleaseType = 'major' | 'minor' | 'patch'
@@ -52,7 +51,7 @@ export type TPackageJson = {
     registry?: string,
   },
   auto?: TAutoConfig,
-} & TJsonMap
+}
 
 export type TPackage = {
   dir: string,

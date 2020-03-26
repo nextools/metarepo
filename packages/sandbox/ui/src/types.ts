@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { TComponentConfig } from 'autoprops'
-import { TJsonMap } from 'typeon'
 import { TColor } from './colors'
 
 export type TPackageJson = {
@@ -9,7 +8,7 @@ export type TPackageJson = {
   ['react-native']?: string,
   designDocsUrl?: string,
   sourceCodeUrl?: string,
-} & TJsonMap
+}
 
 export type TMetaFile = {
   readonly Component: FC<any>,

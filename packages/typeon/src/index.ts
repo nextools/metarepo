@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
-export type TJsonValue = string | number | boolean | null | TJsonArray | TJsonReadonlyArray | TJsonMap
-export interface TJsonMap { [key: string]: TJsonValue }
-export interface TJsonArray extends Array<TJsonValue> {}
-export interface TJsonReadonlyArray extends ReadonlyArray<TJsonValue> {}
+export type TJsonValue = string | number | boolean | null | TJsonArray | TJsonMap
+export type TJsonArray = TJsonValue[]
+export type TJsonMap = { [key: string]: TJsonValue }
+export type TJsonReadonlyValue = string | number | boolean | null | TJsonReadonlyArray | TJsonReadonlyMap
+export type TJsonReadonlyArray = readonly TJsonReadonlyValue[]
+export type TJsonReadonlyMap = { readonly [key: string]: TJsonReadonlyValue }
 
-export const jsonParse = (str: string): TJsonValue => JSON.parse(str)
-export const jsonStringify = (value: TJsonValue): string => JSON.stringify(value)
+export const jsonParse = <T extends TJsonValue>(str: string): T => JSON.parse(str)
+export const jsonStringify = <T extends TJsonReadonlyValue>(value: T): string => JSON.stringify(value)
