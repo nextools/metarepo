@@ -153,14 +153,16 @@ test('writeChangelogFiles', async (t) => {
   t.equals(
     // eslint-disable-next-line no-sync
     fs.readFileSync(`${rootDir}/fakes/c/changelog.md`, 'utf-8'),
-    '## v1.1.0\n\n* ♻️ update dependencies `@ns/a`, `b`\n\n## v0.1.0\n\n* 🐞 patch\n',
+    '## v1.1.0\n\n* ♻️ update dependencies `@ns/a`\n\n## v0.1.0\n\n* 🐞 patch\n',
     'should write changelog'
   )
 
   t.deepEqual(
     getSpyCalls(execaSpy),
     [
+      ['git', ['add', `${rootDir}/fakes/a/changelog.md`]],
       ['git', ['add', `${rootDir}/fakes/b/changelog.md`]],
+      ['git', ['add', `${rootDir}/fakes/c/changelog.md`]],
     ],
     'should stage new changelog files to Git'
   )

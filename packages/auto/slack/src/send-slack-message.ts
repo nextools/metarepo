@@ -1,11 +1,30 @@
 import fetch from 'node-fetch'
-import { THook } from '@auto/core'
+import { THook, TPackageRelease, TMessage, TLogReleaseType } from '@auto/core'
 import { isString, TReadonly } from 'tsfn'
-import { compileMessages } from './compile-messages'
 import { SLACK_HOOKS_URL, SLACK_MAX_ATTACHMENTS } from './constants'
 import { TSlackConfig } from './types'
 
 export const sendSlackMessage = (slackConfig: TReadonly<TSlackConfig>): THook => async ({ packages, prefixes }) => {
+  const compileMessages = (pkg: TReadonly<TPackageRelease>): string => {
+    let result = (pkg.messages || []) as TMessage<TLogReleaseType>[]
+
+    if (pkg.deps !== null && pkg.type !== 'initial') {
+      const depNames = Object.keys(pkg.deps)
+        .filter((name) => Boolean(packages.find((pkg) => pkg.name === name)?.type !== 'initial'))
+
+      if (depNames.length > 0) {
+        result = result.concat({
+          type: 'dependencies',
+          message: `update dependencies \`${depNames.join('`, `')}\``,
+        })
+      }
+    }
+
+    return result
+      .map((message) => `${prefixes[message.type]} ${message.message}`)
+      .join('\n')
+  }
+
   if (!isString(slackConfig.token)) {
     throw new Error('Slack token is required')
   }
@@ -17,7 +36,7 @@ export const sendSlackMessage = (slackConfig: TReadonly<TSlackConfig>): THook =>
           color: slackConfig.colors[pkg.type],
           fields: [{
             title: `${pkg.name} v${pkg.version}`,
-            value: compileMessages(pkg, prefixes),
+            value: compileMessages(pkg),
           }],
         })
       }

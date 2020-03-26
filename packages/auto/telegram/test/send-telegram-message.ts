@@ -130,7 +130,7 @@ test('sendTelegramMessage', async (t) => {
 
 *c v1.1.0*
 
-♻️ update dependencies \`@ns/a\`, \`b\``,
+♻️ update dependencies \`@ns/a\``,
           }),
         },
       ],

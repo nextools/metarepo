@@ -35,11 +35,8 @@ test('git:writeDependenciesCommit: no dependencies', async (t) => {
 
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
-    [
-      ['git', ['add', '-u']],
-      ['git', ['commit', '-m', '♻️ upgrade dependencies']],
-    ],
-    'empty array'
+    [],
+    'should not make a commit'
   )
 
   unmock()
@@ -83,7 +80,7 @@ test('git:writeDependenciesCommit: single dependency', async (t) => {
         'git',
         [
           'add',
-          '-u',
+          'fakes/a/package.json',
         ],
       ],
       [
@@ -139,7 +136,7 @@ test('git:writeDependenciesCommit: single dev dependency', async (t) => {
         'git',
         [
           'add',
-          '-u',
+          'fakes/a/package.json',
         ],
       ],
       [
@@ -221,7 +218,8 @@ test('git:writeDependenciesCommit: multiple packages', async (t) => {
         'git',
         [
           'add',
-          '-u',
+          'fakes/b/package.json',
+          'fakes/c/package.json',
         ],
       ],
       [

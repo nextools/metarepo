@@ -21,11 +21,11 @@ test('promptLog', async (t) => {
       deps: null,
       devDeps: null,
     })
-    .set('b', {
+    .set('b1', {
       type: 'initial',
       version: '0.1.0',
       deps: {
-        '@ns/a': '^0.2.0',
+        'ns/a': '^0.2.0',
       },
       devDeps: null,
     })
@@ -33,8 +33,9 @@ test('promptLog', async (t) => {
       version: '1.1.0',
       type: 'minor',
       deps: {
-        b: '^0.1.0',
-        a: '^0.2.0',
+        b1: '^0.1.0',
+        'ns/a': '^0.2.0',
+        'non-existing': '0.1.0',
       },
       devDeps: null,
     })
@@ -43,8 +44,16 @@ test('promptLog', async (t) => {
       type: null,
       deps: null,
       devDeps: {
-        b: '^0.1.0',
+        b1: '^0.1.0',
       },
+    })
+    .set('e', {
+      version: '1.0.0',
+      type: 'major',
+      deps: {
+        b1: '0.1.0',
+      },
+      devDeps: null,
     })
 
   const gitBumps: TGitMessageMap = new Map()
@@ -60,10 +69,16 @@ test('promptLog', async (t) => {
         message: 'patch commit',
       },
     ])
-    .set('b', [
+    .set('b1', [
       {
         type: 'initial',
         message: 'initial commit',
+      },
+    ])
+    .set('e', [
+      {
+        type: 'major',
+        message: 'major commit',
       },
     ])
 
@@ -78,11 +93,14 @@ test('promptLog', async (t) => {
       ['ns/a → minor → v0.2.0'],
       ['* 🌱 minor commit\n* 🐞 patch commit'],
       [''],
-      ['b → initial → v0.1.0'],
+      ['b1 → initial → v0.1.0'],
       ['* 🐣️ initial commit'],
       [''],
       ['c → minor → v1.1.0'],
-      ['* ♻️ update dependencies `a`'],
+      ['* ♻️ update dependencies `ns/a`'],
+      [''],
+      ['e → major → v1.0.0'],
+      ['* 💥 major commit'],
       [''],
     ],
     'should log'
@@ -90,3 +108,4 @@ test('promptLog', async (t) => {
 
   unmock()
 })
+

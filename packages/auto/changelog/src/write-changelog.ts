@@ -11,7 +11,7 @@ export const writeChangelog = async (log: string, dir: string) => {
     await writeFile(logPath, `${log}\n${changelogData}`, 'utf8')
   } catch {
     await writeFile(logPath, log, 'utf8')
-
+  } finally {
     await execa('git', ['add', logPath])
   }
 }

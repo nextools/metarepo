@@ -80,7 +80,12 @@ test('makeGithubReleases', async (t) => {
         b: '^0.1.0',
       },
       devDeps: null,
-      messages: null,
+      messages: [
+        {
+          type: 'minor',
+          message: 'minor commit',
+        },
+      ],
     },
     {
       name: 'd',
@@ -131,7 +136,7 @@ test('makeGithubReleases', async (t) => {
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: 'token token', 'User-Agent': 'auto-tools' },
-          body: '{"tag_name":"c@1.1.0","name":"c@1.1.0","body":"* ♻️ update dependencies `b`"}',
+          body: '{"tag_name":"c@1.1.0","name":"c@1.1.0","body":"* 🌱 minor commit"}',
         },
       ],
     ],

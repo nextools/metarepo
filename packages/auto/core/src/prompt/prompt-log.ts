@@ -1,6 +1,7 @@
 import { TReadonly } from 'tsfn'
 import { TMessage, TLogReleaseType, TRequiredPrefixes, TGitMessageMap } from '../types'
 import { TPackageBumpMap, TPackageBump } from '../bump/types'
+import { isResolvedReleaseType } from '../utils'
 import { log } from './log'
 
 export const promptLog = (packages: TReadonly<TPackageBumpMap>, gitBumps: TReadonly<TGitMessageMap>, prefixes: TReadonly<TRequiredPrefixes>): void => {
@@ -9,12 +10,14 @@ export const promptLog = (packages: TReadonly<TPackageBumpMap>, gitBumps: TReado
 
     if (pkg.deps !== null && pkg.type !== 'initial') {
       const depNames = Object.keys(pkg.deps)
-        .filter((name) => Boolean(packages.get(name)?.type !== 'initial'))
+        .filter((name) => isResolvedReleaseType(packages.get(name)?.type))
 
-      result = result.concat({
-        type: 'dependencies',
-        message: `update dependencies \`${depNames.join('`, `')}\``,
-      })
+      if (depNames.length > 0) {
+        result = result.concat({
+          type: 'dependencies',
+          message: `update dependencies \`${depNames.join('`, `')}\``,
+        })
+      }
     }
 
     return result

@@ -68,7 +68,8 @@ test('git:writePublishCommit: multiple packages', async (t) => {
         'git',
         [
           'add',
-          '-u',
+          'fakes/a/package.json',
+          'fakes/b/package.json',
         ],
       ],
       [
