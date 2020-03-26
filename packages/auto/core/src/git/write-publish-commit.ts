@@ -18,7 +18,7 @@ export const writePublishCommit = (): THook => async ({ packages, prefixes }) =>
     ],
     {
       stdout: 'ignore',
-      stderr: 'ignore',
+      stderr: process.stderr,
     }
   )
 
@@ -31,7 +31,7 @@ export const writePublishCommit = (): THook => async ({ packages, prefixes }) =>
     ],
     {
       stdout: 'ignore',
-      stderr: 'ignore',
+      stderr: process.stderr,
     }
   )
 }

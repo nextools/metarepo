@@ -8,7 +8,7 @@ export const getCommitMessages = async (): Promise<string[]> => {
       '--no-merges',
       '--format=---%B',
     ], {
-      stderr: 'ignore',
+      stderr: process.stderr,
     }
   )
 
