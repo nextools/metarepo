@@ -23,6 +23,7 @@
     "packages/pifs",
     "packages/rebox/*",
     "packages/refun",
+    "packages/revert/*",
     "packages/rn-fonts",
     "packages/rplace",
     "packages/rsolve",

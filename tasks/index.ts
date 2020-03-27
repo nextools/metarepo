@@ -67,3 +67,12 @@ export const run = (file: string) =>
 
     await main()
   })
+
+export const revert = () => plugin('revert', () => async () => {
+  const { run } = await import('@rebox/web')
+
+  await run({
+    entryPointPath: './tasks/revert/index.tsx',
+    htmlTemplatePath: './tasks/revert/templates/dev.html',
+  })
+})
