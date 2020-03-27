@@ -11,7 +11,7 @@
   "main": "src/index.ts",
   "dependencies": {
     "@babel/core": "^7.4.3",
-    "@nextools/babel-config": "^0.0.0",
+    "@nextools/babel-config": "^0.1.0",
     "babel-loader": "^8.0.5",
     "core-js": "^3.1.4",
     "file-loader": "^5.0.2",
