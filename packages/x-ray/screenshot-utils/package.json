@@ -17,7 +17,7 @@
     "@x-ray/worker-utils": "^1.0.0",
     "imagemin-pngout": "^4.0.0",
     "make-dir": "^3.0.0",
-    "p-all": "^2.1.0",
+    "p-all": "^3.0.0",
     "pixelmatch": "^5.0.0",
     "pkg-dir": "^4.2.0",
     "pretty-ms": "^6.0.0",

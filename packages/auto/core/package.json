@@ -25,7 +25,7 @@
     "escape-string-regexp": "^2.0.0",
     "execa": "^4.0.0",
     "fast-glob": "^3.0.0",
-    "p-all": "^2.0.0",
+    "p-all": "^3.0.0",
     "pifs": "^1.0.0",
     "prompts": "^2.3.1",
     "semver": "^7.0.0",
