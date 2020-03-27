@@ -1,0 +1,30 @@
+{
+  "name": "@revert/layout",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.web.ts",
+  "browser": "src/index.web.ts",
+  "react-native": "src/index.native.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "elegir": "^1.0.0",
+    "refun": "^1.0.0",
+    "tsfn": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/react-native": "^0.61.4",
+    "@types/react": "^16.8.6",
+    "react-native": "^0.61.5",
+    "react": "^16.8.6"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-native": "^0.61.5"
+  }
+}
