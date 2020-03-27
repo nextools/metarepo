@@ -3,9 +3,9 @@ version: "3"
 # https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
 
 services:
-  bubble-dev:
-    container_name: vscode-bubble-dev
-    image: vscode-bubble-dev
+  nextools:
+    container_name: vscode-nextools
+    image: vscode-nextools
     build:
       context: .
       dockerfile: Dockerfile
