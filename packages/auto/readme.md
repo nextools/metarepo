@@ -134,7 +134,7 @@ Config to control publishing to NPM phase:
 
 Where:
 
-* `registry` – `https://registry.npmjs.com/` by default – NPM compilant registry URL
+* `registry` – `https://registry.npmjs.org/` by default – NPM compilant registry URL
 * `publishSubDirectory` – is a sub path which will be added to package directory during Publish phase, can be omitted
 * `access` – `restricted` by default – NPM [`access`](https://docs.npmjs.com/misc/config#access)
 
