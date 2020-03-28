@@ -12,6 +12,7 @@
     "packages/fixdeps",
     "packages/graphiq",
     "packages/import-wasm",
+    "packages/iterama",
     "packages/makethen",
     "packages/mnth",
     "packages/mock/*",
