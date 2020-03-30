@@ -30,6 +30,13 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
     Array.from({ length: SCREENSHOTS_CONCURRENCY }, () => browser.newPage())
   )
 
+  // stop using internal pool and allocate memory every time
+  // because we transfer underlying memory from worker, and hopefully
+  // it's faster than copying a lot of buffers from worker to parent
+  //
+  // otherwise it leads to `Cannot perform Construct on a neutered ArrayBuffer` error
+  Buffer.poolSize = 0
+
   return async (filePath: string): Promise<TWorkerResultInternal<Buffer>> => {
     const tarFilePath = getTarFilePath(filePath)
     let tarFs = null as null | TTarFs
@@ -41,7 +48,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
     } catch {}
 
     const { examples } = await import(filePath) as { examples: Iterable<TExample> }
-    const arrayBufferSet = new Set<ArrayBuffer>()
+    const transferList = [] as ArrayBuffer[]
     const status = {
       ok: 0,
       new: 0,
@@ -74,7 +81,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
 
         // NEW
         if (tarFs === null || !tarFs.has(example.id)) {
-          arrayBufferSet.add(newScreenshot.buffer)
+          transferList.push(newScreenshot.buffer)
 
           const png = bufferToPng(newScreenshot)
 
@@ -98,8 +105,8 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
 
         // DIFF
         if (hasScreenshotDiff(origPng, newPng)) {
-          arrayBufferSet.add(origScreenshot.buffer)
-          arrayBufferSet.add(newScreenshot.buffer)
+          transferList.push(origScreenshot.buffer)
+          transferList.push(newScreenshot.buffer)
 
           results.set(example.id, {
             type: 'DIFF',
@@ -145,7 +152,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
             meta = JSON.parse(metaBuffer.toString('utf8')) as TJsonValue
           }
 
-          arrayBufferSet.add(data)
+          transferList.push(data)
 
           results.set(id, {
             type: 'DELETED',
@@ -168,7 +175,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
         results,
         status,
       },
-      transferList: Array.from(arrayBufferSet),
+      transferList,
     }
   }
 }
