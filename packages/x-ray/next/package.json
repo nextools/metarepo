@@ -1,7 +1,7 @@
 {
-  "name": "@x-ray/chrome",
+  "name": "@x-ray/next",
   "version": "0.0.0",
-  "description": "Check Chrome screenshots with X-Ray",
+  "description": "Next X-Ray",
   "keywords": [],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",

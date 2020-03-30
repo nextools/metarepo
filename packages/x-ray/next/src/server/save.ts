@@ -3,9 +3,9 @@ import pAll from 'p-all'
 // @ts-ignore
 import imageminPngout from 'imagemin-pngout'
 import { isDefined } from 'tsfn'
-import { getTarFilePath } from '../get-tar-file-path'
-import { TResults } from '../types'
+import { getTarFilePath } from '../utils/get-tar-file-path'
 import { WRITE_RESULT_CONCURRENCY } from '../constants'
+import { TResults } from '../chrome/types'
 
 const optimizePng = imageminPngout({ strategy: 2 })
 
@@ -24,7 +24,8 @@ export const save = async (results: TResults, pathMap: Map<string, string>, keys
   }, {} as { [path: string]: string[] })
 
   for (const [filePath, ids] of Object.entries(saveMap)) {
-    const tarFs = await TarFs(getTarFilePath(filePath))
+    // TODO: extract `chrome` type
+    const tarFs = await TarFs(getTarFilePath(filePath, 'chrome'))
 
     await pAll(
       ids.map((id) => async () => {

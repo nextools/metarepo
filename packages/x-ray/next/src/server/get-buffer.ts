@@ -1,4 +1,5 @@
-import { TResults, TGetResponseQuery } from '../types'
+import { TGetResponseQuery } from '../types'
+import { TResults } from '../chrome/types'
 
 export const getBuffer = (results: TResults, pathMap: Map<string, string>, query: TGetResponseQuery): Buffer | null => {
   const [shortPath, id] = query.id.split(':')

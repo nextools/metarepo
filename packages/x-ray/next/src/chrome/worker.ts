@@ -5,13 +5,13 @@ import pAll from 'p-all'
 import { access } from 'pifs'
 import { TarFs, TTarFs } from '@x-ray/tar-fs'
 import { TJsonValue } from 'typeon'
-import { getTarFilePath } from './get-tar-file-path'
-import { TCheckResults, TWorkerResultInternal, TCheckOptions, TExample } from './types'
-import { hasScreenshotDiff } from './has-screenshot-diff'
-import { bufferToPng } from './buffer-to-png'
-import { SCREENSHOTS_CONCURRENCY } from './constants'
-import { ApplyDpr } from './apply-dpr'
-import { mapIterable } from './iterable'
+import { getTarFilePath } from '../utils/get-tar-file-path'
+import { TCheckResults, TWorkerResultInternal, TCheckOptions, TExample } from '../types'
+import { hasScreenshotDiff } from '../utils/has-screenshot-diff'
+import { bufferToPng } from '../utils/buffer-to-png'
+import { ApplyDpr } from '../utils/apply-dpr'
+import { mapIterable } from '../iterable'
+import { SCREENSHOTS_PER_WORKER_COUNT } from './constants'
 import { getContainerStyle } from './get-container-style'
 
 const SELECTOR = '[data-x-ray]'
@@ -27,7 +27,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
     },
   })
   const pages = await Promise.all(
-    Array.from({ length: SCREENSHOTS_CONCURRENCY }, () => browser.newPage())
+    Array.from({ length: SCREENSHOTS_PER_WORKER_COUNT }, () => browser.newPage())
   )
 
   // stop using internal pool and allocate memory every time
@@ -38,7 +38,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
   Buffer.poolSize = 0
 
   return async (filePath: string): Promise<TWorkerResultInternal<Buffer>> => {
-    const tarFilePath = getTarFilePath(filePath)
+    const tarFilePath = getTarFilePath(filePath, 'chrome')
     let tarFs = null as null | TTarFs
 
     try {
@@ -131,7 +131,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
 
         status.ok++
       }),
-      { concurrency: SCREENSHOTS_CONCURRENCY }
+      { concurrency: SCREENSHOTS_PER_WORKER_COUNT }
     )
 
     if (tarFs !== null) {

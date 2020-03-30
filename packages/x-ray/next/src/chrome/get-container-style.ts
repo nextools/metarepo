@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react'
 import { isNumber } from 'tsfn'
-import { TExampleOptions } from './types'
+import { TExampleOptions } from '../types'
 
 export const getContainerStyle = (userOptions?: TExampleOptions): CSSProperties => {
   const options: TExampleOptions = {

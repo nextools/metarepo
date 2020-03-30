@@ -1,6 +1,7 @@
 import path from 'path'
-import { TResults, TListItems } from '../types'
+import { TListItems } from '../types'
 import { reduceIterable, iterableGetFirst } from '../iterable'
+import { TResults } from '../chrome/types'
 
 export type TListResponse = {
   type: 'image',
@@ -20,6 +21,7 @@ export const getList = (results: TResults, pathMap: Map<string, string>): TListR
     shortPaths.push(shortPath)
   }
 
+  // TODO
   // const shortPaths = await pAll<string>(
   //   Object.keys(results).map((longPath) => async () => {
   //     // const packageDir = await pkgDir(path.dirname(longPath))
