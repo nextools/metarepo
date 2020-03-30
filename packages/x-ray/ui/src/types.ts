@@ -1,7 +1,7 @@
 import { TExtend } from 'tsfn'
 import { ThunkAction } from 'redux-thunk'
 import { TSnapshotItem, TSnapshotItems } from '@x-ray/snapshots'
-import { TListItems, TItem } from '../../chrome/src/types'
+import { TListItems, TItem } from '../../next/src/types'
 
 export type TPosition = {
   top: number,

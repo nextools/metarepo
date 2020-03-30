@@ -1,6 +1,6 @@
 import { TSnapshotsListResult } from '@x-ray/snapshots'
 import { HOST, PORT } from '../config'
-import { TListItems } from '../../../chrome/src/types'
+import { TListItems } from '../../../next/src/types'
 
 export type TApiLoadListResult = TSnapshotsListResult | {
   type: 'image',

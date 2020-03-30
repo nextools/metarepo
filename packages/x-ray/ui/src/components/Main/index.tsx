@@ -13,7 +13,7 @@ import { Background } from '../Background'
 import { COL_SPACE, BORDER_SIZE, COLOR_GRAY } from '../../config'
 import { Toolbar, TOOLBAR_HEIGHT } from '../Toolbar'
 import { SaveButton, SAVE_BUTTON_HEIGHT } from '../SaveButton'
-import { TListItems } from '../../../../chrome/src/types'
+import { TListItems } from '../../../../next/src/types'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
 
