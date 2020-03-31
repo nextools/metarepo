@@ -2175,10 +2175,10 @@
   dependencies:
     "@types/istanbul-lib-coverage" "*"
 
-"@types/istanbul-lib-source-maps@^1.2.1":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@types/istanbul-lib-source-maps/-/istanbul-lib-source-maps-1.2.2.tgz#492cb4d6cb0a96d75f1ed7f55bce46851bc13fc1"
-  integrity sha512-41eeNQ3Du3++LV0Hdz7m0UbeYMnShlJ7CkUOVy3tBeFwc0BE7chBs2Vqdx7xOzXBo2iRQfyiWBmqIZTbau3q+A==
+"@types/istanbul-lib-source-maps@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/istanbul-lib-source-maps/-/istanbul-lib-source-maps-4.0.0.tgz#d67b612f453baf7abda33a9baf1cb072189ad909"
+  integrity sha512-pwtxTGrYUe4T/J990fuUk49oJ/MEa2vyugpCnX4n//Owak1lK2vusySEKtolJevFpDuO761Ja+e6PZbxczfn7A==
   dependencies:
     "@types/istanbul-lib-coverage" "*"
     source-map "^0.6.1"
