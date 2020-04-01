@@ -1,5 +1,5 @@
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { TPackageRelease } from '@auto/core'
 import { prefixes } from './prefixes'
@@ -7,7 +7,7 @@ import { prefixes } from './prefixes'
 test('writePublishTags: multiple tags', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../src', {
+  const unmockRequire = mockRequire('../src', {
     execa: { default: execaSpy },
   })
 
@@ -70,5 +70,5 @@ test('writePublishTags: multiple tags', async (t) => {
     'multiple tags'
   )
 
-  unmock()
+  unmockRequire()
 })

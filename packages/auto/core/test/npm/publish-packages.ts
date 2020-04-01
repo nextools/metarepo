@@ -1,6 +1,6 @@
 import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { prefixes } from '../prefixes'
 
 test('npm:publishPackages: normal usecases', async (t) => {
@@ -25,12 +25,12 @@ test('npm:publishPackages: normal usecases', async (t) => {
     },
   }
 
-  const unmock = mock('../../src/npm/publish-packages', {
+  const unmockRequire = mockRequire('../../src/npm/publish-packages', {
     execa: { default: execaSpy },
-    '../fs/read-package': {
+    '../../src/fs/read-package': {
       readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
     },
-    './log-error': {
+    '../../src/npm/log-error': {
       logError: errorSpy,
     },
   })
@@ -88,7 +88,7 @@ test('npm:publishPackages: normal usecases', async (t) => {
     'should not call onError'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('npm:publishPackages: registry override', async (t) => {
@@ -116,9 +116,9 @@ test('npm:publishPackages: registry override', async (t) => {
     },
   }
 
-  const unmock = mock('../../src/npm/publish-packages', {
+  const unmockRequire = mockRequire('../../src/npm/publish-packages', {
     execa: { default: execaSpy },
-    '../fs/read-package': {
+    '../../src/fs/read-package': {
       readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
     },
   })
@@ -173,7 +173,7 @@ test('npm:publishPackages: registry override', async (t) => {
     'should call onError'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('npm:publishPackages: errors', async (t) => {
@@ -201,12 +201,12 @@ test('npm:publishPackages: errors', async (t) => {
     },
   }
 
-  const unmock = mock('../../src/npm/publish-packages', {
+  const unmockRequire = mockRequire('../../src/npm/publish-packages', {
     execa: { default: execaSpy },
-    '../fs/read-package': {
+    '../../src/fs/read-package': {
       readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
     },
-    './log-error': {
+    '../../src/npm/log-error': {
       logError: onErrorSpy,
     },
   })
@@ -285,7 +285,7 @@ test('npm:publishPackages: errors', async (t) => {
     'should call onError'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('npm:publishPackages: other errors', async (t) => {
@@ -313,12 +313,12 @@ test('npm:publishPackages: other errors', async (t) => {
     },
   }
 
-  const unmock = mock('../../src/npm/publish-packages', {
+  const unmockRequire = mockRequire('../../src/npm/publish-packages', {
     execa: { default: execaSpy },
-    '../fs/read-package': {
+    '../../src/fs/read-package': {
       readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
     },
-    './log-error': {
+    '../../src/npm/log-error': {
       logError: onErrorSpy,
     },
   })
@@ -372,5 +372,5 @@ test('npm:publishPackages: other errors', async (t) => {
     'should call onError'
   )
 
-  unmock()
+  unmockRequire()
 })

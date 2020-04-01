@@ -19,11 +19,11 @@
     "tsfn": "^1.1.0"
   },
   "devDependencies": {
-    "@types/tape": "^4.2.34",
+    "@mock/require": "^0.0.0",
     "@types/jssha": "^2.0.0",
     "@types/react": "^16.8.6",
-    "tape": "^5.0.0-next.5",
-    "mocku": "^1.0.0",
-    "react": "^16.8.6"
+    "@types/tape": "^4.2.34",
+    "react": "^16.8.6",
+    "tape": "^5.0.0-next.5"
   }
 }

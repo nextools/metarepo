@@ -1,7 +1,7 @@
 import { Readable } from 'stream'
 import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 
 test('stroki: empty stream', async (t) => {
   const readable = new Readable({
@@ -45,7 +45,7 @@ for (const eol of eols) {
     })
 
     const spy = createSpy(() => {})
-    const unmock = mock('../src', {
+    const unmockRequire = mockRequire('../src', {
       os: {
         EOL: eol,
       },
@@ -63,7 +63,7 @@ for (const eol of eols) {
         .on('end', resolve)
     })
 
-    unmock()
+    unmockRequire()
 
     t.deepEqual(
       getSpyCalls(spy),
@@ -85,7 +85,7 @@ for (const eol of eols) {
     })
 
     const spy = createSpy(() => {})
-    const unmock = mock('../src', {
+    const unmockRequire = mockRequire('../src', {
       os: {
         EOL: eol,
       },
@@ -103,7 +103,7 @@ for (const eol of eols) {
         .on('end', resolve)
     })
 
-    unmock()
+    unmockRequire()
 
     t.deepEqual(
       getSpyCalls(spy),
@@ -141,7 +141,7 @@ for (const eol of eols) {
     })
 
     const spy = createSpy(() => {})
-    const unmock = mock('../src', {
+    const unmockRequire = mockRequire('../src', {
       os: {
         EOL: eol,
       },
@@ -159,7 +159,7 @@ for (const eol of eols) {
         .on('end', resolve)
     })
 
-    unmock()
+    unmockRequire()
 
     t.deepEqual(
       getSpyCalls(spy),
@@ -181,7 +181,7 @@ for (const eol of eols) {
     })
 
     const spy = createSpy(() => {})
-    const unmock = mock('../src', {
+    const unmockRequire = mockRequire('../src', {
       os: {
         EOL: eol,
       },
@@ -199,7 +199,7 @@ for (const eol of eols) {
         .on('end', resolve)
     })
 
-    unmock()
+    unmockRequire()
 
     t.deepEqual(
       getSpyCalls(spy),

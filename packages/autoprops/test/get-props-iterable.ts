@@ -1,5 +1,5 @@
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { TComponentConfig } from '../src/types'
 import { getPropsIterable, mapPropsIterable } from '../src'
 
@@ -31,8 +31,8 @@ test('getPropsIterable: props', (t) => {
 })
 
 test('getPropsIterable: childrenMap', async (t) => {
-  const unmockGetPropIterable = mock('../src/get-props-iterable', {
-    './create-children': {
+  const unmockRequire = mockRequire('../src/get-props-iterable', {
+    '../src/create-children': {
       createChildren: (_: any, map: any) => map,
     },
   })
@@ -88,7 +88,7 @@ test('getPropsIterable: childrenMap', async (t) => {
     'should iterate props'
   )
 
-  unmockGetPropIterable()
+  unmockRequire()
 })
 
 test('mapPropsIterable', (t) => {

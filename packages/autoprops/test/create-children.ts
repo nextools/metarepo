@@ -1,9 +1,9 @@
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { TComponentConfig } from '../src/types'
 
 test('createChildren', async (t) => {
-  const unmockCreateChildren = mock('../src/create-children', {
+  const unmockRequire = mockRequire('../src/create-children', {
     react: {
       createElement: (comp: any, props: any, children: any) => ({
         comp,
@@ -80,7 +80,7 @@ test('createChildren', async (t) => {
     'should return proper children'
   )
 
-  unmockCreateChildren()
+  unmockRequire()
 })
 
 test('createChildren: errors', async (t) => {

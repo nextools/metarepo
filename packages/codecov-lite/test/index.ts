@@ -1,14 +1,14 @@
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 
 test('codecov-lite', async (t) => {
-  const unmock = mock('../src/index', {
+  const unmockRequire = mockRequire('../src/index', {
     got: {
       default: {
         post: () => Promise.resolve({ body: 'HTTP 200\nreportURL' }),
       },
     },
-    './getConfig': {
+    '../src/getConfig': {
       default: () => ({ foo: '1', bar: '2' }),
     },
   })
@@ -29,5 +29,5 @@ test('codecov-lite', async (t) => {
     'should return result object'
   )
 
-  unmock()
+  unmockRequire()
 })

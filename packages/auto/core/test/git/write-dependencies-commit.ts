@@ -1,5 +1,5 @@
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { TPackageRelease } from '../../src/types'
 import { prefixes } from '../prefixes'
@@ -7,7 +7,7 @@ import { prefixes } from '../prefixes'
 test('git:writeDependenciesCommit: no dependencies', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/git/write-dependencies-commit', {
+  const unmockRequire = mockRequire('../../src/git/write-dependencies-commit', {
     execa: { default: execaSpy },
   })
 
@@ -39,13 +39,13 @@ test('git:writeDependenciesCommit: no dependencies', async (t) => {
     'should not make a commit'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('git:writeDependenciesCommit: single dependency', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/git/write-dependencies-commit', {
+  const unmockRequire = mockRequire('../../src/git/write-dependencies-commit', {
     execa: { default: execaSpy },
   })
 
@@ -95,13 +95,13 @@ test('git:writeDependenciesCommit: single dependency', async (t) => {
     'single commit'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('git:writeDependenciesCommit: single dev dependency', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/git/write-dependencies-commit', {
+  const unmockRequire = mockRequire('../../src/git/write-dependencies-commit', {
     execa: { default: execaSpy },
   })
 
@@ -151,13 +151,13 @@ test('git:writeDependenciesCommit: single dev dependency', async (t) => {
     'single commit'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('git:writeDependenciesCommit: multiple packages', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/git/write-dependencies-commit', {
+  const unmockRequire = mockRequire('../../src/git/write-dependencies-commit', {
     execa: { default: execaSpy },
   })
 
@@ -234,5 +234,5 @@ test('git:writeDependenciesCommit: multiple packages', async (t) => {
     'multiple packages'
   )
 
-  unmock()
+  unmockRequire()
 })

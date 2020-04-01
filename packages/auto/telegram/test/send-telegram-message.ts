@@ -1,6 +1,6 @@
 import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { TPackageRelease, TAutoConfig } from '@auto/core'
 import { TTelegramConfig } from '../src/types'
 import { prefixes } from './prefixes'
@@ -17,7 +17,7 @@ const config: TAutoConfig = {
 test('sendTelegramMessage', async (t) => {
   const spy = createSpy(() => Promise.resolve({ ok: true }))
 
-  const unmock = mock('../src/send-telegram-message', {
+  const unmockRequire = mockRequire('../src/send-telegram-message', {
     'node-fetch': {
       default: spy,
     },
@@ -138,17 +138,17 @@ test('sendTelegramMessage', async (t) => {
     'should make request'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('sendTelegramMessage: truncate too long message', async (t) => {
   const spy = createSpy(() => Promise.resolve({ ok: true }))
 
-  const unmock = mock('../src/send-telegram-message', {
+  const unmockRequire = mockRequire('../src/send-telegram-message', {
     'node-fetch': {
       default: spy,
     },
-    './constants': {
+    '../src/constants': {
       TELEGRAM_API_URL: 'https://api.telegram.org/',
       TELEGRAM_MESSAGE_MAX_LENGTH: 20,
     },
@@ -256,13 +256,13 @@ test('sendTelegramMessage: truncate too long message', async (t) => {
     'should make request'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('sendTelegramMessage: throws if there is no token', async (t) => {
   const spy = createSpy(() => Promise.resolve({ ok: true }))
 
-  const unmock = mock('../src/send-telegram-message', {
+  const unmockRequire = mockRequire('../src/send-telegram-message', {
     'node-fetch': {
       default: spy,
     },
@@ -364,7 +364,7 @@ test('sendTelegramMessage: throws if there is no token', async (t) => {
     )
   }
 
-  unmock()
+  unmockRequire()
 })
 
 test('sendTelegramMessage: throws if there was an API request error', async (t) => {
@@ -373,12 +373,9 @@ test('sendTelegramMessage: throws if there was an API request error', async (t) 
     statusText: 'oops',
   }))
 
-  const unmock = mock('../src/send-telegram-message', {
+  const unmockRequire = mockRequire('../src/send-telegram-message', {
     'node-fetch': {
       default: spy,
-    },
-    './get-telegram-options': {
-      getTelegramOptions: () => telegramOptions,
     },
   })
 
@@ -400,5 +397,5 @@ test('sendTelegramMessage: throws if there was an API request error', async (t) 
     )
   }
 
-  unmock()
+  unmockRequire()
 })

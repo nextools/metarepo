@@ -1,6 +1,6 @@
 import { promisify } from 'util'
 import test from 'tape'
-import { mock, deleteFromCache } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
 import { TPackageMap } from '../../src/types'
 
@@ -26,15 +26,12 @@ test('fs:getPackages workspaces[]', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../../src/fs/get-packages', {
+  const unmockRequire = mockRequire('../../src/fs/get-packages', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
     },
   })
-
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { getPackages } = await import('../../src/fs/get-packages')
 
@@ -67,5 +64,5 @@ test('fs:getPackages workspaces[]', async (t) => {
     'should return packages'
   )
 
-  unmock()
+  unmockRequire()
 })

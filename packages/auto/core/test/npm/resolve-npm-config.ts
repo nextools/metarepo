@@ -1,5 +1,5 @@
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 
 test('resolveNpmConfig', async (t) => {
   let i = 0
@@ -26,8 +26,8 @@ test('resolveNpmConfig', async (t) => {
     },
   ]
 
-  const unmock = mock('../../src/npm/resolve-npm-config', {
-    '../fs/read-package': {
+  const unmockRequire = mockRequire('../../src/npm/resolve-npm-config', {
+    '../../src/fs/read-package': {
       readPackage: () => Promise.resolve(localPackages[i++]),
     },
   })
@@ -96,5 +96,5 @@ test('resolveNpmConfig', async (t) => {
     'registry override'
   )
 
-  unmock()
+  unmockRequire()
 })

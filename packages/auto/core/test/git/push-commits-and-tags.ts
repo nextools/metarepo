@@ -1,12 +1,12 @@
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { prefixes } from '../prefixes'
 
 test('git:pushCommitsAndTags', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/git/push-commits-and-tags', {
+  const unmockRequire = mockRequire('../../src/git/push-commits-and-tags', {
     execa: { default: execaSpy },
   })
 
@@ -26,5 +26,5 @@ test('git:pushCommitsAndTags', async (t) => {
     'should push'
   )
 
-  unmock()
+  unmockRequire()
 })

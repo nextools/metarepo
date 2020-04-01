@@ -1,6 +1,6 @@
 import { promisify } from 'util'
 import test from 'tape'
-import { mock, deleteFromCache } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
 
 const rootDir = process.cwd()
@@ -10,13 +10,11 @@ test('fs:writePackage', async (t) => {
     [`${rootDir}/fakes/a/package.json`]: '',
   })
   const fs = createFsFromVolume(vol)
-  const unmock = mock('../../src/fs/write-package', {
+  const unmockRequire = mockRequire('../../src/fs/write-package', {
     pifs: {
       writeFile: promisify(fs.writeFile),
     },
   })
-
-  deleteFromCache('pifs')
 
   const { writePackage } = await import('../../src/fs/write-package')
 
@@ -38,5 +36,5 @@ test('fs:writePackage', async (t) => {
     'should get package content'
   )
 
-  unmock()
+  unmockRequire()
 })

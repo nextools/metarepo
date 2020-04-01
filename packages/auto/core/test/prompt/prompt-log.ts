@@ -1,5 +1,5 @@
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { prefixes } from '../prefixes'
 import { TPackageBumpMap } from '../../src/bump/types'
@@ -7,8 +7,8 @@ import { TGitMessageMap } from '../../src/types'
 
 test('promptLog', async (t) => {
   const logSpy = createSpy(() => {})
-  const unmock = mock('../../src/prompt/prompt-log', {
-    './log': {
+  const unmockRequire = mockRequire('../../src/prompt/prompt-log', {
+    '../../src/prompt/log': {
       log: logSpy,
     },
   })
@@ -106,6 +106,6 @@ test('promptLog', async (t) => {
     'should log'
   )
 
-  unmock()
+  unmockRequire()
 })
 

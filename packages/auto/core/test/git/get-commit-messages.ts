@@ -1,5 +1,5 @@
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 
 test('git:getCommitMessages', async (t) => {
@@ -20,7 +20,7 @@ p2 l2
     stdout: commitMessages,
   }))
 
-  const unmock = mock('../../src/git/get-commit-messages', {
+  const unmockRequire = mockRequire('../../src/git/get-commit-messages', {
     execa: { default: execaSpy },
   })
 
@@ -44,5 +44,5 @@ p2 l2
     'should spawn git with arguments'
   )
 
-  unmock()
+  unmockRequire()
 })

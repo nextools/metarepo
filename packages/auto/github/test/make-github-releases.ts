@@ -1,6 +1,6 @@
 import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { TPackageRelease, TAutoConfig } from '@auto/core'
 import { TGithubConfig } from '../src/types'
 import { prefixes } from './prefixes'
@@ -18,7 +18,7 @@ const config: TAutoConfig = {
 test('makeGithubReleases', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../src/make-github-releases', {
+  const unmockRequire = mockRequire('../src/make-github-releases', {
     'node-fetch': {
       default: spy,
     },
@@ -143,13 +143,13 @@ test('makeGithubReleases', async (t) => {
     'should make request'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('makeGithubReleases: throws if there is no token', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../src/make-github-releases', {
+  const unmockRequire = mockRequire('../src/make-github-releases', {
     'node-fetch': {
       default: spy,
     },
@@ -219,5 +219,5 @@ test('makeGithubReleases: throws if there is no token', async (t) => {
     t.equals(e.message, 'GitHub token is required')
   }
 
-  unmock()
+  unmockRequire()
 })

@@ -1,6 +1,6 @@
 import { promisify } from 'util'
 import test from 'tape'
-import { mock, deleteFromCache } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
 
 const rootDir = process.cwd()
@@ -16,15 +16,12 @@ test('fs:getPackageDirs workspaces[]', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../../src/fs/get-package-dirs', {
+  const unmockRequire = mockRequire('../../src/fs/get-package-dirs', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
     },
   })
-
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { getPackageDirs } = await import('../../src/fs/get-package-dirs')
 
@@ -37,7 +34,7 @@ test('fs:getPackageDirs workspaces[]', async (t) => {
     'should return packages directories'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('fs:getPackageDirs workspaces.packages[]', async (t) => {
@@ -53,16 +50,12 @@ test('fs:getPackageDirs workspaces.packages[]', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../../src/fs/get-package-dirs', {
+  const unmockRequire = mockRequire('../../src/fs/get-package-dirs', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
     },
   })
-
-  deleteFromCache('fs')
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { getPackageDirs } = await import('../../src/fs/get-package-dirs')
 
@@ -75,7 +68,7 @@ test('fs:getPackageDirs workspaces.packages[]', async (t) => {
     'should return packages directories'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('fs:getPackageDirs no workspaces', async (t) => {
@@ -87,16 +80,11 @@ test('fs:getPackageDirs no workspaces', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../../src/fs/get-package-dirs', {
-    fs,
+  const unmockRequire = mockRequire('../../src/fs/get-package-dirs', {
     pifs: {
       readFile: promisify(fs.readFile),
     },
   })
-
-  deleteFromCache('fs')
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { getPackageDirs } = await import('../../src/fs/get-package-dirs')
 
@@ -108,7 +96,7 @@ test('fs:getPackageDirs no workspaces', async (t) => {
     t.equals(e.message, 'Cannot find "workspaces" field in "package.json"')
   }
 
-  unmock()
+  unmockRequire()
 })
 
 test('fs:getPackageDirs no workspaces.packages', async (t) => {
@@ -122,16 +110,12 @@ test('fs:getPackageDirs no workspaces.packages', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../../src/fs/get-package-dirs', {
+  const unmockRequire = mockRequire('../../src/fs/get-package-dirs', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
     },
   })
-
-  deleteFromCache('fs')
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { getPackageDirs } = await import('../../src/fs/get-package-dirs')
 
@@ -143,5 +127,5 @@ test('fs:getPackageDirs no workspaces.packages', async (t) => {
     t.equals(e.message, 'Cannot find "workspaces.packages" field in "package.json"')
   }
 
-  unmock()
+  unmockRequire()
 })
