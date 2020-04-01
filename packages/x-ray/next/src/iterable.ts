@@ -16,10 +16,12 @@ export const makeNumIterable = (num: number) => ({
   },
 })
 
-export const mapIterable = <T, R>(iterable: Iterable<T>, fn: (arg: T) => R): Iterable<R> => ({
+export const mapIterable = <T, R>(iterable: Iterable<T>, fn: (arg: T, i: number) => R): Iterable<R> => ({
   *[Symbol.iterator]() {
-    for (const i of iterable) {
-      yield fn(i)
+    let i = 0
+
+    for (const item of iterable) {
+      yield fn(item, i++)
     }
   },
 })

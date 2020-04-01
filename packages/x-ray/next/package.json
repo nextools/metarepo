@@ -4,6 +4,7 @@
   "description": "Next X-Ray",
   "keywords": [],
   "main": "src/index.ts",
+  "react-native": "src/index.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
