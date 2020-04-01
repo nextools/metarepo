@@ -19,7 +19,7 @@
     "tsfn": "^1.1.0"
   },
   "devDependencies": {
-    "@mock/require": "^0.0.0",
+    "@mock/require": "^0.1.0",
     "@types/jssha": "^2.0.0",
     "@types/react": "^16.8.6",
     "@types/tape": "^4.2.34",

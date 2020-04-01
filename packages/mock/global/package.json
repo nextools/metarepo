@@ -14,7 +14,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@mock/utils": "^0.0.0",
+    "@mock/utils": "^0.1.0",
     "get-caller-file": "^2.0.5"
   },
   "devDependencies": {

@@ -21,7 +21,7 @@
     "tsfn": "^1.1.0"
   },
   "devDependencies": {
-    "@mock/require": "^0.0.0",
+    "@mock/require": "^0.1.0",
     "memfs": "^3.0.3",
     "spyfn": "^1.0.0",
     "tape": "^5.0.0-next.5"

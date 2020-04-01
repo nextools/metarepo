@@ -19,8 +19,8 @@
   },
   "sideEffects": false,
   "devDependencies": {
-    "@mock/fs": "^0.0.0",
-    "@mock/require": "^0.0.0",
+    "@mock/fs": "^0.1.0",
+    "@mock/require": "^0.1.0",
     "@types/tape": "^4.2.34",
     "memfs": "^3.0.3",
     "spyfn": "^1.0.0",
