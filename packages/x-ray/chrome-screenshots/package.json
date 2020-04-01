@@ -19,7 +19,7 @@
     "@x-ray/worker-utils": "^1.0.0",
     "iterama": "^0.1.1",
     "node-fetch": "^2.6.0",
-    "p-all": "^2.0.0",
+    "p-all": "^3.0.0",
     "puppeteer-core": "^2.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.6.0",
