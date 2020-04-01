@@ -1,7 +1,7 @@
 import { promisify } from 'util'
 import test from 'tape'
 import { Volume, createFsFromVolume } from 'memfs'
-import { mock, deleteFromCache } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { TAutoConfig, TPackageRelease, TGitMessageMap, TPackageMap, TPackageJson } from '../src/types'
 import { TPackageBumpMap } from '../src/bump/types'
@@ -72,33 +72,30 @@ test('auto: all hooks', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/auto', {
+  const unmockRequire = mockRequire('../src/auto', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
-    './git/get-commit-messages': {
+    '../src/git/get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.initial} ns/a: init`,
       ]),
     },
-    './prompt/prompt-log': {
+    '../src/prompt/prompt-log': {
       promptLog: promptLogSpy,
     },
-    './prompt/make-prompt': {
+    '../src/prompt/make-prompt': {
       makePrompt: promptSpy,
     },
-    './fs/write-packages-dependencies': {
+    '../src/fs/write-packages-dependencies': {
       writePackagesDependencies: writePackagesDependenciesSpy,
     },
-    './fs/write-packages-versions': {
+    '../src/fs/write-packages-versions': {
       writePackagesVersions: writePackagesVersionsSpy,
     },
   })
-
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { auto } = await import('../src/auto')
 
@@ -446,7 +443,7 @@ test('auto: all hooks', async (t) => {
     'should call postPushSpy'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('auto: no hooks', async (t) => {
@@ -501,39 +498,36 @@ test('auto: no hooks', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/auto', {
+  const unmockRequire = mockRequire('../src/auto', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
-    './git/get-commit-messages': {
+    '../src/git/get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.initial} ns/a: init`,
       ]),
     },
-    './git/write-dependencies-commit': {
+    '../src/git/write-dependencies-commit': {
       writeDependenciesCommit: depsCommitFSpy,
     },
-    './git/write-publish-commit': {
+    '../src/git/write-publish-commit': {
       writePublishCommit: publishCommitFSpy,
     },
-    './git/push-commits-and-tags': {
+    '../src/git/push-commits-and-tags': {
       pushCommitsAndTags: pushFSpy,
     },
-    './prompt/prompt-log': {
+    '../src/prompt/prompt-log': {
       promptLog: () => {},
     },
-    './prompt/make-prompt': {
+    '../src/prompt/make-prompt': {
       makePrompt: promptSpy,
     },
-    './npm/publish-packages': {
+    '../src/npm/publish-packages': {
       publishPackages: publishFSpy,
     },
   })
-
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { auto } = await import('../src/auto')
 
@@ -677,7 +671,7 @@ test('auto: no hooks', async (t) => {
     'should call pushSpy'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('auto: no hooks, prompt edit', async (t) => {
@@ -739,39 +733,36 @@ test('auto: no hooks, prompt edit', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/auto', {
+  const unmockRequire = mockRequire('../src/auto', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
-    './git/get-commit-messages': {
+    '../src/git/get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.initial} ns/a: init`,
       ]),
     },
-    './git/write-dependencies-commit': {
+    '../src/git/write-dependencies-commit': {
       writeDependenciesCommit: depsCommitFSpy,
     },
-    './git/write-publish-commit': {
+    '../src/git/write-publish-commit': {
       writePublishCommit: publishCommitFSpy,
     },
-    './git/push-commits-and-tags': {
+    '../src/git/push-commits-and-tags': {
       pushCommitsAndTags: pushFSpy,
     },
-    './prompt/prompt-log': {
+    '../src/prompt/prompt-log': {
       promptLog: () => {},
     },
-    './prompt/make-prompt': {
+    '../src/prompt/make-prompt': {
       makePrompt: promptSpy,
     },
-    './npm/publish-packages': {
+    '../src/npm/publish-packages': {
       publishPackages: publishFSpy,
     },
   })
-
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { auto } = await import('../src/auto')
 
@@ -920,7 +911,7 @@ test('auto: no hooks, prompt edit', async (t) => {
     'should call pushSpy'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('auto: no hooks, prompt unrecognized', async (t) => {
@@ -975,39 +966,36 @@ test('auto: no hooks, prompt unrecognized', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/auto', {
+  const unmockRequire = mockRequire('../src/auto', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
-    './git/get-commit-messages': {
+    '../src/git/get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.initial} ns/a: init`,
       ]),
     },
-    './git/write-dependencies-commit': {
+    '../src/git/write-dependencies-commit': {
       writeDependenciesCommit: depsCommitFSpy,
     },
-    './git/write-publish-commit': {
+    '../src/git/write-publish-commit': {
       writePublishCommit: publishCommitFSpy,
     },
-    './git/push-commits-and-tags': {
+    '../src/git/push-commits-and-tags': {
       pushCommitsAndTags: pushFSpy,
     },
-    './prompt/prompt-log': {
+    '../src/prompt/prompt-log': {
       promptLog: () => {},
     },
-    './prompt/make-prompt': {
+    '../src/prompt/make-prompt': {
       makePrompt: promptSpy,
     },
-    './npm/publish-packages': {
+    '../src/npm/publish-packages': {
       publishPackages: publishFSpy,
     },
   })
-
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { auto } = await import('../src/auto')
 
@@ -1093,7 +1081,7 @@ test('auto: no hooks, prompt unrecognized', async (t) => {
     'should not call pushSpy'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('auto: rejecting hooks', async (t) => {
@@ -1147,45 +1135,42 @@ test('auto: rejecting hooks', async (t) => {
 
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/auto', {
+  const unmockRequire = mockRequire('../src/auto', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
-    './fs/write-packages-dependencies': {
+    '../src/fs/write-packages-dependencies': {
       writePackagesDependencies: writePackagesDependenciesSpy,
     },
-    './fs/write-packages-versions': {
+    '../src/fs/write-packages-versions': {
       writePackagesVersions: writePackagesVersionsSpy,
     },
-    './git/write-dependencies-commit': {
+    '../src/git/write-dependencies-commit': {
       writeDependenciesCommit: () => depsCommitSpy,
     },
-    './git/write-publish-commit': {
+    '../src/git/write-publish-commit': {
       writePublishCommit: () => publishCommitSpy,
     },
-    './git/push-commits-and-tags': {
+    '../src/git/push-commits-and-tags': {
       pushCommitsAndTags: () => pushSpy,
     },
-    './git/get-commit-messages': {
+    '../src/git/get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.initial} ns/a: init`,
       ]),
     },
-    './prompt/prompt-log': {
+    '../src/prompt/prompt-log': {
       promptLog: () => {},
     },
-    './prompt/make-prompt': {
+    '../src/prompt/make-prompt': {
       makePrompt: promptSpy,
     },
-    './npm/publish-packages': {
+    '../src/npm/publish-packages': {
       publishPackages: () => publishSpy,
     },
   })
-
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { auto } = await import('../src/auto')
 
@@ -1441,7 +1426,7 @@ test('auto: rejecting hooks', async (t) => {
     )
   }
 
-  unmock()
+  unmockRequire()
 })
 
 test('auto: disabled hooks', async (t) => {
@@ -1505,45 +1490,42 @@ test('auto: disabled hooks', async (t) => {
 
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/auto', {
+  const unmockRequire = mockRequire('../src/auto', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
-    './fs/write-packages-dependencies': {
+    '../src/fs/write-packages-dependencies': {
       writePackagesDependencies: writePackagesDependenciesSpy,
     },
-    './fs/write-packages-versions': {
+    '../src/fs/write-packages-versions': {
       writePackagesVersions: writePackagesVersionsSpy,
     },
-    './git/write-dependencies-commit': {
+    '../src/git/write-dependencies-commit': {
       writeDependenciesCommit: () => depsCommitSpy,
     },
-    './git/write-publish-commit': {
+    '../src/git/write-publish-commit': {
       writePublishCommit: () => publishCommitSpy,
     },
-    './git/push-commits-and-tags': {
+    '../src/git/push-commits-and-tags': {
       pushCommitsAndTags: () => pushSpy,
     },
-    './git/get-commit-messages': {
+    '../src/git/get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `${prefixes.initial} ns/a: init`,
       ]),
     },
-    './prompt/prompt-log': {
+    '../src/prompt/prompt-log': {
       promptLog: () => {},
     },
-    './prompt/make-prompt': {
+    '../src/prompt/make-prompt': {
       makePrompt: promptSpy,
     },
-    './npm/publish-packages': {
+    '../src/npm/publish-packages': {
       publishPackages: () => publishSpy,
     },
   })
-
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { auto } = await import('../src/auto')
 
@@ -1729,7 +1711,7 @@ test('auto: disabled hooks', async (t) => {
     'should not call postPushSpy'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('auto: no config', async (t) => {
@@ -1765,16 +1747,13 @@ test('auto: no config', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/auto', {
+  const unmockRequire = mockRequire('../src/auto', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
   })
-
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { auto } = await import('../src/auto')
 
@@ -1790,7 +1769,7 @@ test('auto: no config', async (t) => {
     )
   }
 
-  unmock()
+  unmockRequire()
 })
 
 test('auto: no prefixes', async (t) => {
@@ -1827,16 +1806,13 @@ test('auto: no prefixes', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/auto', {
+  const unmockRequire = mockRequire('../src/auto', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
   })
-
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { auto } = await import('../src/auto')
 
@@ -1852,7 +1828,7 @@ test('auto: no prefixes', async (t) => {
     )
   }
 
-  unmock()
+  unmockRequire()
 })
 
 test('auto: no bumps', async (t) => {
@@ -1891,21 +1867,18 @@ test('auto: no bumps', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/auto', {
+  const unmockRequire = mockRequire('../src/auto', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
-    './git/get-commit-messages': {
+    '../src/git/get-commit-messages': {
       getCommitMessages: () => Promise.resolve([
         `some commit`,
       ]),
     },
   })
-
-  deleteFromCache('pifs')
-  deleteFromCache('fast-glob')
 
   const { auto } = await import('../src/auto')
 
@@ -1921,5 +1894,5 @@ test('auto: no bumps', async (t) => {
     )
   }
 
-  unmock()
+  unmockRequire()
 })

@@ -6,6 +6,7 @@ import plugin, { StartFilesProps } from '@start/plugin'
 export default (reporter?: () => NodeJS.ReadWriteStream) =>
   plugin('tape', () => async ({ files }: StartFilesProps) => {
     const path = await import('path')
+    const Module = await import('module') as any
     const { default: test } = await import('tape')
     const { default: through } = await import('through')
 
@@ -50,5 +51,9 @@ export default (reporter?: () => NodeJS.ReadWriteStream) =>
       })
 
       files.forEach((file) => require(path.resolve(file.path)))
+
+      Object.keys(Module._cache).forEach((key) => {
+        Reflect.deleteProperty(Module._cache, key)
+      })
     })
   })

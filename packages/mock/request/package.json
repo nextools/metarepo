@@ -1,0 +1,40 @@
+{
+  "name": "@mock/request",
+  "version": "0.0.0",
+  "description": "Mock HTTP(S) requests through redirecting to a temporary HTTP(S) server",
+  "keywords": [
+    "mock",
+    "request",
+    "http",
+    "https"
+  ],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@mock/require": "^0.0.0",
+    "get-caller-file": "^2.0.5",
+    "signal-exit": "^3.0.2",
+    "tempy": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/get-caller-file": "^1.0.0",
+    "@types/signal-exit": "^3.0.0",
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0-next.5",
+    "unchunk": "^0.1.0"
+  },
+  "fixdeps": {
+    "devDependenciesGlobs": [
+      "test/**/*.ts",
+      "!test/fixtures"
+    ]
+  }
+}

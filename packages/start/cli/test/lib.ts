@@ -1,6 +1,6 @@
-import { resolve } from 'path'
+import path from 'path'
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 
 test('cli: export', async (t) => {
@@ -29,8 +29,8 @@ test('cli: throw without reporter', async (t) => {
 })
 
 test('cli: throw without task name', async (t) => {
-  const unmock = mock('../src/lib', {
-    preset: {
+  const unmockImport = mockRequire('../src/lib', {
+    './fixtures/preset': {
       a: 1,
       b: 2,
     },
@@ -40,8 +40,8 @@ test('cli: throw without task name', async (t) => {
 
   const argv = ['foo', 'bar']
   const options = {
-    preset: 'preset',
-    reporter: 'reporter',
+    preset: '../test/fixtures/preset',
+    reporter: '../test/fixtures/reporter',
   }
 
   return cliLib(argv, options).catch((error) => {
@@ -51,13 +51,13 @@ test('cli: throw without task name', async (t) => {
       'should throw'
     )
 
-    unmock()
+    unmockImport()
   })
 })
 
 test('cli: throw with unknown task name', async (t) => {
-  const unmock = mock('../src/lib', {
-    preset: {
+  const unmockImport = mockRequire('../src/lib', {
+    './fixtures/preset': {
       a: 1,
       b: 2,
     },
@@ -67,8 +67,8 @@ test('cli: throw with unknown task name', async (t) => {
 
   const argv = ['foo', 'bar', 'c']
   const options = {
-    preset: 'preset',
-    reporter: 'reporter',
+    preset: '../test/fixtures/preset',
+    reporter: '../test/fixtures/reporter',
   }
 
   return cliLib(argv, options).catch((error) => {
@@ -78,7 +78,7 @@ test('cli: throw with unknown task name', async (t) => {
       'should throw'
     )
 
-    unmock()
+    unmockImport()
   })
 })
 
@@ -87,11 +87,11 @@ test('cli: default file', async (t) => {
   const taskSpy = createSpy(() => taskRunnerSpy)
   const reporterSpy = createSpy(() => 'reporter')
 
-  const unmock = mock('../src/lib', {
-    [resolve('./tasks')]: {
+  const unmockImport = mockRequire('../src/lib', {
+    [path.resolve('./tasks')]: {
       task: taskSpy,
     },
-    reporter: {
+    './fixtures/reporter': {
       default: reporterSpy,
     },
   })
@@ -100,7 +100,7 @@ test('cli: default file', async (t) => {
 
   const argv = ['foo', 'bar', 'task', 'arg1', 'arg2']
   const options = {
-    reporter: 'reporter',
+    reporter: '../test/fixtures/reporter',
   }
 
   await cliLib(argv, options)
@@ -123,7 +123,7 @@ test('cli: default file', async (t) => {
     'should call reporter with task name'
   )
 
-  unmock()
+  unmockImport()
 })
 
 test('cli: custom file', async (t) => {
@@ -131,11 +131,11 @@ test('cli: custom file', async (t) => {
   const taskSpy = createSpy(() => taskRunnerSpy)
   const reporterSpy = createSpy(() => 'reporter')
 
-  const unmock = mock('../src/lib', {
-    [resolve('./my-tasks')]: {
+  const unmockImport = mockRequire('../src/lib', {
+    './fixtures/tasks': {
       task: taskSpy,
     },
-    reporter: {
+    './fixtures/reporter': {
       default: reporterSpy,
     },
   })
@@ -144,8 +144,8 @@ test('cli: custom file', async (t) => {
 
   const argv = ['foo', 'bar', 'task', 'arg1', 'arg2']
   const options = {
-    file: './my-tasks',
-    reporter: 'reporter',
+    file: path.relative(process.cwd(), require.resolve('./fixtures/tasks')),
+    reporter: '../test/fixtures/reporter',
   }
 
   await cliLib(argv, options)
@@ -168,7 +168,7 @@ test('cli: custom file', async (t) => {
     'should call reporter with task name'
   )
 
-  unmock()
+  unmockImport()
 })
 
 test('cli: preset', async (t) => {
@@ -176,11 +176,11 @@ test('cli: preset', async (t) => {
   const taskSpy = createSpy(() => taskRunnerSpy)
   const reporterSpy = createSpy(() => 'reporter')
 
-  const unmock = mock('../src/lib', {
-    preset: {
+  const unmockImport = mockRequire('../src/lib', {
+    './fixtures/preset': {
       task: taskSpy,
     },
-    reporter: {
+    './fixtures/reporter': {
       default: reporterSpy,
     },
   })
@@ -189,8 +189,8 @@ test('cli: preset', async (t) => {
 
   const argv = ['foo', 'bar', 'task', 'arg1', 'arg2']
   const options = {
-    preset: 'preset',
-    reporter: 'reporter',
+    preset: '../test/fixtures/preset',
+    reporter: '../test/fixtures/reporter',
   }
 
   await cliLib(argv, options)
@@ -213,5 +213,5 @@ test('cli: preset', async (t) => {
     'should call reporter with task name'
   )
 
-  unmock()
+  unmockImport()
 })

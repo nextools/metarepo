@@ -77,5 +77,5 @@ exports.babelConfigNodeRegister = {
     },
   ],
   extensions: ['.ts', '.tsx', '.js'],
-  shouldPrintComment: (val) => val.startsWith('#'),
+  shouldPrintComment: (val) => val.startsWith('#') || val.startsWith(' istanbul'),
 }

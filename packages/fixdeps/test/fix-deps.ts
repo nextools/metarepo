@@ -1,7 +1,6 @@
 /* eslint-disable no-sync */
-import { promisify } from 'util'
 import test from 'tape'
-import { mock, deleteFromCache } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
 import { createSpy, getSpyCalls } from 'spyfn'
 
@@ -46,20 +45,12 @@ test('fixdeps: all', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmockIndex = mock('../src', {
+  const unmockRequire = mockRequire('../src', {
     fs,
-    pifs: {
-      readFile: promisify(fs.readFile),
-      writeFile: promisify(fs.writeFile),
-    },
-  })
-  const unmockGetPackageVersion = mock('../src/get-package-version', {
-    './get-local-package-version-yarn': {
+    '../src/get-local-package-version-yarn': {
       getLocalPackageVersionYarn: () => '1.0.0',
     },
   })
-
-  deleteFromCache('fast-glob')
 
   const { fixdeps } = await import('../src')
 
@@ -119,8 +110,7 @@ test('fixdeps: all', async (t) => {
     'should return result'
   )
 
-  unmockIndex()
-  unmockGetPackageVersion()
+  unmockRequire()
 })
 
 test('fixdeps: remove empty dependencies objects', async (t) => {
@@ -144,20 +134,12 @@ test('fixdeps: remove empty dependencies objects', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmockIndex = mock('../src', {
+  const unmockRequire = mockRequire('../src', {
     fs,
-    pifs: {
-      readFile: promisify(fs.readFile),
-      writeFile: promisify(fs.writeFile),
-    },
-  })
-  const unmockGetPackageVersion = mock('../src/get-package-version', {
-    './get-local-package-version-yarn': {
+    '../src/get-local-package-version-yarn': {
       getLocalPackageVersionYarn: () => '1.0.0',
     },
   })
-
-  deleteFromCache('fast-glob')
 
   const { fixdeps } = await import('../src')
 
@@ -177,8 +159,7 @@ test('fixdeps: remove empty dependencies objects', async (t) => {
     }
   )
 
-  unmockIndex()
-  unmockGetPackageVersion()
+  unmockRequire()
 })
 
 test('fixdeps: nothing to do', async (t) => {
@@ -202,20 +183,12 @@ test('fixdeps: nothing to do', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmockIndex = mock('../src', {
+  const unmockRequire = mockRequire('../src', {
     fs,
-    pifs: {
-      readFile: promisify(fs.readFile),
-      writeFile: promisify(fs.writeFile),
-    },
-  })
-  const unmockGetPackageVersion = mock('../src/get-package-version', {
-    './get-local-package-version-yarn': {
+    '../src/get-local-package-version-yarn': {
       getLocalPackageVersionYarn: () => '1.0.0',
     },
   })
-
-  deleteFromCache('fast-glob')
 
   const { fixdeps } = await import('../src')
 
@@ -247,8 +220,7 @@ test('fixdeps: nothing to do', async (t) => {
     'return null if nothing to do'
   )
 
-  unmockIndex()
-  unmockGetPackageVersion()
+  unmockRequire()
 })
 
 test('fixdeps: create dependencies objects if was missing', async (t) => {
@@ -263,20 +235,12 @@ test('fixdeps: create dependencies objects if was missing', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmockIndex = mock('../src', {
+  const unmockRequire = mockRequire('../src', {
     fs,
-    pifs: {
-      readFile: promisify(fs.readFile),
-      writeFile: promisify(fs.writeFile),
-    },
-  })
-  const unmockGetPackageVersion = mock('../src/get-package-version', {
-    './get-local-package-version-yarn': {
+    '../src/get-local-package-version-yarn': {
       getLocalPackageVersionYarn: () => '1.0.0',
     },
   })
-
-  deleteFromCache('fast-glob')
 
   const { fixdeps } = await import('../src')
 
@@ -299,8 +263,7 @@ test('fixdeps: create dependencies objects if was missing', async (t) => {
     }
   )
 
-  unmockIndex()
-  unmockGetPackageVersion()
+  unmockRequire()
 })
 
 test('fixdeps: get remote version with npm', async (t) => {
@@ -319,23 +282,15 @@ test('fixdeps: get remote version with npm', async (t) => {
   const fs = createFsFromVolume(vol)
   const spy = createSpy(() => '1.0.0')
 
-  const unmockIndex = mock('../src', {
+  const unmockRequire = mockRequire('../src', {
     fs,
-    pifs: {
-      readFile: promisify(fs.readFile),
-      writeFile: promisify(fs.writeFile),
-    },
-  })
-  const unmockGetPackageVersion = mock('../src/get-package-version', {
-    './get-local-package-version-yarn': {
+    '../src/get-local-package-version-yarn': {
       getLocalPackageVersionYarn: () => null,
     },
-    './get-remote-package-version-npm': {
+    '../src/get-remote-package-version-npm': {
       getRemotePackageVersionNpm: spy,
     },
   })
-
-  deleteFromCache('fast-glob')
 
   const { fixdeps } = await import('../src')
 
@@ -369,6 +324,5 @@ test('fixdeps: get remote version with npm', async (t) => {
     'should call npm once'
   )
 
-  unmockIndex()
-  unmockGetPackageVersion()
+  unmockRequire()
 })

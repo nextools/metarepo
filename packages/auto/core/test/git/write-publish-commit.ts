@@ -1,5 +1,5 @@
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { TPackageRelease } from '../../src/types'
 import { prefixes } from '../prefixes'
@@ -7,7 +7,7 @@ import { prefixes } from '../prefixes'
 test('git:writePublishCommit: multiple packages', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/git/write-publish-commit', {
+  const unmockRequire = mockRequire('../../src/git/write-publish-commit', {
     execa: { default: execaSpy },
   })
 
@@ -84,13 +84,13 @@ test('git:writePublishCommit: multiple packages', async (t) => {
     'multiple packages'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('git:writePublishCommit: no packages to publish', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/git/write-publish-commit', {
+  const unmockRequire = mockRequire('../../src/git/write-publish-commit', {
     execa: { default: execaSpy },
   })
 
@@ -141,5 +141,5 @@ test('git:writePublishCommit: no packages to publish', async (t) => {
     )
   }
 
-  unmock()
+  unmockRequire()
 })

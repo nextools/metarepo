@@ -1,5 +1,5 @@
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { prefixes } from './prefixes'
 
@@ -21,7 +21,7 @@ test('git:makeCommit single package', async (t) => {
     return Promise.resolve({ message: 'message' })
   })
 
-  const unmock = mock('../src/make-commit', {
+  const unmockRequire = mockRequire('../src/make-commit', {
     execa: { default: execaSpy },
     prompts: { default: promptsSpy },
     '@auto/core': {
@@ -36,7 +36,7 @@ test('git:makeCommit single package', async (t) => {
           })
       ),
     },
-    './get-refixes': {
+    '../src/get-refixes': {
       getPrefixes: () => Promise.resolve(prefixes),
     },
   })
@@ -53,7 +53,7 @@ test('git:makeCommit single package', async (t) => {
     'should write proper message'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('git:makeCommit multiple packages', async (t) => {
@@ -78,7 +78,7 @@ test('git:makeCommit multiple packages', async (t) => {
     return Promise.resolve({ message: 'message' })
   })
 
-  const unmock = mock('../src/make-commit', {
+  const unmockRequire = mockRequire('../src/make-commit', {
     execa: { default: execaSpy },
     prompts: { default: promptsSpy },
     '@auto/core': {
@@ -93,7 +93,7 @@ test('git:makeCommit multiple packages', async (t) => {
           })
       ),
     },
-    './get-refixes': {
+    '../src/get-refixes': {
       getPrefixes: () => Promise.resolve(prefixes),
     },
   })
@@ -110,7 +110,7 @@ test('git:makeCommit multiple packages', async (t) => {
     'should write proper message'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('git:makeCommit: no auto name prefix in prefixes', async (t) => {
@@ -131,7 +131,7 @@ test('git:makeCommit: no auto name prefix in prefixes', async (t) => {
     return Promise.resolve({ message: 'message' })
   })
 
-  const unmock = mock('../src/make-commit', {
+  const unmockRequire = mockRequire('../src/make-commit', {
     execa: { default: execaSpy },
     prompts: { default: promptsSpy },
     '@auto/core': {
@@ -146,7 +146,7 @@ test('git:makeCommit: no auto name prefix in prefixes', async (t) => {
           })
       ),
     },
-    './get-refixes': {
+    '../src/get-refixes': {
       getPrefixes: () => Promise.resolve(prefixes),
     },
   })
@@ -163,7 +163,7 @@ test('git:makeCommit: no auto name prefix in prefixes', async (t) => {
     'should write proper message'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('git:makeCommit: no package name', async (t) => {
@@ -180,7 +180,7 @@ test('git:makeCommit: no package name', async (t) => {
     return Promise.resolve({ message: 'message' })
   })
 
-  const unmock = mock('../src/make-commit', {
+  const unmockRequire = mockRequire('../src/make-commit', {
     execa: { default: execaSpy },
     prompts: { default: promptsSpy },
     '@auto/core': {
@@ -195,7 +195,7 @@ test('git:makeCommit: no package name', async (t) => {
           })
       ),
     },
-    './get-refixes': {
+    '../src/get-refixes': {
       getPrefixes: () => Promise.resolve(prefixes),
     },
   })
@@ -212,7 +212,7 @@ test('git:makeCommit: no package name', async (t) => {
     'should write proper message'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('git:makeCommit: all packages `*`', async (t) => {
@@ -229,7 +229,7 @@ test('git:makeCommit: all packages `*`', async (t) => {
     return Promise.resolve({ message: 'message' })
   })
 
-  const unmock = mock('../src/make-commit', {
+  const unmockRequire = mockRequire('../src/make-commit', {
     execa: { default: execaSpy },
     prompts: { default: promptsSpy },
     '@auto/core': {
@@ -244,7 +244,7 @@ test('git:makeCommit: all packages `*`', async (t) => {
           })
       ),
     },
-    './get-refixes': {
+    '../src/get-refixes': {
       getPrefixes: () => Promise.resolve(prefixes),
     },
   })
@@ -261,14 +261,14 @@ test('git:makeCommit: all packages `*`', async (t) => {
     'should write proper message'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('git:makeCommit: should throw on prefix undefined', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
   const promptsSpy = createSpy(() => Promise.resolve({}))
 
-  const unmock = mock('../src/make-commit', {
+  const unmockRequire = mockRequire('../src/make-commit', {
     execa: { default: execaSpy },
     prompts: { default: promptsSpy },
     '@auto/core': {
@@ -283,7 +283,7 @@ test('git:makeCommit: should throw on prefix undefined', async (t) => {
           })
       ),
     },
-    './get-refixes': {
+    '../src/get-refixes': {
       getPrefixes: () => Promise.resolve(prefixes),
     },
   })
@@ -298,7 +298,7 @@ test('git:makeCommit: should throw on prefix undefined', async (t) => {
     t.equals(e.message, 'Change type is required')
   }
 
-  unmock()
+  unmockRequire()
 })
 
 test('git:makeCommit: should throw on packageName undefined', async (t) => {
@@ -311,7 +311,7 @@ test('git:makeCommit: should throw on packageName undefined', async (t) => {
     return Promise.resolve({})
   })
 
-  const unmock = mock('../src/make-commit', {
+  const unmockRequire = mockRequire('../src/make-commit', {
     execa: { default: execaSpy },
     prompts: { default: promptsSpy },
     '@auto/core': {
@@ -326,7 +326,7 @@ test('git:makeCommit: should throw on packageName undefined', async (t) => {
           })
       ),
     },
-    './get-refixes': {
+    '../src/get-refixes': {
       getPrefixes: () => Promise.resolve(prefixes),
     },
   })
@@ -341,7 +341,7 @@ test('git:makeCommit: should throw on packageName undefined', async (t) => {
     t.equals(e.message, 'Package name is required')
   }
 
-  unmock()
+  unmockRequire()
 })
 
 test('git:makeCommit: should throw on message undefined', async (t) => {
@@ -362,7 +362,7 @@ test('git:makeCommit: should throw on message undefined', async (t) => {
     return Promise.resolve({})
   })
 
-  const unmock = mock('../src/make-commit', {
+  const unmockRequire = mockRequire('../src/make-commit', {
     execa: { default: execaSpy },
     prompts: { default: promptsSpy },
     '@auto/core': {
@@ -377,7 +377,7 @@ test('git:makeCommit: should throw on message undefined', async (t) => {
           })
       ),
     },
-    './get-refixes': {
+    '../src/get-refixes': {
       getPrefixes: () => Promise.resolve(prefixes),
     },
   })
@@ -392,7 +392,7 @@ test('git:makeCommit: should throw on message undefined', async (t) => {
     t.equals(e.message, 'Commit message is required')
   }
 
-  unmock()
+  unmockRequire()
 })
 
 test('git:makeCommit lowercase first message letter', async (t) => {
@@ -413,7 +413,7 @@ test('git:makeCommit lowercase first message letter', async (t) => {
     return Promise.resolve({ message: 'My Message' })
   })
 
-  const unmock = mock('../src/make-commit', {
+  const unmockRequire = mockRequire('../src/make-commit', {
     execa: { default: execaSpy },
     prompts: { default: promptsSpy },
     '@auto/core': {
@@ -428,7 +428,7 @@ test('git:makeCommit lowercase first message letter', async (t) => {
           })
       ),
     },
-    './get-refixes': {
+    '../src/get-refixes': {
       getPrefixes: () => Promise.resolve(prefixes),
     },
   })
@@ -445,5 +445,5 @@ test('git:makeCommit lowercase first message letter', async (t) => {
     'should write proper message'
   )
 
-  unmock()
+  unmockRequire()
 })

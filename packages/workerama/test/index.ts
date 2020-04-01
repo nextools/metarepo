@@ -1,6 +1,6 @@
 import { Worker, WorkerOptions } from 'worker_threads'
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 
 test('tommy-gun: `maxThreadCount`', async (t) => {
@@ -16,7 +16,7 @@ test('tommy-gun: `maxThreadCount`', async (t) => {
   const inputArray = new Array(20).fill(null).map((_, i) => i)
   const outputArray = [] as number[]
 
-  const unmock = mock('../src', {
+  const unmockRequire = mockRequire('../src', {
     worker_threads: {
       Worker: MyWorker,
     },
@@ -86,7 +86,7 @@ test('tommy-gun: `maxThreadCount`', async (t) => {
     'should somehow work'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('tommy-gun: not more than needed', async (t) => {
@@ -102,7 +102,7 @@ test('tommy-gun: not more than needed', async (t) => {
   const inputArray = new Array(10).fill(null).map((_, i) => i)
   const outputArray = [] as number[]
 
-  const unmock = mock('../src', {
+  const unmockRequire = mockRequire('../src', {
     worker_threads: {
       Worker: MyWorker,
     },
@@ -162,7 +162,7 @@ test('tommy-gun: not more than needed', async (t) => {
     'should somehow work'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('tommy-gun: throw about `itemsPerThreadCount`', async (t) => {

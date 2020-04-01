@@ -18,7 +18,7 @@ Check the individual documentations for more details:
 * [import-wasm](packages/import-wasm): async/sync helpers to import `.wasm` modules in Node.js
 * [makethen](packages/makethen): strongly typed (up to 3 arguments and 3 result params) promisify for Node.js-style callbacks
 * [mnth](packages/mnth): framework-agnostic base block to build calendars, datepickers, etc by rendering 2d array of Dates
-* [mocku](packages/mocku): imports mocking library
+* [@mock](packages/mocku): `require`, `fs`, `request` and `global` mocking libraries
 * [move-path](packages/move-path): move path to destination folder
 * [@nextools](packages/nextools): [start](packages/start) preset and various shared configs to develop, test, build and publish packages in this metarepo
 * [perfa](packages/perfa): measure React app performance using dockerized Chromium through [xrom](packages/xrom) lib

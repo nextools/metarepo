@@ -1,6 +1,6 @@
 import { promisify } from 'util'
 import test from 'tape'
-import { mock, deleteFromCache } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
 
 const rootDir = process.cwd()
@@ -13,13 +13,11 @@ const vol = Volume.fromJSON({
 const fs = createFsFromVolume(vol)
 
 test('fs:readPackage', async (t) => {
-  const unmock = mock('../../src/fs/read-package', {
+  const unmockRequire = mockRequire('../../src/fs/read-package', {
     pifs: {
       readFile: promisify(fs.readFile),
     },
   })
-
-  deleteFromCache('pifs')
 
   const { readPackage } = await import('../../src/fs/read-package')
 
@@ -32,5 +30,5 @@ test('fs:readPackage', async (t) => {
     'should get package content'
   )
 
-  unmock()
+  unmockRequire()
 })

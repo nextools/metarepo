@@ -1,6 +1,6 @@
 import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { TPackageRelease, TAutoConfig } from '@auto/core'
 import { TSlackConfig } from '../src/types'
 import { prefixes } from './prefixes'
@@ -25,7 +25,7 @@ const config: TAutoConfig = {
 test('sendSlackMessage', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../src/send-slack-message', {
+  const unmockRequire = mockRequire('../src/send-slack-message', {
     'node-fetch': {
       default: spy,
     },
@@ -163,13 +163,13 @@ test('sendSlackMessage', async (t) => {
     'should make request'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('sendSlackMessage: throws if there is no token', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../src/send-slack-message', {
+  const unmockRequire = mockRequire('../src/send-slack-message', {
     'node-fetch': {
       default: spy,
     },
@@ -228,17 +228,17 @@ test('sendSlackMessage: throws if there is no token', async (t) => {
     )
   }
 
-  unmock()
+  unmockRequire()
 })
 
 test('sendSlackMessage: multiple messages', async (t) => {
   const spy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../src/send-slack-message', {
+  const unmockRequire = mockRequire('../src/send-slack-message', {
     'node-fetch': {
       default: spy,
     },
-    './constants': {
+    '../src/constants': {
       SLACK_HOOKS_URL: 'https://hooks.slack.com/services/',
       SLACK_MAX_ATTACHMENTS: 3,
     },
@@ -392,5 +392,5 @@ test('sendSlackMessage: multiple messages', async (t) => {
     'should make multiple requests'
   )
 
-  unmock()
+  unmockRequire()
 })

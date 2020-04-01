@@ -1,5 +1,5 @@
 import test from 'tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { TQuestionObj } from '../../src/prompt/types'
 import { TPackageBumpMap } from '../../src/bump/types'
@@ -14,7 +14,7 @@ test('makePrompt: yes', async (t) => {
   const readFileSpy = createSpy(() => Promise.resolve('{}'))
   const writeFileSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/prompt/make-prompt', {
+  const unmockRequire = mockRequire('../../src/prompt/make-prompt', {
     prompts: {
       default: () => Promise.resolve({ value: 'YES' }),
     },
@@ -29,10 +29,10 @@ test('makePrompt: yes', async (t) => {
       default: execaSpy,
       command: execaCommandSpy,
     },
-    './log': {
+    '../../src/prompt/log': {
       log: logSpy,
     },
-    './get-editor': {
+    '../../src/prompt/get-editor': {
       getEditor: () => Promise.resolve('editor'),
     },
   })
@@ -85,7 +85,7 @@ test('makePrompt: yes', async (t) => {
     'should not call writeFile'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('makePrompt: no', async (t) => {
@@ -96,7 +96,7 @@ test('makePrompt: no', async (t) => {
   const readFileSpy = createSpy(() => Promise.resolve('{}'))
   const writeFileSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/prompt/make-prompt', {
+  const unmockRequire = mockRequire('../../src/prompt/make-prompt', {
     prompts: {
       default: () => Promise.resolve({ value: 'NO' }),
     },
@@ -111,10 +111,10 @@ test('makePrompt: no', async (t) => {
       default: execaSpy,
       command: execaCommandSpy,
     },
-    './log': {
+    '../../src/prompt/log': {
       log: logSpy,
     },
-    './get-editor': {
+    '../../src/prompt/get-editor': {
       getEditor: () => Promise.resolve('editor'),
     },
   })
@@ -167,7 +167,7 @@ test('makePrompt: no', async (t) => {
     'should not call writeFile'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('makePrompt: edit - no changes to make', async (t) => {
@@ -178,7 +178,7 @@ test('makePrompt: edit - no changes to make', async (t) => {
   const readFileSpy = createSpy(() => Promise.resolve('{}'))
   const writeFileSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/prompt/make-prompt', {
+  const unmockRequire = mockRequire('../../src/prompt/make-prompt', {
     prompts: {
       default: () => Promise.resolve({ value: 'EDIT' }),
     },
@@ -193,7 +193,7 @@ test('makePrompt: edit - no changes to make', async (t) => {
       default: execaEditorSpy,
       command: execaCommandSpy,
     },
-    './log': {
+    '../../src/prompt/log': {
       log: logSpy,
     },
   })
@@ -304,7 +304,7 @@ test('makePrompt: edit - no changes to make', async (t) => {
     'should not call delete'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('makePrompt: edit - no changes made', async (t) => {
@@ -329,7 +329,7 @@ test('makePrompt: edit - no changes made', async (t) => {
   const readFileSpy = createSpy(() => Promise.resolve(JSON.stringify(answer)))
   const writeFileSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/prompt/make-prompt', {
+  const unmockRequire = mockRequire('../../src/prompt/make-prompt', {
     prompts: {
       default: () => Promise.resolve({ value: 'EDIT' }),
     },
@@ -344,7 +344,7 @@ test('makePrompt: edit - no changes made', async (t) => {
       default: execaEditorSpy,
       command: execaCommandSpy,
     },
-    './log': {
+    '../../src/prompt/log': {
       log: logSpy,
     },
   })
@@ -439,7 +439,7 @@ test('makePrompt: edit - no changes made', async (t) => {
     'should call delete'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('makePrompt: edit - invalid answer json', async (t) => {
@@ -450,7 +450,7 @@ test('makePrompt: edit - invalid answer json', async (t) => {
   const readFileSpy = createSpy(() => Promise.resolve('invalid'))
   const writeFileSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/prompt/make-prompt', {
+  const unmockRequire = mockRequire('../../src/prompt/make-prompt', {
     prompts: {
       default: () => Promise.resolve({ value: 'EDIT' }),
     },
@@ -465,7 +465,7 @@ test('makePrompt: edit - invalid answer json', async (t) => {
       default: execaEditorSpy,
       command: execaCommandSpy,
     },
-    './log': {
+    '../../src/prompt/log': {
       log: logSpy,
     },
   })
@@ -564,7 +564,7 @@ test('makePrompt: edit - invalid answer json', async (t) => {
     'should call delete'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('makePrompt: edit - changes', async (t) => {
@@ -591,7 +591,7 @@ test('makePrompt: edit - changes', async (t) => {
   const readFileSpy = createSpy(() => Promise.resolve(JSON.stringify(answer)))
   const writeFileSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../../src/prompt/make-prompt', {
+  const unmockRequire = mockRequire('../../src/prompt/make-prompt', {
     prompts: {
       default: () => Promise.resolve({ value: 'EDIT' }),
     },
@@ -606,7 +606,7 @@ test('makePrompt: edit - changes', async (t) => {
       default: execaEditorSpy,
       command: execaCommandSpy,
     },
-    './log': {
+    '../../src/prompt/log': {
       log: logSpy,
     },
   })
@@ -712,5 +712,5 @@ test('makePrompt: edit - changes', async (t) => {
     'should call delete'
   )
 
-  unmock()
+  unmockRequire()
 })

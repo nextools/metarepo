@@ -2,7 +2,7 @@ import { promisify } from 'util'
 import test from 'tape'
 import { TPackageRelease, TAutoConfig } from '@auto/core'
 import { createFsFromVolume, Volume } from 'memfs'
-import { mock, deleteFromCache } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { prefixes } from './prefixes'
 
@@ -37,7 +37,7 @@ test('writeChangelogFiles', async (t) => {
 
   const execaSpy = createSpy(() => Promise.resolve())
 
-  const unmock = mock('../src/write-changelog-files', {
+  const unmockRequire = mockRequire('../src/write-changelog-files', {
     fs,
     pifs: {
       readFile: promisify(fs.readFile),
@@ -47,8 +47,6 @@ test('writeChangelogFiles', async (t) => {
       default: execaSpy,
     },
   })
-
-  deleteFromCache('pifs')
 
   const { writeChangelogFiles } = await import('../src/write-changelog-files')
 
@@ -175,5 +173,5 @@ test('writeChangelogFiles', async (t) => {
   } catch {
   }
 
-  unmock()
+  unmockRequire()
 })

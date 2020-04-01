@@ -1,0 +1,1 @@
+export { cpus } from 'os'

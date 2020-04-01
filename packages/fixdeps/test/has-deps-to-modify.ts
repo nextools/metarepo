@@ -1,7 +1,6 @@
 /* eslint-disable no-sync */
-import { promisify } from 'util'
 import test from 'tape'
-import { mock, deleteFromCache } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
 
 const rootDir = process.cwd()
@@ -44,17 +43,12 @@ test('has-deps-to-modify: all', async (t) => {
     `,
   })
   const fs = createFsFromVolume(vol)
-  const unmockIndex = mock('../src', {
+  const unmockIndex = mockRequire('../src', {
     fs,
-    pifs: {
-      readFile: promisify(fs.readFile),
-      writeFile: promisify(fs.writeFile),
-    },
   })
 
-  deleteFromCache('fast-glob')
-
   const { hasDepsToModify } = await import('../src')
+
   const result = await hasDepsToModify({
     packagePath: rootDir,
     dependenciesGlobs: ['src/**/*.ts'],
@@ -89,17 +83,12 @@ test('fixdeps: nothing to do', async (t) => {
     `,
   })
   const fs = createFsFromVolume(vol)
-  const unmockIndex = mock('../src', {
+  const unmockIndex = mockRequire('../src', {
     fs,
-    pifs: {
-      readFile: promisify(fs.readFile),
-      writeFile: promisify(fs.writeFile),
-    },
   })
 
-  deleteFromCache('fast-glob')
-
   const { hasDepsToModify } = await import('../src')
+
   const result = await hasDepsToModify({
     packagePath: rootDir,
     dependenciesGlobs: ['src/**/*.ts'],

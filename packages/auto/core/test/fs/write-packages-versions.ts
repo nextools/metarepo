@@ -1,6 +1,6 @@
 import { promisify } from 'util'
 import test from 'tape'
-import { mock, deleteFromCache } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
 
 const rootDir = process.cwd()
@@ -22,14 +22,12 @@ test('fs:writePackageVersion: single version bump', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../../src/fs/write-packages-versions', {
+  const unmockRequire = mockRequire('../../src/fs/write-packages-versions', {
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
   })
-
-  deleteFromCache('pifs')
 
   const { writePackagesVersions } = await import('../../src/fs/write-packages-versions')
 
@@ -82,5 +80,5 @@ test('fs:writePackageVersion: single version bump', async (t) => {
     'should not write bumps'
   )
 
-  unmock()
+  unmockRequire()
 })

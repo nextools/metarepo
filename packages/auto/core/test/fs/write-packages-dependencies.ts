@@ -1,6 +1,6 @@
 import { promisify } from 'util'
 import test from 'tape'
-import { mock, deleteFromCache } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
 
 const rootDir = process.cwd()
@@ -14,14 +14,12 @@ test('fs:writePackageDependencies: ignore version bump', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../../src/fs/write-packages-dependencies', {
+  const unmockRequire = mockRequire('../../src/fs/write-packages-dependencies', {
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
   })
-
-  deleteFromCache('pifs')
 
   const { writePackagesDependencies } = await import('../../src/fs/write-packages-dependencies')
 
@@ -44,7 +42,7 @@ test('fs:writePackageDependencies: ignore version bump', async (t) => {
     'should ignore version'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('fs:writePackageDependencies: multiple dependencies bump', async (t) => {
@@ -60,14 +58,12 @@ test('fs:writePackageDependencies: multiple dependencies bump', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../../src/fs/write-packages-dependencies', {
+  const unmockRequire = mockRequire('../../src/fs/write-packages-dependencies', {
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
   })
-
-  deleteFromCache('pifs')
 
   const { writePackagesDependencies } = await import('../../src/fs/write-packages-dependencies')
 
@@ -97,7 +93,7 @@ test('fs:writePackageDependencies: multiple dependencies bump', async (t) => {
     'should write bumps, and ignore version'
   )
 
-  unmock()
+  unmockRequire()
 })
 
 test('fs:writePackageDependencies: multiple dev dependencies bump', async (t) => {
@@ -113,14 +109,12 @@ test('fs:writePackageDependencies: multiple dev dependencies bump', async (t) =>
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../../src/fs/write-packages-dependencies', {
+  const unmockRequire = mockRequire('../../src/fs/write-packages-dependencies', {
     pifs: {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
   })
-
-  deleteFromCache('pifs')
 
   const { writePackagesDependencies } = await import('../../src/fs/write-packages-dependencies')
 
@@ -150,5 +144,5 @@ test('fs:writePackageDependencies: multiple dev dependencies bump', async (t) =>
     'should write bumps, and ignore version'
   )
 
-  unmock()
+  unmockRequire()
 })

@@ -14,7 +14,7 @@
     "packages/import-wasm",
     "packages/makethen",
     "packages/mnth",
-    "packages/mocku",
+    "packages/mock/*",
     "packages/move-path",
     "packages/nextools/*",
     "packages/perfa",
