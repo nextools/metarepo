@@ -13173,14 +13173,10 @@ typeon@^0.3.0:
   resolved "https://registry.yarnpkg.com/typeon/-/typeon-0.3.1.tgz#cf80f63f4054c26aa47a0018fe79eef9944f3748"
   integrity sha512-1QHbHAWyswMnXLAtK5n4RHtGVScyb4TerI8g9eKGeKIsEiVqwWsTUX5EnzzZcwwSY1q1pdBFgcZWP4/C7dlYGw==
 
-typescript@^3.2.1:
+typescript@^3.2.1, typescript@^3.8.0:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
   integrity sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
-
-typescript@bubble-dev/TypeScript#ext-3.7.3:
-  version "3.7.3"
-  resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/e27f8bbeef0333d4635c9761e10308ecf2c1306f"
 
 ua-parser-js@^0.7.18:
   version "0.7.21"
