@@ -127,18 +127,16 @@ class Main extends Component {
       path,
       item: iterator.next().value,
       iterator,
-    }), async () => {
-
-    })
+    }))
   }
 
-  onRef(ref) {
+  async onRef(ref) {
     this.viewShot = ref
 
     const { item } = this.state
 
     if (item !== null && !item.options.shouldWaitForResize && !item.options.shouldWaitForImages) {
-      this.onCapture()
+      await this.onCapture()
     }
   }
 
@@ -153,24 +151,24 @@ class Main extends Component {
 
     this.isCapturing = false
 
-    const res = await fetch('http://localhost:3002/upload', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        data,
-        id: this.state.item.id,
-        serializedElement: this.state.item.serializedElement,
-        path: this.state.path,
-      }),
-      keepalive: true,
-    })
+    // const res = await fetch('http://localhost:3002/upload', {
+    //   method: 'POST',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     data,
+    //     id: this.state.item.id,
+    //     serializedElement: this.state.item.serializedElement,
+    //     path: this.state.path,
+    //   }),
+    //   keepalive: true,
+    // })
 
-    if (!res.ok) {
-      return
-    }
+    // if (!res.ok) {
+    //   return
+    // }
 
     const nextResult = this.state.iterator.next()
 
@@ -189,9 +187,9 @@ class Main extends Component {
         path,
         iterator,
       }))
-    } else {
-      // finish
-      await fetch('http://localhost:3002/done')
+    // } else {
+    //   // finish
+    //   await fetch('http://localhost:3002/done')
     }
   }
 
