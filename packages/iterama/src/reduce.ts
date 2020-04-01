@@ -1,11 +1,12 @@
-export type ReducerFn<T, R> = (acc?: R, val?: T) => R
+export type ReducerFn<T, R> = (acc: R, val: T, index: number) => R
 
-export const reduce = <T, R> (reducer: ReducerFn<T, R>) => (iterable: Iterable<T>): Iterable<R> => ({
+export const reduce = <T, R> (reducer: ReducerFn<T, R>, initial: R) => (iterable: Iterable<T>): Iterable<R> => ({
   *[Symbol.iterator]() {
-    let state = reducer()
+    let state = initial
+    let i = 0
 
     for (const value of iterable) {
-      state = reducer(state, value)
+      state = reducer(state, value, i++)
     }
 
     yield state

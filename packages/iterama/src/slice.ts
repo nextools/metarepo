@@ -13,4 +13,3 @@ export const slice = (from: number = 0, to: number = Number.MAX_SAFE_INTEGER) =>
         ? skip(to) as fi<T>
         : take(to) as fi<T>
     )(it)
-

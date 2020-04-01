@@ -21,11 +21,11 @@ test('iterama map: works with arrays', (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [1],
-      [2],
-      [3],
-      [4],
-      [5],
+      [1, 0],
+      [2, 1],
+      [3, 2],
+      [4, 3],
+      [5, 4],
     ]
   )
 
@@ -43,11 +43,11 @@ test('works with Sets', (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [1],
-      [2],
-      [3],
-      [4],
-      [5],
+      [1, 0],
+      [2, 1],
+      [3, 2],
+      [4, 3],
+      [5, 4],
     ]
   )
 
@@ -63,11 +63,11 @@ test('iterama map: works with Generators', (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [0],
-      [1],
-      [2],
-      [3],
-      [4],
+      [0, 0],
+      [1, 1],
+      [2, 2],
+      [3, 3],
+      [4, 4],
     ]
   )
 
@@ -83,11 +83,11 @@ test('iterama map: works chained', (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [2],
-      [4],
-      [6],
-      [8],
-      [10],
+      [2, 0],
+      [4, 1],
+      [6, 2],
+      [8, 3],
+      [10, 4],
     ]
   )
 

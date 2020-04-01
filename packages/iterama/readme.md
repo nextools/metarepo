@@ -34,7 +34,7 @@ const result = [
 ```
 
 ### `filter`
-`<T> (predicate: (arg: T) => boolean) => (iterable: Iterable<T>) => Iterable<T>`
+`<T> (predicate: (arg: T, i: number) => boolean) => (iterable: Iterable<T>) => Iterable<T>`
 ```ts
 import { filter } from 'iterama'
 
@@ -45,20 +45,6 @@ const result = [
 ]
 
 // [2, 4]
-```
-
-### `filterEx`
-`<T> (predicate: (arg: T, index: number, it: Iterable<T>) => boolean) => (iterable: Iterable<T>) => Iterable<T>`
-```ts
-import { filterEx } from 'iterama'
-
-const skipEverySecond = (x: string, i: number) => i % 2 !== 0
-
-const result = [
-  ...filterEx(skipEverySecond)(['a', 'b', 'c', 'd'])
-]
-
-// ['a', 'c']
 ```
 
 ### `iterate`
@@ -85,7 +71,7 @@ const result = l([1, 2, 3, 4, 5])
 ```
 
 ### `map`
-`<T, R> (xf: (arg: T) => R) => (iterable: Iterable<T>) => Iterable<R>`
+`<T, R> (xf: (arg: T, i: number) => R) => (iterable: Iterable<T>) => Iterable<R>`
 ```ts
 import { map } from 'iterama'
 
@@ -96,20 +82,6 @@ const result = [
 ]
 
 // [2, 4, 6, 8]
-```
-
-### `mapEx`
-`<T, R> (xf: (arg: T, i: number, it: Iterable<T>) => R) => (iterable: Iterable<T>) => Iterable<R>`
-```ts
-import { mapEx } from 'iterama'
-
-const addIndex = (x: number, i: number) => x + i
- 
-const result = [
-  ...mapEx(addIndex)([1, 2, 3, 4])
-]
-
-// [1, 3, 5, 7]
 ```
 
 ### `range`
@@ -125,60 +97,28 @@ const result = [
 ```
 
 ### `reduce`
-`<T, R> (reducer: (a: R, b: T) => R) => (iterable: Iterable<T>) => Iterable<R>`
+`<T, R> (reducer: (a: R, b: T) => R, initial: R) => (iterable: Iterable<T>) => Iterable<R>`
 ```ts
 import { reduce } from 'iterama'
 
-// redux like reducer
-const reducer = (state: number = 0, b: number = 0) => a + b
+const reducer = (state: number, b: number) => a + b
 
 const result = [
-  ...reduce(reducer)([1, 2, 3, 4])
-]
-
-// [10]
-```
-
-### `reduceEx`
-`<T, R> (reducer: (a: R, b: T, i: number, it: Iterable<T>) => R, initial: R) => (iterable: Iterable<T>) => Iterable<R>`
-```ts
-import { reduceEx } from 'iterama'
-
-// JavaScript like reducer
-const reducer = (acc: number, val: number, i: number) => acc + val
-
-const result = [
-  ...reduceEx(reducer, 0)([1, 2, 3, 4])
+  ...reduce(reducer, 0)([1, 2, 3, 4])
 ]
 
 // [10]
 ```
 
 ### `scan`
-`<T, R> (reducer: (a: R, b: T) => R) => (iterable: Iterable<T>) => Iterable<R>`
+`<T, R> (reducer: (a: R, b: T) => R, initial: R) => (iterable: Iterable<T>) => Iterable<R>`
 ```ts
 import { scan } from 'iterama'
 
-// redux like reducer
-const reducer = (state: number = 0, b: number = 0) => a + b
-
+const reducer = (state: number, b: number) => a + b
+w
 const result = [
-  ...scan(reducer)([1, 2, 3, 4])
-]
-
-// [1, 3, 6, 10]
-```
-
-### `scanEx`
-`<T, R> (reducer: (a: R, b: T, i: number, it: Iterable<T>) => R) => (iterable: Iterable<T>) => Iterable<R>`
-```ts
-import { scanEx } from 'iterama'
-
-// JavaScript like reducer
-const reducer = (acc: number, val: number, i: number) => acc + val
-
-const result = [
-  ...scanEx(reducer, 0)([1, 2, 3, 4])
+  ...scan(reducer, 0)([1, 2, 3, 4])
 ]
 
 // [1, 3, 6, 10]
