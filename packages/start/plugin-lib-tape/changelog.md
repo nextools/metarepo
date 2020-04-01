@@ -1,3 +1,7 @@
+## v2.0.1
+
+* 🐞 clean CJS cache before running tests
+
 ## v2.0.0
 
 * 💥 update tape to v5.0.0
