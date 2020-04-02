@@ -37,6 +37,7 @@ export const getPackagesBumps = ({ packages, bumps, config, edit = makeEmptyEdit
       let bumpedRange: string | null = null
       let bumpedDevRange: string | null = null
       let bumpedVersion: string | null = null
+      let shouldBumpDependencts = false
 
       if (depRange !== null) {
         const isIgnoredByEdit = Boolean(edit.dependencyBumpIgnoreMap.get(dependentName)?.includes(pkgName))
@@ -75,8 +76,7 @@ export const getPackagesBumps = ({ packages, bumps, config, edit = makeEmptyEdit
         if (bumpedVersion !== null && compareReleaseTypes(bumpStackItem.type, pkgType) < 0) {
           bumpStackItem.version = bumpedVersion
           bumpStackItem.type = pkgType
-
-          bumpDependents(dependentName, bumpedVersion, pkgType)
+          shouldBumpDependencts = true
         }
       } else {
         const bumpStackItem: TPackageBump = {
@@ -101,11 +101,14 @@ export const getPackagesBumps = ({ packages, bumps, config, edit = makeEmptyEdit
         if (bumpedVersion !== null) {
           bumpStackItem.version = bumpedVersion
           bumpStackItem.type = pkgType
-
-          bumpDependents(dependentName, bumpedVersion, pkgType)
+          shouldBumpDependencts = true
         }
 
         bumpStack.set(dependentName, bumpStackItem)
+      }
+
+      if (bumpedVersion !== null && shouldBumpDependencts) {
+        bumpDependents(dependentName, bumpedVersion, pkgType)
       }
     }
   }
