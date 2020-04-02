@@ -1,3 +1,7 @@
+## v0.1.4
+
+* 🐞 fix circular dependencies
+
 ## v0.1.3
 
 * 🐞 fix TPackageJson types

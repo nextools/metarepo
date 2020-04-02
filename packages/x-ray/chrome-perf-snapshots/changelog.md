@@ -1,3 +1,11 @@
+## v1.2.3
+
+* 🐞 refactor using new rebox/web API
+
+* 🐞 sync React Native and React versions
+
+* ♻️ update dependencies `@x-ray/ui`, `perfa`, `@rebox/web`, `@x-ray/common-utils`
+
 ## v1.2.2
 
 * 🐞 refactor to use `rsolve` package instead of `bro-resolve` and `rn-resolve`

@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 change API
+
 ## v1.0.6
 
 * 🐞 bump Haul stuff

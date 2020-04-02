@@ -1,3 +1,11 @@
+## v2.0.0
+
+* 💥 change API
+
+* 💥 upgrade to React Native 0.62.0
+
+* ♻️ update dependencies `@rebox/native-utils`
+
 ## v1.0.1
 
 * 🐞 bump compatible deps

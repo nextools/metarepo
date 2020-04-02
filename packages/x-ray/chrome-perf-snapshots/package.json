@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/chrome-perf-snapshots",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",

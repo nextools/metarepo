@@ -1,3 +1,9 @@
+## v1.0.4
+
+* 🐞 refactor using new rebox/web API
+
+* ♻️ update dependencies `@x-ray/ui`, `@rebox/web`, `@x-ray/common-utils`, `@x-ray/serialize-react-tree`
+
 ## v1.0.3
 
 * 🐞 refactor to use `rsolve` package instead of `bro-resolve` and `rn-resolve`

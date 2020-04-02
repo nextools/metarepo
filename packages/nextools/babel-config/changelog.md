@@ -1,3 +1,7 @@
+## v0.1.2
+
+* 🐞 bump `metro-react-native-babel-preset`
+
 ## v0.1.1
 
 * 🐞 keep Istanbul comments in `babelConfigNodeRegister` config

@@ -1,3 +1,11 @@
+## v2.0.0
+
+* 💥 change API
+
+* 🐞 sync React Native and React versions
+
+* ♻️ update dependencies `@nextools/babel-config`
+
 ## v1.1.2
 
 * 🐞 rethink peer deps and fix missing deps

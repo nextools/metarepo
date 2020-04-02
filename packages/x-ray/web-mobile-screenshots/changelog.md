@@ -1,3 +1,9 @@
+## v1.0.3
+
+* 🐞 sync React Native and React versions
+
+* ♻️ update dependencies `@x-ray/common-utils`
+
 ## v1.0.2
 
 * 🐞 handle cases without source code

@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/serialize-react-tree",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",

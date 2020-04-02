@@ -1,3 +1,9 @@
+## v1.0.2
+
+* 🐞 fix wrong deps
+
+* 🐞 sync React Native and React versions
+
 ## v1.0.1
 
 * 🐞 handle cases without source code

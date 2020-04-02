@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 sync React Native and React versions
+
 ## v1.0.1
 
 * 🐞 handle cases without source code
