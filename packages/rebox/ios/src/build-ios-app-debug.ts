@@ -8,12 +8,12 @@ import copie from 'copie'
 // @ts-ignore
 import simplePlist from 'simple-plist'
 import dleet from 'dleet'
-import { getAppPath } from './get-app-path'
+import { getIosAppPath } from './get-ios-app-path'
 
 const pPlistRead = promisify(simplePlist.readFile)
 const pPlistWrite = promisify(simplePlist.writeFile)
 
-export type TBuildDebugOptions = {
+export type TBuildIosAppDebugOptions = {
   projectPath: string,
   iOSVersion: string,
   platformName: string,
@@ -21,7 +21,7 @@ export type TBuildDebugOptions = {
   appId: string,
 }
 
-export const buildDebug = async (options: TBuildDebugOptions): Promise<void> => {
+export const buildIosAppDebug = async (options: TBuildIosAppDebugOptions): Promise<void> => {
   const derivedDataPath = path.join(os.tmpdir(), 'rebox')
 
   await execa('pod', ['install', '--silent'], {
@@ -59,7 +59,7 @@ export const buildDebug = async (options: TBuildDebugOptions): Promise<void> => 
   )
 
   const originalAppPath = path.join(derivedDataPath, 'rebox.app')
-  const newAppPath = getAppPath(options.appName)
+  const newAppPath = getIosAppPath(options.appName)
 
   const files = await fastGlob(`${originalAppPath}/**/*`, {
     ignore: ['node_modules/**'],

@@ -1,19 +1,19 @@
 import execa from 'execa'
 import { isUndefined } from 'tsfn'
 
-export type TLaunchAppOptions = {
-  appId: string,
+export type TInstallIosAppOptions = {
+  appPath: string,
   deviceId?: string,
 }
 
-export const launchApp = async (options: TLaunchAppOptions): Promise<void> => {
+export const installIosApp = async (options: TInstallIosAppOptions): Promise<void> => {
   await execa(
     'xcrun',
     [
       'simctl',
-      'launch',
+      'install',
       isUndefined(options.deviceId) ? 'booted' : options.deviceId,
-      options.appId,
+      options.appPath,
     ]
   )
 }
