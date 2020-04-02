@@ -10,7 +10,7 @@ import { isObject } from 'tsfn'
 
 const nodeModulesRegExp = /[\\/]node_modules[\\/]/
 
-export type TBuildJsBundleOptions = {
+export type TBuildWebAppReleaseOptions = {
   entryPointPath: string,
   outputPath: string,
   htmlTemplatePath: string,
@@ -43,8 +43,8 @@ const statsOptions: Stats.ToStringOptionsObject = {
   warnings: true,
 }
 
-export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
-  const options: TBuildJsBundleOptions = {
+export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
+  const options: TBuildWebAppReleaseOptions = {
     isQuiet: false,
     shouldGenerateSourceMaps: true,
     shouldGenerateBundleAnalyzerReport: true,
@@ -78,7 +78,7 @@ export const buildRelease = (userOptions: TBuildJsBundleOptions) => {
           loader: require.resolve('./loader.js'),
         },
         {
-          test: /\.(ts|tsx)$/,
+          test: /\.(ts|js)x?$/,
           exclude: nodeModulesRegExp,
           loader: 'babel-loader',
           options: {
