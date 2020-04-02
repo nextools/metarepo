@@ -30,7 +30,7 @@
     "@x-ray/common-utils": "^1.0.0",
     "@x-ray/screenshot-utils": "^1.0.0",
     "@x-ray/snapshots": "^1.0.3",
-    "bsc": "^1.0.0",
+    "bsc": "^1.0.1",
     "colorido": "^1.0.0",
     "elegir": "^1.0.0",
     "react": "^16.8.6",
@@ -38,7 +38,7 @@
     "redux-thunk": "^2.3.0",
     "refun": "^1.0.0",
     "stili": "^1.0.0",
-    "syntx": "^1.0.0",
-    "tsfn": "^1.1.0"
+    "syntx": "^1.0.1",
+    "tsfn": "^1.1.1"
   }
 }

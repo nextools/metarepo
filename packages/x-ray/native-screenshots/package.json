@@ -16,7 +16,7 @@
     "@x-ray/tar-fs": "^1.0.0",
     "pifs": "^1.0.0",
     "pretty-ms": "^6.0.0",
-    "tsfn": "^1.1.0",
+    "tsfn": "^1.1.1",
     "upng-js": "^2.1.0"
   },
   "devDependencies": {
