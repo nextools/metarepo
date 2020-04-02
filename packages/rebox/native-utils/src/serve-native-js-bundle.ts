@@ -38,7 +38,6 @@ export const serveNativeJsBundle = async (options: TServeNativeJsBundleOptions):
     ],
     {
       env: {
-        FORCE_COLOR: '1',
         REBOX_ENTRY_POINT: options.entryPointPath,
       },
     }
