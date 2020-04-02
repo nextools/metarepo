@@ -1,5 +1,3 @@
-/* eslint-disable no-duplicate-case */
-/* eslint-disable no-fallthrough */
 import plugin from '@start/plugin'
 import { TJsonMap } from 'typeon'
 
@@ -18,24 +16,29 @@ export default (dir: string) =>
         case 'buildAssets': {
           break
         }
-        case 'main':
-        case 'browser':
-        case 'react-native': {
+        case 'main': {
           if (!Reflect.has(packageJson, 'types')) {
             result.types = 'types/index.d.ts'
           }
-        }
-        case 'main': {
+
           result[key] = 'node/index.js'
 
           break
         }
         case 'browser': {
+          if (!Reflect.has(packageJson, 'types')) {
+            result.types = 'types/index.d.ts'
+          }
+
           result[key] = 'web/index.js'
 
           break
         }
         case 'react-native': {
+          if (!Reflect.has(packageJson, 'types')) {
+            result.types = 'types/index.d.ts'
+          }
+
           result[key] = 'native/index.js'
 
           break
