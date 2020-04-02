@@ -4676,6 +4676,72 @@ test('bump:getPackageBumps: c -> b -> a -> c', (t) => {
     'a patch + b major + c minor'
   )
 
+  t.deepEquals(
+    getPackagesBumps({
+      packages: new Map()
+        .set('@ns/a', {
+          dir: '/fakes/a',
+          json: {
+            name: '@ns/a',
+            version: '0.1.0',
+            dependencies: {
+              '@ns/c': '0.3.4',
+            },
+          },
+        })
+        .set('@ns/b', {
+          dir: '/fakes/b',
+          json: {
+            name: '@ns/b',
+            version: '1.2.3',
+          },
+        })
+        .set('@ns/c', {
+          dir: '/fakes/c',
+          json: {
+            name: '@ns/c',
+            version: '0.3.4',
+            dependencies: {
+              '@ns/a': '0.1.0',
+              '@ns/b': '1.2.3',
+            },
+          },
+        }),
+      bumps: new Map()
+        .set('@ns/b', [{ type: 'major', message: '' }]),
+      edit: {
+        dependencyBumpIgnoreMap: new Map(),
+        initialTypeOverrideMap: new Map(),
+        zeroBreakingTypeOverrideMap: new Map().set('@ns/c', 'patch'),
+      },
+    }),
+    new Map()
+      .set('@ns/a', {
+        version: '0.2.0',
+        type: 'major',
+        deps: {
+          '@ns/c': '0.3.5',
+        },
+        devDeps: null,
+      })
+      .set('@ns/b', {
+        version: '2.0.0',
+        type: 'major',
+        deps: null,
+        devDeps: null,
+      })
+      .set('@ns/c', {
+        version: '0.3.5',
+        type: 'major',
+        deps: {
+          '@ns/a': '0.2.0',
+          '@ns/b': '2.0.0',
+        },
+        devDeps: null,
+      }),
+    'a patch + b major + c minor'
+  )
+
   t.end()
 })
 
