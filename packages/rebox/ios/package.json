@@ -2,7 +2,11 @@
   "name": "@rebox/ios",
   "version": "2.0.0",
   "description": "Set of helpers to deal with React Native applications on iOS",
-  "keywords": ["react", "react-native", "ios"],
+  "keywords": [
+    "react",
+    "react-native",
+    "ios"
+  ],
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
@@ -14,7 +18,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@rebox/native-utils": "^2.0.0",
+    "@rebox/native-utils": "^2.0.1",
     "copie": "^1.0.0",
     "dleet": "^1.0.0",
     "execa": "^4.0.0",

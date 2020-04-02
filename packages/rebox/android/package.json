@@ -2,7 +2,11 @@
   "name": "@rebox/android",
   "version": "2.0.0",
   "description": "Set of helpers to deal with React Native applications on Android",
-  "keywords": ["react", "react-native", "android"],
+  "keywords": [
+    "react",
+    "react-native",
+    "android"
+  ],
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
@@ -14,7 +18,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@rebox/native-utils": "^2.0.0",
+    "@rebox/native-utils": "^2.0.1",
     "execa": "^4.0.0",
     "make-dir": "^3.0.0",
     "move-file": "^1.2.0",
