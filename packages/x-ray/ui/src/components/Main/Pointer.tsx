@@ -20,6 +20,7 @@ const style = normalizeStyle({
   left: 0,
   right: 0,
   bottom: 0,
+  overflowY: 'scroll',
 })
 
 export const Pointer = component(
@@ -47,7 +48,7 @@ export const Pointer = component(
     },
   }))
 )((props) => (
-  <div {...props} style={style}/>
+  <div {...props}/>
 ))
 
 Pointer.displayName = 'Pointer'

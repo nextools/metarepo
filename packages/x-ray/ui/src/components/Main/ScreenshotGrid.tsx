@@ -32,10 +32,8 @@ export const ScreenshotGrid = pureComponent(
   mapWithPropsMemo(({ _width, items, filteredFiles }) => {
     const colCount = Math.max(1, Math.floor((_width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
     const gridWidth = (_width - (COL_SPACE * (colCount + 1))) / colCount
-    const top = new Array(colCount).fill(0)
-    const cols: TScreenshotGridItem[][] = new Array(colCount)
-      .fill(0)
-      .map(() => [])
+    const top = Array(colCount).fill(0)
+    const cols: TScreenshotGridItem[][] = Array.from({ length: colCount }, () => [])
 
     Object.entries(items).forEach(([id, item]) => {
       if (filteredFiles.length > 0) {
