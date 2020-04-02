@@ -25,7 +25,7 @@
     "fast-glob": "^3.0.0",
     "is-port-reachable": "^3.0.0",
     "make-dir": "^3.0.0",
-    "metro-react-native-babel-preset": "0.56.4",
+    "metro-react-native-babel-preset": "0.59.0",
     "node-fetch": "^2.6.0",
     "react": "^16.8.0",
     "react-native": "^0.61.5",
