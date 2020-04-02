@@ -1,12 +1,12 @@
 import execa from 'execa'
 import { isUndefined } from 'tsfn'
 
-export type TUninstallAppOptions = {
+export type TUninstallAndroidAppOptions = {
   appId: string,
   deviceId?: string,
 }
 
-export const uninstallAndroidApp = async (options: TUninstallAppOptions): Promise<void> => {
+export const uninstallAndroidApp = async (options: TUninstallAndroidAppOptions): Promise<void> => {
   await execa(
     'adb',
     [
