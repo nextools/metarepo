@@ -1,18 +1,21 @@
 import React, { ReactNode } from 'react'
-import { pureComponent, startWithType, mapHandlers, mapWithPropsMemo } from 'refun'
+import { pureComponent, startWithType, mapHandlers, mapWithPropsMemo, mapContext } from 'refun'
 import bsc from 'bsc'
-import { Border } from '@primitives/border'
+import { PrimitiveBorder as Border } from '@revert/border'
 import { isUndefined } from 'tsfn'
+import { LayoutContext } from '@revert/layout'
+import { TSnapshotItems } from '@x-ray/snapshots'
+import { PrimitiveBlock as Block } from '@revert/block'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectSnapshot } from '../../actions'
-import { TSnapshotGridItem, TSnapshotItems, TRect } from '../../types'
-import { Block } from '../Block'
+import { TSnapshotGridItem } from '../../types'
 import { SnapshotGridItem } from '../SnapshotGridItem'
 import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT, BORDER_SIZE, COLOR_BLACK, SNAPSHOT_GRID_MAX_LINES } from '../../config'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
+import { Pointer } from './Pointer'
 
-export type TSnapshotGrid = TRect & {
+export type TSnapshotGrid = {
   items: TSnapshotItems,
   discardedItems: string[],
   filteredFiles: string[],
@@ -20,10 +23,11 @@ export type TSnapshotGrid = TRect & {
 
 export const SnapshotGrid = pureComponent(
   startWithType<TSnapshotGrid>(),
+  mapContext(LayoutContext),
   mapStoreDispatch('dispatch'),
-  mapWithPropsMemo(({ width, items, filteredFiles }) => {
-    const colCount = Math.max(1, Math.floor((width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
-    const gridWidth = (width - (COL_SPACE * (colCount + 1))) / colCount
+  mapWithPropsMemo(({ _width, items, filteredFiles }) => {
+    const colCount = Math.max(1, Math.floor((_width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
+    const gridWidth = (_width - (COL_SPACE * (colCount + 1))) / colCount
     const top = new Array(colCount).fill(0)
     const cols: TSnapshotGridItem[][] = new Array(colCount)
       .fill(0)
@@ -74,10 +78,10 @@ export const SnapshotGrid = pureComponent(
       cols,
       maxHeight: top[maxIndex],
     }
-  }, ['width', 'items', 'filteredFiles']),
+  }, ['_width', 'items', 'filteredFiles']),
   mapScrollState(),
   mapHandlers({
-    onPress: ({ top, dispatch, scrollTop, cols }) => (x: number, y: number) => {
+    onPress: ({ _top, dispatch, scrollTop, cols }) => (x: number, y: number) => {
       for (let colIndex = 0; colIndex < cols.length; ++colIndex) {
         const firstItem = cols[colIndex][0]
 
@@ -102,7 +106,7 @@ export const SnapshotGrid = pureComponent(
 
           dispatch(actionSelectSnapshot({
             ...item,
-            top: item.top - scrollTop + top,
+            top: item.top - scrollTop + _top,
           }))
         }
       }
@@ -112,21 +116,20 @@ export const SnapshotGrid = pureComponent(
   cols,
   discardedItems,
   maxHeight,
-  top,
-  left,
-  width,
-  height,
+  _top,
+  _left,
+  _width,
+  _height,
   scrollTop,
   prevScrollTop,
   onScroll,
   onPress,
 }) => (
-  <Block
-    top={top}
-    left={left}
-    width={width}
-    height={height}
-    shouldScrollY
+  <Pointer
+    top={_top}
+    left={_left}
+    width={_width}
+    height={_height}
     onScroll={onScroll}
     onPress={onPress}
   >
@@ -134,8 +137,8 @@ export const SnapshotGrid = pureComponent(
     {cols.reduce((result, col) => (
       result.concat(
         col.map((item: TSnapshotGridItem) => {
-          const isVisible = isVisibleItem(item, scrollTop, height)
-          const isNew = prevScrollTop !== null && ((item.top + item.gridHeight < prevScrollTop) || (item.top > prevScrollTop + height))
+          const isVisible = isVisibleItem(item, scrollTop, _height)
+          const isNew = prevScrollTop !== null && ((item.top + item.gridHeight < prevScrollTop) || (item.top > prevScrollTop + _height))
 
           if (isVisible && isNew) {
             return (
@@ -176,7 +179,7 @@ export const SnapshotGrid = pureComponent(
         })
       )
     ), [] as ReactNode[])}
-  </Block>
+  </Pointer>
 ))
 
 SnapshotGrid.displayName = 'SnapshotGrid'

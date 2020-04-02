@@ -1,11 +1,11 @@
 import React from 'react'
 import { startWithType, pureComponent } from 'refun'
 import { TOmitKey } from 'tsfn'
+import { PrimitiveBorder as Border } from '@revert/border'
+import { PrimitiveBlock as Block } from '@revert/block'
 import { TRect } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
 import { COLOR_BORDER_NEW, DISCARD_ALPHA, BORDER_SIZE } from '../config'
-import { Block } from './Block'
-import { Border } from './Border'
 import { Screenshot } from './Screenshot'
 
 export type TScreenshotNew = TRect & TOmitKey<TApiLoadScreenshotOpts, 'type'> & {
@@ -21,9 +21,6 @@ export const ScreenshotNew = pureComponent(
     width={width}
     height={height}
     opacity={isDiscarded ? DISCARD_ALPHA : 1}
-    style={{
-      cursor: 'pointer',
-    }}
   >
     <Block left={BORDER_SIZE} top={BORDER_SIZE}>
       <Screenshot
@@ -34,10 +31,7 @@ export const ScreenshotNew = pureComponent(
       />
     </Block>
     <Border
-      topWidth={BORDER_SIZE}
-      leftWidth={BORDER_SIZE}
-      rightWidth={BORDER_SIZE}
-      bottomWidth={BORDER_SIZE}
+      width={BORDER_SIZE}
       color={COLOR_BORDER_NEW}
     />
   </Block>

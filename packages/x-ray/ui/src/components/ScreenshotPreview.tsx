@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapWithProps, mapState, mapSafeTimeout, mapHandlers, mapRef, onChange } from 'refun'
-import { easeInOutCubic, Animation } from '@primitives/animation'
+import { component, startWithType, mapWithProps, mapState, mapSafeTimeout, mapHandlers, mapRef, onChange, mapContext } from 'refun'
+import { easeInOutCubic, AnimationValue } from '@revert/animation'
 import { pipe } from '@psxcode/compose'
-import { TRect, TScreenshotGridItem } from '../types'
+import { LayoutContext } from '@revert/layout'
+import { PrimitiveBlock as Block } from '@revert/block'
+import { TScreenshotGridItem } from '../types'
 import { DIFF_TIMEOUT, BORDER_SIZE } from '../config'
-import { Block } from './Block'
 import { ScreenshotDiff } from './ScreenshotDiff'
 import { ScreenshotNew } from './ScreenshotNew'
 import { ScreenshotDeleted } from './ScreenshotDeleted'
@@ -31,24 +32,25 @@ const mapDiffState = <P extends {item: TScreenshotGridItem}>() => pipe(
   }, ['diffState', 'item'])
 )
 
-export type TScreenshotPreview = TRect & {
+export type TScreenshotPreview = {
   item: TScreenshotGridItem,
 }
 
 export const ScreenshotPreview = component(
   startWithType<TScreenshotPreview>(),
-  mapWithProps(({ width, height }) => ({
-    halfWidth: width / 2,
-    halfHeight: height / 2,
+  mapContext(LayoutContext),
+  mapWithProps(({ _width, _height }) => ({
+    halfWidth: _width / 2,
+    halfHeight: _height / 2,
   })),
   mapDiffState()
-)(({ top, left, width, height, halfWidth, halfHeight, item: item, diffState }) => {
+)(({ _top, _left, _width, _height, halfWidth, halfHeight, item: item, diffState }) => {
   return (
     <Block
-      top={top}
-      left={left}
-      width={width}
-      height={height}
+      top={_top}
+      left={_left}
+      width={_width}
+      height={_height}
     >
       <Fragment>
         {item.type === 'NEW' && (
@@ -64,8 +66,8 @@ export const ScreenshotPreview = component(
         )}
 
         {item.type === 'DIFF' && (
-          <Animation time={200} easing={easeInOutCubic} values={[diffState ? 1 : 0]}>
-            {([alpha]) => (
+          <AnimationValue time={200} easing={easeInOutCubic} toValue={diffState ? 1 : 0}>
+            {(alpha) => (
               <ScreenshotDiff
                 key={item.id}
                 top={halfHeight - item.origHeight / 2}
@@ -80,7 +82,7 @@ export const ScreenshotPreview = component(
                 isDiscarded={false}
               />
             )}
-          </Animation>
+          </AnimationValue>
         )}
 
         {item.type === 'DELETED' && (

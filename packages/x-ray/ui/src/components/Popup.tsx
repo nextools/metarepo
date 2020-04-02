@@ -1,21 +1,19 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapHandlers, mapState, mapWithProps, onMount } from 'refun'
+import { component, startWithType, mapHandlers, mapState, mapWithProps, onMount, mapContext } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
-import { Background } from '@primitives/background'
-import { Button } from '@primitives/button'
-import { Size } from '@primitives/size'
-// import { objectHas } from 'tsfn'
+import { Background, PrimitiveBackground } from '@revert/background'
+import { Button } from '@revert/button'
+import { Block, PrimitiveBlock } from '@revert/block'
+import { Layout, LayoutContext, Layout_Item } from '@revert/layout'
+import { Text } from '@revert/text'
 import { mapStoreDispatch } from '../store'
-import { TRect, TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
+import { TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
 import { actionDeselect, actionDiscardItem } from '../actions'
 import { COLOR_RED, COLOR_GREEN } from '../config'
 import { onKeyDown } from '../maps/on-keydown'
 import { actionUndiscardItem } from '../actions/undiscard'
-// import { SourceCode } from './SourceCode'
-import { Block } from './Block'
 import { ScreenshotPreview } from './ScreenshotPreview'
 import { SnapshotPreview } from './SnapshotPreview'
-import { Text } from './Text'
 
 const isScreenshotGridItem = (type: TType | undefined, item: TGridItem | null): item is TScreenshotGridItem => type === 'image' && item !== null
 const isSnapshotGridItem = (type: TType | undefined, item: TGridItem | null): item is TSnapshotGridItem => type === 'text' && item !== null
@@ -31,7 +29,7 @@ const STATE_OPENING = 1
 const STATE_OPEN = 2
 const STATE_CLOSING = 3
 
-export type TPopup = TRect & {
+export type TPopup = {
   type: TType,
   item: TGridItem,
   discardedItems: string[],
@@ -39,6 +37,7 @@ export type TPopup = TRect & {
 
 export const Popup = component(
   startWithType<TPopup>(),
+  mapContext(LayoutContext),
   mapStoreDispatch('dispatch'),
   mapWithProps(({ item, discardedItems }) => ({
     isDiscarded: discardedItems.includes(item.id),
@@ -84,15 +83,15 @@ export const Popup = component(
       onDiscardToggle()
     },
   }),
-  mapWithProps(({ top, left, width, height, state, item }) => {
+  mapWithProps(({ _top, _left, _width, _height, state, item }) => {
     const shouldNotAnimate = state === STATE_OPEN || state === STATE_CLOSE
 
     if (state === STATE_OPENING || state === STATE_OPEN) {
       return {
-        popupLeft: left + POPUP_OFFSET,
-        popupTop: top + POPUP_OFFSET,
-        popupWidth: width - POPUP_OFFSET * 2,
-        popupHeight: height - POPUP_OFFSET * 2,
+        popupLeft: _left + POPUP_OFFSET,
+        popupTop: _top + POPUP_OFFSET,
+        popupWidth: _width - POPUP_OFFSET * 2,
+        popupHeight: _height - POPUP_OFFSET * 2,
         popupAlpha: 1,
         backdropAlpha: 0.5,
         shouldNotAnimate,
@@ -131,10 +130,6 @@ export const Popup = component(
   }),
   mapState('discardTextWidth', 'setDiscardTextWidth', () => 0, [])
 )(({
-  left,
-  top,
-  width,
-  height,
   state,
   item,
   type,
@@ -144,24 +139,13 @@ export const Popup = component(
   popupTop,
   popupWidth,
   popupHeight,
-  // sourceCodeLeft,
-  // sourceCodeTop,
-  // sourceCodeWidth,
-  // sourceCodeHeight,
-  previewLeft,
-  previewTop,
-  previewWidth,
-  previewHeight,
-  discardTextWidth,
-  setDiscardTextWidth,
   shouldNotAnimate,
   isDiscarded,
-  // hasSourceCode,
   onDiscardToggle,
   onBackdropPress,
   onAnimationEnd,
 }) => (
-  <Block left={left} top={top} width={width} height={height}>
+  <Block>
     <Animation
       time={300}
       values={[popupLeft, popupTop, popupWidth, popupHeight, popupAlpha, backdropAlpha]}
@@ -171,82 +155,49 @@ export const Popup = component(
     >
       {([popupLeft, popupTop, popupWidth, popupHeight, popupAlpha, backdropAlpha]) => (
         <Fragment>
-          <Block
-            left={left}
-            top={top}
-            width={width}
-            height={height}
-            style={{
-              cursor: 'pointer',
-            }}
+          <Button
             onPress={onBackdropPress}
           >
             <Background color={[0, 0, 0, backdropAlpha]}/>
-          </Block>
-          <Block
+          </Button>
+          <PrimitiveBlock
             left={popupLeft}
             top={popupTop}
             width={popupWidth}
             height={popupHeight}
           >
-            <Background color={[255, 255, 255, popupAlpha]}/>
-            {state === STATE_OPEN && item !== null && (
-              <Fragment>
-                <Block width={popupWidth} height={DISCARD_BUTTON_HEIGHT} isFlexbox>
-                  <Background color={isDiscarded ? COLOR_GREEN : COLOR_RED}/>
-                  <Button onPress={onDiscardToggle}>
-                    <Block
-                      top={(DISCARD_BUTTON_HEIGHT - DISCARD_LINE_HEIGHT) / 2}
-                      left={(popupWidth - discardTextWidth) / 2}
-                      height={DISCARD_LINE_HEIGHT}
-                      shouldIgnorePointerEvents
-                    >
-                      <Size width={discardTextWidth} onWidthChange={setDiscardTextWidth}>
-                        <Text
-                          lineHeight={DISCARD_LINE_HEIGHT}
-                          fontSize={DISCARD_FONT_SIZE}
-                          fontFamily="sans-serif"
-                          shouldPreserveWhitespace
-                        >
-                          {isDiscarded ? 'Undiscard' : 'Discard'}
-                        </Text>
-                      </Size>
-                    </Block>
-                  </Button>
-                </Block>
-                {/* {hasSourceCode && (
-                  <SourceCode
-                    top={sourceCodeTop}
-                    left={sourceCodeLeft}
-                    width={sourceCodeWidth}
-                    height={sourceCodeHeight}
-                    source={item.source!}
-                  />
-                )} */}
-                {isScreenshotGridItem(type, item) && (
-                  <ScreenshotPreview
-                    top={previewTop}
-                    left={previewLeft}
-                    width={previewWidth}
-                    height={previewHeight}
-                    item={item}
-                  />
-                )}
-                {isSnapshotGridItem(type, item) && (
-                  <SnapshotPreview
-                    top={previewTop}
-                    left={previewLeft}
-                    width={previewWidth}
-                    height={previewHeight}
-                    item={item}
-                  />
-                )}
-              </Fragment>
-            )}
-          </Block>
+            <PrimitiveBackground color={[255, 255, 255, popupAlpha]}/>
+          </PrimitiveBlock>
         </Fragment>
       )}
     </Animation>
+    {state === STATE_OPEN && item !== null && (
+      <Layout direction="vertical" hPadding={POPUP_OFFSET} vPadding={POPUP_OFFSET}>
+        <Layout_Item hAlign="center" height={DISCARD_BUTTON_HEIGHT}>
+          <Background color={isDiscarded ? COLOR_GREEN : COLOR_RED}/>
+          <Button onPress={onDiscardToggle}>
+            <Text
+              lineHeight={DISCARD_LINE_HEIGHT}
+              fontSize={DISCARD_FONT_SIZE}
+              fontFamily="sans-serif"
+              shouldPreserveWhitespace
+            >
+              {isDiscarded ? 'Undiscard' : 'Discard'}
+            </Text>
+          </Button>
+        </Layout_Item>
+        {isScreenshotGridItem(type, item) && (
+          <Layout_Item>
+            <ScreenshotPreview item={item}/>
+          </Layout_Item>
+        )}
+        {isSnapshotGridItem(type, item) && (
+          <Layout_Item>
+            <SnapshotPreview item={item}/>
+          </Layout_Item>
+        )}
+      </Layout>
+    )}
   </Block>
 ))
 

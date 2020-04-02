@@ -1,11 +1,12 @@
 import React, { FC } from 'react'
-import { Root } from '@primitives/root'
+import { Root } from '@revert/root'
 import { Main } from './components/Main'
+// import { PortalProvider } from './components/Portal'
 
 export const App: FC<{}> = () => (
   <Root>
-    {({ width, height }: { width: number, height: number }) => (
-      <Main width={width} height={height}/>
-    )}
+    {/* <PortalProvider> */}
+    <Main/>
+    {/* </PortalProvider> */}
   </Root>
 )

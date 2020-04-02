@@ -68,10 +68,10 @@ export type TSnapshotsItemResult =
   }
 
 export type TSnapshotItem = TItem & {
-  type: 'new' | 'deleted' | 'diff',
+  type: 'NEW' | 'DELETED' | 'DIFF',
 }
 
-export type TSnapshotResultType = 'new' | 'diff' | 'deleted'
+export type TSnapshotResultType = 'NEW' | 'DELETED' | 'DIFF'
 
 export type TSnapshotsFileResult = {
   [type in TSnapshotResultType]: {
