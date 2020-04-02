@@ -1,11 +1,11 @@
 # @rebox/android
 
-Set of helpers to deal with React Native on Android.
+Set of helpers to deal with React Native applications on Android.
 
 ## Install
 
 ```sh
-$ yarn add --dev @rebox/android
+$ yarn add @rebox/android
 ```
 
 ## Setup
@@ -37,7 +37,7 @@ yes | sdkmanager --licenses
 sdkmanager "platform-tools" "platforms;android-28" "build-tools;28.0.3" "emulator" "extras;android;m2repository" "system-images;android-28;google_apis;x86"
 ```
 
-## Usage
+## API
 
 ```ts
 type TLinkAndroidDependencyOptions = {
@@ -70,7 +70,7 @@ const installAndroidApp: (options: TInstallAndroidAppOptions) => Promise<void>
 ```ts
 type TUninstallAndroidAppOptions = {
   appId: string,
-  deviceId?: string
+  deviceId?: string // booted one by default
 }
 
 const uninstallAndroidApp: (options: TUninstallAndroidAppOptions) => Promise<void>
@@ -79,7 +79,7 @@ const uninstallAndroidApp: (options: TUninstallAndroidAppOptions) => Promise<voi
 ```ts
 type TRunAndroidEmulatorOptions = {
   portsToForward: number[],
-  isHeadless?: boolean
+  isHeadless?: boolean // false by default
 }
 
 const runAndroidEmulator: (options: TRunAndroidEmulatorOptions) => Promise<() => void>
@@ -88,7 +88,7 @@ const runAndroidEmulator: (options: TRunAndroidEmulatorOptions) => Promise<() =>
 ```ts
 type TLaunchAndroidAppOptions = {
   appId: string,
-  deviceId?: string
+  deviceId?: string // booted one by default
 }
 
 const launchAndroidApp: (options: TLaunchAndroidAppOptions) => Promise<void>
@@ -99,12 +99,46 @@ type TRunAndroidAppOptions = {
   appName: string,
   appId: string,
   entryPointPath: string,
-  portsToForward: number[],
-  fontsDir?: string,
-  dependencyNames?: string[],
-  isHeadless?: boolean,
+  portsToForward?: number[], // additional ports to forward from host to emulator's VM
+  fontsDir?: string, // directory with `.ttf` or `.otf` files
+  dependencyNames?: string[], // installed NPM package names
+  isHeadless?: boolean, // false by default
   logMessage?: (msg: string) => void
 }
 
 const runAndroidApp: (options: TRunAndroidAppOptions) => Promise<() => void
+```
+
+## Usage
+
+```ts
+// App.tsx
+import React, { FC } from 'react'
+import { Svg, Circle } from 'react-native-svg'
+
+export const App: FC<{}> = () => (
+  <Svg height={100} width={100} viewBox="0 0 100 100">
+    <Circle
+      cx="50"
+      cy="50"
+      r="45"
+      stroke="blue"
+      strokeWidth="2.5"
+      fill="green"
+    />
+  </Svg>
+)
+```
+
+```ts
+// run.ts
+import { runAndroidApp } from '@rebox/android'
+
+await runAndroidApp({
+  appName: 'Test',
+  appId: 'org.nextools.test',
+  entryPointPath: './App.tsx',
+  dependencyNames: ['react-native-svg'],
+  logMessage: console.log
+})
 ```
