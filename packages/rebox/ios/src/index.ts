@@ -1,6 +1,4 @@
 export * from './build-ios-app-debug'
-export * from './get-ios-app-path'
-export * from './get-ios-project-path'
 export * from './install-ios-app'
 export * from './launch-ios-app'
 export * from './link-ios-dependency'
