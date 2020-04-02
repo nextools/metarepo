@@ -1,7 +1,7 @@
 import path from 'path'
 import { cpus } from 'os'
 import fetch from 'node-fetch'
-import { run } from '@rebox/web'
+import { runWebApp } from '@rebox/web'
 import { runServer, runScreenshots } from '@x-ray/screenshot-utils'
 import { rsolve } from 'rsolve'
 import { TOptions, TUserOptions } from './types'
@@ -31,7 +31,7 @@ export const runFiles = async (targetFiles: string[], userOptions: TUserOptions)
     const entryPointPath = await rsolve('@x-ray/ui', 'browser')
     const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
 
-    const closeReboxServer = await run({
+    const closeReboxServer = await runWebApp({
       htmlTemplatePath,
       entryPointPath,
       isQuiet: true,

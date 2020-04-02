@@ -7,8 +7,8 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
 
   const path = await import('path')
   const { rsolve } = await import('rsolve')
-  const { run: runAndroid } = await import('@rebox/android')
-  const { run: runWeb } = await import('@rebox/web')
+  const { runAndroidApp } = await import('@rebox/android')
+  const { runWebApp } = await import('@rebox/web')
   const { runScreenshotsServer, prepareFiles } = await import('@x-ray/native-screenshots')
   const { runServer: runUiServer } = await import('@x-ray/screenshot-utils')
 
@@ -21,7 +21,7 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
   let killAll = null
 
   try {
-    killAll = await runAndroid({
+    killAll = await runAndroidApp({
       appName: 'X-Ray',
       appId: 'org.nextools.xray',
       entryPointPath,
@@ -43,7 +43,7 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
       const entryPointPath = await rsolve('@x-ray/ui', 'browser')
       const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
 
-      const closeReboxServer = await runWeb({
+      const closeReboxServer = await runWebApp({
         entryPointPath,
         htmlTemplatePath,
         isQuiet: true,

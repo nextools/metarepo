@@ -3,8 +3,8 @@ import plugin, { StartFilesProps } from '@start/plugin'
 export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ logMessage }) => async ({ files }) => {
   const path = await import('path')
   const { rsolve } = await import('rsolve')
-  const { run: runIos } = await import('@rebox/ios')
-  const { run: runWeb } = await import('@rebox/web')
+  const { runIosApp } = await import('@rebox/ios')
+  const { runWebApp } = await import('@rebox/web')
   const { runScreenshotsServer } = await import('@x-ray/web-mobile-screenshots')
   const { runServer: runUiServer } = await import('@x-ray/screenshot-utils')
 
@@ -29,10 +29,11 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
   try {
     const entryPointPath = await rsolve('@x-ray/web-mobile-screenshots-app', 'react-native')
 
-    killIos = await runIos({
+    killIos = await runIosApp({
       appName: 'X-Ray-Mobile',
       appId: 'org.nextools.x-ray-mobile',
-      iOSVersion: '12.2',
+      iPhoneVersion: 8,
+      iOSVersion: '13.2',
       entryPointPath,
       dependencyNames: [
         'react-native-svg',
@@ -52,7 +53,7 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
       const entryPointPath = await rsolve('@x-ray/ui', 'browser')
       const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
 
-      const closeReboxServer = await runWeb({
+      const closeReboxServer = await runWebApp({
         entryPointPath,
         htmlTemplatePath,
         isQuiet: true,

@@ -1,28 +1,28 @@
 import path from 'path'
 import { readFile, writeFile, readdir } from 'pifs'
 
-export type TLinkDependency = {
+export type TLinkAndroidDependency = {
   projectPath: string,
   dependencyName: string,
 }
 
-export const linkDependency = async ({ projectPath, dependencyName }: TLinkDependency): Promise<void> => {
-  const dependencyPath = path.join('node_modules', dependencyName)
+export const linkAndroidDependency = async (options: TLinkAndroidDependency): Promise<void> => {
+  const dependencyPath = path.join('node_modules', options.dependencyName)
 
   // settings.gradle
-  const settingsGradlePath = path.join(projectPath, 'settings.gradle')
-  const dependencySettingsGradlePath = path.relative(projectPath, dependencyPath)
+  const settingsGradlePath = path.join(options.projectPath, 'settings.gradle')
+  const dependencySettingsGradlePath = path.relative(options.projectPath, dependencyPath)
   let settingGradleData = await readFile(settingsGradlePath, { encoding: 'utf8' })
 
-  settingGradleData = settingGradleData.replace('// REBOX', `include ':${dependencyName}'\nproject(':${dependencyName}').projectDir = new File(rootProject.projectDir, '${dependencySettingsGradlePath}/android')\n// REBOX`)
+  settingGradleData = settingGradleData.replace('// REBOX', `include ':${options.dependencyName}'\nproject(':${options.dependencyName}').projectDir = new File(rootProject.projectDir, '${dependencySettingsGradlePath}/android')\n// REBOX`)
 
   await writeFile(settingsGradlePath, settingGradleData)
 
   // app/build.gradle
-  const buildGradlePath = path.join(projectPath, 'app', 'build.gradle')
+  const buildGradlePath = path.join(options.projectPath, 'app', 'build.gradle')
   let buildGradleData = await readFile(buildGradlePath, { encoding: 'utf8' })
 
-  buildGradleData = buildGradleData.replace('// REBOX', `implementation project(':${dependencyName}')\n    // REBOX`)
+  buildGradleData = buildGradleData.replace('// REBOX', `implementation project(':${options.dependencyName}')\n    // REBOX`)
 
   await writeFile(buildGradlePath, buildGradleData)
 
@@ -32,7 +32,7 @@ export const linkDependency = async ({ projectPath, dependencyName }: TLinkDepen
   const packageId = /package="(.+)"/.exec(dependencyManifestData)![1]
   const packageDirFiles = await readdir(path.join(dependencyPath, 'android', 'src', 'main', 'java', ...packageId.split('.')))
   const packageName = packageDirFiles.find((filename) => filename.endsWith('Package.java'))!.replace('.java', '')
-  const mainApplicationJavaPath = path.join(projectPath, 'app', 'src', 'main', 'java', 'com', 'rebox', 'MainApplication.java')
+  const mainApplicationJavaPath = path.join(options.projectPath, 'app', 'src', 'main', 'java', 'com', 'rebox', 'MainApplication.java')
   let mainApplicationJavaData = await readFile(mainApplicationJavaPath, { encoding: 'utf8' })
 
   mainApplicationJavaData = mainApplicationJavaData

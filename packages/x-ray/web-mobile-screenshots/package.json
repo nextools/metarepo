@@ -19,18 +19,18 @@
     "p-all": "^3.0.0",
     "pifs": "^1.0.0",
     "pretty-ms": "^6.0.0",
-    "react-dom": "^16.6.0",
+    "react-dom": "16.11.0",
     "tsfn": "^1.1.1",
     "upng-js": "^2.1.0"
   },
   "devDependencies": {
     "@types/opentype.js": "^0.7.2",
     "@types/react": "^16.8.6",
-    "react": "^16.8.0",
-    "react-native": "^0.61.5"
+    "react": "16.11.0",
+    "react-native": "0.62.0"
   },
   "peerDependencies": {
-    "react": "^16.8.0",
-    "react-native": ">=0.60.5"
+    "react": "16.11.0",
+    "react-native": "0.62.0"
   }
 }

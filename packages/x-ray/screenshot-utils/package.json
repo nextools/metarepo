@@ -28,9 +28,9 @@
   "devDependencies": {
     "@types/pixelmatch": "^5.0.0",
     "@types/upng-js": "^2.1.1",
-    "react": "^16.8.6"
+    "react": "16.11.0"
   },
   "peerDependencies": {
-    "react": "^16.8.6"
+    "react": "16.11.0"
   }
 }

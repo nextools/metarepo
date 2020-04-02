@@ -7,7 +7,7 @@ import fetch from 'node-fetch'
 
 const REQUEST_TIMEOUT = 2 * 60 * 1000
 
-export type TServeJsBundleOptions = {
+export type TServeNativeJsBundleOptions = {
   entryPointPath: string,
   port: number,
   platform: 'ios' | 'android',
@@ -15,16 +15,16 @@ export type TServeJsBundleOptions = {
   shouldMinify?: boolean,
 }
 
-export const serveJsBundle = async ({ port, entryPointPath, platform, isDev, shouldMinify }: TServeJsBundleOptions): Promise<() => void> => {
-  const isDevString = isUndefined(isDev) ? 'true' : String(isDev)
-  const shouldMinifyString = isUndefined(shouldMinify) ? 'false' : String(shouldMinify)
+export const serveNativeJsBundle = async (options: TServeNativeJsBundleOptions): Promise<() => void> => {
+  const isDevString = isUndefined(options.isDev) ? 'true' : String(options.isDev)
+  const shouldMinifyString = isUndefined(options.shouldMinify) ? 'false' : String(options.shouldMinify)
 
   const proc = execa(
     'haul',
     [
       'start',
       '--port',
-      String(port),
+      String(options.port),
       '--dev',
       isDevString,
       '--minify',
@@ -32,24 +32,24 @@ export const serveJsBundle = async ({ port, entryPointPath, platform, isDev, sho
       '--interactive',
       'false',
       '--eager',
-      platform,
+      options.platform,
       '--config',
       require.resolve('./haul.config.js'),
     ],
     {
       env: {
         FORCE_COLOR: '1',
-        REBOX_ENTRY_POINT: entryPointPath,
+        REBOX_ENTRY_POINT: options.entryPointPath,
       },
     }
   )
 
-  while (!(await isPortReachable(port))) {
+  while (!(await isPortReachable(options.port))) {
     await waitTimePromise(200)
   }
 
   await fetch(
-    `http://localhost:${port}/index.bundle?platform=${platform}&dev=${isDevString}&minify=${shouldMinifyString}`,
+    `http://localhost:${options.port}/index.bundle?platform=${options.platform}&dev=${isDevString}&minify=${shouldMinifyString}`,
     { timeout: REQUEST_TIMEOUT }
   )
 

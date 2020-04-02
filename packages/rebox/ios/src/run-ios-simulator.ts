@@ -16,7 +16,7 @@ export type TRunSimulatorOptions = {
   isHeadless?: boolean,
 }
 
-export const runSimulator = async (options: TRunSimulatorOptions): Promise<() => void> => {
+export const runIosSimulator = async (options: TRunSimulatorOptions): Promise<() => void> => {
   const { default: execa } = await import('execa')
   const { stdout: xcrunList } = await execa('xcrun', ['simctl', 'list', '--json'])
 

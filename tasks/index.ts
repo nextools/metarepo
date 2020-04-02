@@ -31,11 +31,11 @@ export const pkg = Pkg({
 
 export const graphiq = () =>
   plugin('demo', ({ logMessage }) => async () => {
-    const { run } = await import('@rebox/web')
+    const { runWebApp } = await import('@rebox/web')
     const entryPointPath = './tasks/graphiq/index.tsx'
     const htmlTemplatePath = './tasks/graphiq/index.html'
 
-    await run({
+    await runWebApp({
       entryPointPath,
       htmlTemplatePath,
       isQuiet: true,
@@ -46,12 +46,12 @@ export const graphiq = () =>
 
 export const xray = () =>
   plugin('ui', ({ logMessage }) => async () => {
-    const { run } = await import('@rebox/web')
+    const { runWebApp } = await import('@rebox/web')
     const { runXRayServer } = await import('./x-ray-ui/run-server')
 
     await runXRayServer()
 
-    await run({
+    await runWebApp({
       entryPointPath: './tasks/x-ray-ui/index.tsx',
       htmlTemplatePath: './tasks/x-ray-ui/template.html',
       isQuiet: true,

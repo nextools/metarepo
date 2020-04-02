@@ -1,7 +1,7 @@
 import path from 'path'
 import { cpus } from 'os'
 import { TOptions } from '@x-ray/common-utils'
-import { run } from '@rebox/web'
+import { runWebApp } from '@rebox/web'
 import { rsolve } from 'rsolve'
 import { runSnapshots } from './run-snapshots'
 import { runServer } from './run-server'
@@ -16,7 +16,7 @@ export const runFiles = async (targetFiles: string[], options: TOptions) => {
     const entryPointPath = await rsolve('@x-ray/ui', 'browser')
     const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
 
-    const closeReboxServer = await run({
+    const closeReboxServer = await runWebApp({
       htmlTemplatePath,
       entryPointPath,
     })

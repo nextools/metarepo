@@ -5,12 +5,13 @@ import { TPlatform } from './types'
 export type TBuildJsBundleOptions = {
   entryPointPath: string,
   outputPath: string,
+  platform: TPlatform,
 }
 
-export const buildJsBundle = (platform: TPlatform) => async (options: TBuildJsBundleOptions) => {
+export const buildNativeJsBundle = async (options: TBuildJsBundleOptions) => {
   const bundlePath = path.join(
     options.outputPath,
-    platform === 'ios' ? 'main.jsbundle' : 'index.android.bundle'
+    options.platform === 'ios' ? 'main.jsbundle' : 'index.android.bundle'
   )
 
   await execa(
@@ -20,7 +21,7 @@ export const buildJsBundle = (platform: TPlatform) => async (options: TBuildJsBu
       '--config',
       require.resolve('./haul.config.js'),
       '--platform',
-      platform,
+      options.platform,
       '--dev',
       'false',
       '--minify',

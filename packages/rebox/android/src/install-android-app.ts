@@ -1,21 +1,18 @@
 import execa from 'execa'
 import { isUndefined } from 'tsfn'
 
-export type TLaunchAppOptions = {
-  appId: string,
+export type TInstallAndroidAppOptions = {
+  appPath: string,
   deviceId?: string,
 }
 
-export const launchApp = async (options: TLaunchAppOptions): Promise<void> => {
+export const installAndroidApp = async (options: TInstallAndroidAppOptions): Promise<void> => {
   await execa(
     'adb',
     [
       ...(isUndefined(options.deviceId) ? [] : ['-s', options.deviceId]),
-      'shell',
-      'am',
-      'start',
-      '-n',
-      `${options.appId}/com.rebox.MainActivity`,
+      'install',
+      options.appPath,
     ],
     {
       stderr: process.stderr,

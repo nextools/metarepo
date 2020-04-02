@@ -25,7 +25,7 @@ const statsOptions: Stats.ToStringOptionsObject = {
   warnings: true,
 }
 
-export type TServeJsBundleOptions = {
+export type TRunWebAppOptions = {
   entryPointPath: string,
   htmlTemplatePath: string,
   assetsPath?: string,
@@ -33,7 +33,7 @@ export type TServeJsBundleOptions = {
   shouldOpenBrowser?: boolean,
 }
 
-export const run = (options: TServeJsBundleOptions): Promise<() => Promise<void>> => {
+export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<void>> => {
   const config: TWebpackConfig = {
     mode: 'development',
     entry: path.resolve(options.entryPointPath),
@@ -61,7 +61,7 @@ export const run = (options: TServeJsBundleOptions): Promise<() => Promise<void>
           loader: require.resolve('./loader.js'),
         },
         {
-          test: /\.tsx?$/,
+          test: /\.(ts|js)x?$/,
           exclude: excludeNodeModulesRegExp,
           loader: require.resolve('babel-loader'),
           options: {

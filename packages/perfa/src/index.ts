@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer-core'
-import { buildRelease } from '@rebox/web'
+import { buildWebAppRelease } from '@rebox/web'
 import { getObjectEntries } from 'tsfn'
 import tempy from 'tempy'
 import dleet from 'dleet'
@@ -40,7 +40,7 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
   })
   const browser = await puppeteer.connect({ browserWSEndpoint })
 
-  await buildRelease({
+  await buildWebAppRelease({
     entryPointPath: options.entryPointPath,
     outputPath: tempBuildDir,
     htmlTemplatePath: require.resolve('./app.html'),
