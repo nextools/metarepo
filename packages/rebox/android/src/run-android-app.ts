@@ -17,7 +17,7 @@ export type TRunAndroidAppOptions = {
   appName: string,
   appId: string,
   entryPointPath: string,
-  portsToForward: number[],
+  portsToForward?: number[],
   fontsDir?: string,
   dependencyNames?: string[],
   isHeadless?: boolean,
@@ -79,7 +79,7 @@ export const runAndroidApp = async (options: TRunAndroidAppOptions): Promise<() 
 
   const killEmulator = await runAndroidEmulator({
     isHeadless: options.isHeadless,
-    portsToForward: [PORT, ...options.portsToForward],
+    portsToForward: [PORT, ...options.portsToForward ?? []],
   })
 
   log('emulator has been launched')
