@@ -1,25 +1,27 @@
 import React from 'react'
-import { component, startWithType, mapState } from 'refun'
+import { component, startWithType, mapState, mapContext } from 'refun'
 import { TFileResultLine } from '@x-ray/snapshots'
-import { Text } from '@primitives/text'
-import { TRect, TSnapshotGridItem } from '../types'
+import { PrimitiveText as Text } from '@revert/text'
+import { LayoutContext } from '@revert/layout'
+import { PrimitiveBackground as Background } from '@revert/background'
+import { PrimitiveBlock as Block } from '@revert/block'
+import { TSnapshotGridItem } from '../types'
 import { mapStoreDispatch } from '../store'
 import { apiLoadSnapshot } from '../api'
 import { actionError } from '../actions'
 import { COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED } from '../config'
-import { Block } from './Block'
-import { Background } from './Background'
 import { onMountAsync } from './on-mount-async'
 
 const LINE_HEIGHT = 18
 const CHAR_WIDTH = 8.39
 
-export type TSnapshotPreview = TRect & {
+export type TSnapshotPreview = {
   item: TSnapshotGridItem,
 }
 
 export const SnapshotPreview = component(
   startWithType<TSnapshotPreview>(),
+  mapContext(LayoutContext),
   mapStoreDispatch('dispatch'),
   mapState('state', 'setState', () => null as TFileResultLine[] | null, []),
   onMountAsync(async ({ setState, item, dispatch, isMountedRef }) => {
@@ -34,19 +36,18 @@ export const SnapshotPreview = component(
       dispatch(actionError(err.message))
     }
   })
-)(({ top, left, width, height, state, item }) => {
+)(({ _top, _left, _width, _height, state, item }) => {
   if (state === null) {
     return null
   }
 
   return (
     <Block
-      top={top}
-      left={left}
-      width={width}
-      height={height}
-      shouldScrollX
-      shouldScrollY
+      top={_top}
+      left={_left}
+      width={_width}
+      height={_height}
+      shouldScroll
     >
       <Block height={state.length * LINE_HEIGHT}/>
       {state.map((line, i) => (

@@ -1,9 +1,9 @@
 import React from 'react'
 import { component, startWithType, mapDefaultProps } from 'refun'
-import { colorToString, TColor } from 'colorido'
-import { Surface, Shape } from '@primitives/svg'
+import { colorToString, TColor } from '@revert/color'
+import { Surface, Shape } from '@revert/svg'
+import { AnimationColor } from '@revert/animation'
 import { COLOR_BLACK } from '../config'
-import { AnimationColor } from './AnimationColor'
 
 export type TIcon = {
   d: string,
@@ -17,7 +17,7 @@ export const Icon = component(
   })
 )(({ d, color }) => (
   <Surface height={20} width={20}>
-    <AnimationColor values={color} time={200}>
+    <AnimationColor toColor={color} time={200}>
       {(color) => (
         <Shape
           d={d}
