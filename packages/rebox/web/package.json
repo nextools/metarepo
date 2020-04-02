@@ -1,8 +1,8 @@
 {
   "name": "@rebox/web",
   "version": "2.0.0",
-  "description": "",
-  "keywords": [],
+  "description": "Set of helpers to deal with React applications using our Babel config",
+  "keywords": ["react"],
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
