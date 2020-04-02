@@ -71,7 +71,7 @@ export const runAndroidApp = async (options: TRunAndroidAppOptions): Promise<() 
     await buildAndroidAppDebug({
       projectPath,
       appName: options.appName,
-      appId: options.appName,
+      appId: options.appId,
     })
 
     log('app has been built')
@@ -84,7 +84,7 @@ export const runAndroidApp = async (options: TRunAndroidAppOptions): Promise<() 
 
   log('emulator has been launched')
 
-  await uninstallAndroidApp({ appId: options.appName })
+  await uninstallAndroidApp({ appId: options.appId })
   await installAndroidApp({ appPath })
 
   log('app has been installed')
