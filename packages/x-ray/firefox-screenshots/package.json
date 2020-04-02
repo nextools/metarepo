@@ -19,7 +19,7 @@
     "@x-ray/worker-utils": "^1.0.0",
     "foxr": "^0.10.1",
     "react": "16.11.0",
-    "react-dom": "16.11.0",
+    "react-dom": "16.13.1",
     "rsolve": "^0.1.0",
     "upng-js": "^2.1.0"
   },

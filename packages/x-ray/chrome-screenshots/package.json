@@ -22,7 +22,7 @@
     "p-all": "^3.0.0",
     "puppeteer-core": "^2.1.0",
     "react": "16.11.0",
-    "react-dom": "16.11.0",
+    "react-dom": "16.13.1",
     "rsolve": "^0.1.0",
     "upng-js": "^2.1.0"
   },
