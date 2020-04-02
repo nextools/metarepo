@@ -24,7 +24,6 @@
   },
   "devDependencies": {
     "@mock/require": "^0.1.0",
-    "@types/escape-string-regexp": "^2.0.0",
     "@types/tape": "^4.2.34",
     "spyfn": "^1.0.0",
     "tape": "^5.0.0-next.5"

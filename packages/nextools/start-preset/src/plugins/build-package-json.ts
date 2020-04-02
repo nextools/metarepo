@@ -17,16 +17,28 @@ export default (dir: string) =>
           break
         }
         case 'main': {
+          if (!Reflect.has(packageJson, 'types')) {
+            result.types = 'types/index.d.ts'
+          }
+
           result[key] = 'node/index.js'
 
           break
         }
         case 'browser': {
+          if (!Reflect.has(packageJson, 'types')) {
+            result.types = 'types/index.d.ts'
+          }
+
           result[key] = 'web/index.js'
 
           break
         }
         case 'react-native': {
+          if (!Reflect.has(packageJson, 'types')) {
+            result.types = 'types/index.d.ts'
+          }
+
           result[key] = 'native/index.js'
 
           break
