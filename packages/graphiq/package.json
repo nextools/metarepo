@@ -11,7 +11,7 @@
     "node": ">=10.13.0"
   },
   "devDependencies": {
-    "react": "16.11.0"
+    "react": "16.13.1"
   },
   "dependencies": {
     "@primitives/animation": "^1.0.0",

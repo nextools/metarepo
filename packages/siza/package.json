@@ -19,7 +19,7 @@
     "file-loader": "^5.0.2",
     "memfs": "^3.1.1",
     "memory-fs": "^0.5.0",
-    "react": "16.11.0",
+    "react": "16.13.1",
     "react-dom": "16.11.0",
     "terser-webpack-plugin": "^2.3.5",
     "tsfn": "^1.1.1",

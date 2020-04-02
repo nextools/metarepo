@@ -51,7 +51,7 @@
     "core-js": "^3.2.1",
     "eslint": "^6.1.0",
     "graphiq": "*",
-    "react": "16.11.0",
+    "react": "16.13.1",
     "react-native": "0.62.0",
     "tsfn": "*",
     "typescript": "^3.8.0"
