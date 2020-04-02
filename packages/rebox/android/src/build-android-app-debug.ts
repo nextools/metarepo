@@ -2,22 +2,15 @@ import path from 'path'
 import { readFile, writeFile } from 'pifs'
 import execa from 'execa'
 import moveFile from 'move-file'
-import { buildJsBundle } from './build-js-bundle'
+import { getAndroidAppPath } from './get-android-app-path'
 
-export type TBuildReleaseOptions = {
-  entryPointPath: string,
+export type TBuildAndroidAppDebugOptions = {
   projectPath: string,
   appName: string,
   appId: string,
-  outputPath: string,
 }
 
-export const buildRelease = async (options: TBuildReleaseOptions): Promise<void> => {
-  await buildJsBundle({
-    entryPointPath: options.entryPointPath,
-    outputPath: path.join(options.projectPath, 'app', 'src', 'main', 'assets'),
-  })
-
+export const buildAndroidAppDebug = async (options: TBuildAndroidAppDebugOptions): Promise<void> => {
   await execa(
     path.resolve(options.projectPath, 'gradlew'),
     [
@@ -51,11 +44,12 @@ export const buildRelease = async (options: TBuildReleaseOptions): Promise<void>
   await execa(
     path.resolve(options.projectPath, 'gradlew'),
     [
-      'assembleRelease',
+      'assembleDebug',
       '--console=plain',
       '--quiet',
       '--no-daemon',
       '--warning-mode=none',
+      '-PreactNativeDevServerPort=8082',
     ],
     {
       cwd: options.projectPath,
@@ -68,8 +62,8 @@ export const buildRelease = async (options: TBuildReleaseOptions): Promise<void>
 
   await writeFile(stringsXmlPath, '<resources><string name="app_name">rebox</string></resources>')
 
-  const originalApkPath = path.join(options.projectPath, 'app', 'build', 'outputs', 'apk', 'release', 'app-release-unsigned.apk')
-  const newApkPath = path.join(options.outputPath, `${options.appName}.apk`)
+  const originalApkPath = path.join(options.projectPath, 'app', 'build', 'outputs', 'apk', 'debug', 'app-debug.apk')
+  const newApkPath = getAndroidAppPath(options.appName)
 
   await moveFile(originalApkPath, newApkPath)
 }

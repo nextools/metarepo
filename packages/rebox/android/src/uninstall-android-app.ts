@@ -6,7 +6,7 @@ export type TUninstallAppOptions = {
   deviceId?: string,
 }
 
-export const uninstallApp = async (options: TUninstallAppOptions): Promise<void> => {
+export const uninstallAndroidApp = async (options: TUninstallAppOptions): Promise<void> => {
   await execa(
     'adb',
     [

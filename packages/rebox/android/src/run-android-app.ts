@@ -1,16 +1,15 @@
 import { access } from 'pifs'
 import { isArray, isString, isFunction } from 'tsfn'
 import { addFontsAndroid } from 'rn-fonts'
-import { runEmulator } from './run-emulator'
-import { serveJsBundle } from './serve-js-bundle'
-import { buildDebug } from './build-debug'
-import { installApp } from './install-app'
-import { launchApp } from './launch-app'
-import { uninstallApp } from './uninstall-app'
-import { getProjectPath } from './get-project-path'
-import { copyTemplate } from './copy-template'
-import { linkDependency } from './link-dependency'
-import { getAppPath } from './get-app-path'
+import { copyNativeTemplate, serveNativeJsBundle } from '@rebox/native-utils'
+import { runAndroidEmulator } from './run-android-emulator'
+import { buildAndroidAppDebug } from './build-android-app-debug'
+import { installAndroidApp } from './install-android-app'
+import { uninstallAndroidApp } from './uninstall-android-app'
+import { launchAndroidApp } from './launch-android-app'
+import { getAndroidProjectPath } from './get-android-project-path'
+import { getAndroidAppPath } from './get-android-app-path'
+import { linkAndroidDependency } from './link-android-dependency'
 
 const PORT = 8082
 
@@ -25,9 +24,9 @@ export type TOptions = {
   logMessage?: (msg: string) => void,
 }
 
-export const run = async ({ appId, appName, entryPointPath, portsToForward, fontsDir, dependencyNames, logMessage, isHeadless }: TOptions): Promise<() => void> => {
-  const projectPath = getProjectPath(appName)
-  const appPath = getAppPath(appName)
+export const runAndroidApp = async ({ appId, appName, entryPointPath, portsToForward, fontsDir, dependencyNames, logMessage, isHeadless }: TOptions): Promise<() => void> => {
+  const projectPath = getAndroidProjectPath(appName)
+  const appPath = getAndroidAppPath(appName)
   const log = (message: string): void => {
     if (isFunction(logMessage)) {
       logMessage(message)
@@ -44,13 +43,16 @@ export const run = async ({ appId, appName, entryPointPath, portsToForward, font
 
       log('copying template, installing dependencies and adding fonts have been skipped')
     } catch {
-      await copyTemplate(projectPath)
+      await copyNativeTemplate({
+        platform: 'android',
+        projectPath,
+      })
 
       log('template has been copied')
 
       if (isArray(dependencyNames)) {
         for (const dependencyName of dependencyNames) {
-          await linkDependency({
+          await linkAndroidDependency({
             projectPath,
             dependencyName,
           })
@@ -66,7 +68,7 @@ export const run = async ({ appId, appName, entryPointPath, portsToForward, font
       }
     }
 
-    await buildDebug({
+    await buildAndroidAppDebug({
       projectPath,
       appName,
       appId,
@@ -75,19 +77,19 @@ export const run = async ({ appId, appName, entryPointPath, portsToForward, font
     log('app has been built')
   }
 
-  const killEmulator = await runEmulator({
+  const killEmulator = await runAndroidEmulator({
     isHeadless,
     portsToForward: [PORT, ...portsToForward],
   })
 
   log('emulator has been launched')
 
-  await uninstallApp({ appId })
-  await installApp({ appPath })
+  await uninstallAndroidApp({ appId })
+  await installAndroidApp({ appPath })
 
   log('app has been installed')
 
-  const killServer = await serveJsBundle({
+  const killServer = await serveNativeJsBundle({
     entryPointPath,
     port: PORT,
     platform: 'android',
@@ -95,7 +97,7 @@ export const run = async ({ appId, appName, entryPointPath, portsToForward, font
 
   log('bundle has been served')
 
-  await launchApp({ appId })
+  await launchAndroidApp({ appId })
 
   log('app has been launched')
 
