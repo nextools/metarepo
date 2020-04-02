@@ -1,3 +1,9 @@
+## v2.0.1
+
+* 🐞 add package description and keywords
+
+* 🐞 add readme
+
 ## v2.0.0
 
 * 💥 change API

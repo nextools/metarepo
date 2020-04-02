@@ -1,8 +1,13 @@
 {
   "name": "@rebox/native-utils",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Set of common helpers to deal with React Native on iOS and Android",
-  "keywords": ["react", "react-native", "ios", "android"],
+  "keywords": [
+    "react",
+    "react-native",
+    "ios",
+    "android"
+  ],
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {

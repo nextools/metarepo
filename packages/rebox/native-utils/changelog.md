@@ -1,3 +1,11 @@
+## v2.0.1
+
+* 🐞 add readme
+
+* 🐞 add package description and keywords
+
+* 🐞 tweak child process env
+
 ## v2.0.0
 
 * 💥 change API

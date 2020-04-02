@@ -1,3 +1,17 @@
+## v2.0.1
+
+* 🐞 add package description and keywords
+
+* 🐞 make `portsToForward` option optional
+
+* 🐞 don't export too much
+
+* 🐞 update readme with API
+
+* 🐞 rename types
+
+* ♻️ update dependencies `@rebox/native-utils`
+
 ## v2.0.0
 
 * 💥 change API
