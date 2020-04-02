@@ -1,6 +1,4 @@
 export * from './build-android-app-debug'
-export * from './get-android-app-path'
-export * from './get-android-project-path'
 export * from './install-android-app'
 export * from './launch-android-app'
 export * from './link-android-dependency'
