@@ -80,7 +80,6 @@ export const Main = component(
           />
         </Layout_Item>
         <Layout_Item>
-          <Background color={[136, 136, 136, 1]}/>
           {isScreenshots(items, type) && (
             <ScreenshotGrid
               items={items}
@@ -96,7 +95,6 @@ export const Main = component(
               filteredFiles={filteredFiles}
             />
           )}
-
         </Layout_Item>
 
       </Layout>

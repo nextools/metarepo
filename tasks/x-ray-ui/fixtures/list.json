@@ -1,10 +1,136 @@
 {
   "type": "text",
   "files": [
-    "primitives/button"
+    "primitives/button",
+    "primitives/text"
   ],
   "items": {
     "primitives/button:id": {
+      "type": "new",
+      "width": 45,
+      "height": 12
+    },
+    "primitives/button:id2": {
+      "type": "new",
+      "width": 45,
+      "height": 78
+    },
+    "primitives/button:id3": {
+      "type": "new",
+      "width": 64,
+      "height": 12
+    },
+    "primitives/button:id4": {
+      "type": "new",
+      "width": 45,
+      "height": 12
+    },
+    "primitives/button:id5": {
+      "type": "new",
+      "width": 45,
+      "height": 78
+    },
+    "primitives/button:id6": {
+      "type": "new",
+      "width": 45,
+      "height": 12
+    },
+    "primitives/button:id7": {
+      "type": "new",
+      "width": 45,
+      "height": 45
+    },
+    "primitives/button:id8": {
+      "type": "new",
+      "width": 64,
+      "height": 12
+    },
+    "primitives/button:id9": {
+      "type": "new",
+      "width": 45,
+      "height": 78
+    },
+    "primitives/button:id10": {
+      "type": "new",
+      "width": 45,
+      "height": 12
+    },
+    "primitives/button:id11": {
+      "type": "new",
+      "width": 45,
+      "height": 32
+    },
+    "primitives/button:id12": {
+      "type": "new",
+      "width": 45,
+      "height": 12
+    },
+    "primitives/button:id13": {
+      "type": "new",
+      "width": 45,
+      "height": 78
+    },
+    "primitives/button:id14": {
+      "type": "new",
+      "width": 45,
+      "height": 12
+    },
+    "primitives/button:id15": {
+      "type": "new",
+      "width": 45,
+      "height": 12
+    },
+    "primitives/button:id16": {
+      "type": "new",
+      "width": 64,
+      "height": 12
+    },
+    "primitives/button:id17": {
+      "type": "new",
+      "width": 45,
+      "height": 67
+    },
+    "primitives/button:id18": {
+      "type": "new",
+      "width": 45,
+      "height": 78
+    },
+    "primitives/button:id19": {
+      "type": "new",
+      "width": 64,
+      "height": 12
+    },
+    "primitives/text:id20": {
+      "type": "new",
+      "width": 45,
+      "height": 12
+    },
+    "primitives/text:id21": {
+      "type": "new",
+      "width": 45,
+      "height": 12
+    },
+    "primitives/text:id22": {
+      "type": "new",
+      "width": 45,
+      "height": 12
+    },
+    "primitives/text:id23": {
+      "type": "new",
+      "width": 64,
+      "height": 78
+    },
+    "primitives/text:id24": {
+      "type": "new",
+      "width": 45,
+      "height": 12
+    },
+    "primitives/text:id25": {
+      "type": "new",
+      "width": 45,
+      "height": 12
+    },
+    "primitives/text:id26": {
       "type": "new",
       "width": 45,
       "height": 12
