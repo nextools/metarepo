@@ -1,12 +1,12 @@
 import path from 'path'
 import { readFile, writeFile, readdir } from 'pifs'
 
-export type TLinkAndroidDependency = {
+export type TLinkAndroidDependencyOptions = {
   projectPath: string,
   dependencyName: string,
 }
 
-export const linkAndroidDependency = async (options: TLinkAndroidDependency): Promise<void> => {
+export const linkAndroidDependency = async (options: TLinkAndroidDependencyOptions): Promise<void> => {
   const dependencyPath = path.join('node_modules', options.dependencyName)
 
   // settings.gradle

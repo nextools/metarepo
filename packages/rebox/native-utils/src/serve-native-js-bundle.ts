@@ -4,13 +4,14 @@ import { isUndefined } from 'tsfn'
 import isPortReachable from 'is-port-reachable'
 import { waitTimePromise } from '@psxcode/wait'
 import fetch from 'node-fetch'
+import { TPlatform } from './types'
 
 const REQUEST_TIMEOUT = 2 * 60 * 1000
 
 export type TServeNativeJsBundleOptions = {
   entryPointPath: string,
   port: number,
-  platform: 'ios' | 'android',
+  platform: TPlatform,
   isDev?: boolean,
   shouldMinify?: boolean,
 }
@@ -38,7 +39,6 @@ export const serveNativeJsBundle = async (options: TServeNativeJsBundleOptions):
     ],
     {
       env: {
-        FORCE_COLOR: '1',
         REBOX_ENTRY_POINT: options.entryPointPath,
       },
     }

@@ -5,12 +5,12 @@ import execa from 'execa'
 import { isString } from 'tsfn'
 import makeDir from 'make-dir'
 
-export type TRunAndroidEmulator = {
+export type TRunAndroidEmulatorOptions = {
   portsToForward: number[],
   isHeadless?: boolean,
 }
 
-export const runAndroidEmulator = async (options: TRunAndroidEmulator): Promise<() => void> => {
+export const runAndroidEmulator = async (options: TRunAndroidEmulatorOptions): Promise<() => void> => {
   let avdHomePath = null
 
   if (isString(process.env.ANDROID_AVD_HOME)) {

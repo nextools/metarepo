@@ -1,8 +1,8 @@
 {
   "name": "@rebox/android",
   "version": "2.0.0",
-  "description": "",
-  "keywords": [],
+  "description": "Set of helpers to deal with React Native applications on Android",
+  "keywords": ["react", "react-native", "android"],
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
