@@ -1,6 +1,6 @@
 {
   "name": "mnth",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Framework-agnostic base block to build calendars, datepickers, etc by rendering 2d array of Dates",
   "keywords": [
     "date",

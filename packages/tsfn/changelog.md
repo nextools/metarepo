@@ -1,3 +1,7 @@
+## v1.1.1
+
+* 🐞 re-publish using updated Start preset
+
 ## v1.1.0
 
 * 🌱 add `TReadonly` and `TNonNullableObject`
