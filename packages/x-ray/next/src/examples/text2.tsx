@@ -5,7 +5,7 @@ import { mapIterable, makeNumIterable } from '../iterable'
 
 export const examples = mapIterable<number, TExample>(makeNumIterable(100), (i) => ({
   id: String(i),
-  element: <Text>{i}</Text>,
+  element: <Text style={{ fontWeight: '800' }}>{i}</Text>,
   options: {
     hasOwnWidth: true,
   },

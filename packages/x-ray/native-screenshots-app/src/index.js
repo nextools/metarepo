@@ -4,6 +4,9 @@ import { View } from 'react-native'
 import ViewShot from 'react-native-view-shot'
 import files from './files' // eslint-disable-line
 
+const SERVER_HOST = 'localhost'
+const SERVER_PORT = 3003
+
 const defaultStyles = {}
 const hasOwnWidthStyles = {
   marginTop: 30,
@@ -17,7 +20,7 @@ export class App extends Component {
   async componentDidCatch(error) {
     console.log(error)
 
-    await fetch('http://localhost:3002/error', {
+    await fetch(`http://${SERVER_HOST}:${SERVER_PORT}/error`, {
       method: 'POST',
       body: error.message,
     })
@@ -47,12 +50,28 @@ class Main extends Component {
 
     this.iterator = iterator
     this.path = path
+    this.examplesDoneCount = 0
   }
 
-  onCapture = (data, id) => {
-    const iteration = this.iterator.next()
+  onCapture = async (data, id) => {
+    const res = await fetch(`http://${SERVER_HOST}:${SERVER_PORT}/upload`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        data,
+        id,
+        path: this.path,
+      }),
+      keepalive: true,
+    })
 
-    // console.warn(data.length)
+    if (!res.ok) {
+      throw new Error(`${res.statusText}: ${res.statusText}`)
+    }
+
+    const iteration = this.iterator.next()
 
     if (!iteration.done) {
       this.setState((state) => ({
@@ -61,6 +80,31 @@ class Main extends Component {
           .filter((item) => item.id !== id)
           .concat(iteration.value),
       }))
+    } else {
+      this.examplesDoneCount++
+
+      if (this.examplesDoneCount === SCREENSHOTS_CONCURRENCY) {
+        this.examplesDoneCount = 0
+
+        const nextFileIndex = this.state.fileIndex + 1
+
+        if (nextFileIndex === files.length) {
+          console.warn('DONE')
+
+          return
+        }
+
+        const { path, examples } = files[nextFileIndex]
+        const iterator = examples[Symbol.iterator]()
+
+        this.path = path
+        this.iterator = iterator
+
+        this.setState((state) => ({
+          fileIndex: nextFileIndex,
+          items: state.items.map(() => this.iterator.next().value),
+        }))
+      }
     }
   }
 
