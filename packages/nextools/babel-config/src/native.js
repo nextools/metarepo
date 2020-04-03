@@ -1,4 +1,4 @@
-exports.babelConfigReactNative = {
+exports.babelConfigReactNativeBuild = {
   babelrc: false,
   compact: false,
   inputSourceMap: false,

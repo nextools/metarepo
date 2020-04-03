@@ -37,7 +37,7 @@ exports.babelConfigNodeBuild = {
       ],
     },
     {
-      test: /\.tsx$/,
+      test: /\.(ts|js)x$/,
       presets: [
         require.resolve('@babel/preset-react'),
       ],
@@ -70,12 +70,12 @@ exports.babelConfigNodeRegister = {
       ],
     },
     {
-      test: /\.tsx$/,
+      test: /\.(ts|js)x$/,
       presets: [
         require.resolve('@babel/preset-react'),
       ],
     },
   ],
-  extensions: ['.ts', '.tsx', '.js'],
+  extensions: ['.ts', '.tsx', '.js', '.jsx'],
   shouldPrintComment: (val) => val.startsWith('#') || val.startsWith(' istanbul'),
 }
