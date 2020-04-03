@@ -22,7 +22,7 @@ export const buildAssets = async (dir: string) => {
 }
 
 export const buildWeb = async (dir: string): Promise<StartPlugin<{}, {}>> => {
-  const { babelConfigWebLib } = await import('@nextools/babel-config')
+  const { babelConfigWebBuild } = await import('@nextools/babel-config')
 
   return sequence(
     find([
@@ -31,14 +31,14 @@ export const buildWeb = async (dir: string): Promise<StartPlugin<{}, {}>> => {
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
-    babel(babelConfigWebLib),
+    babel(babelConfigWebBuild),
     rename((file) => file.replace(/\.(ts|tsx)$/, '.js')),
     write(`${dir}/build/web/`)
   )
 }
 
 export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>> => {
-  const { babelConfigReactNative } = await import('@nextools/babel-config')
+  const { babelConfigReactNativeBuild } = await import('@nextools/babel-config')
   const { default: globby } = await import('globby')
   const allFiles = await globby(
     [
@@ -71,7 +71,7 @@ export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>
   return inputFiles(
     sequence(
       read,
-      babel(babelConfigReactNative),
+      babel(babelConfigReactNativeBuild),
       rename((file) => file.replace(/(\.native)?\.(ts|tsx)$/, '.js')),
       write(`${dir}/build/native/`)
     )
