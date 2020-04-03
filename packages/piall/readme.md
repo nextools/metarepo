@@ -15,19 +15,19 @@ Consider using [p-all](https://github.com/sindresorhus/p-all) if you need just `
 $ yarn add piall
 ```
 
-## Usage
+## API
 
 ```ts
 const piAll: <T>(iterable: Iterable<() => Promise<T> | T, concurrency?: number) => AsyncIterable<T>
 ```
 
 ```ts
-export type TFulfilled<T> = {
+type TFulfilled<T> = {
   status: 'fulfilled',
   value: T,
 }
 
-export type TRejected = {
+type TRejected = {
   status: 'rejected',
   reason: Error | string,
 }
@@ -39,6 +39,8 @@ where:
 
 * `iterable` – any iterable of Promise/value factories like array, Set values, Map entries, [etc](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)
 * `concurrency` – number >=1, `Infinity` by default
+
+## Usage
 
 ```ts
 export const pDelay = <T>(ms: number, value: T): Promise<T> => {
