@@ -1,5 +1,13 @@
 import { TransformOptions } from '@babel/core'
 
+// have to use `node` target here becaue Acorn (and therefore Webpack)
+// is unable to parse Nullish Coalescing and Optional Chaining
+//
+// excluding such plugins from babel-env doesn't work
+//
+// https://github.com/acornjs/acorn/pull/890
+// https://github.com/acornjs/acorn/pull/891
+
 export const getBabelConfigBuildRelease = (browsersList?: string[]): TransformOptions => ({
   babelrc: false,
   inputSourceMap: null,
@@ -9,7 +17,10 @@ export const getBabelConfigBuildRelease = (browsersList?: string[]): TransformOp
     [
       require.resolve('@babel/preset-env'),
       {
-        targets: { browsers: browsersList ?? ['defaults'] },
+        targets: {
+          browsers: browsersList ?? ['defaults'],
+          node: '10.13.0',
+        },
         ignoreBrowserslistConfig: true,
         modules: false,
         useBuiltIns: 'usage',
@@ -54,7 +65,10 @@ export const getBabelConfigRun = (browsersList?: string[]): TransformOptions => 
     [
       require.resolve('@babel/preset-env'),
       {
-        targets: { browsers: browsersList ?? ['last 1 Chrome version', 'last 1 Firefox version'] },
+        targets: {
+          browsers: browsersList ?? ['last 1 Chrome version', 'last 1 Firefox version'],
+          node: 'current',
+        },
         ignoreBrowserslistConfig: true,
         modules: false,
         exclude: [
