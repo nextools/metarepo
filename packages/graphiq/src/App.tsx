@@ -5,7 +5,6 @@ import {
   mapHandlers,
   mapState,
   mapWithPropsMemo,
-  onMount,
   startWithType,
   onUpdate,
 } from 'refun'
@@ -41,7 +40,7 @@ export const App = component(
       }
     },
   }),
-  onMount(({ setScale, graphs, setSelectedGraph, setHoveredGraph }) => {
+  onUpdate(({ setScale, graphs, setSelectedGraph, setHoveredGraph }) => {
     setTimeout(() => {
       setScale(50)
     }, 200)
@@ -53,7 +52,7 @@ export const App = component(
       setSelectedGraph(hash)
       updateHash(hash)
     })
-  }),
+  }, []),
   onUpdate(({ selectedGraph }) => {
     updateHash(selectedGraph)
   }, ['selectedGraph']),
