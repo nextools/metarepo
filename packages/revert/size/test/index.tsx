@@ -2,7 +2,7 @@ import React from 'react'
 import test from 'tape'
 import { create, act, ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { Size } from '../src/Root.web'
+import { Size } from '../src/Root'
 
 test('Size: standard flow', (t) => {
   const sizes = [{
