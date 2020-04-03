@@ -8,17 +8,17 @@ Measure React app performance using dockerized Chromium through [`xrom`](https:/
 $ yarn add perfa
 ```
 
-## Usage
+## API
 
 ```ts
-type Options = {
+type TGetPerfDataOptions = {
   entryPointPath: string, // path to a React app entry point
   triesCount?: number, // `5` by default
   fontsDir?: string, // path to a directory with custom fonts to be installed
   isQuiet?: boolean, // `false` by default
 }
 
-type Result = {
+type TGetPerfDataResult = {
   firstContentfulPaint: number,
   firstMeaningfulPaint: number,
   largestContentfulPaint: number,
@@ -31,8 +31,10 @@ type Result = {
   usedJsHeapSize: number,
 }
 
-perfa(options: Options) => Promise<Result>
+const getPerfData: (options: TGetPerfDataOptions) => Promise<TGetPerfDataResult>
 ```
+
+## Usage
 
 ```js
 import { getPerfData } from 'perfa'
