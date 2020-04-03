@@ -1,9 +1,7 @@
 import { TransformOptions } from '@babel/core'
 
-// have to use `node` target here becaue Acorn (and therefore Webpack)
+// had to explicitly include proposal plugins because Acorn (and therefore Webpack)
 // is unable to parse Nullish Coalescing and Optional Chaining
-//
-// excluding such plugins from babel-env doesn't work
 //
 // https://github.com/acornjs/acorn/pull/890
 // https://github.com/acornjs/acorn/pull/891
@@ -19,12 +17,15 @@ export const getBabelConfigBuildRelease = (browsersList?: string[]): TransformOp
       {
         targets: {
           browsers: browsersList ?? ['defaults'],
-          node: '10.13.0',
         },
         ignoreBrowserslistConfig: true,
         modules: false,
         useBuiltIns: 'usage',
         corejs: 3,
+        include: [
+          '@babel/plugin-proposal-nullish-coalescing-operator',
+          '@babel/plugin-proposal-optional-chaining',
+        ],
         exclude: [
           '@babel/plugin-transform-regenerator',
           '@babel/plugin-transform-async-to-generator',
@@ -67,10 +68,13 @@ export const getBabelConfigRun = (browsersList?: string[]): TransformOptions => 
       {
         targets: {
           browsers: browsersList ?? ['last 1 Chrome version', 'last 1 Firefox version'],
-          node: 'current',
         },
         ignoreBrowserslistConfig: true,
         modules: false,
+        include: [
+          '@babel/plugin-proposal-nullish-coalescing-operator',
+          '@babel/plugin-proposal-optional-chaining',
+        ],
         exclude: [
           '@babel/plugin-transform-regenerator',
           '@babel/plugin-transform-async-to-generator',
