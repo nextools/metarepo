@@ -1,3 +1,7 @@
+## v2.1.2
+
+* 🐞 workaround for Nullish Coalescing and Optional Chaining
+
 ## v2.1.1
 
 * 🐞 workaround for Nullish Coalescing and Optional Chaining
