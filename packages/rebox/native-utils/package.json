@@ -33,7 +33,7 @@
     "metro-react-native-babel-preset": "0.58.0",
     "node-fetch": "^2.6.0",
     "react": "16.11.0",
-    "react-native": "0.62.0",
+    "react-native": "0.62.1",
     "tsfn": "^1.1.1",
     "webpack": "^4.30.0"
   },
