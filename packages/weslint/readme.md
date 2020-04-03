@@ -10,7 +10,7 @@ Worker Threads + ESlint.
 $ yarn add weslint
 ```
 
-## Usage
+## API
 
 ```ts
 type TWeslintOptions = {
@@ -27,7 +27,7 @@ type TWeslintResult = {
   formattedReport: string,
 }
 
-weslint(options: TWeslintOptions) => Promise<TWeslintResult>
+const weslint: (options: TWeslintOptions) => Promise<TWeslintResult>
 ```
 
 * `files` – array of file paths
@@ -36,6 +36,7 @@ weslint(options: TWeslintOptions) => Promise<TWeslintResult>
 * `formatter` – [ESLint formatter name](https://eslint.org/docs/developer-guide/nodejs-api#cliengine-getformatter)
 * `eslint` – [ESLint CLIEngine options](https://eslint.org/docs/developer-guide/nodejs-api#cliengine)
 
+## Usage
 
 ```ts
 import { weslint } from 'weslint'
