@@ -1,4 +1,4 @@
-import { run as runIos } from '@rebox/ios'
+import { runIosApp } from '@rebox/ios'
 import { rsolve } from 'rsolve'
 import { prepareFiles } from './prepare-files'
 
@@ -7,10 +7,11 @@ export const getResults = async (files: string[], fontsDir?: string) => {
 
   await prepareFiles(entryPointPath, files)
 
-  const killAll = await runIos({
+  const killAll = await runIosApp({
     appName: 'X-Ray',
     appId: 'org.nextools.x-ray',
-    iOSVersion: '12.2',
+    iPhoneVersion: 8,
+    iOSVersion: '13.2',
     entryPointPath,
     fontsDir,
     dependencyNames: [
