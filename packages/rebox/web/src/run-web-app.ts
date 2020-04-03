@@ -2,8 +2,8 @@ import path from 'path'
 import Webpack, { Configuration as TWebpackConfig, Stats } from 'webpack'
 import WebpackDevServer, { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
-import { babelConfigWebLib } from '@nextools/babel-config'
 import { isUndefined } from 'tsfn'
+import { getBabelConfigRun } from './get-babel-config'
 
 const excludeNodeModulesRegExp = /[\\/]node_modules[\\/]/
 
@@ -28,6 +28,7 @@ const statsOptions: Stats.ToStringOptionsObject = {
 export type TRunWebAppOptions = {
   entryPointPath: string,
   htmlTemplatePath: string,
+  browsersList?: string[],
   assetsPath?: string,
   isQuiet?: boolean,
   shouldOpenBrowser?: boolean,
@@ -65,7 +66,7 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
           exclude: excludeNodeModulesRegExp,
           loader: require.resolve('babel-loader'),
           options: {
-            ...babelConfigWebLib,
+            ...getBabelConfigRun(options.browsersList),
             cacheDirectory: true,
           },
         },

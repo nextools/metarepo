@@ -5,8 +5,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import InlineChunkWebpackPlugin from 'fixed-webpack4-html-webpack-inline-chunk-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import { babelConfigWebApp } from '@nextools/babel-config'
 import { isObject } from 'tsfn'
+import { getBabelConfigBuildRelease } from './get-babel-config'
 
 const nodeModulesRegExp = /[\\/]node_modules[\\/]/
 
@@ -14,6 +14,7 @@ export type TBuildWebAppReleaseOptions = {
   entryPointPath: string,
   outputPath: string,
   htmlTemplatePath: string,
+  browsersList?: string[],
   globalConstants?: {
     [key: string]: string,
   },
@@ -82,7 +83,7 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
           exclude: nodeModulesRegExp,
           loader: 'babel-loader',
           options: {
-            ...babelConfigWebApp,
+            ...getBabelConfigBuildRelease(options.browsersList),
             cacheDirectory: false,
           },
         },

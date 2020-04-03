@@ -15,6 +15,7 @@ type TBuildWebAppReleaseOptions = {
   entryPointPath: string,
   htmlTemplatePath: string,
   outputPath: string,
+  browsersList?: string[], // ['defaults'] by default
   globalConstants?: {
     [key: string]: string
   },
@@ -33,6 +34,7 @@ const buildWebAppRelease: (userOptions: TBuildWebAppReleaseOptions) => Promise<v
 type TRunWebAppOptions = {
   entryPointPath: string,
   htmlTemplatePath: string,
+  browsersList?: string[], // ['last 1 Chrome version', 'last 1 Firefox version'] by default
   assetsPath?: string,
   isQuiet?: boolean, // false by default
   shouldOpenBrowser?: boolean // false by default
