@@ -1,3 +1,7 @@
+## v2.1.0
+
+* 🌱 use built-in Babel config and expose `browsersList` option
+
 ## v2.0.1
 
 * 🐞 add package description and keywords

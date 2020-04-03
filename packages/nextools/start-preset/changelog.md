@@ -1,3 +1,9 @@
+## v0.2.1
+
+* 🐞 refactor using new Babel configs
+
+* ♻️ update dependencies `@rebox/web`, `@nextools/babel-config`
+
 ## v0.2.0
 
 * 💥 upgrade `react-native-svg` to v12
