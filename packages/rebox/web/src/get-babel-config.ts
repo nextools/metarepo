@@ -1,18 +1,23 @@
-const TARGET_NODE_VERSION = '10.13.0'
+import { TransformOptions } from '@babel/core'
 
-exports.TARGET_NODE_VERSION = TARGET_NODE_VERSION
-
-exports.babelConfigNodeBuild = {
+export const getBabelConfigBuildRelease = (browsersList?: string[]): TransformOptions => ({
   babelrc: false,
+  inputSourceMap: null,
+  sourceMaps: true,
   compact: false,
-  inputSourceMap: false,
-  sourceMaps: false,
   presets: [
     [
       require.resolve('@babel/preset-env'),
       {
-        targets: { node: TARGET_NODE_VERSION },
+        targets: { browsers: browsersList ?? ['defaults'] },
         ignoreBrowserslistConfig: true,
+        modules: false,
+        useBuiltIns: 'usage',
+        corejs: 3,
+        exclude: [
+          '@babel/plugin-transform-regenerator',
+          '@babel/plugin-transform-async-to-generator',
+        ],
       },
     ],
   ],
@@ -22,12 +27,6 @@ exports.babelConfigNodeBuild = {
       { regenerator: false },
     ],
     require.resolve('@babel/plugin-syntax-bigint'),
-    [
-      require.resolve('babel-plugin-transform-inline-environment-variables'),
-      {
-        include: ['BABEL_ENV'],
-      },
-    ],
   ],
   overrides: [
     {
@@ -43,23 +42,33 @@ exports.babelConfigNodeBuild = {
       ],
     },
   ],
-  shouldPrintComment: (val) => val.startsWith('#') || val.startsWith('bin/sh'),
-}
+  shouldPrintComment: (val) => val.startsWith(' webpackChunkName'),
+})
 
-exports.babelConfigNodeRegister = {
+export const getBabelConfigRun = (browsersList?: string[]): TransformOptions => ({
   babelrc: false,
+  inputSourceMap: null,
+  sourceMaps: true,
   compact: false,
-  inputSourceMap: false,
   presets: [
     [
       require.resolve('@babel/preset-env'),
       {
-        targets: { node: 'current' },
+        targets: { browsers: browsersList ?? ['last 1 Chrome version', 'last 1 Firefox version'] },
         ignoreBrowserslistConfig: true,
+        modules: false,
+        exclude: [
+          '@babel/plugin-transform-regenerator',
+          '@babel/plugin-transform-async-to-generator',
+        ],
       },
     ],
   ],
   plugins: [
+    [
+      require.resolve('@babel/plugin-transform-runtime'),
+      { regenerator: false },
+    ],
     require.resolve('@babel/plugin-syntax-bigint'),
   ],
   overrides: [
@@ -76,6 +85,5 @@ exports.babelConfigNodeRegister = {
       ],
     },
   ],
-  extensions: ['.ts', '.tsx', '.js', '.jsx'],
-  shouldPrintComment: (val) => val.startsWith('#') || val.startsWith(' istanbul'),
-}
+  shouldPrintComment: (val) => val.startsWith(' webpackChunkName'),
+})

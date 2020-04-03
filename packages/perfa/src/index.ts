@@ -44,6 +44,7 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
     entryPointPath: options.entryPointPath,
     outputPath: tempBuildDir,
     htmlTemplatePath: require.resolve('./app.html'),
+    browsersList: ['last 1 Chrome version'],
     isQuiet: true,
     shouldGenerateSourceMaps: false,
     shouldGenerateBundleAnalyzerReport: false,
