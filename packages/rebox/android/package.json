@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@rebox/native-utils": "^2.0.1",
+    "@rebox/native-utils": "^2.0.2",
     "execa": "^4.0.0",
     "make-dir": "^3.0.0",
     "move-file": "^1.2.0",
