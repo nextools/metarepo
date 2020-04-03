@@ -1,3 +1,9 @@
+## v2.0.2
+
+* 🐞 bump React Native to 0.62.1
+
+* 🐞 sync `metro-react-native-babel-preset` version with React Native 0.62.0
+
 ## v2.0.1
 
 * 🐞 add readme

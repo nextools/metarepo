@@ -1,3 +1,9 @@
+## v2.0.2
+
+* 🐞 bump React Native to 0.62.1
+
+* ♻️ update dependencies `@rebox/native-utils`
+
 ## v2.0.1
 
 * 🐞 add package description and keywords
