@@ -19,7 +19,7 @@ $ yarn add @rebox/ios
 brew install cocoapods
 ```
 
-## Usage
+## API
 
 ```ts
 type TLinkIosDependencyOptions = {
