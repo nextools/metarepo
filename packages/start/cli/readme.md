@@ -1,6 +1,6 @@
 # ⬛️ cli
 
-CLI entry point, [ESM](https://github.com/standard-things/esm) included.
+CLI entry point.
 
 ## Install
 
