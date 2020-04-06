@@ -1,19 +1,21 @@
 import http from 'http'
-import path from 'path'
+import { Worker } from 'worker_threads'
 import { runIosApp } from '@rebox/ios'
 import { rsolve } from 'rsolve'
-import { unchunkJson } from 'unchunk'
+import { unchunkBuffer } from 'unchunk'
 import { prepareFiles } from './prepare-files'
 
 const SERVER_HOST = 'localhost'
 const SERVER_PORT = 3003
+const WORKER_PATH = require.resolve('./worker-setup')
 
 export const getResults = async (files: string[], fontsDir?: string) => {
   const entryPointPath = await rsolve('@x-ray/native-screenshots-app', 'react-native')
 
   await prepareFiles(entryPointPath, files)
 
-  const killAll = await runIosApp({
+  // const killAll = await runIosApp({
+  await runIosApp({
     appName: 'X-Ray',
     appId: 'org.nextools.x-ray',
     iPhoneVersion: 8,
@@ -28,11 +30,41 @@ export const getResults = async (files: string[], fontsDir?: string) => {
     logMessage: console.log,
   })
 
+  const workers = Array.from({ length: 4 }, () => new Worker(WORKER_PATH))
+  const busyWorkerIds = new Set<number>()
+
+  Buffer.poolSize = 0
+
   const server = http.createServer(async (req, res) => {
     if (req.url === '/upload') {
-      const body = await unchunkJson(req)
+      const body = await unchunkBuffer(req)
+      const worker = workers.find(({ threadId }) => !busyWorkerIds.has(threadId))!
 
-      console.log(path.basename(body.path), body.id)
+      busyWorkerIds.add(worker.threadId)
+
+      const result = await new Promise<any>((resolve, reject) => {
+        worker
+          .on('error', reject)
+          .on('message', (message) => {
+            worker.removeAllListeners('error')
+            worker.removeAllListeners('message')
+
+            busyWorkerIds.delete(worker.threadId)
+
+            if (message.type === 'done') {
+              resolve({
+                ...message.value,
+                workerId: worker.threadId,
+              })
+              /* istanbul ignore else */
+            } else if (message.type === 'error') {
+              reject(message.value)
+            }
+          })
+          .postMessage(body, [body.buffer])
+      })
+
+      console.log(result.workerId, result.id)
     }
 
     res.end()
