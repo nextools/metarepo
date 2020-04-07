@@ -1,0 +1,29 @@
+{
+  "name": "funcom",
+  "version": "0.0.0",
+  "description": "Functional composition helpers",
+  "keywords": [
+    "functional",
+    "compose",
+    "pipe",
+    "all"
+  ],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "license": "MIT",
+  "author": "psxcode <psxcode@gmail.com> (https://github.com/psxcode)",
+  "repository": "nextools/metarepo",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/tape": "^4.2.34",
+    "spyfn": "^1.0.0",
+    "tape": "^5.0.0-next.5"
+  }
+}
