@@ -53,14 +53,14 @@ class Main extends Component {
     this.examplesDoneCount = 0
   }
 
-  onCapture = async (data, id) => {
+  onCapture = async (base64data, id) => {
     const res = await fetch(`http://${SERVER_HOST}:${SERVER_PORT}/upload`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        data,
+        base64data,
         id,
         path: this.path,
       }),

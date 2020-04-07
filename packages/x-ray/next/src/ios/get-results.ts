@@ -4,6 +4,7 @@ import { runIosApp } from '@rebox/ios'
 import { rsolve } from 'rsolve'
 import { unchunkBuffer } from 'unchunk'
 import { prepareFiles } from './prepare-files'
+import { TMessage, TWorkerResult } from './types'
 
 const SERVER_HOST = 'localhost'
 const SERVER_PORT = 3003
@@ -42,29 +43,26 @@ export const getResults = async (files: string[], fontsDir?: string) => {
 
       busyWorkerIds.add(worker.threadId)
 
-      const result = await new Promise<any>((resolve, reject) => {
+      const result = await new Promise<TWorkerResult>((resolve, reject) => {
         worker
           .on('error', reject)
-          .on('message', (message) => {
+          .on('message', (message: TMessage) => {
             worker.removeAllListeners('error')
             worker.removeAllListeners('message')
 
             busyWorkerIds.delete(worker.threadId)
 
-            if (message.type === 'done') {
-              resolve({
-                ...message.value,
-                workerId: worker.threadId,
-              })
+            if (message.type === 'DONE') {
+              resolve(message.value)
               /* istanbul ignore else */
-            } else if (message.type === 'error') {
+            } else if (message.type === 'ERROR') {
               reject(message.value)
             }
           })
           .postMessage(body, [body.buffer])
       })
 
-      console.log(result.workerId, result.id)
+      console.log(result.id, result.data.byteLength)
     }
 
     res.end()
