@@ -14,7 +14,7 @@ const hasOwnWidthStyles = {
   alignItems: 'flex-start',
 }
 
-const SCREENSHOTS_CONCURRENCY = 4
+const SCREENSHOTS_CONCURRENCY = 2
 
 export class App extends Component {
   async componentDidCatch(error) {
@@ -37,32 +37,33 @@ class Main extends Component {
   constructor(...args) {
     super(...args)
 
-    const { path, examples } = files[0]
-    const iterator = examples[Symbol.iterator]()
+    const state = {}
 
-    this.state = {
-      fileIndex: 0,
-      items: Array.from(
-        { length: SCREENSHOTS_CONCURRENCY },
-        () => iterator.next().value
-      ),
+    for (let i = 0; i < SCREENSHOTS_CONCURRENCY; i++) {
+      const file = files[i]
+      const iterator = file.examples[Symbol.iterator]()
+
+      state[file.path] = {
+        iterator,
+        example: iterator.next().value,
+      }
     }
 
-    this.iterator = iterator
-    this.path = path
+    this.state = state
+    this.fileIndex = SCREENSHOTS_CONCURRENCY - 1
     this.examplesDoneCount = 0
   }
 
-  onCapture = async (base64data, id) => {
+  onCapture = async (path, id, base64data) => {
     const res = await fetch(`http://${SERVER_HOST}:${SERVER_PORT}/upload`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        base64data,
+        path,
         id,
-        path: this.path,
+        base64data,
       }),
       keepalive: true,
     })
@@ -71,67 +72,65 @@ class Main extends Component {
       throw new Error(`${res.statusText}: ${res.statusText}`)
     }
 
-    const iteration = this.iterator.next()
+    const { iterator } = this.state[path]
+    const result = iterator.next()
 
-    if (!iteration.done) {
-      this.setState((state) => ({
-        fileIndex: state.fileIndex,
-        items: state.items
-          .filter((item) => item.id !== id)
-          .concat(iteration.value),
-      }))
-    } else {
-      this.examplesDoneCount++
+    if (result.done) {
+      if (this.fileIndex + 1 >= files.length) {
+        console.warn('DONE')
 
-      if (this.examplesDoneCount === SCREENSHOTS_CONCURRENCY) {
-        this.examplesDoneCount = 0
-
-        const nextFileIndex = this.state.fileIndex + 1
-
-        if (nextFileIndex === files.length) {
-          console.warn('DONE')
-
-          return
-        }
-
-        const { path, examples } = files[nextFileIndex]
-        const iterator = examples[Symbol.iterator]()
-
-        this.path = path
-        this.iterator = iterator
-
-        this.setState((state) => ({
-          fileIndex: nextFileIndex,
-          items: state.items.map(() => this.iterator.next().value),
-        }))
+        return
       }
+
+      const nextFile = files[this.fileIndex++]
+      const nextIterator = nextFile.examples[Symbol.iterator]()
+
+      this.setState((state) => ({
+        ...state,
+        [path]: {
+          path: nextFile.path,
+          iterator: nextIterator,
+          example: nextIterator.next().value,
+        },
+      }))
+
+      return
     }
+
+    this.setState((state) => ({
+      ...state,
+      [path]: {
+        path: state[path].path,
+        iterator: state[path].iterator,
+        example: result.value,
+      },
+    }))
   }
 
   render() {
     return (
       <Fragment>
         {
-          this.state.items.map((item) => (
+          Object.entries(this.state).map(([path, value]) => (
             <View
-              key={`${this.state.fileIndex}:${item.id}`}
-              style={item.options.hasOwnWidth ? hasOwnWidthStyles : defaultStyles}
+              key={`${path}:${value.example.id}`}
+              style={value.example.options.hasOwnWidth ? hasOwnWidthStyles : defaultStyles}
             >
               <ViewShot
-                onCapture={(data) => this.onCapture(data, item.id)}
+                onCapture={(data) => this.onCapture(path, value.example.id, data)}
                 captureMode="mount"
                 options={{ result: 'base64' }}
                 style={{
-                  padding: item.options.overflow,
-                  paddingTop: item.options.overflowTop,
-                  paddingBottom: item.options.overflowBottom,
-                  paddingLeft: item.options.overflowLeft,
-                  paddingRight: item.options.overflowRight,
-                  maxWidth: item.options.maxWidth,
-                  backgroundColor: item.options.backgroundColor || '#fff',
+                  padding: value.example.options.overflow,
+                  paddingTop: value.example.options.overflowTop,
+                  paddingBottom: value.example.options.overflowBottom,
+                  paddingLeft: value.example.options.overflowLeft,
+                  paddingRight: value.example.options.overflowRight,
+                  maxWidth: value.example.options.maxWidth,
+                  backgroundColor: value.example.options.backgroundColor || '#fff',
                 }}
               >
-                {item.element}
+                {value.example.element}
               </ViewShot>
             </View>
           ))
