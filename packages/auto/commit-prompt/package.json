@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@auto/core": "^0.1.4",
-    "escape-string-regexp": "^2.0.0",
+    "escape-string-regexp": "^3.0.0",
     "execa": "^4.0.0",
     "prompts": "^2.3.0",
     "tsfn": "^1.1.1"

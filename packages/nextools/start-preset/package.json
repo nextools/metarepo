@@ -67,7 +67,7 @@
     "copie": "^1.0.0",
     "dleet": "^1.0.0",
     "dotenv": "^8.0.0",
-    "escape-string-regexp": "^2.0.0",
+    "escape-string-regexp": "^3.0.0",
     "execa": "^4.0.0",
     "fixdeps": "^1.1.1",
     "globby": "^11.0.0",
