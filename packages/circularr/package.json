@@ -1,0 +1,19 @@
+{
+  "name": "circularr",
+  "version": "0.2.1",
+  "description": "Circular fixed size array",
+  "keywords": [
+    "circular",
+    "fixed",
+    "array"
+  ],
+  "main": "src/index",
+  "author": "psxcode <psxcode@gmail.com> (https://github.com/psxcode)",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0-next.5"
+  }
+}

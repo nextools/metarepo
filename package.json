@@ -5,6 +5,7 @@
     "packages/auto/*",
     "packages/autoprops",
     "packages/bsc",
+    "packages/circularr",
     "packages/codecov-lite",
     "packages/copie",
     "packages/dleet",
