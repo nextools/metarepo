@@ -3549,15 +3549,6 @@ braces@^3.0.1, braces@^3.0.2, braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
-bro-resolve@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/bro-resolve/-/bro-resolve-1.0.0.tgz#0e71d2ec1513885632274173f6802a0e882ebc71"
-  integrity sha512-+a9IjctGmv0PrB6Du/8pCLMb691IsL39O+Ac+Y+ReCcwqliuA8+1d61hGLyiiNRxsIp5vmPxwdyL399f95nVsQ==
-  dependencies:
-    "@babel/runtime" "^7.4.0"
-    enhanced-resolve "^4.1.0"
-    get-caller-file "^2.0.5"
-
 brorand@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
@@ -10959,7 +10950,7 @@ pretty-ms@^2.1.0:
     parse-ms "^1.0.0"
     plur "^1.0.0"
 
-pretty-ms@^6.0.0, pretty-ms@^6.0.1:
+pretty-ms@^6.0.0:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/pretty-ms/-/pretty-ms-6.0.1.tgz#03ec6cfee20329f142645e63efad96bb775d3da4"
   integrity sha512-ke4njoVmlotekHlHyCZ3wI/c5AMT8peuHs8rKJqekj/oR5G8lND2dVpicFlUz5cbZgE290vvkMuDwfj/OcW1kw==
