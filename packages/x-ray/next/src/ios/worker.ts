@@ -40,10 +40,10 @@ export const init = () => {
 
         parentPort!.postMessage({
           type: 'DONE',
+          id,
+          path,
           value: {
             type: 'NEW',
-            path,
-            id,
             data: newScreenshot,
             width: applyDpr(png.width),
             height: applyDpr(png.height),
@@ -65,6 +65,8 @@ export const init = () => {
 
         parentPort!.postMessage({
           type: 'DONE',
+          id,
+          path,
           value: {
             type: 'DIFF',
             origData: origScreenshot,
@@ -82,9 +84,10 @@ export const init = () => {
       // OK
       parentPort!.postMessage({
         type: 'DONE',
+        id,
+        path,
         value: {
           type: 'OK',
-          id,
         },
       })
     } catch (error) {

@@ -19,6 +19,35 @@ export type TExample = {
   meta?: TJsonValue,
 }
 
+export type TResults = Map<string, TCheckResults<Uint8Array>>
+
+export type TCheckResult<T> = {
+  type: 'OK',
+} | {
+  type: 'DELETED',
+  data: T,
+  width: number,
+  height: number,
+  meta?: TJsonValue,
+} | {
+  type: 'NEW',
+  data: T,
+  width: number,
+  height: number,
+  meta?: TJsonValue,
+} | {
+  type: 'DIFF',
+  newData: T,
+  newWidth: number,
+  newHeight: number,
+  origData: T,
+  origWidth: number,
+  origHeight: number,
+  meta?: TJsonValue,
+}
+
+export type TCheckResults<T> = Map<string, TCheckResult<T>>
+
 export type TItem = {
   type: 'DELETED',
   width: number,

@@ -3,8 +3,9 @@ import { Worker } from 'worker_threads'
 import { runIosApp } from '@rebox/ios'
 import { rsolve } from 'rsolve'
 import { unchunkBuffer } from 'unchunk'
+import { TResults, TCheckResults } from '../types'
 import { prepareFiles } from './prepare-files'
-import { TMessage, TWorkerResult } from './types'
+import { TMessage } from './types'
 
 const SERVER_HOST = 'localhost'
 const SERVER_PORT = 3003
@@ -33,6 +34,13 @@ export const getResults = async (files: string[], fontsDir?: string) => {
 
   const workers = Array.from({ length: 4 }, () => new Worker(WORKER_PATH))
   const busyWorkerIds = new Set<number>()
+  const results: TResults = new Map()
+  // const status = {
+  //   ok: 0,
+  //   new: 0,
+  //   diff: 0,
+  //   deleted: 0,
+  // }
 
   Buffer.poolSize = 0
 
@@ -43,7 +51,7 @@ export const getResults = async (files: string[], fontsDir?: string) => {
 
       busyWorkerIds.add(worker.threadId)
 
-      const result = await new Promise<TWorkerResult>((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         worker
           .on('error', reject)
           .on('message', (message: TMessage) => {
@@ -53,7 +61,15 @@ export const getResults = async (files: string[], fontsDir?: string) => {
             busyWorkerIds.delete(worker.threadId)
 
             if (message.type === 'DONE') {
-              resolve(message.value)
+              if (!results.has(message.path)) {
+                const checkResultsMap: TCheckResults<Uint8Array> = new Map()
+
+                results.set(message.path, checkResultsMap)
+              }
+
+              results.get(message.path)!.set(message.id, message.value)
+
+              resolve()
               /* istanbul ignore else */
             } else if (message.type === 'ERROR') {
               reject(message.value)
@@ -61,8 +77,6 @@ export const getResults = async (files: string[], fontsDir?: string) => {
           })
           .postMessage(body, [body.buffer])
       })
-
-      console.log(result.id, result.data.byteLength)
     }
 
     res.end()
