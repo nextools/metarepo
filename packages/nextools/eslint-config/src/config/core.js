@@ -3,7 +3,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 9,
     sourceType: 'module',
-    project: './tsconfig.json'
+    project: './tsconfig.json',
   },
   env: {
     es6: true,
@@ -119,7 +119,7 @@ module.exports = {
     }],
     'keyword-spacing': 2,
     'linebreak-style': 2,
-    'lines-between-class-members': 2,
+    'lines-between-class-members': [2, 'always', { exceptAfterSingleLine: true }],
     'max-params': [2, 4],
     'multiline-comment-style': [2, 'separate-lines'],
     'multiline-ternary': [2, 'always-multiline'],
