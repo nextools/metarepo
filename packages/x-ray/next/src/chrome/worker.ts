@@ -86,8 +86,6 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
 
           const png = bufferToPng(newScreenshot)
 
-          status.new++
-
           results.set(example.id, {
             type: 'NEW',
             meta: example.meta,
@@ -95,6 +93,8 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
             width: applyDpr(png.width),
             height: applyDpr(png.height),
           })
+
+          status.new++
 
           return
         }
@@ -135,6 +135,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
       { concurrency: SCREENSHOTS_PER_WORKER_COUNT }
     )
 
+    // DELETED
     if (tarFs !== null) {
       for (const id of tarFs.list()) {
         if (id.endsWith('-meta')) {

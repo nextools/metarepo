@@ -1,11 +1,6 @@
-import { TCheckResult } from '../types'
+import { TWorkerResult } from '../types'
 
-export type TMessage = {
-  type: 'DONE',
-  path: string,
-  id: string,
-  value: TCheckResult<Uint8Array>,
-} | {
-  type: 'ERROR',
-  value: string,
-}
+export type TMessage =
+  { type: 'EXAMPLE' } |
+  { type: 'DONE', value: TWorkerResult<Uint8Array> } |
+  { type: 'ERROR', value: string }

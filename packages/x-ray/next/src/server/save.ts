@@ -5,7 +5,7 @@ import imageminPngout from 'imagemin-pngout'
 import { isDefined } from 'tsfn'
 import { getTarFilePath } from '../utils/get-tar-file-path'
 import { WRITE_RESULT_CONCURRENCY } from '../constants'
-import { TResults } from '../chrome/types'
+import { TResults } from '../types'
 
 const optimizePng = imageminPngout({ strategy: 2 })
 

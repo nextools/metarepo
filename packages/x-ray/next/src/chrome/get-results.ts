@@ -1,6 +1,7 @@
 import { runChromium } from 'xrom'
 import { workerama } from 'workerama'
-import { TCheckOptions, TWorkerResult, TResults } from './types'
+import { TResults, TWorkerResult } from '../types'
+import { TCheckOptions } from './types'
 import { MAX_THREAD_COUNT, WORKER_PATH } from './constants'
 
 export const getResults = async (files: string[]) => {

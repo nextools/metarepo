@@ -51,16 +51,20 @@ class Main extends Component {
 
     this.state = state
     this.fileIndex = SCREENSHOTS_CONCURRENCY - 1
-    this.examplesDoneCount = 0
+    this.filesInProgressCount = SCREENSHOTS_CONCURRENCY
   }
 
   onCapture = async (path, id, base64data) => {
-    const res = await fetch(`http://${SERVER_HOST}:${SERVER_PORT}/upload`, {
+    const { iterator } = this.state[path]
+    const result = iterator.next()
+
+    const res = await fetch(`http://${SERVER_HOST}:${SERVER_PORT}/upload?path=${path}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        isDone: result.done,
         path,
         id,
         base64data,
@@ -72,23 +76,30 @@ class Main extends Component {
       throw new Error(`${res.statusText}: ${res.statusText}`)
     }
 
-    const { iterator } = this.state[path]
-    const result = iterator.next()
-
     if (result.done) {
-      if (this.fileIndex + 1 >= files.length) {
-        console.warn('DONE')
+      this.filesInProgressCount--
+
+      if (this.fileIndex + 1 === files.length) {
+        if (this.filesInProgressCount === 0) {
+          await fetch(`http://${SERVER_HOST}:${SERVER_PORT}/done`, {
+            method: 'POST',
+          })
+
+          console.warn('DONE')
+        }
 
         return
       }
 
-      const nextFile = files[this.fileIndex++]
+      this.fileIndex++
+      this.filesInProgressCount++
+
+      const nextFile = files[this.fileIndex]
       const nextIterator = nextFile.examples[Symbol.iterator]()
 
       this.setState((state) => ({
         ...state,
-        [path]: {
-          path: nextFile.path,
+        [nextFile.path]: {
           iterator: nextIterator,
           example: nextIterator.next().value,
         },
@@ -100,7 +111,6 @@ class Main extends Component {
     this.setState((state) => ({
       ...state,
       [path]: {
-        path: state[path].path,
         iterator: state[path].iterator,
         example: result.value,
       },

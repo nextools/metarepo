@@ -19,7 +19,16 @@ export type TExample = {
   meta?: TJsonValue,
 }
 
-export type TResults = Map<string, TCheckResults<Uint8Array>>
+export type TWorkerResult<T> = {
+  filePath: string,
+  results: TCheckResults<T>,
+  status: {
+    ok: number,
+    new: number,
+    diff: number,
+    deleted: number,
+  },
+}
 
 export type TCheckResult<T> = {
   type: 'OK',
@@ -47,6 +56,8 @@ export type TCheckResult<T> = {
 }
 
 export type TCheckResults<T> = Map<string, TCheckResult<T>>
+
+export type TResults = Map<string, TCheckResults<Uint8Array>>
 
 export type TItem = {
   type: 'DELETED',
