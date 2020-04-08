@@ -1,52 +1,72 @@
 import test from 'tape'
-import Circularr from '../src/index'
+import Circularr from '../src'
 
-test('constructor', (t) => {
+test('circularr: constructor', (t) => {
   const arr = new Circularr(3)
 
-  t.deepEquals(Array.from(arr), [undefined, undefined, undefined])
+  t.deepEquals(
+    Array.from(arr),
+    [undefined, undefined, undefined],
+    'should create fixed size array'
+  )
 
   t.end()
 })
 
-test('from', (t) => {
+test('circularr: from', (t) => {
   const arr = Circularr.from([1, 2, 3])
 
-  t.deepEquals(Array.from(arr), [1, 2, 3])
+  t.deepEquals(
+    Array.from(arr),
+    [1, 2, 3],
+    'should create fixed size array'
+  )
 
   t.end()
 })
 
-test('length', (t) => {
+test('circularr: length', (t) => {
   const arr = Circularr.from([1, 2, 3])
 
-  t.equals(arr.length, 3)
+  t.equals(
+    arr.length,
+    3,
+    'should return length'
+  )
 
   t.end()
 })
 
-test('fill', (t) => {
+test('circularr: fill', (t) => {
   const arr = new Circularr<number>(3)
 
   arr.fill(42)
 
-  t.deepEquals(Array.from(arr), [42, 42, 42])
+  t.deepEquals(
+    Array.from(arr),
+    [42, 42, 42],
+    'should fill with value'
+  )
 
   t.end()
 })
 
-test('clear', (t) => {
+test('circularr: clear', (t) => {
   const arr = new Circularr<number>(3)
 
   arr.fill(42)
   arr.clear()
 
-  t.deepEquals(Array.from(arr), [undefined, undefined, undefined])
+  t.deepEquals(
+    Array.from(arr),
+    [undefined, undefined, undefined],
+    'should clear values'
+  )
 
   t.end()
 })
 
-test('shift', (t) => {
+test('circularr: shift', (t) => {
   const arr = new Circularr(3).fill(0)
   const res0 = arr.shift(42)
 
@@ -71,7 +91,7 @@ test('shift', (t) => {
   t.end()
 })
 
-test('unshift', (t) => {
+test('circularr: unshift', (t) => {
   const arr = new Circularr(3).fill(0)
   const res0 = arr.unshift(42)
 
@@ -96,7 +116,7 @@ test('unshift', (t) => {
   t.end()
 })
 
-test('slice: should work with no values', (t) => {
+test('circularr: slice + no values', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -109,7 +129,7 @@ test('slice: should work with no values', (t) => {
   t.end()
 })
 
-test('slice: should work with positive value', (t) => {
+test('circularr: slice + positive value', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -122,7 +142,7 @@ test('slice: should work with positive value', (t) => {
   t.end()
 })
 
-test('slice: should work with positive value overflow', (t) => {
+test('circularr: slice + positive value overflow', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -135,7 +155,7 @@ test('slice: should work with positive value overflow', (t) => {
   t.end()
 })
 
-test('slice: should work with negative values', (t) => {
+test('circularr: slice + negative values', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -148,7 +168,7 @@ test('slice: should work with negative values', (t) => {
   t.end()
 })
 
-test('slice: should work with negative value overflow', (t) => {
+test('circularr: slice + negative value overflow', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -161,7 +181,7 @@ test('slice: should work with negative value overflow', (t) => {
   t.end()
 })
 
-test('slice: should work with range', (t) => {
+test('circularr: slice + range', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -174,7 +194,7 @@ test('slice: should work with range', (t) => {
   t.end()
 })
 
-test('slice: should work with range overflow', (t) => {
+test('circularr: slice + range overflow', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -187,7 +207,7 @@ test('slice: should work with range overflow', (t) => {
   t.end()
 })
 
-test('slice: should work with range order mismatch', (t) => {
+test('circularr: slice + range order mismatch', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -200,7 +220,7 @@ test('slice: should work with range order mismatch', (t) => {
   t.end()
 })
 
-test('slice: should work with range end negative', (t) => {
+test('circularr: slice + range end negative', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -213,7 +233,7 @@ test('slice: should work with range end negative', (t) => {
   t.end()
 })
 
-test('slice: should work with range end negative overflow', (t) => {
+test('circularr: slice + range end negative overflow', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -226,7 +246,7 @@ test('slice: should work with range end negative overflow', (t) => {
   t.end()
 })
 
-test('slice: should work with range begin negative', (t) => {
+test('circularr: slice + range start negative', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -239,7 +259,7 @@ test('slice: should work with range begin negative', (t) => {
   t.end()
 })
 
-test('slice: should work with range negative', (t) => {
+test('circularr: slice + range negative', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -252,7 +272,7 @@ test('slice: should work with range negative', (t) => {
   t.end()
 })
 
-test('slice: should work with range negative mismatch', (t) => {
+test('circularr: slice + range negative mismatch', (t) => {
   const arr = Circularr.from([0, 0, 1, 2, 3])
 
   arr.shift(4)
@@ -265,7 +285,7 @@ test('slice: should work with range negative mismatch', (t) => {
   t.end()
 })
 
-test('trim: should work with shift', (t) => {
+test('circularr: trim + shift', (t) => {
   const arr = new Circularr<number>(5)
 
   arr.shift(4)
@@ -278,7 +298,7 @@ test('trim: should work with shift', (t) => {
   t.end()
 })
 
-test('trim: should work with unshift', (t) => {
+test('circularr: trim + unshift', (t) => {
   const arr = new Circularr<number>(5)
 
   arr.unshift(4)
@@ -291,7 +311,7 @@ test('trim: should work with unshift', (t) => {
   t.end()
 })
 
-test('trim: should work with both shift and unshift', (t) => {
+test('circularr: trim + shift + unshift', (t) => {
   const arr = new Circularr<number>(5)
 
   arr.shift(3)
@@ -305,7 +325,7 @@ test('trim: should work with both shift and unshift', (t) => {
   t.end()
 })
 
-test('trim: should work with from array', (t) => {
+test('circularr: trim + from', (t) => {
   const arr = Circularr.from([1, 2, 3])
   const res = arr.trim()
 
@@ -314,7 +334,7 @@ test('trim: should work with from array', (t) => {
   t.end()
 })
 
-test('trim: should work with filled array', (t) => {
+test('circularr: trim + fill', (t) => {
   const arr = new Circularr<number>(3).fill(0)
   const res = arr.trim()
 
@@ -323,7 +343,7 @@ test('trim: should work with filled array', (t) => {
   t.end()
 })
 
-test('at', (t) => {
+test('circularr: at', (t) => {
   const arr = new Circularr<number>(4)
 
   arr.shift(3)
@@ -337,7 +357,7 @@ test('at', (t) => {
   t.end()
 })
 
-test('at: should work with negative index', (t) => {
+test('circularr: at + negative index', (t) => {
   const arr = new Circularr<number>(4)
 
   arr.shift(3)
@@ -348,7 +368,7 @@ test('at: should work with negative index', (t) => {
   t.end()
 })
 
-test('at: should work with overflow index', (t) => {
+test('circularr: at + overflow index', (t) => {
   const arr = new Circularr<number>(4)
 
   arr.shift(3)
@@ -359,7 +379,7 @@ test('at: should work with overflow index', (t) => {
   t.end()
 })
 
-test('wrapAt', (t) => {
+test('circularr: wrapAt', (t) => {
   const arr = new Circularr<number>(4)
 
   arr.shift(3)
@@ -373,7 +393,7 @@ test('wrapAt', (t) => {
   t.end()
 })
 
-test('wrapAt: should work with negative index', (t) => {
+test('circularr: wrapAt + negative index', (t) => {
   const arr = new Circularr<number>(4)
 
   arr.shift(3)
@@ -387,7 +407,7 @@ test('wrapAt: should work with negative index', (t) => {
   t.end()
 })
 
-test('wrapAt: should work with overflow index', (t) => {
+test('circularr: wrapAt + overflow index', (t) => {
   const arr = new Circularr<number>(4)
 
   arr.shift(3)

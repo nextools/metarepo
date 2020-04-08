@@ -4,14 +4,22 @@
   "description": "Circular fixed size array",
   "keywords": [
     "circular",
-    "fixed",
+    "fixed-size",
     "array"
   ],
-  "main": "src/index",
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
   "author": "psxcode <psxcode@gmail.com> (https://github.com/psxcode)",
   "repository": "nextools/metarepo",
   "license": "MIT",
-  "private": false,
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
   "devDependencies": {
     "@types/tape": "^4.2.34",
     "tape": "^5.0.0-next.5"
