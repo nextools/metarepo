@@ -1,3 +1,4 @@
+export * from './concat-async'
 export * from './concat'
 export * from './distinct'
 export * from './filter'
