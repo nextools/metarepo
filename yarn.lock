@@ -4157,10 +4157,10 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-circularr@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/circularr/-/circularr-0.1.5.tgz#5a10313a0d353e755fb44d7ab3b7f35c750c6ba6"
-  integrity sha512-5mdTCjLkhKMazCKBKWBr5UFpbzXA30WxRdLeO060Wa/dr5EsRdu1zjVOamZBSjDNjJrfgcPU3WENXKHYMA9SKQ==
+circularr@^0.2.0:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/circularr/-/circularr-0.2.1.tgz#76fe993870b9b1e83b59a6628795d2110d679912"
+  integrity sha512-gmGGUxyWtFAMXC2HcnjwhIG0eaoD5n2yuBLDT44nlcWtTRzF6oRERhg29KeYM7Mj67QVQ8VcJAh3bC3dmVSZ2g==
   dependencies:
     "@babel/runtime" "^7.3.1"
 

@@ -24,7 +24,7 @@
   "dependencies": {
     "@babel/runtime": "^7.3.1",
     "@psxcode/compose": "^0.1.2",
-    "circularr": "^0.1.5"
+    "circularr": "^0.2.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",
