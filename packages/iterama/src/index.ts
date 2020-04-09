@@ -1,5 +1,6 @@
 export * from './concat-async'
 export * from './concat'
+export * from './distinct-async'
 export * from './distinct'
 export * from './filter'
 export * from './iterate'
