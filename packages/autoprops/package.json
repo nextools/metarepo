@@ -14,7 +14,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.3",
     "big-integer": "^1.6.44",
-    "iterama": "^0.1.1",
+    "iterama": "^0.2.0",
     "jssha": "^2.3.1",
     "tsfn": "^1.1.1"
   },
