@@ -1,11 +1,11 @@
-export type PredicateFn<T> = (arg: T, index: number) => boolean
+export type TFilterFn<T> = (arg: T, index: number) => boolean
 
-export const filter = <T> (pred: PredicateFn<T>) => (iterable: Iterable<T>): Iterable<T> => ({
+export const filter = <T>(filterFn: TFilterFn<T>) => (iterable: Iterable<T>): Iterable<T> => ({
   *[Symbol.iterator]() {
     let i = 0
 
     for (const value of iterable) {
-      if (pred(value, i++)) {
+      if (filterFn(value, i++)) {
         yield value
       }
     }

@@ -1,35 +1,31 @@
 import test from 'tape'
 import { iterate } from '../src/iterate'
+import { range } from '../src/range'
 
-const gen = function *(n: number) {
-  for (let i = 0; i < n; ++i) {
-    yield i
+test('iterama: iterate', (t) => {
+  const iterable = range(5)
+  const iterator: IterableIterator<number> = iterate(iterable)
+
+  t.deepEquals(
+    [
+      iterator.next().value,
+      iterator.next().value,
+    ],
+    [0, 1],
+    'should return iterator'
+  )
+
+  const result = [] as number[]
+
+  for (const value of iterator) {
+    result.push(value)
   }
-}
 
-test('iterama iterate: should work with arrays', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...iterate(data)]
-
-  t.deepEquals(result, [1, 2, 3, 4, 5])
-
-  t.end()
-})
-
-test('iterama iterate: should work with Sets', (t) => {
-  const data = new Set([1, 2, 3, 4, 5])
-  const result = [...iterate(data)]
-
-  t.deepEquals(result, [1, 2, 3, 4, 5])
-
-  t.end()
-})
-
-test('iterama iterate: should work with Generators', (t) => {
-  const data = gen(5)
-  const result = [...iterate(data)]
-
-  t.deepEquals(result, [0, 1, 2, 3, 4])
+  t.deepEquals(
+    result,
+    [2, 3, 4],
+    'should return iterable iterator'
+  )
 
   t.end()
 })

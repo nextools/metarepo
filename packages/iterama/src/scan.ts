@@ -1,12 +1,13 @@
-import { ReducerFn } from './reduce'
+export type TScanFn<T, R> = (acc: R, value: T, index: number) => R
 
-export const scan = <T, R> (reducer: ReducerFn<T, R>, initial: R) => (iterable: Iterable<T>): Iterable<R> => ({
+export const scan = <T, R>(scanFn: TScanFn<T, R>, initial: R) => (iterable: Iterable<T>): Iterable<R> => ({
   *[Symbol.iterator]() {
     let state = initial
     let i = 0
 
     for (const value of iterable) {
-      yield state = reducer(state, value, i++)
+      state = scanFn(state, value, i++)
+      yield state
     }
   },
 })

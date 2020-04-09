@@ -1,41 +1,41 @@
 import FixedArray from 'circularr'
 import { iterate } from './iterate'
 
-const skipFirst = (n: number) => <T> (iterable: Iterable<T>): Iterable<T> => ({
+const skipFirst = (n: number) => <T>(iterable: Iterable<T>): Iterable<T> => ({
   *[Symbol.iterator]() {
-    const it = iterate(iterable)
+    const iterator = iterate(iterable)
     let i = 0
 
-    // eslint-disable-next-line no-empty
-    while (i++ < n && !it.next().done) { }
+    while (i < n && !iterator.next().done) {
+      i++
+    }
 
-    for (const value of it) {
+    for (const value of iterator) {
       yield value
     }
   },
 })
 
-const skipLast = (n: number) => <T> (iterable: Iterable<T>): Iterable<T> => ({
+const skipLast = (n: number) => <T>(iterable: Iterable<T>): Iterable<T> => ({
   *[Symbol.iterator]() {
-    const it = iterate(iterable)
+    const iterator = iterate(iterable)
     const last = new FixedArray<T>(n)
 
-    for (let i = 0; i < n; ++i) {
-      const res = it.next()
+    for (let i = 0; i < n; i++) {
+      const result = iterator.next()
 
-      if (res.done) {
+      if (result.done) {
         break
       }
 
-      last.shift(res.value)
+      last.shift(result.value)
     }
 
-    for (const value of it) {
+    for (const value of iterator) {
       yield last.shift(value)
     }
   },
 })
 
-export const skip = (n: number) =>
-  (n < 0 ? skipLast(-n) : skipFirst(n))
+export const skip = (n: number) => (n < 0 ? skipLast(-n) : skipFirst(n))
 

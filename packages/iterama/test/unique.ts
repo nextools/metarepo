@@ -1,25 +1,28 @@
 import test from 'tape'
 import { pipe } from '@psxcode/compose'
-import { map } from '../src/map'
 import { unique } from '../src/unique'
+import { toArray } from '../src/to-array'
 
-const multBy = (x: number) => (val: number) => val * x
-const mult2 = multBy(2)
+test('iterama: unique', (t) => {
+  const iterable = {
+    *[Symbol.iterator]() {
+      yield 1
+      yield 1
+      yield 3
+      yield 4
+      yield 3
+    },
+  }
+  const result = pipe(
+    unique,
+    toArray
+  )(iterable)
 
-test('iterama unique: works with arrays', (t) => {
-  const data = [1, 1, 3, 4, 3]
-  const result = [...unique(data)]
-
-  t.deepEquals(result, [1, 3, 4])
-
-  t.end()
-})
-
-test('iterama unique: works chained', (t) => {
-  const data = [1, 1, 3, 4, 3]
-  const result = [...pipe(map(mult2), unique)(data)]
-
-  t.deepEquals(result, [2, 6, 8])
+  t.deepEquals(
+    result,
+    [1, 3, 4],
+    'should keep only unique elements'
+  )
 
   t.end()
 })

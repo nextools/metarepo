@@ -1,73 +1,35 @@
 import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { pipe } from '@psxcode/compose'
-import { map } from '../src/map'
 import { filter } from '../src/filter'
+import { toArray } from '../src/to-array'
+import { range } from '../src/range'
 
-const gen = function *(n: number) {
-  for (let i = 0; i < n; ++i) {
-    yield i
-  }
-}
-const multBy = (x: number) => (val: number) => val * x
-const mult2 = multBy(2)
-const isEven = (x: number) => x % 2 === 0
+test('iterama: filter', (t) => {
+  const iterable = range(5)
+  const isEven = (x: number) => x % 2 === 0
+  const spyFilter: typeof isEven = createSpy(({ args }) => isEven(args[0]))
+  const result = pipe(
+    filter(spyFilter),
+    toArray
+  )(iterable)
 
-test('iterama filter: works with arrays', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const spy: typeof isEven = createSpy(({ args }) => isEven(...args))
-  const result = [...filter(spy)(data)]
-
-  t.deepEquals(result, [2, 4])
   t.deepEquals(
-    getSpyCalls(spy),
-    [
-      [1, 0],
-      [2, 1],
-      [3, 2],
-      [4, 3],
-      [5, 4],
-    ]
-  )
-
-  t.end()
-})
-
-test('iterama filter: works chained', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const spy: typeof isEven = createSpy(({ args }) => isEven(...args))
-  const result = [...pipe(filter(spy), map(mult2))(data)]
-
-  t.deepEquals(result, [4, 8])
-  t.deepEquals(
-    getSpyCalls(spy),
-    [
-      [1, 0],
-      [2, 1],
-      [3, 2],
-      [4, 3],
-      [5, 4],
-    ]
-  )
-
-  t.end()
-})
-
-test('iterama filter: works with Generators', (t) => {
-  const iterator = gen(5)
-  const spy: typeof isEven = createSpy(({ args }) => isEven(...args))
-  const result = [...filter(spy)(iterator)]
-
-  t.deepEquals(result, [0, 2, 4])
-  t.deepEquals(
-    getSpyCalls(spy),
+    getSpyCalls(spyFilter),
     [
       [0, 0],
       [1, 1],
       [2, 2],
       [3, 3],
       [4, 4],
-    ]
+    ],
+    'should pass value and counter to filter function'
+  )
+
+  t.deepEquals(
+    result,
+    [0, 2, 4],
+    'should iterate and filter over iterable'
   )
 
   t.end()

@@ -1,192 +1,229 @@
 import test from 'tape'
 import { pipe } from '@psxcode/compose'
-import { map } from '../src/map'
 import { slice } from '../src/slice'
+import { toArray } from '../src/to-array'
+import { range } from '../src/range'
 
-const gen = function *(n: number) {
-  for (let i = 0; i < n; ++i) {
-    yield i
-  }
-}
-const multBy = (x: number) => (val: number) => val * x
-const mult2 = multBy(2)
+test('iterama: slice + no args', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(),
+    toArray
+  )(iterable)
 
-test('iterama slice: skip \'to\' param', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...slice(1)(data)]
-
-  t.deepEquals(result, [2, 3, 4, 5])
-
-  t.end()
-})
-
-test('iterama slice: skip both params', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...slice()(data)]
-
-  t.deepEquals(result, [1, 2, 3, 4, 5])
+  t.deepEquals(
+    result,
+    [0, 1, 2, 3, 4],
+    'should not skip and take all'
+  )
 
   t.end()
 })
 
-test('iterama slice: works with arrays', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...slice(1, 3)(data)]
+test('iterama: slice + from', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(1),
+    toArray
+  )(iterable)
 
-  t.deepEquals(result, [2, 3, 4])
-
-  t.end()
-})
-
-test('iterama slice: works chained', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...pipe(map(mult2), slice(2, 2))(data)]
-
-  t.deepEquals(result, [6, 8])
+  t.deepEquals(
+    result,
+    [1, 2, 3, 4],
+    'should skip and take the rest'
+  )
 
   t.end()
 })
 
-test('iterama slice: works with Generators', (t) => {
-  const data = gen(5)
-  const result = [...slice(2, 1)(data)]
+test('iterama: slice + from + to', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(1, 3),
+    toArray
+  )(iterable)
 
-  t.deepEquals(result, [2])
-
-  t.end()
-})
-
-test('iterama slice: works with arrays', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...slice(1, -1)(data)]
-
-  t.deepEquals(result, [2, 3, 4])
+  t.deepEquals(
+    result,
+    [1, 2, 3],
+    'should skip and take'
+  )
 
   t.end()
 })
 
-test('iterama slice: works chained', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...pipe(map(mult2), slice(2, -1))(data)]
+test('iterama: slice + from + negative to', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(1, -1),
+    toArray
+  )(iterable)
 
-  t.deepEquals(result, [6, 8])
-
-  t.end()
-})
-
-test('iterama slice: works with Generators', (t) => {
-  const data = gen(5)
-  const result = [...slice(2, -1)(data)]
-
-  t.deepEquals(result, [2, 3])
+  t.deepEquals(
+    result,
+    [1, 2, 3],
+    'should skip and take last'
+  )
 
   t.end()
 })
 
-test('iterama slice: works with arrays', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...slice(-3, 2)(data)]
+test('iterama: slice + negative from + to', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(-3, 2),
+    toArray
+  )(iterable)
 
-  t.deepEquals(result, [3, 4])
-
-  t.end()
-})
-
-test('iterama slice: works chained', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...pipe(map(mult2), slice(-3, 2))(data)]
-
-  t.deepEquals(result, [6, 8])
+  t.deepEquals(
+    result,
+    [2, 3],
+    'should skip from end and take'
+  )
 
   t.end()
 })
 
-test('iterama slice: works with Generators', (t) => {
-  const data = gen(5)
-  const result = [...slice(-3, 2)(data)]
+test('iterama: slice + negative from + negative to', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(-3, -1),
+    toArray
+  )(iterable)
 
-  t.deepEquals(result, [2, 3])
-
-  t.end()
-})
-
-test('iterama slice: works with arrays', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...slice(-3, -1)(data)]
-
-  t.deepEquals(result, [3, 4])
+  t.deepEquals(
+    result,
+    [2, 3],
+    'should skip from end and take last'
+  )
 
   t.end()
 })
 
-test('iterama slice: works chained', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...pipe(map(mult2), slice(-3, -1))(data)]
+test('iterama: slice + more than needed from + to', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(42, 2),
+    toArray
+  )(iterable)
 
-  t.deepEquals(result, [6, 8])
-
-  t.end()
-})
-
-test('iterama slice: works with Generators', (t) => {
-  const data = gen(5)
-  const result = [...slice(-3, -1)(data)]
-
-  t.deepEquals(result, [2, 3])
+  t.deepEquals(
+    result,
+    [],
+    'should skip all and take nothing'
+  )
 
   t.end()
 })
 
-test('iterama slice: works with arrays', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...slice(2, 42)(data)]
+test('iterama: slice + more than needed negative from + to', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(-42, 2),
+    toArray
+  )(iterable)
 
-  t.deepEquals(result, [3, 4, 5])
-
-  t.end()
-})
-
-test('iterama slice: works with arrays', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...slice(42, -2)(data)]
-
-  t.deepEquals(result, [])
+  t.deepEquals(
+    result,
+    [0, 1],
+    'should skip all from end and take'
+  )
 
   t.end()
 })
 
-test('iterama slice: works with arrays', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...slice(-42, 2)(data)]
+test('iterama: slice + from + more than needed to', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(2, 42),
+    toArray
+  )(iterable)
 
-  t.deepEquals(result, [1, 2])
-
-  t.end()
-})
-
-test('iterama slice: works with arrays', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...slice(-42, -2)(data)]
-
-  t.deepEquals(result, [1, 2, 3])
+  t.deepEquals(
+    result,
+    [2, 3, 4],
+    'should skip and take the rest'
+  )
 
   t.end()
 })
 
-test('iterama slice: works with arrays', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...slice(-42, 42)(data)]
+test('iterama: slice + from + more than needed negative to', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(2, -42),
+    toArray
+  )(iterable)
 
-  t.deepEquals(result, [1, 2, 3, 4, 5])
+  t.deepEquals(
+    result,
+    [],
+    'should skip and take nothing including skipped'
+  )
 
   t.end()
 })
 
-test('iterama slice: works with arrays', (t) => {
-  const data = [1, 2, 3, 4, 5]
-  const result = [...slice(-42, -42)(data)]
+test('iterama: slice + more than needed from + more than needed to', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(42, 42),
+    toArray
+  )(iterable)
 
-  t.deepEquals(result, [])
+  t.deepEquals(
+    result,
+    [],
+    'should skip all and take nothing'
+  )
+
+  t.end()
+})
+
+test('iterama: slice + more than needed negative from + more than needed to', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(-42, 42),
+    toArray
+  )(iterable)
+
+  t.deepEquals(
+    result,
+    [0, 1, 2, 3, 4],
+    'should skip all from end and take the rest'
+  )
+
+  t.end()
+})
+
+test('iterama: slice + more than needed from + more than needed negative to', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(42, -42),
+    toArray
+  )(iterable)
+
+  t.deepEquals(
+    result,
+    [],
+    'should skip all and take all last'
+  )
+
+  t.end()
+})
+
+test('iterama: slice + more than needed negative from + more than needed negative to', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    slice(-42, -42),
+    toArray
+  )(iterable)
+
+  t.deepEquals(
+    result,
+    [],
+    'should skip all from end and take all last'
+  )
 
   t.end()
 })
