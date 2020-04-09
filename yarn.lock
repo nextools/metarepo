@@ -8157,15 +8157,6 @@ iterall@^1.2.2:
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.3.0.tgz#afcb08492e2915cbd8a0884eb93a8c94d0d72fea"
   integrity sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==
 
-iterama@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/iterama/-/iterama-0.1.1.tgz#0804947dca73daaa995470413547ef3ee5cdf542"
-  integrity sha512-dUgVPWJ3GfdDnBZ7wUPITrgkSkVqihTSGNDeYebaHgnFmxceveDfmoYf2d0g6ff6+U+JfsGWqwZg3OYyNV+x1A==
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-    "@psxcode/compose" "^0.1.2"
-    circularr "^0.1.5"
-
 jest-changed-files@^25.2.3:
   version "25.2.3"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-25.2.3.tgz#ad19deef9e47ba37efb432d2c9a67dfd97cc78af"

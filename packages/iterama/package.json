@@ -1,0 +1,34 @@
+{
+  "name": "iterama",
+  "version": "0.1.1",
+  "description": "Composable functional (async) iterable helpers",
+  "keywords": [
+    "iterable",
+    "async-iterable",
+    "iterator",
+    "async-iterator",
+    "functional"
+  ],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "license": "MIT",
+  "repository": "nextools/metarepo",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@babel/runtime": "^7.3.1",
+    "@psxcode/compose": "^0.1.2",
+    "circularr": "^0.1.5"
+  },
+  "devDependencies": {
+    "@types/tape": "^4.2.34",
+    "spyfn": "^1.0.0",
+    "tape": "^5.0.0-next.5"
+  }
+}
