@@ -1,16 +1,16 @@
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import puppeteer, { ElementHandle } from 'puppeteer-core'
-import pAll from 'p-all'
 import { access } from 'pifs'
 import { TarFs, TTarFs } from '@x-ray/tar-fs'
 import { TJsonValue } from 'typeon'
+import { map, toMapAsync } from 'iterama'
+import { piAll } from 'piall'
 import { getTarFilePath } from '../utils/get-tar-file-path'
 import { hasScreenshotDiff } from '../utils/has-screenshot-diff'
 import { bufferToPng } from '../utils/buffer-to-png'
 import { ApplyDpr } from '../utils/apply-dpr'
-import { mapIterable } from '../iterable'
-import { TExample, TCheckResults } from '../types'
+import { TExample, TCheckResult } from '../types'
 import { TWorkerResultInternal, TCheckOptions } from './types'
 import { SCREENSHOTS_PER_WORKER_COUNT } from './constants'
 import { getContainerStyle } from './get-container-style'
@@ -56,10 +56,10 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
       diff: 0,
       deleted: 0,
     }
-    const results: TCheckResults<Buffer> = new Map()
+    // const results: TCheckResults<Buffer> = new Map()
 
-    await pAll(
-      mapIterable(examples, (example) => async (): Promise<void> => {
+    const asyncIterable = piAll(
+      map((example: TExample) => async (): Promise<[string, TCheckResult<Buffer>]> => {
         const html = renderToStaticMarkup(
           createElement(
             'div',
@@ -86,17 +86,15 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
 
           const png = bufferToPng(newScreenshot)
 
-          results.set(example.id, {
+          status.new++
+
+          return [example.id, {
             type: 'NEW',
             meta: example.meta,
             data: newScreenshot,
             width: applyDpr(png.width),
             height: applyDpr(png.height),
-          })
-
-          status.new++
-
-          return
+          }]
         }
 
         const origScreenshot = await tarFs.read(example.id) as Buffer
@@ -109,7 +107,9 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
           transferList.push(origScreenshot.buffer)
           transferList.push(newScreenshot.buffer)
 
-          results.set(example.id, {
+          status.diff++
+
+          return [example.id, {
             type: 'DIFF',
             origData: origScreenshot,
             origWidth: applyDpr(origPng.width),
@@ -118,22 +118,20 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
             newWidth: applyDpr(newPng.width),
             newHeight: applyDpr(newPng.height),
             meta: example.meta,
-          })
-
-          status.diff++
-
-          return
+          }]
         }
 
         // OK
-        results.set(example.id, {
-          type: 'OK',
-        })
-
         status.ok++
-      }),
-      { concurrency: SCREENSHOTS_PER_WORKER_COUNT }
+
+        return [example.id, {
+          type: 'OK',
+        }]
+      })(examples),
+      SCREENSHOTS_PER_WORKER_COUNT
     )
+
+    const results = await toMapAsync(asyncIterable)
 
     // DELETED
     if (tarFs !== null) {

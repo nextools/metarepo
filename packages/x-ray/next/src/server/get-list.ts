@@ -1,7 +1,6 @@
 import path from 'path'
-import { TListItems } from '../types'
+import { TListItems, TResults } from '../types'
 import { reduceIterable, iterableGetFirst } from '../iterable'
-import { TResults } from '../chrome/types'
 
 export type TListResponse = {
   type: 'image',
