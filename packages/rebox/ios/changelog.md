@@ -1,3 +1,9 @@
+## v2.0.3
+
+* 🐞 fix compatibility with `lottie-react-native`
+
+* ♻️ update dependencies `@rebox/native-utils`
+
 ## v2.0.2
 
 * 🐞 bump React Native to 0.62.1

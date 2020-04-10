@@ -1,6 +1,6 @@
 {
   "name": "@rebox/ios",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Set of helpers to deal with React Native applications on iOS",
   "keywords": [
     "react",

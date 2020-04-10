@@ -1,3 +1,7 @@
+## v2.1.3
+
+* 🐞 fix missing `.js` and `.jsx` extensions
+
 ## v2.1.2
 
 * 🐞 workaround for Nullish Coalescing and Optional Chaining
