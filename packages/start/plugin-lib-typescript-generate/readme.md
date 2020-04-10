@@ -13,21 +13,7 @@ $ yarn add --dev @start/plugin-lib-typescript-generate
 ### Signature
 
 ```ts
-typescriptGenerate(outDir: string, options?: CompilerOptions)
-```
-
-#### `options`
-
-[TypeScript Compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html).
-
-Default:
-
-```js
-{
-  allowSyntheticDefaultImports: true,
-  lib: 'esnext',
-  moduleResolution: 'node'
-}
+typescriptGenerate(outDir: string)
 ```
 
 ### Example
