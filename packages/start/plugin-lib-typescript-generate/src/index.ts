@@ -1,47 +1,51 @@
 import { CompilerOptions } from 'typescript'
-import plugin, { StartFile, StartFilesProps } from '@start/plugin'
+import plugin, { StartFilesProps } from '@start/plugin'
 
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
-export default (outDirRelative: string, userOptions?: CompilerOptions) =>
+export default (outDirRelative: string) =>
   plugin('typescriptGenerate', ({ logPath }) => async ({ files }: StartFilesProps) => {
-    const {
-      ScriptTarget,
-      ModuleResolutionKind,
-      ModuleKind,
-      createProgram,
-      getPreEmitDiagnostics,
-      flattenDiagnosticMessageText,
-    } = await import('typescript')
     const path = await import('path')
-    const options = {
-      allowSyntheticDefaultImports: true,
-      esModuleInterop: true,
-      moduleResolution: ModuleResolutionKind.NodeJs,
-      target: ScriptTarget.ESNext,
-      module: ModuleKind.ESNext,
-      ...userOptions,
-      declarationDir: path.resolve(outDirRelative),
-      declaration: true,
-      emitDeclarationOnly: true,
-    }
-    const filePaths = files.map((file: StartFile) => file.path)
+    const ts = await import('typescript')
 
-    filePaths.forEach(logPath)
+    const filePaths = files.map((file) => file.path)
 
-    const program = createProgram(filePaths, options)
-    const emitResult = program.emit()
-    const allDiagnostics = getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
+    for (const filePath of filePaths) {
+      logPath(filePath)
 
-    allDiagnostics.forEach((diagnostic) => {
-      if (diagnostic.file) {
+      const fileDir = path.dirname(filePath)
+      const configPath = ts.findConfigFile(fileDir, ts.sys.fileExists)
+
+      if (typeof configPath === 'undefined') {
+        throw new Error(`Unable to find \`tsconfig.json\` for ${fileDir}`)
+      }
+
+      const configFile = ts.readConfigFile(configPath, ts.sys.readFile)
+      const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, fileDir)
+      const options: CompilerOptions = {
+        ...parsedConfig.options,
+        noEmit: false,
+        emitDeclarationOnly: true,
+        declarationDir: path.resolve(outDirRelative),
+        declaration: true,
+      }
+
+      const program = ts.createProgram(filePaths, options)
+      const emitResult = program.emit()
+      const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
+
+      for (const diagnostic of allDiagnostics) {
+        if (typeof diagnostic.file === 'undefined') {
+          console.log(`${ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')}`)
+
+          continue
+        }
+
         const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!)
-        const message = flattenDiagnosticMessageText(diagnostic.messageText, '\n')
+        const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
 
         console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`)
-      } else {
-        console.log(`${flattenDiagnosticMessageText(diagnostic.messageText, '\n')}`)
       }
-    })
+    }
 
     return { files }
   })
