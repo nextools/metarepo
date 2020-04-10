@@ -2,7 +2,7 @@ import { CompilerOptions } from 'typescript'
 import plugin, { StartFilesProps } from '@start/plugin'
 
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
-export default (outDirRelative: string) =>
+export default (outDir: string) =>
   plugin('typescriptGenerate', ({ logPath }) => async ({ files }: StartFilesProps) => {
     const path = await import('path')
     const ts = await import('typescript')
@@ -20,12 +20,12 @@ export default (outDirRelative: string) =>
       }
 
       const configFile = ts.readConfigFile(configPath, ts.sys.readFile)
-      const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, fileDir)
+      const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, path.dirname(configPath))
       const options: CompilerOptions = {
         ...parsedConfig.options,
         noEmit: false,
         emitDeclarationOnly: true,
-        declarationDir: path.resolve(outDirRelative),
+        declarationDir: path.resolve(outDir),
         declaration: true,
       }
 
