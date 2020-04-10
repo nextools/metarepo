@@ -66,6 +66,7 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
         '.web.ts',
         '.web.tsx',
         '.js',
+        '.jsx',
         '.ts',
         '.tsx',
         '.json',

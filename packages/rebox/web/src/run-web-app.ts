@@ -50,6 +50,7 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
         '.web.ts',
         '.web.tsx',
         '.js',
+        '.jsx',
         '.ts',
         '.tsx',
         '.json',
