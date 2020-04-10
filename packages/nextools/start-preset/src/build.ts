@@ -1,5 +1,4 @@
 import path from 'path'
-import { JsxEmit } from 'typescript'
 import { StartPlugin } from '@start/plugin'
 import inputFiles from '@start/plugin-input-files'
 import sequence from '@start/plugin-sequence'
@@ -98,12 +97,7 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
 export const buildTypes = (dir: string): StartPlugin<{}, {}> =>
   sequence(
     find(`${dir}/src/index.{tsx,ts}`),
-    typescriptGenerate(`${dir}/build/types/`, {
-      strict: true,
-      jsx: JsxEmit.React,
-      preserveSymlinks: true,
-      skipLibCheck: true,
-    })
+    typescriptGenerate(`${dir}/build/types/`)
   )
 
 export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, {}>> => {
