@@ -13090,6 +13090,11 @@ time-stamp@^1.0.0:
   resolved "https://registry.yarnpkg.com/time-stamp/-/time-stamp-1.1.0.tgz#764a5a11af50561921b133f3b44e618687e0f5c3"
   integrity sha1-dkpaEa9QVhkhsTPztE5hhofg9cM=
 
+time-test@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/time-test/-/time-test-0.1.0.tgz#cc1c1df0cb7854989981531ed65961c8faa54357"
+  integrity sha512-Ri9sQxMxhcJ+u8SzgN1oao1AR68JX0UQtyjdR7vMPGNXroYn5OgKc6VnYvoP2/F1Lhco9EYe1bh6DWoxAkseoQ==
+
 timed-out@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/timed-out/-/timed-out-4.0.1.tgz#f32eacac5a175bea25d7fab565ab3ed8741ef56f"

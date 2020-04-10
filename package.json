@@ -33,6 +33,7 @@
     "packages/stroki",
     "packages/syntx",
     "packages/tsfn",
+    "packages/tymeout",
     "packages/typeon",
     "packages/unchunk",
     "packages/weslint",

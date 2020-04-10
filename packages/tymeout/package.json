@@ -1,0 +1,27 @@
+{
+  "name": "tymeout",
+  "version": "0.0.0",
+  "description": "Functional setTimeout and setInterval",
+  "keywords": [
+    "setTimeout",
+    "setInterval",
+    "promise",
+    "timeout",
+    "functional"
+  ],
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "sideEffects": false,
+  "main": "src/index.ts",
+  "private": false,
+  "license": "MIT",
+  "author": "psxcode <psxcode@gmail.com> (https://github.com/psxcode)",
+  "repository": "nextools/tymeout",
+  "devDependencies": {
+    "@types/tape": "^4.2.34",
+    "spyfn": "^1.0.0",
+    "tape": "^5.0.0-next.5",
+    "time-test": "^0.1.0"
+  }
+}
