@@ -1,51 +1,49 @@
 import { CompilerOptions } from 'typescript'
-import plugin, { StartFilesProps } from '@start/plugin'
+import plugin from '@start/plugin'
 
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
-export default (outDir: string) =>
-  plugin('typescriptGenerate', ({ logPath }) => async ({ files }: StartFilesProps) => {
+export default (inDir: string, outDir: string) =>
+  plugin('typescriptGenerate', ({ logPath }) => async () => {
     const path = await import('path')
     const ts = await import('typescript')
 
-    const filePaths = files.map((file) => file.path)
+    const inDirFull = path.resolve(inDir)
+    const outDirFull = path.resolve(outDir)
+    const inFile = require.resolve(inDirFull)
 
-    for (const filePath of filePaths) {
-      logPath(filePath)
+    const configPath = ts.findConfigFile(inDirFull, ts.sys.fileExists)
 
-      const fileDir = path.dirname(filePath)
-      const configPath = ts.findConfigFile(fileDir, ts.sys.fileExists)
-
-      if (typeof configPath === 'undefined') {
-        throw new Error(`Unable to find \`tsconfig.json\` for ${fileDir}`)
-      }
-
-      const configFile = ts.readConfigFile(configPath, ts.sys.readFile)
-      const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, path.dirname(configPath))
-      const options: CompilerOptions = {
-        ...parsedConfig.options,
-        noEmit: false,
-        emitDeclarationOnly: true,
-        declarationDir: path.resolve(outDir),
-        declaration: true,
-      }
-
-      const program = ts.createProgram(filePaths, options)
-      const emitResult = program.emit()
-      const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
-
-      for (const diagnostic of allDiagnostics) {
-        if (typeof diagnostic.file === 'undefined') {
-          console.log(`${ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')}`)
-
-          continue
-        }
-
-        const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!)
-        const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
-
-        console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`)
-      }
+    if (typeof configPath === 'undefined') {
+      throw new Error(`Unable to find \`tsconfig.json\` for ${inDir}`)
     }
 
-    return { files }
+    const configFile = ts.readConfigFile(configPath, ts.sys.readFile)
+    const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, path.dirname(configPath))
+    const options: CompilerOptions = {
+      ...parsedConfig.options,
+      noEmit: false,
+      emitDeclarationOnly: true,
+      declarationDir: outDirFull,
+      declaration: true,
+    }
+
+    const program = ts.createProgram([inFile], options)
+    const emitResult = program.emit()
+
+    logPath(inFile)
+
+    const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
+
+    for (const diagnostic of allDiagnostics) {
+      if (typeof diagnostic.file === 'undefined') {
+        console.log(`${ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')}`)
+
+        continue
+      }
+
+      const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!)
+      const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
+
+      console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`)
+    }
   })

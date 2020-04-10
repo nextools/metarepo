@@ -94,11 +94,8 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   )
 }
 
-export const buildTypes = (dir: string): StartPlugin<{}, {}> =>
-  sequence(
-    find(`${dir}/src/index.{tsx,ts}`),
-    typescriptGenerate(`${dir}/build/types/`)
-  )
+export const buildTypes = (dir: string): StartPlugin<{}, void> =>
+  typescriptGenerate(`${dir}/src/`, `${dir}/build/types/`)
 
 export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, {}>> => {
   const dir = path.join('packages', packageDir)
