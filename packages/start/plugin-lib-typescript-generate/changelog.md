@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 remove `options` argument and use nearest `tsconfig.json` automatically
+
 ## v1.0.1
 
 * 🐞 lazy import all the possible things

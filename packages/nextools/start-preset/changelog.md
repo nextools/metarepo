@@ -1,3 +1,9 @@
+## v0.2.2
+
+* 🐞 refactor using updated `start/plugin-lib-typescript-generate`
+
+* ♻️ update dependencies `@start/plugin-lib-typescript-generate`
+
 ## v0.2.1
 
 * 🐞 refactor using new Babel configs
