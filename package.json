@@ -18,6 +18,7 @@
     "packages/mock/*",
     "packages/move-path",
     "packages/nextools/*",
+    "packages/node-stream-test",
     "packages/perfa",
     "packages/piall",
     "packages/pifs",

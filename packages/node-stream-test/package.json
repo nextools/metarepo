@@ -1,0 +1,23 @@
+{
+  "name": "node-stream-test",
+  "version": "0.3.11",
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "sideEffects": false,
+  "author": "psxcode <psxcode@gmail.com> (https://github.com/psxcode)",
+  "dependencies": {
+    "@psxcode/wait": "^0.1.1",
+    "iterama": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.5",
+    "@types/tape": "^4.2.34",
+    "debug": "^4.1.1",
+    "tape": "^5.0.0-next.5",
+    "test-fn": "^0.1.3"
+  }
+}
