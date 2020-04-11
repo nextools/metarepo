@@ -4183,13 +4183,6 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-circularr@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/circularr/-/circularr-0.1.5.tgz#5a10313a0d353e755fb44d7ab3b7f35c750c6ba6"
-  integrity sha512-5mdTCjLkhKMazCKBKWBr5UFpbzXA30WxRdLeO060Wa/dr5EsRdu1zjVOamZBSjDNjJrfgcPU3WENXKHYMA9SKQ==
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-
 clap@^1.1.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/clap/-/clap-1.2.3.tgz#4f36745b32008492557f46412d66d50cb99bce51"
