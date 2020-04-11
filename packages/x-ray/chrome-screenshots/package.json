@@ -17,7 +17,7 @@
     "@x-ray/tar-fs": "^1.0.0",
     "@x-ray/ui": "^1.0.2",
     "@x-ray/worker-utils": "^1.0.0",
-    "iterama": "^0.2.0",
+    "iterama": "^0.2.1",
     "node-fetch": "^2.6.0",
     "p-all": "^3.0.0",
     "puppeteer-core": "^2.1.0",
