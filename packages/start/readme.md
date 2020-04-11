@@ -169,10 +169,7 @@ export const build = (packageName: string) =>
   )
 
 export const dts = (packageName: string) =>
-  sequence(
-    find(`packages/${packageName}/src/index.ts`),
-    typescriptGenerate(`packages/${packageName}/build/`)
-  )
+  typescriptGenerate(`packages/${packageName}/src/`, `packages/${packageName}/build/`)
 
 export const pack = (packageName: string) =>
   sequence(
