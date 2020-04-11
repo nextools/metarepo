@@ -9,6 +9,7 @@ Check the individual documentations for more details:
 * [@auto](packages/auto): set of helpers for managing and developing monorepos
 * [autoprops](packages/autoprops): tool that generates all possible combinations of React props and children based on declarative config, respecting "mutex" and "mutin" features
 * [bsc](packages/bsc): binary search with comparator
+* [circularr](packages/circularr): circular fixed size array
 * [codecov-lite](packages/codecov-lite): LCOV (code coverage data) uploader for [codecov.io](https://codecov.io/) service.
 * [copie](packages/copie): copy a file
 * [dleet](packages/dleet): delete directories and files
