@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "dleet": "^1.0.0",
-    "escape-string-regexp": "^2.0.0",
+    "escape-string-regexp": "^3.0.0",
     "execa": "^4.0.0",
     "fast-glob": "^3.0.0",
     "p-all": "^3.0.0",
