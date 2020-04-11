@@ -1,3 +1,7 @@
+## v2.0.4
+
+* 🐞 upgrade React Native to 0.62.2
+
 ## v2.0.3
 
 * 🐞 fix missing `.js` and `.jsx` extensions

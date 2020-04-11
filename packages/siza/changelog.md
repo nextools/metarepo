@@ -1,3 +1,7 @@
+## v0.1.3
+
+* 🐞 upgrade file-loader to v6
+
 ## v0.1.2
 
 * 🐞 use built-in Babel config

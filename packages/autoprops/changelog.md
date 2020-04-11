@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 upgrade jsSHA to v3
+
 ## v1.0.1
 
 * 🐞 re-publish using updated Start preset
