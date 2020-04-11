@@ -1,3 +1,9 @@
+## v2.0.1
+
+* 🐞 solve entry files confusion by using explicit `inDir` argument
+
+* 🐞 fix base directory for resolving paths in `tsconfig.json`
+
 ## v2.0.0
 
 * 💥 remove `options` argument and use nearest `tsconfig.json` automatically
