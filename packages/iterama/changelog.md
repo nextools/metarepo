@@ -1,3 +1,7 @@
+## v0.2.1
+
+* ♻️ update dependencies `circularr`
+
 ## v0.2.0
 
 * 💥 `reduce` to a value instead of an iterable
