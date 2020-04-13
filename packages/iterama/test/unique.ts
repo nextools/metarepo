@@ -1,5 +1,5 @@
 import test from 'tape'
-import { pipe } from '@psxcode/compose'
+import { pipe } from 'funcom'
 import { unique } from '../src/unique'
 import { toArray } from '../src/to-array'
 

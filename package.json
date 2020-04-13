@@ -11,6 +11,7 @@
     "packages/dleet",
     "packages/ekst",
     "packages/fixdeps",
+    "packages/funcom",
     "packages/graphiq",
     "packages/import-wasm",
     "packages/iterama",

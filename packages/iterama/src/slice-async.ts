@@ -1,4 +1,4 @@
-import { pipe } from '@psxcode/compose'
+import { pipe } from 'funcom'
 import { takeAsync } from './take-async'
 import { skipAsync } from './skip-async'
 
