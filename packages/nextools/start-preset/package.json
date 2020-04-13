@@ -45,7 +45,7 @@
     "@start/plugin-lib-istanbul": "^1.0.0",
     "@start/plugin-lib-tape": "^2.0.1",
     "@start/plugin-lib-typescript-check": "^1.0.0",
-    "@start/plugin-lib-typescript-generate": "^2.0.1",
+    "@start/plugin-lib-typescript-generate": "^2.0.2",
     "@start/plugin-overwrite": "^1.0.0",
     "@start/plugin-parallel": "^1.0.0",
     "@start/plugin-read": "^1.0.0",
