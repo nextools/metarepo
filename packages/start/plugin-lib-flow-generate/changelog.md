@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 ignore non-TS files if there is no `allowJs` option
+
 ## v1.0.1
 
 * 🐞 bump compatible deps

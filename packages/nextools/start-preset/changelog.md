@@ -1,3 +1,7 @@
+## v0.2.4
+
+* 🐞 copy `.d.ts` files from `src/` as is in `buildType` task
+
 ## v0.2.3
 
 * 🐞 upgrade escape-string-regexp to v3
