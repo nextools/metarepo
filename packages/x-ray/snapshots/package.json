@@ -18,7 +18,7 @@
     "@x-ray/ui": "^1.0.2",
     "@x-ray/worker-utils": "^1.0.0",
     "diff": "^4.0.1",
-    "iterama": "^0.2.1",
+    "iterama": "^0.2.2",
     "make-dir": "^3.0.0",
     "p-all": "^3.0.0",
     "pkg-dir": "^4.2.0",
