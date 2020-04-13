@@ -1,3 +1,7 @@
+## v0.2.2
+
+* 🐞 refactor using `funcom` dependency
+
 ## v0.2.1
 
 * ♻️ update dependencies `circularr`
