@@ -9,6 +9,7 @@ import babel from '@start/plugin-lib-babel'
 import rename from '@start/plugin-rename'
 import write from '@start/plugin-write'
 import remove from '@start/plugin-remove'
+import copy from '@start/plugin-copy'
 import parallel from '@start/plugin-parallel'
 import typescriptGenerate from '@start/plugin-lib-typescript-generate'
 import copyAssets from './plugins/copy-assets'
@@ -94,8 +95,12 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   )
 }
 
-export const buildTypes = (dir: string): StartPlugin<{}, void> =>
-  typescriptGenerate(`${dir}/src/`, `${dir}/build/types/`)
+export const buildTypes = (dir: string): StartPlugin<{}, {}> =>
+  sequence(
+    typescriptGenerate(`${dir}/src/`, `${dir}/build/types/`),
+    find(`${dir}/src/**/*.d.ts`),
+    copy(`${dir}/build/types/`)
+  )
 
 export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, {}>> => {
   const dir = path.join('packages', packageDir)
