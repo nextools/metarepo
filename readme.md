@@ -15,6 +15,7 @@ Check the individual documentations for more details:
 * [dleet](packages/dleet): delete directories and files
 * [ekst](packages/ekst): append, prepend, replace or remove file basename extensions
 * [fixdeps](packages/fixdeps): automatically add missing or remove unnecessary (dev)dependencies
+* [funcom](packages/funcom): functional composition helpers
 * [graphiq](packages/graphiq): React component to render various SVG graphs at one plot
 * [import-wasm](packages/import-wasm): async/sync helpers to import `.wasm` modules in Node.js
 * [iterama](packages/iterama): composable functional (async) iterable helpers
