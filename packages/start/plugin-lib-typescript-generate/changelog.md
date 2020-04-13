@@ -1,3 +1,7 @@
+## v2.0.2
+
+* 🐞 ignore non-TS files if there is no `allowJs` option
+
 ## v2.0.1
 
 * 🐞 solve entry files confusion by using explicit `inDir` argument
