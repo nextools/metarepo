@@ -27,6 +27,11 @@ export default (inDir: string, outDir: string) =>
       declaration: true,
     }
 
+    // ignore non-TS files if there is no `allowJs` option
+    if (!(inFile.endsWith('.ts') || inFile.endsWith('.tsx')) && !options.allowJs) {
+      return
+    }
+
     const program = ts.createProgram([inFile], options)
     const emitResult = program.emit()
 
