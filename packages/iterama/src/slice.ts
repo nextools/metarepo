@@ -1,4 +1,4 @@
-import { pipe } from '@psxcode/compose'
+import { pipe } from 'funcom'
 import { skip } from './skip'
 import { take } from './take'
 

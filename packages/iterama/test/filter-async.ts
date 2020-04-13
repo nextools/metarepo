@@ -1,6 +1,6 @@
 import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { pipe } from '@psxcode/compose'
+import { pipe } from 'funcom'
 import { filterAsync } from '../src/filter-async'
 import { toArrayAsync } from '../src/to-array-async'
 import { rangeAsync } from '../src/range-async'

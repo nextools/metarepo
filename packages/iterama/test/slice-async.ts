@@ -1,5 +1,5 @@
 import test from 'tape'
-import { pipe } from '@psxcode/compose'
+import { pipe } from 'funcom'
 import { sliceAsync } from '../src/slice-async'
 import { toArrayAsync } from '../src/to-array-async'
 import { rangeAsync } from '../src/range-async'
