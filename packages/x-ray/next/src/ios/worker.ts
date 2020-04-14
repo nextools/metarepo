@@ -98,8 +98,8 @@ export const init = () => {
             }
 
             if (!results.has(id)) {
-              const data = await tarFs.read(id) as Buffer
-              const deletedPng = bufferToPng(data)
+              const deletedScreenshot = await tarFs.read(id) as Buffer
+              const deletedPng = bufferToPng(deletedScreenshot)
               const metaId = `${id}-meta`
               let meta
 
@@ -109,11 +109,11 @@ export const init = () => {
                 meta = JSON.parse(metaBuffer.toString('utf8')) as TJsonValue
               }
 
-              transferList.push(data)
+              transferList.push(deletedScreenshot)
 
               results.set(id, {
                 type: 'DELETED',
-                data,
+                data: deletedScreenshot,
                 meta,
                 width: applyDpr(deletedPng.width),
                 height: applyDpr(deletedPng.height),

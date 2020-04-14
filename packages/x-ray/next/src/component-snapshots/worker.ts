@@ -1,36 +1,17 @@
-import { createElement } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
-import puppeteer, { ElementHandle } from 'puppeteer-core'
 import { access } from 'pifs'
 import { TarFs, TTarFs } from '@x-ray/tar-fs'
 import { TJsonValue } from 'typeon'
 import { map, toMapAsync } from 'iterama'
 import { piAll } from 'piall'
+import serialize from '@x-ray/serialize-react-tree'
 import { getTarFilePath } from '../utils/get-tar-file-path'
-import { hasScreenshotDiff } from '../utils/has-screenshot-diff'
-import { bufferToPng } from '../utils/buffer-to-png'
-import { ApplyDpr } from '../utils/apply-dpr'
 import { TExample, TCheckResult } from '../types'
-import { TWorkerResultInternal, TCheckOptions } from './types'
+import { hasSnapshotDiff } from '../utils/has-snapshot-diff'
+import { TWorkerResultInternal } from './types'
 import { SCREENSHOTS_PER_WORKER_COUNT } from './constants'
-import { getContainerStyle } from './get-container-style'
+import { getSnapshotDimensions } from './get-snapshot-dimensions'
 
-const SELECTOR = '[data-x-ray]'
-
-export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
-  const applyDpr = ApplyDpr(dpr)
-  const browser = await puppeteer.connect({
-    browserWSEndpoint,
-    defaultViewport: {
-      deviceScaleFactor: dpr,
-      width: 1024,
-      height: 1024,
-    },
-  })
-  const pages = await Promise.all(
-    Array.from({ length: SCREENSHOTS_PER_WORKER_COUNT }, () => browser.newPage())
-  )
-
+export const check = () => {
   // stop using internal pool and allocate memory every time
   // because we transfer underlying memory from worker, and hopefully
   // it's faster than copying a lot of buffers from worker to parent
@@ -56,65 +37,49 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
       diff: 0,
       deleted: 0,
     }
+    // const results: TCheckResults<Buffer> = new Map()
 
     const asyncIterable = piAll(
       map((example: TExample) => async (): Promise<[string, TCheckResult<Buffer>]> => {
-        const html = renderToStaticMarkup(
-          createElement(
-            'div',
-            {
-              'data-x-ray': true,
-              style: getContainerStyle(example.options),
-            },
-            example.element
-          )
-        )
-        const page = pages.shift()!
-
-        await page.setContent(html)
-
-        const domElement = await page.$(SELECTOR) as ElementHandle
-        const newScreenshot = await domElement.screenshot({ encoding: 'binary' })
-
-        page.removeAllListeners()
-        pages.push(page)
+        const newSnapshot = serialize(example.element)
+        const newSnapshotBuffer = Buffer.from(newSnapshot)
 
         // NEW
         if (tarFs === null || !tarFs.has(example.id)) {
-          transferList.push(newScreenshot.buffer)
+          const { width, height } = getSnapshotDimensions(newSnapshot)
 
-          const png = bufferToPng(newScreenshot)
+          transferList.push(newSnapshotBuffer)
 
           status.new++
 
           return [example.id, {
             type: 'NEW',
             meta: example.meta,
-            data: newScreenshot,
-            width: applyDpr(png.width),
-            height: applyDpr(png.height),
+            data: newSnapshotBuffer,
+            width,
+            height,
           }]
         }
 
-        const origScreenshot = await tarFs.read(example.id) as Buffer
-
-        const origPng = bufferToPng(origScreenshot)
-        const newPng = bufferToPng(newScreenshot)
+        const origSnapshotBuffer = await tarFs.read(example.id) as Buffer
 
         // DIFF
-        if (hasScreenshotDiff(origPng, newPng)) {
-          transferList.push(origScreenshot.buffer, newScreenshot.buffer)
+        if (hasSnapshotDiff(newSnapshotBuffer, origSnapshotBuffer)) {
+          const { width: origWidth, height: origHeight } = getSnapshotDimensions(origSnapshotBuffer.toString('utf8'))
+          const { width: newWidth, height: newHeight } = getSnapshotDimensions(newSnapshot)
+
+          transferList.push(newSnapshotBuffer, origSnapshotBuffer)
 
           status.diff++
 
           return [example.id, {
             type: 'DIFF',
-            origData: origScreenshot,
-            origWidth: applyDpr(origPng.width),
-            origHeight: applyDpr(origPng.height),
-            newData: newScreenshot,
-            newWidth: applyDpr(newPng.width),
-            newHeight: applyDpr(newPng.height),
+            origData: origSnapshotBuffer,
+            origWidth,
+            origHeight,
+            newData: newSnapshotBuffer,
+            newWidth,
+            newHeight,
             meta: example.meta,
           }]
         }
@@ -139,8 +104,9 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
         }
 
         if (!results.has(id)) {
-          const deletedScreenshot = await tarFs.read(id) as Buffer
-          const deletedPng = bufferToPng(deletedScreenshot)
+          const deletedSnapshotBuffer = await tarFs.read(id) as Buffer
+          const deletedSnapshot = deletedSnapshotBuffer.toString('utf8')
+          const { width, height } = getSnapshotDimensions(deletedSnapshot)
           const metaId = `${id}-meta`
           let meta
 
@@ -150,14 +116,14 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
             meta = JSON.parse(metaBuffer.toString('utf8')) as TJsonValue
           }
 
-          transferList.push(deletedScreenshot)
+          transferList.push(deletedSnapshotBuffer)
 
           results.set(id, {
             type: 'DELETED',
-            data: deletedScreenshot,
+            data: deletedSnapshotBuffer,
             meta,
-            width: applyDpr(deletedPng.width),
-            height: applyDpr(deletedPng.height),
+            width,
+            height,
           })
 
           status.deleted++
