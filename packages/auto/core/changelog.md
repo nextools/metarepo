@@ -1,3 +1,7 @@
+## v0.1.6
+
+* 🐞 re-publish using new build system to fix types issue
+
 ## v0.1.5
 
 * 🐞 upgrade escape-string-regexp to v3

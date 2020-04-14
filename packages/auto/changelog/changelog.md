@@ -1,3 +1,9 @@
+## v0.1.3
+
+* 🐞 re-publish using new build system to fix types issue
+
+* ♻️ update dependencies `@auto/core`
+
 ## v0.1.2
 
 * 🐞 avoid Git lock by writing changelog files sequentially
