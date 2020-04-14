@@ -26,7 +26,7 @@ export const init = () => {
   parentPort!.on('message', async (bodyArr: Uint8Array) => {
     try {
       const bodyString = new TextDecoder('utf-8').decode(bodyArr)
-      const { path, id, isDone, base64data } = JSON.parse(bodyString)
+      const { path, id, meta, isDone, base64data } = JSON.parse(bodyString)
       const newScreenshot = Buffer.from(base64data, 'base64')
 
       if (currentPath !== path) {
@@ -49,6 +49,7 @@ export const init = () => {
 
         results.set(id, {
           type: 'NEW',
+          meta,
           data: newScreenshot,
           width: applyDpr(png.width),
           height: applyDpr(png.height),
@@ -68,6 +69,7 @@ export const init = () => {
 
           results.set(id, {
             type: 'DIFF',
+            meta,
             origData: origScreenshot,
             origWidth: applyDpr(origPng.width),
             origHeight: applyDpr(origPng.height),

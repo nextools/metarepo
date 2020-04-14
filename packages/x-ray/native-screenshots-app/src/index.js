@@ -54,7 +54,7 @@ class Main extends Component {
     this.filesInProgressCount = SCREENSHOTS_CONCURRENCY
   }
 
-  onCapture = async (path, id, base64data) => {
+  onCapture = async (path, id, meta, base64data) => {
     const { iterator } = this.state[path]
     const result = iterator.next()
 
@@ -67,6 +67,7 @@ class Main extends Component {
         isDone: result.done,
         path,
         id,
+        meta,
         base64data,
       }),
       keepalive: true,
@@ -127,7 +128,7 @@ class Main extends Component {
               style={value.example.options.hasOwnWidth ? hasOwnWidthStyles : defaultStyles}
             >
               <ViewShot
-                onCapture={(data) => this.onCapture(path, value.example.id, data)}
+                onCapture={(data) => this.onCapture(path, value.example.id, value.example.meta, data)}
                 captureMode="mount"
                 options={{ result: 'base64' }}
                 style={{
