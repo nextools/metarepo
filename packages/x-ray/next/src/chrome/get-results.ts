@@ -1,12 +1,13 @@
 import { runChromium } from 'xrom'
 import { workerama } from 'workerama'
-import { TResults, TWorkerResult } from '../types'
+import { forEachAsync, toMapAsync, mapAsync } from 'iterama'
+import { pipe } from '@psxcode/compose'
+import { TWorkerResult } from '../types'
 import { TCheckOptions } from './types'
 import { MAX_THREAD_COUNT, WORKER_PATH } from './constants'
 
 export const getResults = async (files: string[]) => {
   const browserWSEndpoint = await runChromium({ shouldCloseOnExit: true })
-  const results: TResults = new Map()
   const status = {
     ok: 0,
     new: 0,
@@ -26,16 +27,18 @@ export const getResults = async (files: string[]) => {
     fnArgs: [checkOptions],
   })
 
-  for await (const result of resultsIterable) {
-    console.log(result.filePath)
+  const results = await pipe(
+    forEachAsync(([key, value]: TWorkerResult<Uint8Array>) => {
+      console.log(key)
 
-    results.set(result.filePath, result.results)
-
-    status.ok += result.status.ok
-    status.new += result.status.new
-    status.diff += result.status.diff
-    status.deleted += result.status.deleted
-  }
+      status.ok += value.status.ok
+      status.new += value.status.new
+      status.diff += value.status.diff
+      status.deleted += value.status.deleted
+    }),
+    mapAsync(([key, value]) => [key, value.results] as const),
+    toMapAsync
+  )(resultsIterable)
 
   return { status, results }
 }

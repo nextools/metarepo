@@ -4,8 +4,8 @@ import { runWebApp } from '@rebox/web'
 import { rsolve } from 'rsolve'
 import { runServer } from './server/run'
 import { UI_HOST, UI_PORT } from './constants'
-import { getResults } from './chrome/get-results'
-// import { getResults } from './ios/get-results'
+// import { getResults } from './chrome/get-results'
+import { getResults } from './ios/get-results'
 
 const checkChromeScreenshots = async (files: string[]): Promise<void> => {
   const startTime = Date.now()
@@ -45,12 +45,12 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
 
 export const main = async () => {
   await checkChromeScreenshots([
-    require.resolve('./examples/button.tsx'),
-    require.resolve('./examples/input.tsx'),
-    require.resolve('./examples/title.tsx'),
+    // require.resolve('./examples/button.tsx'),
+    // require.resolve('./examples/input.tsx'),
+    // require.resolve('./examples/title.tsx'),
     // require.resolve('./examples/paragraph.tsx'),
     // require.resolve('./examples/select.tsx'),
-    // require.resolve('./examples/text.tsx'),
-    // require.resolve('./examples/text2.tsx'),
+    require.resolve('./examples/text.tsx'),
+    require.resolve('./examples/text2.tsx'),
   ])
 }

@@ -170,11 +170,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
     }
 
     return {
-      value: {
-        filePath,
-        results,
-        status,
-      },
+      value: [filePath, { results, status }],
       transferList,
     }
   }

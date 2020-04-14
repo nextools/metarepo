@@ -85,7 +85,7 @@ export const init = () => {
         }
       }
 
-      parentPort!.postMessage({ type: 'EXAMPLE' })
+      parentPort!.postMessage({ type: 'EXAMPLE', isDone: false })
 
       if (isDone) {
         // DELETED
@@ -125,7 +125,8 @@ export const init = () => {
         }
 
         parentPort!.postMessage({
-          type: 'DONE',
+          type: 'EXAMPLE',
+          isDone: true,
           value: {
             filePath: path,
             results,

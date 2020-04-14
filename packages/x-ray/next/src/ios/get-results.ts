@@ -82,11 +82,12 @@ export const getResults = async (files: string[], fontsDir?: string) => {
               .on('message', (message: TMessage) => {
                 switch (message.type) {
                   case 'EXAMPLE': {
-                    reqResolve()
+                    if (!message.isDone) {
+                      reqResolve()
 
-                    break
-                  }
-                  case 'DONE': {
+                      break
+                    }
+
                     // release worker
                     busyWorkerIds.delete(pathWorkers.get(path)!)
                     pathWorkers.delete(path)
@@ -99,8 +100,6 @@ export const getResults = async (files: string[], fontsDir?: string) => {
                     status.new += result.status.new
                     status.diff += result.status.diff
                     status.deleted += result.status.deleted
-
-                    console.log(path)
 
                     reqResolve()
 
