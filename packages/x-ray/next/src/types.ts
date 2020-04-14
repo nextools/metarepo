@@ -19,17 +19,6 @@ export type TExample = {
   meta?: TJsonValue,
 }
 
-export type TWorkerResult<T> = {
-  filePath: string,
-  results: TCheckResults<T>,
-  status: {
-    ok: number,
-    new: number,
-    diff: number,
-    deleted: number,
-  },
-}
-
 export type TCheckResult<T> = {
   type: 'OK',
 } | {
