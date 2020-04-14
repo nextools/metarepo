@@ -1,7 +1,7 @@
 import { runChromium } from 'xrom'
 import { workerama } from 'workerama'
 import { forEachAsync, toMapAsync, mapAsync } from 'iterama'
-import { pipe } from '@psxcode/compose'
+import { pipe } from 'funcom'
 import { TCheckOptions, TWorkerResult } from './types'
 import { MAX_THREAD_COUNT, WORKER_PATH } from './constants'
 
