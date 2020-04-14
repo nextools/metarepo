@@ -1,3 +1,19 @@
+## v0.2.4
+
+* 🐞 copy `.d.ts` files from `src/` as is in `buildType` task
+
+## v0.2.3
+
+* 🐞 upgrade escape-string-regexp to v3
+
+* ♻️ update dependencies `@rebox/web`, `@auto/core`, `@auto/commit-prompt`, `@start/reporter-verbose`, `@rebox/android`, `@rebox/ios`
+
+## v0.2.2
+
+* 🐞 refactor using updated `start/plugin-lib-typescript-generate`
+
+* ♻️ update dependencies `@start/plugin-lib-typescript-generate`
+
 ## v0.2.1
 
 * 🐞 refactor using new Babel configs

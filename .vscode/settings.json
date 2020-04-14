@@ -32,5 +32,7 @@
     "packages/*/*/build/": true,
     "tmp/": true
   },
-  "search.followSymlinks": false
+  "search.followSymlinks": false,
+  "javascript.preferences.importModuleSpecifierEnding": "minimal",
+  "typescript.preferences.importModuleSpecifierEnding": "minimal"
 }

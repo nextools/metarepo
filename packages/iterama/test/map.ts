@@ -1,6 +1,6 @@
 import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { pipe } from '@psxcode/compose'
+import { pipe } from 'funcom'
 import { map } from '../src/map'
 import { toArray } from '../src/to-array'
 import { range } from '../src/range'

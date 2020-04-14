@@ -1,6 +1,6 @@
 {
   "name": "@auto/commit-prompt",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Interactive commit prompt for Auto Tools",
   "keywords": [
     "monorepo",
@@ -16,8 +16,8 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
-    "@auto/core": "^0.1.4",
-    "escape-string-regexp": "^2.0.0",
+    "@auto/core": "^0.1.5",
+    "escape-string-regexp": "^3.0.0",
     "execa": "^4.0.0",
     "prompts": "^2.3.0",
     "tsfn": "^1.1.1"

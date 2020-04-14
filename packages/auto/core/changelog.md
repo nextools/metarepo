@@ -1,3 +1,7 @@
+## v0.1.5
+
+* 🐞 upgrade escape-string-regexp to v3
+
 ## v0.1.4
 
 * 🐞 fix circular dependencies

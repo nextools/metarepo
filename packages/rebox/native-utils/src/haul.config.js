@@ -79,11 +79,15 @@ export default makeConfig({
         config.resolve.extensions = [
           ...config.resolve.extensions,
           `.${env.platform}.js`,
+          `.${env.platform}.jsx`,
           `.${env.platform}.ts`,
           `.${env.platform}.tsx`,
           '.native.js',
+          '.native.jsx',
           '.native.ts',
           '.native.tsx',
+          '.js',
+          '.jsx',
           '.ts',
           '.tsx',
         ]

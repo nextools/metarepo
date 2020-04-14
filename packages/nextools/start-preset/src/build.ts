@@ -1,5 +1,4 @@
 import path from 'path'
-import { JsxEmit } from 'typescript'
 import { StartPlugin } from '@start/plugin'
 import inputFiles from '@start/plugin-input-files'
 import sequence from '@start/plugin-sequence'
@@ -10,6 +9,7 @@ import babel from '@start/plugin-lib-babel'
 import rename from '@start/plugin-rename'
 import write from '@start/plugin-write'
 import remove from '@start/plugin-remove'
+import copy from '@start/plugin-copy'
 import parallel from '@start/plugin-parallel'
 import typescriptGenerate from '@start/plugin-lib-typescript-generate'
 import copyAssets from './plugins/copy-assets'
@@ -97,13 +97,9 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
 
 export const buildTypes = (dir: string): StartPlugin<{}, {}> =>
   sequence(
-    find(`${dir}/src/index.{tsx,ts}`),
-    typescriptGenerate(`${dir}/build/types/`, {
-      strict: true,
-      jsx: JsxEmit.React,
-      preserveSymlinks: true,
-      skipLibCheck: true,
-    })
+    typescriptGenerate(`${dir}/src/`, `${dir}/build/types/`),
+    find(`${dir}/src/**/*.d.ts`),
+    copy(`${dir}/build/types/`)
   )
 
 export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, {}>> => {

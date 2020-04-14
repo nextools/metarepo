@@ -13,33 +13,13 @@ $ yarn add --dev @start/plugin-lib-typescript-generate
 ### Signature
 
 ```ts
-typescriptGenerate(outDir: string, options?: CompilerOptions)
-```
-
-#### `options`
-
-[TypeScript Compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html).
-
-Default:
-
-```js
-{
-  allowSyntheticDefaultImports: true,
-  lib: 'esnext',
-  moduleResolution: 'node'
-}
+typescriptGenerate(inDir: string, outDir: string)
 ```
 
 ### Example
 
 ```js
-import sequence from '@start/plugin-sequence'
-import find from '@start/plugin-find'
 import typescriptGenerate from '@start/plugin-lib-typescript-generate'
 
-export const task = () =>
-  sequence(
-    find('src/index.ts'),
-    typescriptGenerate('build/')
-  )
+export const task = () => typescriptGenerate('src/', 'build/')
 ```

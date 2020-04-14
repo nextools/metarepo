@@ -1,6 +1,6 @@
 {
   "name": "@rebox/android",
-  "version": "2.0.2",
+  "version": "2.0.4",
   "description": "Set of helpers to deal with React Native applications on Android",
   "keywords": [
     "react",
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@rebox/native-utils": "^2.0.2",
+    "@rebox/native-utils": "^2.0.4",
     "execa": "^4.0.0",
     "make-dir": "^3.0.0",
     "move-file": "^1.2.0",

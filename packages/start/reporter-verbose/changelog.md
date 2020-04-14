@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 upgrade chalk to v4
+
 ## v1.0.1
 
 * 🐞 bump compatible deps

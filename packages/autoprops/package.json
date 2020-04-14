@@ -1,6 +1,6 @@
 {
   "name": "autoprops",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
@@ -14,13 +14,12 @@
   "dependencies": {
     "@babel/runtime": "^7.4.3",
     "big-integer": "^1.6.44",
-    "iterama": "^0.2.0",
-    "jssha": "^2.3.1",
+    "iterama": "^0.2.2",
+    "jssha": "^3.0.0",
     "tsfn": "^1.1.1"
   },
   "devDependencies": {
     "@mock/require": "^0.1.0",
-    "@types/jssha": "^2.0.0",
     "@types/react": "^16.8.6",
     "@types/tape": "^4.2.34",
     "react": "16.11.0",
