@@ -1,5 +1,5 @@
 import React from 'react'
-import { component, startWithType, mapState } from 'refun'
+import { component, startWithType, mapState, onUpdateAsync } from 'refun'
 import { TFileResultLine } from '@x-ray/snapshots'
 import { Text } from '@primitives/text'
 import { TRect, TSnapshotGridItem } from '../types'
@@ -9,7 +9,6 @@ import { actionError } from '../actions'
 import { COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED } from '../config'
 import { Block } from './Block'
 import { Background } from './Background'
-import { onMountAsync } from './on-mount-async'
 
 const LINE_HEIGHT = 18
 const CHAR_WIDTH = 8.39
@@ -22,18 +21,16 @@ export const SnapshotPreview = component(
   startWithType<TSnapshotPreview>(),
   mapStoreDispatch('dispatch'),
   mapState('state', 'setState', () => null as TFileResultLine[] | null, []),
-  onMountAsync(async ({ setState, item, dispatch, isMountedRef }) => {
+  onUpdateAsync((props) => function *() {
     try {
-      const data = await apiLoadSnapshot(item)
+      const data: TFileResultLine[] = yield apiLoadSnapshot(props.current.item)
 
-      if (isMountedRef.current) {
-        setState(data)
-      }
+      props.current.setState(data)
     } catch (err) {
       console.log(err)
-      dispatch(actionError(err.message))
+      props.current.dispatch(actionError(err.message))
     }
-  })
+  }, [])
 )(({ top, left, width, height, state, item }) => {
   if (state === null) {
     return null

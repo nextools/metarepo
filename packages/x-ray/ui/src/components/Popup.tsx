@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapHandlers, mapState, mapWithProps, onMount } from 'refun'
+import { component, startWithType, mapHandlers, mapState, mapWithProps, onUpdate } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { Background } from '@primitives/background'
 import { Button } from '@primitives/button'
@@ -109,9 +109,9 @@ export const Popup = component(
       shouldNotAnimate,
     }
   }),
-  onMount(({ setState }) => {
+  onUpdate(({ setState }) => {
     setState(STATE_OPENING)
-  }),
+  }, []),
   mapWithProps(({ popupWidth, popupHeight, item }) => {
     const halfWidth = popupWidth / 2
     const hasSourceCode = objectHas(item, 'source')

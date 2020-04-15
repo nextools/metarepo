@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, onMount, mapHandlers, mapState } from 'refun'
+import { component, startWithType, mapHandlers, mapState, onUpdate } from 'refun'
 import { Image } from '@primitives/image'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { actionLoadList, actionSave } from '../../actions'
@@ -32,9 +32,10 @@ export const Main = component(
     isSaved,
   }), ['selectedItem', 'files', 'items', 'type', 'discardedItems', 'filteredFiles', 'isSaved']),
   mapStoreDispatch('dispatch'),
-  onMount(async ({ dispatch }) => {
-    await dispatch(actionLoadList())
-  }),
+  onUpdate(({ dispatch }) => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    dispatch(actionLoadList())
+  }, []),
   mapHandlers({
     onSave: ({ type, items, discardedItems, dispatch }) => async () => {
       const itemKeys = Object.keys(items)
