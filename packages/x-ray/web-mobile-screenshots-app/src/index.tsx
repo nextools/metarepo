@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { component, startWithType, mapRef, mapHandlers, mapState, mapWithProps, onMount, onUpdate } from 'refun'
+import { component, startWithType, mapRef, mapHandlers, mapState, mapWithProps, onUpdate } from 'refun'
 import { View, Platform } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { captureRef } from 'react-native-view-shot' // eslint-disable-line
@@ -92,25 +92,28 @@ const Main = component(
   startWithType<{}>(),
   mapState('html', 'setHtml', () => null as string | null, []),
   mapRef('fonts', [] as TFonts),
-  onMount(async ({ setHtml, fonts }) => {
-    const fontRes = await fetch('http://localhost:3002/fonts')
+  onUpdate(({ setHtml, fonts }) => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    (async () => {
+      const fontRes = await fetch('http://localhost:3002/fonts')
 
-    if (fontRes.status === 200) {
-      fonts.current = await fontRes.json() as TFonts
-    }
+      if (fontRes.status === 200) {
+        fonts.current = await fontRes.json() as TFonts
+      }
 
-    const htmlRes = await fetch('http://localhost:3002/next', {
-      keepalive: true,
-    })
+      const htmlRes = await fetch('http://localhost:3002/next', {
+        keepalive: true,
+      })
 
-    if (!htmlRes.ok) {
-      return
-    }
+      if (!htmlRes.ok) {
+        return
+      }
 
-    const html = await htmlRes.text()
+      const html = await htmlRes.text()
 
-    setHtml(makeHtml(html, fonts.current))
-  }),
+      setHtml(makeHtml(html, fonts.current))
+    })()
+  }, []),
   mapState('size', 'setSize', () => null as null | TSize, []),
   mapRef('viewShotRef', null as View | null),
   mapHandlers({
@@ -127,7 +130,7 @@ const Main = component(
       })
     },
   }),
-  onUpdate(async ({ size, viewShotRef, setHtml, fonts }) => {
+  onUpdate(({ size, viewShotRef, setHtml, fonts }) => {
     if (size === null) {
       return
     }
@@ -136,39 +139,42 @@ const Main = component(
       throw new Error('invalid viewShotRef')
     }
 
-    const data = await captureRef(viewShotRef, { result: 'base64' })
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    (async () => {
+      const data = await captureRef(viewShotRef, { result: 'base64' })
 
-    await fetch('http://localhost:3002/upload', {
-      method: 'POST',
-      keepalive: true,
-      body: data,
-    })
+      await fetch('http://localhost:3002/upload', {
+        method: 'POST',
+        keepalive: true,
+        body: data,
+      })
 
-    const res = await fetch('http://localhost:3002/next', {
-      keepalive: true,
-    })
+      const res = await fetch('http://localhost:3002/next', {
+        keepalive: true,
+      })
 
-    if (!res.ok) {
-      return
-    }
+      if (!res.ok) {
+        return
+      }
 
-    if (res.status === 204) {
-      return
-    }
+      if (res.status === 204) {
+        return
+      }
 
-    const html = await res.text()
+      const html = await res.text()
 
-    setHtml(makeHtml(html, fonts.current))
+      setHtml(makeHtml(html, fonts.current))
+    })()
   }, ['size']),
   mapWithProps(({ size }) => {
-    if (size !== null) {
-      return {
-        width: size.width,
-        height: size.height,
-      }
+    if (size === null) {
+      return {}
     }
 
-    return {}
+    return {
+      width: size.width,
+      height: size.height,
+    }
   })
 )(({ width, height, viewShotRef, html, onMessage }) => {
   if (html === null) {
