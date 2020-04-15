@@ -7,17 +7,17 @@ import { component, ReduxDispatchFactory, startWithType } from '../src'
 
 test('ReduxDispatchFactory', (t) => {
   const dispatch = (_: any) => _
-  const compSpy = createSpy(() => null)
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const store = { dispatch, getState: void 0 as any, subscribe: void 0 as any } as Store<{a: number, b: string}>
   const MyComp = component(
     startWithType<{ foo: string }>(),
     ReduxDispatchFactory(createContext(store))('disp')
-  )(compSpy)
+  )(componentSpy)
+
+  let testRenderer: ReactTestRenderer
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
-
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
@@ -26,7 +26,7 @@ test('ReduxDispatchFactory', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', disp: dispatch }], // Mount
     ],
@@ -42,7 +42,7 @@ test('ReduxDispatchFactory', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', disp: dispatch }], // Mount
       [{ foo: 'bar', disp: dispatch }], // Update

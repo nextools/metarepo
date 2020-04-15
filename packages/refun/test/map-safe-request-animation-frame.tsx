@@ -11,16 +11,16 @@ test('mapSafeRequestAnimationFrame', (t) => {
   const timeoutSpy3 = createSpy(() => null)
   const timeout = createRafSpy()
   const mapSafeRequestAnimationFrame = mapSafeRequestAnimationFrameFactory(timeout.requestAnimationFrame, timeout.cancelAnimationFrame)
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: string }>(),
     mapSafeRequestAnimationFrame('raf')
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -32,7 +32,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   const { raf } = getProps(0)
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', raf }],
     ],
@@ -48,7 +48,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', raf }],
       [{ foo: 'bar', raf }],

@@ -11,8 +11,8 @@ A collection of React Hook-enabled functions that compose harmoniously with each
 
 ## Usage example (with TypeScript)
 
-```ts
-import * as React from "react"
+```tsx
+import React from 'react'
 import {
   component,
   mapDefaultProps,
@@ -22,7 +22,7 @@ import {
   mapWithPropsMemo,
   startWithType,
   TMapHovered
-} from "refun"
+} from 'refun'
 
 type TButton = {
   isDisabled?: boolean
@@ -103,6 +103,7 @@ Several things to note:
 ## API
 
 - [component](#component)
+- [pureComponent](#pureComponent)
 - [mapContext](#mapContext)
 - [mapDebouncedHandlerTimeout](#mapDebouncedHandlerTimeout)
 - [mapDebouncedHandlerFactory](#mapDebouncedHandlerFactory)
@@ -113,20 +114,20 @@ Several things to note:
 - [mapKeyboardFocused](#mapKeyboardFocused)
 - [mapPressed](#mapPressed)
 - [mapProps](#mapProps)
-- [mapReducer](#mapReducer)
-- [mapRefLayout](#mapRefLayout)
 - [mapRef](#mapRef)
 - [mapSafeRequestAnimationFrame](#mapSafeRequestAnimationFrame)
 - [mapSafeTimeout](#mapSafeTimeout)
 - [mapState](#mapState)
+- [mapStateRef](#mapStateRef)
 - [mapThrottledHandlerTimeout](#mapThrottledHandlerTimeout)
 - [mapThrottledHandlerAnimationFrame](#mapThrottledHandlerAnimationFrame)
 - [mapThrottledHandlerFactory](#mapThrottledHandlerFactory)
-- [mapWithAsyncProps](#mapWithAsyncProps)
 - [mapWithProps](#mapWithProps)
 - [mapWithPropsMemo](#mapWithPropsMemo)
-- [onMount](#onMount)
-- [pureComponent](#pureComponent)
+- [onChange](#onChange)
+- [onLayout](#onLayout)
+- [onUpdate](#onUpdate)
+- [onUpdateAsync](#onUpdateAsync)
 - [startWithType](#startWithType)
 - [StoreContextFactory](#StoreContextFactory)
 
@@ -137,13 +138,60 @@ This function is an analog of `compose` and it performs simple function composit
 - The value sent into the chain is presumed to be a React Function Component (`FC` type)
 - `component` will use the output type of one function in the chain as the input type of the next function in the chain, allowing the functions to modify the type along the way. It is not necessary to tell `component` what the output type at the end of the chain is going to be, since it will be inferred correctly from the functions passed into it.
 
+## `pureComponent`
+
+This function is identical to [`component`](#component) except that it memoizes the React element that results from rendering with a certain set of props. The props that are memoized are the _inner_ props, that is, the props that the component will get as the result of the entire composition chain. These are different from the _outer_ props, that are the ones that consumers pass manually into the component.
+
+The purpose of this component is to prevent a re-render from happening when the React tree is known to be the same. It is particularly useful when the React tree is a complex one, since the cost grows fast with the amount of nodes in the tree. Since the memoization is done in the inside of the component, all `map` functions will be run, making it ideal for components that control their own state.
+
+> Note that this function is meant to be used to avoid pointless re renders of complex trees, which is a concern that should be treated at the high level, in an app for example, rather than in small presentational components. Memoization comes with a cost, and React is already providing optimizations via reconciliation, so the type of optimizations that `pureComponent` does, similar to the old `shouldComponentUpdate`, is to be reserved for cases where there is a clear need for optimization.
+
+```tsx
+import React from 'react'
+import { mapReducer, pureComponent, startWithType } from 'refun'
+import AComplexHeader from './AComplexHeader'
+import AnExpensiveToComputeSidebar from './AnExpensiveToComputeSidebar'
+
+type TCounter = {
+  initialCount?: number,
+}
+
+export default pureComponent(
+  startWithType<TCounter>(),
+  mapDefaultProps({
+    initialCount: 0
+  }),
+  mapState('counter', 'setCounter', ({ initialCount }) => initialCount, ['initialCount']),
+  mapHandlers
+)(({ counter, dispatch }) = (
+  <main>
+    <AComplexHeader />
+    <AnExpensiveToComputeSidebar />
+    <button onClick>
+      Add
+    </button>
+
+    <p>{counter}</p>
+  </main>
+))
+```
+
+So to be clear, the component that receives `counter` and `dispatch` as props is the one that is going to be memoized. If your intention is to memoize an expensive computation in a function in the composition chain, such as calculating a value in the `mapWithProps`, take a look at [`mapWithPropsMemo`](#mapWithPropsMemo) instead.
+
+`pureComponent` should only be used in components that receive no `children` and no complex props, since otherwise the overhead of memoization is not worth it. If the component receives `children` or complex props (objects / arrays), `pureComponent` will not provide any benefit, since those are very likely (or guaranteed in the case of `children`) to be different on every render. `pureComponent` works by doing a shallow comparison of the current props with the previous props. Shallow comparison means that each prop is compared with hard equality with the previous value of that same props.
+
 ## `mapContext`
+
+Signature:
+```ts
+type mapContext<T> = (context: React.Context<T>) => void
+```
 
 This function receives a React Context object as created by the `React.createContext` function. The assumption is that the `value` property inside the Context is an object: `mapContext` will spread that object into the props of the components.
 
 For example:
 
-```ts
+```tsx
 import React, { createContext } from 'react'
 import { component, mapContext, startWithType } from 'refun'
 
@@ -173,13 +221,18 @@ component(
 
 ## `mapDebouncedHandlerTimeout`
 
+Signature:
+```ts
+type mapDebouncedHandlerTimeout = (handlerName: string, timeout: number) => void
+```
+
 > This function is affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
 
 This function allows you to defer the execution of a handler for a grace period (specified in milliseconds) and if the handler gets invoked again during that period, it cancels the current grace period and overrides it with the new call, restarting the time counter.
 
 Why you ask? Imagine for example that there is a button in the UI in which a user might be tempted to repeatedly click to make sure an action happens, but it doing so they will repeatedly trigger an expensive operation that will freeze the application. To avoid this, you could debounce the `onClick` handler for some milliseconds and make sure only the last call will be acted upon.
 
-The difference between debouncing and throttling (available in [`mapThrottledHandlerTimeout`](#mapThrottledHandlerTimeout)) is that successive calls to a debounced handler will restart the timeout each time, while throttled calls will be executed once the initially set timeout it reached, using the last arguments. Following the FRP convention, this is how debouncing could be represented:
+The difference between debouncing and throttling (available in [`mapThrottledHandlerTimeout`](#mapThrottledHandlerTimeout)) is that successive calls to a debounced handler will restart the timeout each time, while throttled calls will be executed once the initially set timeout it reached, using the latest arguments. Following the FRP convention, this is how debouncing could be represented:
 
 ```
 debouncing in 3 seconds
@@ -191,9 +244,9 @@ ran       ---------y--------z------
 
 Notice how the timeout initially set for `x` is simply cancelled and overridden with a new timeout of 3 seconds for `y`.
 
-```ts
-import * as React from "react"
-import { component, mapHandlers, mapDebouncedHandlerTimeout, startWithType } from "refun"
+```tsx
+import React from 'react'
+import { component, mapHandlers, mapDebouncedHandlerTimeout, startWithType } from 'refun'
 
 type TButton = {
   onClick: () => void
@@ -204,7 +257,7 @@ export default component(
   mapHandlers({
     onClick: () => () => console.log("the handler was now called")
   }),
-  mapDebouncedHandlerTimeout("onClick", 1000)
+  mapDebouncedHandlerTimeout('onClick', 1000)
 )(({ onClick }) => (
   <div>
     <p>
@@ -221,6 +274,11 @@ export default component(
 
 ## `mapDebouncedHandlerFactory`
 
+Signature:
+```ts
+type mapDebouncedHandlerFactory = (setFn: Function, clearFn: Function) => (handlerName: string, ...setFnArgs: any[]) => void
+```
+
 > All the functions create with this one are affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
 
 This function is a constructor for debouncers. It is used under the hood to build the `mapDebouncedHandlerTimeout` function. If you have a function that creates a deferred effect and a function that will cancel that deferral, you can build your own debouncer.
@@ -233,10 +291,15 @@ export const mapDebouncedHandlerTimeout = mapDebouncedHandlerFactory(setTimeout,
 
 ## `mapDefaultProps`
 
+Signature:
+```ts
+type mapDefaultProps<P> = (defaultProps: P) => void
+```
+
 This function sets some default prop values based on the object that is passed into it. Alternative to using the static `defaultProps` component property. The advantage of using it is that the props passed in will be type checked.
 
-```ts
-import * as React from 'react'
+```tsx
+import React from 'react'
 import { component, mapDefaultProps, startWithType } from 'refun'
 
 type TMessage = {
@@ -257,10 +320,12 @@ export default component(
 
 ## `mapFocused`
 
+Signature: Not callable.
+
 This function sets the `isFocused` prop to `true` when the `onFocus` handler is called and to `false` when `onBlur` is called.
 
-```ts
-import * as React from 'react'
+```tsx
+import React from 'react'
 import { component, mapFocused, startWithType, TMapFocused } from 'refun'
 
 type TButton = {
@@ -292,26 +357,31 @@ export default component(
 
 ## `mapHandlers`
 
+Signature:
+```ts
+type mapHandlers<P> = (handlers: { [key: string]: (props: P) => (...args: any[]) => void }) => void
+```
+
 This function allows you to build custom handlers that will be memoized so that they do not cause a diff in the shallow comparison, which would lead to a re render.
 
 So instead of writing:
 
-```ts
+```tsx
 // This will cause the component to re render every time because the handler is unique in every execution
 const Input = ({ onChange, value }) => {
-  const handleChange = ({ target: { value } }) => onChange(value)
+  const handleChange = ({ target }) => onChange(target.value)
 
   return <input
     onChange={handleChange}
-    value={value}
+    value={target.value}
   />
 }
 ```
 
 …it allows you to do:
 
-```ts
-import * as React from 'react'
+```tsx
+import React from 'react'
 import { component, mapHandlers, startWithType } from 'refun'
 
 type TInput = {
@@ -322,7 +392,7 @@ type TInput = {
 export default component(
   startWithType<TInput>(),
   mapHandlers({
-    onChange: ({ onChange }) => ({ target: { value } }) => onChange(value),
+    onChange: ({ onChange }) => ({ target }) => onChange(target.value),
   })
 )(
   ({ onChange, value }) => (
@@ -340,6 +410,8 @@ The first argument that each handler will receive is the current props, and the 
 
 ## `mapHovered`
 
+Signature: Not callable
+
 This function sets the `isHovered` prop to `true` when the `onPointerEnter` handler is called and to `false` when `onPointerLeave` is called.
 
 Note that `onPointerEnter` and `onPointerLeave` are synthetic event names meant to abstract from platform specific hover states. In web, they will be typically mapped:
@@ -349,7 +421,7 @@ Note that `onPointerEnter` and `onPointerLeave` are synthetic event names meant 
 
 …and each platform will have their own corresponding mapping.
 
-```ts
+```tsx
 import React from 'react'
 import { component, mapHovered, startWithType, TMapHovered } from 'refun'
 
@@ -382,6 +454,8 @@ export default component(
 
 ## `mapKeyboardFocused`
 
+Signature: Not callable.
+
 This function sets the `isKeyboardFocused` prop to `true` when the target gets focused (after `onFocus`) but only if the focus was acquired via the keyboard interaction, not a pointer event (so if there was no press event before the `onFocus`). The prop is set to `false` once `onBlur` happens.
 
 The reason this is useful is that it allows focus states meant for keyboard navigation to be differentiated from regular focus states. When the user is navigating with the keyboard, for example pressing the Tab key, visual highlighting of the focused elements needs to be more prominent to guide the sight into where the active element is. Pointer events will trigger focus as well, but when the interaction was initiated with a pointer it's not necessary for the highlight to be as prominent, since the user is already focused in the pointer position. In order to distinguish these two states and make it possible to style them separately, you can use `mapFocused` for the general case and `mapKeyboaredFocused` for the specific keyboard navigation case.
@@ -393,7 +467,7 @@ Note that `onPressIn` and `onPointerLeave` are synthetic event names meant to ab
 
 …and each platform will have their own corresponding mapping.
 
-```ts
+```tsx
 import React from 'react'
 import { component, mapKeyboardFocused, startWithType, TMapKeyboardFocused } from 'refun'
 
@@ -428,6 +502,8 @@ export default component(
 
 ## `mapPressed`
 
+Signature: Not callable.
+
 This function sets the `isPressed` prop to `true` when the `onPressIn` handler is called and to `false` when `onPressOut` is called.
 
 Note that `onPressIn` and `onPressOut` are synthetic event names meant to abstract from platform specific pressed states. In web, they will be typically mapped:
@@ -437,7 +513,7 @@ Note that `onPressIn` and `onPressOut` are synthetic event names meant to abstra
 
 …and each platform will have their own corresponding mapping.
 
-```ts
+```tsx
 import React from 'react'
 import { component, mapPressed, startWithType, TMapPressed } from 'refun'
 
@@ -470,9 +546,14 @@ export default component(
 
 ## `mapProps`
 
+Signature:
+```ts
+type mapProps<P, R> = (getFn: (props: P) => R) => void
+```
+
 This function takes a handler that receives all props and returns new props.
 
-```ts
+```tsx
 import React from 'react'
 import { component, mapProps, startWithType } from 'refun'
 
@@ -492,104 +573,12 @@ Note that `label` is no longer available as a prop to the component. If you want
 
 [📺 Check out live demo](https://codesandbox.io/s/refun-mapprops-37ho6)
 
-## `mapReducer`
-
-This function takes a reducer and an initial state factory, and passes down the `state` (spreaded as props) and the `dispatch` function. It employs the `useReducer` hook under the hood.
-
-```ts
-import React from 'react'
-import { component, mapReducer, startWithType } from 'refun'
-
-type TCounter = {
-  initialCounter: number
-}
-
-type TState = {
-  counter: number
-}
-
-type TAction = {
-  type: "ADD"
-}
-
-const Counter = component(
-  startWithType<TCounter>(),
-  mapReducer(
-    (state: TState, action: TAction): TState => {
-      switch (action.type) {
-        case "ADD":
-          return {
-            counter: state.counter + 1
-          }
-
-        default:
-          return state
-      }
-    },
-    ({ initialCounter }) => ({
-      counter: initialCounter
-    })
-  )
-)(({ counter, dispatch }) => (
-  <div>
-    <button onClick={() => dispatch({ type: "ADD" })}>Add</button>
-    <span>{counter}</span>
-  </div>
-))
-```
-
-[📺 Check out live demo](https://codesandbox.io/s/refun-mapreducer-wqgv6)
-
-## `mapRefLayout`
-
-This function allows you to capture the `ref` to a DOM element, and synchronously perform an update of the props based on some values of the element. It relies on `useLayoutEffect` under the hoods to synchronously capturing the `ref` and then updates the state, which will cause React to cancel the previous render and use the updated one instead.
-
-This is particularly useful in order to measure a component’s size and update the rendering without causing any flickering.
-
-`mapRefLayout` receives three arguments:
-
-1. The name of the prop that will hold the `ref`
-2. A handler that receives the `ref` and the props as arguments, and returns a set of props to be added to the incoming props.
-3. A list of names of incoming props to be monitored. If one of those props changes, the handler should be executed again. Otherwise it will be skipped. See [`mapWithPropsMemo`](#mapWithPropsMemo) for a similar API.
-
-```ts
-import * as React from "react"
-import { component, mapRefLayout, startWithType } from "refun"
-
-type TLayout = {
-  direction: "horizontal" | "vertical"
-}
-
-const Button = component(
-  startWithType<TLayout>(),
-  mapRefLayout(
-    "buttonElementRef",
-    (buttonElementRef, { direction }): { size: number } => {
-      if (buttonElementRef) {
-        switch (direction) {
-          case "horizontal":
-            return {
-              size: buttonElementRef.getBoundingClientRect().width
-            }
-          case "vertical":
-            return {
-              size: buttonElementRef.getBoundingClientRect().height
-            }
-        }
-      }
-
-      return {
-        size: 10
-      }
-    },
-    ["direction"]
-  )
-)(({ buttonElementRef, size }) => <button ref={buttonElementRef}>{size}</button>)
-```
-
-[📺 Check out live demo](https://codesandbox.io/s/refun-mapreflayout-ve3zn)
-
 ## `mapRef`
+
+Signature:
+```ts
+type mapRef<T> = (name: string, initialValue: T) => void
+```
 
 This function provides a way of making a mutable reference available as a prop. It uses the `useRef` hook under the hood.
 
@@ -597,7 +586,7 @@ Refs are useful to store derived values that do not support shallow comparison, 
 
 For example you can use it to capture the `ref` to a DOM element and inspect it:
 
-```ts
+```tsx
 import React from 'react'
 import { component, mapRef, onMount, startWithType } from 'refun'
 
@@ -626,6 +615,11 @@ export default component(
 
 ## `mapSafeRequestAnimationFrame`
 
+Signature:
+```ts
+type mapSafeRequestAnimationFrame = (propName: string) => void
+```
+
 This function allows you to set up operations to be executed in the next animation frame that should only be executed while the component is still mounted, and should be canceled if the component is removed from the tree. Callbacks that are not canceled when unmounted are a common cause of React memory leaks.
 
 Why you ask? Animations. Animations can be done in React by continuously updating style parameters of a component, and the cleanest way of updating those is with `requestAnimationFrame`. This function allows you to use `requestAnimationFrame` without worrying about memory leaks.
@@ -637,15 +631,15 @@ Why you ask? Animations. Animations can be done in React by continuously updatin
 > ```
 > `mapSafeRequestAnimationFrame` does the cleanup for you.
 
-```ts
-import * as React from "react"
+```tsx
+import React from 'react'
 import {
   component,
   mapState,
   mapSafeRequestAnimationFrame,
   startWithType,
   mapHandlers
-} from "refun"
+} from 'refun'
 
 type TLoader = {
   initialPosition: number
@@ -711,6 +705,11 @@ export default component(
 
 ## `mapSafeTimeout`
 
+Signature:
+```ts
+type mapSafeTimeout = (propName: string) => void
+```
+
 This function allows you to configure time outs that should only be executed while the component is still mounted, and should be canceled if the component is removed from the tree. Timeouts that are not canceled when unmounted are a common cause of React memory leaks.
 
 > As you can check in this [📺 live demo of the issue](https://codesandbox.io/s/refun-mapsafetimeout-problem-demonstration-dkiwq), simply using `setTimeout` will cause the problems when pressing the "Close immediately" button before the countdown is completed. In particular, React will log:
@@ -719,15 +718,15 @@ This function allows you to configure time outs that should only be executed whi
 > ```
 > `mapSafeTimeout` does the cleanup for you.
 
-```ts
-import * as React from "react"
+```tsx
+import React from 'react'
 import {
   component,
   mapHandlers,
   mapState,
   mapSafeTimeout,
   startWithType
-} from "refun"
+} from 'refun'
 
 type TMessage = {
   onClose: () => void
@@ -823,13 +822,18 @@ export default component(
 
 ## `mapState`
 
+Signature:
+```ts
+type mapState<P, R> = (stateName: string, setterName: string, getValue: (props: P) => R, watchKeys: string[]) => void
+```
+
 This function allows you to set up a stateful prop and a function for updating that prop. It also supports setting the initial value, derived from the props passed into it, and a list of props to watch to reset that value whenever the external prop changes.
 
 Note in the example how the `OverridableInternalCounter` sets the `["counter"]` as the last argument of `mapState`. This will cause `mapState` to watch for incoming changes to the `counter` prop and use them to update the `internalCounter` prop, accordingly to the function in the third argument `({ counter }) => counter`. In the case of `InternalCounter`, the array in the last argument is empty (`[]`) and then `mapState` does not watch for changes, which causes the external prop `counter` value to be ignored once updated, effectively working as an initial value only for `internalCounter`.
 
-```ts
-import * as React from "react"
-import { component, mapState, startWithType } from "refun"
+```tsx
+import React from 'react'
+import { component, mapState, startWithType } from 'refun'
 
 type TCounter = {
   counter: number
@@ -880,7 +884,64 @@ export default component(
 
 [📺 Check out live demo](https://codesandbox.io/s/refun-mapstate-zy1rj)
 
+## `mapStateRef`
+
+Signature:
+```ts
+type mapStateRef<P, R> = (stateName: string, flushName: string, getValue: (props: P) => R, watchKeys: string[]) => void
+```
+
+This function allows you to set up a stateful prop and a function for updating that prop. It also supports setting the initial value, derived from the props passed into it, and a list of props to watch to reset that value whenever the external prop changes.
+
+Note in the example how the `OverridableInternalCounter` sets the `["counter"]` as the last argument of `mapState`. This will cause `mapState` to watch for incoming changes to the `counter` prop and use them to update the `internalCounter` prop, accordingly to the function in the third argument `({ counter }) => counter`. In the case of `InternalCounter`, the array in the last argument is empty (`[]`) and then `mapState` does not watch for changes, which causes the external prop `counter` value to be ignored once updated, effectively working as an initial value only for `internalCounter`.
+
+```tsx
+import React from 'react'
+import { component, mapStateRef, onMount, startWithType } from 'refun'
+
+type TGetValue = {
+  index: number,
+  value: number,
+  onChange: (i: number, v: number) => void
+}
+
+const GetValue = component(
+  startWithType<TValue>(),
+  onMount(({ index, onChange }) => {
+    onChange(index, Math.random())
+  })
+)(({ value }) => (
+  <span>{value}</span>
+));
+
+type TComp = {
+  numValues: number
+}
+
+export default component(
+  startWithType<TComp>(),
+  mapStateRef('valuesRef', 'flushValues', ({ numValue }) => Array(numValues).fill(0), ['numValues']),
+  mapHandlers({
+    onChange: ({ valuesRef, flushValues }) => (i, value) => {
+      valuesRef.current[i] = value
+      flushValues()
+    }
+  })
+)(({ valuesRef }) => (
+  <div>
+    {valuesRef.current.map((value) => (
+      <GetValue value={value} />
+    ))}
+  </div>
+))
+```
+
 ## `mapThrottledHandlerTimeout`
+
+Signature:
+```ts
+type mapThrottledHandlerTimeout = (handlerName: string, timeout: number) => void
+```
 
 > This function is affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
 
@@ -900,28 +961,28 @@ ran       ------y-----------x------
 
 Notice how the timeout initially configured for `x` is respected and the execution happens 3 seconds after the event for `x` is received, but `y` is run instead.
 
-```ts
-import * as React from "react"
+```tsx
+import React from 'react'
 import {
   component,
   mapThrottledHandlerTimeout,
   startWithType,
   mapHandlers
-} from "refun"
+} from 'refun'
 
 type TSlider = {
   onChange: (string) => void
 }
 
 export default component(
+  startWithType<TSlider>(),
   mapHandlers({
     onChange: () => (value) =>
       console.log(`the handler has now been invoked with value: ${value}`)
   }),
-  startWithType<TSlider>(),
-  mapThrottledHandlerTimeout("onChange", 300),
+  mapThrottledHandlerTimeout('onChange', 300),
   mapHandlers({
-    onChange: ({ onChange }) => ({ target: { value } }) => onChange(value)
+    onChange: ({ onChange }) => ({ target}) => onChange(target.value)
   })
 )(({ onChange }) => <input type="range" onChange={onChange} max="1000" />)
 ```
@@ -929,6 +990,11 @@ export default component(
 [📺 Check out live demo](https://codesandbox.io/s/refun-mapthrottledhandlertimeout-1ss16)
 
 ## `mapThrottledHandlerAnimationFrame`
+
+Signature:
+```ts
+type mapThrottledHandlerAnimationFrame = (handlerName: string) => void
+```
 
 > This function is affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
 
@@ -938,14 +1004,14 @@ Why you ask? Pretty much the same reasons that are true for [`mapThrottledHandle
 
 > You might wonder why there is not `mapDebouncedHandlerAnimationFrame` if there is a `mapDebouncedHandlerTimeout`. The reason is that the behavior of that function would be identical to this one, so it's skipped.
 
-```ts
-import * as React from "react"
+```tsx
+import React from 'react'
 import {
   component,
   mapThrottledHandlerAnimationFrame,
   startWithType,
   mapHandlers
-} from "refun"
+} from 'refun'
 
 type TSlider = {
   onChange: (string) => void
@@ -957,7 +1023,7 @@ export default component(
     onChange: () => (value) =>
       console.log(`the handler has now been invoked with value: ${value}`)
   }),
-  mapThrottledHandlerAnimationFrame("onChange"),
+  mapThrottledHandlerAnimationFrame('onChange'),
   mapHandlers({
     onChange: ({ onChange }) => ({ target: { value } }) => onChange(value)
   })
@@ -967,6 +1033,11 @@ export default component(
 [📺 Check out live demo](https://codesandbox.io/s/refun-mapthrottledhandleranimationframe-xk8uc)
 
 ## `mapThrottledHandlerFactory`
+
+Signature:
+```ts
+type mapThrottledHandlerFactory = (setFn: Function, clearFn: Function) => (handlerName: string, ...setFnArgs: any[]) => void
+```
 
 > All the functions created with this one is affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
 
@@ -978,60 +1049,18 @@ This is how `mapThrottledHandlerTimeout` is defined:
 export const mapThrottledHandlerTimeout = mapThrottledHandlerFactory(setTimeout, clearTimeout)
 ```
 
-## `mapWithAsyncProps`
-
-This function is exactly like [`mapWithPropsMemo`](#mapWithPropsMemo), except that the mapper function is expected to return a Promise that will resolve with the props to add.
-
-```ts
-import * as React from "react";
-import { render } from "react-dom";
-import { component, mapWithAsyncProps, startWithType } from "refun";
-import axios from "axios";
-
-type TPokemon = {
-  id: string;
-};
-
-const Pokemon = component(
-  startWithType<TPokemon>(),
-  mapWithAsyncProps(
-    async ({ id }) => {
-      try {
-        const response = await axios.get(
-          `https://pokeapi.co/api/v2/pokemon/${id}`
-        );
-
-        return {
-          height: response.data.height,
-          weight: response.data.weight
-        };
-      } catch {
-        return {
-          height: undefined,
-          weight: undefined
-        };
-      }
-    },
-    ["id"]
-  )
-)(({ id, height, weight }) => (
-  <p>
-    {id} is {height} height and weights {weight}
-  </p>
-));
-
-export default () => <Pokemon id="pikachu" />
-```
-
-[📺 Check out live demo](https://codesandbox.io/s/refun-mapwithasyncprops-ty9l6)
-
 ## `mapWithProps`
+
+Signature:
+```ts
+type mapWithProps<P, R> = (getFn: (props: P) => R) => void
+```
 
 This function allows you to expand the props passed in to a component with more props derived from them. It is typically used to precalculate values that are to be used in the component, to minimize the amount of logic needed to do in the render.
 
 If the returned props have the same name as incoming props, they will override the incoming props.
 
-```ts
+```tsx
 import React from 'react'
 import {
   component,
@@ -1039,7 +1068,7 @@ import {
   mapWithProps,
   startWithType,
   TMapFocused
-} from "refun"
+} from 'refun'
 
 type TButton = {
   label: string
@@ -1073,11 +1102,15 @@ Note that this function just adds props to the component. If you want to replace
 
 ## `mapWithPropsMemo`
 
+```ts
+type mapWithPropsMemo<P, R> = (getFn: (props: P) => R, watchKeys: string[]) => void
+```
+
 This function does the same as [`mapWithProps`](#mapWithProps) and it memoizes the result for the props specified in the second parameter.
 
 An example use case in which this can prove useful is if you were to be calculating the Fibonacci number of an input, which is known to be expensive for large numbers:
 
-```ts
+```tsx
 import React from 'react'
 import { component, mapWithPropsMemo, startWithType } from 'refun'
 
@@ -1109,15 +1142,20 @@ Notice that `mapWithPropsMemo` takes two arguments, and that memoization happens
 
 [📺 Check out live demo](https://codesandbox.io/s/refun-mapwithpropsmemo-hjcso)
 
-## `onMount`
+## `onChange`
 
-This function calls the passed in callback when the component is first mounted, sending the current Props as argument.
+Signature:
+```ts
+type onChange <P> = (handler: (props: P) => Promise<void> | void, watchKeys: string[])
+```
+
+This function calls the passed in callback when the component is updated, sending the current Props as argument.
 
 For example:
 
-```ts
+```tsx
 import React from 'react'
-import { component, onMount, startWithType } from 'refun'
+import { component, onChange, startWithType } from 'refun'
 
 type TButton = {
   label: string,
@@ -1125,7 +1163,9 @@ type TButton = {
 
 export default component(
   startWithType<TButton>(),
-  onMount(({ label }) => console.log('Mounted with label', label))
+  onChange(({ label }) => {
+    console.log('Updated with label', label)
+  }, ['label'])
 )(({ label }) => (
   <button>
     {label}
@@ -1133,68 +1173,141 @@ export default component(
 ))
 ```
 
-[📺 Check out live demo](https://codesandbox.io/s/refun-onmount-5r5ol)
+[📺 Check out live demo](https://codesandbox.io/s/refun-onchange-lhvik)
 
-## `pureComponent`
+## `onLayout`
 
-This function is identical to [`component`](#component) except that it memoizes the React element that results from rendering with a certain set of props. The props that are memoized are the _inner_ props, that is, the props that the component will get as the result of the entire composition chain. These are different from the _outer_ props, that are the ones that consumers pass manually into the component.
-
-The purpose of this component is to prevent a re render from happening when the React tree is known to be the same. It is particularly useful when the React tree is a complex one, since the cost grows fast with the amount of nodes in the tree. Since the memoization is done in the inside of the component, all `map` functions will be run, making it ideal for components that control their own state.
-
-> Note that this function is meant to be used to avoid pointless re renders of complex trees, which is a concern that should be treated at the high level, in an app for example, rather than in small presentational components. Memoization comes with a cost, and React is already providing optimizations via reconciliation, so the type of optimizations that `pureComponent` does, similar to the old `shouldComponentUpdate`, is to be reserved for cases where there is a clear need for optimization.
-
+Signature:
 ```ts
-import React from 'react'
-import { mapReducer, pureComponent, startWithType } from 'refun'
-import AComplexHeader from './AComplexHeader'
-import AnExpensiveToComputeSidebar from './AnExpensiveToComputeSidebar'
+type onLayout <P> = (onLayoutHandler: (props: P) => Promise<void> | void, watchKeys: string[])
+```
 
-type TCounter = {
-  initialCount: number,
+This function calls the passed in callback when the component is updated, sending the current Props as argument.
+
+For example:
+
+```tsx
+import React from 'react'
+import { component, onLayout, startWithType } from 'refun'
+
+type TButton = {
+  label: string,
 }
 
-export default pureComponent(
-  startWithType<TCounter>(),
-  mapReducer(
-    (state, action) => {
-      switch (action.type) {
-        case 'ADD':
-          return {
-            counter: state.counter + 1
-          }
-
-        default:
-          return state
-      }
-    },
-    ({ initialCounter }) => ({
-      counter: initialCounter
-    })
-  )
-)(({ counter, dispatch }) = (
-  <main>
-    <AComplexHeader />
-    <AnExpensiveToComputeSidebar />
-    <button>
-      Add
-    </button>
-
-    <p>{counter}</p>
-  </main>
+export default component(
+  startWithType<TButton>(),
+  onLayout(({ label }) => {
+    console.log('Updated with label', label)
+  }, ['label'])
+)(({ label }) => (
+  <button>
+    {label}
+  </button>
 ))
 ```
 
-So to be clear, the component that receives `counter` and `dispatch` as props is the one that is going to be memoized. If your intention is to memoize an expensive computation in a function in the composition chain, such as calculating a value in the `mapWithProps`, take a look at [`mapWithPropsMemo`](#mapWithPropsMemo) instead.
+## `onUpdate`
 
-`pureComponent` should only be used in components that receive no `children` and no complex props, since otherwise the overhead of memoization is not worth it. If the component receives `children` or complex props (objects / arrays), `pureComponent` will not provide any benefit, since those are very likely (or guaranteed in the case of `children`) to be different on every render. `pureComponent` works by doing a shallow comparison of the current props with the previous props. Shallow comparison means that each prop is compared with hard equality with the previous value of that same props.
+Signature:
+```ts
+type onUpdate <P> = (onUpdateFn: (props: P) => (() => void) | void, watchKeys: string[])
+```
+
+This function calls the passed in callback when the component is mounted and updated, sending the current Props as an argument.
+> Pass certain propery keys as an array, to invoke handler only when such props has been updated.  
+> It is possible to return some *unsubscribe* function from *onUpdateHandler*. It will be called before next *onUpdate*.  
+> If watch array is empty *onUpdateHandler* will be called only for component mount and unmount cases.
+
+For example:
+
+```tsx
+import React from 'react'
+import { component, onUpdate, startWithType } from 'refun'
+
+type TButton = {
+  label: string,
+}
+
+export default component(
+  startWithType<TButton>(),
+  onUpdate(({ label }) => {
+    console.log('Updated with label', label)
+
+    const handler = () => {}
+    window.addEventListener('resize', handler)
+
+    return () => {
+      window.removeEventListener('resize', handler)
+    }
+  }, ['label'])
+)(({ label }) => (
+  <button>
+    {label}
+  </button>
+))
+```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-onupdate-x8wln)
+
+## `onUpdateAsync`
+
+Signature:
+```ts
+type onUpdateAsync <P> = (onUpdateFn: (propsRef: React.RefObject<P>) => (props: { cancelOthers: () => void, index: number }) => Generator<Promise<unknown>>, watchKeys: string[])
+```
+
+This is `onUpdate` variant that properly handles asynchronous behavior.
+> `propsRef` is a `props` reference, so *current* props are always available even after long waiting for some promises.  
+> `cancelOthers` provides a way to stop all concurrently running *routines*, if necessary. Canceled routine can use `finally` keyword to make some cleanup.  
+> Think of `function*` as the usual `async` function, which uses `yield` instead of `await`.
+
+For example:
+
+```tsx
+import React from 'react'
+import { component, onUpdateAsync, startWithType } from 'refun'
+
+type TComponent = {
+  ID: string,
+}
+
+export default component(
+  startWithType<TComponent>(),
+  mapState('state', 'setState', () => null, [])
+  onUpdateAsync((propsRef) => function* ({ cancelOthers, index }) {
+    try {
+      // cancel all concurrently running routines
+      cancelOthers()
+
+      // use 'yield' instead of 'await'
+      const res = yield fetch(`http://url.com?id=${props.current.ID}`)
+      const json = yield res.json()
+
+      props.current.setState(json)
+
+    } finally {
+      cleanup()
+    }
+}, ['ID'])
+)(({ state }) => (
+  <div>
+    {state}
+  </div>
+))
+```
 
 ## `startWithType`
+
+Signature:
+```ts
+type startWithType<P> = () => void
+```
 
 This function is simply a way of setting up the initial type in the [`component`](#component) composition chain, since TypeScript does not currently support doing that in the composition function itself (`component` in this case, but would be `compose` in Redux, Ramda, etc).
 
 It's purpose is entirely for types, and in runtime it's a no-op.
 
-```ts
+```tsx
 import React from 'react'
 import { component, startWithType } from 'refun'
 
@@ -1213,7 +1326,7 @@ export default component(
 
 Once this is fixed in TypeScript this function will be redundant and it will be possible to pass the generic directly into `component`:
 
-```ts
+```tsx
 import React from 'react'
 import { component } from 'refun'
 
@@ -1235,6 +1348,14 @@ export default component<TButton>(
 
 ## `StoreContextFactory`
 
+Signature:
+```ts
+type StoreContextFactory<S> = (store: Redux.Store<S>) => {
+  mapStoreState: <R>(mapStateToProps: (state: S) => R, stateKeysToWatch: string[]) => void,
+  mapStoreDispatch: (dispatchPropName: string) => void
+}
+```
+
 This function is a way of working with Redux stores together with React Hooks. It is an alternative to React Redux, with these goals:
 
 1. Work with Hooks, avoiding higher-order components
@@ -1249,10 +1370,10 @@ The way this function works is that it receives a Redux Store object, and return
 
 Check the example below for a full use case.
 
-```ts
-import * as React from "react"
+```tsx
+import React from 'react'
 import { createStore } from "redux"
-import { component, pureComponent, StoreContextFactory, mapHandlers } from "refun"
+import { component, pureComponent, StoreContextFactory, mapHandlers, startWithType } from 'refun'
 
 type TState = {
   counter: number
@@ -1285,11 +1406,10 @@ const initialState = {
 
 const store = createStore(reducer, initialState)
 
-const { StoreProvider, mapStoreState, mapStoreDispatch } = StoreContextFactory(
-  store
-)
+const { mapStoreState, mapStoreDispatch } = StoreContextFactory(store)
 
 const CounterDisplay = pureComponent(
+  startWithType<{}>(),
   mapStoreState(
     ({ counter }) => ({
       counter
@@ -1303,7 +1423,8 @@ const CounterDisplay = pureComponent(
 ))
 
 const ResetButton = component(
-  mapStoreDispatch,
+  startWithType<{}>(),
+  mapStoreDispatch('dispatch'),
   mapHandlers({
     onClick: ({ dispatch }) => () =>
       dispatch({
@@ -1317,7 +1438,8 @@ const ResetButton = component(
 ))
 
 const IncrementButton = component(
-  mapStoreDispatch,
+  startWithType<{}>(),
+  mapStoreDispatch('dispatch'),
   mapHandlers({
     onClick: ({ dispatch }) => () =>
       dispatch({
@@ -1332,13 +1454,11 @@ const IncrementButton = component(
 ))
 
 export default () => (
-  <StoreProvider>
-    <div>
-      <CounterDisplay />
-      <ResetButton />
-      <IncrementButton />
-    </div>
-  </StoreProvider>
+  <div>
+    <CounterDisplay />
+    <ResetButton />
+    <IncrementButton />
+  </div>
 )
 ```
 
@@ -1365,25 +1485,25 @@ If you are going to use information coming from the Synthetic Event, consider ex
 
 If you are not going to use _any_ information coming from the Event—such as in the example for [`mapDebouncedHandlerTimeout`](#mapDebouncedHandlerTimeout)—then you will not be affected by this issue.
 
-```ts
-import * as React from "react"
+```tsx
+import React from 'react'
 import {
   component,
   mapThrottledHandlerTimeout,
   startWithType,
   mapHandlers
-} from "refun"
+} from 'refun'
 
 type TSlider = {
   onChange: (string) => void
 }
 
 export default component(
+  startWithType<TSlider>(),
   mapHandlers({
     onChange: () => (value) =>
       console.log(`the handler has now been invoked with value: ${value}`)
   }),
-  startWithType<TSlider>(),
   mapThrottledHandlerTimeout("onChange", 300),
   mapHandlers({
     onChange: ({ onChange }) => ({ target: { value } }) => onChange(value)

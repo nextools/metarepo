@@ -5,16 +5,16 @@ import { createSpy, getSpyCalls } from 'spyfn'
 import { component, mapContext, startWithType } from '../src'
 
 test('mapContext', (t) => {
-  const compSpy = createSpy(() => null)
+  const componentSpy = createSpy(() => null)
   const Context = createContext({ ctxA: 'foo', ctxB: 42 })
   const MyComp = component(
     startWithType<{ foo: string }>(),
     mapContext(Context)
-  )(compSpy)
+  )(componentSpy)
+
+  let testRenderer: ReactTestRenderer
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
-
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
@@ -25,9 +25,9 @@ test('mapContext', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{ ctxA: 'foo', ctxB: 42, foo: 'bar' }],
+      [{ ctxA: 'foo', ctxB: 42, foo: 'bar' }], // Mount
     ],
     'Mount: should pass context as props'
   )
@@ -43,10 +43,10 @@ test('mapContext', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{ ctxA: 'foo', ctxB: 42, foo: 'bar' }],
-      [{ ctxA: 'bar', ctxB: 1337, foo: 'bar' }],
+      [{ ctxA: 'foo', ctxB: 42, foo: 'bar' }], // Mount
+      [{ ctxA: 'bar', ctxB: 1337, foo: 'bar' }], // Update Context
     ],
     'Update Context: should pass context as props'
   )

@@ -23,13 +23,13 @@ test('StoreContextFactory', (t) => {
   const dispatch = (_: any) => _
   const store = { getState: getStateSpy, dispatch, subscribe: subscribeSpy } as Store<{a: number, b: string}>
   const { mapStoreState, mapStoreDispatch } = StoreContextFactory(store)
-  const compSpy = createSpy(() => null)
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: string }>(),
     mapStoreState(mapStateSpy, ['a']),
     mapStoreDispatch('dispatch')
-  )(compSpy)
+  )(componentSpy)
 
   let testRenderer: ReactTestRenderer
 
@@ -74,7 +74,7 @@ test('StoreContextFactory', (t) => {
   )
   // render
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', result: 8, dispatch }], // Mount
     ],
@@ -122,7 +122,7 @@ test('StoreContextFactory', (t) => {
   )
   // render
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', result: 8, dispatch }], // Mount
       [{ foo: 'bar', result: 8, dispatch }], // Update
@@ -169,7 +169,7 @@ test('StoreContextFactory', (t) => {
   )
   // render
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', result: 8, dispatch }], // Mount
       [{ foo: 'bar', result: 8, dispatch }], // Update
@@ -218,7 +218,7 @@ test('StoreContextFactory', (t) => {
   )
   // render
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', result: 8, dispatch }], // Mount
       [{ foo: 'bar', result: 8, dispatch }], // Update

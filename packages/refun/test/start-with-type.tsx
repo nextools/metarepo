@@ -1,14 +1,16 @@
 import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
 import test from 'tape'
+import { createSpy, getSpyCalls } from 'spyfn'
 import { component, startWithType } from '../src'
 
 test('startWithType', (t) => {
+  const componentSpy = createSpy(() => null)
   const MyComp = component(
     startWithType<{ foo: string }>()
-  )((props) => <span {...props}/>)
+  )(componentSpy)
 
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   /* Mount */
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -19,10 +21,10 @@ test('startWithType', (t) => {
   })
 
   t.deepEquals(
-    testRenderer.root.findByType('span').props,
-    {
-      foo: 'foo',
-    },
+    getSpyCalls(componentSpy),
+    [
+      [{ foo: 'foo' }], // Mount
+    ],
     'Mount: should pass props'
   )
 
@@ -35,10 +37,11 @@ test('startWithType', (t) => {
   })
 
   t.deepEquals(
-    testRenderer.root.findByType('span').props,
-    {
-      foo: 'bar',
-    },
+    getSpyCalls(componentSpy),
+    [
+      [{ foo: 'foo' }], // Mount
+      [{ foo: 'bar' }], // Update
+    ],
     'Update: should pass props'
   )
 

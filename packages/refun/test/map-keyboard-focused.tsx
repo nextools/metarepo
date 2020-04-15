@@ -5,16 +5,16 @@ import { createSpy, getSpyCalls } from 'spyfn'
 import { component, mapKeyboardFocused, startWithType, TMapKeyboardFocused } from '../src'
 
 test('mapKeyboardFocused: no props, focus by press in', (t) => {
-  const compSpy = createSpy(() => null)
-  const getProps = () => getSpyCalls(compSpy)[getSpyCalls(compSpy).length - 1][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = () => getSpyCalls(componentSpy)[getSpyCalls(componentSpy).length - 1][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapKeyboardFocused>(),
     mapKeyboardFocused
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -28,7 +28,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
   const { onFocus, onBlur, onPressIn, onPressOut } = getProps()
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
     ],
@@ -46,7 +46,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -61,7 +61,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -76,7 +76,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -91,7 +91,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -106,7 +106,7 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -124,16 +124,16 @@ test('mapKeyboardFocused: no props, focus by press in', (t) => {
 })
 
 test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
-  const compSpy = createSpy(() => null)
-  const getProps = () => getSpyCalls(compSpy)[getSpyCalls(compSpy).length - 1][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = () => getSpyCalls(componentSpy)[getSpyCalls(componentSpy).length - 1][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapKeyboardFocused>(),
     mapKeyboardFocused
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -147,7 +147,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
   const { onFocus, onBlur, onPressIn, onPressOut } = getProps()
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
     ],
@@ -165,7 +165,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -180,7 +180,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -196,7 +196,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -212,7 +212,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -229,7 +229,7 @@ test('mapKeyboardFocused: no props, focus by keyboard', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -253,16 +253,16 @@ test('mapKeyboardFocused: external handlers', (t) => {
   const onBlurSpy = createSpy(() => {})
   const onPressInSpy = createSpy(() => {})
   const onPressOutSpy = createSpy(() => {})
-  const compSpy = createSpy(() => null)
-  const getProps = () => getSpyCalls(compSpy)[getSpyCalls(compSpy).length - 1][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = () => getSpyCalls(componentSpy)[getSpyCalls(componentSpy).length - 1][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapKeyboardFocused>(),
     mapKeyboardFocused
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -280,7 +280,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   const { onFocus, onBlur, onPressIn, onPressOut } = getProps()
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
     ],
@@ -326,7 +326,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -365,7 +365,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -405,7 +405,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -447,7 +447,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -492,7 +492,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -552,7 +552,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -624,7 +624,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -698,7 +698,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -774,7 +774,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -852,7 +852,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -936,7 +936,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -1017,7 +1017,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -1098,7 +1098,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -1179,7 +1179,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -1260,7 +1260,7 @@ test('mapKeyboardFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -1414,16 +1414,16 @@ test('mapKeyboardFocused: external handlers', (t) => {
 })
 
 test('mapKeyboardFocused: external isKeyboardFocused', (t) => {
-  const compSpy = createSpy(() => null)
-  const getProps = () => getSpyCalls(compSpy)[getSpyCalls(compSpy).length - 1][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = () => getSpyCalls(componentSpy)[getSpyCalls(componentSpy).length - 1][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapKeyboardFocused>(),
     mapKeyboardFocused
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -1437,7 +1437,7 @@ test('mapKeyboardFocused: external isKeyboardFocused', (t) => {
   const { onFocus, onBlur, onPressIn, onPressOut } = getProps()
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
     ],
@@ -1456,7 +1456,7 @@ test('mapKeyboardFocused: external isKeyboardFocused', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 4, isKeyboardFocused: true, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -1471,7 +1471,7 @@ test('mapKeyboardFocused: external isKeyboardFocused', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 4, isKeyboardFocused: true, onFocus, onBlur, onPressIn, onPressOut }], // Update
@@ -1487,7 +1487,7 @@ test('mapKeyboardFocused: external isKeyboardFocused', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isKeyboardFocused: false, onFocus, onBlur, onPressIn, onPressOut }], // Mount
       [{ foo: 4, isKeyboardFocused: true, onFocus, onBlur, onPressIn, onPressOut }], // Update
