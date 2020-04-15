@@ -10,7 +10,7 @@ import { getTarFilePath } from '../utils/get-tar-file-path'
 import { hasScreenshotDiff } from '../utils/has-screenshot-diff'
 import { bufferToPng } from '../utils/buffer-to-png'
 import { ApplyDpr } from '../utils/apply-dpr'
-import { TExample, TCheckResult } from '../types'
+import { TExample, TExampleResult } from '../types'
 import { TWorkerResultInternal, TCheckOptions } from './types'
 import { SCREENSHOTS_PER_WORKER_COUNT } from './constants'
 import { getContainerStyle } from './get-container-style'
@@ -48,7 +48,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
       tarFs = await TarFs(tarFilePath)
     } catch {}
 
-    const { examples } = await import(filePath) as { examples: Iterable<TExample> }
+    const { name, examples } = await import(filePath) as { examples: Iterable<TExample>, name: string }
     const transferList = [] as ArrayBuffer[]
     const status = {
       ok: 0,
@@ -58,7 +58,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
     }
 
     const asyncIterable = piAll(
-      map((example: TExample) => async (): Promise<[string, TCheckResult<Buffer>]> => {
+      map((example: TExample) => async (): Promise<[string, TExampleResult<Buffer>]> => {
         const html = renderToStaticMarkup(
           createElement(
             'div',
@@ -129,7 +129,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
       SCREENSHOTS_PER_WORKER_COUNT
     )
 
-    const results = await toMapAsync(asyncIterable)
+    const fileResults = await toMapAsync(asyncIterable)
 
     // DELETED
     if (tarFs !== null) {
@@ -138,7 +138,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
           continue
         }
 
-        if (!results.has(id)) {
+        if (!fileResults.has(id)) {
           const deletedScreenshot = await tarFs.read(id) as Buffer
           const deletedPng = bufferToPng(deletedScreenshot)
           const metaId = `${id}-meta`
@@ -152,7 +152,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
 
           transferList.push(deletedScreenshot)
 
-          results.set(id, {
+          fileResults.set(id, {
             type: 'DELETED',
             data: deletedScreenshot,
             meta,
@@ -168,7 +168,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
     }
 
     return {
-      value: [filePath, { results, status }],
+      value: [filePath, { name, results: fileResults, status }],
       transferList,
     }
   }

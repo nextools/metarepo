@@ -6,7 +6,7 @@ import { getTarFilePath } from '../utils/get-tar-file-path'
 import { bufferToPng } from '../utils/buffer-to-png'
 import { ApplyDpr } from '../utils/apply-dpr'
 import { hasScreenshotDiff } from '../utils/has-screenshot-diff'
-import { TCheckResults } from '../types'
+import { TFileResults } from '../types'
 
 Buffer.poolSize = 0
 
@@ -15,7 +15,7 @@ export const init = () => {
   const applyDpr = ApplyDpr(2)
   let tarFs = null as null | TTarFs
   const transferList = [] as ArrayBuffer[]
-  const results: TCheckResults<Buffer> = new Map()
+  const results: TFileResults<Buffer> = new Map()
   const status = {
     ok: 0,
     new: 0,
@@ -26,7 +26,7 @@ export const init = () => {
   parentPort!.on('message', async (bodyArr: Uint8Array) => {
     try {
       const bodyString = new TextDecoder('utf-8').decode(bodyArr)
-      const { path, id, meta, isDone, base64data } = JSON.parse(bodyString)
+      const { path, name, id, meta, isDone, base64data } = JSON.parse(bodyString)
       const newScreenshot = Buffer.from(base64data, 'base64')
 
       if (currentPath !== path) {
@@ -129,14 +129,16 @@ export const init = () => {
         parentPort!.postMessage({
           type: 'EXAMPLE',
           isDone: true,
-          value: {
-            filePath: path,
+          value: [path, {
+            name,
             results,
             status,
-          },
+          }],
         }, transferList)
       }
     } catch (error) {
+      console.error(error)
+
       const value = error instanceof Error ? error.message : error
 
       parentPort!.postMessage({ type: 'ERROR', value })

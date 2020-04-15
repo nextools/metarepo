@@ -1,9 +1,9 @@
-import { TGetResponseQuery, TResults } from '../types'
+import { TGetResponseQuery, TTotalResults } from '../types'
 
-export const getBuffer = (results: TResults, pathMap: Map<string, string>, query: TGetResponseQuery): Buffer | null => {
-  const [shortPath, id] = query.id.split(':')
-  const longPath = pathMap.get(shortPath)!
-  const result = results.get(longPath)!.get(id)!
+export const getBuffer = (totalResults: TTotalResults, pathsMap: Map<string, string>, query: TGetResponseQuery): Buffer | null => {
+  const [name, id] = query.id.split('::')
+
+  const result = totalResults.get(pathsMap.get(name)!)!.results.get(id)!
 
   if (result.type === 'NEW') {
     return Buffer.from(result.data)

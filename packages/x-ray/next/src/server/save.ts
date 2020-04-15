@@ -9,27 +9,28 @@ import { TResults } from '../types'
 
 const optimizePng = imageminPngout({ strategy: 2 })
 
-export const save = async (results: TResults, pathMap: Map<string, string>, keys: string[]): Promise<void> => {
+export const save = async (results: TResults, keys: string[]): Promise<void> => {
   const saveMap = keys.reduce((acc, key) => {
-    const [shortPath, id] = key.split(':')
-    const longPath = pathMap.get(shortPath)!
+    const [filePath, name, id] = key.split('::')
+    const fileId = `${filePath}::${name}`
 
-    if (!Reflect.has(acc, longPath)) {
-      acc[longPath] = []
+    if (!Reflect.has(acc, fileId)) {
+      acc[fileId] = []
     }
 
-    acc[longPath].push(id)
+    acc[fileId].push(id)
 
     return acc
   }, {} as { [path: string]: string[] })
 
-  for (const [filePath, ids] of Object.entries(saveMap)) {
+  for (const [fileId, ids] of Object.entries(saveMap)) {
+    const [filePath] = fileId.split('::')
     // TODO: extract `chrome` type
     const tarFs = await TarFs(getTarFilePath(filePath, 'chrome'))
 
     await pAll(
       ids.map((id) => async () => {
-        const result = results.get(filePath)!.get(id)!
+        const result = results.get(fileId)!.get(id)!
 
         switch (result.type) {
           case 'NEW': {

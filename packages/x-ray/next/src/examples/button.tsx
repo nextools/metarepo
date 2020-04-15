@@ -11,6 +11,7 @@ export const examples = map<number, TExample>((i) => ({
   meta: [i],
 }))(range(10))
 
+export const name = 'button'
 // export const examples = mapIterable<number, TExample>(makeNumIterable(10), (i) => ({
 //   id: String(i),
 //   element: <button>{i}</button>,

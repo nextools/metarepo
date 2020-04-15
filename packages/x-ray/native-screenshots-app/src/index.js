@@ -44,6 +44,7 @@ class Main extends Component {
       const iterator = file.examples[Symbol.iterator]()
 
       state[file.path] = {
+        name: file.name,
         iterator,
         example: iterator.next().value,
       }
@@ -54,7 +55,7 @@ class Main extends Component {
     this.filesInProgressCount = SCREENSHOTS_CONCURRENCY
   }
 
-  onCapture = async (path, id, meta, base64data) => {
+  onCapture = async ({ path, name, id, meta, base64data }) => {
     const { iterator } = this.state[path]
     const result = iterator.next()
 
@@ -66,6 +67,7 @@ class Main extends Component {
       body: JSON.stringify({
         isDone: result.done,
         path,
+        name,
         id,
         meta,
         base64data,
@@ -102,6 +104,7 @@ class Main extends Component {
         ...state,
         [nextFile.path]: {
           iterator: nextIterator,
+          name: nextFile.name,
           example: nextIterator.next().value,
         },
       }))
@@ -113,6 +116,7 @@ class Main extends Component {
       ...state,
       [path]: {
         iterator: state[path].iterator,
+        name,
         example: result.value,
       },
     }))
@@ -128,7 +132,13 @@ class Main extends Component {
               style={value.example.options.hasOwnWidth ? hasOwnWidthStyles : defaultStyles}
             >
               <ViewShot
-                onCapture={(data) => this.onCapture(path, value.example.id, value.example.meta, data)}
+                onCapture={(base64data) => this.onCapture({
+                  path,
+                  name: value.name,
+                  id: value.example.id,
+                  meta: value.example.meta,
+                  base64data,
+                })}
                 captureMode="mount"
                 options={{ result: 'base64' }}
                 style={{

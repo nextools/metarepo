@@ -1,15 +1,15 @@
-import { TCheckResults } from '../types'
+import { TFileResults } from '../types'
 
-export type TWorkerResult<T> = {
-  filePath: string,
-  results: TCheckResults<T>,
+export type TWorkerResult<T> = [string, {
+  name: string,
+  results: TFileResults<T>,
   status: {
     ok: number,
     new: number,
     diff: number,
     deleted: number,
   },
-}
+}]
 
 export type TMessage =
   { type: 'EXAMPLE', isDone: false } |

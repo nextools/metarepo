@@ -10,3 +10,5 @@ export const examples = map<number, TExample>((i) => ({
   },
   meta: [i],
 }))(range(10))
+
+export const name = 'input'

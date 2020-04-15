@@ -4,13 +4,26 @@ import { runWebApp } from '@rebox/web'
 import { rsolve } from 'rsolve'
 import { runServer } from './server/run'
 import { UI_HOST, UI_PORT } from './constants'
-// import { getResults } from './chrome/get-results'
-import { getResults } from './ios/get-results'
+// import { getResults } from './chrome-screenshots/get-results'
+import { getResults } from './ios-screenshots/get-results'
 
 const checkChromeScreenshots = async (files: string[]): Promise<void> => {
   const startTime = Date.now()
+  const status = {
+    ok: 0,
+    new: 0,
+    diff: 0,
+    deleted: 0,
+  }
 
-  const { status, results } = await getResults(files)
+  const totalResults = await getResults(files)
+
+  for (const result of totalResults.values()) {
+    status.ok += result.status.ok
+    status.new += result.status.new
+    status.diff += result.status.diff
+    status.deleted += result.status.deleted
+  }
 
   console.log(`ok: ${status.ok}`)
   console.log(`new: ${status.new}`)
@@ -23,7 +36,7 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
   }
 
   let closeRebox = null as null | (() => Promise<void>)
-  const savePromise = await runServer(results)
+  const savePromise = await runServer(totalResults)
 
   const entryPointPath = await rsolve('@x-ray/ui', 'browser')
   const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')

@@ -4,7 +4,7 @@ import url, { UrlWithParsedQuery } from 'url'
 import { runIosApp } from '@rebox/ios'
 import { rsolve } from 'rsolve'
 import { unchunkBuffer } from 'unchunk'
-import { TResults } from '../types'
+import { TTotalResults } from '../types'
 import { prepareFiles } from './prepare-files'
 import { TMessage } from './types'
 
@@ -12,7 +12,7 @@ const SERVER_HOST = 'localhost'
 const SERVER_PORT = 3003
 const WORKER_PATH = require.resolve('./worker-setup')
 
-export const getResults = async (files: string[], fontsDir?: string) => {
+export const getResults = async (files: string[], fontsDir?: string): Promise<TTotalResults> => {
   const entryPointPath = await rsolve('@x-ray/native-screenshots-app', 'react-native')
 
   await prepareFiles(entryPointPath, files)
@@ -33,15 +33,9 @@ export const getResults = async (files: string[], fontsDir?: string) => {
   })
 
   const workers = Array.from({ length: 2 }, () => new Worker(WORKER_PATH))
-  const results: TResults = new Map()
+  const totalResults: TTotalResults = new Map()
   const busyWorkerIds = new Set<number>()
   const pathWorkers = new Map<string, number>()
-  const status = {
-    ok: 0,
-    new: 0,
-    diff: 0,
-    deleted: 0,
-  }
 
   Buffer.poolSize = 0
 
@@ -92,14 +86,9 @@ export const getResults = async (files: string[], fontsDir?: string) => {
                     busyWorkerIds.delete(pathWorkers.get(path)!)
                     pathWorkers.delete(path)
 
-                    const result = message.value
+                    const [filePath, result] = message.value
 
-                    results.set(result.filePath, result.results)
-
-                    status.ok += result.status.ok
-                    status.new += result.status.new
-                    status.diff += result.status.diff
-                    status.deleted += result.status.deleted
+                    totalResults.set(filePath, result)
 
                     reqResolve()
 
@@ -133,5 +122,5 @@ export const getResults = async (files: string[], fontsDir?: string) => {
     server.listen(SERVER_PORT, SERVER_HOST)
   })
 
-  return { status, results }
+  return totalResults
 }
