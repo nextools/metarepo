@@ -1,10 +1,11 @@
 import React from 'react'
 import { startWithType, mapState, mapWithPropsMemo, pureComponent } from 'refun'
 import { isDefined } from 'tsfn'
+import { diffArrays } from 'diff'
 import { PrimitiveText as Text } from '@revert/text'
 import { PrimitiveBackground as Background } from '@revert/background'
 import { PrimitiveBorder as Border } from '@revert/border'
-import { PrimitiveBlock as Block } from '@revert/block'
+import { PrimitiveBlock as Block, PrimitiveBlock } from '@revert/block'
 import { apiLoadSnapshot } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
@@ -21,7 +22,7 @@ import {
 } from '../config'
 import { onMountAsync } from './on-mount-async'
 
-export type TFileResultLine = {
+export type TDiffLine = {
   value: string,
   type?: 'added' | 'removed',
 }
@@ -31,16 +32,50 @@ export type TSnapshotDiff = TRect & {
   isDiscarded: boolean,
 }
 
+// TODO: Background VS Text z-index
+
 export const SnapshotDiff = pureComponent(
   startWithType<TSnapshotDiff>(),
   mapStoreDispatch('dispatch'),
-  mapState('state', 'setState', () => null as TFileResultLine[] | null, []),
+  mapState('state', 'setState', () => null as TDiffLine[] | null, []),
   onMountAsync(async ({ setState, id, dispatch, isMountedRef }) => {
     try {
-      const data = await apiLoadSnapshot({ id, type: 'ORIG' })
+      const [dataOrig, dataNew] = await Promise.all([
+        apiLoadSnapshot({ id, type: 'ORIG' }),
+        apiLoadSnapshot({ id, type: 'NEW' }),
+      ])
+      const linesOrig = dataOrig.split('\n')
+      const linesNew = dataNew.split('\n')
+      const linesDiff = diffArrays(linesOrig, linesNew).reduce((result, chunk) => {
+        result.push(
+          ...chunk.value.map((line) => {
+            if (chunk.added) {
+              return {
+                value: line,
+                type: 'added' as const,
+              }
+            }
+
+            if (chunk.removed) {
+              return {
+                value: line,
+                type: 'removed' as const,
+              }
+            }
+
+            return {
+              value: line,
+            }
+          })
+        )
+
+        return result
+      }, [] as TDiffLine[])
+
+      console.log(linesDiff)
 
       if (isMountedRef.current) {
-        setState(data)
+        setState(linesDiff)
       }
     } catch (err) {
       console.log(err)
@@ -91,15 +126,17 @@ export const SnapshotDiff = pureComponent(
         {line.type === 'removed' && (
           <Background color={COLOR_LINE_BG_REMOVED}/>
         )}
-        <Text
-          fontFamily="monospace"
-          fontSize={SNAPSHOT_GRID_FONT_SIZE}
-          lineHeight={SNAPSHOT_GRID_LINE_HEIGHT}
-          shouldPreserveWhitespace
-          shouldPreventSelection
-        >
-          {line.value}
-        </Text>
+        <PrimitiveBlock>
+          <Text
+            fontFamily="monospace"
+            fontSize={SNAPSHOT_GRID_FONT_SIZE}
+            lineHeight={SNAPSHOT_GRID_LINE_HEIGHT}
+            shouldPreserveWhitespace
+            shouldPreventSelection
+          >
+            {line.value}
+          </Text>
+        </PrimitiveBlock>
       </Block>
     ))}
     <Border

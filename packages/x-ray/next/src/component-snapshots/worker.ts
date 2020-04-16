@@ -12,7 +12,7 @@ import { getSnapshotDimensions } from './get-snapshot-dimensions'
 import { SNAPSHOTS_PER_WORKER_COUNT } from './constants'
 
 export const check = () => async (filePath: string): Promise<TWorkerResultInternal<string>> => {
-  const tarFilePath = getTarFilePath(filePath, 'web-snapshots')
+  const tarFilePath = getTarFilePath(filePath, 'component-snapshots')
   let tarFs = null as null | TTarFs
 
   try {
