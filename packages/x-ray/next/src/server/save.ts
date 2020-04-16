@@ -5,32 +5,37 @@ import imageminPngout from 'imagemin-pngout'
 import { isDefined } from 'tsfn'
 import { getTarFilePath } from '../utils/get-tar-file-path'
 import { WRITE_RESULT_CONCURRENCY } from '../constants'
-import { TResults } from '../types'
+import { TTotalResults } from '../types'
 
 const optimizePng = imageminPngout({ strategy: 2 })
 
-export const save = async (results: TResults, keys: string[]): Promise<void> => {
-  const saveMap = keys.reduce((acc, key) => {
-    const [filePath, name, id] = key.split('::')
-    const fileId = `${filePath}::${name}`
+export type TSaveOptions = {
+  totalResults: TTotalResults,
+  pathsMap: Map<string, string>,
+  keys: string[],
+  type: string,
+}
 
-    if (!Reflect.has(acc, fileId)) {
-      acc[fileId] = []
+export const save = async (options: TSaveOptions): Promise<void> => {
+  const saveMap = options.keys.reduce((acc, key) => {
+    const [name, id] = key.split('::')
+    const filePath = options.pathsMap.get(name)!
+
+    if (!Reflect.has(acc, filePath)) {
+      acc[filePath] = []
     }
 
-    acc[fileId].push(id)
+    acc[filePath].push(id)
 
     return acc
   }, {} as { [path: string]: string[] })
 
-  for (const [fileId, ids] of Object.entries(saveMap)) {
-    const [filePath] = fileId.split('::')
-    // TODO: extract `chrome` type
-    const tarFs = await TarFs(getTarFilePath(filePath, 'chrome'))
+  for (const [filePath, ids] of Object.entries(saveMap)) {
+    const tarFs = await TarFs(getTarFilePath(filePath, options.type))
 
     await pAll(
       ids.map((id) => async () => {
-        const result = results.get(fileId)!.get(id)!
+        const result = options.totalResults.get(filePath)!.results.get(id)!
 
         switch (result.type) {
           case 'NEW': {

@@ -5,11 +5,11 @@ import { map, toMapAsync } from 'iterama'
 import { piAll } from 'piall'
 import serialize from '@x-ray/serialize-react-tree'
 import { getTarFilePath } from '../utils/get-tar-file-path'
-import { TExample, TCheckResult } from '../types'
+import { TExample, TExampleResult } from '../types'
 import { hasSnapshotDiff } from '../utils/has-snapshot-diff'
 import { TWorkerResultInternal } from './types'
-import { SCREENSHOTS_PER_WORKER_COUNT } from './constants'
 import { getSnapshotDimensions } from './get-snapshot-dimensions'
+import { SNAPSHOTS_PER_WORKER_COUNT } from './constants'
 
 export const check = () => {
   // stop using internal pool and allocate memory every time
@@ -20,7 +20,7 @@ export const check = () => {
   Buffer.poolSize = 0
 
   return async (filePath: string): Promise<TWorkerResultInternal<Buffer>> => {
-    const tarFilePath = getTarFilePath(filePath, 'chrome')
+    const tarFilePath = getTarFilePath(filePath, 'web-snapshots')
     let tarFs = null as null | TTarFs
 
     try {
@@ -40,7 +40,7 @@ export const check = () => {
     // const results: TCheckResults<Buffer> = new Map()
 
     const asyncIterable = piAll(
-      map((example: TExample) => async (): Promise<[string, TCheckResult<Buffer>]> => {
+      map((example: TExample) => async (): Promise<[string, TExampleResult<Buffer>]> => {
         const newSnapshot = serialize(example.element)
         const newSnapshotBuffer = Buffer.from(newSnapshot)
 
@@ -91,7 +91,7 @@ export const check = () => {
           type: 'OK',
         }]
       })(examples),
-      SCREENSHOTS_PER_WORKER_COUNT
+      SNAPSHOTS_PER_WORKER_COUNT
     )
 
     const results = await toMapAsync(asyncIterable)

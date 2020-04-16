@@ -31,7 +31,7 @@ export const init = () => {
 
       if (currentPath !== path) {
         try {
-          const tarFilePath = getTarFilePath(path, 'ios')
+          const tarFilePath = getTarFilePath(path, 'ios-screenshots')
 
           await access(tarFilePath)
 

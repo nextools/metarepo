@@ -39,7 +39,7 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
   Buffer.poolSize = 0
 
   return async (filePath: string): Promise<TWorkerResultInternal<Buffer>> => {
-    const tarFilePath = getTarFilePath(filePath, 'chrome')
+    const tarFilePath = getTarFilePath(filePath, 'chrome-screenshots')
     let tarFs = null as null | TTarFs
 
     try {

@@ -8,7 +8,7 @@ import { getList } from './get-list'
 import { getBuffer } from './get-buffer'
 import { save } from './save'
 
-export const runServer = (totalResults: TTotalResults) => new Promise<() => Promise<void>>((serverResolve, serverReject) => {
+export const runServer = (totalResults: TTotalResults, type: string) => new Promise<() => Promise<void>>((serverResolve, serverReject) => {
   const pathsMap = new Map<string, string>()
 
   for (const [key, value] of totalResults) {
@@ -36,7 +36,7 @@ export const runServer = (totalResults: TTotalResults) => new Promise<() => Prom
             }
 
             if (req.method === 'GET' && urlData.pathname === '/get') {
-              const buffer = getBuffer(totalResults, pathsMap, urlData.query)
+              const buffer = getBuffer({ totalResults, pathsMap, query: urlData.query })
 
               if (buffer === null) {
                 throw new Error(`Invalid get request: ${req.url}`)
@@ -51,7 +51,7 @@ export const runServer = (totalResults: TTotalResults) => new Promise<() => Prom
             if (req.method === 'POST' && req.url === '/save') {
               const keys = await unchunkJson<string[]>(req)
 
-              await save(totalResults, keys)
+              await save({ totalResults, pathsMap, keys, type })
 
               res.end()
               server.close((error) => {
