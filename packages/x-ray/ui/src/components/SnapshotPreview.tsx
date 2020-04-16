@@ -2,22 +2,17 @@ import React from 'react'
 import { component, startWithType, mapState, mapContext } from 'refun'
 import { PrimitiveText as Text } from '@revert/text'
 import { LayoutContext } from '@revert/layout'
-import { PrimitiveBackground as Background } from '@revert/background'
+// import { PrimitiveBackground as Background } from '@revert/background'
 import { PrimitiveBlock as Block } from '@revert/block'
 import { TSnapshotGridItem } from '../types'
 import { mapStoreDispatch } from '../store'
 import { apiLoadSnapshot } from '../api'
 import { actionError } from '../actions'
-import { COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED } from '../config'
+// import { COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED } from '../config'
 import { onMountAsync } from './on-mount-async'
 
 const LINE_HEIGHT = 18
 const CHAR_WIDTH = 8.39
-
-export type TFileResultLine = {
-  value: string,
-  type?: 'added' | 'removed',
-}
 
 export type TSnapshotPreview = {
   item: TSnapshotGridItem,
@@ -27,13 +22,17 @@ export const SnapshotPreview = component(
   startWithType<TSnapshotPreview>(),
   mapContext(LayoutContext),
   mapStoreDispatch('dispatch'),
-  mapState('state', 'setState', () => null as TFileResultLine[] | null, []),
+  mapState('state', 'setState', () => null as string[] | null, []),
   onMountAsync(async ({ setState, item, dispatch, isMountedRef }) => {
     try {
-      const data = await apiLoadSnapshot(item)
+      const data = await apiLoadSnapshot({
+        id: item.id,
+        type: 'NEW',
+      })
+      const lines = data.split('\n')
 
       if (isMountedRef.current) {
-        setState(data)
+        setState(lines)
       }
     } catch (err) {
       console.log(err)
@@ -61,12 +60,12 @@ export const SnapshotPreview = component(
           width={item.width * CHAR_WIDTH}
           key={i}
         >
-          {line.type === 'added' && (
+          {/* {line.type === 'added' && (
             <Background color={COLOR_LINE_BG_ADDED}/>
           )}
           {line.type === 'removed' && (
             <Background color={COLOR_LINE_BG_REMOVED}/>
-          )}
+          )} */}
           <Block>
             <Text
               fontFamily="monospace"
@@ -74,7 +73,7 @@ export const SnapshotPreview = component(
               lineHeight={LINE_HEIGHT}
               shouldPreserveWhitespace
             >
-              {line.value}
+              {line}
             </Text>
           </Block>
         </Block>

@@ -1,18 +1,13 @@
 import { HOST, PORT } from '../config'
 
-export type TFileResultLine = {
-  value: string,
-  type?: 'added' | 'removed',
-}
-
-const apiLoadSnapshotCache = new Map<string, TFileResultLine[]>()
+const apiLoadSnapshotCache = new Map<string, string>()
 
 export type TApiLoadSnapshotOpts = {
   id: string,
   type: 'ORIG' | 'NEW',
 }
 
-export const apiLoadSnapshot = async (opts: TApiLoadSnapshotOpts): Promise<TFileResultLine[]> => {
+export const apiLoadSnapshot = async (opts: TApiLoadSnapshotOpts): Promise<string> => {
   const params = `type=${opts.type}&id=${encodeURIComponent(opts.id)}`
 
   if (apiLoadSnapshotCache.has(params)) {
@@ -25,8 +20,7 @@ export const apiLoadSnapshot = async (opts: TApiLoadSnapshotOpts): Promise<TFile
     throw new Error(`Load snapshot (${response.status}): ${response.statusText}`)
   }
 
-  const resultStr = await response.text()
-  const result = JSON.parse(resultStr)
+  const result = await response.text()
 
   apiLoadSnapshotCache.set(params, result)
 
