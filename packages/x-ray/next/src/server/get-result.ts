@@ -1,30 +1,31 @@
 import { TGetResponseQuery, TTotalResults } from '../types'
+import { TResultsType } from './types'
 
-export type TGetBufferOptions = {
-  totalResults: TTotalResults,
+export type TGetResultOptions = {
+  results: TTotalResults<TResultsType>,
   pathsMap: Map<string, string>,
   query: TGetResponseQuery,
 }
 
-export const getBuffer = (options: TGetBufferOptions): Buffer | null => {
+export const getResult = (options: TGetResultOptions): TResultsType | null => {
   const [name, id] = options.query.id.split('::')
 
-  const result = options.totalResults.get(options.pathsMap.get(name)!)!.results.get(id)!
+  const result = options.results.get(options.pathsMap.get(name)!)!.results.get(id)!
 
   if (result.type === 'NEW') {
-    return Buffer.from(result.data)
+    return result.data
   }
 
   if (result.type === 'DELETED') {
-    return Buffer.from(result.data)
+    return result.data
   }
 
   if (result.type === 'DIFF' && options.query.type === 'ORIG') {
-    return Buffer.from(result.origData)
+    return result.origData
   }
 
   if (result.type === 'DIFF' && options.query.type === 'NEW') {
-    return Buffer.from(result.newData)
+    return result.data
   }
 
   return null

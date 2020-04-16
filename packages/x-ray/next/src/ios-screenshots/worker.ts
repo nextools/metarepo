@@ -70,12 +70,12 @@ export const init = () => {
           results.set(id, {
             type: 'DIFF',
             meta,
+            data: newScreenshot,
+            width: applyDpr(newPng.width),
+            height: applyDpr(newPng.height),
             origData: origScreenshot,
             origWidth: applyDpr(origPng.width),
             origHeight: applyDpr(origPng.height),
-            newData: newScreenshot,
-            newWidth: applyDpr(newPng.width),
-            newHeight: applyDpr(newPng.height),
           })
 
           status.diff++

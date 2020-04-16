@@ -1,6 +1,5 @@
 import { TExtend } from 'tsfn'
 import { ThunkAction } from 'redux-thunk'
-import { TSnapshotItem, TSnapshotItems } from '@x-ray/snapshots'
 import { TListItems, TItem } from '../../next/src/types'
 
 export type TPosition = {
@@ -36,7 +35,7 @@ export type TGridItem = TPosition & {
 
 export type TScreenshotGridItem = TItem & TGridItem
 
-export type TSnapshotGridItem = TSnapshotItem & TGridItem
+export type TSnapshotGridItem = TItem & TGridItem
 
 export type TState = {
   error?: string,
@@ -47,7 +46,7 @@ export type TState = {
   files: string[],
 } & ({
   type: 'text' | null,
-  items: TSnapshotItems,
+  items: TListItems,
   selectedItem: TSnapshotGridItem | null,
 } | {
   type: 'image' | null,

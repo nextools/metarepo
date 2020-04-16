@@ -1,26 +1,9 @@
 import plugin from '@start/plugin'
-import {
-  CheckChromeScreenshots,
-  CheckFirefoxScreenshots,
-  CheckIosScreenshots,
-  CheckAndroidScreenshots,
-  CheckIosWebScreenshots,
-  CheckAndroidWebScreenshots,
-  CheckChromePerfSnapshots,
-  Pkg,
-} from '@nextools/start-preset'
+import { Pkg } from '@nextools/start-preset'
 
 export * from '@nextools/start-preset'
 
 // custom tasks:
-export const checkChromeScreenshots = CheckChromeScreenshots()
-export const checkFirefoxScreenshots = CheckFirefoxScreenshots()
-export const checkAndroidScreenshots = CheckAndroidScreenshots()
-export const checkIosScreenshots = CheckIosScreenshots()
-export const checkIosWebScreenshots = CheckIosWebScreenshots()
-export const checkAndroidWebScreenshots = CheckAndroidWebScreenshots()
-export const checkChromePerfSnapshots = CheckChromePerfSnapshots()
-
 export const pkg = Pkg({
   lib: {
     $description$: null,

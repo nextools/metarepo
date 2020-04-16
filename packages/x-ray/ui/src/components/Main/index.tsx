@@ -2,8 +2,6 @@ import React, { Fragment } from 'react'
 import { component, startWithType, onMount, mapHandlers, mapState, mapContext } from 'refun'
 import { PrimitiveImage } from '@revert/image'
 import { Layout, Layout_Item, LayoutContext } from '@revert/layout'
-import { Background } from '@revert/background'
-import { TSnapshotItems } from '@x-ray/snapshots'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { actionLoadList, actionSave } from '../../actions'
 import { TType } from '../../types'
@@ -17,7 +15,7 @@ import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
 
 const isScreenshots = (items: any, type: TType | null): items is TListItems => type === 'image' && Object.keys(items).length > 0
-const isSnapshots = (items: any, type: TType | null): items is TSnapshotItems => type === 'text' && Object.keys(items).length > 0
+const isSnapshots = (items: any, type: TType | null): items is TListItems => type === 'text' && Object.keys(items).length > 0
 
 export type TMain = {}
 

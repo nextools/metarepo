@@ -1,10 +1,12 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
-import { TSyntxLines } from '@x-ray/common-utils'
 import { PrimitiveBlock as Block } from '@revert/block'
+import { TLineElement } from 'syntx'
 import { TRect } from '../../types'
 import { LineElement } from './LineElement'
 import { LINE_HEIGHT } from './constants'
+
+export type TSyntxLines = TLineElement[][]
 
 export type TSourceCode = TRect & {
   source: TSyntxLines,

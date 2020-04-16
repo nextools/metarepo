@@ -55,8 +55,8 @@ export const ScreenshotGrid = pureComponent(
       let gridHeight: number
 
       if (item.type === 'DIFF') {
-        const largestWidth = item.origWidth > item.newWidth ? item.origWidth : item.newWidth
-        const largestHeight = item.origHeight > item.newHeight ? item.origHeight : item.newHeight
+        const largestWidth = item.origWidth > item.width ? item.origWidth : item.width
+        const largestHeight = item.origHeight > item.height ? item.origHeight : item.height
 
         gridHeight = (gridWidth - BORDER_SIZE * 2) / largestWidth * largestHeight + BORDER_SIZE * 2
       } else {
@@ -191,22 +191,8 @@ export const ScreenshotGrid = pureComponent(
                     )
                   }
 
-                  if (item.type === 'DELETED') {
-                    return (
-                      <ScreenshotDeleted
-                        key={item.id}
-                        id={item.id}
-                        top={item.top}
-                        left={item.left}
-                        width={item.gridWidth}
-                        height={item.gridHeight}
-                        isDiscarded={isDiscarded}
-                      />
-                    )
-                  }
-
                   if (item.type === 'DIFF') {
-                    const largestWidth = item.origWidth > item.newWidth ? item.origWidth : item.newWidth
+                    const largestWidth = item.origWidth > item.width ? item.origWidth : item.width
                     const scale = item.gridWidth / largestWidth
 
                     return (
@@ -217,10 +203,24 @@ export const ScreenshotGrid = pureComponent(
                         left={item.left}
                         oldWidth={item.origWidth * scale}
                         oldHeight={item.origHeight * scale}
-                        newWidth={item.newWidth * scale}
-                        newHeight={item.newHeight * scale}
+                        newWidth={item.width * scale}
+                        newHeight={item.height * scale}
                         oldAlpha={1 - alpha}
                         newAlpha={alpha}
+                        isDiscarded={isDiscarded}
+                      />
+                    )
+                  }
+
+                  if (item.type === 'DELETED') {
+                    return (
+                      <ScreenshotDeleted
+                        key={item.id}
+                        id={item.id}
+                        top={item.top}
+                        left={item.left}
+                        width={item.gridWidth}
+                        height={item.gridHeight}
                         isDiscarded={isDiscarded}
                       />
                     )

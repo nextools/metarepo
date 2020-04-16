@@ -12,7 +12,7 @@ const SERVER_HOST = 'localhost'
 const SERVER_PORT = 3003
 const WORKER_PATH = require.resolve('./worker-setup')
 
-export const getResults = async (files: string[], fontsDir?: string): Promise<TTotalResults> => {
+export const getResults = async (files: string[], fontsDir?: string): Promise<TTotalResults<Uint8Array>> => {
   const entryPointPath = await rsolve('@x-ray/native-screenshots-app', 'react-native')
 
   await prepareFiles(entryPointPath, files)
@@ -33,7 +33,7 @@ export const getResults = async (files: string[], fontsDir?: string): Promise<TT
   })
 
   const workers = Array.from({ length: 2 }, () => new Worker(WORKER_PATH))
-  const totalResults: TTotalResults = new Map()
+  const totalResults: TTotalResults<Uint8Array> = new Map()
   const busyWorkerIds = new Set<number>()
   const pathWorkers = new Map<string, number>()
 

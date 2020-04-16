@@ -1,12 +1,12 @@
 import { runChromium } from 'xrom'
 import { workerama } from 'workerama'
-import { toMapAsync, forEachAsync } from 'iterama'
+import { forEachAsync, toMapAsync } from 'iterama'
 import { pipe } from 'funcom'
 import { TTotalResults } from '../types'
 import { TCheckOptions, TWorkerResult } from './types'
 import { MAX_THREAD_COUNT, WORKER_PATH } from './constants'
 
-export const getResults = async (files: string[]): Promise<TTotalResults> => {
+export const getResults = async (files: string[]): Promise<TTotalResults<Uint8Array>> => {
   const browserWSEndpoint = await runChromium({ shouldCloseOnExit: true })
   const checkOptions: TCheckOptions = {
     browserWSEndpoint,

@@ -1,4 +1,4 @@
-import { TCheckResults } from '../types'
+import { TFileResults } from '../types'
 
 export type TCheckOptions = {
   browserWSEndpoint: string,
@@ -6,7 +6,8 @@ export type TCheckOptions = {
 }
 
 export type TWorkerResult<T> = [string, {
-  results: TCheckResults<T>,
+  name: string,
+  results: TFileResults<T>,
   status: {
     ok: number,
     new: number,

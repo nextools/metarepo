@@ -1,12 +1,16 @@
-import { TFileResultLine, TSnapshotResultType } from '@x-ray/snapshots'
 import { HOST, PORT } from '../config'
 
-export type TApiLoadSnapshotOpts = {
-  id: string,
-  type: TSnapshotResultType,
+export type TFileResultLine = {
+  value: string,
+  type?: 'added' | 'removed',
 }
 
 const apiLoadSnapshotCache = new Map<string, TFileResultLine[]>()
+
+export type TApiLoadSnapshotOpts = {
+  id: string,
+  type: 'ORIG' | 'NEW',
+}
 
 export const apiLoadSnapshot = async (opts: TApiLoadSnapshotOpts): Promise<TFileResultLine[]> => {
   const params = `type=${opts.type}&id=${encodeURIComponent(opts.id)}`

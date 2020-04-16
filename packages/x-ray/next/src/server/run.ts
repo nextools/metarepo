@@ -5,13 +5,20 @@ import { unchunkJson } from 'unchunk'
 import { TGetResponseQuery, TTotalResults } from '../types'
 import { UI_HOST, UI_PORT, SERVER_PORT, SERVER_HOST } from '../constants'
 import { getList } from './get-list'
-import { getBuffer } from './get-buffer'
+import { getResult } from './get-result'
 import { save } from './save'
+import { TResultsType } from './types'
 
-export const runServer = (totalResults: TTotalResults, type: string) => new Promise<() => Promise<void>>((serverResolve, serverReject) => {
+export type TRunServerOptions = {
+  results: TTotalResults<TResultsType>,
+  type: string,
+  encoding: 'image' | 'text',
+}
+
+export const runServer = (options: TRunServerOptions) => new Promise<() => Promise<void>>((serverResolve, serverReject) => {
   const pathsMap = new Map<string, string>()
 
-  for (const [key, value] of totalResults) {
+  for (const [key, value] of options.results) {
     pathsMap.set(key, value.name)
     pathsMap.set(value.name, key)
   }
@@ -28,7 +35,10 @@ export const runServer = (totalResults: TTotalResults, type: string) => new Prom
             }
 
             if (req.method === 'GET' && urlData.pathname === '/list') {
-              const list = getList(totalResults)
+              const list = getList({
+                results: options.results,
+                encoding: options.encoding,
+              })
 
               res.end(JSON.stringify(list))
 
@@ -36,14 +46,22 @@ export const runServer = (totalResults: TTotalResults, type: string) => new Prom
             }
 
             if (req.method === 'GET' && urlData.pathname === '/get') {
-              const buffer = getBuffer({ totalResults, pathsMap, query: urlData.query })
+              const result = getResult({
+                results: options.results,
+                pathsMap,
+                query: urlData.query,
+              })
 
-              if (buffer === null) {
+              if (result === null) {
                 throw new Error(`Invalid get request: ${req.url}`)
               }
 
-              res.setHeader('Content-Type', 'image/png')
-              res.end(buffer, 'binary')
+              if (options.encoding === 'image') {
+                res.setHeader('Content-Type', 'image/png')
+                res.end(Buffer.from(result), 'binary')
+              } else {
+                res.end(result)
+              }
 
               return
             }
@@ -51,7 +69,13 @@ export const runServer = (totalResults: TTotalResults, type: string) => new Prom
             if (req.method === 'POST' && req.url === '/save') {
               const keys = await unchunkJson<string[]>(req)
 
-              await save({ totalResults, pathsMap, keys, type })
+              await save({
+                results: options.results,
+                pathsMap,
+                keys,
+                type: options.type,
+                encoding: options.encoding,
+              })
 
               res.end()
               server.close((error) => {

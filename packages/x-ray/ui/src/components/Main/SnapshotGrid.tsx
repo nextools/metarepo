@@ -4,19 +4,19 @@ import bsc from 'bsc'
 import { PrimitiveBorder as Border } from '@revert/border'
 import { isUndefined } from 'tsfn'
 import { LayoutContext } from '@revert/layout'
-import { TSnapshotItems } from '@x-ray/snapshots'
 import { PrimitiveBlock as Block } from '@revert/block'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectSnapshot } from '../../actions'
 import { TSnapshotGridItem } from '../../types'
-import { SnapshotGridItem } from '../SnapshotGridItem'
 import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT, BORDER_SIZE, COLOR_BLACK, SNAPSHOT_GRID_MAX_LINES } from '../../config'
+import { TListItems } from '../../../../next/src/types'
+import { SnapshotNew } from '../SnapshotNew'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 import { Pointer } from './Pointer'
 
 export type TSnapshotGrid = {
-  items: TSnapshotItems,
+  items: TListItems,
   discardedItems: string[],
   filteredFiles: string[],
 }
@@ -163,18 +163,49 @@ export const SnapshotGrid = pureComponent(
           if (isVisible) {
             const isDiscarded = discardedItems.includes(item.id)
 
-            return (
-              <SnapshotGridItem
-                key={item.id}
-                id={item.id}
-                type={item.type}
-                top={item.top}
-                left={item.left}
-                width={item.gridWidth}
-                height={item.gridHeight}
-                isDiscarded={isDiscarded}
-              />
-            )
+            if (item.type === 'NEW') {
+              return (
+                <SnapshotNew
+                  key={item.id}
+                  id={item.id}
+                  top={item.top}
+                  left={item.left}
+                  width={item.gridWidth}
+                  height={item.gridHeight}
+                  isDiscarded={isDiscarded}
+                />
+              )
+            }
+
+            // if (item.type === 'DIFF') {
+            //   return (
+            //     <SnapshotDiff
+            //       key={item.id}
+            //       id={item.id}
+            //       type={item.type}
+            //       top={item.top}
+            //       left={item.left}
+            //       width={item.gridWidth}
+            //       height={item.gridHeight}
+            //       isDiscarded={isDiscarded}
+            //     />
+            //   )
+            // }
+
+            // if (item.type === 'DELETED') {
+            //   return (
+            //     <SnapshotDiff
+            //       key={item.id}
+            //       id={item.id}
+            //       type={item.type}
+            //       top={item.top}
+            //       left={item.left}
+            //       width={item.gridWidth}
+            //       height={item.gridHeight}
+            //       isDiscarded={isDiscarded}
+            //     />
+            //   )
+            // }
           }
         })
       )

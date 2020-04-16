@@ -1,9 +1,8 @@
-import { TSnapshotsListResult } from '@x-ray/snapshots'
 import { HOST, PORT } from '../config'
 import { TListItems } from '../../../next/src/types'
 
-export type TApiLoadListResult = TSnapshotsListResult | {
-  type: 'image',
+export type TApiLoadListResult = {
+  type: 'image' | 'text',
   files: string[],
   items: TListItems,
 }

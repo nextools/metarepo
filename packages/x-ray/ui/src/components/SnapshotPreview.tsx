@@ -1,6 +1,5 @@
 import React from 'react'
 import { component, startWithType, mapState, mapContext } from 'refun'
-import { TFileResultLine } from '@x-ray/snapshots'
 import { PrimitiveText as Text } from '@revert/text'
 import { LayoutContext } from '@revert/layout'
 import { PrimitiveBackground as Background } from '@revert/background'
@@ -14,6 +13,11 @@ import { onMountAsync } from './on-mount-async'
 
 const LINE_HEIGHT = 18
 const CHAR_WIDTH = 8.39
+
+export type TFileResultLine = {
+  value: string,
+  type?: 'added' | 'removed',
+}
 
 export type TSnapshotPreview = {
   item: TSnapshotGridItem,

@@ -4,9 +4,9 @@ import { runWebApp } from '@rebox/web'
 import { rsolve } from 'rsolve'
 import { runServer } from './server/run'
 import { UI_HOST, UI_PORT } from './constants'
-import { getResults } from './chrome-screenshots/get-results'
+import { getResults } from './component-snapshots/get-results'
 
-const checkChromeScreenshots = async (files: string[]): Promise<void> => {
+const checkComponentSnapshots = async (files: string[]): Promise<void> => {
   const startTime = Date.now()
   const status = {
     ok: 0,
@@ -36,8 +36,8 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
 
   const savePromise = await runServer({
     results: totalResults,
-    type: 'chrome-screenshots',
-    encoding: 'image',
+    type: 'component-snapshots',
+    encoding: 'text',
   })
   const entryPointPath = await rsolve('@x-ray/ui', 'browser')
   const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
@@ -57,7 +57,7 @@ const checkChromeScreenshots = async (files: string[]): Promise<void> => {
 }
 
 export const main = async () => {
-  await checkChromeScreenshots([
+  await checkComponentSnapshots([
     require.resolve('./examples/button.tsx'),
     require.resolve('./examples/input.tsx'),
     // require.resolve('./examples/title.tsx'),

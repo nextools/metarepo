@@ -19,6 +19,7 @@
     "@bubble-dev/babel-config": "^0.1.4",
     "@rebox/ios": "^2.0.1",
     "@rebox/web": "^2.1.2",
+    "@x-ray/serialize-react-tree": "^1.0.1",
     "@x-ray/tar-fs": "^1.0.0",
     "funcom": "^0.1.0",
     "imagemin-pngout": "^4.0.0",

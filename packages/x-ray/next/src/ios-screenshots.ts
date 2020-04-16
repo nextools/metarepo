@@ -34,13 +34,14 @@ const checkIosScreenshots = async (files: string[]): Promise<void> => {
     return
   }
 
-  let closeRebox = null as null | (() => Promise<void>)
-  const savePromise = await runServer(totalResults, 'ios-screenshots')
-
+  const savePromise = await runServer({
+    results: totalResults,
+    type: 'ios-screenshots',
+    encoding: 'image',
+  })
   const entryPointPath = await rsolve('@x-ray/ui', 'browser')
   const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
-
-  closeRebox = await runWebApp({
+  const closeRebox = await runWebApp({
     htmlTemplatePath,
     entryPointPath,
     isQuiet: true,

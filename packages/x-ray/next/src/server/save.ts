@@ -6,14 +6,16 @@ import { isDefined } from 'tsfn'
 import { getTarFilePath } from '../utils/get-tar-file-path'
 import { WRITE_RESULT_CONCURRENCY } from '../constants'
 import { TTotalResults } from '../types'
+import { TResultsType } from './types'
 
-const optimizePng = imageminPngout({ strategy: 2 })
+const optimizePng = imageminPngout({ strategy: 2 }) as (buf: Buffer) => Promise<Buffer>
 
 export type TSaveOptions = {
-  totalResults: TTotalResults,
+  results: TTotalResults<TResultsType>,
   pathsMap: Map<string, string>,
   keys: string[],
   type: string,
+  encoding: 'image' | 'text',
 }
 
 export const save = async (options: TSaveOptions): Promise<void> => {
@@ -35,11 +37,17 @@ export const save = async (options: TSaveOptions): Promise<void> => {
 
     await pAll(
       ids.map((id) => async () => {
-        const result = options.totalResults.get(filePath)!.results.get(id)!
+        const result = options.results.get(filePath)!.results.get(id)!
 
         switch (result.type) {
           case 'NEW': {
-            const data = await optimizePng(Buffer.from(result.data))
+            let data: Buffer
+
+            if (options.encoding === 'image') {
+              data = await optimizePng(Buffer.from(result.data))
+            } else {
+              data = Buffer.from(result.data)
+            }
 
             tarFs.write(id, data)
 
@@ -50,7 +58,13 @@ export const save = async (options: TSaveOptions): Promise<void> => {
             break
           }
           case 'DIFF': {
-            const data = await optimizePng(Buffer.from(result.newData))
+            let data: Buffer
+
+            if (options.encoding === 'image') {
+              data = await optimizePng(Buffer.from(result.data))
+            } else {
+              data = Buffer.from(result.data)
+            }
 
             tarFs.write(id, data)
 

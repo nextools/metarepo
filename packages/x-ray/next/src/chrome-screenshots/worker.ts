@@ -109,12 +109,12 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
 
           return [example.id, {
             type: 'DIFF',
+            data: newScreenshot,
+            width: applyDpr(newPng.width),
+            height: applyDpr(newPng.height),
             origData: origScreenshot,
             origWidth: applyDpr(origPng.width),
             origHeight: applyDpr(origPng.height),
-            newData: newScreenshot,
-            newWidth: applyDpr(newPng.width),
-            newHeight: applyDpr(newPng.height),
             meta: example.meta,
           }]
         }

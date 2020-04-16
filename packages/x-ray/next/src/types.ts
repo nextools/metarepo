@@ -35,9 +35,9 @@ export type TExampleResult<T> = {
   meta?: TJsonValue,
 } | {
   type: 'DIFF',
-  newData: T,
-  newWidth: number,
-  newHeight: number,
+  data: T,
+  width: number,
+  height: number,
   origData: T,
   origWidth: number,
   origHeight: number,
@@ -46,9 +46,9 @@ export type TExampleResult<T> = {
 
 export type TFileResults<T> = Map<string, TExampleResult<T>>
 
-export type TTotalResults = Map<string, {
+export type TTotalResults<T> = Map<string, {
   name: string,
-  results: TFileResults<Uint8Array>,
+  results: TFileResults<T>,
   status: {
     ok: number,
     new: number,
@@ -67,8 +67,8 @@ export type TItem = {
   height: number,
 } | {
   type: 'DIFF',
-  newWidth: number,
-  newHeight: number,
+  width: number,
+  height: number,
   origWidth: number,
   origHeight: number,
 }
