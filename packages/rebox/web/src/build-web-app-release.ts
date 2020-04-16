@@ -63,6 +63,7 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
     resolve: {
       extensions: [
         '.web.js',
+        '.web.jsx',
         '.web.ts',
         '.web.tsx',
         '.js',
