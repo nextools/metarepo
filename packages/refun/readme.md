@@ -183,8 +183,9 @@ So to be clear, the component that receives `counter` and `dispatch` as props is
 ## `mapContext`
 
 Signature:
+
 ```ts
-type mapContext<T> = (context: React.Context<T>) => void
+const mapContext: <T>(context: React.Context<T>) => // ...
 ```
 
 This function receives a React Context object as created by the `React.createContext` function. The assumption is that the `value` property inside the Context is an object: `mapContext` will spread that object into the props of the components.
@@ -222,8 +223,9 @@ component(
 ## `mapDebouncedHandlerTimeout`
 
 Signature:
+
 ```ts
-type mapDebouncedHandlerTimeout = (handlerName: string, timeout: number) => void
+const mapDebouncedHandlerTimeout: (handlerName: string, timeout: number) => // ...
 ```
 
 > This function is affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
@@ -275,8 +277,9 @@ export default component(
 ## `mapDebouncedHandlerFactory`
 
 Signature:
+
 ```ts
-type mapDebouncedHandlerFactory = (setFn: Function, clearFn: Function) => (handlerName: string, ...setFnArgs: any[]) => void
+const mapDebouncedHandlerFactory: (setFn: Function, clearFn: Function) => (handlerName: string, ...setFnArgs: any[]) => // ...
 ```
 
 > All the functions create with this one are affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
@@ -292,8 +295,9 @@ export const mapDebouncedHandlerTimeout = mapDebouncedHandlerFactory(setTimeout,
 ## `mapDefaultProps`
 
 Signature:
+
 ```ts
-type mapDefaultProps<P> = (defaultProps: P) => void
+const mapDefaultProps: <P>(defaultProps: P) => // ...
 ```
 
 This function sets some default prop values based on the object that is passed into it. Alternative to using the static `defaultProps` component property. The advantage of using it is that the props passed in will be type checked.
@@ -358,8 +362,9 @@ export default component(
 ## `mapHandlers`
 
 Signature:
+
 ```ts
-type mapHandlers<P> = (handlers: { [key: string]: (props: P) => (...args: any[]) => void }) => void
+const mapHandlers: <P>(handlers: { [key: string]: (props: P) => (...args: any[]) => void }) => // ...
 ```
 
 This function allows you to build custom handlers that will be memoized so that they do not cause a diff in the shallow comparison, which would lead to a re render.
@@ -547,8 +552,9 @@ export default component(
 ## `mapProps`
 
 Signature:
+
 ```ts
-type mapProps<P, R> = (getFn: (props: P) => R) => void
+const mapProps: <P, R>(getFn: (props: P) => R) => // ...
 ```
 
 This function takes a handler that receives all props and returns new props.
@@ -576,8 +582,9 @@ Note that `label` is no longer available as a prop to the component. If you want
 ## `mapRef`
 
 Signature:
+
 ```ts
-type mapRef<T> = (name: string, initialValue: T) => void
+const mapRef: <T>(name: string, initialValue: T) => // ...
 ```
 
 This function provides a way of making a mutable reference available as a prop. It uses the `useRef` hook under the hood.
@@ -616,8 +623,9 @@ export default component(
 ## `mapSafeRequestAnimationFrame`
 
 Signature:
+
 ```ts
-type mapSafeRequestAnimationFrame = (propName: string) => void
+const mapSafeRequestAnimationFrame: (propName: string) => // ...
 ```
 
 This function allows you to set up operations to be executed in the next animation frame that should only be executed while the component is still mounted, and should be canceled if the component is removed from the tree. Callbacks that are not canceled when unmounted are a common cause of React memory leaks.
@@ -706,8 +714,9 @@ export default component(
 ## `mapSafeTimeout`
 
 Signature:
+
 ```ts
-type mapSafeTimeout = (propName: string) => void
+const mapSafeTimeout: (propName: string) => // ...
 ```
 
 This function allows you to configure time outs that should only be executed while the component is still mounted, and should be canceled if the component is removed from the tree. Timeouts that are not canceled when unmounted are a common cause of React memory leaks.
@@ -823,8 +832,9 @@ export default component(
 ## `mapState`
 
 Signature:
+
 ```ts
-type mapState<P, R> = (stateName: string, setterName: string, getValue: (props: P) => R, watchKeys: string[]) => void
+const mapState: <P, R>(stateName: string, setterName: string, getValue: (props: P) => R, watchKeys: string[]) => // ...
 ```
 
 This function allows you to set up a stateful prop and a function for updating that prop. It also supports setting the initial value, derived from the props passed into it, and a list of props to watch to reset that value whenever the external prop changes.
@@ -887,8 +897,9 @@ export default component(
 ## `mapStateRef`
 
 Signature:
+
 ```ts
-type mapStateRef<P, R> = (stateName: string, flushName: string, getValue: (props: P) => R, watchKeys: string[]) => void
+const mapStateRef: <P, R>(stateName: string, flushName: string, getValue: (props: P) => R, watchKeys: string[]) => // ...
 ```
 
 This function allows you to set up a stateful prop and a function for updating that prop. It also supports setting the initial value, derived from the props passed into it, and a list of props to watch to reset that value whenever the external prop changes.
@@ -939,8 +950,9 @@ export default component(
 ## `mapThrottledHandlerTimeout`
 
 Signature:
+
 ```ts
-type mapThrottledHandlerTimeout = (handlerName: string, timeout: number) => void
+const mapThrottledHandlerTimeout: (handlerName: string, timeout: number) => // ...
 ```
 
 > This function is affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
@@ -992,8 +1004,9 @@ export default component(
 ## `mapThrottledHandlerAnimationFrame`
 
 Signature:
+
 ```ts
-type mapThrottledHandlerAnimationFrame = (handlerName: string) => void
+const mapThrottledHandlerAnimationFrame: (handlerName: string) => // ...
 ```
 
 > This function is affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
@@ -1035,8 +1048,9 @@ export default component(
 ## `mapThrottledHandlerFactory`
 
 Signature:
+
 ```ts
-type mapThrottledHandlerFactory = (setFn: Function, clearFn: Function) => (handlerName: string, ...setFnArgs: any[]) => void
+const mapThrottledHandlerFactory: (setFn: Function, clearFn: Function) => (handlerName: string, ...setFnArgs: any[]) => // ...
 ```
 
 > All the functions created with this one is affected by the [React Synthetic Events vs debouncing / throttling](#react-synthetic-events-vs-debouncing--throttling) issue.
@@ -1052,8 +1066,9 @@ export const mapThrottledHandlerTimeout = mapThrottledHandlerFactory(setTimeout,
 ## `mapWithProps`
 
 Signature:
+
 ```ts
-type mapWithProps<P, R> = (getFn: (props: P) => R) => void
+const mapWithProps: <P, R>(getFn: (props: P) => R) => // ...
 ```
 
 This function allows you to expand the props passed in to a component with more props derived from them. It is typically used to precalculate values that are to be used in the component, to minimize the amount of logic needed to do in the render.
@@ -1102,8 +1117,10 @@ Note that this function just adds props to the component. If you want to replace
 
 ## `mapWithPropsMemo`
 
+Signature:
+
 ```ts
-type mapWithPropsMemo<P, R> = (getFn: (props: P) => R, watchKeys: string[]) => void
+const mapWithPropsMemo: <P, R>(getFn: (props: P) => R, watchKeys: string[]) => // ...
 ```
 
 This function does the same as [`mapWithProps`](#mapWithProps) and it memoizes the result for the props specified in the second parameter.
@@ -1145,8 +1162,9 @@ Notice that `mapWithPropsMemo` takes two arguments, and that memoization happens
 ## `onChange`
 
 Signature:
+
 ```ts
-type onChange <P> = (handler: (props: P) => Promise<void> | void, watchKeys: string[])
+const onChange: <P>(handler: (props: P) => Promise<void> | void, watchKeys: string[]) => // ...
 ```
 
 This function calls the passed in callback when the component is updated, sending the current Props as argument.
@@ -1178,8 +1196,9 @@ export default component(
 ## `onLayout`
 
 Signature:
+
 ```ts
-type onLayout <P> = (onLayoutHandler: (props: P) => Promise<void> | void, watchKeys: string[])
+const onLayout: <P>(onLayoutHandler: (props: P) => Promise<void> | void, watchKeys: string[]) => // ...
 ```
 
 This function calls the passed in callback when the component is updated, sending the current Props as argument.
@@ -1209,8 +1228,9 @@ export default component(
 ## `onUpdate`
 
 Signature:
+
 ```ts
-type onUpdate <P> = (onUpdateFn: (props: P) => (() => void) | void, watchKeys: string[])
+const onUpdate: <P>(onUpdateFn: (props: P) => (() => void) | void, watchKeys: string[]) => // ...
 ```
 
 This function calls the passed in callback when the component is mounted and updated, sending the current Props as an argument.
@@ -1252,8 +1272,9 @@ export default component(
 ## `onUpdateAsync`
 
 Signature:
+
 ```ts
-type onUpdateAsync <P> = (onUpdateFn: (propsRef: React.RefObject<P>) => (props: { cancelOthers: () => void, index: number }) => Generator<Promise<unknown>>, watchKeys: string[])
+const onUpdateAsync: <P>(onUpdateFn: (propsRef: React.RefObject<P>) => (props: { cancelOthers: () => void, index: number }) => Generator<Promise<unknown>>, watchKeys: string[]) => // ...
 ```
 
 This is `onUpdate` variant that properly handles asynchronous behavior.
@@ -1299,8 +1320,9 @@ export default component(
 ## `startWithType`
 
 Signature:
+
 ```ts
-type startWithType<P> = () => void
+const startWithType: <P>() => // ...
 ```
 
 This function is simply a way of setting up the initial type in the [`component`](#component) composition chain, since TypeScript does not currently support doing that in the composition function itself (`component` in this case, but would be `compose` in Redux, Ramda, etc).
@@ -1349,10 +1371,11 @@ export default component<TButton>(
 ## `StoreContextFactory`
 
 Signature:
+
 ```ts
-type StoreContextFactory<S> = (store: Redux.Store<S>) => {
-  mapStoreState: <R>(mapStateToProps: (state: S) => R, stateKeysToWatch: string[]) => void,
-  mapStoreDispatch: (dispatchPropName: string) => void
+const StoreContextFactory: <S>(store: Redux.Store<S>) => {
+  mapStoreState: <R>(mapStateToProps: (state: S) => R, stateKeysToWatch: string[]) => // ...
+  mapStoreDispatch: (dispatchPropName: string) => // ...
 }
 ```
 
