@@ -47,6 +47,7 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
     resolve: {
       extensions: [
         '.web.js',
+        '.web.jsx',
         '.web.ts',
         '.web.tsx',
         '.js',
