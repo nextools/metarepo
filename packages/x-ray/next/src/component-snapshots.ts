@@ -60,10 +60,10 @@ export const main = async () => {
   await checkComponentSnapshots([
     require.resolve('./examples/button.tsx'),
     require.resolve('./examples/input.tsx'),
-    // require.resolve('./examples/paragraph.tsx'),
-    // require.resolve('./examples/select.tsx'),
-    // require.resolve('./examples/title1.tsx'),
-    // require.resolve('./examples/title2.tsx'),
-    // require.resolve('./examples/title3.tsx'),
+    require.resolve('./examples/paragraph.tsx'),
+    require.resolve('./examples/select.tsx'),
+    require.resolve('./examples/title1.tsx'),
+    require.resolve('./examples/title2.tsx'),
+    require.resolve('./examples/title3.tsx'),
   ])
 }

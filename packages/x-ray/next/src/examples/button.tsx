@@ -9,7 +9,7 @@ export const examples = map<number, TExample>((i) => ({
     hasOwnWidth: true,
   },
   meta: [i],
-}))(range(1000))
+}))(range(10))
 
 export const name = 'button'
 // export const examples = mapIterable<number, TExample>(makeNumIterable(10), (i) => ({
