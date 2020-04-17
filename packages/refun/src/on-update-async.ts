@@ -45,10 +45,6 @@ export const onUpdateAsync = <P extends {}> (onUpdateFn: (props: RefObject<P>) =
           index: generatorId,
         }),
         () => {
-          console.log('SHOULD_CONTINUE', generatorId)
-          console.log('isMounted', generatorId, isMountedRef.current)
-          console.log('isRunning', generatorId, idsRef.current.isGeneratorRunning(generatorId))
-
           return isMountedRef.current && idsRef.current.isGeneratorRunning(generatorId)
         }
       )
