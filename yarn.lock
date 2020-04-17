@@ -11505,6 +11505,13 @@ redux@^4.0.0, redux@^4.0.1:
     loose-envify "^1.4.0"
     symbol-observable "^1.2.0"
 
+refun@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/refun/-/refun-1.0.1.tgz#5e2c5d91bab4794e3cd68d68d67cbf3b9b8ade95"
+  integrity sha512-jGrtpVW3DtNt0klqA+FrcxOH574sT9xjWN3qLdGheiTQYOqMSAFBppJs5hsNKVpC9UyFpfHiQfWH+1GpHMNULQ==
+  dependencies:
+    tsfn "^1.1.1"
+
 regenerate-unicode-properties@^8.2.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/regenerate-unicode-properties/-/regenerate-unicode-properties-8.2.0.tgz#e5de7111d655e7ba60c057dbe9ff37c87e65cdec"
