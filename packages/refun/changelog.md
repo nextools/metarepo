@@ -1,3 +1,18 @@
+## v2.0.0
+
+* 💥 refactor API
+
+  ```
+  * add onLayout
+  * add onUpdateAsync
+  * change onUpdate
+  * delete mapWithAsyncProps
+  * delete mapRefLayout
+  * delete onMount
+  * delete onUnmount
+  * delete onMountUnmount
+  ```
+
 ## v1.0.1
 
 * 🐞 re-publish using new build system to fix `tsfn` issues
