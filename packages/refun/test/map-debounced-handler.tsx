@@ -7,9 +7,9 @@ import { component, mapDebouncedHandlerFactory, startWithType } from '../src'
 
 test('mapDebouncedHandler: Common usecases', (t) => {
   let handlerSpy = createSpy(() => null)
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const timeout = createTimeoutSpy()
   const mapDebouncedHandler = mapDebouncedHandlerFactory(timeout.setTimeout, timeout.clearTimeout)
 
@@ -20,11 +20,11 @@ test('mapDebouncedHandler: Common usecases', (t) => {
       b: number,
     }>(),
     mapDebouncedHandler('handler', 100)
-  )(compSpy)
+  )(componentSpy)
+
+  let testRenderer: ReactTestRenderer
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
-
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
@@ -39,13 +39,9 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   const { handler } = getProps(0)
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{
-        handler,
-        a: 'foo',
-        b: 42,
-      }],
+      [{ handler, a: 'foo', b: 42 }], // Mount
     ],
     'Mount: should pass props'
   )
@@ -81,18 +77,10 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{
-        handler,
-        a: 'foo',
-        b: 42,
-      }],
-      [{
-        handler,
-        a: 'bar',
-        b: 1337,
-      }],
+      [{ handler, a: 'foo', b: 42 }], // Mount
+      [{ handler, a: 'bar', b: 1337 }], // Update
     ],
     'Update: should pass props and leave handler the same'
   )
@@ -130,23 +118,11 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{
-        handler,
-        a: 'foo',
-        b: 42,
-      }],
-      [{
-        handler,
-        a: 'bar',
-        b: 1337,
-      }],
-      [{
-        handler,
-        a: 'bar',
-        b: 1337,
-      }],
+      [{ handler, a: 'foo', b: 42 }], // Mount
+      [{ handler, a: 'bar', b: 1337 }], // Update
+      [{ handler, a: 'bar', b: 1337 }], // Update Handler
     ],
     'Update Handler: should pass props and leave handler the same'
   )
@@ -160,7 +136,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     timeout.getSetTimeoutCalls(),
     [
-      [100],
+      [100], // First Call
     ],
     'First Call: should set proper delay'
   )
@@ -186,7 +162,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     timeout.getClearTimeoutCalls(),
     [
-      [0],
+      [0], // Second Call
     ],
     'Second Call, interrupting first one: should clear previous timeout'
   )
@@ -194,8 +170,8 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     timeout.getSetTimeoutCalls(),
     [
-      [100],
-      [100],
+      [100], // First Call
+      [100], // Second Call
     ],
     'Second Call, interrupting first one: should set proper delay'
   )
@@ -215,7 +191,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     getSpyCalls(handlerSpy),
     [
-      [13, 'bar'],
+      [13, 'bar'], // Timeout Tick
     ],
     'Timeout Tick: should call spy now'
   )
@@ -223,7 +199,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     timeout.getClearTimeoutCalls(),
     [
-      [0],
+      [0], // Second Call
     ],
     'Timeout Tick: should not call clearTimeout'
   )
@@ -231,8 +207,8 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     timeout.getSetTimeoutCalls(),
     [
-      [100],
-      [100],
+      [100], // First Call
+      [100], // Second Call
     ],
     'Timeout Tick: should not call setTimeout'
   )
@@ -246,7 +222,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     getSpyCalls(handlerSpy),
     [
-      [13, 'bar'],
+      [13, 'bar'], // Timeout Tick
     ],
     'Third Call, after completing secont call timeout: should not call spy'
   )
@@ -254,7 +230,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     timeout.getClearTimeoutCalls(),
     [
-      [0],
+      [0], // Second Call
     ],
     'Third Call, after completing secont call timeout: should not call clearTimeout'
   )
@@ -262,9 +238,9 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     timeout.getSetTimeoutCalls(),
     [
-      [100],
-      [100],
-      [100],
+      [100], // First Call
+      [100], // Second Call
+      [100], // Third Call
     ],
     'Third Call, after completing secont call timeout: should call setTimeout'
   )
@@ -278,7 +254,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     getSpyCalls(handlerSpy),
     [
-      [13, 'bar'],
+      [13, 'bar'], // Timeout Tick
     ],
     'Unmount: should not call spy'
   )
@@ -286,8 +262,8 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     timeout.getClearTimeoutCalls(),
     [
-      [0],
-      [2],
+      [0], // Second Call
+      [2], // Unmount
     ],
     'Unmount: should call clearTimeout'
   )
@@ -295,9 +271,9 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     timeout.getSetTimeoutCalls(),
     [
-      [100],
-      [100],
-      [100],
+      [100], // First Call
+      [100], // Second Call
+      [100], // Third Call
     ],
     'Unmount: should not call setTimeout'
   )
@@ -311,7 +287,7 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     getSpyCalls(handlerSpy),
     [
-      [13, 'bar'],
+      [13, 'bar'], // Timeout Tick
     ],
     'Timeout Tick after Unmount: should not call spy'
   )
@@ -319,8 +295,8 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     timeout.getClearTimeoutCalls(),
     [
-      [0],
-      [2],
+      [0], // Second Call
+      [2], // Unmount
     ],
     'Timeout Tick after Unmount: should not call clearTimeout'
   )
@@ -328,9 +304,9 @@ test('mapDebouncedHandler: Common usecases', (t) => {
   t.deepEquals(
     timeout.getSetTimeoutCalls(),
     [
-      [100],
-      [100],
-      [100],
+      [100], // First Call
+      [100], // Second Call
+      [100], // Third Call
     ],
     'Timeout Tick after Unmount: should not call setTimeout'
   )
@@ -347,15 +323,15 @@ test('mapDebouncedHandler: Common usecases', (t) => {
 test('mapDebouncedHandler: Invalid handler', (t) => {
   const timeout = createTimeoutSpy()
   const mapDebouncedHandler = mapDebouncedHandlerFactory(timeout.setTimeout, timeout.clearTimeout)
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
   const MyComp = component(
     startWithType<{ handler?: () => void }>(), // eslint-disable-line func-call-spacing
     mapDebouncedHandler('handler', 50)
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -433,15 +409,15 @@ test('mapDebouncedHandler: Handler is removed during timeout period', (t) => {
   const spy = createSpy(() => {})
   const timeout = createTimeoutSpy()
   const mapDebouncedHandler = mapDebouncedHandlerFactory(timeout.setTimeout, timeout.clearTimeout)
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
   const MyComp = component(
     startWithType<{ handler?: () => void }>(), // eslint-disable-line func-call-spacing
     mapDebouncedHandler('handler', 50)
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {

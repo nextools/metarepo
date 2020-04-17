@@ -2,18 +2,16 @@ import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
 import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { component, startWithType, onChange } from '../src'
+import { component, startWithType, onLayout } from '../src'
 
-test('onChange: sync function', (t) => {
-  const onChangeSpy = createSpy(() => {})
+test('onLayout: empty watch keys', (t) => {
+  const onUnsubSpy = createSpy(() => {})
+  const onLayoutSpy = createSpy(() => onUnsubSpy)
   const componentSpy = createSpy(() => null)
   const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
-    startWithType<{
-      foo: string,
-      watch?: string,
-    }>(),
-    onChange(onChangeSpy, ['watch'])
+    startWithType<{ foo: string }>(),
+    onLayout(onLayoutSpy, [])
   )(componentSpy)
 
   let testRenderer: ReactTestRenderer
@@ -35,20 +33,24 @@ test('onChange: sync function', (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(onChangeSpy),
+    getSpyCalls(onLayoutSpy),
     [
       [{ foo: 'foo' }], // Mount
     ],
-    'Mount: should call update'
+    'Mount: should call onLayout'
   )
 
-  /* Update unwatched props */
+  t.deepEquals(
+    getSpyCalls(onUnsubSpy),
+    [],
+    'Mount: should call unsub'
+  )
+
+  /* Update */
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
-      <MyComp
-        foo="bar"
-      />
+      <MyComp foo="bar"/>
     )
   })
 
@@ -56,47 +58,23 @@ test('onChange: sync function', (t) => {
     getSpyCalls(componentSpy),
     [
       [{ foo: 'foo' }], // Mount
-      [{ foo: 'bar' }], // Update not watched prop
+      [{ foo: 'bar' }], // Update
     ],
-    'Update unwatched props: should pass props'
+    'Update: should pass props'
   )
 
   t.deepEquals(
-    getSpyCalls(onChangeSpy),
+    getSpyCalls(onLayoutSpy),
     [
       [{ foo: 'foo' }], // Mount
     ],
-    'Update unwatched props: should not call update'
-  )
-
-  /* Update watched props */
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  act(() => {
-    testRenderer.update(
-      <MyComp
-        foo="bar"
-        watch="watch"
-      />
-    )
-  })
-
-  t.deepEquals(
-    getSpyCalls(componentSpy),
-    [
-      [{ foo: 'foo' }], // Mount
-      [{ foo: 'bar' }], // Update not watched prop
-      [{ foo: 'bar', watch: 'watch' }], // Update watched prop
-    ],
-    'Update watched props: should pass props'
+    'Update: should not call onLayout if array was empty'
   )
 
   t.deepEquals(
-    getSpyCalls(onChangeSpy),
-    [
-      [{ foo: 'foo' }], // Mount
-      [{ foo: 'bar', watch: 'watch' }], // Update watched prop
-    ],
-    'Update watched props: should call update'
+    getSpyCalls(onUnsubSpy),
+    [],
+    'Update: should not call unsub'
   )
 
   /* Unmount */
@@ -106,43 +84,49 @@ test('onChange: sync function', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(onChangeSpy),
+    getSpyCalls(onLayoutSpy),
     [
       [{ foo: 'foo' }], // Mount
-      [{ foo: 'bar', watch: 'watch' }], // Update watched prop
     ],
-    'Unmount: should not call update'
+    'Unmount: should not call onLayout'
+  )
+
+  t.deepEquals(
+    getSpyCalls(onUnsubSpy),
+    [
+      [],
+    ],
+    'Unmount: should call unsub'
   )
 
   t.equals(
     getNumRenders(),
-    3,
+    2,
     'Render: should render component exact times'
   )
 
   t.end()
 })
 
-test('onChange: async function', (t) => {
-  const onChangeSpy = createSpy(async () => {})
+test('onLayout: watch keys', (t) => {
+  const onUnsubSpy = createSpy(() => {})
+  const onLayoutSpy = createSpy(() => onUnsubSpy)
   const componentSpy = createSpy(() => null)
   const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
-    startWithType<{
-      foo: string,
-      watch?: string,
-    }>(),
-    onChange(onChangeSpy, ['watch'])
+    startWithType<{ foo: string, bar: string }>(),
+    onLayout(onLayoutSpy, ['foo'])
   )(componentSpy)
 
-  /* Mount */
   let testRenderer: ReactTestRenderer
 
+  /* Mount */
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
         foo="foo"
+        bar="bar"
       />
     )
   })
@@ -150,17 +134,23 @@ test('onChange: async function', (t) => {
   t.deepEquals(
     getSpyCalls(componentSpy),
     [
-      [{ foo: 'foo' }], // Mount
+      [{ foo: 'foo', bar: 'bar' }], // Mount
     ],
     'Mount: should pass props'
   )
 
   t.deepEquals(
-    getSpyCalls(onChangeSpy),
+    getSpyCalls(onLayoutSpy),
     [
-      [{ foo: 'foo' }], // Mount
+      [{ foo: 'foo', bar: 'bar' }], // Mount
     ],
-    'Mount: should call update'
+    'Mount: should call onLayout'
+  )
+
+  t.deepEquals(
+    getSpyCalls(onUnsubSpy),
+    [],
+    'Mount: should not call unsub'
   )
 
   /* Update not watched prop */
@@ -169,6 +159,7 @@ test('onChange: async function', (t) => {
     testRenderer.update(
       <MyComp
         foo="foo"
+        bar="baz"
       />
     )
   })
@@ -176,18 +167,24 @@ test('onChange: async function', (t) => {
   t.deepEquals(
     getSpyCalls(componentSpy),
     [
-      [{ foo: 'foo' }], // Mount
-      [{ foo: 'foo' }], // Update not watched prop
+      [{ foo: 'foo', bar: 'bar' }], // Mount
+      [{ foo: 'foo', bar: 'baz' }], // Update not watched prop
     ],
     'Update not watched prop: should pass props'
   )
 
   t.deepEquals(
-    getSpyCalls(onChangeSpy),
+    getSpyCalls(onLayoutSpy),
     [
-      [{ foo: 'foo' }], // Mount
+      [{ foo: 'foo', bar: 'bar' }], // Mount
     ],
     'Update not watched prop: should not call update if changed props were not watched'
+  )
+
+  t.deepEquals(
+    getSpyCalls(onUnsubSpy),
+    [],
+    'Mount: should not call unsub'
   )
 
   /* Update watched prop */
@@ -195,8 +192,8 @@ test('onChange: async function', (t) => {
   act(() => {
     testRenderer.update(
       <MyComp
-        foo="foo"
-        watch="watch"
+        foo="bar"
+        bar="baz"
       />
     )
   })
@@ -204,20 +201,28 @@ test('onChange: async function', (t) => {
   t.deepEquals(
     getSpyCalls(componentSpy),
     [
-      [{ foo: 'foo' }], // Mount
-      [{ foo: 'foo' }], // Update not watched prop
-      [{ foo: 'foo', watch: 'watch' }], // Update watched prop
+      [{ foo: 'foo', bar: 'bar' }], // Mount
+      [{ foo: 'foo', bar: 'baz' }], // Update not watched prop
+      [{ foo: 'bar', bar: 'baz' }], // Update watched prop
     ],
     'Update watched prop: should pass props'
   )
 
   t.deepEquals(
-    getSpyCalls(onChangeSpy),
+    getSpyCalls(onLayoutSpy),
     [
-      [{ foo: 'foo' }], // Mount
-      [{ foo: 'foo', watch: 'watch' }], // Update watched values
+      [{ foo: 'foo', bar: 'bar' }], // Mount
+      [{ foo: 'bar', bar: 'baz' }], // Update watched prop
     ],
     'Update watched prop: should call update if changed props were watched'
+  )
+
+  t.deepEquals(
+    getSpyCalls(onUnsubSpy),
+    [
+      [],
+    ],
+    'Update watched prop: should call unsub'
   )
 
   /* Unmount */
@@ -227,12 +232,21 @@ test('onChange: async function', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(onChangeSpy),
+    getSpyCalls(onLayoutSpy),
     [
-      [{ foo: 'foo' }], // Mount
-      [{ foo: 'foo', watch: 'watch' }], // Update watched values
+      [{ foo: 'foo', bar: 'bar' }], // Mount
+      [{ foo: 'bar', bar: 'baz' }], // Update watched prop
     ],
-    'Unmount: should not call update'
+    'Unmount: should not call onLayout'
+  )
+
+  t.deepEquals(
+    getSpyCalls(onUnsubSpy),
+    [
+      [],
+      [],
+    ],
+    'Unmount: should call unsub'
   )
 
   t.equals(

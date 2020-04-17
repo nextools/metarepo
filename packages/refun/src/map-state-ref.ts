@@ -9,7 +9,7 @@ export const mapStateRef = <SN extends string, SSN extends string, P extends {},
     const stateRef = useRef<R>(EMPTY_OBJECT)
     const stateFlushRef = useRef(NOOP)
 
-    if (prevProps.current === EMPTY_OBJECT) {
+    if (stateFlushRef.current === NOOP) {
       stateFlushRef.current = () => {
         useStateResult[1]({} as R)
       }

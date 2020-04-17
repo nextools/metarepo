@@ -5,19 +5,19 @@ import { createSpy, getSpyCalls } from 'spyfn'
 import { component, startWithType, mapRef } from '../src'
 
 test('mapRef', (t) => {
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{
       foo: number,
       bar?: string,
     }>(),
     mapRef('valueRef', 42)
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -37,7 +37,7 @@ test('mapRef', (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 2, valueRef }],
     ],
@@ -55,7 +55,7 @@ test('mapRef', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 2, valueRef }],
       [{ foo: 4, valueRef }],
@@ -70,7 +70,7 @@ test('mapRef', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 2, valueRef }],
       [{ foo: 4, valueRef }],

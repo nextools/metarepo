@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react'
 import { EMPTY_OBJECT, NOOP, EMPTY_ARRAY } from 'tsfn'
 import { shallowEqualByKeys } from './utils'
 
-export const onUpdate = <P extends {}> (onUpdateFn: (props: P) => Promise<void> | void, watchKeys: (keyof P)[]) => (props: P): P => {
+export const onUpdate = <P extends {}> (onUpdateFn: (props: P) => (() => void) | void, watchKeys: (keyof P)[]) => (props: P): P => {
   const useEffectFnRef = useRef<() => void>(NOOP)
   const propsRef = useRef<P>(EMPTY_OBJECT)
   const watchValuesRef = useRef<any>(EMPTY_ARRAY)
@@ -13,10 +13,7 @@ export const onUpdate = <P extends {}> (onUpdateFn: (props: P) => Promise<void> 
 
   if (useEffectFnRef.current === NOOP) {
     useEffectFnRef.current = () => {
-      useEffectFnRef.current = () => {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        onUpdateFn(propsRef.current)
-      }
+      return onUpdateFn(propsRef.current)
     }
   }
 

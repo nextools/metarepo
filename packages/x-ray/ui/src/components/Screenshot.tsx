@@ -1,10 +1,9 @@
 import React from 'react'
-import { startWithType, component, mapHandlers, mapState } from 'refun'
+import { startWithType, component, mapHandlers, mapState, onUpdateAsync } from 'refun'
 import { apiLoadScreenshot, TApiLoadScreenshotOpts } from '../api'
 import { mapStoreDispatch } from '../store'
 import { TSize } from '../types'
 import { actionError } from '../actions'
-import { onMountAsync } from './on-mount-async'
 
 export type TScreenshot = TSize & TApiLoadScreenshotOpts
 
@@ -12,19 +11,19 @@ export const Screenshot = component(
   startWithType<TScreenshot>(),
   mapStoreDispatch('dispatch'),
   mapState('src', 'setSrc', () => null as string | null, []),
-  onMountAsync(async ({ isMountedRef, dispatch, setSrc, ...opts }) => {
+  onUpdateAsync((props) => function *() {
+    const { id, type, setSrc, dispatch } = props.current
+
     try {
-      const blob = await apiLoadScreenshot(opts)
+      const blob = yield apiLoadScreenshot({ id, type })
       const url = URL.createObjectURL(blob)
 
-      if (isMountedRef.current) {
-        setSrc(url)
-      }
+      setSrc(url)
     } catch (err) {
       console.log(err)
       dispatch(actionError(err.message))
     }
-  }),
+  }, []),
   mapHandlers({
     onLoad: ({ src }) => () => {
       URL.revokeObjectURL(src!)

@@ -11,16 +11,16 @@ test('mapSafeTimeout', (t) => {
   const timeoutSpy3 = createSpy(() => null)
   const timeout = createTimeoutSpy()
   const mapSafeTimeout = mapSafeTimeoutFactory(timeout.setTimeout, timeout.clearTimeout)
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: string }>(),
     mapSafeTimeout('setSafeTimeout')
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -32,7 +32,7 @@ test('mapSafeTimeout', (t) => {
   const { setSafeTimeout } = getProps(0)
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', setSafeTimeout }],
     ],
@@ -48,7 +48,7 @@ test('mapSafeTimeout', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', setSafeTimeout }],
       [{ foo: 'bar', setSafeTimeout }],

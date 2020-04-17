@@ -5,16 +5,16 @@ import { createSpy, getSpyCalls } from 'spyfn'
 import { component, mapHovered, startWithType, TMapHovered } from '../src'
 
 test('mapHovered: no props', (t) => {
-  const compSpy = createSpy(() => null)
-  const getProps = () => getSpyCalls(compSpy)[getSpyCalls(compSpy).length - 1][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = () => getSpyCalls(componentSpy)[getSpyCalls(componentSpy).length - 1][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapHovered>(),
     mapHovered
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -28,7 +28,7 @@ test('mapHovered: no props', (t) => {
   const { onPointerEnter, onPointerLeave } = getProps()
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
     ],
@@ -46,7 +46,7 @@ test('mapHovered: no props', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 8, isHovered: false, onPointerEnter, onPointerLeave }], // Update
@@ -61,7 +61,7 @@ test('mapHovered: no props', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 8, isHovered: false, onPointerEnter, onPointerLeave }], // Update
@@ -77,7 +77,7 @@ test('mapHovered: no props', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 8, isHovered: false, onPointerEnter, onPointerLeave }], // Update
@@ -94,7 +94,7 @@ test('mapHovered: no props', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 8, isHovered: false, onPointerEnter, onPointerLeave }], // Update
@@ -112,7 +112,7 @@ test('mapHovered: no props', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 8, isHovered: false, onPointerEnter, onPointerLeave }], // Update
@@ -136,16 +136,16 @@ test('mapHovered: no props', (t) => {
 test('mapHovered: external handlers', (t) => {
   const onPointerEnterSpy = createSpy(() => {})
   const onPointerLeaveSpy = createSpy(() => {})
-  const compSpy = createSpy(() => null)
-  const getProps = () => getSpyCalls(compSpy)[getSpyCalls(compSpy).length - 1][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = () => getSpyCalls(componentSpy)[getSpyCalls(componentSpy).length - 1][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapHovered>(),
     mapHovered
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -161,7 +161,7 @@ test('mapHovered: external handlers', (t) => {
   const { onPointerEnter, onPointerLeave } = getProps()
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
     ],
@@ -193,7 +193,7 @@ test('mapHovered: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 8, isHovered: false, onPointerEnter, onPointerLeave }], // Update
@@ -220,7 +220,7 @@ test('mapHovered: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 8, isHovered: false, onPointerEnter, onPointerLeave }], // Update
@@ -250,7 +250,7 @@ test('mapHovered: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 8, isHovered: false, onPointerEnter, onPointerLeave }], // Update
@@ -282,7 +282,7 @@ test('mapHovered: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 8, isHovered: false, onPointerEnter, onPointerLeave }], // Update
@@ -317,7 +317,7 @@ test('mapHovered: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 8, isHovered: false, onPointerEnter, onPointerLeave }], // Update
@@ -363,7 +363,7 @@ test('mapHovered: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 8, isHovered: false, onPointerEnter, onPointerLeave }], // Update
@@ -495,7 +495,7 @@ test('mapHovered: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 8, isHovered: false, onPointerEnter, onPointerLeave }], // Update
@@ -675,16 +675,16 @@ test('mapHovered: external handlers', (t) => {
 })
 
 test('mapHovered: external isHovered', (t) => {
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapHovered>(),
     mapHovered
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -698,7 +698,7 @@ test('mapHovered: external isHovered', (t) => {
   const { onPointerEnter, onPointerLeave } = getProps(0)
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
     ],
@@ -717,7 +717,7 @@ test('mapHovered: external isHovered', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 4, isHovered: true, onPointerEnter, onPointerLeave }], // Update
@@ -732,7 +732,7 @@ test('mapHovered: external isHovered', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 4, isHovered: true, onPointerEnter, onPointerLeave }], // Update
@@ -748,7 +748,7 @@ test('mapHovered: external isHovered', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isHovered: false, onPointerEnter, onPointerLeave }], // Mount
       [{ foo: 4, isHovered: true, onPointerEnter, onPointerLeave }], // Update

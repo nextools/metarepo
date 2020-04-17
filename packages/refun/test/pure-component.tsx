@@ -6,11 +6,11 @@ import { pureComponent, startWithType } from '../src'
 
 test('pureComponent: props', (t) => {
   const mapSpy = createSpy(({ args }) => args[0])
-  const compSpy = createSpy(() => null)
-  const MyComp = pureComponent(mapSpy)(compSpy)
+  const componentSpy = createSpy(() => null)
+  const MyComp = pureComponent(mapSpy)(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -27,7 +27,7 @@ test('pureComponent: props', (t) => {
     'Mount: should call map functions'
   )
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo' }],
     ],
@@ -52,7 +52,7 @@ test('pureComponent: props', (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo' }],
       [{ foo: 'bar' }],
@@ -79,7 +79,7 @@ test('pureComponent: props', (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo' }],
       [{ foo: 'bar' }],
@@ -107,15 +107,15 @@ test('pureComponent: props', (t) => {
 })
 
 test('pureComponent: multiple map functions', (t) => {
-  const compSpy = createSpy(() => null)
+  const componentSpy = createSpy(() => null)
   const MyComp = pureComponent(
     startWithType<{ initial: number }>(),
     ({ initial }) => ({ foo: `foo${initial}` }),
     ({ foo }) => ({ bar: `${foo}bar` })
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -125,7 +125,7 @@ test('pureComponent: multiple map functions', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ bar: 'foo2bar' }],
     ],
@@ -141,7 +141,7 @@ test('pureComponent: multiple map functions', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ bar: 'foo2bar' }],
       [{ bar: 'foo4bar' }],
@@ -158,7 +158,7 @@ test('pureComponent: multiple map functions', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ bar: 'foo2bar' }],
       [{ bar: 'foo4bar' }],
