@@ -9,4 +9,6 @@ export const examples = map<number, TExample>((i) => ({
     hasOwnWidth: true,
   },
   meta: [i],
-}))(range(10))
+}))(range(1000))
+
+export const name = 'paragraph'

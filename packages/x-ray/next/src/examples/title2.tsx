@@ -4,9 +4,11 @@ import { TExample } from '../types'
 
 export const examples = map<number, TExample>((i) => ({
   id: String(i),
-  element: <h1>{i}</h1>,
+  element: <h2>{i}</h2>,
   options: {
     hasOwnWidth: true,
   },
   meta: [i],
-}))(range(10))
+}))(range(1000))
+
+export const name = 'title2'
