@@ -47,8 +47,6 @@ export const unwindGenerator = <T>(gen: Generator<Promise<T>, void, T>, shouldCo
     try {
       const value = await ir.value
 
-      console.log('AFTER')
-
       if (shouldContinue()) {
         return handle(gen.next(value))
       }
