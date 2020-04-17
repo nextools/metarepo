@@ -13,7 +13,7 @@
     "@babel/runtime": "^7.4.3",
     "react-native-view-shot": "^3.0.2",
     "react-native-webview": "^8.0.3",
-    "refun": "^1.0.1"
+    "refun": "^2.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

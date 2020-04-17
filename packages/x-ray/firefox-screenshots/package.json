@@ -15,7 +15,7 @@
     "@x-ray/common-utils": "^1.0.2",
     "@x-ray/screenshot-utils": "^1.0.0",
     "@x-ray/tar-fs": "^1.0.0",
-    "@x-ray/ui": "^1.0.2",
+    "@x-ray/ui": "^1.0.3",
     "@x-ray/worker-utils": "^1.0.0",
     "foxr": "^0.10.1",
     "react": "16.11.0",

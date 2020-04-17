@@ -63,7 +63,7 @@
     "@x-ray/screenshot-utils": "^1.0.0",
     "@x-ray/snapshots": "^1.0.4",
     "@x-ray/web-mobile-screenshots": "^1.0.3",
-    "@x-ray/web-mobile-screenshots-app": "^1.0.0",
+    "@x-ray/web-mobile-screenshots-app": "^1.0.1",
     "copie": "^1.0.0",
     "dleet": "^1.0.0",
     "dotenv": "^8.0.0",
