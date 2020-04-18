@@ -1,4 +1,4 @@
-# spyfn
+# spyfn ![npm](https://flat.badgen.net/npm/v/spyfn)
 
 Spy function.
 

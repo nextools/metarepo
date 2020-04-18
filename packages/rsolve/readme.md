@@ -1,4 +1,4 @@
-# rsolve
+# rsolve ![npm](https://flat.badgen.net/npm/v/rsolve)
 
 Resolve module path with custom entry point `package.json` field relative to caller file.
 

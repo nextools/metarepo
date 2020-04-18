@@ -1,4 +1,4 @@
-# @rebox/android
+# @rebox/android ![npm](https://flat.badgen.net/npm/v/@rebox/android)
 
 Set of helpers to deal with React Native applications on Android.
 

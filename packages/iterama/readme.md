@@ -1,4 +1,4 @@
-# iterama
+# iterama ![npm](https://flat.badgen.net/npm/v/iterama)
 
 Composable functional (async) iterable helpers.
 

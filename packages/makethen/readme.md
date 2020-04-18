@@ -1,4 +1,4 @@
-# makethen
+# makethen ![npm](https://flat.badgen.net/npm/v/makethen)
 
 Strongly typed (up to 3 arguments and 3 result params) promisify for Node.js-style callbacks.
 

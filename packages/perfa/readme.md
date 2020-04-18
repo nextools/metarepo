@@ -1,4 +1,4 @@
-# perfa
+# perfa ![npm](https://flat.badgen.net/npm/v/perfa)
 
 Measure React app performance using dockerized Chromium through [`xrom`](https://github.com/nextools/metarepo/tree/master/packages/xrom) lib.
 

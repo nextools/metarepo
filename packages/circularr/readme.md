@@ -1,4 +1,4 @@
-# circularr
+# circularr ![npm](https://flat.badgen.net/npm/v/circularr)
 
 Circular fixed size array.
 

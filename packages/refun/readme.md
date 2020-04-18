@@ -1,4 +1,4 @@
-# refun
+# refun ![npm](https://flat.badgen.net/npm/v/refun)
 
 A collection of React Hook-enabled functions that compose harmoniously with each other. Similar to `recompose`, but:
 

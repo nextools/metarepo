@@ -1,4 +1,4 @@
-# unchunk
+# unchunk ![npm](https://flat.badgen.net/npm/v/unchunk)
 
 Unchunk readable stream into Promise. Works with HTTP server requests, HTTP request responses or any other event emitters where `data` event receives `Buffer`-chunks and `end` means it's done.
 

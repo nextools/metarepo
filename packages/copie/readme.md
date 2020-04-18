@@ -1,4 +1,4 @@
-# copie
+# copie ![npm](https://flat.badgen.net/npm/v/copie)
 
 Copy a file.
 

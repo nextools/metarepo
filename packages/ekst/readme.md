@@ -1,4 +1,4 @@
-# ekst
+# ekst ![npm](https://flat.badgen.net/npm/v/ekst)
 
 Append, prepend, replace or remove [basename](https://nodejs.org/api/path.html#path_path_basename_path_ext) extensions.
 

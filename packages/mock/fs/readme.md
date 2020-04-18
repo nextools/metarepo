@@ -1,4 +1,4 @@
-# @mock/fs
+# @mock/fs ![npm](https://flat.badgen.net/npm/v/@mock/fs)
 
 Mock FS in-memory using [memfs](https://github.com/streamich/memfs).
 

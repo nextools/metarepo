@@ -1,4 +1,4 @@
-# @rebox/native-utils
+# @rebox/native-utils ![npm](https://flat.badgen.net/npm/v/@rebox/native-utils)
 
 Set of common helpers to deal with React Native on iOS and Android.
 

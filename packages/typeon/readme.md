@@ -1,4 +1,4 @@
-# typeon
+# typeon ![npm](https://flat.badgen.net/npm/v/typeon)
 
 Typed JSON parse and stringify for TypeScript.
 

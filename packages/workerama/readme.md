@@ -1,4 +1,4 @@
-# workerama
+# workerama ![npm](https://flat.badgen.net/npm/v/workerama)
 
 Run sync/async function across [Worker Threads](https://nodejs.org/api/worker_threads.html). Input data array is chunked in parts and goes to each thread, where it runs with `Promise.all()`, benefiting from both [parallelism and concurrency](https://stackoverflow.com/questions/1050222/what-is-the-difference-between-concurrency-and-parallelism).
 

@@ -1,4 +1,4 @@
-# rplace
+# rplace ![npm](https://flat.badgen.net/npm/v/rplace)
 
 Transform stream by replacing strings.
 

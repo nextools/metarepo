@@ -1,4 +1,4 @@
-# stroki
+# stroki ![npm](https://flat.badgen.net/npm/v/stroki)
 
 Transform stream by reading it line by line.
 

@@ -1,4 +1,4 @@
-# pifs
+# pifs ![npm](https://flat.badgen.net/npm/v/pifs)
 
 Promisified [graceful-fs](https://github.com/isaacs/node-graceful-fs).
 

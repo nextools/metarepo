@@ -1,4 +1,4 @@
-# move-path
+# move-path ![npm](https://flat.badgen.net/npm/v/move-path)
 
 Move path to destination folder.
 

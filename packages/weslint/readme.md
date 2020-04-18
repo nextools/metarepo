@@ -1,4 +1,4 @@
-# weslint
+# weslint ![npm](https://flat.badgen.net/npm/v/weslint)
 
 Worker Threads + ESlint.
 

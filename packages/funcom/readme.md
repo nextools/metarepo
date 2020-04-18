@@ -1,4 +1,4 @@
-# funcom
+# funcom ![npm](https://flat.badgen.net/npm/v/funcom)
 
 Functional composition helpers.
 

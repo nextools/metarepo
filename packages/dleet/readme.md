@@ -1,4 +1,4 @@
-# dleet
+# dleet ![npm](https://flat.badgen.net/npm/v/dleet)
 
 Delete directories and files. Yet another one of many similar to `rm -rf` packages. However:
 
