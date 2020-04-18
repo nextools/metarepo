@@ -2,7 +2,7 @@
 
 Promise-Iterable-All. Like [`Promise.all`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) and [`Promise.allSettled`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled) but:
 
-* takes Promise/value factories, not Promises directly, to get them lazily when needed
+* takes Promise/value factories to invoke them lazily when needed
 * returns ["async iterable"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/asyncIterator) to be consumed with [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of)
 * iterates in whatever comes first order
 * has `concurrency` option
