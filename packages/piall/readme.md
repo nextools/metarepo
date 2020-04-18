@@ -5,7 +5,7 @@ Promise-Iterable-All. Like [`Promise.all`](https://developer.mozilla.org/en-US/d
 * takes Promise/value factories to invoke them lazily when needed
 * returns ["async iterable"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/asyncIterator) to be consumed with [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of)
 * iterates in whatever comes first order
-* has `concurrency` option
+* provides `concurrency` option
 
 Consider using [p-all](https://github.com/sindresorhus/p-all) if you need just `Promise.all` with `concurrency` option.
 
