@@ -1,4 +1,4 @@
-# $name$
+# $name$ ![npm](https://flat.badgen.net/npm/v/$name$)
 
 $description$.
 
