@@ -9,7 +9,7 @@ import { TExample, TExampleResult } from '../types'
 import { hasSnapshotDiff } from '../utils/has-snapshot-diff'
 import { TWorkerResultInternal } from './types'
 import { getSnapshotDimensions } from './get-snapshot-dimensions'
-import { SNAPSHOTS_PER_WORKER_COUNT } from './constants'
+import { SNAPSHOTS_PER_WORKER_COUNT, REQUIRE_HOOK_PATH } from './constants'
 
 export const check = () => async (filePath: string): Promise<TWorkerResultInternal<string>> => {
   const tarFilePath = getTarFilePath(filePath, 'component-snapshots')
@@ -20,6 +20,8 @@ export const check = () => async (filePath: string): Promise<TWorkerResultIntern
 
     tarFs = await TarFs(tarFilePath)
   } catch {}
+
+  await import(REQUIRE_HOOK_PATH)
 
   const { name, examples } = await import(filePath) as { name: string, examples: Iterable<TExample> }
   const status = {
