@@ -20,7 +20,7 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.4.2",
-    "got": "^10.2.2"
+    "got": "^11.0.0"
   },
   "devDependencies": {
     "@mock/require": "^0.1.0",
