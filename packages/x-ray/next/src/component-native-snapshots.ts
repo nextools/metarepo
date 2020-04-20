@@ -66,5 +66,6 @@ export const main = async () => {
     // require.resolve('./examples/title2.tsx'),
     // require.resolve('./examples/title3.tsx'),
     require.resolve('./examples/text.tsx'),
+    require.resolve('./examples/svg.tsx'),
   ])
 }

@@ -2,6 +2,7 @@ import path from 'path'
 import _Module from 'module'
 import resolver from 'enhanced-resolve'
 import * as ReactNativeMocks from './react-native-mocks'
+import { ReactNativeSvgMocks } from './react-native-svg-mocks'
 
 type TModule = {
   _load: (request: string, parent: NodeModule, isMain: boolean) => any,
@@ -21,6 +22,10 @@ const resolve = resolver.create.sync({
 Module._load = (request, parent, isMain) => {
   if (request === 'react-native') {
     return ReactNativeMocks
+  }
+
+  if (request === 'react-native-svg') {
+    return ReactNativeSvgMocks
   }
 
   if (!request.startsWith('.') && !path.isAbsolute(request) && !Module.builtinModules.includes(request)) {
