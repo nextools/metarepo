@@ -1,6 +1,7 @@
 import path from 'path'
 import _Module from 'module'
 import resolver from 'enhanced-resolve'
+import * as ReactNativeMocks from './react-native-mocks'
 
 type TModule = {
   _load: (request: string, parent: NodeModule, isMain: boolean) => any,
@@ -13,11 +14,15 @@ const originalLoad = Module._load
 const cache = new Map()
 
 const resolve = resolver.create.sync({
-  mainFields: ['browser', 'main'],
+  mainFields: ['react-native', 'main'],
   unsafeCache: true,
 })
 
 Module._load = (request, parent, isMain) => {
+  if (request === 'react-native') {
+    return ReactNativeMocks
+  }
+
   if (!request.startsWith('.') && !path.isAbsolute(request) && !Module.builtinModules.includes(request)) {
     const callerDir = path.dirname(parent.filename)
     const cacheKey = `${callerDir}@${request}`

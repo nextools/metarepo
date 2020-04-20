@@ -4,9 +4,9 @@ import { runWebApp } from '@rebox/web'
 import { rsolve } from 'rsolve'
 import { runServer } from './server/run'
 import { UI_HOST, UI_PORT } from './constants'
-import { getResults } from './component-snapshots/get-results'
+import { getResults } from './component-web-snapshots/get-results'
 
-const checkComponentSnapshots = async (files: string[]): Promise<void> => {
+const checkComponentWebSnapshots = async (files: string[]): Promise<void> => {
   const startTime = Date.now()
   const status = {
     ok: 0,
@@ -57,7 +57,7 @@ const checkComponentSnapshots = async (files: string[]): Promise<void> => {
 }
 
 export const main = async () => {
-  await checkComponentSnapshots([
+  await checkComponentWebSnapshots([
     require.resolve('./examples/button.tsx'),
     require.resolve('./examples/input.tsx'),
     require.resolve('./examples/paragraph.tsx'),

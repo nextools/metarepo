@@ -15,6 +15,8 @@ parentPort.on('message', async (item) => {
 
     parentPort.postMessage({ type: 'done', value }, transferList)
   } catch (error) {
+    console.error(error)
+
     const value = error instanceof Error ? error.message : error
 
     parentPort.postMessage({ type: 'error', value })
