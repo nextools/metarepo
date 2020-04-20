@@ -30,7 +30,7 @@ export const graphiq = () =>
 export const xray = () =>
   plugin('ui', ({ logMessage }) => async () => {
     const { runWebApp } = await import('@rebox/web')
-    const { runXRayServer } = await import('./x-ray-ui/run-server')
+    const { runXRayServer } = await import('./x-ray/run-server')
 
     await runXRayServer()
 

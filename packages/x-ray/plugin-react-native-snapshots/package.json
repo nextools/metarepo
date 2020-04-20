@@ -1,0 +1,34 @@
+{
+  "name": "@x-ray/plugin-react-native-snapshots",
+  "version": "0.0.0",
+  "description": "Check React Native snapshots with X-Ray",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@babel/plugin-syntax-bigint": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/preset-typescript": "^7.9.0",
+    "@babel/register": "^7.8.6",
+    "@x-ray/core": "^0.0.0",
+    "@x-ray/serialize-react-tree": "^1.0.1",
+    "@x-ray/tar-fs": "^1.0.0",
+    "enhanced-resolve": "^4.1.1",
+    "funcom": "^0.1.0",
+    "iterama": "^0.2.0",
+    "piall": "^0.1.1",
+    "pifs": "^1.0.2",
+    "react": "16.11.0",
+    "typeon": "^1.0.0",
+    "workerama": "^0.1.0"
+  }
+}
