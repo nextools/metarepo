@@ -7,15 +7,15 @@ export type TRequireKeys<T, K extends keyof T> = T & {
   [P in Extract<keyof T, K>]: Exclude<T[P], undefined>;
 }
 export type TOptionalKeys<T extends {}> = Exclude<{
-  [K in keyof T]: T extends Record<K, T[K]>
+  [K in TKeyOf<T>]: T extends Record<K, T[K]>
     ? never
     : K
-}[keyof T], undefined>
+}[TKeyOf<T>], undefined>
 export type TRequiredKeys<T extends {}> = Exclude<{
-  [K in keyof T]: T extends Record<K, T[K]>
+  [K in TKeyOf<T>]: T extends Record<K, T[K]>
     ? K
     : never
-}[keyof T], undefined>
+}[TKeyOf<T>], undefined>
 export type TWritable<T> = { -readonly [K in keyof T]: T[K] }
 export type TOmitKey<T extends {}, K extends PropertyKey> = Pick<T, Exclude<keyof T, K>>
 
