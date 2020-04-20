@@ -1,7 +1,7 @@
 import path from 'path'
 import _Module from 'module'
 import resolver from 'enhanced-resolve'
-import * as ReactNativeMocks from './react-native-mocks'
+import { ReactNativeMocks } from './react-native-mocks'
 import { ReactNativeSvgMocks } from './react-native-svg-mocks'
 
 type TModule = {
