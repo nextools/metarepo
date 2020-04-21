@@ -1,3 +1,9 @@
+## v1.0.3
+
+* 🐞 fix recursive meta type
+
+* ♻️ update dependencies `tsfn`
+
 ## v1.0.2
 
 * 🐞 upgrade jsSHA to v3

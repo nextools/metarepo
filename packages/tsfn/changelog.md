@@ -1,3 +1,7 @@
+## v1.1.2
+
+* 🐞 fix `TRequiredKeys` and `TOptionalKeys` to use string as keyof
+
 ## v1.1.1
 
 * 🐞 re-publish using updated Start preset
