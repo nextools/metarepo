@@ -1,8 +1,8 @@
 # workerama ![npm](https://flat.badgen.net/npm/v/workerama)
 
-Run sync/async function across [Worker Threads](https://nodejs.org/api/worker_threads.html). Input data array is chunked in parts and goes to each thread, where it runs with `Promise.all()`, benefiting from both [parallelism and concurrency](https://stackoverflow.com/questions/1050222/what-is-the-difference-between-concurrency-and-parallelism).
+Feed input data array items one by one to provided function that is automatically spread across [Worker Threads](https://nodejs.org/api/worker_threads.html).
 
-When it fails then it fails hard, i.e. it terminates entire thread pool. It's up to a consumer's worker function to retry or even swallow errors to keep things going.
+When it fails then it fails hard, i.e. it terminates entire threads pool. It's up to a consumer's worker function to retry or even swallow errors to keep things going.
 
 :warning: Node.js v10 needs an `--experimental-worker` flag.
 
@@ -17,32 +17,30 @@ $ yarn add workerama
 ```ts
 type TOptions = {
   items: any[],
-  itemsPerThreadCount: number,
   maxThreadCount: number,
   fnFilePath: string,
   fnName: string,
-  fnArgs: any[],
-  onItemResult: (result: any, workerId: number) => void,
+  fnArgs: any[]
 }
 
-workerama(options: TOptions) => Promise<void>
+const workerama: <T>(options: TOptions) => AsyncIterable<T>
 ```
 
 ```ts
 import { workerama } from 'workerama'
 import { cpus } from 'os'
 
-await workerama({
-  items: new Array(1000).fill(null).map((_, i) => i),
-  itemsPerThreadCount: 5,
+const resultsIterable = workerama({
+  items: Array.from({ length: 1000 }, (_, i) => i),
   maxThreadCount: cpus().length,
   fnFilePath: './test',
   fnName: 'add',
   fnArgs: [1],
-  onItemResult: (result, workerId) => {
-    process.stdout.write(`${workerId}:${result} `)
-  },
 })
+
+for await (const result of resultsIterable) {
+  process.stdout.write(`${workerId}:${result} `)
+}
 
 process.stdout.write('\n')
 ```
@@ -50,9 +48,19 @@ process.stdout.write('\n')
 ```ts
 // test.js
 
-exports.add = (item, arg1) => Promise.resolve(item + arg1)
+// factory function that receives `fnArgs`
+exports.add = (arg1) => {
+  // actual function that receives item of `items`
+  return (item) => Promise.resolve({
+    value: item + arg1,
+    transferList: []
+  })
+}
 ```
 
-## TODO
+where:
 
-[`SharedArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer), [`Atomics`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics) and [`DataView`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView) to avoid IPC channels and serializing/deserializing data as much as possible.
+* factory function – called once per worker, useful to initialize/instantiate something
+* actual function – called once per item, must return special object:
+  * `value` – actual result produced by function
+  * `transferList` – [optional array](https://nodejs.org/dist/latest-v12.x/docs/api/worker_threads.html#worker_threads_port_postmessage_value_transferlist) of `ArrayBuffer` or `SharedArrayBuffer` (not to be confused with Node.js `Buffer`, but rather `Buffer.from([1, 2, 3]).buffer`) to be _moved_ from worker to parent to avoid cloning it and consuming double amount of memory

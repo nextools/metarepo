@@ -1,19 +1,22 @@
 const { workerData, parentPort } = require('worker_threads')
 
-const fn = require(workerData.fnFilePath)[workerData.fnName]
+const { umask, fnFilePath, fnName, fnArgs } = workerData
 
-parentPort.on('message', async (items) => {
+// https://github.com/nodejs/node/issues/25448
+// https://github.com/nodejs/node/pull/25526
+process.umask = () => umask
+
+const fnPromise = require(fnFilePath)[fnName](...fnArgs)
+
+parentPort.on('message', async (item) => {
   try {
-    await Promise.all(
-      items.map(async (item) => {
-        const result = await fn(item, ...workerData.fnArgs)
+    const fn = await fnPromise
+    const { value, transferList } = await fn(item)
 
-        parentPort.postMessage({ type: 'data', value: result })
-      })
-    )
+    parentPort.postMessage({ type: 'done', value }, transferList)
+  } catch (error) {
+    const value = error instanceof Error ? error.message : error
 
-    parentPort.postMessage({ type: 'next' })
-  } catch (e) {
-    parentPort.postMessage({ type: 'error', value: e instanceof Error ? e.message : e })
+    parentPort.postMessage({ type: 'error', value })
   }
 })

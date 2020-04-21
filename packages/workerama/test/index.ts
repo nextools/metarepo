@@ -3,7 +3,9 @@ import test from 'tape'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 
-test('tommy-gun: `maxThreadCount`', async (t) => {
+const umask = process.umask()
+
+test('workerama: `maxThreadCount`', async (t) => {
   const workerSpy = createSpy(() => {})
 
   class MyWorker extends Worker {
@@ -24,17 +26,17 @@ test('tommy-gun: `maxThreadCount`', async (t) => {
 
   const { workerama } = await import('../src')
 
-  await workerama({
+  const asyncIterable = workerama<number>({
     items: inputArray,
-    itemsPerThreadCount: 3,
     maxThreadCount: 3,
     fnFilePath: './fixtures/ok',
     fnName: 'test',
     fnArgs: [1],
-    onItemResult: (result) => {
-      outputArray.push(result)
-    },
   })
+
+  for await (const result of asyncIterable) {
+    outputArray.push(result)
+  }
 
   const expectedArray = inputArray.map((item) => item + 1)
 
@@ -53,6 +55,7 @@ test('tommy-gun: `maxThreadCount`', async (t) => {
             fnFilePath,
             fnName: 'test',
             fnArgs: [1],
+            umask,
           },
         },
       ],
@@ -63,6 +66,7 @@ test('tommy-gun: `maxThreadCount`', async (t) => {
             fnFilePath,
             fnName: 'test',
             fnArgs: [1],
+            umask,
           },
         },
       ],
@@ -73,6 +77,7 @@ test('tommy-gun: `maxThreadCount`', async (t) => {
             fnFilePath,
             fnName: 'test',
             fnArgs: [1],
+            umask,
           },
         },
       ],
@@ -89,7 +94,7 @@ test('tommy-gun: `maxThreadCount`', async (t) => {
   unmockRequire()
 })
 
-test('tommy-gun: not more than needed', async (t) => {
+test('workerama: not more than needed', async (t) => {
   const workerSpy = createSpy(() => {})
 
   class MyWorker extends Worker {
@@ -110,17 +115,17 @@ test('tommy-gun: not more than needed', async (t) => {
 
   const { workerama } = await import('../src')
 
-  await workerama({
+  const asyncIterable = workerama<number>({
     items: inputArray,
-    itemsPerThreadCount: 5,
-    maxThreadCount: 3,
+    maxThreadCount: 2,
     fnFilePath: './fixtures/ok',
     fnName: 'test',
     fnArgs: [1],
-    onItemResult: (result) => {
-      outputArray.push(result)
-    },
   })
+
+  for await (const result of asyncIterable) {
+    outputArray.push(result)
+  }
 
   const expectedArray = inputArray.map((item) => item + 1)
 
@@ -139,6 +144,7 @@ test('tommy-gun: not more than needed', async (t) => {
             fnFilePath,
             fnName: 'test',
             fnArgs: [1],
+            umask,
           },
         },
       ],
@@ -149,6 +155,7 @@ test('tommy-gun: not more than needed', async (t) => {
             fnFilePath,
             fnName: 'test',
             fnArgs: [1],
+            umask,
           },
         },
       ],
@@ -165,53 +172,23 @@ test('tommy-gun: not more than needed', async (t) => {
   unmockRequire()
 })
 
-test('tommy-gun: throw about `itemsPerThreadCount`', async (t) => {
+test('workerama: throw about `maxThreadCount`', async (t) => {
   const inputArray = new Array(10).fill(null).map((_, i) => i)
-  const outputArray = [] as number[]
 
   const { workerama } = await import('../src')
 
   try {
-    await workerama({
+    const asyncIterable = workerama({
       items: inputArray,
-      itemsPerThreadCount: 0,
-      maxThreadCount: 3,
-      fnFilePath: './fixtures/ok',
-      fnName: 'test',
-      fnArgs: [1],
-      onItemResult: (result) => {
-        outputArray.push(result)
-      },
-    })
-
-    t.fail('should not get here')
-  } catch (e) {
-    t.equal(
-      e.message,
-      '`itemsPerThreadCount` should be greater than zero',
-      'should throw'
-    )
-  }
-})
-
-test('tommy-gun: throw about `maxThreadCount`', async (t) => {
-  const inputArray = new Array(10).fill(null).map((_, i) => i)
-  const outputArray = [] as number[]
-
-  const { workerama } = await import('../src')
-
-  try {
-    await workerama({
-      items: inputArray,
-      itemsPerThreadCount: 3,
       maxThreadCount: 0,
       fnFilePath: './fixtures/ok',
       fnName: 'test',
       fnArgs: [1],
-      onItemResult: (result) => {
-        outputArray.push(result)
-      },
     })
+
+    const iterator = asyncIterable[Symbol.asyncIterator]()
+
+    await iterator.next()
 
     t.fail('should not get here')
   } catch (e) {
@@ -223,20 +200,23 @@ test('tommy-gun: throw about `maxThreadCount`', async (t) => {
   }
 })
 
-test('tommy-gun: should propagate and throw errors from workers', async (t) => {
+test('workerama: should propagate and throw errors from workers', async (t) => {
   const inputArray = new Array(20).fill(null).map((_, i) => i)
   const { workerama } = await import('../src')
+  const outputArray = [] as number[]
 
   try {
-    await workerama({
+    const asyncIterable = workerama<number>({
       items: inputArray,
-      itemsPerThreadCount: 3,
-      maxThreadCount: 3,
+      maxThreadCount: 2,
       fnFilePath: './fixtures/error',
       fnName: 'test',
       fnArgs: [1],
-      onItemResult: () => {},
     })
+
+    for await (const result of asyncIterable) {
+      outputArray.push(result)
+    }
 
     t.fail('should not get here')
   } catch (e) {
