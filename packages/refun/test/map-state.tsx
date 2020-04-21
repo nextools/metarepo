@@ -5,9 +5,9 @@ import { createSpy, getSpyCalls } from 'spyfn'
 import { component, mapState, startWithType } from '../src'
 
 test('mapState', (t) => {
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const spy = createSpy(({ args }) => [args[0].foo * 2])
   const MyComp = component(
     startWithType<{
@@ -15,10 +15,10 @@ test('mapState', (t) => {
       bar?: string,
     }>(),
     mapState('state', 'setState', spy, ['foo'])
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -32,7 +32,7 @@ test('mapState', (t) => {
   const { state, setState } = getProps(0)
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 1, state: [2], setState }],
     ],
@@ -65,7 +65,7 @@ test('mapState', (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 1, state: [2], setState }],
       [{ foo: 1, bar: 'bar', state, setState }],
@@ -93,7 +93,7 @@ test('mapState', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 1, state: [2], setState }],
       [{ foo: 1, bar: 'bar', state, setState }],
@@ -119,7 +119,7 @@ test('mapState', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 1, state: [2], setState }],
       [{ foo: 1, bar: 'bar', state, setState }],

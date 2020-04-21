@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import { isDefined, isArray } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
-import { TComponentConfig, TRequiredConfig } from './types'
+import { TCommonComponentConfig, TCommonRequiredConfig } from './types'
 import { packPerm } from './pack-perm'
 import { unpackPerm } from './unpack-perm'
 import { parseBigInt } from './parse-bigint'
@@ -11,7 +11,7 @@ import { checkRestrictionMutex } from './check-restriction-mutex'
 import { checkRestrictionMutin } from './check-restriction-mutin'
 import { getNumSkipMutin } from './get-num-skip-mutin'
 
-const getChildNextPerm = (int: BigInteger, childConfig: TComponentConfig, childKey: string, required?: TRequiredConfig): BigInteger | null => {
+const getChildNextPerm = (int: BigInteger, childConfig: TCommonComponentConfig, childKey: string, required?: TCommonRequiredConfig): BigInteger | null => {
   if (isDefined(required) && required.includes(childKey)) {
     return getNextPermImpl(childConfig, int)
   }
@@ -29,7 +29,7 @@ const getChildNextPerm = (int: BigInteger, childConfig: TComponentConfig, childK
   return int.plus(BigInt.one)
 }
 
-export const getNextPermImpl = (componentConfig: TComponentConfig, int: BigInteger): BigInteger | null => {
+export const getNextPermImpl = (componentConfig: TCommonComponentConfig, int: BigInteger): BigInteger | null => {
   const { values, length, propKeys, childrenKeys } = unpackPerm(componentConfig, int)
 
   if (values.length === 0) {
@@ -80,7 +80,7 @@ export const getNextPermImpl = (componentConfig: TComponentConfig, int: BigInteg
   return packPerm(values, length)
 }
 
-export const getNextPerm = (componentConfig: TComponentConfig, intStr: string): string | null => {
+export const getNextPerm = (componentConfig: TCommonComponentConfig, intStr: string): string | null => {
   const result = getNextPermImpl(componentConfig, parseBigInt(intStr))
 
   if (result !== null) {

@@ -1,6 +1,6 @@
 import test from 'tape'
 import { mockRequire } from '@mock/require'
-import { TComponentConfig } from '../src/types'
+import { TCommonComponentConfig } from '../src/types'
 
 test('createChildren', async (t) => {
   const unmockRequire = mockRequire('../src/create-children', {
@@ -17,7 +17,7 @@ test('createChildren', async (t) => {
   const { createChildren } = await import('../src/create-children')
 
   const Comp = () => null
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {},
     children: {
       child: {

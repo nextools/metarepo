@@ -1,6 +1,6 @@
 import test from 'tape'
 import { getPropKeys, getChildrenKeys } from '../src/get-keys'
-import { TComponentConfig } from '../src'
+import { TCommonComponentConfig } from '../src/types'
 
 test('getPropKeys', (t) => {
   const props = {
@@ -33,7 +33,7 @@ test('getPropKeys', (t) => {
 })
 
 test('getChildrenKeys: no children', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {},
   }
 
@@ -47,7 +47,7 @@ test('getChildrenKeys: no children', (t) => {
 })
 
 test('getChildrenKeys: sorted children', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {},
     children: {
       text: {

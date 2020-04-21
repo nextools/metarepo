@@ -1,6 +1,6 @@
 {
   "name": "@auto/slack",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Send Slack messages with Auto Tools",
   "keywords": [
     "monorepo",
@@ -16,9 +16,9 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
-    "@auto/core": "^0.1.5",
+    "@auto/core": "^0.1.6",
     "node-fetch": "^2.6.0",
-    "tsfn": "^1.1.1"
+    "tsfn": "^1.1.2"
   },
   "devDependencies": {
     "@mock/require": "^0.1.0",

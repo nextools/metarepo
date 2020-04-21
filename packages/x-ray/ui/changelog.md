@@ -1,3 +1,9 @@
+## v1.0.3
+
+* 🐞 adapt new refun API
+
+* ♻️ update dependencies `refun`
+
 ## v1.0.2
 
 * 🐞 fix wrong deps

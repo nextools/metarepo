@@ -1,4 +1,4 @@
-# @rebox/ios
+# @rebox/ios ![npm](https://flat.badgen.net/npm/v/@rebox/ios)
 
 Set of helpers to deal with React Native applications on iOS.
 

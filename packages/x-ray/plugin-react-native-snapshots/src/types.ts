@@ -1,4 +1,4 @@
-import { TFileResults } from '../types'
+import { TFileResults } from '@x-ray/core'
 
 export type TCheckOptions = {
   browserWSEndpoint: string,

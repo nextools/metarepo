@@ -1,4 +1,4 @@
-# @mock/request
+# @mock/request ![npm](https://flat.badgen.net/npm/v/@mock/request)
 
 Mock HTTP(S) requests through redirecting to a temporary HTTP(S) server allowing to handle a request in whatever way.
 

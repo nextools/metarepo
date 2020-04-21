@@ -1,4 +1,4 @@
-# xrom
+# xrom ![npm](https://flat.badgen.net/npm/v/xrom)
 
 Run [dockerized Chromium in headless remote debugging mode](https://github.com/deepsweet/chromium-headless-remote) and return `browserWSEndpoint` needed for `puppeteer.connect()`.
 

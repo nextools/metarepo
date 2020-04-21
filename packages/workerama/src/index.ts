@@ -2,7 +2,8 @@ import path from 'path'
 import { Worker } from 'worker_threads'
 import getCallerFile from 'get-caller-file'
 import { piAll } from 'piall'
-import { iterableFinally, iterableMap } from './iterable'
+import { map } from 'iterama'
+import { asyncIterableFinally } from './async-iterable-finally'
 
 type TMessage = {
   type: 'done' | 'error',
@@ -43,9 +44,9 @@ export const workerama = <T>(options: TWorkeramaOptions): AsyncIterable<T> => {
   })
   const busyWorkerIds = new Set<number>()
 
-  const resultsIterable = iterableFinally(
+  const resultsIterable = asyncIterableFinally(
     piAll(
-      iterableMap((item) => () => {
+      map((item: any) => () => {
         const worker = workers.find(({ threadId }) => !busyWorkerIds.has(threadId))!
 
         busyWorkerIds.add(worker.threadId)
@@ -59,20 +60,20 @@ export const workerama = <T>(options: TWorkeramaOptions): AsyncIterable<T> => {
 
               busyWorkerIds.delete(worker.threadId)
 
+              /* istanbul ignore else */
               if (message.type === 'done') {
                 resolve(message.value)
-              /* istanbul ignore else */
               } else if (message.type === 'error') {
                 reject(message.value)
               }
             })
             .postMessage(item)
         })
-      }, options.items),
+      })(options.items),
       threadCount
     ),
     () => piAll(
-      iterableMap((worker) => () => worker.terminate(), workers)
+      map((worker: Worker) => () => worker.terminate())(workers)
     )
   )
 

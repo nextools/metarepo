@@ -1,6 +1,6 @@
 {
   "name": "workerama",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Run sync/async function across Worker Threads",
   "keywords": [
     "workers",
@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "get-caller-file": "^2.0.5",
+    "iterama": "^0.2.2",
     "piall": "^0.1.0"
   }
 }

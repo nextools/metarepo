@@ -1,5 +1,5 @@
 import React from 'react'
-import { startWithType, mapState, mapWithPropsMemo, pureComponent } from 'refun'
+import { startWithType, mapState, mapWithPropsMemo, pureComponent, onUpdateAsync } from 'refun'
 import { isDefined } from 'tsfn'
 import { diffArrays } from 'diff'
 import { PrimitiveText as Text } from '@revert/text'
@@ -20,7 +20,6 @@ import {
   BORDER_SIZE,
   SNAPSHOT_GRID_MAX_LINES,
 } from '../config'
-import { onMountAsync } from './on-mount-async'
 
 export type TDiffLine = {
   value: string,
@@ -38,14 +37,14 @@ export const SnapshotDiff = pureComponent(
   startWithType<TSnapshotDiff>(),
   mapStoreDispatch('dispatch'),
   mapState('state', 'setState', () => null as TDiffLine[] | null, []),
-  onMountAsync(async ({ setState, id, dispatch, isMountedRef }) => {
+  onUpdateAsync((props) => function *() {
     try {
-      const [dataOrig, dataNew] = await Promise.all([
-        apiLoadSnapshot({ id, type: 'ORIG' }),
-        apiLoadSnapshot({ id, type: 'NEW' }),
+      const [dataOrig, dataNew] = yield Promise.all([
+        apiLoadSnapshot({ id: props.current.id, type: 'ORIG' }),
+        apiLoadSnapshot({ id: props.current.id, type: 'NEW' }),
       ])
-      const linesOrig = dataOrig.split('\n')
-      const linesNew = dataNew.split('\n')
+      const linesOrig = dataOrig.split('\n') as string[]
+      const linesNew = dataNew.split('\n') as string[]
       const linesDiff = diffArrays(linesOrig, linesNew).reduce((result, chunk) => {
         result.push(
           ...chunk.value.map((line) => {
@@ -74,14 +73,12 @@ export const SnapshotDiff = pureComponent(
 
       console.log(linesDiff)
 
-      if (isMountedRef.current) {
-        setState(linesDiff)
-      }
+      props.current.setState(linesDiff)
     } catch (err) {
       console.log(err)
-      dispatch(actionError(err.message))
+      props.current.dispatch(actionError(err.message))
     }
-  }),
+  }, []),
   mapWithPropsMemo(({ state }) => {
     if (state === null) {
       return {

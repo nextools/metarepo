@@ -2,29 +2,44 @@ import { FC } from 'react'
 import { TAnyObject, TKeyOf, TRequiredKeys, TOptionalKeys } from 'tsfn'
 import { BigInteger } from 'big-integer'
 
-export type TRequiredConfig <TProps = any, TChildrenKeys extends string = string> = readonly (TRequiredKeys<TProps> | TChildrenKeys)[]
-export type TMutexConfig <TProps = any, TChildrenKeys extends string = string> = readonly (readonly (TKeyOf<TProps> | TChildrenKeys)[])[]
-export type TMutinConfig <TProps = any, TChildrenKeys extends string = string> = readonly (readonly (TKeyOf<TProps> | TChildrenKeys)[])[]
+export type TCommonRequiredConfig = readonly string[]
+export type TCommonMutexConfig = readonly (readonly string[])[]
+export type TCommonMutinConfig = readonly (readonly string[])[]
 
-export type TComponentConfig<TProps = any, TChildrenKeys extends string = string> = {
+export type TCommonComponentConfig = {
   readonly props: {
-    readonly [k in Exclude<TRequiredKeys<TProps>, 'children'>]: readonly TProps[k][];
+    readonly [K: string]: (readonly any[]) | undefined,
+  },
+  readonly children?: {
+    readonly [K: string]: {
+      readonly Component: FC<any>,
+      readonly config: TCommonComponentConfig,
+    },
+  },
+  readonly required?: readonly string[],
+  readonly mutex?: readonly (readonly string[])[],
+  readonly mutin?: readonly (readonly string[])[],
+}
+
+export type TComponentConfig<TProps, TChildrenKeys extends string = never> = {
+  readonly props: {
+    readonly [K in Exclude<TRequiredKeys<TProps>, 'children'>]: readonly TProps[K][];
   } & {
-    readonly [k in TOptionalKeys<TProps> | Extract<keyof TProps, 'children'>]?: readonly (Exclude<TProps[k], undefined>)[];
+    readonly [K in TOptionalKeys<TProps> | Extract<keyof TProps, 'children'>]?: readonly (Exclude<TProps[K], undefined>)[];
   },
   readonly children?: {
     readonly [K in TChildrenKeys]: {
       readonly Component: FC<any>,
-      readonly config: TComponentConfig,
+      readonly config: TCommonComponentConfig,
     }
   },
-  readonly required?: TRequiredConfig<TProps, TChildrenKeys>,
-  readonly mutex?: TMutexConfig<TProps, TChildrenKeys>,
-  readonly mutin?: TMutinConfig<TProps, TChildrenKeys>,
+  readonly required?: readonly (TRequiredKeys<TProps> | TChildrenKeys)[],
+  readonly mutex?: readonly (readonly (TKeyOf<TProps> | TChildrenKeys)[])[],
+  readonly mutin?: readonly (readonly (TKeyOf<TProps> | TChildrenKeys)[])[],
 }
 
-export type TChildrenMap<TChildrenKeys extends string = string> = {
-  readonly [K in TChildrenKeys]?: Readonly<TAnyObject>
+export type TChildrenMap = {
+  readonly [K: string]: (Readonly<TAnyObject>) | undefined,
 }
 
 export type Permutation = Readonly<{

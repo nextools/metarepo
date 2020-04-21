@@ -6,18 +6,18 @@ import { component, startWithType, mapWithPropsMemo } from '../src'
 
 test('mapWithPropsMemo', (t) => {
   const mapSpy = createSpy(({ args }) => ({ bar: args[0].foo * 2 }))
-  const compSpy = createSpy(() => null)
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{
       foo: number,
       watch?: string,
     }>(),
     mapWithPropsMemo(mapSpy, ['watch'])
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
@@ -29,7 +29,7 @@ test('mapWithPropsMemo', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 2, bar: 4 }],
     ],
@@ -53,7 +53,7 @@ test('mapWithPropsMemo', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 2, bar: 4 }],
       [{ foo: 3, bar: 4 }],
@@ -81,7 +81,7 @@ test('mapWithPropsMemo', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 2, bar: 4 }],
       [{ foo: 3, bar: 4 }],

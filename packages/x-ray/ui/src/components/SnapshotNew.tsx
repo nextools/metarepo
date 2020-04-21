@@ -1,5 +1,5 @@
 import React from 'react'
-import { startWithType, mapState, mapWithPropsMemo, pureComponent } from 'refun'
+import { startWithType, mapState, mapWithPropsMemo, pureComponent, onUpdateAsync } from 'refun'
 import { PrimitiveText as Text } from '@revert/text'
 import { PrimitiveBorder as Border } from '@revert/border'
 import { PrimitiveBlock as Block } from '@revert/block'
@@ -15,7 +15,6 @@ import {
   BORDER_SIZE,
   SNAPSHOT_GRID_MAX_LINES,
 } from '../config'
-import { onMountAsync } from './on-mount-async'
 
 export type TSnapshotNew = TRect & {
   id: string,
@@ -26,19 +25,17 @@ export const SnapshotNew = pureComponent(
   startWithType<TSnapshotNew>(),
   mapStoreDispatch('dispatch'),
   mapState('state', 'setState', () => null as string[] | null, []),
-  onMountAsync(async ({ setState, id, dispatch, isMountedRef }) => {
+  onUpdateAsync((props) => function *() {
     try {
-      const data = await apiLoadSnapshot({ id, type: 'NEW' })
+      const data = yield apiLoadSnapshot({ id: props.current.id, type: 'NEW' })
       const lines = data.split('\n')
 
-      if (isMountedRef.current) {
-        setState(lines)
-      }
+      props.current.setState(lines)
     } catch (err) {
       console.log(err)
-      dispatch(actionError(err.message))
+      props.current.dispatch(actionError(err.message))
     }
-  }),
+  }, []),
   mapWithPropsMemo(({ state }) => {
     if (state === null) {
       return {

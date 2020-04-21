@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, onMount, mapHandlers, mapState, mapContext } from 'refun'
-import { PrimitiveImage } from '@revert/image'
+import { component, startWithType, mapHandlers, mapState, mapContext, onUpdate } from 'refun'
 import { Layout, Layout_Item, LayoutContext } from '@revert/layout'
+import { PrimitiveImage } from '@revert/image'
+import { TListItems } from '@x-ray/core'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { actionLoadList, actionSave } from '../../actions'
 import { TType } from '../../types'
@@ -10,7 +11,6 @@ import noSignalImage from '../../images/no-signal.png'
 import { Popup } from '../Popup'
 import { Toolbar } from '../Toolbar'
 import { SaveButton } from '../SaveButton'
-import { TListItems } from '../../../../next/src/types'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
 
@@ -32,9 +32,10 @@ export const Main = component(
     isSaved,
   }), ['selectedItem', 'files', 'items', 'type', 'discardedItems', 'filteredFiles', 'isSaved']),
   mapStoreDispatch('dispatch'),
-  onMount(async ({ dispatch }) => {
-    await dispatch(actionLoadList())
-  }),
+  onUpdate(({ dispatch }) => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    dispatch(actionLoadList())
+  }, []),
   mapHandlers({
     onSave: ({ type, items, discardedItems, dispatch }) => async () => {
       const itemKeys = Object.keys(items)

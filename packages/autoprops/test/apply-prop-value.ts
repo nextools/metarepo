@@ -1,9 +1,9 @@
 import test from 'tape'
-import { TComponentConfig } from '../src/types'
+import { TCommonComponentConfig, TComponentConfig } from '../src/types'
 import { applyPropValue } from '../src'
 
 test('applyPropValue: boolean case', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [false, true],
       b: [false, true],
@@ -57,7 +57,7 @@ test('applyPropValue: boolean case', (t) => {
 })
 
 test('applyPropValue: non primitive values', (t) => {
-  const config: TComponentConfig = {
+  const config: TComponentConfig<{ a: any }, never> = {
     props: {
       a: [() => {}, [1, 2], { a: 1 }],
     },
@@ -85,7 +85,7 @@ test('applyPropValue: non primitive values', (t) => {
 })
 
 test('applyPropValue: prop mutex', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],
@@ -107,7 +107,7 @@ test('applyPropValue: prop mutex', (t) => {
 })
 
 test('applyPropValue: prop mutin', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],
@@ -135,7 +135,7 @@ test('applyPropValue: prop mutin', (t) => {
 })
 
 test('applyPropValue: boolean inside child', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
     },
@@ -173,7 +173,7 @@ test('applyPropValue: boolean inside child', (t) => {
 })
 
 test('applyPropPath: enable disable child', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {},
     children: {
       child: {
@@ -199,7 +199,7 @@ test('applyPropPath: enable disable child', (t) => {
 })
 
 test('applyPropPath: child mutins', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
     },
@@ -229,7 +229,7 @@ test('applyPropPath: child mutins', (t) => {
 })
 
 test('applyPropPath: child mutexes', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
     },
@@ -253,7 +253,7 @@ test('applyPropPath: child mutexes', (t) => {
 })
 
 test('applyPropPath: change required child prop', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {},
     children: {
       child: {
@@ -284,7 +284,7 @@ test('applyPropPath: change required child prop', (t) => {
 })
 
 test('applyPropPath: errors', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
     },

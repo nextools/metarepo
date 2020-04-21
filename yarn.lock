@@ -956,7 +956,7 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.0", "@babel/runtime@^7.4.2", "@babel/runtime@^7.4.3", "@babel/runtime@^7.8.0", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.0", "@babel/runtime@^7.4.2", "@babel/runtime@^7.4.3", "@babel/runtime@^7.4.5", "@babel/runtime@^7.8.0", "@babel/runtime@^7.8.4":
   version "7.9.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.9.2.tgz#d90df0583a3a252f09aaa619665367bae518db06"
   integrity sha512-NE2DtOdufG7R5vnfQUTehdTfNycfUANEtCa9PssN9O/xmTzP4E08UI797ixaei6hBEVL9BI/PsdJS5x7mWoB9Q==
@@ -1706,7 +1706,7 @@
     refun "^1.0.0"
     stili "^1.0.0"
 
-"@psxcode/compose@^0.1.3":
+"@psxcode/compose@^0.1.2", "@psxcode/compose@^0.1.3":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@psxcode/compose/-/compose-0.1.4.tgz#38e117cd8bd84dde15f30f7b114f6bfce7fa8adf"
   integrity sha512-z/2H7UYym/YYzkW0KZEdeZ+QTVPf4xl9p0IrXIV98+0YHM0fLmGc4g2tz9yNtgA9/dh3z1QsSLZ4lLvKtUfEiw==
@@ -2173,6 +2173,13 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.11.1.tgz#49a2a83df9d26daacead30d0ccc8762b128d53c7"
   integrity sha512-eWQGP3qtxwL8FGneRrC5DwrJLGN4/dH1clNTuLfN81HCrxVtxRjygDTUoZJ5ASlDEeo0ppYFQjQIlXhtXpOn6g==
 
+"@types/pixelmatch@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@types/pixelmatch/-/pixelmatch-5.1.0.tgz#580b356fde4499fb2a9293da886edf5d627a1a4b"
+  integrity sha512-9duySxw+imsKMBnsTwve8gbWhwO0OyF3BqTwia2EyCOSAOvFYm8IB9cLanSHggfVu8pgvqvsO4+FG+TwVVK08w==
+  dependencies:
+    "@types/node" "*"
+
 "@types/plist@^3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@types/plist/-/plist-3.0.2.tgz#61b3727bba0f5c462fe333542534a0c3e19ccb01"
@@ -2203,6 +2210,20 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
 
+"@types/puppeteer-core@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/puppeteer-core/-/puppeteer-core-2.0.0.tgz#3b7fbbac53d56b566f5ef096116e1d60d504aa45"
+  integrity sha512-JvoEb7KgEkUet009ZDrtpUER3hheXoHgQByuYpJZ5WWT7LWwMH+0NTqGQXGgoOKzs+G5NA1T4DZwXK79Bhnejw==
+  dependencies:
+    "@types/puppeteer" "*"
+
+"@types/puppeteer@*":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-2.0.1.tgz#83a1d7f0a1c2e0edbbb488b4d8fb54b14ec9d455"
+  integrity sha512-G8vEyU83Bios+dzs+DZGpAirDmMqRhfFBJCkFrg+A5+6n5EPPHxwBLImJto3qjh0mrBXbLBCyuahhhtTrAfR5g==
+  dependencies:
+    "@types/node" "*"
+
 "@types/qs@*":
   version "6.9.1"
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.1.tgz#937fab3194766256ee09fcd40b781740758617e7"
@@ -2212,6 +2233,13 @@
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
+
+"@types/react-dom@^16.9.6":
+  version "16.9.6"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.9.6.tgz#9e7f83d90566521cc2083be2277c6712dcaf754c"
+  integrity sha512-S6ihtlPMDotrlCJE9ST1fRmYrQNNwfgL61UB4I1W7M6kPulUKx9fXAleW5zpdIjUQ4fTaaog8uERezjsGUj9HQ==
+  dependencies:
+    "@types/react" "*"
 
 "@types/react-native@^0.61.4":
   version "0.61.23"
@@ -2608,15 +2636,173 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@x-ray/web-mobile-screenshots-app@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@x-ray/web-mobile-screenshots-app/-/web-mobile-screenshots-app-1.0.0.tgz#dcea1641cd43532566a8d1f10f1490bc00210001"
-  integrity sha512-BKJH419P7MWs322hBBhHLV9H9fP/7ydCeEhWmScIcMgzPknku1KkSxkYkG2to3/OWPNpTpkh6oFJLJhrorMARA==
+"@x-ray/chrome-perf-snapshots@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@x-ray/chrome-perf-snapshots/-/chrome-perf-snapshots-1.2.3.tgz#baa8f57f1975f61ec6eddc04485a7b572b4d7f10"
+  integrity sha512-7TWsrQ5FG2vZs7LRepXgkg2s7I0jvBgH7xN3ngh08Ip7ufIlqFHd9pa9rp1nVMWDjZcYdp1BmGo6Uelh3FXW9A==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@rebox/web" "^2.0.0"
+    "@x-ray/common-utils" "^1.0.2"
+    "@x-ray/tar-fs" "^1.0.0"
+    "@x-ray/ui" "^1.0.2"
+    diff "^4.0.1"
+    make-dir "^3.0.0"
+    p-all "^3.0.0"
+    perfa "^0.2.1"
+    pkg-dir "^4.2.0"
+    pretty-ms "^6.0.0"
+    react "16.11.0"
+    rsolve "^0.1.0"
+    tsfn "^1.1.1"
+
+"@x-ray/chrome-screenshots@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@x-ray/chrome-screenshots/-/chrome-screenshots-1.0.5.tgz#08dbd2dd2a7315ef6e953f51dd5fee5ecd8ae52a"
+  integrity sha512-4uIJhXCBCn5hBHg8AEL1GQXSnwl3dtq7U9Gzq6Jaxptbg7tRHm5eaSqaunHur29xl4wHLo3osuBKeZ7/Ig4lbw==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@rebox/web" "^2.0.0"
+    "@x-ray/common-utils" "^1.0.2"
+    "@x-ray/screenshot-utils" "^1.0.0"
+    "@x-ray/tar-fs" "^1.0.0"
+    "@x-ray/ui" "^1.0.2"
+    "@x-ray/worker-utils" "^1.0.0"
+    iterama "^0.1.1"
+    node-fetch "^2.6.0"
+    p-all "^3.0.0"
+    puppeteer-core "^2.1.0"
+    react "16.11.0"
+    react-dom "16.11.0"
+    rsolve "^0.1.0"
+    upng-js "^2.1.0"
+
+"@x-ray/common-utils@^1.0.0", "@x-ray/common-utils@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@x-ray/common-utils/-/common-utils-1.0.2.tgz#ee8980aff9f4ae2f7440e171123ec4d988ba4df1"
+  integrity sha512-STbvBfDJ01BAi9O6r4s9o6438QJU10OZM7ew7nroLSJ4OkEWYOrPbEX3IvsVKRMjtR4U/cwaL/VL4LZk2QdB4w==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    react "16.11.0"
+    syntx "^1.0.1"
+    tsfn "^1.1.1"
+
+"@x-ray/firefox-screenshots@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@x-ray/firefox-screenshots/-/firefox-screenshots-1.0.3.tgz#1f0e8d38ac5c3a520fb43e37619fa5134447cee8"
+  integrity sha512-yOzc7PMdk2PkMkGM038nK3ogOCd+xjiDgZ/Pu5ZWbGjCWxvFsSQTV8OF6DqRPTKcd6k2+nGGe1cx6uEP8QESJQ==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@rebox/web" "^2.0.0"
+    "@x-ray/common-utils" "^1.0.2"
+    "@x-ray/screenshot-utils" "^1.0.0"
+    "@x-ray/tar-fs" "^1.0.0"
+    "@x-ray/ui" "^1.0.2"
+    "@x-ray/worker-utils" "^1.0.0"
+    foxr "^0.10.1"
+    react "16.11.0"
+    react-dom "16.11.0"
+    rsolve "^0.1.0"
+    upng-js "^2.1.0"
+
+"@x-ray/native-screenshots@^1.0.0":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@x-ray/native-screenshots/-/native-screenshots-1.0.2.tgz#1dbee470a33f3302ec19ee3b6d0095e77335582a"
+  integrity sha512-H8TFd2qeVKJ9XGg9Ye6w4JAi47uIG/1sE34Mi5atwJCmFUo8sKNq3+Ih5WMcxbOXkW67UlBXg9N1lZTBlhNLbA==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@x-ray/common-utils" "^1.0.0"
+    "@x-ray/screenshot-utils" "^1.0.0"
+    "@x-ray/tar-fs" "^1.0.0"
+    pifs "^1.0.0"
+    pretty-ms "^6.0.0"
+    tsfn "^1.0.0"
+    upng-js "^2.1.0"
+
+"@x-ray/screenshot-utils@^1.0.0":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@x-ray/screenshot-utils/-/screenshot-utils-1.0.2.tgz#8d851a366be708a543e52c937791e37f7bb5a4fe"
+  integrity sha512-OnUI/JVNQiPTOKocALaKNjp97qf88faaUWx+UEgneBLX9XrtneaeYwy3DK1ZD6damR92iQiZ6ROdJlou5eOSjw==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@types/react" "^16.8.6"
+    "@x-ray/common-utils" "^1.0.0"
+    "@x-ray/tar-fs" "^1.0.0"
+    "@x-ray/worker-utils" "^1.0.0"
+    imagemin-pngout "^4.0.0"
+    make-dir "^3.0.0"
+    p-all "^2.1.0"
+    pixelmatch "^5.0.0"
+    pkg-dir "^4.2.0"
+    pretty-ms "^6.0.0"
+    stili "^1.0.0"
+    tsfn "^1.0.0"
+    upng-js "^2.1.0"
+
+"@x-ray/snapshots@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@x-ray/snapshots/-/snapshots-1.0.4.tgz#d4a0f6edeff26a8e2ebc49099a714adf4d9a4ccf"
+  integrity sha512-tBB/sS/OPhBrKCVek06JCPDbSau/9OIpw8jUhV7mrA9+iTuWnbpqnLDRFworsZKUK21zUM3DwalqrlGAn9rdkw==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@rebox/web" "^2.0.0"
+    "@x-ray/common-utils" "^1.0.2"
+    "@x-ray/serialize-react-tree" "^1.0.1"
+    "@x-ray/tar-fs" "^1.0.0"
+    "@x-ray/ui" "^1.0.2"
+    "@x-ray/worker-utils" "^1.0.0"
+    diff "^4.0.1"
+    iterama "^0.1.1"
+    make-dir "^3.0.0"
+    p-all "^3.0.0"
+    pkg-dir "^4.2.0"
+    pretty-ms "^6.0.0"
+    rsolve "^0.1.0"
+    tsfn "^1.1.1"
+
+"@x-ray/web-mobile-screenshots-app@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@x-ray/web-mobile-screenshots-app/-/web-mobile-screenshots-app-1.0.1.tgz#9adec1f0be85b95e060153b0e65d7f6591563b13"
+  integrity sha512-bolmXz9t1EmH0oNEDPbUzSrCZGPzsbT3lpwrLz9BkyjmCYq8FJmyhG9PWLuyJE5+jNtTVB+h4wQx3V7WQ0+3RQ==
   dependencies:
     "@babel/runtime" "^7.4.3"
     react-native-view-shot "^3.0.2"
     react-native-webview "^8.0.3"
-    refun "^1.0.0"
+    refun "^2.0.0"
+
+"@x-ray/web-mobile-screenshots@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@x-ray/web-mobile-screenshots/-/web-mobile-screenshots-1.0.3.tgz#d74d25843e5758ce0caf1ed764d36c8e084ddd51"
+  integrity sha512-eH50mUk0D0cZUr1YgG2iaONxd2d/cXdpALaqUMbRn305EHy5cK3h1KHJJ2Ub2GLFMFaifCRiWvTjHTSVUUQzVA==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@x-ray/common-utils" "^1.0.2"
+    "@x-ray/screenshot-utils" "^1.0.0"
+    "@x-ray/tar-fs" "^1.0.0"
+    "@x-ray/worker-utils" "^1.0.0"
+    opentype.js "^1.1.0"
+    p-all "^3.0.0"
+    pifs "^1.0.0"
+    pretty-ms "^6.0.0"
+    react-dom "16.11.0"
+    tsfn "^1.1.1"
+    upng-js "^2.1.0"
+
+"@x-ray/worker-utils@^1.0.0":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@x-ray/worker-utils/-/worker-utils-1.0.3.tgz#a97e9fb32bd6742c21112b54899737cafafd6222"
+  integrity sha512-qWqc0SAG+slBGE56xxfzCZhlJSXtUG+D3Utt3yrCOZ/sJCS12MX13BGfQeowHPITwAPoak/Mz5KGIINEzfJveg==
+  dependencies:
+    "@babel/plugin-syntax-bigint" "^7.8.0"
+    "@babel/preset-env" "^7.8.0"
+    "@babel/preset-react" "^7.8.0"
+    "@babel/preset-typescript" "^7.8.0"
+    "@babel/register" "^7.8.0"
+    "@babel/runtime" "^7.8.0"
+    execa "^4.0.0"
+    pkg-dir "^4.2.0"
+    resolve "^1.12.0"
+    tsfn "^1.0.0"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -4055,6 +4241,13 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+circularr@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/circularr/-/circularr-0.1.5.tgz#5a10313a0d353e755fb44d7ab3b7f35c750c6ba6"
+  integrity sha512-5mdTCjLkhKMazCKBKWBr5UFpbzXA30WxRdLeO060Wa/dr5EsRdu1zjVOamZBSjDNjJrfgcPU3WENXKHYMA9SKQ==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+
 clap@^1.1.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/clap/-/clap-1.2.3.tgz#4f36745b32008492557f46412d66d50cb99bce51"
@@ -5052,7 +5245,7 @@ diff@^2.2.1:
   resolved "https://registry.yarnpkg.com/diff/-/diff-2.2.3.tgz#60eafd0d28ee906e4e8ff0a52c1229521033bf99"
   integrity sha1-YOr9DSjukG5Oj/ClLBIpUhAzv5k=
 
-diff@^4.0.2:
+diff@^4.0.1, diff@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
@@ -6510,6 +6703,16 @@ forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
+
+foxr@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/foxr/-/foxr-0.10.1.tgz#04effb9ff788ddc2d4ceb6e8a50ad1f796a912c3"
+  integrity sha512-38qNJLCINwxfDAz6mN6DQVgvuxod2+8ca58Q59oTvWS2MGNMXqeLc/yieANC6LGwV5XOYf7KrR/fi2HtTFhByw==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    execa "^1.0.0"
+    signal-exit "^3.0.2"
+    typeon "^0.3.0"
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -8042,6 +8245,15 @@ iterall@^1.2.2:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.3.0.tgz#afcb08492e2915cbd8a0884eb93a8c94d0d72fea"
   integrity sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==
+
+iterama@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/iterama/-/iterama-0.1.1.tgz#0804947dca73daaa995470413547ef3ee5cdf542"
+  integrity sha512-dUgVPWJ3GfdDnBZ7wUPITrgkSkVqihTSGNDeYebaHgnFmxceveDfmoYf2d0g6ff6+U+JfsGWqwZg3OYyNV+x1A==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    "@psxcode/compose" "^0.1.2"
+    circularr "^0.1.5"
 
 jest-changed-files@^25.3.0:
   version "25.3.0"
@@ -10238,6 +10450,14 @@ opener@^1.5.1:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.1.tgz#6d2f0e77f1a0af0032aca716c2c1fbb8e7e8abed"
   integrity sha512-goYSy5c2UXE4Ra1xixabeVh1guIX/ZV/YokJksb6q2lubWu6UbvPQ20p542/sFIll1nl8JnCyK9oBaOcCWXwvA==
 
+opentype.js@^1.1.0:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/opentype.js/-/opentype.js-1.3.3.tgz#65b8645b090a1ad444065b784d442fa19d1061f6"
+  integrity sha512-/qIY/+WnKGlPIIPhbeNjynfD2PO15G9lA/xqlX2bDH+4lc3Xz5GCQ68mqxj3DdUv6AJqCeaPvuAoH8mVL0zcuA==
+  dependencies:
+    string.prototype.codepointat "^0.2.1"
+    tiny-inflate "^1.0.3"
+
 opn@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/opn/-/opn-5.5.0.tgz#fc7164fab56d235904c51c3b27da6758ca3b9bfc"
@@ -10480,7 +10700,7 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
-pako@~1.0.5:
+pako@^1.0.5, pako@~1.0.5:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
   integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
@@ -10736,6 +10956,13 @@ pirates@^4.0.0, pirates@^4.0.1:
   dependencies:
     node-modules-regexp "^1.0.0"
 
+pixelmatch@^5.0.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/pixelmatch/-/pixelmatch-5.2.0.tgz#6433386c6a830b0d9ee3962f9ad59695500677cd"
+  integrity sha512-TdleROuanI+Uo/4PcOAH7b7qgO4kjzJO8K4y/TBAo1wx/5BE8cn1B0I6Jfk3mKcJsGpWvX7zjM8OjU5o9i+aog==
+  dependencies:
+    pngjs "^4.0.1"
+
 pixelmatch@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/pixelmatch/-/pixelmatch-5.1.0.tgz#b640f0e5a03a09f235a4b818ef3b9b98d9d0b911"
@@ -10757,7 +10984,7 @@ pkg-dir@^3.0.0:
   dependencies:
     find-up "^3.0.0"
 
-pkg-dir@^4.1.0:
+pkg-dir@^4.1.0, pkg-dir@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-4.2.0.tgz#f099133df7ede422e81d1d8448270eeb3e4261f3"
   integrity sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==
@@ -10815,6 +11042,11 @@ pngjs@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.4.0.tgz#99ca7d725965fb655814eaf65f38f12bbdbf555f"
   integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
+
+pngjs@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-4.0.1.tgz#f803869bb2fc1bfe1bf99aa4ec21c108117cfdbe"
+  integrity sha512-rf5+2/ioHeQxR6IxuYNYGFytUyG3lma/WW1nsmjeHlWwtb2aByla6dkVc8pmJ9nplzkTA0q2xx7mMWrOTqT4Gg==
 
 pngout-bin@^4.0.0:
   version "4.0.0"
@@ -10938,7 +11170,7 @@ pretty-ms@^2.1.0:
     parse-ms "^1.0.0"
     plur "^1.0.0"
 
-pretty-ms@^6.0.1:
+pretty-ms@^6.0.0, pretty-ms@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/pretty-ms/-/pretty-ms-6.0.1.tgz#03ec6cfee20329f142645e63efad96bb775d3da4"
   integrity sha512-ke4njoVmlotekHlHyCZ3wI/c5AMT8peuHs8rKJqekj/oR5G8lND2dVpicFlUz5cbZgE290vvkMuDwfj/OcW1kw==
@@ -11409,6 +11641,13 @@ redux@^4.0.0, redux@^4.0.1:
   dependencies:
     loose-envify "^1.4.0"
     symbol-observable "^1.2.0"
+
+refun@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/refun/-/refun-1.0.1.tgz#5e2c5d91bab4794e3cd68d68d67cbf3b9b8ade95"
+  integrity sha512-jGrtpVW3DtNt0klqA+FrcxOH574sT9xjWN3qLdGheiTQYOqMSAFBppJs5hsNKVpC9UyFpfHiQfWH+1GpHMNULQ==
+  dependencies:
+    tsfn "^1.1.1"
 
 regenerate-unicode-properties@^8.2.0:
   version "8.2.0"
@@ -12584,6 +12823,11 @@ string-width@^4.1.0, string-width@^4.2.0:
     is-fullwidth-code-point "^3.0.0"
     strip-ansi "^6.0.0"
 
+string.prototype.codepointat@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/string.prototype.codepointat/-/string.prototype.codepointat-0.2.1.tgz#004ad44c8afc727527b108cd462b4d971cd469bc"
+  integrity sha512-2cBVCj6I4IOvEnjgO/hWqXjqBGsY+zwPmHl12Srk9IXSZ56Jwwmy+66XO5Iut/oQVR7t5ihYdLB0GMa4alEUcg==
+
 string.prototype.matchall@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/string.prototype.matchall/-/string.prototype.matchall-4.0.2.tgz#48bb510326fb9fdeb6a33ceaa81a6ea04ef7648e"
@@ -13035,6 +13279,11 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
+tiny-inflate@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/tiny-inflate/-/tiny-inflate-1.0.3.tgz#122715494913a1805166aaf7c93467933eea26c4"
+  integrity sha512-pkY1fj1cKHb2seWDy0B16HeWyczlJA9/WW3u3c4z/NiWDsO3DOU5D7nhTLE9CF0yXv/QZFY7sEJmj24dK+Rrqw==
+
 tmp@0.0.33, tmp@0.0.x, tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
@@ -13241,6 +13490,11 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
+typeon@^0.3.0:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/typeon/-/typeon-0.3.1.tgz#cf80f63f4054c26aa47a0018fe79eef9944f3748"
+  integrity sha512-1QHbHAWyswMnXLAtK5n4RHtGVScyb4TerI8g9eKGeKIsEiVqwWsTUX5EnzzZcwwSY1q1pdBFgcZWP4/C7dlYGw==
+
 typescript@^3.2.1, typescript@^3.8.0:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
@@ -13358,6 +13612,13 @@ upath@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/upath/-/upath-1.2.0.tgz#8f66dbcd55a883acdae4408af8b035a5044c1894"
   integrity sha512-aZwGpamFO61g3OlfT7OQCHqhGnW43ieH9WZeP7QxN/G/jS4jfqUkZxoryvJgVPEcrl5NL/ggHsSmLMHuH64Lhg==
+
+upng-js@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/upng-js/-/upng-js-2.1.0.tgz#7176e73973db361ca95d0fa14f958385db6b9dd2"
+  integrity sha512-d3xzZzpMP64YkjP5pr8gNyvBt7dLk/uGI67EctzDuVp4lCZyVMo0aJO6l/VDlgbInJYDY6cnClLoBp29eKWI6g==
+  dependencies:
+    pako "^1.0.5"
 
 uri-js@^4.2.2:
   version "4.2.2"

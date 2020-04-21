@@ -1,6 +1,6 @@
 {
   "name": "@auto/tag",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Write Git tags with Auto Tools",
   "keywords": [
     "monorepo",
@@ -16,7 +16,7 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
-    "@auto/core": "^0.1.5",
+    "@auto/core": "^0.1.6",
     "execa": "^4.0.0"
   },
   "devDependencies": {

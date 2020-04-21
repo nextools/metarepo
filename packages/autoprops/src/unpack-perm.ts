@@ -1,16 +1,16 @@
 import BigInt, { BigInteger } from 'big-integer'
-import { Permutation, TComponentConfig } from './types'
+import { Permutation, TCommonComponentConfig } from './types'
 import { getValuesLength, getLength } from './get-length'
 import { getPropKeys, getChildrenKeys } from './get-keys'
 
-export const unpackPerm = (componentConfig: TComponentConfig, int: BigInteger): Permutation => {
+export const unpackPerm = (componentConfig: TCommonComponentConfig, int: BigInteger): Permutation => {
   const permValues: BigInteger[] = []
   const permLength: BigInteger[] = []
   const propKeys = getPropKeys(componentConfig.props)
   let permValue = int
 
   for (const key of propKeys) {
-    const length = getValuesLength(BigInt(componentConfig.props[key].length), key, componentConfig.required)
+    const length = getValuesLength(BigInt(componentConfig.props[key]!.length), key, componentConfig.required)
     const { quotient, remainder } = permValue.divmod(length)
 
     permLength.push(length)

@@ -1,15 +1,12 @@
 import React from 'react'
-import { component, startWithType, mapState, mapContext } from 'refun'
+import { component, startWithType, mapState, mapContext, onUpdateAsync } from 'refun'
 import { PrimitiveText as Text } from '@revert/text'
 import { LayoutContext } from '@revert/layout'
-// import { PrimitiveBackground as Background } from '@revert/background'
 import { PrimitiveBlock as Block } from '@revert/block'
 import { TSnapshotGridItem } from '../types'
 import { mapStoreDispatch } from '../store'
 import { apiLoadSnapshot } from '../api'
 import { actionError } from '../actions'
-// import { COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED } from '../config'
-import { onMountAsync } from './on-mount-async'
 
 const LINE_HEIGHT = 18
 const CHAR_WIDTH = 8.39
@@ -23,22 +20,20 @@ export const SnapshotPreview = component(
   mapContext(LayoutContext),
   mapStoreDispatch('dispatch'),
   mapState('state', 'setState', () => null as string[] | null, []),
-  onMountAsync(async ({ setState, item, dispatch, isMountedRef }) => {
+  onUpdateAsync((props) => function *() {
     try {
-      const data = await apiLoadSnapshot({
-        id: item.id,
+      const data = yield apiLoadSnapshot({
+        id: props.current.item.id,
         type: 'NEW',
       })
       const lines = data.split('\n')
 
-      if (isMountedRef.current) {
-        setState(lines)
-      }
+      props.current.setState(lines)
     } catch (err) {
       console.log(err)
-      dispatch(actionError(err.message))
+      props.current.dispatch(actionError(err.message))
     }
-  })
+  }, [])
 )(({ _top, _left, _width, _height, state, item }) => {
   if (state === null) {
     return null

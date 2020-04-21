@@ -1,4 +1,4 @@
-# @rebox/web
+# @rebox/web ![npm](https://flat.badgen.net/npm/v/@rebox/web)
 
 Set of helpers to deal with React applications using [our Babel config](https://github.com/nextools/metarepo/blob/master/packages/nextools/babel-config/src/web.js).
 

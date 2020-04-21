@@ -1,7 +1,7 @@
 import { BigInteger } from 'big-integer'
-import { TMutexConfig } from './types'
+import { TCommonMutexConfig } from './types'
 
-export const checkRestrictionMutex = (values: readonly BigInteger[], propKeys: readonly string[], childrenKeys: readonly string[], mutexGroups: TMutexConfig): boolean => {
+export const checkRestrictionMutex = (values: readonly BigInteger[], propKeys: readonly string[], childrenKeys: readonly string[], mutexGroups: TCommonMutexConfig): boolean => {
   for (const mutexGroup of mutexGroups) {
     let intersectCount = 0
 

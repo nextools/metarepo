@@ -1,4 +1,4 @@
-# codecov-lite
+# codecov-lite ![npm](https://flat.badgen.net/npm/v/codecov-lite)
 
 LCOV (code coverage data) uploader for [codecov.io](https://codecov.io/) service. Synced with [codecov-bash](https://github.com/codecov/codecov-bash).
 

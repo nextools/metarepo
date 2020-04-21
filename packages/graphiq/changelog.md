@@ -1,3 +1,9 @@
+## v0.2.2
+
+* 🐞 update to new Refun API
+
+* ♻️ update dependencies `refun`
+
 ## v0.2.1
 
 * 🐞 re-publish using updated Start preset

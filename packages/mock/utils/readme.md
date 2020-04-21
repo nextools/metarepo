@@ -1,4 +1,4 @@
-# @mock/utils
+# @mock/utils ![npm](https://flat.badgen.net/npm/v/@mock/utils)
 
 Mock utils.
 

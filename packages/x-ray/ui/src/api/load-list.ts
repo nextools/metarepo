@@ -1,5 +1,5 @@
+import { TListItems } from '@x-ray/core'
 import { HOST, PORT } from '../config'
-import { TListItems } from '../../../next/src/types'
 
 export type TApiLoadListResult = {
   type: 'image' | 'text',

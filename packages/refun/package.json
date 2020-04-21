@@ -1,6 +1,6 @@
 {
   "name": "refun",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
@@ -13,7 +13,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "tsfn": "^1.1.1"
+    "tsfn": "^1.1.2"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

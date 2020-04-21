@@ -1,8 +1,8 @@
 /* eslint-disable max-params */
 import BigInt, { BigInteger } from 'big-integer'
-import { TMutexConfig } from './types'
+import { TCommonMutexConfig } from './types'
 
-export const applyDisableMutexes = (values: BigInteger[], propName: string, propKeys: readonly string[], childrenKeys: readonly string[], mutexConfig: TMutexConfig): void => {
+export const applyDisableMutexes = (values: BigInteger[], propName: string, propKeys: readonly string[], childrenKeys: readonly string[], mutexConfig: TCommonMutexConfig): void => {
   for (const mutexGroup of mutexConfig) {
     if (!mutexGroup.includes(propName)) {
       continue

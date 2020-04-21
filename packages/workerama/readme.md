@@ -1,8 +1,8 @@
-# workerama
+# workerama ![npm](https://flat.badgen.net/npm/v/workerama)
 
 Feed input data array items one by one to provided function that is automatically spread across [Worker Threads](https://nodejs.org/api/worker_threads.html).
 
-When it fails then it fails hard, i.e. it terminates entire thread pool. It's up to a consumer's worker function to retry or even swallow errors to keep things going.
+When it fails then it fails hard, i.e. it terminates entire threads pool. It's up to a consumer's worker function to retry or even swallow errors to keep things going.
 
 :warning: Node.js v10 needs an `--experimental-worker` flag.
 
@@ -48,9 +48,9 @@ process.stdout.write('\n')
 ```ts
 // test.js
 
-// factory function
+// factory function that receives `fnArgs`
 exports.add = (arg1) => {
-  // actual function
+  // actual function that receives item of `items`
   return (item) => Promise.resolve({
     value: item + arg1,
     transferList: []
@@ -61,6 +61,6 @@ exports.add = (arg1) => {
 where:
 
 * factory function – called once per worker, useful to initialize/instantiate something
-* actual function – called once per item, returns special object:
+* actual function – called once per item, must return special object:
   * `value` – actual result produced by function
   * `transferList` – [optional array](https://nodejs.org/dist/latest-v12.x/docs/api/worker_threads.html#worker_threads_port_postmessage_value_transferlist) of `ArrayBuffer` or `SharedArrayBuffer` (not to be confused with Node.js `Buffer`, but rather `Buffer.from([1, 2, 3]).buffer`) to be _moved_ from worker to parent to avoid cloning it and consuming double amount of memory

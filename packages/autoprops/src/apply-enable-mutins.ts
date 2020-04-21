@@ -1,9 +1,9 @@
 /* eslint-disable max-params */
 import { isUndefined } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
-import { TMutinConfig, TRequiredConfig } from './types'
+import { TCommonMutinConfig, TCommonRequiredConfig } from './types'
 
-export const applyEnableMutins = (values: BigInteger[], propName: string, propKeys: readonly string[], childrenKeys: readonly string[], mutinConfig: TMutinConfig, requiredConfig?: TRequiredConfig): void => {
+export const applyEnableMutins = (values: BigInteger[], propName: string, propKeys: readonly string[], childrenKeys: readonly string[], mutinConfig: TCommonMutinConfig, requiredConfig?: TCommonRequiredConfig): void => {
   let changedProps: Set<string> | null = null
 
   for (const mutinGroup of mutinConfig) {

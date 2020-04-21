@@ -1,4 +1,4 @@
-# @mock/require
+# @mock/require ![npm](https://flat.badgen.net/npm/v/@mock/require)
 
 Mock `require`, doesn't currently work with real `--experimental-modules` ESM.
 

@@ -1,3 +1,7 @@
+## v2.1.5
+
+* 🐞 support `.web.jsx` extension
+
 ## v2.1.4
 
 * 🐞 upgrade html-webpack-plugin to v4

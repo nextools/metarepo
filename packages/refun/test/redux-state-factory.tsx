@@ -21,17 +21,17 @@ test('ReduxStateFactory', (t) => {
   ]
   const getStateSpy = createSpy(({ index }) => stateValues[index])
   const mapStateSpy = createSpy(({ args }) => ({ result: args[0].a * 2 }))
-  const compSpy = createSpy(() => null)
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const store = { dispatch, getState: getStateSpy, subscribe: subscribeSpy } as Store<{a: number, b: string}>
   const MyComp = component(
     startWithType<{ foo: string }>(),
     ReduxStateFactory(createContext(store))(mapStateSpy, ['a'])
-  )(compSpy)
+  )(componentSpy)
+
+  let testRenderer: ReactTestRenderer
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
-
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
@@ -40,7 +40,7 @@ test('ReduxStateFactory', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', result: 8 }], // Mount
     ],
@@ -50,7 +50,7 @@ test('ReduxStateFactory', (t) => {
   t.deepEquals(
     getSpyCalls(mapStateSpy),
     [
-      [{ a: 4, b: '' }],
+      [{ a: 4, b: '' }], // Mount
     ],
     'Mount: should call map function'
   )
@@ -66,7 +66,7 @@ test('ReduxStateFactory', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', result: 8 }], // Mount
       [{ foo: 'bar', result: 8 }], // Update
@@ -77,7 +77,7 @@ test('ReduxStateFactory', (t) => {
   t.deepEquals(
     getSpyCalls(mapStateSpy),
     [
-      [{ a: 4, b: '' }],
+      [{ a: 4, b: '' }], // Mount
     ],
     'Update: should not call map function'
   )
@@ -89,7 +89,7 @@ test('ReduxStateFactory', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', result: 8 }], // Mount
       [{ foo: 'bar', result: 8 }], // Update
@@ -100,7 +100,7 @@ test('ReduxStateFactory', (t) => {
   t.deepEquals(
     getSpyCalls(mapStateSpy),
     [
-      [{ a: 4, b: '' }],
+      [{ a: 4, b: '' }], // Mount
     ],
     'Update unwatched values: should not call map function'
   )
@@ -112,7 +112,7 @@ test('ReduxStateFactory', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', result: 8 }], // Mount
       [{ foo: 'bar', result: 8 }], // Update
@@ -124,8 +124,8 @@ test('ReduxStateFactory', (t) => {
   t.deepEquals(
     getSpyCalls(mapStateSpy),
     [
-      [{ a: 4, b: '' }],
-      [{ a: 8, b: 'bar' }],
+      [{ a: 4, b: '' }], // Mount
+      [{ a: 8, b: 'bar' }], // Update watched values
     ],
     'Update watched values: should call map function'
   )
@@ -139,8 +139,8 @@ test('ReduxStateFactory', (t) => {
   t.deepEquals(
     getSpyCalls(mapStateSpy),
     [
-      [{ a: 4, b: '' }],
-      [{ a: 8, b: 'bar' }],
+      [{ a: 4, b: '' }], // Mount
+      [{ a: 8, b: 'bar' }], // Update watched values
     ],
     'Unmount: should not call map function'
   )

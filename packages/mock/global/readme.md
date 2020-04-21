@@ -1,4 +1,4 @@
-# @mock/global
+# @mock/global ![npm](https://flat.badgen.net/npm/v/@mock/global)
 
 Mock global scope and `global` object.
 
