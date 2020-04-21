@@ -14,7 +14,7 @@
     "execa": "^4.0.0",
     "node-fetch": "^2.6.0",
     "signal-exit": "^3.0.2",
-    "tsfn": "^1.1.1"
+    "tsfn": "^1.1.2"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.5.4",

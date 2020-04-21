@@ -27,7 +27,7 @@
     "istanbul-lib-instrument": "^4.0.0",
     "istanbul-lib-report": "^3.0.0",
     "istanbul-lib-source-maps": "^4.0.0",
-    "tsfn": "^1.1.1"
+    "tsfn": "^1.1.2"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",

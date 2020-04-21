@@ -22,7 +22,7 @@
     "pkg-dir": "^4.2.0",
     "pretty-ms": "^6.0.0",
     "stili": "^1.0.0",
-    "tsfn": "^1.1.1",
+    "tsfn": "^1.1.2",
     "upng-js": "^2.1.0"
   },
   "devDependencies": {
