@@ -5,7 +5,6 @@ import { CLIEngine } from 'eslint'
 export type TWeslintOptions = {
   files: string[],
   maxThreadCount?: number,
-  filesPerThreadCount?: number,
   formatter?: string,
   eslint?: CLIEngine.Options,
 }
@@ -19,7 +18,6 @@ export type TWeslintResult = {
 export const weslint = async (userOptions: TWeslintOptions): Promise<TWeslintResult> => {
   const options = {
     maxThreadCount: cpus().length,
-    filesPerThreadCount: 5,
     ...userOptions,
     eslint: {
       cache: true,
@@ -30,17 +28,17 @@ export const weslint = async (userOptions: TWeslintOptions): Promise<TWeslintRes
   const cli = new CLIEngine(options.eslint)
   const reports = [] as CLIEngine.LintReport[]
 
-  await workerama({
+  const reportsIterable = workerama<CLIEngine.LintReport>({
     items: options.files,
-    itemsPerThreadCount: options.filesPerThreadCount,
     maxThreadCount: options.maxThreadCount,
     fnFilePath: './run-eslint',
     fnName: 'run',
-    fnArgs: [options],
-    onItemResult: (report) => {
-      reports.push(report)
-    },
+    fnArgs: [options.eslint],
   })
+
+  for await (const report of reportsIterable) {
+    reports.push(report)
+  }
 
   const result: CLIEngine.LintReport = reports.reduce((acc, report) => {
     for (const result of report.results) {
