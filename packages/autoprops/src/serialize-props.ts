@@ -2,7 +2,7 @@
 import { isValidElement, ReactElement, FC } from 'react'
 import { isFunction, isSymbol, isRegExp, TAnyObject, isString, isDefined, TWritable, isObject, isArray } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
-import { TComponentConfig, TChildrenMap, TRequiredConfig } from './types'
+import { TCommonComponentConfig, TChildrenMap, TCommonRequiredConfig } from './types'
 import { unpackPerm } from './unpack-perm'
 
 const getElementName = (element: ReactElement) => {
@@ -22,7 +22,7 @@ const getElementName = (element: ReactElement) => {
   return element.type.name
 }
 
-const getValue = (valueIndex: number, values: readonly any[], key: string, required?: TRequiredConfig): string | undefined => {
+const getValue = (valueIndex: number, values: readonly any[], key: string, required?: TCommonRequiredConfig): string | undefined => {
   let index = -1
 
   if (isDefined(required) && required.includes(key)) {
@@ -66,7 +66,7 @@ const getValue = (valueIndex: number, values: readonly any[], key: string, requi
   return `${value}`
 }
 
-const getChildValue = (int: BigInteger, childConfig: TComponentConfig, childKey: string, required?: TRequiredConfig): TAnyObject | undefined => {
+const getChildValue = (int: BigInteger, childConfig: TCommonComponentConfig, childKey: string, required?: TCommonRequiredConfig): TAnyObject | undefined => {
   if (isDefined(required) && required.includes(childKey)) {
     return getPropsImpl(childConfig, int)
   }
@@ -76,7 +76,7 @@ const getChildValue = (int: BigInteger, childConfig: TComponentConfig, childKey:
   }
 }
 
-const getPropsImpl = (componentConfig: TComponentConfig, int: BigInteger): TAnyObject => {
+const getPropsImpl = (componentConfig: TCommonComponentConfig, int: BigInteger): TAnyObject => {
   const result: TAnyObject = {}
   const { values, propKeys, childrenKeys } = unpackPerm(componentConfig, int)
 
@@ -85,7 +85,7 @@ const getPropsImpl = (componentConfig: TComponentConfig, int: BigInteger): TAnyO
   for (; i < propKeys.length; ++i) {
     const propKey = propKeys[i]
     const valueIndex = values[i].toJSNumber()
-    const value = getValue(valueIndex, componentConfig.props[propKey], propKey, componentConfig.required)
+    const value = getValue(valueIndex, componentConfig.props[propKey]!, propKey, componentConfig.required)
 
     if (isString(value)) {
       result[propKey] = value
@@ -125,5 +125,5 @@ const getPropsImpl = (componentConfig: TComponentConfig, int: BigInteger): TAnyO
   return result
 }
 
-export const serializeProps = (componentConfig: TComponentConfig, int: BigInteger): string =>
+export const serializeProps = (componentConfig: TCommonComponentConfig, int: BigInteger): string =>
   JSON.stringify(getPropsImpl(componentConfig, int))

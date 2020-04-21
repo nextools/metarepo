@@ -1,9 +1,9 @@
 import test from 'tape'
-import { TComponentConfig } from '../src/types'
+import { TCommonComponentConfig } from '../src/types'
 import { getNumPerms } from '../src/get-num-perms'
 
 test('getNumPerms: simple case', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],
@@ -20,7 +20,7 @@ test('getNumPerms: simple case', (t) => {
 })
 
 test('getNumPerms: props mutex', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],
@@ -42,7 +42,7 @@ test('getNumPerms: props mutex', (t) => {
 })
 
 test('getNumPerms: props mutin', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],
@@ -63,7 +63,7 @@ test('getNumPerms: props mutin', (t) => {
 })
 
 test('getNumPerms: children', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
     },

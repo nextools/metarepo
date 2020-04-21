@@ -1,7 +1,7 @@
 /* eslint-disable max-params, no-use-before-define */
 import { isUndefined, isDefined } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
-import { TComponentConfig, TRequiredConfig } from './types'
+import { TCommonRequiredConfig, TCommonComponentConfig } from './types'
 import { unpackPerm } from './unpack-perm'
 import { packPerm } from './pack-perm'
 import { stringifyBigInt } from './stringify-bigint'
@@ -10,7 +10,7 @@ import { applyDisableMutins } from './apply-disable-mutins'
 import { applyEnableMutins } from './apply-enable-mutins'
 import { applyDisableMutexes } from './apply-disable-mutexes'
 
-const applyChildPropValue = (int: BigInteger, childConfig: TComponentConfig, propPath: readonly string[], propValue: any, childKey: string, required?: TRequiredConfig): BigInteger => {
+const applyChildPropValue = (int: BigInteger, childConfig: TCommonComponentConfig, propPath: readonly string[], propValue: any, childKey: string, required?: TCommonRequiredConfig): BigInteger => {
   if (isDefined(required) && required.includes(childKey)) {
     return applyPropValueImpl(childConfig, int, propPath, propValue)
   }
@@ -22,14 +22,14 @@ const applyChildPropValue = (int: BigInteger, childConfig: TComponentConfig, pro
   throw new Error(`path error: child "${childKey}" was not enabled, but path points inside it`)
 }
 
-const applyPropValueImpl = (componentConfig: TComponentConfig, int: BigInteger, propPath: readonly string[], propValue: any): BigInteger => {
+const applyPropValueImpl = (componentConfig: TCommonComponentConfig, int: BigInteger, propPath: readonly string[], propValue: any): BigInteger => {
   const { values, length, propKeys, childrenKeys } = unpackPerm(componentConfig, int)
   const pathValue = propPath[0]
   const propIndex = propKeys.indexOf(pathValue)
 
   // check path pointing to prop
   if (propPath.length === 1 && propIndex >= 0) {
-    const propValues = componentConfig.props[pathValue]
+    const propValues = componentConfig.props[pathValue]!
     const isPropRequired = isDefined(componentConfig.required) && componentConfig.required.includes(pathValue)
     const propValueIndex = propValues.indexOf(propValue) + (isPropRequired ? 0 : 1)
 
@@ -97,6 +97,6 @@ const applyPropValueImpl = (componentConfig: TComponentConfig, int: BigInteger, 
   throw new Error(`prop path error: incorrect path "[${propPath}]"`)
 }
 
-export const applyPropValue = (componentConfig: TComponentConfig, intStr: string, propPath: string[], propValue: any): string => {
+export const applyPropValue = (componentConfig: TCommonComponentConfig, intStr: string, propPath: string[], propValue: any): string => {
   return stringifyBigInt(applyPropValueImpl(componentConfig, parseBigInt(intStr), propPath, propValue))
 }

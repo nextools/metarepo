@@ -1,6 +1,6 @@
 import test from 'tape'
 import I from 'big-integer'
-import { TComponentConfig, Permutation } from '../src/types'
+import { TCommonComponentConfig, Permutation } from '../src/types'
 import { unpackPerm } from '../src/unpack-perm'
 
 const permEquals = (a: Permutation, b: Permutation): boolean => {
@@ -22,7 +22,7 @@ const permEquals = (a: Permutation, b: Permutation): boolean => {
 }
 
 test('autoprops: decimalToPerm props', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],
@@ -68,7 +68,7 @@ test('autoprops: decimalToPerm props', (t) => {
 })
 
 test('autoprops: decimalToPerm props with children', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],
