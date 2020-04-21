@@ -1,3 +1,10 @@
+export type TPrimitiveCheckbox = TCheckbox & {
+  left?: number,
+  top?: number,
+  width?: number,
+  height?: number,
+}
+
 export type TCheckbox = {
   id?: string,
   accessibilityLabel?: string,

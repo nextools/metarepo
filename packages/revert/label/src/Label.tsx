@@ -1,30 +1,56 @@
 import React from 'react'
-import { startWithType, component } from 'refun'
-import { TStyle } from 'stili'
-import { ParentBlock } from '@revert/block'
-
-const style: TStyle = {
-  display: 'block',
-  position: 'absolute',
-  left: 0,
-  top: 0,
-  right: 0,
-  bottom: 0,
-  width: '100%',
-  height: '100%',
-  userSelect: 'none',
-}
-
-export type TLabel = {}
+import { startWithType, component, mapContext } from 'refun'
+import { LayoutContext } from '@revert/layout'
+import { PrimitiveLabel } from './PrimitiveLabel'
+import { TLabel } from './types'
 
 export const Label = component(
-  startWithType<TLabel>()
-)(({ children }) => (
-  <ParentBlock>
-    <label style={style}>
+  startWithType<TLabel>(),
+  mapContext(LayoutContext)
+)(({
+  _x,
+  _y,
+  _left,
+  _top,
+  _width,
+  _height,
+  _maxWidth,
+  _maxHeight,
+  _parentLeft,
+  _parentTop,
+  _parentWidth,
+  _parentHeight,
+  _onWidthChange,
+  _onHeightChange,
+  children,
+}) => (
+  <PrimitiveLabel
+    left={_parentLeft}
+    top={_parentTop}
+    width={_parentWidth}
+    height={_parentHeight}
+  >
+    <LayoutContext.Provider
+      value={{
+        _x, // TODO _x - (_left - _parentLeft)
+        _y,
+        _parentLeft: 0,
+        _parentTop: 0,
+        _parentWidth,
+        _parentHeight,
+        _left: _left - _parentLeft,
+        _top: _top - _parentTop,
+        _width,
+        _height,
+        _onWidthChange,
+        _onHeightChange,
+        _maxWidth,
+        _maxHeight,
+      }}
+    >
       {children}
-    </label>
-  </ParentBlock>
+    </LayoutContext.Provider>
+  </PrimitiveLabel>
 ))
 
 Label.displayName = 'Label'

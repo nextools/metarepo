@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { component, startWithType, mapContext, mapDefaultProps, mapHandlers, mapWithProps, onLayoutRef, mapStateRef } from 'refun'
+import { component, startWithType, mapContext, mapDefaultProps, mapHandlers, mapWithProps, onLayout, mapStateRef, mapRef } from 'refun'
 import { isNumber, isFunction } from 'tsfn'
 import { TStyle, normalizeStyle } from 'stili'
 import { LayoutContext } from '@revert/layout'
@@ -71,11 +71,16 @@ export const Scroll = component(
       childStyle: normalizeStyle(childStyle),
     }
   }),
-  onLayoutRef('ref', (ref: HTMLDivElement, { shouldScrollToBottom }) => {
-    if (shouldScrollToBottom) {
-      ref.scrollTop = ref.scrollHeight
+  mapRef('ref', null as HTMLDivElement | null),
+  onLayout(({ ref, shouldScrollToBottom }) => {
+    if (ref.current === null) {
+      return
     }
-  })
+
+    if (shouldScrollToBottom) {
+      ref.current.scrollTop = ref.current.scrollHeight
+    }
+  }, ['ref', 'shouldScrollToBottom'])
 )(({
   _x,
   _y,

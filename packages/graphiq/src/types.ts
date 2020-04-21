@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement } from 'react'
-import { TColor } from 'colorido'
+import { TColor } from '@revert/color'
 import { TEasingFn } from '@primitives/animation'
 
 export type TEntry = {

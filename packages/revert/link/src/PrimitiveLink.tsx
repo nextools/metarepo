@@ -1,17 +1,16 @@
 import React from 'react'
-import { component, startWithType, mapDefaultProps, mapWithPropsMemo } from 'refun'
+import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { normalizeStyle } from 'stili'
-import { InlineBlock } from '@revert/block'
 import { colorToString } from '@revert/color'
 import { PrimitiveText } from '@revert/text'
 import { TLink } from './types'
 
 export const PrimitiveLink = component(
   startWithType<TLink>(),
-  mapDefaultProps({
-    isUnderlined: false,
-  }),
-  mapWithPropsMemo(({ isUnderlined, color }) => ({
+  mapWithPropsMemo(({
+    isUnderlined = false,
+    color,
+  }) => ({
     style: normalizeStyle({
       color: colorToString(color),
       textDecoration: isUnderlined ? 'underlined' : 'none',
@@ -34,29 +33,27 @@ export const PrimitiveLink = component(
   onPressIn,
   onPressOut,
 }) => (
-  <InlineBlock>
-    <a
-      href={href}
-      id={id}
-      onBlur={onBlur}
-      onClick={onPress}
-      onFocus={onFocus}
-      onMouseDown={onPressIn}
-      onMouseEnter={onPointerEnter}
-      onMouseLeave={onPointerLeave}
-      onMouseUp={onPressOut}
-      style={style}
-      tabIndex={tabIndex}
-      target={target}
+  <a
+    href={href}
+    id={id}
+    onBlur={onBlur}
+    onClick={onPress}
+    onFocus={onFocus}
+    onMouseDown={onPressIn}
+    onMouseEnter={onPointerEnter}
+    onMouseLeave={onPointerLeave}
+    onMouseUp={onPressOut}
+    style={style}
+    tabIndex={tabIndex}
+    target={target}
+  >
+    <PrimitiveText
+      shouldHideOverflow={shouldHideOverflow}
+      shouldPreventWrap={shouldPreventWrap}
     >
-      <PrimitiveText
-        shouldHideOverflow={shouldHideOverflow}
-        shouldPreventWrap={shouldPreventWrap}
-      >
-        {children}
-      </PrimitiveText>
-    </a>
-  </InlineBlock>
+      {children}
+    </PrimitiveText>
+  </a>
 ))
 
 PrimitiveLink.displayName = 'PrimitiveLink'

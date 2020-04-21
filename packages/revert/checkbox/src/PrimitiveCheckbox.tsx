@@ -1,11 +1,15 @@
 import React from 'react'
 import { normalizeStyle } from 'stili'
-import { component, startWithType, mapWithPropsMemo } from 'refun'
+import { component, startWithType, mapWithPropsMemo, mapDefaultProps } from 'refun'
 import { PrimitiveBlock } from '@revert/block'
-import { TCheckbox } from './types'
+import { TPrimitiveCheckbox } from './types'
 
 export const PrimitiveCheckbox = component(
-  startWithType<TCheckbox>(),
+  startWithType<TPrimitiveCheckbox>(),
+  mapDefaultProps({
+    left: 0,
+    top: 0,
+  }),
   mapWithPropsMemo(({ isDisabled }) => ({
     style: normalizeStyle({
       position: 'absolute',
@@ -22,6 +26,10 @@ export const PrimitiveCheckbox = component(
     }),
   }), ['isDisabled'])
 )(({
+  left,
+  top,
+  width,
+  height,
   id,
   accessibilityLabel,
   isDisabled,
@@ -36,7 +44,7 @@ export const PrimitiveCheckbox = component(
   onBlur,
   children,
 }) => (
-  <PrimitiveBlock left={0} top={0} right={0} bottom={0}>
+  <PrimitiveBlock left={left} top={top} width={width} height={height}>
     {children}
     <input
       type="checkbox"

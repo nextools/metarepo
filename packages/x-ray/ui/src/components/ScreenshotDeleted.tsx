@@ -31,7 +31,7 @@ export const ScreenshotDeleted = pureComponent(
       />
     </Block>
     <Border
-      width={BORDER_SIZE}
+      borderWidth={BORDER_SIZE}
       color={COLOR_BORDER_DELETED}
     />
   </Block>

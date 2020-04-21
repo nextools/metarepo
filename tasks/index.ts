@@ -30,7 +30,7 @@ export const graphiq = () =>
 export const xray = () =>
   plugin('ui', ({ logMessage }) => async () => {
     const { runWebApp } = await import('@rebox/web')
-    const { runXRayServer } = await import('./x-ray/run-server')
+    const { runXRayServer } = await import('./x-ray-ui/run-server')
 
     await runXRayServer()
 
@@ -50,12 +50,3 @@ export const run = (file: string) =>
 
     await main()
   })
-
-export const revert = () => plugin('revert', () => async () => {
-  const { run } = await import('@rebox/web')
-
-  await run({
-    entryPointPath: './tasks/revert/index.tsx',
-    htmlTemplatePath: './tasks/revert/templates/dev.html',
-  })
-})

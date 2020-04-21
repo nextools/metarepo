@@ -153,10 +153,7 @@ export const SnapshotGrid = pureComponent(
               >
                 <Border
                   color={COLOR_BLACK}
-                  topWidth={BORDER_SIZE}
-                  leftWidth={BORDER_SIZE}
-                  rightWidth={BORDER_SIZE}
-                  bottomWidth={BORDER_SIZE}
+                  borderWidth={BORDER_SIZE}
                 />
               </Block>
             )

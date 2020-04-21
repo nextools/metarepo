@@ -12,17 +12,8 @@
     "node": ">=10.13.0"
   },
   "sideEffects": false,
-  "dependencies": {
-    "colorido": "^1.0.1"
-  },
   "devDependencies": {
-    "@types/react": "^16.8.6",
-    "@types/react-native": "^0.61.4",
-    "react": "16.11.0",
-    "react-native": "^0.62.0"
-  },
-  "peerDependencies": {
-    "react": "16.11.0",
-    "react-native": "^0.62.0"
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0-next.5"
   }
 }

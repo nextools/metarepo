@@ -1,13 +1,16 @@
-import { TWritable } from 'tsfn'
-import { TColor } from '@revert/color'
+import { TColor, rgba, redChannel, greenChannel, blueChannel, alphaChannel } from '@revert/color'
 import { TAnimationMapFn, TEasingFn } from './types'
 
 export const easeColor = (easingFn: TEasingFn): TAnimationMapFn<TColor> => (from, to, time) => {
-  const res = from.slice() as TWritable<TColor>
+  const redFrom = redChannel(from)
+  const greenFrom = greenChannel(from)
+  const blueFrom = blueChannel(from)
+  const alphaFrom = alphaChannel(from)
 
-  for (let i = 0; i < 4; i++) {
-    res[i] = easingFn(to[i] - from[i], time) + from[i]
-  }
-
-  return res
+  return rgba(
+    easingFn(redChannel(to) - redFrom, time) + redFrom,
+    easingFn(greenChannel(to) - greenFrom, time) + greenFrom,
+    easingFn(blueChannel(to) - blueFrom, time) + blueFrom,
+    easingFn(alphaChannel(to) - alphaFrom, time) + alphaFrom
+  )
 }

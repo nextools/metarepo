@@ -168,7 +168,7 @@ export const ScreenshotGrid = pureComponent(
                     >
                       <Border
                         color={COLOR_BLACK}
-                        width={BORDER_SIZE}
+                        borderWidth={BORDER_SIZE}
                       />
                     </Block>
                   )

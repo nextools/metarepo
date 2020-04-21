@@ -1,3 +1,10 @@
+export type TPrimitiveButton = TButton & {
+  left?: number,
+  top?: number,
+  width?: number,
+  height?: number,
+}
+
 export type TButton = {
   id?: string,
   accessibilityLabel?: string,

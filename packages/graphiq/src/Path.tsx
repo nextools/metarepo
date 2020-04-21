@@ -1,5 +1,5 @@
 import React, { Fragment, FC } from 'react'
-import { colorToString } from 'colorido'
+import { colorToString } from '@revert/color'
 import { easeInOutCubic } from '@primitives/animation'
 import { Animate } from './Animate'
 import { TGraphPath } from './types'

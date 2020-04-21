@@ -13,18 +13,18 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "refun": "^1.0.0",
+    "refun": "^2.0.0",
     "stili": "^1.1.0",
     "tsfn": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
-    "@types/react-native": "^0.61.4",
+    "@types/react-native": "0.62.2",
     "react": "16.11.0",
-    "react-native": "^0.62.0"
+    "react-native": "0.62.2"
   },
   "peerDependencies": {
     "react": "16.11.0",
-    "react-native": "^0.62.0"
+    "react-native": "0.62.2"
   }
 }

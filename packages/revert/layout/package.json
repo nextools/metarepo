@@ -14,17 +14,17 @@
   "sideEffects": false,
   "dependencies": {
     "elegir": "^1.0.0",
-    "refun": "^1.0.0",
+    "refun": "^2.0.0",
     "tsfn": "^1.0.0"
   },
   "devDependencies": {
-    "@types/react-native": "^0.61.4",
+    "@types/react-native": "0.62.2",
     "@types/react": "^16.8.6",
-    "react-native": "^0.62.0",
+    "react-native": "0.62.2",
     "react": "16.11.0"
   },
   "peerDependencies": {
     "react": "16.11.0",
-    "react-native": "^0.62.0"
+    "react-native": "0.62.2"
   }
 }

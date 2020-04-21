@@ -1,21 +1,25 @@
 import React from 'react'
 import { normalizeStyle } from 'stili'
-import { component, startWithType, mapWithPropsMemo } from 'refun'
-import { TButton } from './types'
+import { component, startWithType, mapDefaultProps, mapWithProps } from 'refun'
+import { TPrimitiveButton } from './types'
 
 export const PrimitiveButton = component(
-  startWithType<TButton>(),
-  mapWithPropsMemo(({ isDisabled }) => ({
+  startWithType<TPrimitiveButton>(),
+  mapDefaultProps({
+    left: 0,
+    top: 0,
+  }),
+  mapWithProps(({ left, top, width, height, isDisabled }) => ({
     styles: normalizeStyle({
       display: 'flex',
       flexDirection: 'row',
       position: 'absolute',
-      left: 0,
-      top: 0,
+      left,
+      top,
       right: 0,
       bottom: 0,
-      width: '100%',
-      height: '100%',
+      width: width || '100%',
+      height: height || '100%',
       cursor: isDisabled ? 'auto' : 'pointer',
       boxSizing: 'border-box',
       alignSelf: 'stretch',
@@ -29,7 +33,7 @@ export const PrimitiveButton = component(
       appearance: 'none',
       background: 'none',
     }),
-  }), ['isDisabled'])
+  }))
 )(({
   id,
   accessibilityLabel,

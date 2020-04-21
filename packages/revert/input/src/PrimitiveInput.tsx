@@ -3,10 +3,10 @@ import { normalizeStyle, TStyle } from 'stili'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { isNumber } from 'tsfn'
 import { colorToString, isColor } from '@revert/color'
-import { TInput } from './types'
+import { TPrimitiveInput } from './types'
 
 export const PrimitiveInput = component(
-  startWithType<TInput>(),
+  startWithType<TPrimitiveInput>(),
   mapHandlers({
     onChange: ({ onChange }) => (e: any) => onChange(e.target.value),
     onKeyPress: ({ onSubmit }) => (e: KeyboardEvent<HTMLInputElement>) => {
@@ -26,6 +26,10 @@ export const PrimitiveInput = component(
     paddingLeft,
     paddingRight,
     paddingTop,
+    left = 0,
+    top = 0,
+    width,
+    height,
   }) => {
     const style: TStyle = {
       backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -43,12 +47,10 @@ export const PrimitiveInput = component(
       paddingRight,
       paddingTop,
       position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      width: '100%',
-      height: '100%',
+      left,
+      top,
+      width: isNumber(width) ? width : '100%',
+      height: isNumber(height) ? height : '100%',
     }
 
     if (isColor(color)) {

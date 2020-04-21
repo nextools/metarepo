@@ -31,10 +31,7 @@ export const Switch = component(
     <Background color={isActive ? COLOR_GREEN : COLOR_WHITE}/>
     <Border
       color={COLOR_GREEN}
-      topWidth={BORDER_SIZE}
-      leftWidth={BORDER_SIZE}
-      rightWidth={BORDER_SIZE}
-      bottomWidth={BORDER_SIZE}
+      borderWidth={BORDER_SIZE}
     />
     <Checkbox
       isChecked={isActive}

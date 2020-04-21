@@ -6,6 +6,7 @@ import { Button } from '@revert/button'
 import { Block, PrimitiveBlock } from '@revert/block'
 import { Layout, LayoutContext, Layout_Item } from '@revert/layout'
 import { Text } from '@revert/text'
+import { rgba } from '@revert/color'
 import { mapStoreDispatch } from '../store'
 import { TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
 import { actionDeselect, actionDiscardItem } from '../actions'
@@ -157,7 +158,7 @@ export const Popup = component(
           <Button
             onPress={onBackdropPress}
           >
-            <Background color={[0, 0, 0, backdropAlpha]}/>
+            <Background color={rgba(0, 0, 0, backdropAlpha)}/>
           </Button>
           <PrimitiveBlock
             left={popupLeft}
@@ -165,7 +166,7 @@ export const Popup = component(
             width={popupWidth}
             height={popupHeight}
           >
-            <PrimitiveBackground color={[255, 255, 255, popupAlpha]}/>
+            <PrimitiveBackground color={rgba(255, 255, 255, popupAlpha)}/>
           </PrimitiveBlock>
         </Fragment>
       )}

@@ -1,6 +1,13 @@
 import { TStyle } from 'stili'
 import { TColor } from '@revert/color'
 
+export type TPrimitiveInput = TInput & {
+  top?: number,
+  left?: number,
+  width?: number,
+  height?: number,
+}
+
 export type TInput = {
   id?: string,
   accessibilityLabel?: string,

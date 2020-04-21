@@ -82,7 +82,7 @@ export const SnapshotNew = pureComponent(
       </Block>
     ))}
     <Border
-      width={BORDER_SIZE}
+      borderWidth={BORDER_SIZE}
       color={COLOR_BORDER_NEW}
     />
   </Block>

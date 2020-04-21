@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { TColor } from 'colorido'
+import { TColor } from '@revert/color'
 import { PrimitiveText } from '@revert/text'
 import { LINE_HEIGHT } from './constants'
 

@@ -2,10 +2,10 @@ import React, { ReactElement } from 'react'
 import { component, startWithType, mapDefaultProps, mapWithPropsMemo } from 'refun'
 import { TColor } from '@revert/color'
 import { Animation } from './Animation'
-import { isShallowEqualArray } from './is-shallow-equal-array'
 import { easeColor } from './ease-color'
 import { easeInOutCubic } from './easing'
 import { TEasingFn } from './types'
+import { isValueEqual } from './is-value-equal'
 
 export type TAnimationColor = {
   fromColor?: TColor,
@@ -31,7 +31,7 @@ export const AnimationColor = component(
     from={fromColor}
     to={toColor}
     shouldNotAnimate={shouldNotAnimate}
-    valuesEqualFn={isShallowEqualArray}
+    valuesEqualFn={isValueEqual}
     animationMapFn={mapColor}
   >
     {children}
