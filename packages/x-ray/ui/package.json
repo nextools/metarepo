@@ -31,6 +31,7 @@
     "@revert/scroll": "^0.0.0",
     "@revert/svg": "^0.0.0",
     "@revert/text": "^0.0.0",
+    "@x-ray/core": "^0.0.0",
     "bsc": "^1.0.0",
     "colorido": "^1.0.0",
     "diff": "^4.0.2",
