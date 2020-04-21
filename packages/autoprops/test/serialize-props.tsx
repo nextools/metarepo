@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import test from 'tape'
 import I from 'big-integer'
-import { TComponentConfig } from '../src/types'
+import { TCommonComponentConfig } from '../src/types'
 import { serializeProps } from '../src/serialize-props'
 
 test('serializeProps: props', (t) => {
@@ -11,7 +11,7 @@ test('serializeProps: props', (t) => {
 
   const Comp2 = () => null
 
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       isOk: [true],
       str: ['value'],
@@ -41,7 +41,7 @@ test('serializeProps: props', (t) => {
 })
 
 test('serializeProps: children Fragment', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       isOk: [true],
       str: ['value'],
@@ -66,7 +66,7 @@ test('serializeProps: children Fragment', (t) => {
 })
 
 test('serializeProps: children Element', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       isOk: [true],
       str: ['value'],
@@ -89,7 +89,7 @@ test('serializeProps: children Element', (t) => {
 })
 
 test('serializeProps: children in array', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       isOk: [true],
       str: ['value'],
@@ -117,7 +117,7 @@ test('serializeProps: children in array', (t) => {
 })
 
 test('serializeProps: childrenMap', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       isOk: [true],
       str: ['value'],
@@ -156,7 +156,7 @@ test('serializeProps: childrenMap', (t) => {
 })
 
 test('serializeProps: childrenMap child not required case', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {},
     children: {
       child2: {
@@ -185,7 +185,7 @@ test('serializeProps: childrenMap child not required case', (t) => {
 })
 
 test('serializeProps: childrenMap no children', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       isOk: [true],
       str: ['value'],

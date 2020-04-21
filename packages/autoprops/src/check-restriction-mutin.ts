@@ -1,7 +1,7 @@
 import { BigInteger } from 'big-integer'
-import { TMutinConfig } from './types'
+import { TCommonMutinConfig } from './types'
 
-export const checkRestrictionMutin = (values: readonly BigInteger[], propKeys: readonly string[], childrenKeys: readonly string[], mutinGroups: TMutinConfig): number => {
+export const checkRestrictionMutin = (values: readonly BigInteger[], propKeys: readonly string[], childrenKeys: readonly string[], mutinGroups: TCommonMutinConfig): number => {
   for (let groupIndex = 0; groupIndex < mutinGroups.length; groupIndex++) {
     const mutinGroup = mutinGroups[groupIndex]
     let intersectCount = 0

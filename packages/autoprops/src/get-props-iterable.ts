@@ -9,7 +9,7 @@ import { isChildrenMap } from './is-children-map'
 import { createChildren } from './create-children'
 import { getLength } from './get-length'
 
-export const getPropsIterable = <T extends {}>(componentConfig: TComponentConfig<T>): Iterable<{ id: string, props: T }> => {
+export const getPropsIterable = <T extends {}>(componentConfig: TComponentConfig<T, string>): Iterable<{ id: string, props: T }> => {
   const length = getLength(componentConfig)
   let int: BigInteger | null = BigInt.zero
 
@@ -38,6 +38,6 @@ export const getPropsIterable = <T extends {}>(componentConfig: TComponentConfig
   }
 }
 
-export const mapPropsIterable = <T, R>(componentConfig: TComponentConfig<T>, xf: (value: { id: string, props: T }) => R): Iterable<R> => {
+export const mapPropsIterable = <T, R>(componentConfig: TComponentConfig<T, string>, xf: (value: { id: string, props: T }) => R): Iterable<R> => {
   return map(xf)(getPropsIterable(componentConfig))
 }

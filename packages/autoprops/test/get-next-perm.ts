@@ -1,9 +1,9 @@
 import test from 'tape'
-import { TComponentConfig } from '../src/types'
+import { TCommonComponentConfig } from '../src/types'
 import { getNextPerm } from '../src/get-next-perm'
 
 test('getNextPerm: simple case', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],
@@ -23,7 +23,7 @@ test('getNextPerm: simple case', (t) => {
 })
 
 test('getNextPerm: props mutex', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],
@@ -48,7 +48,7 @@ test('getNextPerm: props mutex', (t) => {
 })
 
 test('getNextPerm: props mutin', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],
@@ -72,7 +72,7 @@ test('getNextPerm: props mutin', (t) => {
 })
 
 test('getNextPerm: children', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {},
     children: {
       child: {
@@ -108,7 +108,7 @@ test('getNextPerm: children', (t) => {
 })
 
 test('getNextPerm: props mutex children', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],

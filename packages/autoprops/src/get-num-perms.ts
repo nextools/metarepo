@@ -1,8 +1,8 @@
 import BigInt, { BigInteger } from 'big-integer'
-import { TComponentConfig } from './types'
+import { TCommonComponentConfig } from './types'
 import { getNextPermImpl } from './get-next-perm'
 
-export const getNumPerms = (componentConfig: TComponentConfig): number => {
+export const getNumPerms = (componentConfig: TCommonComponentConfig): number => {
   let numPerms = 0
   let index: BigInteger | null = BigInt.zero
 

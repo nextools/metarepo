@@ -4,7 +4,7 @@ import { TComponentConfig } from '../src/types'
 import { getPropsIterable, mapPropsIterable } from '../src'
 
 test('getPropsIterable: props', (t) => {
-  const config: TComponentConfig = {
+  const config: TComponentConfig<{a: boolean}, never> = {
     props: {
       a: [true],
     },
@@ -39,7 +39,7 @@ test('getPropsIterable: childrenMap', async (t) => {
 
   const { getPropsIterable } = await import('../src/get-props-iterable')
 
-  const config: TComponentConfig = {
+  const config: TComponentConfig<{ a: boolean }, 'child2' | 'child'> = {
     props: {
       a: [true],
     },
@@ -92,7 +92,7 @@ test('getPropsIterable: childrenMap', async (t) => {
 })
 
 test('mapPropsIterable', (t) => {
-  const config: TComponentConfig = {
+  const config: TComponentConfig<{a: boolean}, never> = {
     props: {
       a: [true],
     },
