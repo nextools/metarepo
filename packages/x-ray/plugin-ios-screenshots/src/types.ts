@@ -1,5 +1,10 @@
 import { TFileResults } from '@x-ray/core'
 
+export type TCheckOptions = {
+  dpr: number,
+  shouldBailout: boolean,
+}
+
 export type TWorkerResult<T> = [string, {
   name: string,
   results: TFileResults<T>,

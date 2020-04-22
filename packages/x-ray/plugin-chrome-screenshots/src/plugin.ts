@@ -8,16 +8,25 @@ import { MAX_THREAD_COUNT, WORKER_PATH } from './constants'
 
 export type TChromeScreenshotsOptions = {
   fontsDir?: string,
+  shouldBailout?: boolean,
 }
 
 export const chromeScreenshots = (options?: TChromeScreenshotsOptions): TPlugin<Uint8Array> => ({
   name: 'chrome-screenshots',
   encoding: 'image',
   getResults: async (files) => {
-    const browserWSEndpoint = await runChromium({ shouldCloseOnExit: true, fontsDir: options?.fontsDir })
+    const opts = {
+      shouldBailout: false,
+      ...options,
+    }
+    const browserWSEndpoint = await runChromium({
+      shouldCloseOnExit: true,
+      fontsDir: opts?.fontsDir,
+    })
     const checkOptions: TCheckOptions = {
       browserWSEndpoint,
       dpr: 2,
+      shouldBailout: opts.shouldBailout,
     }
 
     const totalResultsIterable = workerama<TWorkerResult<Uint8Array>>({

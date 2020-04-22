@@ -16,12 +16,12 @@ import { getContainerStyle } from './get-container-style'
 
 const SELECTOR = '[data-x-ray]'
 
-export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
-  const applyDpr = ApplyDpr(dpr)
+export const check = async (options: TCheckOptions) => {
+  const applyDpr = ApplyDpr(options.dpr)
   const browser = await puppeteer.connect({
-    browserWSEndpoint,
+    browserWSEndpoint: options.browserWSEndpoint,
     defaultViewport: {
-      deviceScaleFactor: dpr,
+      deviceScaleFactor: options.dpr,
       width: 1024,
       height: 1024,
     },
@@ -84,6 +84,10 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
 
         // NEW
         if (tarFs === null || !tarFs.has(example.id)) {
+          if (options.shouldBailout) {
+            throw new Error(`BAILOUT: ${filePath} → ${example.id} → NEW`)
+          }
+
           transferList.push(newScreenshot.buffer)
 
           const png = bufferToPng(newScreenshot)
@@ -106,6 +110,10 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
 
         // DIFF
         if (hasScreenshotDiff(origPng, newPng)) {
+          if (options.shouldBailout) {
+            throw new Error(`BAILOUT: ${filePath} → ${example.id} → DIFF`)
+          }
+
           transferList.push(origScreenshot.buffer, newScreenshot.buffer)
 
           status.diff++
@@ -142,6 +150,10 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
         }
 
         if (!fileResults.has(id)) {
+          if (options.shouldBailout) {
+            throw new Error(`BAILOUT: ${filePath} → ${id} → DELETED`)
+          }
+
           const deletedScreenshot = await tarFs.read(id) as Buffer
           const deletedPng = bufferToPng(deletedScreenshot)
           const metaId = `${id}-meta`

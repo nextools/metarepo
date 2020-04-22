@@ -5,16 +5,24 @@ import { TPlugin } from '@x-ray/core'
 import { TWorkerResult } from './types'
 import { MAX_THREAD_COUNT, WORKER_PATH } from './constants'
 
-export const reactNativeSnapshots = (): TPlugin<string> => ({
+export type TReactNativeSnapshotsOptions = {
+  shouldBailout?: boolean,
+}
+
+export const reactNativeSnapshots = (options?: TReactNativeSnapshotsOptions): TPlugin<string> => ({
   name: 'react-native-snapshots',
   encoding: 'text',
   getResults: (files) => {
+    const opts = {
+      shouldBailout: false,
+      ...options,
+    }
     const totalResultsIterable = workerama<TWorkerResult<string>>({
       items: files,
       maxThreadCount: MAX_THREAD_COUNT,
       fnFilePath: WORKER_PATH,
       fnName: 'check',
-      fnArgs: [],
+      fnArgs: [opts],
     })
 
     return pipe(

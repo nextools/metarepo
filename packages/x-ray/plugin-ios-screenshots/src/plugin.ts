@@ -14,12 +14,17 @@ const WORKER_PATH = require.resolve('./worker-setup')
 
 export type TIOSScreenshotsOptions = {
   fontsDir?: string,
+  shouldBailout?: boolean,
 }
 
 export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8Array> => ({
   name: 'ios-screenshots',
   encoding: 'image',
   getResults: async (files) => {
+    const opts = {
+      shouldBailout: false,
+      ...options,
+    }
     const entryPointPath = await rsolve('@x-ray/native-screenshots-app', 'react-native')
 
     await prepareFiles(entryPointPath, files)
@@ -30,7 +35,7 @@ export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8A
       iPhoneVersion: 8,
       iOSVersion: '13.2',
       entryPointPath,
-      fontsDir: options?.fontsDir,
+      fontsDir: opts?.fontsDir,
       dependencyNames: [
         'react-native-svg',
         'react-native-view-shot',
@@ -39,7 +44,15 @@ export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8A
       logMessage: console.log,
     })
 
-    const workers = Array.from({ length: 2 }, () => new Worker(WORKER_PATH))
+    const workers = Array.from({ length: 2 }, () => new Worker(
+      WORKER_PATH,
+      {
+        workerData: {
+          dpr: 2,
+          shouldBailout: opts.shouldBailout,
+        },
+      }
+    ))
     const totalResults: TTotalResults<Uint8Array> = new Map()
     const busyWorkerIds = new Set<number>()
     const pathWorkers = new Map<string, number>()
@@ -119,6 +132,7 @@ export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8A
             })
           }
         } catch (error) {
+          closeIosApp()
           serverReject(error)
         }
 

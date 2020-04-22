@@ -1,8 +1,7 @@
 import { TFileResults } from '@x-ray/core'
 
 export type TCheckOptions = {
-  browserWSEndpoint: string,
-  dpr: number,
+  shouldBailout: boolean,
 }
 
 export type TWorkerResult<T> = [string, {

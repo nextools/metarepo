@@ -6,12 +6,13 @@ import { getTarFilePath, TFileResults } from '@x-ray/core'
 import { hasScreenshotDiff } from './has-screenshot-diff'
 import { bufferToPng } from './buffer-to-png'
 import { ApplyDpr } from './apply-dpr'
+import { TCheckOptions } from './types'
 
 Buffer.poolSize = 0
 
-export const init = () => {
+export const check = (options: TCheckOptions) => {
   const currentPath = null as null | string
-  const applyDpr = ApplyDpr(2)
+  const applyDpr = ApplyDpr(options.dpr)
   let tarFs = null as null | TTarFs
   const transferList = [] as ArrayBuffer[]
   const results: TFileResults<Buffer> = new Map()
@@ -46,6 +47,10 @@ export const init = () => {
 
       // NEW
       if (tarFs === null || !tarFs.has(id)) {
+        if (options.shouldBailout) {
+          throw new Error(`BAILOUT: ${path} → ${id} → NEW`)
+        }
+
         transferList.push(newScreenshot.buffer)
 
         const png = bufferToPng(newScreenshot)
@@ -67,6 +72,10 @@ export const init = () => {
 
         // DIFF
         if (hasScreenshotDiff(origPng, newPng)) {
+          if (options.shouldBailout) {
+            throw new Error(`BAILOUT: ${path} → ${id} → DIFF`)
+          }
+
           transferList.push(origScreenshot.buffer)
           transferList.push(newScreenshot.buffer)
 
@@ -101,6 +110,10 @@ export const init = () => {
             }
 
             if (!results.has(id)) {
+              if (options.shouldBailout) {
+                throw new Error(`BAILOUT: ${path} → ${id} → DELETED`)
+              }
+
               const deletedScreenshot = await tarFs.read(id) as Buffer
               const deletedPng = bufferToPng(deletedScreenshot)
               const metaId = `${id}-meta`
@@ -140,8 +153,6 @@ export const init = () => {
         }, transferList)
       }
     } catch (error) {
-      console.error(error)
-
       const value = error instanceof Error ? error.message : error
 
       parentPort!.postMessage({ type: 'ERROR', value })
