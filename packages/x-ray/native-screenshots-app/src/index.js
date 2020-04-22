@@ -14,6 +14,7 @@ const hasOwnWidthStyles = {
   alignItems: 'flex-start',
 }
 
+// TODO: sync with parent workers count
 const SCREENSHOTS_CONCURRENCY = 2
 
 export class App extends Component {

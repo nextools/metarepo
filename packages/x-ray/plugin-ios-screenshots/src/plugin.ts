@@ -44,6 +44,7 @@ export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8A
       logMessage: console.log,
     })
 
+    // TODO: sync with app screenshots concurrency
     const workers = Array.from({ length: 2 }, () => new Worker(
       WORKER_PATH,
       {
