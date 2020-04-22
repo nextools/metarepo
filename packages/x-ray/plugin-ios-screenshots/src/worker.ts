@@ -30,7 +30,11 @@ export const init = () => {
 
       if (currentPath !== path) {
         try {
-          const tarFilePath = getTarFilePath(path, 'ios-screenshots')
+          const tarFilePath = getTarFilePath({
+            examplesFilePath: path,
+            examplesName: name,
+            pluginName: 'ios-screenshots',
+          })
 
           await access(tarFilePath)
 

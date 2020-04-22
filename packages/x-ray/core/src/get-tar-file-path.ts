@@ -1,7 +1,13 @@
 import path from 'path'
 
-export const getTarFilePath = (filePath: string, type: string): string => {
-  const name = path.basename(filePath, '.tsx')
+export type TGetTarFilePath = {
+  examplesFilePath: string,
+  examplesName: string,
+  pluginName: string,
+}
 
-  return path.join(path.dirname(filePath), `${name}-${type}.tar.gz`)
+export const getTarFilePath = (options: TGetTarFilePath): string => {
+  const examplesDirPath = path.dirname(options.examplesFilePath)
+
+  return path.join(examplesDirPath, '__x-ray__', `${options.examplesName}-${options.pluginName}.tar.gz`)
 }

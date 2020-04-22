@@ -38,15 +38,6 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
   Buffer.poolSize = 0
 
   return async (filePath: string): Promise<TWorkerResultInternal<Buffer>> => {
-    const tarFilePath = getTarFilePath(filePath, 'chrome-screenshots')
-    let tarFs = null as null | TTarFs
-
-    try {
-      await access(tarFilePath)
-
-      tarFs = await TarFs(tarFilePath)
-    } catch {}
-
     const { name, examples } = await import(filePath) as { examples: Iterable<TExample>, name: string }
     const transferList = [] as ArrayBuffer[]
     const status = {
@@ -55,6 +46,19 @@ export const check = async ({ browserWSEndpoint, dpr }: TCheckOptions) => {
       diff: 0,
       deleted: 0,
     }
+
+    const tarFilePath = getTarFilePath({
+      examplesFilePath: filePath,
+      examplesName: name,
+      pluginName: 'chrome-screenshots',
+    })
+    let tarFs = null as null | TTarFs
+
+    try {
+      await access(tarFilePath)
+
+      tarFs = await TarFs(tarFilePath)
+    } catch {}
 
     const asyncIterable = piAll(
       map((example: TExample) => async (): Promise<[string, TExampleResult<Buffer>]> => {

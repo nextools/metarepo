@@ -10,7 +10,7 @@ import { save } from './save'
 
 export type TRunServerOptions = {
   results: TTotalResults<TResultsType>,
-  name: string,
+  pluginName: string,
   encoding: TEncoding,
 }
 
@@ -72,7 +72,7 @@ export const runServer = (options: TRunServerOptions) => new Promise<() => Promi
                 results: options.results,
                 pathsMap,
                 keys,
-                name: options.name,
+                pluginName: options.pluginName,
                 encoding: options.encoding,
               })
 

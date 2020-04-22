@@ -36,7 +36,7 @@ export const xRay = (plugin: TPlugin<TResultsType>) => async (files: string[]): 
 
   const savePromise = await runServer({
     results: totalResults,
-    name: plugin.name,
+    pluginName: plugin.name,
     encoding: plugin.encoding,
   })
   const entryPointPath = await rsolve('@x-ray/ui', 'browser')

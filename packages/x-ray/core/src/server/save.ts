@@ -1,8 +1,11 @@
+import path from 'path'
 import { TarFs } from '@x-ray/tar-fs'
 import pAll from 'p-all'
 // @ts-ignore
 import imageminPngout from 'imagemin-pngout'
+import { map } from 'iterama'
 import { isDefined } from 'tsfn'
+import makeDir from 'make-dir'
 import { getTarFilePath } from '../get-tar-file-path'
 import { WRITE_RESULT_CONCURRENCY } from '../constants'
 import { TTotalResults, TResultsType, TEncoding } from '../types'
@@ -13,7 +16,7 @@ export type TSaveOptions = {
   results: TTotalResults<TResultsType>,
   pathsMap: Map<string, string>,
   keys: string[],
-  name: string,
+  pluginName: string,
   encoding: TEncoding,
 }
 
@@ -22,20 +25,29 @@ export const save = async (options: TSaveOptions): Promise<void> => {
     const [name, id] = key.split('::')
     const filePath = options.pathsMap.get(name)!
 
-    if (!Reflect.has(acc, filePath)) {
-      acc[filePath] = []
+    if (!acc.has(filePath)) {
+      acc.set(filePath, { name, ids: new Set() })
     }
 
-    acc[filePath].push(id)
+    acc.get(filePath)!.ids.add(id)
 
     return acc
-  }, {} as { [path: string]: string[] })
+  }, new Map<string, { name: string, ids: Set<string> }>())
 
-  for (const [filePath, ids] of Object.entries(saveMap)) {
-    const tarFs = await TarFs(getTarFilePath(filePath, options.name))
+  for (const [filePath, { name, ids }] of saveMap) {
+    const tarFilePath = getTarFilePath({
+      examplesFilePath: filePath,
+      examplesName: name,
+      pluginName: options.pluginName,
+    })
+    const tarFileDir = path.dirname(tarFilePath)
+
+    await makeDir(tarFileDir)
+
+    const tarFs = await TarFs(tarFilePath)
 
     await pAll(
-      ids.map((id) => async () => {
+      map((id: string) => async () => {
         const result = options.results.get(filePath)!.results.get(id)!
 
         switch (result.type) {
@@ -78,7 +90,7 @@ export const save = async (options: TSaveOptions): Promise<void> => {
             tarFs.delete(`${id}-meta`)
           }
         }
-      }),
+      })(ids),
       { concurrency: WRITE_RESULT_CONCURRENCY }
     )
 

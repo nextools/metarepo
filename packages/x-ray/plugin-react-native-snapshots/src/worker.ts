@@ -11,15 +11,6 @@ import { getSnapshotDimensions } from './get-snapshot-dimensions'
 import { SNAPSHOTS_PER_WORKER_COUNT, REQUIRE_HOOK_PATH } from './constants'
 
 export const check = () => async (filePath: string): Promise<TWorkerResultInternal<string>> => {
-  const tarFilePath = getTarFilePath(filePath, 'component-snapshots')
-  let tarFs = null as null | TTarFs
-
-  try {
-    await access(tarFilePath)
-
-    tarFs = await TarFs(tarFilePath)
-  } catch {}
-
   await import(REQUIRE_HOOK_PATH)
 
   const { name, examples } = await import(filePath) as { name: string, examples: Iterable<TExample> }
@@ -29,6 +20,20 @@ export const check = () => async (filePath: string): Promise<TWorkerResultIntern
     diff: 0,
     deleted: 0,
   }
+
+  const tarFilePath = getTarFilePath({
+    examplesFilePath: filePath,
+    examplesName: name,
+    pluginName: 'react-native-snapshots',
+  })
+
+  let tarFs = null as null | TTarFs
+
+  try {
+    await access(tarFilePath)
+
+    tarFs = await TarFs(tarFilePath)
+  } catch {}
 
   const asyncIterable = piAll(
     map((example: TExample) => async (): Promise<[string, TExampleResult<string>]> => {
