@@ -37,6 +37,7 @@ Module._load = (request, parent, isMain) => {
     }
 
     const resolvedPath = resolve(callerDir, request)
+
     const result = originalLoad(resolvedPath, parent, isMain)
 
     cache.set(cacheKey, result)

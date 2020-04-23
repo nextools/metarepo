@@ -5,7 +5,7 @@ import { TExample } from '@x-ray/core'
 
 export const examples = map<number, TExample>((i) => ({
   id: String(i),
-  element: <Text>{i}----</Text>,
+  element: <Text>{i}</Text>,
   options: {
     hasOwnWidth: true,
   },

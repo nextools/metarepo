@@ -10,11 +10,21 @@ import { TWorkerResultInternal, TCheckOptions } from './types'
 import { getSnapshotDimensions } from './get-snapshot-dimensions'
 import { SNAPSHOTS_PER_WORKER_COUNT, REQUIRE_HOOK_PATH } from './constants'
 
-export const check = (options: TCheckOptions) =>
-  async (filePath: string): Promise<TWorkerResultInternal<string>> => {
+export const check = (options: TCheckOptions) => {
+  let tarFs = null as null | TTarFs
+
+  return async (item: IteratorResult<string>): Promise<TWorkerResultInternal<string> | void> => {
+    if (tarFs !== null) {
+      await tarFs.close()
+    }
+
+    if (item.done) {
+      return
+    }
+
     await import(REQUIRE_HOOK_PATH)
 
-    const { name, examples } = await import(filePath) as { name: string, examples: Iterable<TExample> }
+    const { name, examples } = await import(item.value) as { name: string, examples: Iterable<TExample> }
     const status = {
       ok: 0,
       new: 0,
@@ -23,11 +33,10 @@ export const check = (options: TCheckOptions) =>
     }
 
     const tarFilePath = getTarFilePath({
-      examplesFilePath: filePath,
+      examplesFilePath: item.value,
       examplesName: name,
       pluginName: 'react-snapshots',
     })
-    let tarFs = null as null | TTarFs
 
     try {
       await access(tarFilePath)
@@ -42,7 +51,7 @@ export const check = (options: TCheckOptions) =>
         // NEW
         if (tarFs === null || !tarFs.has(example.id)) {
           if (options.shouldBailout) {
-            throw new Error(`BAILOUT: ${filePath} → ${example.id} → NEW`)
+            throw new Error(`BAILOUT: ${item.value} → ${example.id} → NEW`)
           }
 
           const { width, height } = getSnapshotDimensions(newSnapshot)
@@ -64,7 +73,7 @@ export const check = (options: TCheckOptions) =>
         // DIFF
         if (hasSnapshotDiff(newSnapshot, origSnapshot)) {
           if (options.shouldBailout) {
-            throw new Error(`BAILOUT: ${filePath} → ${example.id} → DIFF`)
+            throw new Error(`BAILOUT: ${item.value} → ${example.id} → DIFF`)
           }
 
           const { width: origWidth, height: origHeight } = getSnapshotDimensions(origSnapshot)
@@ -105,7 +114,7 @@ export const check = (options: TCheckOptions) =>
 
         if (!fileResults.has(id)) {
           if (options.shouldBailout) {
-            throw new Error(`BAILOUT: ${filePath} → ${id} → DELETED`)
+            throw new Error(`BAILOUT: ${item.value} → ${id} → DELETED`)
           }
 
           const deletedSnapshotBuffer = await tarFs.read(id) as Buffer
@@ -131,11 +140,10 @@ export const check = (options: TCheckOptions) =>
           status.deleted++
         }
       }
-
-      await tarFs.close()
     }
 
     return {
-      value: [filePath, { name, results: fileResults, status }],
+      value: [item.value, { name, results: fileResults, status }],
     }
   }
+}

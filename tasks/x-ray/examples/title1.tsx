@@ -11,4 +11,4 @@ export const examples = map<number, TExample>((i) => ({
   meta: [i],
 }))(range(1000))
 
-export const name = 'title1'
+export const name = 'Title1'

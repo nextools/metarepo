@@ -45,16 +45,20 @@ for await (const result of resultsIterable) {
 process.stdout.write('\n')
 ```
 
-```ts
+```js
 // test.js
 
 // factory function that receives `fnArgs`
 exports.add = (arg1) => {
   // actual function that receives item of `items`
-  return (item) => Promise.resolve({
-    value: item + arg1,
-    transferList: []
-  })
+  return (item) => {
+    if (!item.done) {
+      Promise.resolve({
+        value: item.value + arg1,
+        transferList: []
+      })
+    }
+  }
 }
 ```
 

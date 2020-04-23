@@ -138,8 +138,6 @@ export const check = (options: TCheckOptions) => {
               status.deleted++
             }
           }
-
-          await tarFs.close()
         }
 
         parentPort!.postMessage({
@@ -156,6 +154,10 @@ export const check = (options: TCheckOptions) => {
       const value = error instanceof Error ? error.message : error
 
       parentPort!.postMessage({ type: 'ERROR', value })
+    } finally {
+      if (tarFs !== null) {
+        await tarFs.close()
+      }
     }
   })
 }
