@@ -8,7 +8,7 @@ export const uncacheKey = (key: string): void => {
     return
   }
 
-  const module = cache[key]
+  const module = cache[key]!
 
   /* istanbul ignore else */
   if (module.parent !== null) {
