@@ -21,7 +21,7 @@
     "@rebox/native-utils": "^2.0.4",
     "execa": "^4.0.0",
     "make-dir": "^3.0.0",
-    "move-file": "^1.2.0",
+    "move-file": "^2.0.0",
     "pifs": "^1.0.0",
     "react-native": "0.62.2",
     "rn-fonts": "^1.0.0",
