@@ -15,7 +15,7 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/register": "^7.8.6",
-    "@bubble-dev/babel-config": "^0.1.4",
+    "@nextools/babel-config": "^0.1.3",
     "@rebox/ios": "^2.0.4",
     "@x-ray/core": "^0.0.0",
     "@x-ray/tar-fs": "^1.0.0",

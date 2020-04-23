@@ -40,7 +40,8 @@
     "refun": "^2.0.0",
     "stili": "^1.0.0",
     "syntx": "^1.0.1",
-    "tsfn": "^1.1.2"
+    "tsfn": "^1.1.2",
+    "typeon": "^1.0.1"
   },
   "devDependencies": {
     "@types/diff": "^4.0.2"

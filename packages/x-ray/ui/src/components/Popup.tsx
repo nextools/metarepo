@@ -15,6 +15,7 @@ import { onKeyDown } from '../maps/on-keydown'
 import { actionUndiscardItem } from '../actions/undiscard'
 import { ScreenshotPreview } from './ScreenshotPreview'
 import { SnapshotPreview } from './SnapshotPreview'
+import { Meta } from './Meta'
 
 const isScreenshotGridItem = (type: TType | undefined, item: TGridItem | null): item is TScreenshotGridItem => type === 'image' && item !== null
 const isSnapshotGridItem = (type: TType | undefined, item: TGridItem | null): item is TSnapshotGridItem => type === 'text' && item !== null
@@ -191,7 +192,14 @@ export const Popup = component(
         )}
         {isSnapshotGridItem(type, item) && (
           <Layout_Item>
-            <SnapshotPreview item={item}/>
+            <Layout direction="horizontal">
+              <Layout_Item>
+                <Meta id={item.id}/>
+              </Layout_Item>
+              <Layout_Item>
+                <SnapshotPreview item={item}/>
+              </Layout_Item>
+            </Layout>
           </Layout_Item>
         )}
       </Layout>
