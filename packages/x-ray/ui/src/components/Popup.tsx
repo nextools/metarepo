@@ -114,7 +114,7 @@ export const Popup = component(
   }, []),
   mapWithProps(({ popupWidth, popupHeight }) => {
     const halfWidth = popupWidth / 2
-    const hasSourceCode = false
+    const hasSourceCode = true
 
     return ({
       sourceCodeWidth: halfWidth - POPUP_SPACING * 2,
@@ -155,9 +155,7 @@ export const Popup = component(
     >
       {([popupLeft, popupTop, popupWidth, popupHeight, popupAlpha, backdropAlpha]) => (
         <Fragment>
-          <Button
-            onPress={onBackdropPress}
-          >
+          <Button onPress={onBackdropPress}>
             <Background color={rgba(0, 0, 0, backdropAlpha)}/>
           </Button>
           <PrimitiveBlock

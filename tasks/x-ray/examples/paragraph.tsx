@@ -8,7 +8,7 @@ export const examples = map<number, TExample>((i) => ({
   options: {
     hasOwnWidth: true,
   },
-  meta: [i],
+  meta: () => [i],
 }))(range(10))
 
 export const name = 'Paragraph'

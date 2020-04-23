@@ -9,7 +9,6 @@ const SERVER_PORT = 3003
 
 const defaultStyles = {}
 const hasOwnWidthStyles = {
-  marginTop: 30,
   flexDirection: 'row',
   alignItems: 'flex-start',
 }
@@ -101,14 +100,18 @@ class Main extends Component {
       const nextFile = files[this.fileIndex]
       const nextIterator = nextFile.examples[Symbol.iterator]()
 
-      this.setState((state) => ({
-        ...state,
-        [nextFile.path]: {
-          iterator: nextIterator,
-          name: nextFile.name,
-          example: nextIterator.next().value,
-        },
-      }))
+      this.setState((state) => {
+        Reflect.deleteProperty(state, path)
+
+        return ({
+          ...state,
+          [nextFile.path]: {
+            iterator: nextIterator,
+            name: nextFile.name,
+            example: nextIterator.next().value,
+          },
+        })
+      })
 
       return
     }
@@ -137,7 +140,7 @@ class Main extends Component {
                   path,
                   name: value.name,
                   id: value.example.id,
-                  meta: value.example.meta,
+                  meta: value.example.meta(value.example.element),
                   base64data,
                 })}
                 captureMode="mount"

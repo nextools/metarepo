@@ -7,5 +7,6 @@ export const main = async () => {
   await xRayIOsScreenshots([
     require.resolve('./examples/text1.tsx'),
     require.resolve('./examples/text2.tsx'),
+    require.resolve('./examples/svg.tsx'),
   ])
 }

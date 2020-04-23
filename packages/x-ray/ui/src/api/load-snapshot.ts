@@ -14,7 +14,7 @@ export const apiLoadSnapshot = async (opts: TApiLoadSnapshotOpts): Promise<strin
     return apiLoadSnapshotCache.get(params)!
   }
 
-  const response = await fetch(`http://${HOST}:${PORT}/get?${params}`)
+  const response = await fetch(`http://${HOST}:${PORT}/get-result?${params}`)
 
   if (!response.ok) {
     throw new Error(`Load snapshot (${response.status}): ${response.statusText}`)

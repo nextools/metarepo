@@ -1,26 +1,26 @@
 export type TMeta = {
-  readonly value: any,
-  readonly children?: readonly TMeta[],
+  value: any,
+  children?: TMeta[],
 }
 
 export type TLineElement = {
-  readonly type: string,
-  readonly value: string,
+  type: string,
+  value: string,
 }
 
 export type TLine = {
-  readonly meta?: any,
-  readonly elements: readonly TLineElement[],
+  meta?: any,
+  elements: TLineElement[],
 }
 
 // no body - no tail
 export type TSerializedElement = {
-  readonly head: readonly TLineElement[], // shared old line
-  readonly body: readonly TLine[], // self added line(s)
-  readonly tail: readonly TLineElement[], // shared new line
+  head: TLineElement[], // shared old line
+  body: TLine[], // self added line(s)
+  tail: TLineElement[], // shared new line
 }
 
 export type TConfig = {
-  readonly indent: number,
-  readonly meta?: TMeta,
+  indent: number,
+  meta?: TMeta,
 }

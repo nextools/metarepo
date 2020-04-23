@@ -14,7 +14,7 @@ export const apiLoadScreenshot = async (opts: TApiLoadScreenshotOpts): Promise<B
     return apiLoadScreenshotCache.get(params)!
   }
 
-  const response = await fetch(`http://${HOST}:${PORT}/get?${params}`)
+  const response = await fetch(`http://${HOST}:${PORT}/get-result?${params}`)
 
   if (!response.ok) {
     throw new Error(`Load screenshot (${response.status}): ${response.statusText}`)

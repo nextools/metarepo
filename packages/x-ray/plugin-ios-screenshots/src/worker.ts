@@ -11,10 +11,10 @@ import { TCheckOptions } from './types'
 Buffer.poolSize = 0
 
 export const check = (options: TCheckOptions) => {
-  const currentPath = null as null | string
+  let currentPath: string
   const applyDpr = ApplyDpr(options.dpr)
   let tarFs = null as null | TTarFs
-  const transferList = [] as ArrayBuffer[]
+  let transferList = [] as ArrayBuffer[]
   const results: TFileResults<Buffer> = new Map()
   const status = {
     ok: 0,
@@ -23,9 +23,17 @@ export const check = (options: TCheckOptions) => {
     deleted: 0,
   }
 
-  parentPort!.on('message', async (bodyArr: Uint8Array) => {
+  parentPort!.on('message', async (item: IteratorResult<Uint8Array>) => {
     try {
-      const bodyString = new TextDecoder('utf-8').decode(bodyArr)
+      if (item.done) {
+        if (tarFs !== null) {
+          await tarFs.close()
+        }
+
+        process.exit()
+      }
+
+      const bodyString = new TextDecoder('utf-8').decode(item.value)
       const { path, name, id, meta, isDone, base64data } = JSON.parse(bodyString)
       const newScreenshot = Buffer.from(base64data, 'base64')
 
@@ -43,6 +51,8 @@ export const check = (options: TCheckOptions) => {
         } catch {
           tarFs = null
         }
+
+        currentPath = path
       }
 
       // NEW
@@ -129,8 +139,8 @@ export const check = (options: TCheckOptions) => {
 
               results.set(id, {
                 type: 'DELETED',
-                data: deletedScreenshot,
                 meta,
+                data: deletedScreenshot,
                 width: applyDpr(deletedPng.width),
                 height: applyDpr(deletedPng.height),
               })
@@ -138,6 +148,8 @@ export const check = (options: TCheckOptions) => {
               status.deleted++
             }
           }
+
+          await tarFs.close()
         }
 
         parentPort!.postMessage({
@@ -149,15 +161,17 @@ export const check = (options: TCheckOptions) => {
             status,
           }],
         }, transferList)
+
+        status.ok = 0
+        status.new = 0
+        status.diff = 0
+        status.deleted = 0
+        transferList = []
       }
     } catch (error) {
       const value = error instanceof Error ? error.message : error
 
       parentPort!.postMessage({ type: 'ERROR', value })
-    } finally {
-      if (tarFs !== null) {
-        await tarFs.close()
-      }
     }
   })
 }

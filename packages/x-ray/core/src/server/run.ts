@@ -7,6 +7,7 @@ import { UI_HOST, UI_PORT, SERVER_PORT, SERVER_HOST } from '../constants'
 import { getList } from './get-list'
 import { getResult } from './get-result'
 import { save } from './save'
+import { getMeta } from './get-meta'
 
 export type TRunServerOptions = {
   results: TTotalResults<TResultsType>,
@@ -44,7 +45,7 @@ export const runServer = (options: TRunServerOptions) => new Promise<() => Promi
               return
             }
 
-            if (req.method === 'GET' && urlData.pathname === '/get') {
+            if (req.method === 'GET' && urlData.pathname === '/get-result') {
               const result = getResult({
                 results: options.results,
                 pathsMap,
@@ -61,6 +62,23 @@ export const runServer = (options: TRunServerOptions) => new Promise<() => Promi
               } else {
                 res.end(result)
               }
+
+              return
+            }
+
+            if (req.method === 'GET' && urlData.pathname === '/get-meta') {
+              const result = getMeta({
+                results: options.results,
+                pathsMap,
+                query: urlData.query,
+              })
+
+              if (result === null) {
+                throw new Error(`Invalid get request: ${req.url}`)
+              }
+
+              res.setHeader('Content-Type', 'application/json')
+              res.end(JSON.stringify(result))
 
               return
             }

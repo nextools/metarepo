@@ -60,89 +60,94 @@ export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8A
 
     Buffer.poolSize = 0
 
-    await new Promise<void>((serverResolve, serverReject) => {
-      const server = http.createServer(async (req, res) => {
-        try {
-          const urlData = url.parse(req.url!, true) as UrlWithParsedQuery & {
-            query: {
-              path: string,
-            },
-          }
-
-          if (urlData.pathname === '/upload') {
-            const path = urlData.query.path as string
-
-            const body = await unchunkBuffer(req)
-            let worker: Worker
-
-            // no worker for path, assign new
-            if (!pathWorkers.has(path)) {
-              worker = workers.find(({ threadId }) => !busyWorkerIds.has(threadId))!
-
-              busyWorkerIds.add(worker.threadId)
-              pathWorkers.set(path, worker.threadId)
-            // reuse worker
-            } else {
-              const pathThreadId = pathWorkers.get(path)!
-
-              worker = workers.find(({ threadId }) => threadId === pathThreadId)!
-
-              worker.removeAllListeners('error')
-              worker.removeAllListeners('message')
+    try {
+      await new Promise<void>((serverResolve, serverReject) => {
+        const server = http.createServer(async (req, res) => {
+          try {
+            const urlData = url.parse(req.url!, true) as UrlWithParsedQuery & {
+              query: {
+                path: string,
+              },
             }
 
-            await new Promise<void>((reqResolve, reqReject) => {
-              worker
-                .once('error', reqReject)
-                .on('message', (message: TMessage) => {
-                  switch (message.type) {
-                    case 'EXAMPLE': {
-                      if (!message.isDone) {
+            if (urlData.pathname === '/upload') {
+              const path = urlData.query.path as string
+
+              const body = await unchunkBuffer(req)
+              let worker: Worker
+
+              // no worker for path, assign new
+              if (!pathWorkers.has(path)) {
+                worker = workers.find(({ threadId }) => !busyWorkerIds.has(threadId))!
+
+                busyWorkerIds.add(worker.threadId)
+                pathWorkers.set(path, worker.threadId)
+                // reuse worker
+              } else {
+                const pathThreadId = pathWorkers.get(path)!
+
+                worker = workers.find(({ threadId }) => threadId === pathThreadId)!
+              }
+
+              await new Promise<void>((reqResolve, reqReject) => {
+                worker
+                  .once('error', reqReject)
+                  .on('message', (message: TMessage) => {
+                    switch (message.type) {
+                      case 'EXAMPLE': {
+                        if (!message.isDone) {
+                          reqResolve()
+
+                          break
+                        }
+
+                        // release worker
+                        worker.removeAllListeners('error')
+                        worker.removeAllListeners('message')
+                        busyWorkerIds.delete(pathWorkers.get(path)!)
+                        pathWorkers.delete(path)
+
+                        const [filePath, result] = message.value
+
+                        totalResults.set(filePath, result)
+
                         reqResolve()
 
                         break
                       }
-
-                      // release worker
-                      busyWorkerIds.delete(pathWorkers.get(path)!)
-                      pathWorkers.delete(path)
-
-                      const [filePath, result] = message.value
-
-                      totalResults.set(filePath, result)
-
-                      reqResolve()
-
-                      break
+                      case 'ERROR': {
+                        reqReject(message.value)
+                      }
                     }
-                    case 'ERROR': {
-                      reqReject(message.value)
-                    }
-                  }
-                })
-                .postMessage(body, [body.buffer])
-            })
-          } else if (urlData.pathname === '/done') {
-            server.close(async () => {
-              await Promise.all(
-                workers.map((worker) => worker.terminate())
-              )
-
-              closeIosApp()
-              serverResolve()
-            })
+                  })
+                  .postMessage({ value: body }, [body.buffer])
+              })
+            } else if (urlData.pathname === '/done') {
+              server.close(() => {
+                serverResolve()
+              })
+            }
+          } catch (error) {
+            serverReject(error)
           }
-        } catch (error) {
-          closeIosApp()
-          serverReject(error)
-        }
 
-        res.end()
+          res.end()
+        })
+
+        server.once('error', serverReject)
+        server.listen(SERVER_PORT, SERVER_HOST)
       })
+    } finally {
+      await Promise.all(
+        workers.map((worker) => new Promise((resolve) => {
+          worker
+            .on('exit', resolve)
+            .postMessage({ done: true })
+        }))
+      )
 
-      server.once('error', serverReject)
-      server.listen(SERVER_PORT, SERVER_HOST)
-    })
+      await closeIosApp()
+    }
 
     return totalResults
   },

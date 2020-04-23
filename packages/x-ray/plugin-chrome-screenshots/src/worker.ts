@@ -105,7 +105,7 @@ export const check = async (options: TCheckOptions) => {
 
             return [example.id, {
               type: 'NEW',
-              meta: example.meta,
+              meta: example.meta?.(example.element),
               data: newScreenshot,
               width: applyDpr(png.width),
               height: applyDpr(png.height),
@@ -129,13 +129,13 @@ export const check = async (options: TCheckOptions) => {
 
             return [example.id, {
               type: 'DIFF',
+              meta: example.meta?.(example.element),
               data: newScreenshot,
               width: applyDpr(newPng.width),
               height: applyDpr(newPng.height),
               origData: origScreenshot,
               origWidth: applyDpr(origPng.width),
               origHeight: applyDpr(origPng.height),
-              meta: example.meta,
             }]
           }
 
@@ -178,8 +178,8 @@ export const check = async (options: TCheckOptions) => {
 
             fileResults.set(id, {
               type: 'DELETED',
-              data: deletedScreenshot,
               meta,
+              data: deletedScreenshot,
               width: applyDpr(deletedPng.width),
               height: applyDpr(deletedPng.height),
             })

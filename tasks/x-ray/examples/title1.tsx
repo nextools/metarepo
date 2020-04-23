@@ -8,7 +8,7 @@ export const examples = map<number, TExample>((i) => ({
   options: {
     hasOwnWidth: true,
   },
-  meta: [i],
+  meta: () => [i],
 }))(range(1000))
 
 export const name = 'Title1'

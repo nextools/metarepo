@@ -26,7 +26,7 @@ export type TExample = {
   id: string,
   element: ReactElement,
   options?: TExampleOptions,
-  meta?: TJsonValue,
+  meta?: (element: ReactElement) => TJsonValue,
 }
 
 export type TExampleResult<T> = {

@@ -7,6 +7,7 @@ import { TSnapshotGridItem } from '../types'
 import { mapStoreDispatch } from '../store'
 import { apiLoadSnapshot } from '../api'
 import { actionError } from '../actions'
+import { apiLoadMeta } from '../api/load-meta'
 
 const LINE_HEIGHT = 18
 const CHAR_WIDTH = 8.39
@@ -22,11 +23,18 @@ export const SnapshotPreview = component(
   mapState('state', 'setState', () => null as string[] | null, []),
   onUpdateAsync((props) => function *() {
     try {
-      const data = yield apiLoadSnapshot({
-        id: props.current.item.id,
-        type: 'NEW',
-      })
+      const [data, meta] = yield Promise.all([
+        apiLoadSnapshot({
+          id: props.current.item.id,
+          type: 'NEW',
+        }),
+        apiLoadMeta({
+          id: props.current.item.id,
+        }),
+      ])
       const lines = data.split('\n')
+
+      console.log(meta)
 
       props.current.setState(lines)
     } catch (err) {

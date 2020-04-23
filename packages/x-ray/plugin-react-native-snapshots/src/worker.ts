@@ -60,7 +60,7 @@ export const check = (options: TCheckOptions) => {
 
           return [example.id, {
             type: 'NEW',
-            meta: example.meta,
+            meta: example.meta?.(example.element),
             data: newSnapshot,
             width,
             height,
@@ -83,13 +83,13 @@ export const check = (options: TCheckOptions) => {
 
           return [example.id, {
             type: 'DIFF',
+            meta: example.meta?.(example.element),
             data: newSnapshot,
             width,
             height,
             origData: origSnapshot,
             origWidth,
             origHeight,
-            meta: example.meta,
           }]
         }
 
@@ -131,8 +131,8 @@ export const check = (options: TCheckOptions) => {
 
           fileResults.set(id, {
             type: 'DELETED',
-            data: deletedSnapshot,
             meta,
+            data: deletedSnapshot,
             width,
             height,
           })
