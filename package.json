@@ -51,6 +51,7 @@
     "@types/node": "^13.5.0",
     "@types/react-native": "^0.62.0",
     "@x-ray/core":" *",
+    "@x-ray/plugin-android-screenshots": "*",
     "@x-ray/plugin-chrome-screenshots": "*",
     "@x-ray/plugin-ios-screenshots": "*",
     "@x-ray/plugin-react-snapshots": "*",

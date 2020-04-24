@@ -5,7 +5,7 @@ import ViewShot from 'react-native-view-shot'
 import { files, screenshotsConcurrency } from './meta' // eslint-disable-line
 
 const SERVER_HOST = 'localhost'
-const SERVER_PORT = 3003
+const SERVER_PORT = 3002
 
 const defaultStyles = {}
 const hasOwnWidthStyles = {
