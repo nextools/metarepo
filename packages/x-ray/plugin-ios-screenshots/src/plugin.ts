@@ -5,12 +5,9 @@ import { runIosApp } from '@rebox/ios'
 import { rsolve } from 'rsolve'
 import { unchunkBuffer } from 'unchunk'
 import { TTotalResults, TPlugin } from '@x-ray/core'
-import { prepareFiles } from './prepare-files'
+import { prepareMeta } from './prepare-meta'
 import { TMessage } from './types'
-
-const SERVER_HOST = 'localhost'
-const SERVER_PORT = 3003
-const WORKER_PATH = require.resolve('./worker-setup')
+import { WORKER_PATH, SERVER_PORT, SERVER_HOST, MAX_THREAD_COUNT } from './constants'
 
 export type TIOSScreenshotsOptions = {
   fontsDir?: string,
@@ -27,8 +24,9 @@ export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8A
       ...options,
     }
     const entryPointPath = await rsolve('@x-ray/native-screenshots-app', 'react-native')
+    const threadCount = Math.min(MAX_THREAD_COUNT, files.length)
 
-    await prepareFiles(entryPointPath, files)
+    await prepareMeta(entryPointPath, files, threadCount)
 
     const closeIosApp = await runIosApp({
       appName: 'X-Ray',
@@ -45,8 +43,7 @@ export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8A
       logMessage: console.log,
     })
 
-    // TODO: sync with app screenshots concurrency
-    const workers = Array.from({ length: 2 }, () => new Worker(
+    const workers = Array.from({ length: threadCount }, () => new Worker(
       WORKER_PATH,
       {
         workerData: {

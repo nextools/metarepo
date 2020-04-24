@@ -2,7 +2,7 @@
 import React, { Component, Fragment } from 'react'
 import { View } from 'react-native'
 import ViewShot from 'react-native-view-shot'
-import files from './files' // eslint-disable-line
+import { files, screenshotsConcurrency } from './meta' // eslint-disable-line
 
 const SERVER_HOST = 'localhost'
 const SERVER_PORT = 3003
@@ -12,9 +12,6 @@ const hasOwnWidthStyles = {
   flexDirection: 'row',
   alignItems: 'flex-start',
 }
-
-// TODO: sync with parent workers count
-const SCREENSHOTS_CONCURRENCY = 2
 
 export class App extends Component {
   async componentDidCatch(error) {
@@ -39,7 +36,7 @@ class Main extends Component {
 
     const state = {}
 
-    for (let i = 0; i < SCREENSHOTS_CONCURRENCY; i++) {
+    for (let i = 0; i < screenshotsConcurrency; i++) {
       const file = files[i]
       const iterator = file.examples[Symbol.iterator]()
 
@@ -51,8 +48,8 @@ class Main extends Component {
     }
 
     this.state = state
-    this.fileIndex = SCREENSHOTS_CONCURRENCY - 1
-    this.filesInProgressCount = SCREENSHOTS_CONCURRENCY
+    this.fileIndex = screenshotsConcurrency - 1
+    this.filesInProgressCount = screenshotsConcurrency
   }
 
   onCapture = async ({ path, name, id, meta, base64data }) => {
