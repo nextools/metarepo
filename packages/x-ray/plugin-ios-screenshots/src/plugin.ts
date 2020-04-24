@@ -40,7 +40,6 @@ export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8A
         'react-native-view-shot',
       ],
       isHeadless: false,
-      logMessage: console.log,
     })
 
     const workers = Array.from({ length: threadCount }, () => new Worker(
@@ -85,6 +84,9 @@ export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8A
                 const pathThreadId = pathWorkers.get(path)!
 
                 worker = workers.find(({ threadId }) => threadId === pathThreadId)!
+                // release worker
+                worker.removeAllListeners('error')
+                worker.removeAllListeners('message')
               }
 
               await new Promise<void>((reqResolve, reqReject) => {
@@ -99,9 +101,8 @@ export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8A
                           break
                         }
 
-                        // release worker
-                        worker.removeAllListeners('error')
-                        worker.removeAllListeners('message')
+                        console.log(path)
+
                         busyWorkerIds.delete(pathWorkers.get(path)!)
                         pathWorkers.delete(path)
 
