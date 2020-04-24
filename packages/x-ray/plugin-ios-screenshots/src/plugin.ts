@@ -20,6 +20,7 @@ export type TIOSScreenshotsOptions = {
 export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8Array> => ({
   name: 'ios-screenshots',
   encoding: 'image',
+  appEntryPointPath: require.resolve('./App.tsx'),
   getResults: async (files) => {
     const opts = {
       shouldBailout: false,

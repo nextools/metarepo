@@ -8,6 +8,7 @@ export type TEncoding = 'image' | 'text'
 export type TPlugin<T extends TResultsType> = {
   name: string,
   encoding: TEncoding,
+  appEntryPointPath: string,
   getResults: (files: string[]) => Promise<TTotalResults<T>>,
 }
 

@@ -12,6 +12,7 @@ export type TReactNativeSnapshotsOptions = {
 export const reactNativeSnapshots = (options?: TReactNativeSnapshotsOptions): TPlugin<string> => ({
   name: 'react-native-snapshots',
   encoding: 'text',
+  appEntryPointPath: require.resolve('./App.tsx'),
   getResults: (files) => {
     const opts = {
       shouldBailout: false,

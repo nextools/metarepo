@@ -22,6 +22,7 @@
     "@x-ray/core": "^0.0.0",
     "@x-ray/serialize-react-tree": "^1.0.1",
     "@x-ray/tar-fs": "^1.0.0",
+    "@x-ray/ui": "^1.0.3",
     "enhanced-resolve": "^4.1.1",
     "funcom": "^0.1.0",
     "iterama": "^0.2.0",

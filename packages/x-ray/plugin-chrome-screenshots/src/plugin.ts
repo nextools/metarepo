@@ -14,6 +14,7 @@ export type TChromeScreenshotsOptions = {
 export const chromeScreenshots = (options?: TChromeScreenshotsOptions): TPlugin<Uint8Array> => ({
   name: 'chrome-screenshots',
   encoding: 'image',
+  appEntryPointPath: require.resolve('./App.tsx'),
   getResults: async (files) => {
     const opts = {
       shouldBailout: false,

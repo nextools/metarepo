@@ -19,6 +19,7 @@
     "@rebox/ios": "^2.0.4",
     "@x-ray/core": "^0.0.0",
     "@x-ray/tar-fs": "^1.0.0",
+    "@x-ray/ui": "^1.0.3",
     "pifs": "^1.0.2",
     "pixelmatch": "^5.1.0",
     "pngjs": "^3.4.0",

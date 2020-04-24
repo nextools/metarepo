@@ -43,7 +43,7 @@ export const xRay = (plugin: TPlugin<TResultsType>) => async (files: string[]): 
   const htmlTemplatePath = path.join(path.dirname(entryPointPath), 'index.html')
   const closeRebox = await runWebApp({
     htmlTemplatePath,
-    entryPointPath,
+    entryPointPath: plugin.appEntryPointPath,
     isQuiet: true,
   })
 
