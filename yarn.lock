@@ -1765,16 +1765,15 @@
   dependencies:
     react-native-svg "^11.0.1"
 
-"@primitives/text@^1.0.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@primitives/text/-/text-1.1.0.tgz#3507a151dc90067f6d11d003671ae951a9596638"
-  integrity sha512-VjjS9tHPaJvn82F1C2gNhq9LHr5y7UAOob5iw9i3C50rFC1UeejyCuvvGA8Kd6l8GOxko3JdyC0YpuuqOpNQXA==
+"@primitives/text@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/text/-/text-2.0.0.tgz#3ef1297fc2834a170f2268c3944b210d4cf38727"
+  integrity sha512-rhOK+U6NrAdMyng07tm6jQu/az6N37hKui3qqiEIlCBb5yTod/K+tP73yI/8W46BQKweCBR3of7ZsPvq+7WL+w==
   dependencies:
-    "@themeables/text" "^1.0.0"
+    "@themeables/text" "^2.0.0"
     colorido "^1.0.0"
-    refun "^1.0.0"
-    stili "^1.0.0"
-    tsfn "^1.0.0"
+    refun "^2.0.0"
+    stili "^2.0.0"
 
 "@psxcode/compose@^0.1.3":
   version "0.1.4"
@@ -1931,6 +1930,14 @@
     "@babel/runtime" "^7.1.2"
     refun "^1.0.0"
 
+"@themeables/core@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@themeables/core/-/core-2.0.0.tgz#530012f80d99dfcf464309ae84a63e3a1f261192"
+  integrity sha512-YfASoC80nKG8uQ38zQUx6umWxr7OMWKwoBuI2mjqwytX4AUVIrxNWiHy5xxlvTvl7A64I3hR5qK6m2W6xsHL5w==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    refun "^2.0.0"
+
 "@themeables/image@^1.0.0":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@themeables/image/-/image-1.0.1.tgz#7210bb8d8b9713abf7ec98bba95bdfa70a17d90c"
@@ -1939,16 +1946,16 @@
     "@babel/runtime" "^7.1.2"
     "@themeables/core" "^1.0.0"
 
-"@themeables/text@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@themeables/text/-/text-1.0.1.tgz#4f8118514bc0a167a2f2f4b390484d7d20d52970"
-  integrity sha512-J/4Szq44Aq1/Gn/4fQ4+53sgjwGbDm1D/vnlcIBcgp9pJUIr6Kvgo/CdBq3++coU0THEojv4kuTQjmh18UuiCw==
+"@themeables/text@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@themeables/text/-/text-2.0.0.tgz#594fb93bf113381abd62d083c563f04467db11a0"
+  integrity sha512-41Sk6de+Ou83ho8dgLAXhUymYucI7wcFU1ZGb0VpCfQfuKxP4aDY059F3+ZWj1vvnjL7TcpKYQzg7D4v+pi/7w==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@primitives/text" "^1.0.0"
-    "@themeables/core" "^1.0.0"
+    "@primitives/text" "^2.0.0"
+    "@themeables/core" "^2.0.0"
     colorido "^1.0.0"
-    stili "^1.0.0"
+    stili "^2.0.0"
 
 "@types/anymatch@*":
   version "1.3.1"
@@ -12589,6 +12596,13 @@ stili@^1.0.0:
   integrity sha512-TpgV9o0MgbhtXRN5ZFnOF/Ltu+Dd+QNO7/B8Ydh8WlMOch4qPF/EVR4RyKt/S3tv9MC8YaTAtbp+kCTI9xCehA==
   dependencies:
     tsfn "^1.0.0"
+
+stili@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/stili/-/stili-2.0.0.tgz#5f67500006b751b81d9e7cd2a32b7ab5c3e5a6b2"
+  integrity sha512-dFc507bJxE/kYYc/jRlKZyYuCJwNoI4xPom6KdU2SExoOKxybY1pO9t7p8DpmUE7Ewkp+Ux4ZxIHYQm566thnA==
+  dependencies:
+    tsfn "^1.1.0"
 
 stream-browserify@^2.0.1:
   version "2.0.2"
