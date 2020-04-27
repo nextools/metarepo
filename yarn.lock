@@ -1757,10 +1757,10 @@
     stili "^1.0.0"
     tsfn "^1.0.0"
 
-"@primitives/svg@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@primitives/svg/-/svg-1.0.1.tgz#321e2fe63b09d0e8cfa13a4394b2ce82fdd30af0"
-  integrity sha512-shogR8NLCq5TWdVo/WSUflBC2+2lZBt+lFvu4+JLhT1dmO6ut4ToeSKQnOEmNgNJo2/GeHAdHvCo52n3fKsgpg==
+"@primitives/svg@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/svg/-/svg-2.0.0.tgz#229c87eeb75d06733a8cac60d17eb331b2655734"
+  integrity sha512-GB8Y9YbqCTkHFs6OpyN5eUOptkoxDY1ZYMT3JsfN3Acume1BTieXNTU9H2QZwMCr2d8uYcEQ1XZq+amp9olAbQ==
   dependencies:
     react-native-svg "^11.0.1"
 
