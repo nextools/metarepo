@@ -20,7 +20,7 @@
     "iterama": "^0.2.2",
     "node-fetch": "^2.6.0",
     "p-all": "^3.0.0",
-    "puppeteer-core": "^2.1.0",
+    "puppeteer-core": "^3.0.0",
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "rsolve": "^0.1.0",
