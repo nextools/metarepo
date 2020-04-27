@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { map, range } from 'iterama'
 import { TExample } from '@x-ray/core'
+import { serializeComponent } from 'syntx'
+
+const Title1: FC<{ i: number }> = ({ i }) => (
+  <h1>{i}</h1>
+)
 
 export const examples = map<number, TExample>((i) => ({
   id: String(i),
-  element: <h1>{i}</h1>,
+  element: <Title1 i={i}/>,
   options: {
     hasOwnWidth: true,
   },
-  meta: () => [i],
-}))(range(1000))
+  meta: () => serializeComponent(Title1, { i }, { indent: 2 }).map((line) => line.elements),
+}))(range(10))
 
 export const name = 'Title1'

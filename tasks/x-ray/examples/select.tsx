@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { map, range } from 'iterama'
 import { TExample } from '@x-ray/core'
+import { serializeComponent } from 'syntx'
+
+const Select: FC<{ i: number }> = ({ i }) => (
+  <select><option>{i}</option></select>
+)
 
 export const examples = map<number, TExample>((i) => ({
   id: String(i),
-  element: <select><option>{i}</option></select>,
+  element: <Select i={i}/>,
   options: {
     hasOwnWidth: true,
   },
-  meta: () => [i],
+  meta: () => serializeComponent(Select, { i }, { indent: 2 }).map((line) => line.elements),
 }))(range(10))
 
 export const name = 'Select'

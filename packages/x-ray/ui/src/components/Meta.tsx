@@ -1,12 +1,12 @@
 import React from 'react'
-import { component, startWithType, mapState, onUpdateAsync } from 'refun'
+import { component, startWithType, mapState, onUpdateAsync, mapContext } from 'refun'
 import { TJsonValue } from 'typeon'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
 import { apiLoadMeta } from '../api/load-meta'
 import { TRect } from '../types'
+import { RenderMetaContext } from '../context/RenderMeta'
 import { Block } from './Block'
-import { SourceCode } from './SourceCode'
 
 export type TMeta = TRect & {
   id: string,
@@ -16,6 +16,7 @@ export const Meta = component(
   startWithType<TMeta>(),
   mapStoreDispatch('dispatch'),
   mapState('state', 'setState', () => null as TJsonValue | null, []),
+  mapContext(RenderMetaContext),
   onUpdateAsync((props) => function *() {
     try {
       const meta = yield apiLoadMeta({
@@ -28,7 +29,7 @@ export const Meta = component(
       props.current.dispatch(actionError(err.message))
     }
   }, [])
-)(({ top, left, width, height, state }) => {
+)(({ top, left, width, height, state, renderMeta }) => {
   if (state === null) {
     return null
   }
@@ -42,7 +43,7 @@ export const Meta = component(
       shouldScrollX
       shouldScrollY
     >
-      <SourceCode source={state}/>
+      {renderMeta(state)}
     </Block>
   )
 })
