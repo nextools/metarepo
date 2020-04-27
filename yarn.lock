@@ -1747,15 +1747,15 @@
     refun "^1.0.0"
     stili "^1.0.0"
 
-"@primitives/size@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@primitives/size/-/size-1.0.0.tgz#2e6c649a505943d8f37bd1fe198927b576887221"
-  integrity sha512-w2pdu6h/OtSALXIccf9zfpL/sKcbqCKkUuVlMp52kJj68zfaKo67wy7FXzwxNY9nLKSTtrvz36708vCPJWvk8g==
+"@primitives/size@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/size/-/size-2.0.0.tgz#203a0eb506e2bd52d0c0cb5958994246ec5a3c2a"
+  integrity sha512-TjlenLslhasLkJsQ3C5wJmk3cOSvE29bYbyGy01ZrrVlNG6yW4+ElJ6fdN4PPJMATKgZeLlZXipos5nYVvl/2w==
   dependencies:
     "@psxcode/compose" "^0.1.3"
-    refun "^1.0.0"
-    stili "^1.0.0"
-    tsfn "^1.0.0"
+    refun "^2.0.0"
+    stili "^2.0.0"
+    tsfn "^1.1.0"
 
 "@primitives/svg@^1.0.0":
   version "1.0.1"
@@ -12576,6 +12576,13 @@ stili@^1.0.0:
   integrity sha512-TpgV9o0MgbhtXRN5ZFnOF/Ltu+Dd+QNO7/B8Ydh8WlMOch4qPF/EVR4RyKt/S3tv9MC8YaTAtbp+kCTI9xCehA==
   dependencies:
     tsfn "^1.0.0"
+
+stili@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/stili/-/stili-2.0.0.tgz#5f67500006b751b81d9e7cd2a32b7ab5c3e5a6b2"
+  integrity sha512-dFc507bJxE/kYYc/jRlKZyYuCJwNoI4xPom6KdU2SExoOKxybY1pO9t7p8DpmUE7Ewkp+Ux4ZxIHYQm566thnA==
+  dependencies:
+    tsfn "^1.1.0"
 
 stream-browserify@^2.0.1:
   version "2.0.2"
