@@ -6,7 +6,7 @@ import { actionError } from '../actions'
 import { apiLoadMeta } from '../api/load-meta'
 import { TRect } from '../types'
 import { Block } from './Block'
-import { Text } from './Text'
+import { SourceCode } from './SourceCode'
 
 export type TMeta = TRect & {
   id: string,
@@ -24,7 +24,7 @@ export const Meta = component(
 
       props.current.setState(meta)
     } catch (err) {
-      console.log(err)
+      console.error(err)
       props.current.dispatch(actionError(err.message))
     }
   }, [])
@@ -42,14 +42,7 @@ export const Meta = component(
       shouldScrollX
       shouldScrollY
     >
-      <Text
-        fontFamily="monospace"
-        fontSize={14}
-        lineHeight={18}
-        shouldPreserveWhitespace
-      >
-        {JSON.stringify(state)}
-      </Text>
+      <SourceCode source={state}/>
     </Block>
   )
 })

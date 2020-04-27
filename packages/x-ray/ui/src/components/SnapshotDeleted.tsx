@@ -32,7 +32,7 @@ export const SnapshotDeleted = pureComponent(
 
       props.current.setState(lines)
     } catch (err) {
-      console.log(err)
+      console.error(err)
       props.current.dispatch(actionError(err.message))
     }
   }, []),

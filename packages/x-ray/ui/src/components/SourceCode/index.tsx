@@ -1,28 +1,20 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { component, startWithType } from 'refun'
 import { TLineElement } from 'syntx'
-import { TRect } from '../../types'
 import { Block } from '../Block'
 import { LineElement } from './LineElement'
 import { LINE_HEIGHT } from './constants'
 
 export type TSyntxLines = TLineElement[][]
 
-export type TSourceCode = TRect & {
+export type TSourceCode = {
   source: TSyntxLines,
 }
 
 export const SourceCode = component(
   startWithType<TSourceCode>()
-)(({ top, left, width, height, source }) => (
-  <Block
-    top={top}
-    left={left}
-    width={width}
-    height={height}
-    shouldScrollX
-    shouldScrollY
-  >
+)(({ source }) => (
+  <Fragment>
     <Block height={source.length * LINE_HEIGHT} shouldFlow/>
     {source.map((line, i) => (
       <Block
@@ -40,7 +32,7 @@ export const SourceCode = component(
         ))}
       </Block>
     ))}
-  </Block>
+  </Fragment>
 ))
 
 SourceCode.displayName = 'SourceCode'

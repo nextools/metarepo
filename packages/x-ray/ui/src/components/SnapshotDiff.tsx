@@ -76,7 +76,7 @@ export const SnapshotDiff = pureComponent(
 
       props.current.setState(linesDiff)
     } catch (err) {
-      console.log(err)
+      console.error(err)
       props.current.dispatch(actionError(err.message))
     }
   }, []),
