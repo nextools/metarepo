@@ -1739,13 +1739,13 @@
     stili "^1.0.0"
     tsfn "^1.0.0"
 
-"@primitives/root@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@primitives/root/-/root-1.0.0.tgz#1907a51049421897a240fc2fa3b7498856df2bba"
-  integrity sha512-6Dgx9OWagRNkRvAUQQunlUZCnfgx6sFe0cBw1b5R0SeKT4OkSyvjeSzo24ZxR1vmnQ/HjdqLR80czjRwDUaMMQ==
+"@primitives/root@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/root/-/root-2.0.0.tgz#a62fdd895d91bc9ca14a515610d17822d5faf7e3"
+  integrity sha512-zJnRnd+4MShHXOLYrxFsl7nDAPeVv+14brbJ7RwORhMzsfAQpg95xwa0n/ZjO+ESl87BTFMkb2pXxT9yc1eoRg==
   dependencies:
-    refun "^1.0.0"
-    stili "^1.0.0"
+    refun "^2.0.0"
+    stili "^2.0.0"
 
 "@primitives/size@^1.0.0":
   version "1.0.0"
@@ -12576,6 +12576,13 @@ stili@^1.0.0:
   integrity sha512-TpgV9o0MgbhtXRN5ZFnOF/Ltu+Dd+QNO7/B8Ydh8WlMOch4qPF/EVR4RyKt/S3tv9MC8YaTAtbp+kCTI9xCehA==
   dependencies:
     tsfn "^1.0.0"
+
+stili@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/stili/-/stili-2.0.0.tgz#5f67500006b751b81d9e7cd2a32b7ab5c3e5a6b2"
+  integrity sha512-dFc507bJxE/kYYc/jRlKZyYuCJwNoI4xPom6KdU2SExoOKxybY1pO9t7p8DpmUE7Ewkp+Ux4ZxIHYQm566thnA==
+  dependencies:
+    tsfn "^1.1.0"
 
 stream-browserify@^2.0.1:
   version "2.0.2"
