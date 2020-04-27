@@ -1709,14 +1709,14 @@
     colorido "^1.0.0"
     refun "^1.0.0"
 
-"@primitives/button@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@primitives/button/-/button-1.0.0.tgz#fc303e2daa3556db212d779f390ca04c5ba6461e"
-  integrity sha512-UN44+f5HcIt+oZMMn2SnB2fD4BAsxBAbaGa3FZpAqDbdTJtnbWhJy3taxsPLpRfUvu1Y/g3JzWTGRg7gHk4/rw==
+"@primitives/button@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/button/-/button-2.0.0.tgz#d2f789b82336d3f4c05cc7564395ca9619e96307"
+  integrity sha512-hoG+CTO5YxamrpnUtwFm0S9ahay0rg/0rOTlxCwrzMxtvlvSNumnaFjFP5oEK9NOYs7KPtKjio+PBYb+bM3Eug==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    refun "^1.0.0"
-    stili "^1.0.0"
+    refun "^2.0.0"
+    stili "^2.0.0"
 
 "@primitives/checkbox@^1.0.0":
   version "1.0.0"
@@ -12576,6 +12576,13 @@ stili@^1.0.0:
   integrity sha512-TpgV9o0MgbhtXRN5ZFnOF/Ltu+Dd+QNO7/B8Ydh8WlMOch4qPF/EVR4RyKt/S3tv9MC8YaTAtbp+kCTI9xCehA==
   dependencies:
     tsfn "^1.0.0"
+
+stili@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/stili/-/stili-2.0.0.tgz#5f67500006b751b81d9e7cd2a32b7ab5c3e5a6b2"
+  integrity sha512-dFc507bJxE/kYYc/jRlKZyYuCJwNoI4xPom6KdU2SExoOKxybY1pO9t7p8DpmUE7Ewkp+Ux4ZxIHYQm566thnA==
+  dependencies:
+    tsfn "^1.1.0"
 
 stream-browserify@^2.0.1:
   version "2.0.2"
