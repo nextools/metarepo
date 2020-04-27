@@ -3,7 +3,7 @@ import _Module from 'module'
 export const Module = _Module as unknown as TModule
 
 export type TModule = {
-  _cache: NodeJS.NodeRequireCache,
+  _cache: NodeJS.Require['cache'],
   _load: (request: string, parent: NodeModule, isMain: boolean) => any,
   prototype: {
     _compile: (content: string, filename: string) => void,
