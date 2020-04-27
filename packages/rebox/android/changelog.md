@@ -1,3 +1,11 @@
+## v2.0.5
+
+* 🐞 upgrade Haul deps to v0.19
+
+* 🐞 upgrade `move-file` to v4
+
+* ♻️ update dependencies `rn-fonts`, `@rebox/native-utils`
+
 ## v2.0.4
 
 * 🐞 upgrade React Native to 0.62.2

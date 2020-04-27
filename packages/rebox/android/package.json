@@ -1,6 +1,6 @@
 {
   "name": "@rebox/android",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Set of helpers to deal with React Native applications on Android",
   "keywords": [
     "react",
