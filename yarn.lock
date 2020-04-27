@@ -1679,14 +1679,14 @@
     "@babel/runtime" "^7.1.2"
     tsfn "^1.0.0"
 
-"@primitives/background@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@primitives/background/-/background-1.0.0.tgz#f47390bed81b54248036f4e50b186aaa693c347a"
-  integrity sha512-pU1l/siPd6AC/eQpSs9iZDpX7AUxeKJK7YozRHO5ldr0m1nX/NJWlaOWcDojHHboU7wLS8owX1F8RzMpQ+IBUA==
+"@primitives/background@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/background/-/background-2.0.0.tgz#3b225bb08dc93411bcb9dd727afd927e5e70afd6"
+  integrity sha512-JlvTPuBEAoUcE8VpyK7JXlyyVX8QF1h8CQDTFX65x5PUAShLd4gRuq2JI7dh9ii+RL0D5LISqX5xyNnxfFNwlQ==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@primitives/block" "^1.0.0"
-    "@themeables/background" "^1.0.0"
+    "@primitives/block" "^2.0.0"
+    "@themeables/background" "^2.0.0"
     colorido "^1.0.0"
 
 "@primitives/block@^1.0.0":
@@ -1697,6 +1697,15 @@
     refun "^1.0.0"
     stili "^1.0.0"
     tsfn "^1.0.0"
+
+"@primitives/block@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/block/-/block-2.0.0.tgz#c9f1f77f07dab09e028f87bce7f9557df5b4b9f8"
+  integrity sha512-Twg+UnVSIUjGDxkgVsL/XSfMMqUEJWWUsafELPYPCjzXuIByHdniH90AlqdoTevqxNRjAlrYkzQ3hUI1hVsbNA==
+  dependencies:
+    refun "^2.0.0"
+    stili "^2.0.0"
+    tsfn "^1.1.0"
 
 "@primitives/border@^1.0.0":
   version "1.0.0"
@@ -1904,13 +1913,13 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
-"@themeables/background@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@themeables/background/-/background-1.0.1.tgz#f0b916821003ae5f2e765571d65c7ae02050b3f3"
-  integrity sha512-Zy9J8WSBuUH9QV9KaKM6kK1Ao1SLot2v2He8fF0u8xZ5HDDVybLP8tPUkMx/OSpX6n1JbjqxFB+JS6jOaFyDiA==
+"@themeables/background@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@themeables/background/-/background-2.0.0.tgz#72e56a791c9fe81edf036cf55a0c82e2749acfdf"
+  integrity sha512-k/n7qkhe6YddRm0tUHdcWS1Vhk5ZJOhRTpq8V1nsqLhTq1TcPlNI7hWmdjmzwHqQKwHx/G8MwElwCF/5jCCeKQ==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@themeables/core" "^1.0.0"
+    "@themeables/core" "^2.0.0"
     colorido "^1.0.0"
 
 "@themeables/border@^1.0.0":
@@ -1929,6 +1938,14 @@
   dependencies:
     "@babel/runtime" "^7.1.2"
     refun "^1.0.0"
+
+"@themeables/core@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@themeables/core/-/core-2.0.0.tgz#530012f80d99dfcf464309ae84a63e3a1f261192"
+  integrity sha512-YfASoC80nKG8uQ38zQUx6umWxr7OMWKwoBuI2mjqwytX4AUVIrxNWiHy5xxlvTvl7A64I3hR5qK6m2W6xsHL5w==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    refun "^2.0.0"
 
 "@themeables/image@^1.0.0":
   version "1.0.1"
@@ -12576,6 +12593,13 @@ stili@^1.0.0:
   integrity sha512-TpgV9o0MgbhtXRN5ZFnOF/Ltu+Dd+QNO7/B8Ydh8WlMOch4qPF/EVR4RyKt/S3tv9MC8YaTAtbp+kCTI9xCehA==
   dependencies:
     tsfn "^1.0.0"
+
+stili@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/stili/-/stili-2.0.0.tgz#5f67500006b751b81d9e7cd2a32b7ab5c3e5a6b2"
+  integrity sha512-dFc507bJxE/kYYc/jRlKZyYuCJwNoI4xPom6KdU2SExoOKxybY1pO9t7p8DpmUE7Ewkp+Ux4ZxIHYQm566thnA==
+  dependencies:
+    tsfn "^1.1.0"
 
 stream-browserify@^2.0.1:
   version "2.0.2"
