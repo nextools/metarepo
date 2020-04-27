@@ -2,7 +2,7 @@ import { parentPort } from 'worker_threads'
 import { TTarFs, TarFs } from '@x-ray/tar-fs'
 import { access } from 'pifs'
 import { TJsonValue } from 'typeon'
-import { getTarFilePath, TFileResults } from '@x-ray/core'
+import { getTarFilePath, TExampleResults } from '@x-ray/core'
 import { hasScreenshotDiff } from './has-screenshot-diff'
 import { bufferToPng } from './buffer-to-png'
 import { ApplyDpr } from './apply-dpr'
@@ -15,7 +15,7 @@ export const check = (options: TCheckOptions) => {
   const applyDpr = ApplyDpr(options.dpr)
   let tarFs = null as null | TTarFs
   let transferList = [] as ArrayBuffer[]
-  const results: TFileResults<Buffer> = new Map()
+  const results: TExampleResults<Buffer> = new Map()
   const status = {
     ok: 0,
     new: 0,

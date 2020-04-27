@@ -1,10 +1,6 @@
 import { reduce, toArray, map } from 'iterama'
 import { pipe } from 'funcom'
-import { TListItems, TTotalResults, TResultsType, TEncoding } from '../types'
-
-// type TIterableType<T> = T extends Iterable<infer R> ? R : never
-// type TMapKey<T> = T extends Map<infer R, any> ? R : never
-type TMapValue<T> = T extends Map<any, infer R> ? R : never
+import { TListItems, TTotalResults, TResultsType, TEncoding, TFileResults } from '../types'
 
 export type TGetListOptions = {
   results: TTotalResults<TResultsType>,
@@ -19,11 +15,11 @@ export type TListResponse = {
 
 export const getList = (options: TGetListOptions): TListResponse => {
   const shortKeys = pipe(
-    map((value: TMapValue<TTotalResults<TResultsType>>) => value.name),
+    map((value: TFileResults<TResultsType>) => value.name),
     toArray
   )(options.results.values())
 
-  const items = reduce((acc, fileResults: TMapValue<TTotalResults<TResultsType>>) => {
+  const items = reduce((acc, fileResults: TFileResults<TResultsType>) => {
     for (const [exampleId, exampleResult] of fileResults.results) {
       const key = `${fileResults.name}::${exampleId}`
 

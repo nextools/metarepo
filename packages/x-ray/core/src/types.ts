@@ -55,18 +55,20 @@ export type TExampleResult<T> = {
   meta?: TJsonValue,
 }
 
-export type TFileResults<T> = Map<string, TExampleResult<T>>
+export type TExampleResults<T> = Map<string, TExampleResult<T>>
 
-export type TTotalResults<T> = Map<string, {
+export type TFileResults<T> = {
   name: string,
-  results: TFileResults<T>,
+  results: TExampleResults<T>,
   status: {
     ok: number,
     new: number,
     diff: number,
     deleted: number,
   },
-}>
+}
+
+export type TTotalResults<T> = Map<string, TFileResults<T>>
 
 export type TItem = {
   type: 'DELETED',

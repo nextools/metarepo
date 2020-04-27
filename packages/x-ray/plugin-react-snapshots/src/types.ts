@@ -1,4 +1,4 @@
-import { TFileResults } from '@x-ray/core'
+import { TExampleResults } from '@x-ray/core'
 
 export type TCheckOptions = {
   shouldBailout: boolean,
@@ -6,7 +6,7 @@ export type TCheckOptions = {
 
 export type TWorkerResult<T> = [string, {
   name: string,
-  results: TFileResults<T>,
+  results: TExampleResults<T>,
   status: {
     ok: number,
     new: number,
