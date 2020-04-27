@@ -12590,6 +12590,13 @@ stili@^1.0.0:
   dependencies:
     tsfn "^1.0.0"
 
+stili@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/stili/-/stili-2.0.0.tgz#5f67500006b751b81d9e7cd2a32b7ab5c3e5a6b2"
+  integrity sha512-dFc507bJxE/kYYc/jRlKZyYuCJwNoI4xPom6KdU2SExoOKxybY1pO9t7p8DpmUE7Ewkp+Ux4ZxIHYQm566thnA==
+  dependencies:
+    tsfn "^1.1.0"
+
 stream-browserify@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/stream-browserify/-/stream-browserify-2.0.2.tgz#87521d38a44aa7ee91ce1cd2a47df0cb49dd660b"
