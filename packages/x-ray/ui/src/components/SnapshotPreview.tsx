@@ -1,23 +1,23 @@
 import React from 'react'
-import { component, startWithType, mapState, mapContext, onUpdateAsync } from 'refun'
-import { PrimitiveText as Text } from '@revert/text'
-import { LayoutContext } from '@revert/layout'
-import { PrimitiveBlock as Block } from '@revert/block'
-import { TSnapshotGridItem } from '../types'
+import { component, startWithType, mapState, onUpdateAsync } from 'refun'
+import { Text } from '@primitives/text'
+import { TRect, TSnapshotGridItem } from '../types'
 import { mapStoreDispatch } from '../store'
 import { apiLoadSnapshot } from '../api'
 import { actionError } from '../actions'
+// import { COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED } from '../config'
+import { Block } from './Block'
+// import { Background } from './Background'
 
 const LINE_HEIGHT = 18
 const CHAR_WIDTH = 8.39
 
-export type TSnapshotPreview = {
+export type TSnapshotPreview = TRect & {
   item: TSnapshotGridItem,
 }
 
 export const SnapshotPreview = component(
   startWithType<TSnapshotPreview>(),
-  mapContext(LayoutContext),
   mapStoreDispatch('dispatch'),
   mapState('state', 'setState', () => null as string[] | null, []),
   onUpdateAsync((props) => function *() {
@@ -34,18 +34,19 @@ export const SnapshotPreview = component(
       props.current.dispatch(actionError(err.message))
     }
   }, [])
-)(({ _top, _left, _width, _height, state, item }) => {
+)(({ top, left, width, height, state, item }) => {
   if (state === null) {
     return null
   }
 
   return (
     <Block
-      top={_top}
-      left={_left}
-      width={_width}
-      height={_height}
-      shouldScroll
+      top={top}
+      left={left}
+      width={width}
+      height={height}
+      shouldScrollX
+      shouldScrollY
     >
       <Block height={state.length * LINE_HEIGHT}/>
       {state.map((line, i) => (

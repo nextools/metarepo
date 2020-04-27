@@ -1,14 +1,13 @@
 import React, { ReactNode } from 'react'
-import { pureComponent, startWithType, mapHandlers, mapWithPropsMemo, mapContext } from 'refun'
+import { pureComponent, startWithType, mapHandlers, mapWithPropsMemo } from 'refun'
 import bsc from 'bsc'
-import { PrimitiveBorder as Border } from '@revert/border'
+import { Border } from '@primitives/border'
 import { isUndefined } from 'tsfn'
-import { LayoutContext } from '@revert/layout'
-import { PrimitiveBlock as Block } from '@revert/block'
 import { TListItems } from '@x-ray/core'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectSnapshot } from '../../actions'
-import { TSnapshotGridItem } from '../../types'
+import { TSnapshotGridItem, TRect } from '../../types'
+import { Block } from '../Block'
 import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT, BORDER_SIZE, COLOR_BLACK, SNAPSHOT_GRID_MAX_LINES } from '../../config'
 import { SnapshotNew } from '../SnapshotNew'
 import { SnapshotDiff } from '../SnapshotDiff'
@@ -17,7 +16,7 @@ import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 import { Pointer } from './Pointer'
 
-export type TSnapshotGrid = {
+export type TSnapshotGrid = TRect & {
   items: TListItems,
   discardedItems: string[],
   filteredFiles: string[],
@@ -25,11 +24,10 @@ export type TSnapshotGrid = {
 
 export const SnapshotGrid = pureComponent(
   startWithType<TSnapshotGrid>(),
-  mapContext(LayoutContext),
   mapStoreDispatch('dispatch'),
-  mapWithPropsMemo(({ _width, items, filteredFiles }) => {
-    const colCount = Math.max(1, Math.floor((_width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
-    const gridWidth = (_width - (COL_SPACE * (colCount + 1))) / colCount
+  mapWithPropsMemo(({ width, items, filteredFiles }) => {
+    const colCount = Math.max(1, Math.floor((width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
+    const gridWidth = (width - (COL_SPACE * (colCount + 1))) / colCount
     const top = new Array(colCount).fill(0)
     const cols: TSnapshotGridItem[][] = new Array(colCount)
       .fill(0)
@@ -80,10 +78,10 @@ export const SnapshotGrid = pureComponent(
       cols,
       maxHeight: top[maxIndex],
     }
-  }, ['_width', 'items', 'filteredFiles']),
+  }, ['width', 'items', 'filteredFiles']),
   mapScrollState(),
   mapHandlers({
-    onPress: ({ _top, dispatch, scrollTop, cols }) => (x: number, y: number) => {
+    onPress: ({ top, dispatch, scrollTop, cols }) => (x: number, y: number) => {
       for (let colIndex = 0; colIndex < cols.length; ++colIndex) {
         const firstItem = cols[colIndex][0]
 
@@ -108,7 +106,7 @@ export const SnapshotGrid = pureComponent(
 
           dispatch(actionSelectSnapshot({
             ...item,
-            top: item.top - scrollTop + _top,
+            top: item.top - scrollTop + top,
           }))
         }
       }
@@ -118,20 +116,20 @@ export const SnapshotGrid = pureComponent(
   cols,
   discardedItems,
   maxHeight,
-  _top,
-  _left,
-  _width,
-  _height,
+  top,
+  left,
+  width,
+  height,
   scrollTop,
   prevScrollTop,
   onScroll,
   onPress,
 }) => (
   <Pointer
-    top={_top}
-    left={_left}
-    width={_width}
-    height={_height}
+    top={top}
+    left={left}
+    width={width}
+    height={height}
     onScroll={onScroll}
     onPress={onPress}
   >
@@ -139,8 +137,8 @@ export const SnapshotGrid = pureComponent(
     {cols.reduce((result, col) => (
       result.concat(
         col.map((item: TSnapshotGridItem) => {
-          const isVisible = isVisibleItem(item, scrollTop, _height)
-          const isNew = prevScrollTop !== null && ((item.top + item.gridHeight < prevScrollTop) || (item.top > prevScrollTop + _height))
+          const isVisible = isVisibleItem(item, scrollTop, height)
+          const isNew = prevScrollTop !== null && ((item.top + item.gridHeight < prevScrollTop) || (item.top > prevScrollTop + height))
 
           if (isVisible && isNew) {
             return (
@@ -153,7 +151,10 @@ export const SnapshotGrid = pureComponent(
               >
                 <Border
                   color={COLOR_BLACK}
-                  borderWidth={BORDER_SIZE}
+                  topWidth={BORDER_SIZE}
+                  leftWidth={BORDER_SIZE}
+                  rightWidth={BORDER_SIZE}
+                  bottomWidth={BORDER_SIZE}
                 />
               </Block>
             )

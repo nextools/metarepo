@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
 import { startWithType, pureComponent } from 'refun'
 import { TOmitKey } from 'tsfn'
-import { PrimitiveBorder as Border } from '@revert/border'
-import { PrimitiveBlock as Block } from '@revert/block'
 import { TPosition } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
 import { COLOR_BORDER_DELETED, COLOR_BORDER_NEW, DISCARD_ALPHA, BORDER_SIZE } from '../config'
 import { Screenshot } from './Screenshot'
+import { Block } from './Block'
+import { Border } from './Border'
 
 export type TScreenshotDiff = TPosition & TOmitKey<TApiLoadScreenshotOpts, 'type'> & {
   oldWidth: number,
@@ -49,7 +49,10 @@ export const ScreenshotDiff = pureComponent(
         />
       </Block>
       <Border
-        borderWidth={BORDER_SIZE}
+        topWidth={BORDER_SIZE}
+        leftWidth={BORDER_SIZE}
+        rightWidth={BORDER_SIZE}
+        bottomWidth={BORDER_SIZE}
         color={COLOR_BORDER_DELETED}
       />
     </Block>
@@ -69,7 +72,10 @@ export const ScreenshotDiff = pureComponent(
         />
       </Block>
       <Border
-        borderWidth={BORDER_SIZE}
+        topWidth={BORDER_SIZE}
+        leftWidth={BORDER_SIZE}
+        rightWidth={BORDER_SIZE}
+        bottomWidth={BORDER_SIZE}
         color={COLOR_BORDER_NEW}
       />
     </Block>

@@ -1,20 +1,19 @@
 import React from 'react'
-import { component, startWithType, mapState, onUpdateAsync, mapContext } from 'refun'
-import { PrimitiveText as Text } from '@revert/text'
-import { PrimitiveBlock as Block } from '@revert/block'
-import { LayoutContext } from '@revert/layout'
+import { component, startWithType, mapState, onUpdateAsync } from 'refun'
 import { TJsonValue } from 'typeon'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
 import { apiLoadMeta } from '../api/load-meta'
+import { TRect } from '../types'
+import { Block } from './Block'
+import { Text } from './Text'
 
-export type TMeta = {
+export type TMeta = TRect & {
   id: string,
 }
 
 export const Meta = component(
   startWithType<TMeta>(),
-  mapContext(LayoutContext),
   mapStoreDispatch('dispatch'),
   mapState('state', 'setState', () => null as TJsonValue | null, []),
   onUpdateAsync((props) => function *() {
@@ -29,18 +28,19 @@ export const Meta = component(
       props.current.dispatch(actionError(err.message))
     }
   }, [])
-)(({ _top, _left, _width, _height, state }) => {
+)(({ top, left, width, height, state }) => {
   if (state === null) {
     return null
   }
 
   return (
     <Block
-      top={_top}
-      left={_left}
-      width={_width}
-      height={_height}
-      shouldScroll
+      top={top}
+      left={left}
+      width={width}
+      height={height}
+      shouldScrollX
+      shouldScrollY
     >
       <Text
         fontFamily="monospace"

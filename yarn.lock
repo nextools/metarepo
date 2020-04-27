@@ -1679,6 +1679,66 @@
     "@babel/runtime" "^7.1.2"
     tsfn "^1.0.0"
 
+"@primitives/background@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/background/-/background-1.0.0.tgz#f47390bed81b54248036f4e50b186aaa693c347a"
+  integrity sha512-pU1l/siPd6AC/eQpSs9iZDpX7AUxeKJK7YozRHO5ldr0m1nX/NJWlaOWcDojHHboU7wLS8owX1F8RzMpQ+IBUA==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@primitives/block" "^1.0.0"
+    "@themeables/background" "^1.0.0"
+    colorido "^1.0.0"
+
+"@primitives/block@^1.0.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@primitives/block/-/block-1.1.0.tgz#8d67db5a17bb5c5cc95cf8f7ba4c389a8880f977"
+  integrity sha512-dsV7t1MoNGvJ6w5YLX5jW0nIEaubKpgQjp9TaebyxR3pUBpiohELuCE7+6jW2pqkQlwCV4QGOznJMJkrlJWnnw==
+  dependencies:
+    refun "^1.0.0"
+    stili "^1.0.0"
+    tsfn "^1.0.0"
+
+"@primitives/border@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/border/-/border-1.0.0.tgz#4f767e1545bc6ab46cbb7c83c4488cebcca69719"
+  integrity sha512-bdtLKjBcfAYfQ4ZRWI+E4x6fgv74GMPtsKXAq47O5jOUjjhBKkaVxX/naCAZNG8zfjBYG41sSmXzWx7Yd59fpg==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@primitives/block" "^1.0.0"
+    "@themeables/border" "^1.0.0"
+    colorido "^1.0.0"
+    refun "^1.0.0"
+
+"@primitives/button@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/button/-/button-1.0.0.tgz#fc303e2daa3556db212d779f390ca04c5ba6461e"
+  integrity sha512-UN44+f5HcIt+oZMMn2SnB2fD4BAsxBAbaGa3FZpAqDbdTJtnbWhJy3taxsPLpRfUvu1Y/g3JzWTGRg7gHk4/rw==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    refun "^1.0.0"
+    stili "^1.0.0"
+
+"@primitives/checkbox@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/checkbox/-/checkbox-1.0.0.tgz#9bc126f767869f2c6010a6a44a82a03d5856697a"
+  integrity sha512-wk6H+P+x4np+9oh4orduTippmWz043SIG3I5vguu8lUVU5L/yHI2za3/1FnAYEGaNkDrx+9CtItdJCZYxNEbww==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@primitives/block" "^1.0.0"
+    refun "^1.0.0"
+    stili "^1.0.0"
+
+"@primitives/image@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/image/-/image-1.0.0.tgz#e227612de9f587614184c7c1cb3a7ecad4b52ff5"
+  integrity sha512-ZcR7F+fSUX8rF3f066At+K9SE8faHXOT5WJJOVpQe5IktywykWJCLjjJKzjXRlNMIVoTRGytJUp5Dl+d4Ae/6Q==
+  dependencies:
+    "@psxcode/compose" "^0.1.3"
+    "@themeables/image" "^1.0.0"
+    refun "^1.0.0"
+    stili "^1.0.0"
+    tsfn "^1.0.0"
+
 "@primitives/root@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@primitives/root/-/root-1.0.0.tgz#1907a51049421897a240fc2fa3b7498856df2bba"
@@ -1686,6 +1746,34 @@
   dependencies:
     refun "^1.0.0"
     stili "^1.0.0"
+
+"@primitives/size@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/size/-/size-1.0.0.tgz#2e6c649a505943d8f37bd1fe198927b576887221"
+  integrity sha512-w2pdu6h/OtSALXIccf9zfpL/sKcbqCKkUuVlMp52kJj68zfaKo67wy7FXzwxNY9nLKSTtrvz36708vCPJWvk8g==
+  dependencies:
+    "@psxcode/compose" "^0.1.3"
+    refun "^1.0.0"
+    stili "^1.0.0"
+    tsfn "^1.0.0"
+
+"@primitives/svg@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@primitives/svg/-/svg-1.0.1.tgz#321e2fe63b09d0e8cfa13a4394b2ce82fdd30af0"
+  integrity sha512-shogR8NLCq5TWdVo/WSUflBC2+2lZBt+lFvu4+JLhT1dmO6ut4ToeSKQnOEmNgNJo2/GeHAdHvCo52n3fKsgpg==
+  dependencies:
+    react-native-svg "^11.0.1"
+
+"@primitives/text@^1.0.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@primitives/text/-/text-1.1.0.tgz#3507a151dc90067f6d11d003671ae951a9596638"
+  integrity sha512-VjjS9tHPaJvn82F1C2gNhq9LHr5y7UAOob5iw9i3C50rFC1UeejyCuvvGA8Kd6l8GOxko3JdyC0YpuuqOpNQXA==
+  dependencies:
+    "@themeables/text" "^1.0.0"
+    colorido "^1.0.0"
+    refun "^1.0.0"
+    stili "^1.0.0"
+    tsfn "^1.0.0"
 
 "@psxcode/compose@^0.1.3":
   version "0.1.4"
@@ -1815,6 +1903,51 @@
   integrity sha512-PyRA9sm1Yayuj5OIoJ1hGt2YISX45w9WcFbh6ddT0Z/0yaFxOtGLInr4jUfU1EAFVs0Yfyfev4RNwBlUaHdlDQ==
   dependencies:
     defer-to-connect "^2.0.0"
+
+"@themeables/background@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@themeables/background/-/background-1.0.1.tgz#f0b916821003ae5f2e765571d65c7ae02050b3f3"
+  integrity sha512-Zy9J8WSBuUH9QV9KaKM6kK1Ao1SLot2v2He8fF0u8xZ5HDDVybLP8tPUkMx/OSpX6n1JbjqxFB+JS6jOaFyDiA==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@themeables/core" "^1.0.0"
+    colorido "^1.0.0"
+
+"@themeables/border@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@themeables/border/-/border-1.0.1.tgz#0c6cace94eed43ba59a1d33542ddbaf1fc3c6a7e"
+  integrity sha512-U95P7Nin+KM3p8KzSaDebUC7bHcSS9dtJIQwyQHsKUulan7ZMYrwxgJoQsE9A1ykBOeteUaSpAqQTF+E/7BSBQ==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@themeables/core" "^1.0.0"
+    colorido "^1.0.0"
+
+"@themeables/core@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@themeables/core/-/core-1.0.0.tgz#713d67eba41ba84c87e0014f30b3137e115cc696"
+  integrity sha512-oAClRbSUxb5sRwEzQOt9cuou7QRZcqxtyYs5G+U097rNqNSwzUrldwJf3QS1a+GQ+L/UqKl1KevKQlkHqoaE3A==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    refun "^1.0.0"
+
+"@themeables/image@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@themeables/image/-/image-1.0.1.tgz#7210bb8d8b9713abf7ec98bba95bdfa70a17d90c"
+  integrity sha512-SanM3jYo4jsUaIZjz9jMlomgwv5WzTJ49yvLYgpqk79D6/SQT9wWRjpDGabiE0IHrXQToBzvonyiYDMsUoRcHA==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@themeables/core" "^1.0.0"
+
+"@themeables/text@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@themeables/text/-/text-1.0.1.tgz#4f8118514bc0a167a2f2f4b390484d7d20d52970"
+  integrity sha512-J/4Szq44Aq1/Gn/4fQ4+53sgjwGbDm1D/vnlcIBcgp9pJUIr6Kvgo/CdBq3++coU0THEojv4kuTQjmh18UuiCw==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    "@primitives/text" "^1.0.0"
+    "@themeables/core" "^1.0.0"
+    colorido "^1.0.0"
+    stili "^1.0.0"
 
 "@types/anymatch@*":
   version "1.3.1"
@@ -2221,7 +2354,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-native@0.62.2", "@types/react-native@^0.62.0":
+"@types/react-native@^0.62.0":
   version "0.62.2"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.62.2.tgz#f3e150f308c27089cefbcbfa3eb6cc14db279b2f"
   integrity sha512-oIUIbqZNN9vRnGKWHYbTVp/GyTqdaM5mfy1s4zsi6BYvHAaFOPZ32IrhIHno/A5XOv4wuGfE7g5fliDk/H0+/Q==
@@ -4225,7 +4358,7 @@ colorette@^1.0.7:
   resolved "https://registry.yarnpkg.com/colorette/-/colorette-1.1.0.tgz#1f943e5a357fac10b4e0f5aaef3b14cdc1af6ec7"
   integrity sha512-6S062WDQUXi6hOfkO/sBPVwE5ASXY4G2+b4atvhJfSsuUUhIaUKlkjLe9692Ipyt5/a+IPF5aVTu3V5gvXq5cg==
 
-colorido@^1.0.1:
+colorido@^1.0.0, colorido@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/colorido/-/colorido-1.0.1.tgz#15149e585b4a49c125e7fa88e502c779d4ecc8ac"
   integrity sha512-juLrxBmaLcFgBZxiJJ54+LKBfeAxguC/J5cZLclg26lfcVC442cwEOJ5JLp02abJE399pfUJNKzjWJ73BHwjmg==
@@ -5271,13 +5404,6 @@ electron-to-chromium@^1.3.390:
   version "1.3.408"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.408.tgz#e6a3a2b8f87c875dfd6e16501abe7a28f079bbb3"
   integrity sha512-vn1zWIxIdyl0MR72lr81/7kHYTRlDRjJT4ocp8dtb85VhH46J3lNqDMEBljAKPKgguqjK0+WAbf3IL6ZKw72kQ==
-
-elegir@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/elegir/-/elegir-1.0.0.tgz#56852da06fa82b90ec7139a84c4a8e43da17b18d"
-  integrity sha512-YMwZzVQABwukSPWgriP4yPhKApgD69WMJaXslIzIaZm1s05mNDTZ+ot/98umvunAOHKIlFCXtCz4j1VWHu8Qzw==
-  dependencies:
-    "@babel/runtime" "^7.4.3"
 
 elliptic@^6.0.0:
   version "6.5.2"
@@ -12428,7 +12554,7 @@ stealthy-require@^1.1.1:
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
 
-stili@^1.0.0, stili@^1.0.1, stili@^1.1.0:
+stili@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/stili/-/stili-1.1.0.tgz#d7d1e606e53249fd29c5667a780cf1fe48a07045"
   integrity sha512-TpgV9o0MgbhtXRN5ZFnOF/Ltu+Dd+QNO7/B8Ydh8WlMOch4qPF/EVR4RyKt/S3tv9MC8YaTAtbp+kCTI9xCehA==

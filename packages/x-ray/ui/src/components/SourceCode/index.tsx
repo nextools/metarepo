@@ -1,8 +1,8 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
-import { PrimitiveBlock as Block } from '@revert/block'
 import { TLineElement } from 'syntx'
 import { TRect } from '../../types'
+import { Block } from '../Block'
 import { LineElement } from './LineElement'
 import { LINE_HEIGHT } from './constants'
 
@@ -20,7 +20,8 @@ export const SourceCode = component(
     left={left}
     width={width}
     height={height}
-    shouldScroll
+    shouldScrollX
+    shouldScrollY
   >
     <Block height={source.length * LINE_HEIGHT} shouldFlow/>
     {source.map((line, i) => (
@@ -30,6 +31,7 @@ export const SourceCode = component(
         top={i * LINE_HEIGHT}
         right={0}
         height={LINE_HEIGHT}
+        shouldPreventWrap
       >
         {line.map((element, i) => (
           <LineElement key={i} type={element.type}>

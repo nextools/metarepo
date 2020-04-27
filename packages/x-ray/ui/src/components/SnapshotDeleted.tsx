@@ -1,8 +1,5 @@
 import React from 'react'
 import { startWithType, mapState, mapWithPropsMemo, pureComponent, onUpdateAsync } from 'refun'
-import { PrimitiveText as Text } from '@revert/text'
-import { PrimitiveBorder as Border } from '@revert/border'
-import { PrimitiveBlock as Block } from '@revert/block'
 import { apiLoadSnapshot } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
@@ -15,6 +12,9 @@ import {
   BORDER_SIZE,
   SNAPSHOT_GRID_MAX_LINES,
 } from '../config'
+import { Block } from './Block'
+import { Text } from './Text'
+import { Border } from './Border'
 
 export type TSnapshotDeleted = TRect & {
   id: string,
@@ -82,7 +82,10 @@ export const SnapshotDeleted = pureComponent(
       </Block>
     ))}
     <Border
-      borderWidth={BORDER_SIZE}
+      topWidth={BORDER_SIZE}
+      leftWidth={BORDER_SIZE}
+      rightWidth={BORDER_SIZE}
+      bottomWidth={BORDER_SIZE}
       color={COLOR_BORDER_DELETED}
     />
   </Block>

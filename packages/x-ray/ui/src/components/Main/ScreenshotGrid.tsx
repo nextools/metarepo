@@ -1,15 +1,14 @@
 import React, { Fragment, ReactNode } from 'react'
-import { startWithType, mapHandlers, mapWithPropsMemo, pureComponent, mapContext } from 'refun'
+import { startWithType, mapHandlers, mapWithPropsMemo, pureComponent } from 'refun'
 import bsc from 'bsc'
-import { easeInOutCubic, AnimationValue } from '@revert/animation'
-import { PrimitiveBorder as Border } from '@revert/border'
+import { easeInOutCubic, Animation } from '@primitives/animation'
+import { Border } from '@primitives/border'
 import { isUndefined } from 'tsfn'
-import { LayoutContext } from '@revert/layout'
-import { PrimitiveBlock as Block } from '@revert/block'
 import { TListItems } from '@x-ray/core'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectScreenshot } from '../../actions'
-import { TScreenshotGridItem } from '../../types'
+import { TScreenshotGridItem, TRect } from '../../types'
+import { Block } from '../Block'
 import { ScreenshotNew } from '../ScreenshotNew'
 import { ScreenshotDeleted } from '../ScreenshotDeleted'
 import { ScreenshotDiff } from '../ScreenshotDiff'
@@ -19,7 +18,7 @@ import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 import { Pointer } from './Pointer'
 
-export type TScreenshotGrid = {
+export type TScreenshotGrid = TRect & {
   items: TListItems,
   discardedItems: string[],
   filteredFiles: string[],
@@ -28,10 +27,10 @@ export type TScreenshotGrid = {
 
 export const ScreenshotGrid = pureComponent(
   startWithType<TScreenshotGrid>(),
-  mapContext(LayoutContext),
-  mapWithPropsMemo(({ _width, items, filteredFiles }) => {
-    const colCount = Math.max(1, Math.floor((_width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
-    const gridWidth = (_width - (COL_SPACE * (colCount + 1))) / colCount
+  mapStoreDispatch('dispatch'),
+  mapWithPropsMemo(({ width, items, filteredFiles }) => {
+    const colCount = Math.max(1, Math.floor((width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
+    const gridWidth = (width - (COL_SPACE * (colCount + 1))) / colCount
     const top = Array(colCount).fill(0)
     const cols: TScreenshotGridItem[][] = Array.from({ length: colCount }, () => [])
 
@@ -89,11 +88,10 @@ export const ScreenshotGrid = pureComponent(
       cols,
       maxHeight: top[maxIndex],
     }
-  }, ['_width', 'items', 'filteredFiles']),
+  }, ['width', 'items', 'filteredFiles']),
   mapScrollState(),
-  mapStoreDispatch('dispatch'),
   mapHandlers({
-    onPress: ({ _top, dispatch, scrollTop, cols }) => (x: number, y: number) => {
+    onPress: ({ top, dispatch, scrollTop, cols }) => (x: number, y: number) => {
       for (let colIndex = 0; colIndex < cols.length; ++colIndex) {
         const firstItem = cols[colIndex][0]
 
@@ -118,7 +116,7 @@ export const ScreenshotGrid = pureComponent(
 
           dispatch(actionSelectScreenshot({
             ...item,
-            top: item.top - scrollTop + _top,
+            top: item.top - scrollTop + top,
           }))
         }
       }
@@ -129,10 +127,10 @@ export const ScreenshotGrid = pureComponent(
   cols,
   discardedItems,
   maxHeight,
-  _top,
-  _left,
-  _width,
-  _height,
+  top,
+  left,
+  width,
+  height,
   scrollTop,
   prevScrollTop,
   diffState,
@@ -140,22 +138,22 @@ export const ScreenshotGrid = pureComponent(
   onPress,
 }) => (
   <Pointer
-    left={_left}
-    top={_top}
-    width={_width}
-    height={_height}
+    left={left}
+    top={top}
+    width={width}
+    height={height}
     onScroll={onScroll}
     onPress={onPress}
   >
     <Block left={0} top={0} width={0} height={maxHeight} shouldFlow/>
-    <AnimationValue toValue={diffState ? 1 : 0} time={200} easing={easeInOutCubic}>
-      {(alpha) => (
+    <Animation values={[diffState ? 1 : 0]} time={200} easing={easeInOutCubic}>
+      {([alpha]) => (
         <Fragment>
           {cols.reduce((result, col) => (
             result.concat(
               col.map((item: TScreenshotGridItem) => {
-                const isVisible = isVisibleItem(item, scrollTop, _height)
-                const isNew = prevScrollTop !== null && ((item.top + item.gridHeight < prevScrollTop) || (item.top > prevScrollTop + _height))
+                const isVisible = isVisibleItem(item, scrollTop, height)
+                const isNew = prevScrollTop !== null && ((item.top + item.gridHeight < prevScrollTop) || (item.top > prevScrollTop + height))
 
                 if (isVisible && isNew) {
                   return (
@@ -168,7 +166,10 @@ export const ScreenshotGrid = pureComponent(
                     >
                       <Border
                         color={COLOR_BLACK}
-                        borderWidth={BORDER_SIZE}
+                        topWidth={BORDER_SIZE}
+                        leftWidth={BORDER_SIZE}
+                        rightWidth={BORDER_SIZE}
+                        bottomWidth={BORDER_SIZE}
                       />
                     </Block>
                   )
@@ -231,7 +232,7 @@ export const ScreenshotGrid = pureComponent(
           ), [] as ReactNode[])}
         </Fragment>
       )}
-    </AnimationValue>
+    </Animation>
   </Pointer>
 ))
 

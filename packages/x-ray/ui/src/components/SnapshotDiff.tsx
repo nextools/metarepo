@@ -2,10 +2,7 @@ import React from 'react'
 import { startWithType, mapState, mapWithPropsMemo, pureComponent, onUpdateAsync } from 'refun'
 import { isDefined } from 'tsfn'
 import { diffArrays } from 'diff'
-import { PrimitiveText as Text } from '@revert/text'
-import { PrimitiveBackground as Background } from '@revert/background'
-import { PrimitiveBorder as Border } from '@revert/border'
-import { PrimitiveBlock as Block, PrimitiveBlock } from '@revert/block'
+import { Block as PrimitiveBlock } from '@primitives/block'
 import { apiLoadSnapshot } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
@@ -20,6 +17,10 @@ import {
   BORDER_SIZE,
   SNAPSHOT_GRID_MAX_LINES,
 } from '../config'
+import { Block } from './Block'
+import { Background } from './Background'
+import { Text } from './Text'
+import { Border } from './Border'
 
 export type TDiffLine = {
   value: string,
@@ -137,7 +138,10 @@ export const SnapshotDiff = pureComponent(
       </Block>
     ))}
     <Border
-      borderWidth={BORDER_SIZE}
+      topWidth={BORDER_SIZE}
+      leftWidth={BORDER_SIZE}
+      rightWidth={BORDER_SIZE}
+      bottomWidth={BORDER_SIZE}
       color={COLOR_BORDER_DIFF}
     />
   </Block>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { component, startWithType, mapRef, onUpdate } from 'refun'
-import { colorToString } from '@revert/color'
+import { colorToString } from 'colorido'
 import { TButton } from '../types'
 
 export const Button = component(

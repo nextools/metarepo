@@ -1,5 +1,5 @@
 import React, { Fragment, FC } from 'react'
-import { colorToString } from '@revert/color'
+import { colorToString } from 'colorido'
 import { easeInOutCubic } from '@primitives/animation'
 import { Animate } from './Animate'
 import { POINT_BORDER, POINT_RADIUS } from './constants'

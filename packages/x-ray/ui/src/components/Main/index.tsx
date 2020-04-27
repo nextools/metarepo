@@ -1,27 +1,28 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapHandlers, mapState, mapContext, onUpdate } from 'refun'
-import { Layout, Layout_Item, LayoutContext } from '@revert/layout'
-import { PrimitiveImage } from '@revert/image'
+import { component, startWithType, mapHandlers, mapState, onUpdate } from 'refun'
+import { Image } from '@primitives/image'
 import { TListItems } from '@x-ray/core'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { actionLoadList, actionSave } from '../../actions'
-import { TType } from '../../types'
+import { TSize, TType } from '../../types'
 // @ts-ignore
 import noSignalImage from '../../images/no-signal.png'
 import { Popup } from '../Popup'
-import { Toolbar } from '../Toolbar'
-import { SaveButton } from '../SaveButton'
+import { Block } from '../Block'
+import { Background } from '../Background'
+import { COL_SPACE, BORDER_SIZE, COLOR_GRAY } from '../../config'
+import { Toolbar, TOOLBAR_HEIGHT } from '../Toolbar'
+import { SaveButton, SAVE_BUTTON_HEIGHT } from '../SaveButton'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
 
 const isScreenshots = (items: any, type: TType | null): items is TListItems => type === 'image' && Object.keys(items).length > 0
 const isSnapshots = (items: any, type: TType | null): items is TListItems => type === 'text' && Object.keys(items).length > 0
 
-export type TMain = {}
+export type TMain = TSize
 
 export const Main = component(
   startWithType<TMain>(),
-  mapContext(LayoutContext),
   mapStoreState(({ type, selectedItem, files, items, discardedItems, filteredFiles, isSaved }) => ({
     type,
     selectedItem,
@@ -47,23 +48,25 @@ export const Main = component(
   }),
   mapState('saveButtonWidth', 'setSaveButtonWidth', () => 0, [])
 )(({
-  discardedItems,
-  files,
-  filteredFiles,
-  _height,
-  isSaved,
-  items,
-  type,
-  _width,
+  width,
+  height,
   selectedItem,
+  items,
+  discardedItems,
+  filteredFiles,
+  files,
+  type,
+  saveButtonWidth,
+  setSaveButtonWidth,
+  isSaved,
   onSave,
 }) => {
   if (isSaved) {
     return (
-      <PrimitiveImage
+      <Image
         source={noSignalImage}
-        width={_width}
-        height={_height}
+        width={width}
+        height={height}
         resizeMode="contain"
       />
     )
@@ -71,40 +74,60 @@ export const Main = component(
 
   return (
     <Fragment>
-      <Layout direction="vertical">
-        <Layout_Item height={60}>
-          <Toolbar
-            files={files}
-            filteredFiles={filteredFiles}
-          />
-        </Layout_Item>
-        <Layout_Item>
-          {isScreenshots(items, type) && (
-            <ScreenshotGrid
-              items={items}
-              discardedItems={discardedItems}
-              filteredFiles={filteredFiles}
-              shouldAnimate={selectedItem === null}
-            />
-          )}
-          {isSnapshots(items, type) && (
-            <SnapshotGrid
-              items={items}
-              discardedItems={discardedItems}
-              filteredFiles={filteredFiles}
-            />
-          )}
-        </Layout_Item>
-
-      </Layout>
+      <Toolbar
+        top={0}
+        left={0}
+        width={width}
+        files={files}
+        filteredFiles={filteredFiles}
+      />
+      <Block
+        left={0}
+        top={TOOLBAR_HEIGHT}
+        width={width}
+        height={BORDER_SIZE}
+      >
+        <Background color={COLOR_GRAY}/>
+      </Block>
+      {isScreenshots(items, type) && (
+        <ScreenshotGrid
+          top={TOOLBAR_HEIGHT + BORDER_SIZE + COL_SPACE}
+          left={0}
+          width={width}
+          height={height - TOOLBAR_HEIGHT - BORDER_SIZE - COL_SPACE}
+          items={items}
+          discardedItems={discardedItems}
+          filteredFiles={filteredFiles}
+          shouldAnimate={selectedItem === null}
+        />
+      )}
+      {isSnapshots(items, type) && (
+        <SnapshotGrid
+          top={TOOLBAR_HEIGHT + BORDER_SIZE + COL_SPACE}
+          left={0}
+          width={width}
+          height={height - TOOLBAR_HEIGHT - BORDER_SIZE - COL_SPACE}
+          items={items}
+          discardedItems={discardedItems}
+          filteredFiles={filteredFiles}
+        />
+      )}
       <SaveButton
+        top={height - SAVE_BUTTON_HEIGHT - 10}
+        left={width - saveButtonWidth - 10}
+        width={saveButtonWidth}
         onPress={onSave}
+        onWidthChange={setSaveButtonWidth}
       />
       {type !== null && selectedItem !== null && (
         <Popup
-          discardedItems={discardedItems}
-          item={selectedItem}
+          left={0}
+          top={0}
+          width={width}
+          height={height}
           type={type}
+          item={selectedItem}
+          discardedItems={discardedItems}
         />
       )}
     </Fragment>

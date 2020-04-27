@@ -5,7 +5,7 @@ import { DIFF_TIMEOUT } from '../../config'
 import { hasDiffItems } from './has-diff-items'
 
 export type TMapDiffState = {
-  _height: number,
+  height: number,
   scrollTop: number,
   prevScrollTop: number | null,
   shouldAnimate: boolean,
@@ -22,13 +22,13 @@ export const mapDiffState = <P extends TMapDiffState>() => pipe(
   }),
   mapSafeTimeout('setSafeTimeout'),
   mapRef('clearDiffTimeout', null as (() => void) | null),
-  onChange(({ prevScrollTop, toggleDiffState, clearDiffTimeout, setSafeTimeout, shouldAnimate, cols, scrollTop, _height }) => {
+  onChange(({ prevScrollTop, toggleDiffState, clearDiffTimeout, setSafeTimeout, shouldAnimate, cols, scrollTop, height }) => {
     if (clearDiffTimeout.current !== null) {
       clearDiffTimeout.current()
       clearDiffTimeout.current = null
     }
 
-    if (prevScrollTop === null && shouldAnimate && hasDiffItems(cols, scrollTop, _height)) {
+    if (prevScrollTop === null && shouldAnimate && hasDiffItems(cols, scrollTop, height)) {
       clearDiffTimeout.current = setSafeTimeout(toggleDiffState, DIFF_TIMEOUT)
     }
   }, ['prevScrollTop', 'diffState', 'shouldAnimate'])
