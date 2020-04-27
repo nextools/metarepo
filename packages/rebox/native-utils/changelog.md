@@ -1,3 +1,7 @@
+## v2.0.5
+
+* 🐞 upgrade Haul deps to v0.19
+
 ## v2.0.4
 
 * 🐞 upgrade React Native to 0.62.2
