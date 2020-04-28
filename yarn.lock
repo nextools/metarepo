@@ -12575,13 +12575,6 @@ stealthy-require@^1.1.1:
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
 
-stili@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/stili/-/stili-1.1.0.tgz#d7d1e606e53249fd29c5667a780cf1fe48a07045"
-  integrity sha512-TpgV9o0MgbhtXRN5ZFnOF/Ltu+Dd+QNO7/B8Ydh8WlMOch4qPF/EVR4RyKt/S3tv9MC8YaTAtbp+kCTI9xCehA==
-  dependencies:
-    tsfn "^1.0.0"
-
 stili@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/stili/-/stili-2.0.0.tgz#5f67500006b751b81d9e7cd2a32b7ab5c3e5a6b2"
