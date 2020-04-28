@@ -1,6 +1,6 @@
 {
   "name": "rn-fonts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
@@ -16,6 +16,6 @@
     "make-dir": "^3.0.0",
     "pifs": "^1.0.0",
     "plist": "^3.0.1",
-    "xcode": "^2.0.0"
+    "xcode": "^3.0.0"
   }
 }
