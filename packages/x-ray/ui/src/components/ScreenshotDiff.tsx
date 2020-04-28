@@ -40,7 +40,9 @@ export const ScreenshotDiff = pureComponent(
       height={oldHeight}
       opacity={Math.min(oldAlpha, isDiscarded ? DISCARD_ALPHA : 1)}
       style={{
-        cursor: 'pointer',
+        _webOnly: {
+          cursor: 'pointer',
+        },
       }}
     >
       <Block left={BORDER_SIZE} top={BORDER_SIZE}>
@@ -66,7 +68,9 @@ export const ScreenshotDiff = pureComponent(
       height={newHeight}
       opacity={Math.min(newAlpha, isDiscarded ? DISCARD_ALPHA : 1)}
       style={{
-        cursor: 'pointer',
+        _webOnly: {
+          cursor: 'pointer',
+        },
       }}
     >
       <Block left={BORDER_SIZE} top={BORDER_SIZE}>

@@ -1,5 +1,5 @@
 import React, { Ref, HTMLProps, CSSProperties, ReactNode, SyntheticEvent, MouseEvent } from 'react'
-import { normalizeStyle, TStyle } from 'stili'
+import { normalizeWebStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isUndefined, isNumber, isFunction } from 'tsfn'
 
@@ -71,18 +71,16 @@ export const Block = component(
     }) => {
       const styles: TStyle = {
         ...style,
+        _webOnly: {
+          ...style?._webOnly,
+        },
         position: 'absolute',
         left: 0,
         top: 0,
-        // lineHeight: 0,
       }
 
       if (isFlexbox) {
         styles.display = 'flex'
-      }
-
-      if (!isUndefined(styles.lineHeight)) {
-        styles.lineHeight = `${styles.lineHeight}px`
       }
 
       if (!isUndefined(width)) {
@@ -126,11 +124,11 @@ export const Block = component(
       }
 
       if (shouldIgnorePointerEvents) {
-        styles.pointerEvents = 'none'
+        styles._webOnly!.pointerEvents = 'none'
       }
 
       if (shouldPreventWrap) {
-        styles.whiteSpace = 'nowrap'
+        styles._webOnly!.whiteSpace = 'nowrap'
       }
 
       if (shouldHideOverflow) {
@@ -146,19 +144,19 @@ export const Block = component(
       }
 
       if (shouldScrollX) {
-        styles.overflowX = 'scroll'
+        styles._webOnly!.overflowX = 'scroll'
       }
 
       if (shouldScrollY) {
-        styles.overflowY = 'scroll'
+        styles._webOnly!.overflowY = 'scroll'
       }
 
       if (shouldForceAcceleration) {
-        styles.transform = 'translateZ(0)'
+        styles._webOnly!.transform = 'translateZ(0)'
       }
 
       if (!isUndefined(blendMode)) {
-        styles.mixBlendMode = blendMode
+        styles._webOnly!.mixBlendMode = blendMode
       }
 
       if (!isUndefined(opacity)) {
@@ -166,7 +164,7 @@ export const Block = component(
       }
 
       const props: HTMLProps<HTMLDivElement> = {
-        style: normalizeStyle(styles),
+        style: normalizeWebStyle(styles),
         children,
       }
 

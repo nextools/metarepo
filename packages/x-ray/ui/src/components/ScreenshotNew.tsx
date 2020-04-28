@@ -22,7 +22,9 @@ export const ScreenshotNew = pureComponent(
     height={height}
     opacity={isDiscarded ? DISCARD_ALPHA : 1}
     style={{
-      cursor: 'pointer',
+      _webOnly: {
+        cursor: 'pointer',
+      },
     }}
   >
     <Block left={BORDER_SIZE} top={BORDER_SIZE}>

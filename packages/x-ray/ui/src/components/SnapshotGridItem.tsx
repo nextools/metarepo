@@ -79,7 +79,9 @@ export const SnapshotGridItem = pureComponent(
     height={height}
     opacity={isDiscarded ? DISCARD_ALPHA : 1}
     style={{
-      cursor: 'pointer',
+      _webOnly: {
+        cursor: 'pointer',
+      },
     }}
   >
     {lines.map((line, i) => (
