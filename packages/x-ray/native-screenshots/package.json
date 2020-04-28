@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@x-ray/common-utils": "^1.0.2",
-    "@x-ray/screenshot-utils": "^1.0.0",
+    "@x-ray/screenshot-utils": "^1.0.3",
     "@x-ray/tar-fs": "^1.0.0",
     "pifs": "^1.0.0",
     "pretty-ms": "^6.0.0",

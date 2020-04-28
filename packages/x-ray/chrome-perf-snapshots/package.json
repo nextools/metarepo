@@ -14,7 +14,7 @@
     "@rebox/web": "^2.1.5",
     "@x-ray/common-utils": "^1.0.2",
     "@x-ray/tar-fs": "^1.0.0",
-    "@x-ray/ui": "^1.0.3",
+    "@x-ray/ui": "^1.0.4",
     "diff": "^4.0.1",
     "make-dir": "^3.0.0",
     "p-all": "^3.0.0",
