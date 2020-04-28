@@ -1680,101 +1680,100 @@
     "@babel/runtime" "^7.1.2"
     tsfn "^1.0.0"
 
-"@primitives/background@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@primitives/background/-/background-1.0.0.tgz#f47390bed81b54248036f4e50b186aaa693c347a"
-  integrity sha512-pU1l/siPd6AC/eQpSs9iZDpX7AUxeKJK7YozRHO5ldr0m1nX/NJWlaOWcDojHHboU7wLS8owX1F8RzMpQ+IBUA==
+"@primitives/background@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/background/-/background-2.0.0.tgz#3b225bb08dc93411bcb9dd727afd927e5e70afd6"
+  integrity sha512-JlvTPuBEAoUcE8VpyK7JXlyyVX8QF1h8CQDTFX65x5PUAShLd4gRuq2JI7dh9ii+RL0D5LISqX5xyNnxfFNwlQ==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@primitives/block" "^1.0.0"
-    "@themeables/background" "^1.0.0"
+    "@primitives/block" "^2.0.0"
+    "@themeables/background" "^2.0.0"
     colorido "^1.0.0"
 
-"@primitives/block@^1.0.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@primitives/block/-/block-1.1.0.tgz#8d67db5a17bb5c5cc95cf8f7ba4c389a8880f977"
-  integrity sha512-dsV7t1MoNGvJ6w5YLX5jW0nIEaubKpgQjp9TaebyxR3pUBpiohELuCE7+6jW2pqkQlwCV4QGOznJMJkrlJWnnw==
+"@primitives/block@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/block/-/block-2.0.0.tgz#c9f1f77f07dab09e028f87bce7f9557df5b4b9f8"
+  integrity sha512-Twg+UnVSIUjGDxkgVsL/XSfMMqUEJWWUsafELPYPCjzXuIByHdniH90AlqdoTevqxNRjAlrYkzQ3hUI1hVsbNA==
   dependencies:
-    refun "^1.0.0"
-    stili "^1.0.0"
-    tsfn "^1.0.0"
+    refun "^2.0.0"
+    stili "^2.0.0"
+    tsfn "^1.1.0"
 
-"@primitives/border@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@primitives/border/-/border-1.0.0.tgz#4f767e1545bc6ab46cbb7c83c4488cebcca69719"
-  integrity sha512-bdtLKjBcfAYfQ4ZRWI+E4x6fgv74GMPtsKXAq47O5jOUjjhBKkaVxX/naCAZNG8zfjBYG41sSmXzWx7Yd59fpg==
+"@primitives/border@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/border/-/border-2.0.0.tgz#a86f96057e4fdfd029026edc32f0603240260440"
+  integrity sha512-BFApKcbAez6mulI8iEumSZGXT3gzudvkm3g4oBKh5e365S+91C35dQyr3PNIzjCf9rc+0hQ8AYTfZ1f0lqQOQA==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@primitives/block" "^1.0.0"
-    "@themeables/border" "^1.0.0"
+    "@primitives/block" "^2.0.0"
+    "@themeables/border" "^2.0.0"
     colorido "^1.0.0"
-    refun "^1.0.0"
+    refun "^2.0.0"
 
-"@primitives/button@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@primitives/button/-/button-1.0.0.tgz#fc303e2daa3556db212d779f390ca04c5ba6461e"
-  integrity sha512-UN44+f5HcIt+oZMMn2SnB2fD4BAsxBAbaGa3FZpAqDbdTJtnbWhJy3taxsPLpRfUvu1Y/g3JzWTGRg7gHk4/rw==
+"@primitives/button@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/button/-/button-2.0.0.tgz#d2f789b82336d3f4c05cc7564395ca9619e96307"
+  integrity sha512-hoG+CTO5YxamrpnUtwFm0S9ahay0rg/0rOTlxCwrzMxtvlvSNumnaFjFP5oEK9NOYs7KPtKjio+PBYb+bM3Eug==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    refun "^1.0.0"
-    stili "^1.0.0"
+    refun "^2.0.0"
+    stili "^2.0.0"
 
-"@primitives/checkbox@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@primitives/checkbox/-/checkbox-1.0.0.tgz#9bc126f767869f2c6010a6a44a82a03d5856697a"
-  integrity sha512-wk6H+P+x4np+9oh4orduTippmWz043SIG3I5vguu8lUVU5L/yHI2za3/1FnAYEGaNkDrx+9CtItdJCZYxNEbww==
+"@primitives/checkbox@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/checkbox/-/checkbox-2.0.0.tgz#396fb6d0ef0c831ba19c7346c89be5e7f76cc50b"
+  integrity sha512-c/KCY+8A0UJjwApMxQpsgLQYB9vszr+0IutIbklnmepAa2/isgKXYQn1TsRoTdX/Hk4+yYMe+s6tZaDv24O7oQ==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@primitives/block" "^1.0.0"
-    refun "^1.0.0"
-    stili "^1.0.0"
+    "@primitives/block" "^2.0.0"
+    refun "^2.0.0"
+    stili "^2.0.0"
 
-"@primitives/image@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@primitives/image/-/image-1.0.0.tgz#e227612de9f587614184c7c1cb3a7ecad4b52ff5"
-  integrity sha512-ZcR7F+fSUX8rF3f066At+K9SE8faHXOT5WJJOVpQe5IktywykWJCLjjJKzjXRlNMIVoTRGytJUp5Dl+d4Ae/6Q==
+"@primitives/image@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/image/-/image-2.0.0.tgz#6c4778a23c5d6e9814a8c870f045f7bd9b6f0ed8"
+  integrity sha512-nJTnT/64KAbtaAGQdtDys0HSi/Lm9epB3qSyoa+D0GD1gIhj0GdKSrrVrG25QGxd/AmW3cm0G8vQmTrpYvykdg==
   dependencies:
     "@psxcode/compose" "^0.1.3"
-    "@themeables/image" "^1.0.0"
-    refun "^1.0.0"
-    stili "^1.0.0"
-    tsfn "^1.0.0"
+    "@themeables/image" "^2.0.0"
+    refun "^2.0.0"
+    stili "^2.0.0"
+    tsfn "^1.1.0"
 
-"@primitives/root@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@primitives/root/-/root-1.0.0.tgz#1907a51049421897a240fc2fa3b7498856df2bba"
-  integrity sha512-6Dgx9OWagRNkRvAUQQunlUZCnfgx6sFe0cBw1b5R0SeKT4OkSyvjeSzo24ZxR1vmnQ/HjdqLR80czjRwDUaMMQ==
+"@primitives/root@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/root/-/root-2.0.0.tgz#a62fdd895d91bc9ca14a515610d17822d5faf7e3"
+  integrity sha512-zJnRnd+4MShHXOLYrxFsl7nDAPeVv+14brbJ7RwORhMzsfAQpg95xwa0n/ZjO+ESl87BTFMkb2pXxT9yc1eoRg==
   dependencies:
-    refun "^1.0.0"
-    stili "^1.0.0"
+    refun "^2.0.0"
+    stili "^2.0.0"
 
-"@primitives/size@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@primitives/size/-/size-1.0.0.tgz#2e6c649a505943d8f37bd1fe198927b576887221"
-  integrity sha512-w2pdu6h/OtSALXIccf9zfpL/sKcbqCKkUuVlMp52kJj68zfaKo67wy7FXzwxNY9nLKSTtrvz36708vCPJWvk8g==
+"@primitives/size@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/size/-/size-2.0.0.tgz#203a0eb506e2bd52d0c0cb5958994246ec5a3c2a"
+  integrity sha512-TjlenLslhasLkJsQ3C5wJmk3cOSvE29bYbyGy01ZrrVlNG6yW4+ElJ6fdN4PPJMATKgZeLlZXipos5nYVvl/2w==
   dependencies:
     "@psxcode/compose" "^0.1.3"
-    refun "^1.0.0"
-    stili "^1.0.0"
-    tsfn "^1.0.0"
+    refun "^2.0.0"
+    stili "^2.0.0"
+    tsfn "^1.1.0"
 
-"@primitives/svg@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@primitives/svg/-/svg-1.0.1.tgz#321e2fe63b09d0e8cfa13a4394b2ce82fdd30af0"
-  integrity sha512-shogR8NLCq5TWdVo/WSUflBC2+2lZBt+lFvu4+JLhT1dmO6ut4ToeSKQnOEmNgNJo2/GeHAdHvCo52n3fKsgpg==
+"@primitives/svg@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/svg/-/svg-2.0.0.tgz#229c87eeb75d06733a8cac60d17eb331b2655734"
+  integrity sha512-GB8Y9YbqCTkHFs6OpyN5eUOptkoxDY1ZYMT3JsfN3Acume1BTieXNTU9H2QZwMCr2d8uYcEQ1XZq+amp9olAbQ==
   dependencies:
     react-native-svg "^11.0.1"
 
-"@primitives/text@^1.0.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@primitives/text/-/text-1.1.0.tgz#3507a151dc90067f6d11d003671ae951a9596638"
-  integrity sha512-VjjS9tHPaJvn82F1C2gNhq9LHr5y7UAOob5iw9i3C50rFC1UeejyCuvvGA8Kd6l8GOxko3JdyC0YpuuqOpNQXA==
+"@primitives/text@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/text/-/text-2.0.0.tgz#3ef1297fc2834a170f2268c3944b210d4cf38727"
+  integrity sha512-rhOK+U6NrAdMyng07tm6jQu/az6N37hKui3qqiEIlCBb5yTod/K+tP73yI/8W46BQKweCBR3of7ZsPvq+7WL+w==
   dependencies:
-    "@themeables/text" "^1.0.0"
+    "@themeables/text" "^2.0.0"
     colorido "^1.0.0"
-    refun "^1.0.0"
-    stili "^1.0.0"
-    tsfn "^1.0.0"
+    refun "^2.0.0"
+    stili "^2.0.0"
 
 "@psxcode/compose@^0.1.3":
   version "0.1.4"
@@ -1905,50 +1904,50 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
-"@themeables/background@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@themeables/background/-/background-1.0.1.tgz#f0b916821003ae5f2e765571d65c7ae02050b3f3"
-  integrity sha512-Zy9J8WSBuUH9QV9KaKM6kK1Ao1SLot2v2He8fF0u8xZ5HDDVybLP8tPUkMx/OSpX6n1JbjqxFB+JS6jOaFyDiA==
+"@themeables/background@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@themeables/background/-/background-2.0.0.tgz#72e56a791c9fe81edf036cf55a0c82e2749acfdf"
+  integrity sha512-k/n7qkhe6YddRm0tUHdcWS1Vhk5ZJOhRTpq8V1nsqLhTq1TcPlNI7hWmdjmzwHqQKwHx/G8MwElwCF/5jCCeKQ==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@themeables/core" "^1.0.0"
+    "@themeables/core" "^2.0.0"
     colorido "^1.0.0"
 
-"@themeables/border@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@themeables/border/-/border-1.0.1.tgz#0c6cace94eed43ba59a1d33542ddbaf1fc3c6a7e"
-  integrity sha512-U95P7Nin+KM3p8KzSaDebUC7bHcSS9dtJIQwyQHsKUulan7ZMYrwxgJoQsE9A1ykBOeteUaSpAqQTF+E/7BSBQ==
+"@themeables/border@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@themeables/border/-/border-2.0.0.tgz#85421ed2736deb068393ef73cbcdf1dc66be7a8d"
+  integrity sha512-9ZyxMRWS/lVXxgkziExNHkYKZArkS7vk2aJXJaTP3CtWe14WPn6iOF1YWNQgjqawkjmc7v81rIXcX9CWIzswnA==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@themeables/core" "^1.0.0"
+    "@themeables/core" "^2.0.0"
     colorido "^1.0.0"
 
-"@themeables/core@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@themeables/core/-/core-1.0.0.tgz#713d67eba41ba84c87e0014f30b3137e115cc696"
-  integrity sha512-oAClRbSUxb5sRwEzQOt9cuou7QRZcqxtyYs5G+U097rNqNSwzUrldwJf3QS1a+GQ+L/UqKl1KevKQlkHqoaE3A==
+"@themeables/core@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@themeables/core/-/core-2.0.0.tgz#530012f80d99dfcf464309ae84a63e3a1f261192"
+  integrity sha512-YfASoC80nKG8uQ38zQUx6umWxr7OMWKwoBuI2mjqwytX4AUVIrxNWiHy5xxlvTvl7A64I3hR5qK6m2W6xsHL5w==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    refun "^1.0.0"
+    refun "^2.0.0"
 
-"@themeables/image@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@themeables/image/-/image-1.0.1.tgz#7210bb8d8b9713abf7ec98bba95bdfa70a17d90c"
-  integrity sha512-SanM3jYo4jsUaIZjz9jMlomgwv5WzTJ49yvLYgpqk79D6/SQT9wWRjpDGabiE0IHrXQToBzvonyiYDMsUoRcHA==
+"@themeables/image@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@themeables/image/-/image-2.0.0.tgz#dbfbd2a12cec4b23dfc5ce547b30ecdfc1291e75"
+  integrity sha512-isd+yuAQOg643Mdi8p1xkn4OhwSuxxsoBeQsGlo4LQVtXbCjNoV+taBYoMPa8ng+PrTPLqno25otgnSP+c0PvQ==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@themeables/core" "^1.0.0"
+    "@themeables/core" "^2.0.0"
 
-"@themeables/text@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@themeables/text/-/text-1.0.1.tgz#4f8118514bc0a167a2f2f4b390484d7d20d52970"
-  integrity sha512-J/4Szq44Aq1/Gn/4fQ4+53sgjwGbDm1D/vnlcIBcgp9pJUIr6Kvgo/CdBq3++coU0THEojv4kuTQjmh18UuiCw==
+"@themeables/text@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@themeables/text/-/text-2.0.0.tgz#594fb93bf113381abd62d083c563f04467db11a0"
+  integrity sha512-41Sk6de+Ou83ho8dgLAXhUymYucI7wcFU1ZGb0VpCfQfuKxP4aDY059F3+ZWj1vvnjL7TcpKYQzg7D4v+pi/7w==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@primitives/text" "^1.0.0"
-    "@themeables/core" "^1.0.0"
+    "@primitives/text" "^2.0.0"
+    "@themeables/core" "^2.0.0"
     colorido "^1.0.0"
-    stili "^1.0.0"
+    stili "^2.0.0"
 
 "@types/anymatch@*":
   version "1.3.1"
@@ -11512,13 +11511,6 @@ redux@^4.0.0, redux@^4.0.1:
   dependencies:
     loose-envify "^1.4.0"
     symbol-observable "^1.2.0"
-
-refun@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/refun/-/refun-1.0.1.tgz#5e2c5d91bab4794e3cd68d68d67cbf3b9b8ade95"
-  integrity sha512-jGrtpVW3DtNt0klqA+FrcxOH574sT9xjWN3qLdGheiTQYOqMSAFBppJs5hsNKVpC9UyFpfHiQfWH+1GpHMNULQ==
-  dependencies:
-    tsfn "^1.1.1"
 
 regenerate-unicode-properties@^8.2.0:
   version "8.2.0"
