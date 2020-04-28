@@ -52,7 +52,9 @@ export const Shadow = component(
       borderTopRightRadius: topRightRadius,
       borderBottomRightRadius: bottomRightRadius,
       borderBottomLeftRadius: bottomLeftRadius,
-      boxShadow: `${offsetX}px ${offsetY}px ${blurRadius}px ${spreadRadius}px ${colorToString(color)}`,
+      _webOnly: {
+        boxShadow: `${offsetX}px ${offsetY}px ${blurRadius}px ${spreadRadius}px ${colorToString(color)}`,
+      },
     }}
   />
 ))

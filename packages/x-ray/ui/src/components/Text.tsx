@@ -1,5 +1,5 @@
 import React from 'react'
-import { normalizeStyle, TStyle } from 'stili'
+import { normalizeWebStyle, TStyle } from 'stili'
 import {
   component,
   mapDefaultProps,
@@ -49,49 +49,51 @@ export const Text = component(
     shouldHideOverflow,
   }) => {
     const style: TStyle = {
+      _webOnly: {
+        display: 'block',
+        fontSmoothing: 'antialiased',
+        textRendering: 'geometricPrecision',
+        textSizeAdjust: 'none',
+      },
       color: colorToString(color),
       fontFamily,
       fontWeight,
       fontSize,
-      fontSmoothing: 'antialiased',
-      textRendering: 'geometricPrecision',
-      textSizeAdjust: 'none',
-      display: 'block',
       position: 'relative',
     }
 
     if (shouldPreserveWhitespace) {
-      style.whiteSpace = 'pre'
+      style._webOnly!.whiteSpace = 'pre'
     }
 
     if (shouldPreventWrap) {
-      style.whiteSpace = 'nowrap'
+      style._webOnly!.whiteSpace = 'nowrap'
     }
 
     if (shouldPreventSelection) {
-      style.userSelect = 'none'
+      style._webOnly!.userSelect = 'none'
     }
 
     if (shouldHideOverflow) {
-      style.whiteSpace = 'nowrap'
-      style.textOverflow = 'ellipsis'
+      style._webOnly!.whiteSpace = 'nowrap'
+      style._webOnly!.textOverflow = 'ellipsis'
       style.overflow = 'hidden'
     }
 
     if (isNumber(letterSpacing)) {
-      style.letterSpacing = `${letterSpacing}px`
+      style._webOnly!.letterSpacing = `${letterSpacing}px`
     }
 
     if (isNumber(lineHeight)) {
-      style.lineHeight = `${lineHeight}px`
+      style.lineHeight = lineHeight
     }
 
     if (isUnderlined) {
-      style.textDecoration = 'underline'
+      style._webOnly!.textDecoration = 'underline'
     }
 
     return {
-      style: normalizeStyle(style),
+      style: normalizeWebStyle(style),
     }
   })
 )(({ children, style, id }) => (

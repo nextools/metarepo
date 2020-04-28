@@ -4,32 +4,37 @@ import { TMeta } from './types'
 
 export const getContainerStyle = (options: TMeta['options']): TStyle => {
   const result: TStyle = {
-    display: options.hasOwnWidth ? 'inline-block' : 'flex',
+    _webOnly: {
+      display: options.hasOwnWidth ? 'inline-block' : 'flex',
+    },
     backgroundColor: options.backgroundColor || '#fff',
   }
 
   if (isNumber(options.maxWidth)) {
-    result.maxWidth = `${options.maxWidth}px`
+    result.maxWidth = options.maxWidth
   }
 
   if (isNumber(options.overflow)) {
-    result.padding = `${options.overflow}px`
+    result.paddingTop = options.overflow
+    result.paddingBottom = options.overflow
+    result.paddingLeft = options.overflow
+    result.paddingRight = options.overflow
   }
 
   if (isNumber(options.overflowTop)) {
-    result.paddingTop = `${options.overflowTop}px`
+    result.paddingTop = options.overflowTop
   }
 
   if (isNumber(options.overflowBottom)) {
-    result.paddingBottom = `${options.overflowBottom}px`
+    result.paddingBottom = options.overflowBottom
   }
 
   if (isNumber(options.overflowLeft)) {
-    result.paddingLeft = `${options.overflowLeft}px`
+    result.paddingLeft = options.overflowLeft
   }
 
   if (isNumber(options.overflowRight)) {
-    result.paddingRight = `${options.overflowRight}px`
+    result.paddingRight = options.overflowRight
   }
 
   return result
