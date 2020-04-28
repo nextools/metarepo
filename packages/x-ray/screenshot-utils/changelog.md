@@ -1,3 +1,7 @@
+## v1.0.3
+
+* 🐞 upgrade `stili`
+
 ## v1.0.2
 
 * 🐞 handle cases without source code

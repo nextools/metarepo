@@ -1,3 +1,9 @@
+## v1.0.4
+
+* 🐞 upgrade `stili`
+
+* 🐞 upgrade primitives
+
 ## v1.0.3
 
 * 🐞 adapt new refun API

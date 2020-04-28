@@ -1,3 +1,7 @@
+## v0.2.3
+
+* 🐞 upgrade primitives
+
 ## v0.2.2
 
 * 🐞 update to new Refun API
