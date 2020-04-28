@@ -39,7 +39,7 @@ export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8A
         'react-native-svg',
         'react-native-view-shot',
       ],
-      isHeadless: false,
+      isHeadless: true,
     })
 
     const workers = Array.from({ length: threadCount }, () => new Worker(

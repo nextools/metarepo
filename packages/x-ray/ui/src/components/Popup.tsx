@@ -216,13 +216,22 @@ export const Popup = component(
           </Button>
         </Block>
         {isScreenshotGridItem(type, item) && (
-          <ScreenshotPreview
-            top={previewTop}
-            left={previewLeft}
-            width={previewWidth}
-            height={previewHeight}
-            item={item}
-          />
+          <Fragment>
+            <Meta
+              id={item.id}
+              left={sourceCodeLeft}
+              top={sourceCodeTop}
+              width={sourceCodeWidth}
+              height={sourceCodeHeight}
+            />
+            <ScreenshotPreview
+              top={previewTop}
+              left={previewLeft}
+              width={previewWidth}
+              height={previewHeight}
+              item={item}
+            />
+          </Fragment>
         )}
         {isSnapshotGridItem(type, item) && (
           <Fragment>
