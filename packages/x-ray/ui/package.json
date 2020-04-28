@@ -21,7 +21,7 @@
     "@primitives/border": "^1.0.0",
     "@primitives/button": "^1.0.0",
     "@primitives/checkbox": "^1.0.0",
-    "@primitives/image": "^1.0.0",
+    "@primitives/image": "^2.0.0",
     "@primitives/root": "^1.0.0",
     "@primitives/size": "^1.0.0",
     "@primitives/svg": "^1.0.0",

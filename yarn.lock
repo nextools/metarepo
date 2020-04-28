@@ -1729,16 +1729,16 @@
     refun "^1.0.0"
     stili "^1.0.0"
 
-"@primitives/image@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@primitives/image/-/image-1.0.0.tgz#e227612de9f587614184c7c1cb3a7ecad4b52ff5"
-  integrity sha512-ZcR7F+fSUX8rF3f066At+K9SE8faHXOT5WJJOVpQe5IktywykWJCLjjJKzjXRlNMIVoTRGytJUp5Dl+d4Ae/6Q==
+"@primitives/image@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@primitives/image/-/image-2.0.0.tgz#6c4778a23c5d6e9814a8c870f045f7bd9b6f0ed8"
+  integrity sha512-nJTnT/64KAbtaAGQdtDys0HSi/Lm9epB3qSyoa+D0GD1gIhj0GdKSrrVrG25QGxd/AmW3cm0G8vQmTrpYvykdg==
   dependencies:
     "@psxcode/compose" "^0.1.3"
-    "@themeables/image" "^1.0.0"
-    refun "^1.0.0"
-    stili "^1.0.0"
-    tsfn "^1.0.0"
+    "@themeables/image" "^2.0.0"
+    refun "^2.0.0"
+    stili "^2.0.0"
+    tsfn "^1.1.0"
 
 "@primitives/root@^1.0.0":
   version "1.0.0"
@@ -1938,13 +1938,13 @@
     "@babel/runtime" "^7.1.2"
     refun "^2.0.0"
 
-"@themeables/image@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@themeables/image/-/image-1.0.1.tgz#7210bb8d8b9713abf7ec98bba95bdfa70a17d90c"
-  integrity sha512-SanM3jYo4jsUaIZjz9jMlomgwv5WzTJ49yvLYgpqk79D6/SQT9wWRjpDGabiE0IHrXQToBzvonyiYDMsUoRcHA==
+"@themeables/image@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@themeables/image/-/image-2.0.0.tgz#dbfbd2a12cec4b23dfc5ce547b30ecdfc1291e75"
+  integrity sha512-isd+yuAQOg643Mdi8p1xkn4OhwSuxxsoBeQsGlo4LQVtXbCjNoV+taBYoMPa8ng+PrTPLqno25otgnSP+c0PvQ==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@themeables/core" "^1.0.0"
+    "@themeables/core" "^2.0.0"
 
 "@themeables/text@^2.0.0":
   version "2.0.0"
