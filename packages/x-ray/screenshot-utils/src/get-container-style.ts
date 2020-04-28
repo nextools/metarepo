@@ -1,8 +1,8 @@
-import { TStyle } from 'stili'
+import { normalizeWebStyle, TStyle, TWebStyle } from 'stili'
 import { isNumber } from 'tsfn'
 import { TMeta } from './types'
 
-export const getContainerStyle = (options: TMeta['options']): TStyle => {
+export const getContainerStyle = (options: TMeta['options']): TWebStyle => {
   const result: TStyle = {
     _webOnly: {
       display: options.hasOwnWidth ? 'inline-block' : 'flex',
@@ -37,5 +37,5 @@ export const getContainerStyle = (options: TMeta['options']): TStyle => {
     result.paddingRight = options.overflowRight
   }
 
-  return result
+  return normalizeWebStyle(result)
 }
