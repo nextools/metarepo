@@ -1,3 +1,7 @@
+## v1.0.4
+
+* 🐞 fix screenshot container style
+
 ## v1.0.3
 
 * 🐞 upgrade `stili`

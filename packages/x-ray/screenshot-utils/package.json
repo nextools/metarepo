@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/screenshot-utils",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
