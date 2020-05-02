@@ -11,15 +11,12 @@ services:
       dockerfile: Dockerfile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - $HOME/.gitconfig:/root/.gitconfig
       - $HOME/.gnupg/pubring.kbx:/root/.gnupg/pubring.kbx
       - $HOME/.gnupg/trustdb.gpg:/root/.gnupg/trustdb.gpg
       - ssh-agent-forward:/ssh-agent-forward
       - workspace:/workspace
       - /workspace/node_modules
     command: sleep infinity
-    environment:
-      - SSH_AUTH_SOCK=/ssh-agent-forward/ssh-agent.sock
 
 volumes:
   workspace:
