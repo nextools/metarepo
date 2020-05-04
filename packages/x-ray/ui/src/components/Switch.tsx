@@ -1,17 +1,16 @@
 import React from 'react'
-import { startWithType, component, mapState, mapHandlers, mapWithProps } from 'refun'
+import { startWithType, component, mapState, mapHandlers, mapHovered, TMapHovered } from 'refun'
 import { Checkbox } from '@primitives/checkbox'
-import { Size } from '@primitives/size'
 import { TOmitKey } from 'tsfn'
 import { TRect } from '../types'
-import { COLOR_GREEN, COLOR_WHITE, BORDER_SIZE } from '../config'
+import { COLOR_WHITE, BORDER_SIZE, COLOR_LIGHT_BLUE, COLOR_BLUE, COLOR_DARK_GRAY } from '../config'
 import { Block } from './Block'
 import { Text } from './Text'
 import { Background } from './Background'
 import { Border } from './Border'
 
 export const SWITCH_HORIZONTAL_PADDING = 10
-export const SWITCH_HEIGHT = 24 + BORDER_SIZE * 2
+export const SWITCH_HEIGHT = 44 + BORDER_SIZE * 2
 export const SWITCH_LINE_HEIGHT = 18
 export const SWITCH_FONT_SIZE = 16
 
@@ -19,61 +18,57 @@ export type TSwitch = TOmitKey<TRect, 'height'> & {
   file: string,
   filteredFiles: string[],
   width: number,
-  onWidthChange: (file: string, width: number) => void,
   onToggle: (file: string, isActive: boolean) => void,
-}
+} & TMapHovered
 
 export const Switch = component(
   startWithType<TSwitch>(),
+  mapHovered,
   mapState('isActive', 'setIsActive', ({ filteredFiles, file }) => filteredFiles.includes(file), ['filteredFiles', 'file']),
   mapHandlers({
     onToggle: ({ file, isActive, setIsActive, onToggle }) => () => {
       setIsActive(!isActive)
       onToggle(file, !isActive)
     },
-    onWidthChange: ({ file, onWidthChange }) => (width: number) => {
-      onWidthChange(file, width + SWITCH_HORIZONTAL_PADDING * 2 + BORDER_SIZE * 2)
-    },
-  }),
-  mapWithProps(({ width }) => ({
-    textWidth: width - SWITCH_HORIZONTAL_PADDING * 2 - BORDER_SIZE * 2,
-  }))
-)(({ left, top, width, textWidth, isActive, file, onToggle, onWidthChange }) => (
+  })
+)(({ left, top, isActive, file, onToggle, width, onPointerEnter, onPointerLeave, isHovered }) => (
   <Block
     left={left}
     top={top}
     width={width}
     height={SWITCH_HEIGHT}
     isFlexbox
+    onPointerEnter={onPointerEnter}
+    onPointerLeave={onPointerLeave}
   >
-    <Background color={isActive ? COLOR_GREEN : COLOR_WHITE}/>
+    <Background color={isActive || isHovered ? COLOR_LIGHT_BLUE : COLOR_WHITE}/>
     <Border
-      color={COLOR_GREEN}
-      topWidth={BORDER_SIZE}
-      leftWidth={BORDER_SIZE}
+      color={isActive || isHovered ? COLOR_BLUE : COLOR_LIGHT_BLUE}
+      topWidth={0}
+      leftWidth={0}
       rightWidth={BORDER_SIZE}
-      bottomWidth={BORDER_SIZE}
+      bottomWidth={0}
     />
     <Checkbox
       isChecked={isActive}
       onToggle={onToggle}
     />
     <Block
+      width={150}
       left={SWITCH_HORIZONTAL_PADDING + BORDER_SIZE}
       height={SWITCH_HEIGHT}
       top={(SWITCH_HEIGHT - SWITCH_LINE_HEIGHT) / 2}
       shouldIgnorePointerEvents
     >
-      <Size width={textWidth} onWidthChange={onWidthChange}>
-        <Text
-          lineHeight={SWITCH_LINE_HEIGHT}
-          fontSize={SWITCH_FONT_SIZE}
-          fontFamily="sans-serif"
-          shouldPreserveWhitespace
-        >
-          {file}
-        </Text>
-      </Size>
+      <Text
+        color={COLOR_DARK_GRAY}
+        lineHeight={SWITCH_LINE_HEIGHT}
+        fontSize={SWITCH_FONT_SIZE}
+        fontFamily="sans-serif"
+        shouldPreserveWhitespace
+      >
+        {file}
+      </Text>
     </Block>
   </Block>
 ))
