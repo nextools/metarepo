@@ -1,12 +1,12 @@
 import React from 'react'
 import { startWithType, pureComponent } from 'refun'
 import { TOmitKey } from 'tsfn'
+import { colorToString } from 'colorido'
 import { TRect } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
-import { COLOR_BORDER_DELETED, DISCARD_ALPHA, BORDER_SIZE } from '../config'
+import { COLOR_BORDER_DELETED, DISCARD_ALPHA, BORDER_SIZE, DASH_SPACE } from '../config'
 import { Screenshot } from './Screenshot'
 import { Block } from './Block'
-import { Border } from './Border'
 
 export type TScreenshotDeleted = TRect & TOmitKey<TApiLoadScreenshotOpts, 'type'> & {
   isDiscarded: boolean,
@@ -21,6 +21,9 @@ export const ScreenshotDeleted = pureComponent(
     width={width}
     height={height}
     opacity={isDiscarded ? DISCARD_ALPHA : 1}
+    style={{
+      background: `repeating-linear-gradient(45deg,#fff,#fff ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${DASH_SPACE}px)`,
+    }}
   >
     <Block left={BORDER_SIZE} top={BORDER_SIZE}>
       <Screenshot
@@ -30,13 +33,6 @@ export const ScreenshotDeleted = pureComponent(
         height={height - BORDER_SIZE * 2}
       />
     </Block>
-    <Border
-      topWidth={BORDER_SIZE}
-      leftWidth={BORDER_SIZE}
-      rightWidth={BORDER_SIZE}
-      bottomWidth={BORDER_SIZE}
-      color={COLOR_BORDER_DELETED}
-    />
   </Block>
 ))
 

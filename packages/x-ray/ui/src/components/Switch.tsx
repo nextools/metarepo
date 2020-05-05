@@ -3,7 +3,7 @@ import { startWithType, component, mapState, mapHandlers, mapHovered, TMapHovere
 import { Checkbox } from '@primitives/checkbox'
 import { TOmitKey } from 'tsfn'
 import { TRect } from '../types'
-import { COLOR_WHITE, BORDER_SIZE, COLOR_LIGHT_BLUE, COLOR_BLUE, COLOR_DARK_GRAY } from '../config'
+import { COLOR_WHITE, BORDER_SIZE, COLOR_LIGHT_GREY, COLOR_BLUE, COLOR_DARK_GREY, COLOR_GREY, BORDER_SIZE_SMAL } from '../config'
 import { Block } from './Block'
 import { Text } from './Text'
 import { Background } from './Background'
@@ -41,12 +41,12 @@ export const Switch = component(
     onPointerEnter={onPointerEnter}
     onPointerLeave={onPointerLeave}
   >
-    <Background color={isActive || isHovered ? COLOR_LIGHT_BLUE : COLOR_WHITE}/>
+    <Background color={isActive || isHovered ? COLOR_LIGHT_GREY : COLOR_WHITE}/>
     <Border
-      color={isActive || isHovered ? COLOR_BLUE : COLOR_LIGHT_BLUE}
+      color={isActive || isHovered ? COLOR_BLUE : COLOR_GREY}
       topWidth={0}
       leftWidth={0}
-      rightWidth={BORDER_SIZE}
+      rightWidth={isActive || isHovered ? BORDER_SIZE : BORDER_SIZE_SMAL}
       bottomWidth={0}
     />
     <Checkbox
@@ -61,7 +61,7 @@ export const Switch = component(
       shouldIgnorePointerEvents
     >
       <Text
-        color={COLOR_DARK_GRAY}
+        color={COLOR_DARK_GREY}
         lineHeight={SWITCH_LINE_HEIGHT}
         fontSize={SWITCH_FONT_SIZE}
         fontFamily="sans-serif"

@@ -146,7 +146,7 @@ export const ScreenshotGrid = pureComponent(
     onPress={onPress}
   >
     <Block left={0} top={0} width={0} height={maxHeight} shouldFlow/>
-    <Animation values={[diffState ? 1 : 0]} time={200} easing={easeInOutCubic}>
+    <Animation values={[diffState ? 1 : 0]} time={500} easing={easeInOutCubic}>
       {([alpha]) => (
         <Fragment>
           {cols.reduce((result, col) => (

@@ -200,7 +200,6 @@ export const Popup = component(
               top={(DISCARD_BUTTON_HEIGHT - DISCARD_LINE_HEIGHT) / 2}
               left={(popupWidth - discardTextWidth) / 2}
               height={DISCARD_LINE_HEIGHT}
-              shouldIgnorePointerEvents
             >
               <Size width={discardTextWidth} onWidthChange={setDiscardTextWidth}>
                 <Text

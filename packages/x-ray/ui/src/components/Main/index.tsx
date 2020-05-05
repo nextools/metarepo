@@ -10,8 +10,8 @@ import noSignalImage from '../../images/no-signal.png'
 import { Popup } from '../Popup'
 import { Block } from '../Block'
 import { Background } from '../Background'
-import { COL_SPACE, BORDER_SIZE, COLOR_GRAY } from '../../config'
-import { Toolbar, TOOLBAR_HEIGHT, TOOLBAR_WIDTH } from '../Toolbar'
+import { COL_SPACE, COLOR_LIGHT_GREY } from '../../config'
+import { Toolbar, TOOLBAR_WIDTH } from '../Toolbar'
 import { SaveButton, SAVE_BUTTON_HEIGHT } from '../SaveButton'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
@@ -81,6 +81,14 @@ export const Main = component(
         files={files}
         filteredFiles={filteredFiles}
       />
+      <Block
+        top={0}
+        left={TOOLBAR_WIDTH}
+        width={width}
+        height={height}
+      >
+        <Background color={COLOR_LIGHT_GREY}/>
+      </Block>
       {isScreenshots(items, type) && (
         <ScreenshotGrid
           top={COL_SPACE}

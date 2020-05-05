@@ -3,7 +3,7 @@ import { startWithType, component, mapHandlers, mapStateRef } from 'refun'
 import { TPosition } from '../types'
 import { mapStoreDispatch } from '../store'
 import { actionAddFilter, actionRemoveFilter } from '../actions'
-import { COL_SPACE, COLOR_WHITE, COLOR_GREY, BORDER_SIZE } from '../config'
+import { COL_SPACE, COLOR_WHITE, COLOR_GREY, BORDER_SIZE_SMAL } from '../config'
 import { Block } from './Block'
 import { Switch, SWITCH_HEIGHT } from './Switch'
 import { Background } from './Background'
@@ -11,7 +11,6 @@ import { Border } from './Border'
 
 export const TOOLBAR_SPACING = COL_SPACE
 export const TOOLBAR_WIDTH = TOOLBAR_SPACING * 2 + 200
-export const TOOLBAR_HEIGHT = TOOLBAR_SPACING * 2 + SWITCH_HEIGHT
 
 export type TToolbar = TPosition & {
   files: string[],
@@ -35,7 +34,7 @@ export const Toolbar = component(
     top={0}
     width={TOOLBAR_WIDTH}
     height={height}
-    shouldScrollX
+    shouldScrollY
   >
     <Block
       height={height}
@@ -45,10 +44,10 @@ export const Toolbar = component(
       <Background color={COLOR_WHITE}/>
       <Border
         color={COLOR_GREY}
-        topWidth={BORDER_SIZE}
-        leftWidth={BORDER_SIZE}
-        rightWidth={BORDER_SIZE}
-        bottomWidth={BORDER_SIZE}
+        topWidth={0}
+        leftWidth={0}
+        rightWidth={BORDER_SIZE_SMAL}
+        bottomWidth={0}
       />
     </Block>
     {
