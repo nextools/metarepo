@@ -1,9 +1,21 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import ViewShot from 'react-native-view-shot' // eslint-disable-line
+import { setJSExceptionHandler, setNativeExceptionHandler } from 'react-native-exception-handler'
 import { SizeContext } from '@primitives/size'
 import { ImageContext } from '@primitives/image'
 import files from './files' // eslint-disable-line
+
+const exceptionHandler = (error) => {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  fetch('http://localhost:3002/error', {
+    method: 'POST',
+    body: String(error),
+  })
+}
+
+setJSExceptionHandler(exceptionHandler)
+setNativeExceptionHandler(exceptionHandler)
 
 const defaultStyles = {}
 const hasOwnWidthStyles = {
@@ -138,6 +150,7 @@ class Main extends Component {
     const { item } = this.state
 
     if (item !== null && !item.options.shouldWaitForResize && !item.options.shouldWaitForImages) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       this.onCapture()
     }
   }

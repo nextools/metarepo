@@ -13,6 +13,7 @@
     "@babel/runtime": "^7.4.3",
     "@primitives/image": "^2.0.0",
     "@primitives/size": "^2.0.0",
+    "react-native-exception-handler": "^2.10.8",
     "react-native-view-shot": "^3.0.2"
   },
   "devDependencies": {
