@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 add `react-native-exception-handler`
+
 ## v1.0.1
 
 * 🐞 upgrade primitives

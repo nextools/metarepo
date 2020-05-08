@@ -1,3 +1,9 @@
+## v0.2.5
+
+* 🐞 add `react-native-exception-handler`
+
+* ♻️ update dependencies `@x-ray/native-screenshots-app`
+
 ## v0.2.4
 
 * 🐞 copy `.d.ts` files from `src/` as is in `buildType` task
