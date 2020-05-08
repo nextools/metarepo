@@ -12,6 +12,7 @@ import {
   isActionDiscardItem,
   isActionAddFilter,
   isActionRemoveFilter,
+  isActionResetFilter,
 } from '../actions'
 import { TAction, TState } from '../types'
 import { initialState } from '../store/initial-state'
@@ -134,6 +135,13 @@ export const reducer: Reducer<TState> = (state, action) => {
     return {
       ...state,
       filteredFiles: state.filteredFiles.filter((item) => item !== action.payload),
+    }
+  }
+
+  if (isActionResetFilter(action)) {
+    return {
+      ...state,
+      filteredFiles: [],
     }
   }
 

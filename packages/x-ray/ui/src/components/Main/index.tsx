@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapHandlers, mapState, onUpdate } from 'refun'
+import { component, startWithType, mapHandlers, onUpdate } from 'refun'
 import { Image } from '@primitives/image'
 import { TListItems } from '@x-ray/core'
 import { mapStoreState, mapStoreDispatch } from '../../store'
@@ -12,9 +12,9 @@ import { Block } from '../Block'
 import { Background } from '../Background'
 import { COL_SPACE, COLOR_LIGHT_GREY } from '../../config'
 import { Toolbar, TOOLBAR_WIDTH } from '../Toolbar'
-import { SaveButton, SAVE_BUTTON_HEIGHT } from '../SaveButton'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
+import { Controls, CONTROLS_HEIGHT } from './Controls'
 
 const isScreenshots = (items: any, type: TType | null): items is TListItems => type === 'image' && Object.keys(items).length > 0
 const isSnapshots = (items: any, type: TType | null): items is TListItems => type === 'text' && Object.keys(items).length > 0
@@ -31,6 +31,30 @@ export const Main = component(
     discardedItems,
     filteredFiles,
     isSaved,
+    elements: Object.keys(items).reduce((acc, key) => {
+      if (items[key].type === 'NEW') {
+        return {
+          ...acc,
+          new: acc.new + 1,
+        }
+      } else if (items[key].type === 'DIFF') {
+        return {
+          ...acc,
+          diff: acc.diff + 1,
+        }
+      } else if (items[key].type === 'DELETED') {
+        return {
+          ...acc,
+          deleted: acc.deleted + 1,
+        }
+      }
+
+      return acc
+    }, {
+      new: 0,
+      diff: 0,
+      deleted: 0,
+    }),
   }), ['selectedItem', 'files', 'items', 'type', 'discardedItems', 'filteredFiles', 'isSaved']),
   mapStoreDispatch('dispatch'),
   onUpdate(({ dispatch }) => {
@@ -45,19 +69,17 @@ export const Main = component(
         await dispatch(actionSave(itemKeys, discardedItems))
       }
     },
-  }),
-  mapState('saveButtonWidth', 'setSaveButtonWidth', () => 0, [])
+  })
 )(({
   width,
   height,
   selectedItem,
   items,
+  elements,
   discardedItems,
   filteredFiles,
   files,
   type,
-  saveButtonWidth,
-  setSaveButtonWidth,
   isSaved,
   onSave,
 }) => {
@@ -81,44 +103,42 @@ export const Main = component(
         files={files}
         filteredFiles={filteredFiles}
       />
+      <Controls
+        width={width}
+        elements={elements}
+        onSave={onSave}
+      />
       <Block
-        top={0}
+        top={CONTROLS_HEIGHT}
         left={TOOLBAR_WIDTH}
         width={width}
-        height={height}
+        height={height - CONTROLS_HEIGHT}
       >
         <Background color={COLOR_LIGHT_GREY}/>
+        {isScreenshots(items, type) && (
+          <ScreenshotGrid
+            top={COL_SPACE}
+            left={0}
+            width={width - TOOLBAR_WIDTH}
+            height={height - CONTROLS_HEIGHT}
+            items={items}
+            discardedItems={discardedItems}
+            filteredFiles={filteredFiles}
+            shouldAnimate={selectedItem === null}
+          />
+        )}
+        {isSnapshots(items, type) && (
+          <SnapshotGrid
+            top={COL_SPACE}
+            left={0}
+            width={width - TOOLBAR_WIDTH}
+            height={height - CONTROLS_HEIGHT}
+            items={items}
+            discardedItems={discardedItems}
+            filteredFiles={filteredFiles}
+          />
+        )}
       </Block>
-      {isScreenshots(items, type) && (
-        <ScreenshotGrid
-          top={COL_SPACE}
-          left={TOOLBAR_WIDTH}
-          width={width - TOOLBAR_WIDTH}
-          height={height}
-          items={items}
-          discardedItems={discardedItems}
-          filteredFiles={filteredFiles}
-          shouldAnimate={selectedItem === null}
-        />
-      )}
-      {isSnapshots(items, type) && (
-        <SnapshotGrid
-          top={COL_SPACE}
-          left={TOOLBAR_WIDTH}
-          width={width - TOOLBAR_WIDTH}
-          height={height}
-          items={items}
-          discardedItems={discardedItems}
-          filteredFiles={filteredFiles}
-        />
-      )}
-      <SaveButton
-        top={height - SAVE_BUTTON_HEIGHT - 10}
-        left={width - saveButtonWidth - 10}
-        width={saveButtonWidth}
-        onPress={onSave}
-        onWidthChange={setSaveButtonWidth}
-      />
       {type !== null && selectedItem !== null && (
         <Popup
           left={0}
