@@ -29,6 +29,7 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
       dependencyNames: [
         'react-native-svg',
         'react-native-view-shot',
+        'react-native-exception-handler',
       ],
       portsToForward: [3002],
       isHeadless: true,
