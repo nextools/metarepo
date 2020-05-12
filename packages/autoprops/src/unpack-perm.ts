@@ -1,16 +1,17 @@
 import BigInt, { BigInteger } from 'big-integer'
-import { Permutation, TCommonComponentConfig } from './types'
-import { getValuesLength, getLength } from './get-length'
+import { TPermutation, TCommonComponentConfig } from './types'
+import { getLength } from './get-length'
 import { getPropKeys, getChildrenKeys } from './get-keys'
+import { adjustLengthForOptionalProp } from './utils'
 
-export const unpackPerm = (componentConfig: TCommonComponentConfig, int: BigInteger): Permutation => {
+export const unpackPerm = (componentConfig: TCommonComponentConfig, int: BigInteger): TPermutation => {
   const permValues: BigInteger[] = []
   const permLength: BigInteger[] = []
   const propKeys = getPropKeys(componentConfig.props)
   let permValue = int
 
   for (const key of propKeys) {
-    const length = getValuesLength(BigInt(componentConfig.props[key]!.length), key, componentConfig.required)
+    const length = adjustLengthForOptionalProp(BigInt(componentConfig.props[key]!.length), key, componentConfig.required)
     const { quotient, remainder } = permValue.divmod(length)
 
     permLength.push(length)
@@ -21,7 +22,8 @@ export const unpackPerm = (componentConfig: TCommonComponentConfig, int: BigInte
   const childrenKeys = getChildrenKeys(componentConfig)
 
   for (const key of childrenKeys) {
-    const length = getValuesLength(getLength(componentConfig.children![key].config), key, componentConfig.required)
+    const childConfig = componentConfig.children![key]!.config
+    const length = adjustLengthForOptionalProp(getLength(childConfig), key, componentConfig.required)
     const { quotient, remainder } = permValue.divmod(length)
 
     permLength.push(length)
@@ -31,7 +33,7 @@ export const unpackPerm = (componentConfig: TCommonComponentConfig, int: BigInte
 
   return {
     values: permValues,
-    length: permLength,
+    lengths: permLength,
     propKeys,
     childrenKeys,
   }

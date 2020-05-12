@@ -113,10 +113,11 @@ test('applyPropValue: prop mutin', (t) => {
       b: [true],
       c: [true],
     },
-    mutin: [
-      ['a', 'b'],
-      ['b', 'c'],
-    ],
+    deps: {
+      a: ['b'],
+      b: ['c', 'a'],
+      c: ['b'],
+    },
   }
 
   t.equals(
@@ -207,10 +208,11 @@ test('applyPropPath: child mutins', (t) => {
       b: { config: { props: {} }, Component: () => null },
       c: { config: { props: {} }, Component: () => null },
     },
-    mutin: [
-      ['a', 'b'],
-      ['a', 'c'],
-    ],
+    deps: {
+      a: ['b', 'c'],
+      b: ['a', 'c'],
+      c: ['a', 'b'],
+    },
   }
 
   t.equals(
