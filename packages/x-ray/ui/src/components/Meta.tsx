@@ -6,7 +6,11 @@ import { actionError } from '../actions'
 import { apiLoadMeta } from '../api/load-meta'
 import { TRect } from '../types'
 import { RenderMetaContext } from '../context/RenderMeta'
+import { COLOR_GREY, BORDER_SIZE_SMAL } from '../config'
 import { Block } from './Block'
+import { Border } from './Border'
+
+const SPACING = 20
 
 export type TMeta = TRect & {
   id: string,
@@ -43,7 +47,21 @@ export const Meta = component(
       shouldScrollX
       shouldScrollY
     >
-      {renderMeta(state)}
+      <Border
+        color={COLOR_GREY}
+        topWidth={0}
+        leftWidth={0}
+        rightWidth={BORDER_SIZE_SMAL}
+        bottomWidth={0}
+      />
+      <Block
+        top={SPACING}
+        left={SPACING}
+        width={width - SPACING * 2}
+      >
+        {renderMeta(state)}
+      </Block>
+
     </Block>
   )
 })

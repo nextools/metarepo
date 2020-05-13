@@ -10,11 +10,12 @@ import { Block } from './Block'
 
 export type TScreenshotDeleted = TRect & TOmitKey<TApiLoadScreenshotOpts, 'type'> & {
   isDiscarded: boolean,
+  hasNoBorder?: boolean,
 }
 
 export const ScreenshotDeleted = pureComponent(
   startWithType<TScreenshotDeleted>()
-)(({ top, left, width, height, id, isDiscarded }) => (
+)(({ top, left, width, height, id, isDiscarded, hasNoBorder }) => (
   <Block
     top={top}
     left={left}
@@ -22,7 +23,7 @@ export const ScreenshotDeleted = pureComponent(
     height={height}
     opacity={isDiscarded ? DISCARD_ALPHA : 1}
     style={{
-      background: `repeating-linear-gradient(45deg,#fff,#fff ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${DASH_SPACE}px)`,
+      background: hasNoBorder ? 'none' : `repeating-linear-gradient(45deg,#fff,#fff ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${DASH_SPACE}px)`,
     }}
   >
     <Block left={BORDER_SIZE} top={BORDER_SIZE}>

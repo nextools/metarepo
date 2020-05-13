@@ -19,12 +19,14 @@ export const COLOR_LIGHT_GREY: TColor = [249, 249, 251, 1]
 export const COLOR_GREY: TColor = [230, 230, 230, 1]
 export const COLOR_DARK_GREY: TColor = [90, 91, 100, 1]
 export const COLOR_RED: TColor = [249, 65, 49, 1]
+export const COLOR_LIGHT_RED: TColor = [255, 242, 241, 1]
 export const COLOR_GREEN: TColor = [111, 207, 151, 1]
+export const COLOR_LIGHT_GREEN: TColor = [236, 255, 244, 1]
 export const COLOR_BLUE: TColor = [70, 147, 249, 1]
 export const COLOR_ORANGE: TColor = [254, 126, 34, 1]
+export const COLOR_LINE_BG_ADDED: TColor = [196, 255, 198, 1]
+export const COLOR_LINE_BG_REMOVED: TColor = [255, 195, 190, 1]
 
 export const COLOR_BORDER_NEW: TColor = COLOR_GREEN
 export const COLOR_BORDER_DIFF: TColor = COLOR_BLUE
 export const COLOR_BORDER_DELETED: TColor = COLOR_RED
-export const COLOR_LINE_BG_ADDED: TColor = COLOR_GREEN
-export const COLOR_LINE_BG_REMOVED: TColor = COLOR_RED

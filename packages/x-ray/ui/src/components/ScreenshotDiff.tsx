@@ -17,6 +17,7 @@ export type TScreenshotDiff = TPosition & TOmitKey<TApiLoadScreenshotOpts, 'type
   oldAlpha: number,
   newAlpha: number,
   isDiscarded: boolean,
+  hasNoBorder?: boolean,
 }
 
 export const ScreenshotDiff = pureComponent(
@@ -32,6 +33,7 @@ export const ScreenshotDiff = pureComponent(
   newAlpha,
   id,
   isDiscarded,
+  hasNoBorder,
 }) => (
   <Fragment>
     <Block
@@ -41,7 +43,7 @@ export const ScreenshotDiff = pureComponent(
       height={oldHeight}
       opacity={Math.min(oldAlpha, isDiscarded ? DISCARD_ALPHA : 1)}
       style={{
-        background: `repeating-linear-gradient(45deg,#fff,#fff ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${DASH_SPACE}px)`,
+        background: hasNoBorder ? 'none' : `repeating-linear-gradient(45deg,#fff,#fff ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${DASH_SPACE}px)`,
       }}
     >
       <Block
@@ -68,7 +70,7 @@ export const ScreenshotDiff = pureComponent(
       height={newHeight}
       opacity={Math.min(newAlpha, isDiscarded ? DISCARD_ALPHA : 1)}
       style={{
-        background: `repeating-linear-gradient(45deg,#fff,#fff ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${DASH_SPACE}px)`,
+        background: hasNoBorder ? 'none' : `repeating-linear-gradient(45deg,#fff,#fff ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${DASH_SPACE}px)`,
       }}
     >
       <Block
