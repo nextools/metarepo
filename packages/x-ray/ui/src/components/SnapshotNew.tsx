@@ -1,5 +1,6 @@
 import React from 'react'
 import { startWithType, mapState, mapWithPropsMemo, pureComponent, onUpdateAsync } from 'refun'
+import { colorToString } from 'colorido'
 import { apiLoadSnapshot } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
@@ -11,10 +12,12 @@ import {
   DISCARD_ALPHA,
   BORDER_SIZE,
   SNAPSHOT_GRID_MAX_LINES,
+  COLOR_WHITE,
+  DASH_SPACE,
 } from '../config'
 import { Block } from './Block'
 import { Text } from './Text'
-import { Border } from './Border'
+import { Background } from './Background'
 
 export type TSnapshotNew = TRect & {
   id: string,
@@ -60,34 +63,39 @@ export const SnapshotNew = pureComponent(
     width={width}
     height={height}
     opacity={isDiscarded ? DISCARD_ALPHA : 1}
+    style={{
+      background: `repeating-linear-gradient(45deg,#fff,#fff ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${DASH_SPACE}px)`,
+    }}
   >
-    {lines.map((line, i) => (
-      <Block
-        key={i}
-        left={BORDER_SIZE}
-        top={i * SNAPSHOT_GRID_LINE_HEIGHT + BORDER_SIZE}
-        height={SNAPSHOT_GRID_LINE_HEIGHT}
-        width={width - BORDER_SIZE * 2}
-        shouldHideOverflow
-      >
-        <Text
-          fontFamily="monospace"
-          fontSize={SNAPSHOT_GRID_FONT_SIZE}
-          lineHeight={SNAPSHOT_GRID_LINE_HEIGHT}
-          shouldPreserveWhitespace
-          shouldPreventSelection
+    <Block
+      top={0}
+      left={0}
+      width={width}
+      height={height - BORDER_SIZE}
+      shouldHideOverflow
+    >
+      {lines.map((line, i) => (
+        <Block
+          key={i}
+          left={BORDER_SIZE}
+          top={i * SNAPSHOT_GRID_LINE_HEIGHT + BORDER_SIZE}
+          height={SNAPSHOT_GRID_LINE_HEIGHT}
+          width={width - BORDER_SIZE * 2}
+          shouldHideOverflow
         >
-          {line}
-        </Text>
-      </Block>
-    ))}
-    <Border
-      topWidth={BORDER_SIZE}
-      leftWidth={BORDER_SIZE}
-      rightWidth={BORDER_SIZE}
-      bottomWidth={BORDER_SIZE}
-      color={COLOR_BORDER_NEW}
-    />
+          <Background color={COLOR_WHITE}/>
+          <Text
+            fontFamily="monospace"
+            fontSize={SNAPSHOT_GRID_FONT_SIZE}
+            lineHeight={SNAPSHOT_GRID_LINE_HEIGHT}
+            shouldPreserveWhitespace
+            shouldPreventSelection
+          >
+            {line}
+          </Text>
+        </Block>
+      ))}
+    </Block>
   </Block>
 ))
 

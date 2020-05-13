@@ -3,6 +3,7 @@ import { startWithType, mapState, mapWithPropsMemo, pureComponent, onUpdateAsync
 import { isDefined } from 'tsfn'
 import { diffArrays } from 'diff'
 import { Block as PrimitiveBlock } from '@primitives/block'
+import { colorToString } from 'colorido'
 import { apiLoadSnapshot } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
@@ -10,17 +11,18 @@ import { TRect } from '../types'
 import {
   SNAPSHOT_GRID_FONT_SIZE,
   SNAPSHOT_GRID_LINE_HEIGHT,
-  COLOR_BORDER_DIFF,
   COLOR_LINE_BG_ADDED,
   COLOR_LINE_BG_REMOVED,
   DISCARD_ALPHA,
   BORDER_SIZE,
   SNAPSHOT_GRID_MAX_LINES,
+  DASH_SPACE,
+  COLOR_WHITE,
+  COLOR_ORANGE,
 } from '../config'
 import { Block } from './Block'
 import { Background } from './Background'
 import { Text } from './Text'
-import { Border } from './Border'
 
 export type TDiffLine = {
   value: string,
@@ -108,42 +110,47 @@ export const SnapshotDiff = pureComponent(
     width={width}
     height={height}
     opacity={isDiscarded ? DISCARD_ALPHA : 1}
+    style={{
+      background: `repeating-linear-gradient(45deg,#fff,#fff ${BORDER_SIZE}px,${colorToString(COLOR_ORANGE)} ${BORDER_SIZE}px,${colorToString(COLOR_ORANGE)} ${DASH_SPACE}px)`,
+    }}
   >
-    {lines.map((line, i) => (
-      <Block
-        key={i}
-        left={BORDER_SIZE}
-        top={i * SNAPSHOT_GRID_LINE_HEIGHT + BORDER_SIZE}
-        height={SNAPSHOT_GRID_LINE_HEIGHT}
-        width={width - BORDER_SIZE * 2}
-        shouldHideOverflow
-      >
-        {line.type === 'added' && (
-          <Background color={COLOR_LINE_BG_ADDED}/>
-        )}
-        {line.type === 'removed' && (
-          <Background color={COLOR_LINE_BG_REMOVED}/>
-        )}
-        <PrimitiveBlock>
-          <Text
-            fontFamily="monospace"
-            fontSize={SNAPSHOT_GRID_FONT_SIZE}
-            lineHeight={SNAPSHOT_GRID_LINE_HEIGHT}
-            shouldPreserveWhitespace
-            shouldPreventSelection
-          >
-            {line.value}
-          </Text>
-        </PrimitiveBlock>
-      </Block>
-    ))}
-    <Border
-      topWidth={BORDER_SIZE}
-      leftWidth={BORDER_SIZE}
-      rightWidth={BORDER_SIZE}
-      bottomWidth={BORDER_SIZE}
-      color={COLOR_BORDER_DIFF}
-    />
+    <Block
+      top={0}
+      left={0}
+      width={width}
+      height={height - BORDER_SIZE}
+      shouldHideOverflow
+    >
+      {lines.map((line, i) => (
+        <Block
+          key={i}
+          left={BORDER_SIZE}
+          top={i * SNAPSHOT_GRID_LINE_HEIGHT + BORDER_SIZE}
+          height={SNAPSHOT_GRID_LINE_HEIGHT}
+          width={width - BORDER_SIZE * 2}
+          shouldHideOverflow
+        >
+          <Background color={COLOR_WHITE}/>
+          {line.type === 'added' && (
+            <Background color={COLOR_LINE_BG_ADDED}/>
+          )}
+          {line.type === 'removed' && (
+            <Background color={COLOR_LINE_BG_REMOVED}/>
+          )}
+          <PrimitiveBlock>
+            <Text
+              fontFamily="monospace"
+              fontSize={SNAPSHOT_GRID_FONT_SIZE}
+              lineHeight={SNAPSHOT_GRID_LINE_HEIGHT}
+              shouldPreserveWhitespace
+              shouldPreventSelection
+            >
+              {line.value}
+            </Text>
+          </PrimitiveBlock>
+        </Block>
+      ))}
+    </Block>
   </Block>
 ))
 
