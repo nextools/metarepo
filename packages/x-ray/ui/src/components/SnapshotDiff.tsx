@@ -1,5 +1,5 @@
 import React from 'react'
-import { startWithType, mapState, mapWithPropsMemo, pureComponent, onUpdateAsync } from 'refun'
+import { startWithType, mapState, mapWithPropsMemo, pureComponent, onUpdateAsync, mapContext } from 'refun'
 import { isDefined } from 'tsfn'
 import { diffArrays } from 'diff'
 import { Block as PrimitiveBlock } from '@primitives/block'
@@ -12,14 +12,21 @@ import {
   SNAPSHOT_GRID_FONT_SIZE,
   SNAPSHOT_GRID_LINE_HEIGHT,
   COLOR_LINE_BG_ADDED,
-  COLOR_LINE_BG_REMOVED,
   DISCARD_ALPHA,
   BORDER_SIZE,
   SNAPSHOT_GRID_MAX_LINES,
   DASH_SPACE,
   COLOR_WHITE,
   COLOR_ORANGE,
+  COLOR_DM_BLACK,
+  COLOR_DM_LIGHT_GREY,
+  COLOR_DM_GREY,
+  COLOR_DM_LINE_BG_ADDED,
+  COLOR_DM_LINE_BG_REMOVED,
+  COLOR_LINE_BG_REMOVED,
+  COLOR_DARK_GREY,
 } from '../config'
+import { ThemeContext } from '../context/Theme'
 import { Block } from './Block'
 import { Background } from './Background'
 import { Text } from './Text'
@@ -39,6 +46,16 @@ export type TSnapshotDiff = TRect & {
 export const SnapshotDiff = pureComponent(
   startWithType<TSnapshotDiff>(),
   mapStoreDispatch('dispatch'),
+  mapContext(ThemeContext),
+  mapWithPropsMemo(({ darkMode }) => ({
+    color: {
+      border: darkMode ? COLOR_DM_BLACK : COLOR_WHITE,
+      background: darkMode ? COLOR_DM_LIGHT_GREY : COLOR_WHITE,
+      font: darkMode ? COLOR_DM_GREY : COLOR_DARK_GREY,
+      addedLine: darkMode ? COLOR_DM_LINE_BG_ADDED : COLOR_LINE_BG_ADDED,
+      removedLine: darkMode ? COLOR_DM_LINE_BG_REMOVED : COLOR_LINE_BG_REMOVED,
+    },
+  }), ['darkMode']),
   mapState('state', 'setState', () => null as TDiffLine[] | null, []),
   onUpdateAsync((props) => function *() {
     try {
@@ -103,7 +120,7 @@ export const SnapshotDiff = pureComponent(
       lines: state.slice(removeTopLinesCount, removeTopLinesCount + SNAPSHOT_GRID_MAX_LINES),
     }
   }, ['state'])
-)(({ lines, top, left, width, height, isDiscarded }) => (
+)(({ color, lines, top, left, width, height, isDiscarded }) => (
   <Block
     top={top}
     left={left}
@@ -111,7 +128,7 @@ export const SnapshotDiff = pureComponent(
     height={height}
     opacity={isDiscarded ? DISCARD_ALPHA : 1}
     style={{
-      background: `repeating-linear-gradient(45deg,#fff,#fff ${BORDER_SIZE}px,${colorToString(COLOR_ORANGE)} ${BORDER_SIZE}px,${colorToString(COLOR_ORANGE)} ${DASH_SPACE}px)`,
+      background: `repeating-linear-gradient(45deg,${colorToString(color.border)},${colorToString(color.border)} ${BORDER_SIZE}px,${colorToString(COLOR_ORANGE)} ${BORDER_SIZE}px,${colorToString(COLOR_ORANGE)} ${DASH_SPACE}px)`,
     }}
   >
     <Block
@@ -130,15 +147,16 @@ export const SnapshotDiff = pureComponent(
           width={width - BORDER_SIZE * 2}
           shouldHideOverflow
         >
-          <Background color={COLOR_WHITE}/>
+          <Background color={color.background}/>
           {line.type === 'added' && (
-            <Background color={COLOR_LINE_BG_ADDED}/>
+            <Background color={color.addedLine}/>
           )}
           {line.type === 'removed' && (
-            <Background color={COLOR_LINE_BG_REMOVED}/>
+            <Background color={color.removedLine}/>
           )}
           <PrimitiveBlock>
             <Text
+              color={color.font}
               fontFamily="monospace"
               fontSize={SNAPSHOT_GRID_FONT_SIZE}
               lineHeight={SNAPSHOT_GRID_LINE_HEIGHT}

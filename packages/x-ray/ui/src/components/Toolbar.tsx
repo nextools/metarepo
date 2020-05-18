@@ -1,11 +1,12 @@
 import React from 'react'
-import { startWithType, component, mapHandlers, mapState, mapWithProps } from 'refun'
+import { startWithType, component, mapHandlers, mapState, mapWithProps, mapContext, mapWithPropsMemo } from 'refun'
 import { Button } from '@primitives/button'
 import { Size } from '@primitives/size'
 import { TPosition } from '../types'
 import { mapStoreDispatch } from '../store'
 import { actionAddFilter, actionRemoveFilter, actionResetFilter } from '../actions'
-import { COL_SPACE, COLOR_WHITE, COLOR_GREY, BORDER_SIZE_SMAL, COLOR_DARK_GREY } from '../config'
+import { COL_SPACE, COLOR_WHITE, COLOR_GREY, BORDER_SIZE_SMAL, COLOR_DARK_GREY, COLOR_BLACK, COLOR_DM_DARK_GREY, COLOR_DM_LIGHT_GREY } from '../config'
+import { ThemeContext } from '../context/Theme'
 import { Block } from './Block'
 import { Switch, SWITCH_HEIGHT } from './Switch'
 import { Background } from './Background'
@@ -35,6 +36,13 @@ const Controls = component(
   startWithType<TControls>(),
   mapState('resetTextWidth', 'setResetTextWidth', () => 0, []),
   mapState('resetTextHeight', 'setResetTextHeight', () => 0, []),
+  mapContext(ThemeContext),
+  mapWithPropsMemo(({ darkMode }) => ({
+    color: {
+      background: darkMode ? COLOR_DM_DARK_GREY : COLOR_WHITE,
+      border: darkMode ? COLOR_DM_LIGHT_GREY : COLOR_GREY,
+    },
+  }), ['darkMode']),
   mapWithProps(({ resetTextWidth, resetTextHeight }) => ({
     resetButtonWidth: resetTextWidth + RESET_BUTTON_HORIZONTAL_PADDING * 2,
     resetButtonHeight: resetTextHeight + RESET_BUTTON_VERTICAL_PADDING * 2,
@@ -46,8 +54,9 @@ const Controls = component(
     width={TOOLBAR_WIDTH}
     height={CONTROLS_HEIGHT}
   >
+    <Background color={props.color.background}/>
     <Border
-      color={COLOR_GREY}
+      color={props.color.border}
       topWidth={0}
       leftWidth={0}
       rightWidth={0}
@@ -97,6 +106,13 @@ const Controls = component(
 export const Toolbar = component(
   startWithType<TToolbar>(),
   mapStoreDispatch('dispatch'),
+  mapContext(ThemeContext),
+  mapWithPropsMemo(({ darkMode }) => ({
+    color: {
+      background: darkMode ? COLOR_DM_DARK_GREY : COLOR_WHITE,
+      border: darkMode ? COLOR_DM_LIGHT_GREY : COLOR_GREY,
+    },
+  }), ['darkMode']),
   mapHandlers({
     onSwitchToggle: ({ dispatch }) => (file: string, isActive: boolean) => {
       dispatch(isActive ? actionAddFilter(file) : actionRemoveFilter(file))
@@ -105,7 +121,7 @@ export const Toolbar = component(
       dispatch(actionResetFilter())
     },
   })
-)(({ files, filteredFiles, height, onSwitchToggle, onResetFilter }) => (
+)(({ color, files, filteredFiles, height, onSwitchToggle, onResetFilter }) => (
   <Block
     left={0}
     top={0}
@@ -117,9 +133,9 @@ export const Toolbar = component(
       width={TOOLBAR_WIDTH}
       shouldFlow
     >
-      <Background color={COLOR_WHITE}/>
+      <Background color={color.background}/>
       <Border
-        color={COLOR_GREY}
+        color={color.border}
         topWidth={0}
         leftWidth={0}
         rightWidth={BORDER_SIZE_SMAL}

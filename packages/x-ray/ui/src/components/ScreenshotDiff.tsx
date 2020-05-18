@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react'
-import { startWithType, pureComponent } from 'refun'
+import { startWithType, pureComponent, mapContext, mapWithPropsMemo } from 'refun'
 import { TOmitKey } from 'tsfn'
 import { colorToString } from 'colorido'
 import { TPosition } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
-import { COLOR_BORDER_DELETED, COLOR_BORDER_NEW, DISCARD_ALPHA, BORDER_SIZE, DASH_SPACE, COLOR_WHITE } from '../config'
+import { COLOR_BORDER_DELETED, COLOR_BORDER_NEW, DISCARD_ALPHA, BORDER_SIZE, DASH_SPACE, COLOR_WHITE, COLOR_DM_BLACK } from '../config'
+import { ThemeContext } from '../context/Theme'
 import { Background } from './Background'
 import { Screenshot } from './Screenshot'
 import { Block } from './Block'
@@ -21,8 +22,16 @@ export type TScreenshotDiff = TPosition & TOmitKey<TApiLoadScreenshotOpts, 'type
 }
 
 export const ScreenshotDiff = pureComponent(
-  startWithType<TScreenshotDiff>()
+  startWithType<TScreenshotDiff>(),
+  mapContext(ThemeContext),
+  mapWithPropsMemo(({ darkMode }) => ({
+    color: {
+      border: darkMode ? COLOR_DM_BLACK : COLOR_WHITE,
+      background: darkMode ? COLOR_DM_BLACK : COLOR_WHITE,
+    },
+  }), ['darkMode'])
 )(({
+  color,
   left,
   top,
   oldWidth,
@@ -43,7 +52,7 @@ export const ScreenshotDiff = pureComponent(
       height={oldHeight}
       opacity={Math.min(oldAlpha, isDiscarded ? DISCARD_ALPHA : 1)}
       style={{
-        background: hasNoBorder ? 'none' : `repeating-linear-gradient(45deg,#fff,#fff ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${DASH_SPACE}px)`,
+        background: hasNoBorder ? 'none' : `repeating-linear-gradient(45deg,${colorToString(color.border)},${colorToString(color.border)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_DELETED)} ${DASH_SPACE}px)`,
       }}
     >
       <Block
@@ -52,7 +61,7 @@ export const ScreenshotDiff = pureComponent(
         width={oldWidth - BORDER_SIZE * 2}
         height={oldHeight - BORDER_SIZE * 2}
       >
-        <Background color={COLOR_WHITE}/>
+        <Background color={color.background}/>
       </Block>
       <Block left={BORDER_SIZE} top={BORDER_SIZE}>
         <Screenshot
@@ -70,14 +79,14 @@ export const ScreenshotDiff = pureComponent(
       height={newHeight}
       opacity={Math.min(newAlpha, isDiscarded ? DISCARD_ALPHA : 1)}
       style={{
-        background: hasNoBorder ? 'none' : `repeating-linear-gradient(45deg,#fff,#fff ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${DASH_SPACE}px)`,
+        background: hasNoBorder ? 'none' : `repeating-linear-gradient(45deg,${colorToString(color.border)},${colorToString(color.border)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${DASH_SPACE}px)`,
       }}
     >
       <Block
         left={BORDER_SIZE}
         top={BORDER_SIZE}
       >
-        <Background color={COLOR_WHITE}/>
+        <Background color={color.background}/>
         <Screenshot
           id={id}
           type="NEW"

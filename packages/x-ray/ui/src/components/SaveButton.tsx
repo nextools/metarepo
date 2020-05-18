@@ -9,7 +9,7 @@ import { Text } from './Text'
 import { Background } from './Background'
 import { CONTROLS_HEIGHT } from './Main/Controls'
 
-const SAVE_BUTTON_HORIZONTAL_PADDING = 14
+export const SAVE_BUTTON_HORIZONTAL_PADDING = 14
 const SAVE_BUTTON_VERTICAL_PADDING = 6
 const SAVE_BUTTON_FONT_SIZE = 13
 const SAVE_BUTTON_BORDER_RADIUS = 14

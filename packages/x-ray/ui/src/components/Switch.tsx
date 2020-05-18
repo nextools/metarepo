@@ -1,9 +1,10 @@
 import React from 'react'
-import { startWithType, component, mapState, mapHandlers, mapHovered, TMapHovered } from 'refun'
+import { startWithType, component, mapState, mapHandlers, mapHovered, TMapHovered, mapContext, mapWithPropsMemo } from 'refun'
 import { Checkbox } from '@primitives/checkbox'
 import { TOmitKey } from 'tsfn'
 import { TRect } from '../types'
-import { COLOR_WHITE, BORDER_SIZE, COLOR_LIGHT_GREY, COLOR_BLUE, COLOR_DARK_GREY, COLOR_GREY, BORDER_SIZE_SMAL } from '../config'
+import { COLOR_WHITE, BORDER_SIZE, COLOR_LIGHT_GREY, COLOR_BLUE, COLOR_DARK_GREY, COLOR_GREY, BORDER_SIZE_SMAL, COLOR_DM_DARK_GREY, COLOR_DM_LIGHT_GREY, COLOR_DM_GREY } from '../config'
+import { ThemeContext } from '../context/Theme'
 import { Block } from './Block'
 import { Text } from './Text'
 import { Background } from './Background'
@@ -24,6 +25,15 @@ export type TSwitch = TOmitKey<TRect, 'height'> & {
 export const Switch = component(
   startWithType<TSwitch>(),
   mapHovered,
+  mapContext(ThemeContext),
+  mapWithPropsMemo(({ darkMode }) => ({
+    color: {
+      background: darkMode ? COLOR_DM_DARK_GREY : COLOR_WHITE,
+      activeBackground: darkMode ? COLOR_DM_LIGHT_GREY : COLOR_LIGHT_GREY,
+      font: darkMode ? COLOR_DM_GREY : COLOR_DARK_GREY,
+      border: darkMode ? COLOR_DM_LIGHT_GREY : COLOR_GREY,
+    },
+  }), ['darkMode']),
   mapState('isActive', 'setIsActive', ({ filteredFiles, file }) => filteredFiles.includes(file), ['filteredFiles', 'file']),
   mapHandlers({
     onToggle: ({ file, isActive, setIsActive, onToggle }) => () => {
@@ -31,7 +41,7 @@ export const Switch = component(
       onToggle(file, !isActive)
     },
   })
-)(({ left, top, isActive, file, onToggle, width, onPointerEnter, onPointerLeave, isHovered }) => (
+)(({ color, left, top, isActive, file, onToggle, width, onPointerEnter, onPointerLeave, isHovered }) => (
   <Block
     left={left}
     top={top}
@@ -41,9 +51,14 @@ export const Switch = component(
     onPointerEnter={onPointerEnter}
     onPointerLeave={onPointerLeave}
   >
-    <Background color={isActive || isHovered ? COLOR_LIGHT_GREY : COLOR_WHITE}/>
+    <Background
+      color={isActive || isHovered
+        ? color.activeBackground
+        : color.background
+      }
+    />
     <Border
-      color={isActive || isHovered ? COLOR_BLUE : COLOR_GREY}
+      color={isActive || isHovered ? COLOR_BLUE : color.border}
       topWidth={0}
       leftWidth={0}
       rightWidth={isActive || isHovered ? BORDER_SIZE : BORDER_SIZE_SMAL}
@@ -61,7 +76,7 @@ export const Switch = component(
       shouldIgnorePointerEvents
     >
       <Text
-        color={COLOR_DARK_GREY}
+        color={color.font}
         lineHeight={SWITCH_LINE_HEIGHT}
         fontSize={SWITCH_FONT_SIZE}
         fontFamily="sans-serif"

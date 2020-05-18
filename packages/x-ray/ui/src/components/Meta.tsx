@@ -61,7 +61,6 @@ export const Meta = component(
       >
         {renderMeta(state)}
       </Block>
-
     </Block>
   )
 })
