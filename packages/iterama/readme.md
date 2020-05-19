@@ -518,7 +518,9 @@ const iterable = range(5)
 const reducer = (acc: number, value: number) => acc + value
 const result = reduce(reducer, 0)(iterable)
 
-console.log(result)
+for (const value of result) {
+  console.log(value)
+}
 // 10
 ```
 

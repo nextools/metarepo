@@ -1,13 +1,18 @@
 import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import { pipe } from 'funcom'
 import { reduce } from '../src/reduce'
 import { range } from '../src/range'
+import { toArray } from '../src/to-array'
 
 test('iterama: reduce', (t) => {
   const iterable = range(5)
   const add = (a: number, b: number): number => a + b
   const spyReducer: typeof add = createSpy(({ args }) => add(args[0], args[1]))
-  const result = reduce(spyReducer, 0)(iterable)
+  const result = pipe(
+    reduce(spyReducer, 0),
+    toArray
+  )(iterable)
 
   t.deepEquals(
     getSpyCalls(spyReducer),
@@ -18,12 +23,12 @@ test('iterama: reduce', (t) => {
       [3, 3, 3],
       [6, 4, 4],
     ],
-    'should pass accumulator, value and counter to reducer function '
+    'should pass accumulator, value and counter to reducer function'
   )
 
   t.deepEquals(
     result,
-    10,
+    [10],
     'should iterate and reduce over iterable'
   )
 
