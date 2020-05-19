@@ -41,6 +41,6 @@
   "devDependencies": {
     "@x-ray/common-utils": "^1.0.2",
     "@x-ray/screenshot-utils": "^1.0.4",
-    "@x-ray/snapshots": "^1.0.4"
+    "@x-ray/snapshots": "^1.0.5"
   }
 }
