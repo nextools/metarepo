@@ -13,6 +13,7 @@
     "packages/fixdeps",
     "packages/funcom",
     "packages/graphiq",
+    "packages/ida",
     "packages/import-wasm",
     "packages/iterama",
     "packages/makethen",

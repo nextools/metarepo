@@ -50,6 +50,8 @@ yarn add iterama
 * [`toObjectAsync`](#toobjectasync)
 * [`toMap`](#tomap)
 * [`toMapAsync`](#tomapasync)
+* [`toIterator`](#toiterator)
+* [`toIteratorAsync`](#toiteratorasync)
 
 In the examples below we use `range()` and `rangeAsync()` helpers whenever possible just to save space and reading time.
 
@@ -518,7 +520,9 @@ const iterable = range(5)
 const reducer = (acc: number, value: number) => acc + value
 const result = reduce(reducer, 0)(iterable)
 
-console.log(result)
+for (const value of result) {
+  console.log(value)
+}
 // 10
 ```
 
@@ -529,7 +533,7 @@ Reduces over async iterable.
 ```ts
 type TReduceFnAsync<T, R> = (acc: R, value: T, index: number) => Promise<R> | R
 
-const reduceAsync: <T, R>(reduceFn: TReduceFnAsync<T, R>, initial: Promise<R> | R) => (iterable: AsyncIterable<T>) => Promise<R>
+const reduceAsync: <T, R>(reduceFn: TReduceFnAsync<T, R>, initial: Promise<R> | R) => (iterable: AsyncIterable<T>) => AsyncIterable<R>
 ```
 
 ```ts
@@ -537,9 +541,11 @@ import { reduceAsync, rangeAsync } from 'iterama'
 
 const iterable = rangeAsync(5)
 const reducer = (acc: number, value: number) => Promise.resolve(acc + value)
-const result = await reduceAsync(reducer, Promise.resolve(0))(iterable)
+const result = reduceAsync(reducer, Promise.resolve(0))(iterable)
 
-console.log(result)
+for await (const value of result) {
+  console.log(value)
+}
 // 10
 ```
 
@@ -1057,7 +1063,7 @@ for await (const value of result) {
 
 ### `toArray`
 
-Convert iterable into array.
+Converts iterable into array.
 
 ```ts
 const toArray: <T>(iterable: Iterable<T>) => T[]
@@ -1075,7 +1081,7 @@ console.log(result)
 
 ### `toArrayAsync`
 
-Convert async iterable into array.
+Converts async iterable into array.
 
 ```ts
 const toArrayAsync: <T>(iterable: AsyncIterable<T>) => Promise<T[]>
@@ -1093,7 +1099,7 @@ console.log(result)
 
 ### `toSet`
 
-Convert iterable into Set.
+Converts iterable into Set.
 
 ```ts
 const toSet: <T>(iterable: Iterable<T>) => Set<T>
@@ -1111,7 +1117,7 @@ console.log(result)
 
 ### `toSetAsync`
 
-Convert async iterable into Set.
+Converts async iterable into Set.
 
 ```ts
 const toSetAsync: <T>(iterable: AsyncIterable<T>) => Promise<Set<T>>
@@ -1129,7 +1135,7 @@ console.log(result)
 
 ### `toObject`
 
-Convert iterable filled with entries into object.
+Converts iterable filled with entries into object.
 
 ```ts
 const toObject: <K extends PropertyKey, V>(iterable: Iterable<readonly [K, V]>) => { [key in K]: V }
@@ -1161,7 +1167,7 @@ console.log(result)
 
 ### `toObjectAsync`
 
-Convert async iterable filled with entries into object.
+Converts async iterable filled with entries into object.
 
 ```ts
 const toObject: <K extends PropertyKey, V>(iterable: AsyncIterable<readonly [K, V]>) => Promise<{ [key in K]: V }>
@@ -1193,7 +1199,7 @@ console.log(result)
 
 ### `toMap`
 
-Convert iterable filled with entries into Map.
+Converts iterable filled with entries into Map.
 
 ```ts
 const toMap: <K, V>(iterable: Iterable<readonly [K, V]>) => Map<K, V>
@@ -1225,7 +1231,7 @@ console.log(result)
 
 ### `toMapAsync`
 
-Convert async iterable filled with entries into Map.
+Converts async iterable filled with entries into Map.
 
 ```ts
 const toMapAsync: <K, V>(iterable: AsyncIterable<readonly [K, V]>) => Promise<Map<K, V>>
@@ -1253,4 +1259,74 @@ console.log(result)
 //   d → 3,
 //   e → 4
 // }
+```
+
+### `toIterator`
+
+Extracts iterator from iterable.
+
+```ts
+const toIterator: <T>(iterable: Iterable<T>) => Iterator<T>
+```
+
+```ts
+import { toIterator } from 'iterama'
+
+const iterable = {
+  *[Symbol.iterator]() {
+    yield 1
+    yield 2
+    yield 3
+  }
+}
+const iterator = toIterator(iterable)
+const result = [
+  iterator.next(),
+  iterator.next(),
+  iterator.next(),
+  iterator.next(),
+]
+
+console.log(result)
+// [
+//   { value: 1, done: false },
+//   { value: 2, done: false },
+//   { value: 3, done: false },
+//   { value: undefined, done: true },
+// ]
+```
+
+### `toIteratorAsync`
+
+Extracts async iterator from async iterable.
+
+```ts
+const toAsyncIterator: <T>(iterable: AsyncIterable<T>) => AsyncIterator<T>
+```
+
+```ts
+import { toIteratorAsync } from 'iterama'
+
+const iterable = {
+  *[Symbol.asyncIterator]() {
+    yield Promise.resolve(1)
+    yield Promise.resolve(2)
+    yield Promise.resolve(3)
+  }
+}
+const iterator = toIteratorAsync(iterable)
+const result = [
+  await iterator.next(),
+  await iterator.next(),
+  await iterator.next(),
+  await iterator.next(),
+]
+
+console.log(result)
+// [
+//   { value: 1, done: false },
+//   { value: 2, done: false },
+//   { value: 3, done: false },
+//   { value: undefined, done: true },
+// ]
 ```

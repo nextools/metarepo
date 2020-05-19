@@ -23,7 +23,7 @@ test('iterama: scanAsync', async (t) => {
       [3, 3, 3],
       [6, 4, 4],
     ],
-    'should pass accumulator, value and counter to scanner function '
+    'should pass accumulator, value and counter to scanner function'
   )
 
   t.deepEquals(

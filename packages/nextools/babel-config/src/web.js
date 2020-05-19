@@ -25,6 +25,9 @@ exports.babelConfigWebBuild = {
       { regenerator: false },
     ],
     require.resolve('@babel/plugin-syntax-bigint'),
+    require.resolve('@babel/plugin-proposal-class-properties'),
+    require.resolve('@babel/plugin-proposal-private-methods'),
+    require.resolve('@babel/plugin-proposal-export-namespace-from'),
   ],
   overrides: [
     {

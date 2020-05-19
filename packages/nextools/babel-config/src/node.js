@@ -22,6 +22,9 @@ exports.babelConfigNodeBuild = {
       { regenerator: false },
     ],
     require.resolve('@babel/plugin-syntax-bigint'),
+    require.resolve('@babel/plugin-proposal-class-properties'),
+    require.resolve('@babel/plugin-proposal-private-methods'),
+    require.resolve('@babel/plugin-proposal-export-namespace-from'),
     [
       require.resolve('babel-plugin-transform-inline-environment-variables'),
       {
@@ -61,6 +64,9 @@ exports.babelConfigNodeRegister = {
   ],
   plugins: [
     require.resolve('@babel/plugin-syntax-bigint'),
+    require.resolve('@babel/plugin-proposal-class-properties'),
+    require.resolve('@babel/plugin-proposal-private-methods'),
+    require.resolve('@babel/plugin-proposal-export-namespace-from'),
   ],
   overrides: [
     {
