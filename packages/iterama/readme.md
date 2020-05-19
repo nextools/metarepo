@@ -51,6 +51,7 @@ yarn add iterama
 * [`toMap`](#tomap)
 * [`toMapAsync`](#tomapasync)
 * [`toIterator`](#toiterator)
+* [`toIteratorAsync`](#toiteratorasync)
 
 In the examples below we use `range()` and `rangeAsync()` helpers whenever possible just to save space and reading time.
 
@@ -1062,7 +1063,7 @@ for await (const value of result) {
 
 ### `toArray`
 
-Convert iterable into array.
+Converts iterable into array.
 
 ```ts
 const toArray: <T>(iterable: Iterable<T>) => T[]
@@ -1080,7 +1081,7 @@ console.log(result)
 
 ### `toArrayAsync`
 
-Convert async iterable into array.
+Converts async iterable into array.
 
 ```ts
 const toArrayAsync: <T>(iterable: AsyncIterable<T>) => Promise<T[]>
@@ -1098,7 +1099,7 @@ console.log(result)
 
 ### `toSet`
 
-Convert iterable into Set.
+Converts iterable into Set.
 
 ```ts
 const toSet: <T>(iterable: Iterable<T>) => Set<T>
@@ -1116,7 +1117,7 @@ console.log(result)
 
 ### `toSetAsync`
 
-Convert async iterable into Set.
+Converts async iterable into Set.
 
 ```ts
 const toSetAsync: <T>(iterable: AsyncIterable<T>) => Promise<Set<T>>
@@ -1134,7 +1135,7 @@ console.log(result)
 
 ### `toObject`
 
-Convert iterable filled with entries into object.
+Converts iterable filled with entries into object.
 
 ```ts
 const toObject: <K extends PropertyKey, V>(iterable: Iterable<readonly [K, V]>) => { [key in K]: V }
@@ -1166,7 +1167,7 @@ console.log(result)
 
 ### `toObjectAsync`
 
-Convert async iterable filled with entries into object.
+Converts async iterable filled with entries into object.
 
 ```ts
 const toObject: <K extends PropertyKey, V>(iterable: AsyncIterable<readonly [K, V]>) => Promise<{ [key in K]: V }>
@@ -1198,7 +1199,7 @@ console.log(result)
 
 ### `toMap`
 
-Convert iterable filled with entries into Map.
+Converts iterable filled with entries into Map.
 
 ```ts
 const toMap: <K, V>(iterable: Iterable<readonly [K, V]>) => Map<K, V>
@@ -1230,7 +1231,7 @@ console.log(result)
 
 ### `toMapAsync`
 
-Convert async iterable filled with entries into Map.
+Converts async iterable filled with entries into Map.
 
 ```ts
 const toMapAsync: <K, V>(iterable: AsyncIterable<readonly [K, V]>) => Promise<Map<K, V>>
@@ -1295,3 +1296,37 @@ console.log(result)
 // ]
 ```
 
+### `toIteratorAsync`
+
+Extracts async iterator from async iterable.
+
+```ts
+const toAsyncIterator: <T>(iterable: AsyncIterable<T>) => AsyncIterator<T>
+```
+
+```ts
+import { toIteratorAsync } from 'iterama'
+
+const iterable = {
+  *[Symbol.asyncIterator]() {
+    yield Promise.resolve(1)
+    yield Promise.resolve(2)
+    yield Promise.resolve(3)
+  }
+}
+const iterator = toIteratorAsync(iterable)
+const result = [
+  await iterator.next(),
+  await iterator.next(),
+  await iterator.next(),
+  await iterator.next(),
+]
+
+console.log(result)
+// [
+//   { value: 1, done: false },
+//   { value: 2, done: false },
+//   { value: 3, done: false },
+//   { value: undefined, done: true },
+// ]
+```
