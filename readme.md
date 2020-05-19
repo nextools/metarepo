@@ -17,6 +17,7 @@ Check the individual documentations for more details:
 * [fixdeps](packages/fixdeps): automatically add missing or remove unnecessary (dev)dependencies
 * [funcom](packages/funcom): functional composition helpers
 * [graphiq](packages/graphiq): React component to render various SVG graphs at one plot
+* [ida](packages/ida): iterable data structures
 * [import-wasm](packages/import-wasm): async/sync helpers to import `.wasm` modules in Node.js
 * [iterama](packages/iterama): composable functional (async) iterable helpers
 * [makethen](packages/makethen): strongly typed (up to 3 arguments and 3 result params) promisify for Node.js-style callbacks
