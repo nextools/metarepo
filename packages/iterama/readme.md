@@ -50,6 +50,7 @@ yarn add iterama
 * [`toObjectAsync`](#toobjectasync)
 * [`toMap`](#tomap)
 * [`toMapAsync`](#tomapasync)
+* [`toIterator`](#toiterator)
 
 In the examples below we use `range()` and `rangeAsync()` helpers whenever possible just to save space and reading time.
 
@@ -1258,3 +1259,39 @@ console.log(result)
 //   e → 4
 // }
 ```
+
+### `toIterator`
+
+Extracts iterator from iterable.
+
+```ts
+const toIterator: <T>(iterable: Iterable<T>) => Iterator<T>
+```
+
+```ts
+import { toIterator } from 'iterama'
+
+const iterable = {
+  *[Symbol.iterator]() {
+    yield 1
+    yield 2
+    yield 3
+  }
+}
+const iterator = toIterator(iterable)
+const result = [
+  iterator.next(),
+  iterator.next(),
+  iterator.next(),
+  iterator.next(),
+]
+
+console.log(result)
+// [
+//   { value: 1, done: false },
+//   { value: 2, done: false },
+//   { value: 3, done: false },
+//   { value: undefined, done: true },
+// ]
+```
+
