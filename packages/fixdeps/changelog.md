@@ -1,3 +1,7 @@
+## v1.1.2
+
+* 🐞 parse `classPrivateProperties` and `classPrivateMethods` ESNext features
+
 ## v1.1.1
 
 * 🐞 fix TPackageJson types

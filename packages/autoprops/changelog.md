@@ -1,3 +1,9 @@
+## v1.0.4
+
+* 🐞 upgrade `iterama`
+
+* ♻️ update dependencies `iterama`
+
 ## v1.0.3
 
 * 🐞 fix recursive meta type

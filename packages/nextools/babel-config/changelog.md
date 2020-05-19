@@ -1,3 +1,7 @@
+## v0.1.4
+
+* 🐞 support ESNext proposals already implemented in TS
+
 ## v0.1.3
 
 * 🐞 refactor and rename configs

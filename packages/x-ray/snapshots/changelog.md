@@ -1,3 +1,9 @@
+## v1.0.5
+
+* 🐞 upgrade `iterama`
+
+* ♻️ update dependencies `iterama`
+
 ## v1.0.4
 
 * 🐞 refactor using new rebox/web API

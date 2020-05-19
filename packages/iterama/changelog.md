@@ -1,3 +1,13 @@
+## v0.3.0
+
+* 💥 make `reduceAsync` to return async iterable instead of promise to value
+
+* 💥 make `reduce` to return iterable instead of value
+
+* 🌱 add `toIteratorAsync` method
+
+* 🌱 add `toIterator` method
+
 ## v0.2.2
 
 * 🐞 refactor using `funcom` dependency
