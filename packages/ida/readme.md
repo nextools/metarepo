@@ -10,6 +10,33 @@ $ yarn add ida
 
 ## API
 
+* [Map](#map)
+  * [from](#from)
+  * [fromAsync](#fromasync)
+  * [size](#size)
+  * [clear](#clear)
+  * [delete](#delete)
+  * [has](#has)
+  * [get](#get)
+  * [set](#set)
+  * [update](#update)
+  * [keys](#keys)
+  * [values](#values)
+  * [pipe](#pipe)
+  * [toObject](#toobject)
+  * [toNativeMap](#tonativemap)
+* [Set](#set-1)
+  * [from](#from-1)
+  * [fromAsync](#fromasync-1)
+  * [size](#size-1)
+  * [clear](#clear-1)
+  * [delete](#delete-1)
+  * [has](#has-1)
+  * [add](#add)
+  * [pipe](#pipe-1)
+  * [toArray](#toarray)
+  * [toNativeSet](#tonativeset)
+
 ### `Map`
 
 Wrapper on top of native ES6 [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
