@@ -9,6 +9,8 @@ export const parse = (content: string): File => (
       'typescript',
       'objectRestSpread',
       'classProperties',
+      'classPrivateProperties',
+      'classPrivateMethods',
       'exportDefaultFrom',
       'exportNamespaceFrom',
       'asyncGenerators',
