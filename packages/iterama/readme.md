@@ -531,7 +531,7 @@ Reduces over async iterable.
 ```ts
 type TReduceFnAsync<T, R> = (acc: R, value: T, index: number) => Promise<R> | R
 
-const reduceAsync: <T, R>(reduceFn: TReduceFnAsync<T, R>, initial: Promise<R> | R) => (iterable: AsyncIterable<T>) => Promise<R>
+const reduceAsync: <T, R>(reduceFn: TReduceFnAsync<T, R>, initial: Promise<R> | R) => (iterable: AsyncIterable<T>) => AsyncIterable<R>
 ```
 
 ```ts
@@ -539,9 +539,11 @@ import { reduceAsync, rangeAsync } from 'iterama'
 
 const iterable = rangeAsync(5)
 const reducer = (acc: number, value: number) => Promise.resolve(acc + value)
-const result = await reduceAsync(reducer, Promise.resolve(0))(iterable)
+const result = reduceAsync(reducer, Promise.resolve(0))(iterable)
 
-console.log(result)
+for await (const value of result) {
+  console.log(value)
+}
 // 10
 ```
 
