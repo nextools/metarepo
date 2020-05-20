@@ -19,13 +19,16 @@ const getDependencyAndroidSourcePath = async (dependencyPath: string): Promise<s
 export const linkAndroidDependency = async (options: TLinkAndroidDependencyOptions): Promise<void> => {
   const dependencyPath = path.join('node_modules', options.dependencyName)
   const dependencyAndroidSourcePath = await getDependencyAndroidSourcePath(dependencyPath)
+  const cleanDependencyName = options.dependencyName.indexOf('@') === -1
+    ? options.dependencyName
+    : options.dependencyName.split('/')[1]
 
   // settings.gradle
   const settingsGradlePath = path.join(options.projectPath, 'settings.gradle')
   const dependencySettingsGradlePath = path.relative(options.projectPath, dependencyAndroidSourcePath)
   let settingGradleData = await readFile(settingsGradlePath, { encoding: 'utf8' })
 
-  settingGradleData = settingGradleData.replace('// REBOX', `include ':${options.dependencyName}'\nproject(':${options.dependencyName}').projectDir = new File(rootProject.projectDir, '${dependencySettingsGradlePath}')\n// REBOX`)
+  settingGradleData = settingGradleData.replace('// REBOX', `include ':${cleanDependencyName}'\nproject(':${cleanDependencyName}').projectDir = new File(rootProject.projectDir, '${dependencySettingsGradlePath}')\n// REBOX`)
 
   await writeFile(settingsGradlePath, settingGradleData)
 
@@ -33,7 +36,7 @@ export const linkAndroidDependency = async (options: TLinkAndroidDependencyOptio
   const buildGradlePath = path.join(options.projectPath, 'app', 'build.gradle')
   let buildGradleData = await readFile(buildGradlePath, { encoding: 'utf8' })
 
-  buildGradleData = buildGradleData.replace('// REBOX', `implementation project(':${options.dependencyName}')\n    // REBOX`)
+  buildGradleData = buildGradleData.replace('// REBOX', `implementation project(':${cleanDependencyName}')\n    // REBOX`)
 
   await writeFile(buildGradlePath, buildGradleData)
 
