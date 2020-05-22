@@ -6,7 +6,7 @@ import { sanitizeLines, optMetaValue } from './utils'
 import { TYPE_ARRAY_BRACKET, TYPE_ARRAY_COMMA } from './constants'
 
 export type TSerializeArray = {
-  arr: readonly any[],
+  arr: any[],
   currentIndent: number,
   config: TConfig,
   meta?: TMeta,
