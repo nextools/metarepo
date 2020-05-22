@@ -1,0 +1,45 @@
+{
+  "name": "@x-ray/plugin-android-screenshots",
+  "version": "0.0.0",
+  "description": "Check Android screenshots with X-Ray",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-syntax-bigint": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/preset-typescript": "^7.9.0",
+    "@babel/register": "^7.8.6",
+    "@rebox/android": "^2.0.4",
+    "@x-ray/core": "^0.0.0",
+    "@x-ray/ui": "^1.0.3",
+    "pifs": "^1.0.2",
+    "pixelmatch": "^5.1.0",
+    "pngjs": "^3.4.0",
+    "react": "16.11.0",
+    "rsolve": "^0.1.0",
+    "tarmap": "^0.0.0",
+    "typeon": "^1.0.0",
+    "unchunk": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/pixelmatch": "^5.1.0",
+    "@types/pngjs": "^3.4.1",
+    "@types/react": "^16.9.6"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/core"
+    ]
+  }
+}
