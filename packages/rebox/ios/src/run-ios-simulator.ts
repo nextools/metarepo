@@ -16,7 +16,7 @@ export type TRunSimulatorOptions = {
   isHeadless?: boolean,
 }
 
-export const runIosSimulator = async (options: TRunSimulatorOptions): Promise<() => void> => {
+export const runIosSimulator = async (options: TRunSimulatorOptions): Promise<() => Promise<void>> => {
   const { default: execa } = await import('execa')
   const { stdout: xcrunList } = await execa('xcrun', ['simctl', 'list', '--json'])
 
@@ -36,5 +36,7 @@ export const runIosSimulator = async (options: TRunSimulatorOptions): Promise<()
     await execa('open', ['-a', 'Simulator', '--args', '-CurrentDeviceUDID', deviceInfo.udid])
   }
 
-  return () => execa('xcrun', ['simctl', 'shutdown', deviceInfo.udid])
+  return async () => {
+    await execa('xcrun', ['simctl', 'shutdown', deviceInfo.udid])
+  }
 }
