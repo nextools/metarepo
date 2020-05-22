@@ -1,6 +1,6 @@
 import http from 'http'
-import { Worker } from 'worker_threads'
 import url, { UrlWithParsedQuery } from 'url'
+import { Worker } from 'worker_threads'
 import { runAndroidApp } from '@rebox/android'
 import { rsolve } from 'rsolve'
 import { unchunkBuffer } from 'unchunk'
