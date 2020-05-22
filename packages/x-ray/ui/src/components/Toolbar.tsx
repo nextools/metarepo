@@ -1,72 +1,184 @@
 import React from 'react'
-import { startWithType, component, mapHandlers, mapWithProps, mapStateRef } from 'refun'
-import { TOmitKey } from 'tsfn'
-import { TRect } from '../types'
+import { startWithType, component, mapHandlers, mapState, mapWithProps, mapContext, mapWithPropsMemo } from 'refun'
+import { Button } from '@primitives/button'
+import { Size } from '@primitives/size'
+import { TPosition } from '../types'
 import { mapStoreDispatch } from '../store'
-import { actionAddFilter, actionRemoveFilter } from '../actions'
-import { COLOR_LIGHT_GRAY, COL_SPACE } from '../config'
+import { actionAddFilter, actionRemoveFilter, actionResetFilter } from '../actions'
+import {
+  COL_SPACE,
+  COLOR_WHITE,
+  COLOR_GREY,
+  BORDER_SIZE_SMAL,
+  COLOR_DARK_GREY,
+  COLOR_DM_DARK_GREY,
+  COLOR_DM_LIGHT_GREY,
+} from '../config'
+import { ThemeContext } from '../context/Theme'
 import { Block } from './Block'
 import { Switch, SWITCH_HEIGHT } from './Switch'
 import { Background } from './Background'
+import { Border } from './Border'
+import { Text } from './Text'
 
 export const TOOLBAR_SPACING = COL_SPACE
-export const TOOLBAR_HEIGHT = TOOLBAR_SPACING * 2 + SWITCH_HEIGHT
+export const TOOLBAR_WIDTH = TOOLBAR_SPACING * 2 + 140
+export const CONTROLS_HEIGHT = 48
+const RESET_BUTTON_HORIZONTAL_PADDING = 14
+const RESET_BUTTON_VERTICAL_PADDING = 6
+const RESET_BUTTON_BORDER_RADIUS = 14
+const RESET_BUTTON_FONT_SIZE = 13
 
-export type TToolbar = TOmitKey<TRect, 'height'> & {
+export type TToolbar = TPosition & {
   files: string[],
   filteredFiles: string[],
+  height: number,
 }
+
+type TControls = {
+  filteredFiles: string[],
+  onResetFilter: () => void,
+}
+
+const Controls = component(
+  startWithType<TControls>(),
+  mapState('resetTextWidth', 'setResetTextWidth', () => 0, []),
+  mapState('resetTextHeight', 'setResetTextHeight', () => 0, []),
+  mapContext(ThemeContext),
+  mapWithPropsMemo(({ darkMode }) => ({
+    color: {
+      background: darkMode ? COLOR_DM_DARK_GREY : COLOR_WHITE,
+      border: darkMode ? COLOR_DM_LIGHT_GREY : COLOR_GREY,
+    },
+  }), ['darkMode']),
+  mapWithProps(({ resetTextWidth, resetTextHeight }) => ({
+    resetButtonWidth: resetTextWidth + RESET_BUTTON_HORIZONTAL_PADDING * 2,
+    resetButtonHeight: resetTextHeight + RESET_BUTTON_VERTICAL_PADDING * 2,
+  }))
+)((props) => (
+  <Block
+    top={0}
+    left={0}
+    width={TOOLBAR_WIDTH}
+    height={CONTROLS_HEIGHT}
+  >
+    <Background color={props.color.background}/>
+    <Border
+      color={props.color.border}
+      topWidth={0}
+      leftWidth={0}
+      rightWidth={0}
+      bottomWidth={BORDER_SIZE_SMAL}
+    />
+    <Block
+      top={CONTROLS_HEIGHT / 2 - props.resetButtonHeight / 2 - BORDER_SIZE_SMAL}
+      left={TOOLBAR_WIDTH / 2 - props.resetButtonWidth / 2}
+      width={props.resetTextWidth + RESET_BUTTON_HORIZONTAL_PADDING * 2}
+      height={props.resetTextHeight + RESET_BUTTON_VERTICAL_PADDING * 2}
+      opacity={props.filteredFiles.length > 0 ? 1 : 0.4}
+    >
+      <Background
+        color={COLOR_GREY}
+        topLeftRadius={RESET_BUTTON_BORDER_RADIUS}
+        topRightRadius={RESET_BUTTON_BORDER_RADIUS}
+        bottomRightRadius={RESET_BUTTON_BORDER_RADIUS}
+        bottomLeftRadius={RESET_BUTTON_BORDER_RADIUS}
+      />
+      <Block
+        top={RESET_BUTTON_VERTICAL_PADDING}
+        left={RESET_BUTTON_HORIZONTAL_PADDING}
+      >
+        <Button onPress={props.onResetFilter}>
+          <Size
+            width={props.resetTextWidth}
+            height={props.resetTextHeight}
+            onWidthChange={props.setResetTextWidth}
+            onHeightChange={props.setResetTextHeight}
+          >
+            <Text
+              color={COLOR_DARK_GREY}
+              fontSize={RESET_BUTTON_FONT_SIZE}
+              fontWeight={600}
+              fontFamily="sans-serif"
+              shouldPreserveWhitespace
+            >
+              Reset
+            </Text>
+          </Size>
+        </Button>
+      </Block>
+    </Block>
+  </Block>
+))
 
 export const Toolbar = component(
   startWithType<TToolbar>(),
   mapStoreDispatch('dispatch'),
-  mapStateRef('switchWidthsRef', 'flushSwitchWidths', ({ files }) => (Array.isArray(files) ? new Array(files.length).fill(0) : []) as number[], ['files']),
-  mapHandlers({
-    onSwitchWidthChange: ({ files, switchWidthsRef, flushSwitchWidths }) => (file: string, width: number) => {
-      switchWidthsRef.current[files.indexOf(file)] = width
-      flushSwitchWidths()
+  mapContext(ThemeContext),
+  mapWithPropsMemo(({ darkMode }) => ({
+    color: {
+      background: darkMode ? COLOR_DM_DARK_GREY : COLOR_WHITE,
+      border: darkMode ? COLOR_DM_LIGHT_GREY : COLOR_GREY,
     },
+  }), ['darkMode']),
+  mapHandlers({
     onSwitchToggle: ({ dispatch }) => (file: string, isActive: boolean) => {
       dispatch(isActive ? actionAddFilter(file) : actionRemoveFilter(file))
     },
-  }),
-  mapWithProps(({ switchWidthsRef, width }) => ({
-    totalWidth: Math.max(
-      switchWidthsRef.current.reduce((result, width) => {
-        return result + width + TOOLBAR_SPACING
-      }, TOOLBAR_SPACING),
-      width
-    ),
-  }))
-)(({ files, filteredFiles, width, switchWidthsRef, totalWidth, onSwitchToggle, onSwitchWidthChange }) => (
+    onResetFilter: ({ dispatch }) => () => {
+      dispatch(actionResetFilter())
+    },
+  })
+)(({ color, files, filteredFiles, height, onSwitchToggle, onResetFilter }) => (
   <Block
     left={0}
     top={0}
-    width={width}
-    height={TOOLBAR_HEIGHT}
-    shouldScrollX
+    width={TOOLBAR_WIDTH}
+    height={height}
   >
-    <Block height={TOOLBAR_HEIGHT} width={totalWidth} shouldFlow>
-      <Background color={COLOR_LIGHT_GRAY}/>
+    <Block
+      height={height}
+      width={TOOLBAR_WIDTH}
+      shouldFlow
+    >
+      <Background color={color.background}/>
+      <Border
+        color={color.border}
+        topWidth={0}
+        leftWidth={0}
+        rightWidth={BORDER_SIZE_SMAL}
+        bottomWidth={0}
+      />
     </Block>
-    {
-      switchWidthsRef.current.map((switchWidth, i) => {
-        const left = switchWidthsRef.current.slice(0, i).reduce((r, w) => r + w, 0) + TOOLBAR_SPACING * (i + 1)
+    <Controls
+      filteredFiles={filteredFiles}
+      onResetFilter={onResetFilter}
+    />
+    <Block
+      top={CONTROLS_HEIGHT}
+      left={0}
+      width={TOOLBAR_WIDTH}
+      height={height - CONTROLS_HEIGHT}
+      shouldScrollY
+    >
+      {
+      files.map((switchWidth, i) => {
+        const top = i * SWITCH_HEIGHT
         const file = files[i]
 
         return (
           <Switch
             key={i}
-            top={TOOLBAR_SPACING}
-            left={left}
-            width={switchWidth}
+            top={top}
+            left={0}
+            width={TOOLBAR_WIDTH}
             file={file}
             filteredFiles={filteredFiles}
-            onWidthChange={onSwitchWidthChange}
             onToggle={onSwitchToggle}
           />
         )
       })
     }
+    </Block>
   </Block>
 ))

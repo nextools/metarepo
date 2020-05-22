@@ -29,6 +29,11 @@ export type TBlock = {
   style?: TStyle,
   onScroll?: (scrollTop: number) => void,
   onPress?: (x: number, y: number) => void,
+  onPointerEnter?: () => void,
+  onPointerLeave?: () => void,
+  onPointerDown?: () => void,
+  onPointerUp?: () => void,
+  onPointerMove?: () => void,
 }
 
 export const Block = component(
@@ -68,6 +73,11 @@ export const Block = component(
       isFlexbox,
       onScroll,
       onPress,
+      onPointerEnter,
+      onPointerLeave,
+      onPointerDown,
+      onPointerUp,
+      onPointerMove,
     }) => {
       const styles: TStyle = {
         ...style,
@@ -166,6 +176,11 @@ export const Block = component(
       const props: HTMLProps<HTMLDivElement> = {
         style: normalizeWebStyle(styles),
         children,
+        onMouseEnter: onPointerEnter,
+        onMouseLeave: onPointerLeave,
+        onMouseDown: onPointerDown,
+        onMouseUp: onPointerUp,
+        onMouseMove: onPointerMove,
       }
 
       if (!isUndefined(ref)) {
