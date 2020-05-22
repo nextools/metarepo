@@ -45,22 +45,26 @@ for await (const result of resultsIterable) {
 process.stdout.write('\n')
 ```
 
-```ts
+```js
 // test.js
 
 // factory function that receives `fnArgs`
 exports.add = (arg1) => {
-  // actual function that receives item of `items`
-  return (item) => Promise.resolve({
-    value: item + arg1,
-    transferList: []
-  })
+  // actual function that receives IteratorResult with per-item value
+  return (item) => {
+    if (!item.done) {
+      Promise.resolve({
+        value: item.value + arg1,
+        transferList: []
+      })
+    }
+  }
 }
 ```
 
 where:
 
 * factory function – called once per worker, useful to initialize/instantiate something
-* actual function – called once per item, must return special object:
+* actual function – called once per item + once when it's done, must return special object:
   * `value` – actual result produced by function
   * `transferList` – [optional array](https://nodejs.org/dist/latest-v12.x/docs/api/worker_threads.html#worker_threads_port_postmessage_value_transferlist) of `ArrayBuffer` or `SharedArrayBuffer` (not to be confused with Node.js `Buffer`, but rather `Buffer.from([1, 2, 3]).buffer`) to be _moved_ from worker to parent to avoid cloning it and consuming double amount of memory
