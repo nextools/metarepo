@@ -1,4 +1,5 @@
 export * from './test'
+export * from './x-ray'
 export * from './fix'
 export * from './build'
 export * from './publish'

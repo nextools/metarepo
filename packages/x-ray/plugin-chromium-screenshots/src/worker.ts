@@ -59,7 +59,7 @@ export const check = async (options: TCheckOptions) => {
     const tarFilePath = getTarFilePath({
       examplesFilePath: item.value,
       examplesName: name,
-      pluginName: 'chrome-screenshots',
+      pluginName: 'chromium-screenshots',
     })
 
     try {

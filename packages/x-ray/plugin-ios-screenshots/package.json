@@ -23,6 +23,7 @@
     "@rebox/ios": "^2.0.4",
     "@x-ray/core": "^0.0.0",
     "@x-ray/ui": "^1.0.3",
+    "@x-ray/native-screenshots-app": "^1.0.2",
     "pifs": "^1.0.2",
     "pixelmatch": "^5.1.0",
     "pngjs": "^3.4.0",
@@ -39,7 +40,8 @@
   },
   "fixdeps": {
     "ignoredPackages": [
-      "@babel/core"
+      "@babel/core",
+      "@x-ray/native-screenshots-app"
     ]
   }
 }

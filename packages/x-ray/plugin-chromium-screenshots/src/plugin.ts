@@ -6,23 +6,25 @@ import { TPlugin } from '@x-ray/core'
 import { TCheckOptions, TWorkerResult } from './types'
 import { MAX_THREAD_COUNT, WORKER_PATH } from './constants'
 
-export type TChromeScreenshotsOptions = {
+export type TChromiumScreenshotsOptions = {
   fontsDir?: string,
+  chromiumVersion?: string,
   shouldBailout?: boolean,
 }
 
-export const chromeScreenshots = (options?: TChromeScreenshotsOptions): TPlugin<Uint8Array> => ({
-  name: 'chrome-screenshots',
+export const chromiumScreenshots = (options?: TChromiumScreenshotsOptions): TPlugin<Uint8Array> => ({
+  name: 'chromium-screenshots',
   encoding: 'image',
-  appEntryPointPath: require.resolve('./App.tsx'),
+  appEntryPointPath: require.resolve('./App'),
   getResults: async (files) => {
     const opts = {
       shouldBailout: false,
+      chromiumVersion: 'latest',
       ...options,
     }
     const { browserWSEndpoint, closeBrowser } = await runBrowser({
-      browser: 'firefox',
-      version: 'latest',
+      browser: 'chromium',
+      version: opts.chromiumVersion,
       fontsDir: opts?.fontsDir,
     })
 

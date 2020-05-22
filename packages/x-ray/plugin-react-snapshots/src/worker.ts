@@ -8,7 +8,7 @@ import { getTarFilePath, TExample, TExampleResult } from '@x-ray/core'
 import { hasSnapshotDiff } from './has-snapshot-diff'
 import { TWorkerResultInternal, TCheckOptions } from './types'
 import { getSnapshotDimensions } from './get-snapshot-dimensions'
-import { SNAPSHOTS_PER_WORKER_COUNT, REQUIRE_HOOK_PATH } from './constants'
+import { SNAPSHOTS_PER_WORKER_COUNT } from './constants'
 
 export const check = (options: TCheckOptions) => {
   let tarMap = null as null | TTarMap
@@ -22,7 +22,7 @@ export const check = (options: TCheckOptions) => {
       return
     }
 
-    await import(REQUIRE_HOOK_PATH)
+    // await import(REQUIRE_HOOK_PATH)
 
     const { name, examples } = await import(item.value) as { name: string, examples: Iterable<TExample> }
     const status = {

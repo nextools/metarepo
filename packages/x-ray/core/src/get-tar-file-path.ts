@@ -9,5 +9,5 @@ export type TGetTarFilePath = {
 export const getTarFilePath = (options: TGetTarFilePath): string => {
   const examplesDirPath = path.dirname(options.examplesFilePath)
 
-  return path.join(examplesDirPath, '__x-ray__', `${options.examplesName}-${options.pluginName}.tar.gz`)
+  return path.join(examplesDirPath, '__data__', `${options.examplesName}-${options.pluginName}.tar.gz`)
 }

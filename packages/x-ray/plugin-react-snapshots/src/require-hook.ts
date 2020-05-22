@@ -14,6 +14,17 @@ const cache = new Map()
 
 const resolve = resolver.create.sync({
   mainFields: ['browser', 'main'],
+  extensions: [
+    '.web.ts',
+    '.ts',
+    '.web.tsx',
+    '.tsx',
+    '.web.js',
+    '.js',
+    '.web.jsx',
+    '.jsx',
+    '.json',
+  ],
   unsafeCache: true,
 })
 

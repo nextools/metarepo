@@ -15,14 +15,11 @@ export type TPlugin<T extends TResultsType> = {
 export type TExampleOptions = {
   backgroundColor?: string,
   maxWidth?: number,
-  overflow?: number,
   overflowTop?: number,
   overflowBottom?: number,
   overflowLeft?: number,
   overflowRight?: number,
   hasOwnWidth?: boolean,
-  shouldWaitForImages?: boolean,
-  shouldWaitForViews?: boolean,
 }
 
 export type TExample = {

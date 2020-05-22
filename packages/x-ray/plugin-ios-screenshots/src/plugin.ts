@@ -9,18 +9,22 @@ import { prepareMeta } from './prepare-meta'
 import { TMessage } from './types'
 import { WORKER_PATH, SERVER_PORT, SERVER_HOST, MAX_THREAD_COUNT } from './constants'
 
-export type TIOSScreenshotsOptions = {
+export type TIosScreenshotsOptions = {
   fontsDir?: string,
+  iPhoneVersion?: number,
+  iOSVersion?: string,
   shouldBailout?: boolean,
 }
 
-export const iOSScreenshots = (options?: TIOSScreenshotsOptions): TPlugin<Uint8Array> => ({
+export const iOsScreenshots = (options?: TIosScreenshotsOptions): TPlugin<Uint8Array> => ({
   name: 'ios-screenshots',
   encoding: 'image',
-  appEntryPointPath: require.resolve('./App.tsx'),
+  appEntryPointPath: require.resolve('./App'),
   getResults: async (files) => {
     const opts = {
       shouldBailout: false,
+      iPhoneVersion: 8,
+      iOSVersion: '13.2',
       ...options,
     }
     const entryPointPath = await rsolve('@x-ray/native-screenshots-app', 'react-native')

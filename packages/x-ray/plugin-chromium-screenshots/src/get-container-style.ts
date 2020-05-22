@@ -18,10 +18,6 @@ export const getContainerStyle = (userOptions?: TExampleOptions): CSSProperties 
     result.maxWidth = `${options.maxWidth}px`
   }
 
-  if (isNumber(options.overflow)) {
-    result.padding = `${options.overflow}px`
-  }
-
   if (isNumber(options.overflowTop)) {
     result.paddingTop = `${options.overflowTop}px`
   }

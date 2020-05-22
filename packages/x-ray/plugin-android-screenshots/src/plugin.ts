@@ -17,7 +17,7 @@ export type TAndroidScreenshotsOptions = {
 export const androidScreenshots = (options?: TAndroidScreenshotsOptions): TPlugin<Uint8Array> => ({
   name: 'android-screenshots',
   encoding: 'image',
-  appEntryPointPath: require.resolve('./App.tsx'),
+  appEntryPointPath: require.resolve('./App'),
   getResults: async (files) => {
     const opts = {
       shouldBailout: false,

@@ -16,6 +16,17 @@ const cache = new Map()
 
 const resolve = resolver.create.sync({
   mainFields: ['react-native', 'main'],
+  extensions: [
+    '.native.ts',
+    '.ts',
+    '.native.tsx',
+    '.tsx',
+    '.native.js',
+    '.js',
+    '.native.jsx',
+    '.jsx',
+    '.json',
+  ],
   unsafeCache: true,
 })
 

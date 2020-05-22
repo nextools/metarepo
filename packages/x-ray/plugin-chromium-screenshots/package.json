@@ -1,7 +1,7 @@
 {
-  "name": "@x-ray/plugin-chrome-screenshots",
+  "name": "@x-ray/plugin-chromium-screenshots",
   "version": "0.0.0",
-  "description": "Check Chrome screenshots with X-Ray",
+  "description": "Check Chromium screenshots with X-Ray",
   "keywords": [],
   "main": "src/index.ts",
   "repository": "bubble-dev/_",
