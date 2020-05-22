@@ -1,3 +1,7 @@
+## v2.0.6
+
+* 🐞 support scoped npm dependencies
+
 ## v2.0.5
 
 * 🐞 upgrade Haul deps to v0.19
