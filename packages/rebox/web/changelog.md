@@ -1,3 +1,7 @@
+## v2.1.6
+
+* 🐞 use alternative plugin to inline runtime chunk in `buildWebAppRelease`
+
 ## v2.1.5
 
 * 🐞 support `.web.jsx` extension
