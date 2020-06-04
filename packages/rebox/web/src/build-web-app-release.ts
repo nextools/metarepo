@@ -2,7 +2,7 @@ import path from 'path'
 import webpack, { Stats, Configuration as WebpackConfig } from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 // @ts-ignore
-import InlineChunkWebpackPlugin from 'fixed-webpack4-html-webpack-inline-chunk-plugin'
+import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin'
 import TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import { isObject } from 'tsfn'
@@ -154,12 +154,10 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
     },
     plugins: [
       new HtmlWebpackPlugin({
+        inject: true,
         template: path.resolve(options.htmlTemplatePath),
       }),
-      new InlineChunkWebpackPlugin({
-        quiet: true,
-        inlineChunks: ['runtime'],
-      }),
+      new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime/]),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production'),
       }),
