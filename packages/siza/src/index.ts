@@ -66,9 +66,11 @@ export const getBundleSize = (userOptions: TGetBuildReleaseStatsOptions): Promis
     resolve: {
       extensions: [
         '.web.js',
+        '.web.jsx',
         '.web.ts',
         '.web.tsx',
         '.js',
+        '.jsx',
         '.ts',
         '.tsx',
         '.json',
