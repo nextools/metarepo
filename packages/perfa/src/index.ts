@@ -16,13 +16,11 @@ export type TGetPerfDataOptions = {
   entryPointPath: string,
   triesCount?: number,
   fontsDir?: string,
-  isQuiet?: boolean,
 }
 
 export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPerfResult> => {
   const options = {
     triesCount: TRIES_COUNT,
-    isQuiet: false,
     ...userOptions,
   }
   const tempBuildDir = tempy.directory()
@@ -64,10 +62,6 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
   }
 
   for (let i = 0; i < options.triesCount; i++) {
-    if (!options.isQuiet) {
-      console.log('tries:', `${i + 1}/${options.triesCount}`)
-    }
-
     const page = await browser.newPage()
     const client = await page.target().createCDPSession()
 
