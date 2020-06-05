@@ -1,3 +1,7 @@
+## v0.3.0
+
+* 💥 remove `isQuiet` option and verbose logs
+
 ## v0.2.2
 
 * 🐞 refactor using new rebox/web API
