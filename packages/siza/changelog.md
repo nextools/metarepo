@@ -1,3 +1,7 @@
+## v0.1.4
+
+* 🐞 fix handling `.jsx` extension
+
 ## v0.1.3
 
 * 🐞 upgrade file-loader to v6
