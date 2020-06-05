@@ -15,7 +15,6 @@ type TGetPerfDataOptions = {
   entryPointPath: string, // path to a React app entry point
   triesCount?: number, // `5` by default
   fontsDir?: string, // path to a directory with custom fonts to be installed
-  isQuiet?: boolean, // `false` by default
 }
 
 type TGetPerfDataResult = {
