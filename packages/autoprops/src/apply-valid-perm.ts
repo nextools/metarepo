@@ -1,6 +1,6 @@
-/* eslint-disable max-params, no-use-before-define */
+/* eslint-disable no-use-before-define */
 import BigInt, { BigInteger } from 'big-integer'
-import { TCommonRequiredConfig, TCommonComponentConfig } from './types'
+import { TCommonComponentConfig } from './types'
 import { unpackPerm } from './unpack-perm'
 import { packPerm } from './pack-perm'
 import { stringifyBigInt } from './stringify-bigint'
@@ -9,9 +9,13 @@ import { applyDisableDeps } from './apply-disable-deps'
 import { applyEnableDeps } from './apply-enable-deps'
 import { applyEnableChildren } from './apply-enable-children'
 
-const applyChildPropValue = (int: BigInteger, childConfig: TCommonComponentConfig, childKey: string, required?: TCommonRequiredConfig): BigInteger => {
-  if (required?.includes(childKey)) {
+const applyChildPropValue = (int: BigInteger, childConfig: TCommonComponentConfig, isChildRequired: boolean): BigInteger => {
+  if (isChildRequired) {
     return applyValidPermImpl(childConfig, int)
+  }
+
+  if (int.isZero()) {
+    return int
   }
 
   return applyValidPermImpl(childConfig, int.minus(BigInt.one)).plus(BigInt.one)
@@ -21,23 +25,27 @@ const applyValidPermImpl = (componentConfig: TCommonComponentConfig, int: BigInt
   const perm = unpackPerm(componentConfig, int)
   const { values, lengths, propKeys, childrenKeys } = perm
 
+  // Iterate over all props
   for (let i = 0; i < propKeys.length; ++i) {
-    const isPropActive = values[i].isZero() === false || Boolean(componentConfig.required?.includes(propKeys[i]))
+    const propKey = propKeys[i]
+    const isPropActive = values[i].isZero() === false || Boolean(componentConfig.required?.includes(propKey))
 
     if (isPropActive) {
-      applyEnableDeps(values, propKeys[i], perm, componentConfig)
+      applyEnableDeps(values, propKey, perm, componentConfig)
     } else {
-      applyDisableDeps(values, propKeys[i], perm, componentConfig)
+      applyDisableDeps(values, propKey, perm, componentConfig)
     }
   }
 
   applyEnableChildren(values, '', perm, componentConfig)
 
+  // Iterate over all children
   for (let i = 0; i < childrenKeys.length; ++i) {
     const childKey = childrenKeys[i]
     const childConfig = componentConfig.children![childKey]!.config
 
-    applyChildPropValue(values[i + propKeys.length], childConfig, childKey, componentConfig.required)
+    // Validate every child
+    applyChildPropValue(values[i + propKeys.length], childConfig, Boolean(componentConfig.required?.includes(childKey)))
   }
 
   return packPerm(values, lengths)
