@@ -13,7 +13,7 @@
     "@babel/runtime": "^7.1.2",
     "@rebox/web": "^2.1.6",
     "@x-ray/common-utils": "^1.0.2",
-    "@x-ray/serialize-react-tree": "^1.0.1",
+    "@x-ray/serialize-react-tree": "^1.0.2",
     "@x-ray/tar-fs": "^1.0.0",
     "@x-ray/ui": "^1.0.4",
     "@x-ray/worker-utils": "^1.0.0",
