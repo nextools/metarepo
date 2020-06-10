@@ -1,5 +1,5 @@
 import { isUndefined } from 'util'
-import { TAnyObject } from 'tsfn'
+import { TAnyObject, TReadonly } from 'tsfn'
 import { TCommonComponentConfig } from './types'
 
 const isBoolean = (arg: string): boolean => {
@@ -30,7 +30,7 @@ const compareBoolean = (bool: string, other: string): number => {
   return 1
 }
 
-export const getPropKeys = (props: TAnyObject): string[] => {
+export const getPropKeys = (props: TReadonly<TAnyObject>): string[] => {
   return Object.keys(props).sort((a, b) => {
     if (isBoolean(a)) {
       return compareBoolean(a, b)

@@ -1,9 +1,15 @@
 /* eslint-disable max-params */
-import BigInt, { BigInteger } from 'big-integer'
-import { TCommonMutexConfig } from './types'
+import BigInt from 'big-integer'
+import { isUndefined } from 'tsfn'
+import { TApplyRestrictionFn } from './types'
+import { getPropIndex } from './utils'
 
-export const applyDisableMutexes = (values: BigInteger[], propName: string, propKeys: readonly string[], childrenKeys: readonly string[], mutexConfig: TCommonMutexConfig): void => {
-  for (const mutexGroup of mutexConfig) {
+export const applyDisableMutexes: TApplyRestrictionFn = (values, propName, permConfig, componentConfig) => {
+  if (isUndefined(componentConfig.mutex)) {
+    return
+  }
+
+  for (const mutexGroup of componentConfig.mutex) {
     if (!mutexGroup.includes(propName)) {
       continue
     }
@@ -13,17 +19,10 @@ export const applyDisableMutexes = (values: BigInteger[], propName: string, prop
         continue
       }
 
-      const mutexPropIndex = propKeys.indexOf(mutexName)
+      const mutexPropIndex = getPropIndex(mutexName, permConfig.propKeys, permConfig.childrenKeys)
 
-      if (mutexPropIndex >= 0) {
+      if (mutexPropIndex !== null) {
         values[mutexPropIndex] = BigInt.zero
-        continue
-      }
-
-      const mutexChildIndex = childrenKeys.indexOf(mutexName)
-
-      if (mutexChildIndex >= 0) {
-        values[mutexChildIndex + propKeys.length] = BigInt.zero
       }
     }
   }

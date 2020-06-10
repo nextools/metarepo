@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { isValidElement, ReactElement, FC } from 'react'
-import { isFunction, isSymbol, isRegExp, TAnyObject, isString, isDefined, TWritable, isObject, isArray } from 'tsfn'
+import { isFunction, isSymbol, isRegExp, TAnyObject, isString, isDefined, isObject, isArray, TReadonly } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
 import { TCommonComponentConfig, TChildrenMap, TCommonRequiredConfig } from './types'
 import { unpackPerm } from './unpack-perm'
@@ -22,10 +22,10 @@ const getElementName = (element: ReactElement) => {
   return element.type.name
 }
 
-const getValue = (valueIndex: number, values: readonly any[], key: string, required?: TCommonRequiredConfig): string | undefined => {
+const getValue = (valueIndex: number, values: readonly any[], key: string, required?: TReadonly<TCommonRequiredConfig>): string | undefined => {
   let index = -1
 
-  if (isDefined(required) && required.includes(key)) {
+  if (required?.includes(key)) {
     index = valueIndex
   } else if (valueIndex > 0) {
     index = valueIndex - 1
@@ -66,8 +66,8 @@ const getValue = (valueIndex: number, values: readonly any[], key: string, requi
   return `${value}`
 }
 
-const getChildValue = (int: BigInteger, childConfig: TCommonComponentConfig, childKey: string, required?: TCommonRequiredConfig): TAnyObject | undefined => {
-  if (isDefined(required) && required.includes(childKey)) {
+const getChildValue = (int: BigInteger, childConfig: TCommonComponentConfig, childKey: string, required?: TReadonly<TCommonRequiredConfig>): TAnyObject | undefined => {
+  if (required?.includes(childKey)) {
     return getPropsImpl(childConfig, int)
   }
 
@@ -93,14 +93,14 @@ const getPropsImpl = (componentConfig: TCommonComponentConfig, int: BigInteger):
   }
 
   if (isDefined(componentConfig.children)) {
-    const childrenMap: TWritable<TChildrenMap> = {}
+    const childrenMap: TChildrenMap = {}
     let hasChildren = false
 
     for (; i < values.length; ++i) {
-      const childIndex = i - propKeys.length
-      const childKey = childrenKeys[childIndex]
+      const childKey = childrenKeys[i - propKeys.length]
       const valueIndex = values[i]
-      const value = getChildValue(valueIndex, componentConfig.children[childKey].config, childKey, componentConfig.required)
+      const childConfig = componentConfig.children[childKey]!.config
+      const value = getChildValue(valueIndex, childConfig, childKey, componentConfig.required)
 
       if (isDefined(value)) {
         childrenMap[childKey] = value
@@ -110,7 +110,7 @@ const getPropsImpl = (componentConfig: TCommonComponentConfig, int: BigInteger):
 
     if (hasChildren) {
       const sortedChildrenKeys = childrenKeys.slice().sort((a, b) => a.localeCompare(b))
-      const sortedChildrenMap: TWritable<TChildrenMap> = {}
+      const sortedChildrenMap: TChildrenMap = {}
 
       for (const key of sortedChildrenKeys) {
         if (Reflect.has(childrenMap, key)) {

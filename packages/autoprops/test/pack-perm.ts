@@ -3,7 +3,7 @@ import I from 'big-integer'
 import { packPerm } from '../src/pack-perm'
 
 test('autoprops: packPerm', (t) => {
-  const length = [I(2), I(3), I(4)]
+  const lengths = [I(2), I(3), I(4)]
   const values = [
     [I(0), I(0), I(0)],
     [I(1), I(0), I(0)],
@@ -60,7 +60,7 @@ test('autoprops: packPerm', (t) => {
 
   t.true(
     values
-      .map((values) => packPerm(values, length))
+      .map((values) => packPerm(values, lengths))
       .every((val, i) => (val === null || expected[i] === null ? val === expected[i] : val.equals(expected[i]!))),
     'should return correct packed permutation'
   )
