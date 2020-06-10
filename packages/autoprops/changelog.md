@@ -1,3 +1,14 @@
+## v2.0.0
+
+* 💥 refactor
+
+  ```
+  * add special handling for `children` in `required`
+  * add `deps` feature
+  * remove `mutin` feature
+  * change `required` field to allow all prop keys
+  ```
+
 ## v1.0.4
 
 * 🐞 upgrade `iterama`

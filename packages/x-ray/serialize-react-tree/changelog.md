@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 fix checking for empty props
+
 ## v1.0.1
 
 * 🐞 sync React Native and React versions
