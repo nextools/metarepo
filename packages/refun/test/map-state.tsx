@@ -8,7 +8,7 @@ test('mapState', (t) => {
   const componentSpy = createSpy(() => null)
   const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
   const getNumRenders = () => getSpyCalls(componentSpy).length
-  const spy = createSpy(({ args }) => [args[0].foo * 2])
+  const spy = createSpy(({ args }) => Math.round(args[0].foo / 2) * 2)
   const MyComp = component(
     startWithType<{
       foo: number,
@@ -24,7 +24,7 @@ test('mapState', (t) => {
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
-        foo={1}
+        foo={2}
       />
     )
   })
@@ -34,7 +34,7 @@ test('mapState', (t) => {
   t.deepEquals(
     getSpyCalls(componentSpy),
     [
-      [{ foo: 1, state: [2], setState }],
+      [{ foo: 2, state: 2, setState }], // Mount
     ],
     'Mount: should pass props, state and state-setter'
   )
@@ -42,7 +42,7 @@ test('mapState', (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [{ foo: 1 }],
+      [{ foo: 2 }], // Mount
     ],
     'Mount: should call map function'
   )
@@ -52,7 +52,7 @@ test('mapState', (t) => {
   act(() => {
     testRenderer.update(
       <MyComp
-        foo={1}
+        foo={2}
         bar="bar"
       />
     )
@@ -67,8 +67,8 @@ test('mapState', (t) => {
   t.deepEquals(
     getSpyCalls(componentSpy),
     [
-      [{ foo: 1, state: [2], setState }],
-      [{ foo: 1, bar: 'bar', state, setState }],
+      [{ foo: 2, state: 2, setState }], // Mount
+      [{ foo: 2, bar: 'bar', state, setState }], // Update unwatched props
     ],
     'Update unwatched props: should pass props'
   )
@@ -76,7 +76,7 @@ test('mapState', (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [{ foo: 1 }],
+      [{ foo: 2 }], // Mount
     ],
     'Update unwatched props: should not call map function'
   )
@@ -95,10 +95,10 @@ test('mapState', (t) => {
   t.deepEquals(
     getSpyCalls(componentSpy),
     [
-      [{ foo: 1, state: [2], setState }],
-      [{ foo: 1, bar: 'bar', state, setState }],
-      [{ foo: 4, bar: 'bar', state: [2], setState }],
-      [{ foo: 4, bar: 'bar', state: [8], setState }],
+      [{ foo: 2, state: 2, setState }], // Mount
+      [{ foo: 2, bar: 'bar', state, setState }], // Update unwatched props
+      [{ foo: 4, bar: 'bar', state: 4, setState }], // Update watched props
+      [{ foo: 4, bar: 'bar', state: 4, setState }], // Update watched props
     ],
     'Update watched props: should pass props'
   )
@@ -106,26 +106,60 @@ test('mapState', (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [{ foo: 1 }],
-      [{ foo: 4, bar: 'bar' }],
+      [{ foo: 2 }], // Mount
+      [{ foo: 4, bar: 'bar' }], // Update watched props
     ],
     'Update watched props: should call map function'
   )
 
-  /* Update state */
+  /* Update watched props, no rerender */
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
-    setState([10])
+    testRenderer.update(
+      <MyComp
+        foo={4.5}
+        bar="bar"
+      />
+    )
   })
 
   t.deepEquals(
     getSpyCalls(componentSpy),
     [
-      [{ foo: 1, state: [2], setState }],
-      [{ foo: 1, bar: 'bar', state, setState }],
-      [{ foo: 4, bar: 'bar', state: [2], setState }],
-      [{ foo: 4, bar: 'bar', state: [8], setState }],
-      [{ foo: 4, bar: 'bar', state: [10], setState }],
+      [{ foo: 2, state: 2, setState }], // Mount
+      [{ foo: 2, bar: 'bar', state, setState }], // Update unwatched props
+      [{ foo: 4, bar: 'bar', state: 4, setState }], // Update watched props
+      [{ foo: 4, bar: 'bar', state: 4, setState }], // Update watched props
+      [{ foo: 4.5, bar: 'bar', state: 4, setState }], // Update watched props, no rerender
+    ],
+    'Update watched props, no rerender: should pass props'
+  )
+
+  t.deepEquals(
+    getSpyCalls(spy),
+    [
+      [{ foo: 2 }], // Mount
+      [{ foo: 4, bar: 'bar' }], // Update watched props
+      [{ foo: 4.5, bar: 'bar' }], // Update watched props, no rerender
+    ],
+    'Update watched props, no rerender: should call map function'
+  )
+
+  /* Update state */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  act(() => {
+    setState(10)
+  })
+
+  t.deepEquals(
+    getSpyCalls(componentSpy),
+    [
+      [{ foo: 2, state: 2, setState }], // Mount
+      [{ foo: 2, bar: 'bar', state, setState }], // Update unwatched props
+      [{ foo: 4, bar: 'bar', state: 4, setState }], // Update watched props
+      [{ foo: 4, bar: 'bar', state: 4, setState }], // Update watched props
+      [{ foo: 4.5, bar: 'bar', state: 4, setState }], // Update watched props, no rerender
+      [{ foo: 4.5, bar: 'bar', state: 10, setState }], // Update state
     ],
     'Update state: should update state, but leave state-setter same'
   )
@@ -133,8 +167,9 @@ test('mapState', (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [{ foo: 1 }],
-      [{ foo: 4, bar: 'bar' }],
+      [{ foo: 2 }], // Mount
+      [{ foo: 4, bar: 'bar' }], // Update watched props
+      [{ foo: 4.5, bar: 'bar' }], // Update watched props, no rerender
     ],
     'Update state: should not call map function'
   )
@@ -148,15 +183,16 @@ test('mapState', (t) => {
   t.deepEquals(
     getSpyCalls(spy),
     [
-      [{ foo: 1 }],
-      [{ foo: 4, bar: 'bar' }],
+      [{ foo: 2 }], // Mount
+      [{ foo: 4, bar: 'bar' }], // Update watched props
+      [{ foo: 4.5, bar: 'bar' }], // Update watched props, no rerender
     ],
     'Unmount: should not call map function'
   )
 
   t.equals(
     getNumRenders(),
-    5,
+    6,
     'Render: should render component exact times'
   )
 

@@ -7,15 +7,29 @@ export const mapState = <SN extends string, SSN extends string, P extends {}, R>
     const prevProps = useRef<P>(EMPTY_OBJECT)
     const [state, setState] = useState<R>(prevProps.current === EMPTY_OBJECT ? getValue(props) : EMPTY_OBJECT)
 
+    let nextState = state
+
     if (prevProps.current !== EMPTY_OBJECT && !shallowEqualByKeys(prevProps.current, props, watchKeys)) {
-      setState(getValue(props))
+      // React will continue current render, delivering 'state', which is already old state.
+      // By assigning to 'nextState', we deliver fresh state during current render.
+      // After that React will rerender due to actual 'setState', delivering same state value.
+      nextState = getValue(props)
+
+      // React prevents rerender by setState if next value is the same as current state.
+      // But in this case, setState is triggered during the render phase.
+      // React does not interrupt render, and lets the component to render till the end,
+      // and after that initiates next render caused by this setState.
+      // Manually checking for equality to prevent unnecessary rerender.
+      if (nextState !== state) {
+        setState(nextState)
+      }
     }
 
     prevProps.current = props
 
     return {
       ...props,
-      [stateName]: state,
+      [stateName]: nextState,
       [stateSetterName]: setState,
       // FIXME: https://github.com/Microsoft/TypeScript/issues/13948
     } as any
