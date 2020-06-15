@@ -1,6 +1,10 @@
 import BigInt, { BigInteger } from 'big-integer'
 
 export const packPerm = (values: readonly BigInteger[], lengths: readonly BigInteger[]): BigInteger => {
+  if (values.length === 0) {
+    return BigInt.zero
+  }
+
   let result = values[0]
   let multipliedLength = BigInt.one
 

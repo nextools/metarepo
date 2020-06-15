@@ -58,11 +58,20 @@ test('autoprops: packPerm', (t) => {
     I(23),
   ]
 
-  t.true(
-    values
-      .map((values) => packPerm(values, lengths))
-      .every((val, i) => (val === null || expected[i] === null ? val === expected[i] : val.equals(expected[i]!))),
+  t.deepEquals(
+    values.map((values) => packPerm(values, lengths)),
+    expected,
     'should return correct packed permutation'
+  )
+
+  t.end()
+})
+
+test('packPerm: values zero length', (t) => {
+  t.deepEquals(
+    packPerm([], []),
+    I(0),
+    'should return zero'
   )
 
   t.end()
