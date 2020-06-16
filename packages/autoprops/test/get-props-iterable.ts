@@ -14,12 +14,12 @@ test('getPropsIterable: props', (t) => {
     Array.from(getPropsIterable(config)),
     [
       {
-        id: 'vyGp6PvFo4RvsFtPoIWeCReyIC8=',
+        id: 'bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f',
         props: {},
         progress: 50,
       },
       {
-        id: '/PaKjeN23mDE6A7+0iWHainFpLE=',
+        id: 'fcf68a8de376de60c4e80efed225876a29c5a4b1',
         props: { a: true },
         progress: 100,
       },
@@ -64,7 +64,7 @@ test('getPropsIterable: childrenMap', async (t) => {
     Array.from(getPropsIterable(config)),
     [
       {
-        id: '2vV3HHWzD1qUog13NC2Yx3dXYt8=',
+        id: 'daf5771c75b30f5a94a20d77342d98c7775762df',
         props: {
           a: true,
           children: {
@@ -74,7 +74,7 @@ test('getPropsIterable: childrenMap', async (t) => {
         progress: 50,
       },
       {
-        id: '3wMk62ri3GcSmEzW2XxXWZBKj2U=',
+        id: 'df0324eb6ae2dc6712984cd6d97c5759904a8f65',
         props: {
           a: true,
           children: {
@@ -102,12 +102,12 @@ test('mapPropsIterable', (t) => {
     Array.from(mapPropsIterable(config, (obj) => obj)),
     [
       {
-        id: 'vyGp6PvFo4RvsFtPoIWeCReyIC8=',
+        id: 'bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f',
         props: {},
         progress: 50,
       },
       {
-        id: '/PaKjeN23mDE6A7+0iWHainFpLE=',
+        id: 'fcf68a8de376de60c4e80efed225876a29c5a4b1',
         props: { a: true },
         progress: 100,
       },

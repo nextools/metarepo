@@ -27,7 +27,7 @@ export const getPropsIterable = <T extends {}>(componentConfig: TComponentConfig
         sha.update(serializeProps(componentConfig, int))
 
         yield {
-          id: sha.getHash('B64'),
+          id: sha.getHash('HEX'),
           props: props as T,
           progress: int.plus(BigInt.one).multiply(10000).divide(length).toJSNumber() / 100, // eslint-disable-line
         }
