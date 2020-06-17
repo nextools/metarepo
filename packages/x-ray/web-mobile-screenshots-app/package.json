@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.3",
     "react-native-view-shot": "^3.0.2",
-    "react-native-webview": "^8.0.3",
+    "react-native-webview": "^10.0.0",
     "refun": "^2.0.1"
   },
   "devDependencies": {
