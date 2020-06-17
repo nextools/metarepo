@@ -1,3 +1,7 @@
+## v2.0.1
+
+* 🐞 fix `mapState` to deliver fresh state early
+
 ## v2.0.0
 
 * 💥 refactor API

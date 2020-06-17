@@ -1,3 +1,7 @@
+## v2.0.1
+
+* 🐞 fix deps and required case
+
 ## v2.0.0
 
 * 💥 refactor
