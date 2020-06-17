@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 rename export function to `runBrowser` and make it run Chromium or Firefox
+
 ## v1.0.4
 
 * 🐞 handle Docker errors more properly

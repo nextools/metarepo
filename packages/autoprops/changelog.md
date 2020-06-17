@@ -1,3 +1,11 @@
+## v3.0.0
+
+* 💥 use `HEX` format for `id` hash in `mapPropsIterable`
+
+  ```
+  instead of base64 to avoid `/` symbols
+  ```
+
 ## v2.0.1
 
 * 🐞 fix deps and required case

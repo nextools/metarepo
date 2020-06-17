@@ -1,3 +1,9 @@
+## v0.2.1
+
+* 🐞 refactor using new `workerama`
+
+* ♻️ update dependencies `workerama`
+
 ## v0.2.0
 
 * 💥 refactor using new `workerama` version, remove `filesPerThreadCount` option

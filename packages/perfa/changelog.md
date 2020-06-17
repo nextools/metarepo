@@ -1,3 +1,9 @@
+## v0.3.1
+
+* 🐞 refactor using new `xrom`
+
+* ♻️ update dependencies `xrom`
+
 ## v0.3.0
 
 * 💥 remove `isQuiet` option and verbose logs

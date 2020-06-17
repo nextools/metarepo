@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 simplify types by removing `readonly`
+
 ## v1.0.1
 
 * 🐞 re-publish using updated Start preset

@@ -1,3 +1,9 @@
+## v2.0.0
+
+* 💥 new UI for new X-Ray
+
+* ♻️ update dependencies `@x-ray/core`, `syntx`
+
 ## v1.0.4
 
 * 🐞 upgrade `stili`

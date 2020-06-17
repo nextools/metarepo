@@ -1,3 +1,7 @@
+## v3.0.0
+
+* 💥 make `killSimulator` async
+
 ## v2.0.5
 
 * 🐞 upgrade Haul deps to v0.19

@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 take multiple screenshots concurrently
+
 ## v1.0.2
 
 * 🐞 add `react-native-exception-handler`
