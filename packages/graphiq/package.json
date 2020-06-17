@@ -17,6 +17,6 @@
     "@primitives/animation": "^1.0.0",
     "@primitives/root": "^2.0.0",
     "colorido": "^1.0.0",
-    "refun": "^2.0.0"
+    "refun": "^2.0.1"
   }
 }
