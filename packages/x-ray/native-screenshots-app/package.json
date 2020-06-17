@@ -11,18 +11,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@primitives/image": "^2.0.0",
-    "@primitives/size": "^2.0.0",
-    "react-native-exception-handler": "^2.10.8",
+    "nanoid": "^3.1.4",
+    "react": "16.11.0",
+    "react-native": "0.62.2",
     "react-native-view-shot": "^3.0.2"
   },
   "devDependencies": {
-    "@types/react": "^16.8.6",
-    "react": "16.11.0",
-    "react-native": "0.62.2"
-  },
-  "peerDependencies": {
-    "react": "16.11.0",
-    "react-native": "0.62.2"
+    "@types/react": "^16.8.6"
   }
 }

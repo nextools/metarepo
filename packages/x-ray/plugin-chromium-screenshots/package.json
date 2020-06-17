@@ -1,0 +1,51 @@
+{
+  "name": "@x-ray/plugin-chromium-screenshots",
+  "version": "0.0.0",
+  "description": "Check Chromium screenshots with X-Ray",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-syntax-bigint": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/preset-typescript": "^7.9.0",
+    "@babel/register": "^7.8.6",
+    "@x-ray/core": "^0.0.0",
+    "@x-ray/ui": "^1.0.3",
+    "funcom": "^0.1.0",
+    "iterama": "^0.2.0",
+    "piall": "^0.1.1",
+    "pifs": "^1.0.2",
+    "pixelmatch": "^5.1.0",
+    "pngjs": "^3.4.0",
+    "puppeteer-core": "^2.1.1",
+    "react-dom": "16.11.0",
+    "react": "16.11.0",
+    "tarmap": "^0.0.0",
+    "tsfn": "^1.0.0",
+    "typeon": "^1.0.0",
+    "workerama": "^0.2.0",
+    "xrom": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/pngjs": "^3.4.1",
+    "@types/puppeteer-core": "^2.0.0",
+    "@types/react": "^16.9.6",
+    "@types/react-dom": "^16.9.6"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/core"
+    ]
+  }
+}

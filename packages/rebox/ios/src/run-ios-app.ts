@@ -24,7 +24,7 @@ export type TRunIosOptions = {
   logMessage?: (msg: string) => void,
 }
 
-export const runIosApp = async (options: TRunIosOptions): Promise<() => void> => {
+export const runIosApp = async (options: TRunIosOptions): Promise<() => Promise<void>> => {
   const projectPath = getIosProjectPath(options.appName)
   const appPath = getIosAppPath(options.appName)
   const log = (message: string): void => {
@@ -105,9 +105,10 @@ export const runIosApp = async (options: TRunIosOptions): Promise<() => void> =>
 
   log('app has been launched')
 
-  return () => {
+  return async () => {
     killServer()
-    killSimulator()
+
+    await killSimulator()
   }
 }
 

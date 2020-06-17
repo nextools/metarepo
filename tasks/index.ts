@@ -1,26 +1,24 @@
 import plugin from '@start/plugin'
 import {
-  CheckChromeScreenshots,
-  CheckFirefoxScreenshots,
+  CheckChromiumScreenshots,
   CheckIosScreenshots,
   CheckAndroidScreenshots,
-  CheckIosWebScreenshots,
-  CheckAndroidWebScreenshots,
-  CheckChromePerfSnapshots,
+  CheckReactSnapshots,
+  CheckReactNativeSnapshots,
   Pkg,
 } from '@nextools/start-preset'
 
+const shouldBailout = Boolean(process.env.CI)
+
 export * from '@nextools/start-preset'
 
-// custom tasks:
-export const checkChromeScreenshots = CheckChromeScreenshots()
-export const checkFirefoxScreenshots = CheckFirefoxScreenshots()
-export const checkAndroidScreenshots = CheckAndroidScreenshots()
-export const checkIosScreenshots = CheckIosScreenshots()
-export const checkIosWebScreenshots = CheckIosWebScreenshots()
-export const checkAndroidWebScreenshots = CheckAndroidWebScreenshots()
-export const checkChromePerfSnapshots = CheckChromePerfSnapshots()
+export const checkChromiumScreenshots = CheckChromiumScreenshots({ shouldBailout, chromiumVersion: '83' })
+export const checkIosScreenshots = CheckIosScreenshots({ shouldBailout })
+export const checkAndroidScreenshots = CheckAndroidScreenshots({ shouldBailout })
+export const checkReactSnapshots = CheckReactSnapshots({ shouldBailout })
+export const checkReactNativeSnapshots = CheckReactNativeSnapshots({ shouldBailout })
 
+// custom tasks:
 export const pkg = Pkg({
   lib: {
     $description$: null,
@@ -38,22 +36,6 @@ export const graphiq = () =>
     await runWebApp({
       entryPointPath,
       htmlTemplatePath,
-      isQuiet: true,
-    })
-
-    logMessage('http://localhost:3000/')
-  })
-
-export const xray = () =>
-  plugin('ui', ({ logMessage }) => async () => {
-    const { runWebApp } = await import('@rebox/web')
-    const { runXRayServer } = await import('./x-ray-ui/run-server')
-
-    await runXRayServer()
-
-    await runWebApp({
-      entryPointPath: './tasks/x-ray-ui/index.tsx',
-      htmlTemplatePath: './tasks/x-ray-ui/template.html',
       isQuiet: true,
     })
 

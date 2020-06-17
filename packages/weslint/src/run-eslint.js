@@ -11,10 +11,12 @@ exports.run = (options) => {
     ...options,
   })
 
-  return async (file) => {
-    const data = await readFile(file, 'utf8')
-    const report = cli.executeOnText(data, file)
+  return async (item) => {
+    if (!item.done) {
+      const data = await readFile(item.value, 'utf8')
+      const report = cli.executeOnText(data, item.value)
 
-    return { value: report }
+      return { value: report }
+    }
   }
 }

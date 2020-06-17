@@ -1,21 +1,14 @@
-import React, { Component } from 'react'
+/* eslint-disable no-invalid-this */
+import React, { Component, Fragment } from 'react'
 import { View } from 'react-native'
-import ViewShot from 'react-native-view-shot' // eslint-disable-line
-import { setJSExceptionHandler, setNativeExceptionHandler } from 'react-native-exception-handler'
-import { SizeContext } from '@primitives/size'
-import { ImageContext } from '@primitives/image'
-import files from './files' // eslint-disable-line
+import ViewShot from 'react-native-view-shot'
+import { ImageContext } from './image-context'
+import { ViewContext } from './view-context'
+import './react-native-patch'
+import { files, screenshotsConcurrency } from './meta'
 
-const exceptionHandler = (error) => {
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  fetch('http://localhost:3002/error', {
-    method: 'POST',
-    body: String(error),
-  })
-}
-
-setJSExceptionHandler(exceptionHandler)
-setNativeExceptionHandler(exceptionHandler)
+const SERVER_HOST = 'localhost'
+const SERVER_PORT = 3002
 
 const defaultStyles = {}
 const hasOwnWidthStyles = {
@@ -23,93 +16,91 @@ const hasOwnWidthStyles = {
   alignItems: 'flex-start',
 }
 
-const Provider = ({ shouldWaitForResize, shouldWaitForImages, onCapture, children }) => {
-  if (shouldWaitForResize || shouldWaitForImages) {
-    const sizesIds = new Set()
-    let numSizesReady = 0
-    const imagesIds = new Set()
-    let numImagesReady = 0
+class Example extends Component {
+  constructor(...args) {
+    super(...args)
 
-    const onSizeReady = (id) => {
-      if (sizesIds.has(id)) {
-        numSizesReady++
-
-        if (numSizesReady === sizesIds.size && numImagesReady === imagesIds.size) {
-          onCapture()
-        }
-      } else {
-        sizesIds.add(id)
-      }
-    }
-    const onImageReady = (id) => {
-      if (imagesIds.has(id)) {
-        numImagesReady++
-
-        if (numImagesReady === imagesIds.size && numSizesReady === sizesIds.size) {
-          onCapture()
-        }
-      } else {
-        imagesIds.add(id)
-      }
-    }
-
-    if (shouldWaitForImages && shouldWaitForResize) {
-      return (
-        <SizeContext.Provider value={{
-          onSizeMount: onSizeReady,
-          onSizeUpdate: onSizeReady,
-        }}
-        >
-          <ImageContext.Provider value={{
-            onImageMount: onImageReady,
-            onImageLoad: onImageReady,
-          }}
-          >
-            {children}
-          </ImageContext.Provider>
-        </SizeContext.Provider>
-      )
-    }
-
-    if (shouldWaitForImages) {
-      return (
-        <ImageContext.Provider value={{
-          onImageMount: onImageReady,
-          onImageLoad: onImageReady,
-        }}
-        >
-          {children}
-        </ImageContext.Provider>
-      )
-    }
-
-    return (
-      <SizeContext.Provider value={{
-        onSizeMount: onSizeReady,
-        onSizeUpdate: onSizeReady,
-      }}
-      >
-        {children}
-      </SizeContext.Provider>
-    )
+    this.imageIds = new Set()
+    this.viewIds = new Set()
   }
 
-  return children
-}
+  async componentDidMount() {
+    if (!this.props.options.shouldWaitForImages && !this.props.options.shouldWaitForViews) {
+      await this.onCapture()
+    }
+  }
 
-export class App extends Component {
-  async componentDidCatch(error) {
-    console.log(error)
+  onRef = (ref) => {
+    this.ref = ref
+  }
 
-    await fetch('http://localhost:3002/error', {
-      method: 'POST',
-      body: error.message,
-    })
+  onCapture = async () => {
+    if (this.ref === null) {
+      return
+    }
+
+    const base64data = await this.ref.capture()
+
+    this.props.onCapture(base64data)
+  }
+
+  onImageMount = (id) => {
+    this.imageIds.add(id)
+  }
+
+  onImageLoad = async (id) => {
+    this.imageIds.delete(id)
+
+    if (this.imageIds.size === 0) {
+      if (this.props.options.shouldWaitForViews && this.viewIds.size > 0) {
+        return
+      }
+
+      await this.onCapture()
+    }
+  }
+
+  onViewMount = (id) => {
+    this.viewIds.add(id)
+  }
+
+  onViewLayout = async (id) => {
+    this.viewIds.delete(id)
+
+    if (this.viewIds.size === 0) {
+      if (this.props.options.shouldWaitForImages && this.imageIds.size > 0) {
+        return
+      }
+
+      await this.onCapture()
+    }
   }
 
   render() {
+    const { options, children } = this.props
+
     return (
-      <Main/>
+      <View style={options.hasOwnWidth ? hasOwnWidthStyles : defaultStyles}>
+        <ViewShot
+          ref={this.onRef}
+          options={{ result: 'base64' }}
+          style={{
+            padding: options.overflow,
+            paddingTop: options.overflowTop,
+            paddingBottom: options.overflowBottom,
+            paddingLeft: options.overflowLeft,
+            paddingRight: options.overflowRight,
+            maxWidth: options.maxWidth,
+            backgroundColor: options.backgroundColor || '#fff',
+          }}
+        >
+          <ImageContext.Provider value={{ onMount: this.onImageMount, onLoad: this.onImageLoad }}>
+            <ViewContext.Provider value={{ onMount: this.onViewMount, onLayout: this.onViewLayout }}>
+              {children}
+            </ViewContext.Provider>
+          </ImageContext.Provider>
+        </ViewShot>
+      </View>
     )
   }
 }
@@ -119,129 +110,130 @@ class Main extends Component {
     super(...args)
 
     this.state = {
-      fileIndex: 0,
-      iterator: null,
-      item: null,
-      path: null,
+      paths: {},
     }
 
-    this.isCapturing = false
-    this.viewShot = null
-    this.onRef = this.onRef.bind(this)
-    this.onCapture = this.onCapture.bind(this)
-  }
+    for (let i = 0; i < screenshotsConcurrency; i++) {
+      const file = files[i]
+      const iterator = file.examples[Symbol.iterator]()
 
-  componentDidMount() {
-    const { path, content } = files[0]
-    const iterator = content[Symbol.iterator]()
-
-    this.setState(() => ({
-      path,
-      item: iterator.next().value,
-      iterator,
-    }), async () => {
-
-    })
-  }
-
-  onRef(ref) {
-    this.viewShot = ref
-
-    const { item } = this.state
-
-    if (item !== null && !item.options.shouldWaitForResize && !item.options.shouldWaitForImages) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      this.onCapture()
-    }
-  }
-
-  async onCapture() {
-    if (this.viewShot === null || this.isCapturing) {
-      return
+      this.state.paths[file.path] = {
+        name: file.name,
+        iterator,
+        example: iterator.next().value,
+      }
     }
 
-    this.isCapturing = true
+    this.fileIndex = screenshotsConcurrency - 1
+    this.filesInProgressCount = screenshotsConcurrency
+  }
 
-    const data = await this.viewShot.capture()
+  onCapture = (path) => async (base64data) => {
+    const { iterator, example, name } = this.state.paths[path]
+    const result = iterator.next()
 
-    this.isCapturing = false
-
-    const res = await fetch('http://localhost:3002/upload', {
+    const res = await fetch(`http://${SERVER_HOST}:${SERVER_PORT}/upload?path=${path}`, {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        data,
-        id: this.state.item.id,
-        serializedElement: this.state.item.serializedElement,
-        path: this.state.path,
+        isDone: result.done,
+        path,
+        name,
+        id: example.id,
+        meta: example.meta(example.element),
+        base64data,
       }),
       keepalive: true,
     })
 
     if (!res.ok) {
+      throw new Error(`${res.statusText}: ${res.statusText}`)
+    }
+
+    if (result.done) {
+      this.filesInProgressCount--
+
+      if (this.fileIndex + 1 === files.length) {
+        if (this.filesInProgressCount === 0) {
+          await fetch(`http://${SERVER_HOST}:${SERVER_PORT}/done`, {
+            method: 'POST',
+          })
+
+          console.warn('DONE')
+        }
+
+        return
+      }
+
+      this.fileIndex++
+      this.filesInProgressCount++
+
+      const nextFile = files[this.fileIndex]
+      const nextIterator = nextFile.examples[Symbol.iterator]()
+
+      this.setState((state) => {
+        Reflect.deleteProperty(state.paths, path)
+
+        return ({
+          paths: {
+            ...state.paths,
+            [nextFile.path]: {
+              iterator: nextIterator,
+              name: nextFile.name,
+              example: nextIterator.next().value,
+            },
+          },
+        })
+      })
+
       return
     }
 
-    const nextResult = this.state.iterator.next()
-
-    if (!nextResult.done) {
-      this.setState({
-        item: nextResult.value,
-      })
-    } else if (this.state.fileIndex < files.length - 1) {
-      const nextFileIndex = this.state.fileIndex + 1
-      const { path, content } = files[nextFileIndex]
-      const iterator = content[Symbol.iterator]()
-
-      this.setState(() => ({
-        item: iterator.next().value,
-        fileIndex: nextFileIndex,
-        path,
-        iterator,
-      }))
-    } else {
-      // finish
-      await fetch('http://localhost:3002/done')
-    }
+    this.setState((state) => ({
+      paths: {
+        ...this.state.paths,
+        [path]: {
+          ...state.paths[path],
+          example: result.value,
+        },
+      },
+    }))
   }
 
   render() {
-    const { item, fileIndex } = this.state
-
-    if (item === null) {
-      return null
-    }
-
     return (
-      <Provider
-        shouldWaitForResize={item.options.shouldWaitForResize}
-        shouldWaitForImages={item.options.shouldWaitForImages}
-        onCapture={this.onCapture}
-      >
-        <View
-          style={item.options.hasOwnWidth ? hasOwnWidthStyles : defaultStyles}
-          key={`${fileIndex}:${item.id}`}
-        >
-          <ViewShot
-            ref={this.onRef}
-            options={{ result: 'base64' }}
-            style={{
-              padding: item.options.overflow,
-              paddingTop: item.options.overflowTop,
-              paddingBottom: item.options.overflowBottom,
-              paddingLeft: item.options.overflowLeft,
-              paddingRight: item.options.overflowRight,
-              maxWidth: item.options.maxWidth,
-              backgroundColor: item.options.backgroundColor || '#fff',
-            }}
-          >
-            {item.element}
-          </ViewShot>
-        </View>
-      </Provider>
+      <Fragment>
+        {
+          Object.entries(this.state.paths).map(([path, value]) => (
+            <Example
+              key={`${path}:${value.example.id}`}
+              options={value.example.options}
+              onCapture={this.onCapture(path)}
+            >
+              {value.example.element}
+            </Example>
+          ))
+        }
+      </Fragment>
+    )
+  }
+}
+
+export class App extends Component {
+  async componentDidCatch(error) {
+    console.log(error)
+
+    await fetch(`http://${SERVER_HOST}:${SERVER_PORT}/error`, {
+      method: 'POST',
+      body: error.message,
+    })
+  }
+
+  render() {
+    return (
+      <Main/>
     )
   }
 }

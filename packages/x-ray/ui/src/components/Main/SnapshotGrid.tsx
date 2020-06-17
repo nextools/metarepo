@@ -3,17 +3,21 @@ import { pureComponent, startWithType, mapHandlers, mapWithPropsMemo } from 'ref
 import bsc from 'bsc'
 import { Border } from '@primitives/border'
 import { isUndefined } from 'tsfn'
+import { TListItems } from '@x-ray/core'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectSnapshot } from '../../actions'
-import { TSnapshotGridItem, TSnapshotItems, TRect } from '../../types'
+import { TSnapshotGridItem, TRect } from '../../types'
 import { Block } from '../Block'
-import { SnapshotGridItem } from '../SnapshotGridItem'
 import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT, BORDER_SIZE, COLOR_BLACK, SNAPSHOT_GRID_MAX_LINES } from '../../config'
+import { SnapshotNew } from '../SnapshotNew'
+import { SnapshotDiff } from '../SnapshotDiff'
+import { SnapshotDeleted } from '../SnapshotDeleted'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
+import { Pointer } from './Pointer'
 
 export type TSnapshotGrid = TRect & {
-  items: TSnapshotItems,
+  items: TListItems,
   discardedItems: string[],
   filteredFiles: string[],
 }
@@ -121,12 +125,11 @@ export const SnapshotGrid = pureComponent(
   onScroll,
   onPress,
 }) => (
-  <Block
+  <Pointer
     top={top}
     left={left}
     width={width}
     height={height}
-    shouldScrollY
     onScroll={onScroll}
     onPress={onPress}
   >
@@ -160,23 +163,52 @@ export const SnapshotGrid = pureComponent(
           if (isVisible) {
             const isDiscarded = discardedItems.includes(item.id)
 
-            return (
-              <SnapshotGridItem
-                key={item.id}
-                id={item.id}
-                type={item.type}
-                top={item.top}
-                left={item.left}
-                width={item.gridWidth}
-                height={item.gridHeight}
-                isDiscarded={isDiscarded}
-              />
-            )
+            if (item.type === 'NEW') {
+              return (
+                <SnapshotNew
+                  key={item.id}
+                  id={item.id}
+                  top={item.top}
+                  left={item.left}
+                  width={item.gridWidth}
+                  height={item.gridHeight}
+                  isDiscarded={isDiscarded}
+                />
+              )
+            }
+
+            if (item.type === 'DIFF') {
+              return (
+                <SnapshotDiff
+                  key={item.id}
+                  id={item.id}
+                  top={item.top}
+                  left={item.left}
+                  width={item.gridWidth}
+                  height={item.gridHeight}
+                  isDiscarded={isDiscarded}
+                />
+              )
+            }
+
+            if (item.type === 'DELETED') {
+              return (
+                <SnapshotDeleted
+                  key={item.id}
+                  id={item.id}
+                  top={item.top}
+                  left={item.left}
+                  width={item.gridWidth}
+                  height={item.gridHeight}
+                  isDiscarded={isDiscarded}
+                />
+              )
+            }
           }
         })
       )
     ), [] as ReactNode[])}
-  </Block>
+  </Pointer>
 ))
 
 SnapshotGrid.displayName = 'SnapshotGrid'

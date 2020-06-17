@@ -1,12 +1,6 @@
 import { TExtend } from 'tsfn'
 import { ThunkAction } from 'redux-thunk'
-import { TScreenshotItem, TScreenshotItems } from '@x-ray/screenshot-utils'
-import { TSnapshotItem, TSnapshotItems } from '@x-ray/snapshots'
-import { TItem } from '@x-ray/common-utils'
-
-export { TItem } from '@x-ray/common-utils'
-export { TSnapshotItem, TSnapshotItems } from '@x-ray/snapshots'
-export { TScreenshotItem, TScreenshotItems } from '@x-ray/screenshot-utils'
+import { TListItems, TItem } from '@x-ray/core'
 
 export type TPosition = {
   top: number,
@@ -33,17 +27,15 @@ export type TActionAsync<A extends TAnyAction> = ThunkAction<Promise<void>, TSta
 
 export type TType = 'image' | 'text'
 
-export type TItemType = 'new' | 'deleted' | 'diff'
-
-export type TGridItem = TItem & TPosition & {
+export type TGridItem = TPosition & {
   id: string,
   gridWidth: number,
   gridHeight: number,
 }
 
-export type TScreenshotGridItem = TScreenshotItem & TGridItem
+export type TScreenshotGridItem = TItem & TGridItem
 
-export type TSnapshotGridItem = TSnapshotItem & TGridItem
+export type TSnapshotGridItem = TItem & TGridItem
 
 export type TState = {
   error?: string,
@@ -54,10 +46,10 @@ export type TState = {
   files: string[],
 } & ({
   type: 'text' | null,
-  items: TSnapshotItems,
+  items: TListItems,
   selectedItem: TSnapshotGridItem | null,
 } | {
   type: 'image' | null,
-  items: TScreenshotItems,
+  items: TListItems,
   selectedItem: TScreenshotGridItem | null,
 })

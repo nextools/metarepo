@@ -3,7 +3,7 @@ import { buildWebAppRelease } from '@rebox/web'
 import { getObjectEntries } from 'tsfn'
 import tempy from 'tempy'
 import dleet from 'dleet'
-import { runChromium } from 'xrom'
+import { runBrowser } from 'xrom'
 import { getPerfPaintEntryValue } from './get-perf-paint-entry-value'
 import { getPerfMetricsEntryValue } from './get-perf-metrics-entry-value'
 import { getPercentile } from './get-percentile'
@@ -24,7 +24,9 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
     ...userOptions,
   }
   const tempBuildDir = tempy.directory()
-  const browserWSEndpoint = await runChromium({
+  const { browserWSEndpoint, closeBrowser } = await runBrowser({
+    browser: 'chromium',
+    version: 'latest',
     cpus: 1,
     cpusetCpus: [1],
     fontsDir: options.fontsDir,
@@ -34,7 +36,6 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
         to: INJECTED_BUILD_FOLDER_PATH,
       },
     ],
-    shouldCloseOnExit: true,
   })
   const browser = await puppeteer.connect({ browserWSEndpoint })
 
@@ -103,6 +104,7 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
   }
 
   await browser.close()
+  await closeBrowser()
   await dleet(tempBuildDir)
 
   return getObjectEntries(result).reduce((acc, [key, value]) => {

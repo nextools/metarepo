@@ -1,11 +1,10 @@
-import { TScreenshotResultType } from '@x-ray/screenshot-utils'
 import { HOST, PORT } from '../config'
 
 const apiLoadScreenshotCache = new Map<string, Blob>()
 
 export type TApiLoadScreenshotOpts = {
   id: string,
-  type: TScreenshotResultType,
+  type: 'ORIG' | 'NEW',
 }
 
 export const apiLoadScreenshot = async (opts: TApiLoadScreenshotOpts): Promise<Blob> => {
@@ -15,7 +14,7 @@ export const apiLoadScreenshot = async (opts: TApiLoadScreenshotOpts): Promise<B
     return apiLoadScreenshotCache.get(params)!
   }
 
-  const response = await fetch(`http://${HOST}:${PORT}/get?${params}`)
+  const response = await fetch(`http://${HOST}:${PORT}/get-result?${params}`)
 
   if (!response.ok) {
     throw new Error(`Load screenshot (${response.status}): ${response.statusText}`)

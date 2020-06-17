@@ -67,13 +67,19 @@ export const workerama = <T>(options: TWorkeramaOptions): AsyncIterable<T> => {
                 reject(message.value)
               }
             })
-            .postMessage(item)
+            .postMessage({ value: item })
         })
       })(options.items),
       threadCount
     ),
     () => piAll(
-      map((worker: Worker) => () => worker.terminate())(workers)
+      map((worker: Worker) => () => {
+        return new Promise((resolve) => {
+          worker
+            .on('exit', resolve)
+            .postMessage({ done: true })
+        })
+      })(workers)
     )
   )
 

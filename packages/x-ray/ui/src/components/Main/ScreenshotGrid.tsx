@@ -4,9 +4,10 @@ import bsc from 'bsc'
 import { easeInOutCubic, Animation } from '@primitives/animation'
 import { Border } from '@primitives/border'
 import { isUndefined } from 'tsfn'
+import { TListItems } from '@x-ray/core'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectScreenshot } from '../../actions'
-import { TScreenshotGridItem, TScreenshotItems, TRect } from '../../types'
+import { TScreenshotGridItem, TRect } from '../../types'
 import { Block } from '../Block'
 import { ScreenshotNew } from '../ScreenshotNew'
 import { ScreenshotDeleted } from '../ScreenshotDeleted'
@@ -15,9 +16,10 @@ import { COL_SPACE, COL_WIDTH, BORDER_SIZE, COLOR_BLACK } from '../../config'
 import { mapDiffState } from './map-diff-state'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
+import { Pointer } from './Pointer'
 
 export type TScreenshotGrid = TRect & {
-  items: TScreenshotItems,
+  items: TListItems,
   discardedItems: string[],
   filteredFiles: string[],
   shouldAnimate: boolean,
@@ -29,10 +31,8 @@ export const ScreenshotGrid = pureComponent(
   mapWithPropsMemo(({ width, items, filteredFiles }) => {
     const colCount = Math.max(1, Math.floor((width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
     const gridWidth = (width - (COL_SPACE * (colCount + 1))) / colCount
-    const top = new Array(colCount).fill(0)
-    const cols: TScreenshotGridItem[][] = new Array(colCount)
-      .fill(0)
-      .map(() => [])
+    const top = Array(colCount).fill(0)
+    const cols: TScreenshotGridItem[][] = Array.from({ length: colCount }, () => [])
 
     Object.entries(items).forEach(([id, item]) => {
       if (filteredFiles.length > 0) {
@@ -53,9 +53,9 @@ export const ScreenshotGrid = pureComponent(
 
       let gridHeight: number
 
-      if (item.type === 'diff') {
-        const largestWidth = item.width > item.newWidth ? item.width : item.newWidth
-        const largestHeight = item.height > item.newHeight ? item.height : item.newHeight
+      if (item.type === 'DIFF') {
+        const largestWidth = item.origWidth > item.width ? item.origWidth : item.width
+        const largestHeight = item.origHeight > item.height ? item.origHeight : item.height
 
         gridHeight = (gridWidth - BORDER_SIZE * 2) / largestWidth * largestHeight + BORDER_SIZE * 2
       } else {
@@ -137,17 +137,16 @@ export const ScreenshotGrid = pureComponent(
   onScroll,
   onPress,
 }) => (
-  <Block
+  <Pointer
     left={left}
     top={top}
     width={width}
     height={height}
-    shouldScrollY
     onScroll={onScroll}
     onPress={onPress}
   >
     <Block left={0} top={0} width={0} height={maxHeight} shouldFlow/>
-    <Animation values={[diffState ? 1 : 0]} time={200} easing={easeInOutCubic}>
+    <Animation values={[diffState ? 1 : 0]} time={500} easing={easeInOutCubic}>
       {([alpha]) => (
         <Fragment>
           {cols.reduce((result, col) => (
@@ -179,7 +178,7 @@ export const ScreenshotGrid = pureComponent(
                 if (isVisible) {
                   const isDiscarded = discardedItems.includes(item.id)
 
-                  if (item.type === 'new') {
+                  if (item.type === 'NEW') {
                     return (
                       <ScreenshotNew
                         key={item.id}
@@ -193,7 +192,28 @@ export const ScreenshotGrid = pureComponent(
                     )
                   }
 
-                  if (item.type === 'deleted') {
+                  if (item.type === 'DIFF') {
+                    const largestWidth = item.origWidth > item.width ? item.origWidth : item.width
+                    const scale = item.gridWidth / largestWidth
+
+                    return (
+                      <ScreenshotDiff
+                        key={item.id}
+                        id={item.id}
+                        top={item.top}
+                        left={item.left}
+                        oldWidth={item.origWidth * scale}
+                        oldHeight={item.origHeight * scale}
+                        newWidth={item.width * scale}
+                        newHeight={item.height * scale}
+                        oldAlpha={1 - alpha}
+                        newAlpha={alpha}
+                        isDiscarded={isDiscarded}
+                      />
+                    )
+                  }
+
+                  if (item.type === 'DELETED') {
                     return (
                       <ScreenshotDeleted
                         key={item.id}
@@ -206,27 +226,6 @@ export const ScreenshotGrid = pureComponent(
                       />
                     )
                   }
-
-                  if (item.type === 'diff') {
-                    const largestWidth = item.width > item.newWidth ? item.width : item.newWidth
-                    const scale = item.gridWidth / largestWidth
-
-                    return (
-                      <ScreenshotDiff
-                        key={item.id}
-                        id={item.id}
-                        top={item.top}
-                        left={item.left}
-                        oldWidth={item.width * scale}
-                        oldHeight={item.height * scale}
-                        newWidth={item.newWidth * scale}
-                        newHeight={item.newHeight * scale}
-                        oldAlpha={1 - alpha}
-                        newAlpha={alpha}
-                        isDiscarded={isDiscarded}
-                      />
-                    )
-                  }
                 }
               })
             )
@@ -234,7 +233,7 @@ export const ScreenshotGrid = pureComponent(
         </Fragment>
       )}
     </Animation>
-  </Block>
+  </Pointer>
 ))
 
 ScreenshotGrid.displayName = 'ScreenshotGrid'
