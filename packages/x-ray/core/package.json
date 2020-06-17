@@ -15,7 +15,7 @@
   "sideEffects": false,
   "dependencies": {
     "@rebox/web": "^2.1.2",
-    "tarmap": "^0.0.0",
+    "tarmap": "^0.1.0",
     "funcom": "^0.1.0",
     "imagemin-pngout": "^4.0.0",
     "iterama": "^0.2.0",

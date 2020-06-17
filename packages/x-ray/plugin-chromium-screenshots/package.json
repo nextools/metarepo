@@ -20,8 +20,8 @@
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
     "@babel/register": "^7.8.6",
-    "@x-ray/core": "^0.0.0",
-    "@x-ray/ui": "^1.0.3",
+    "@x-ray/core": "^0.1.0",
+    "@x-ray/ui": "^2.0.0",
     "funcom": "^0.1.0",
     "iterama": "^0.2.0",
     "piall": "^0.1.1",
@@ -31,11 +31,11 @@
     "puppeteer-core": "^2.1.1",
     "react-dom": "16.11.0",
     "react": "16.11.0",
-    "tarmap": "^0.0.0",
+    "tarmap": "^0.1.0",
     "tsfn": "^1.0.0",
     "typeon": "^1.0.0",
-    "workerama": "^0.2.0",
-    "xrom": "^1.0.4"
+    "workerama": "^0.3.0",
+    "xrom": "^2.0.0"
   },
   "devDependencies": {
     "@types/pngjs": "^3.4.1",
