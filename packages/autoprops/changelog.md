@@ -1,3 +1,7 @@
+## v3.0.1
+
+* 🐞 fix inner children restriction
+
 ## v3.0.0
 
 * 💥 use `HEX` format for `id` hash in `mapPropsIterable`
