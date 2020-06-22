@@ -41,11 +41,12 @@ const applyValidPermImpl = (componentConfig: TCommonComponentConfig, int: BigInt
 
   // Iterate over all children
   for (let i = 0; i < childrenKeys.length; ++i) {
+    const childIndex = i + propKeys.length
     const childKey = childrenKeys[i]
     const childConfig = componentConfig.children![childKey]!.config
 
     // Validate every child
-    applyChildPropValue(values[i + propKeys.length], childConfig, Boolean(componentConfig.required?.includes(childKey)))
+    values[childIndex] = applyChildPropValue(values[childIndex], childConfig, Boolean(componentConfig.required?.includes(childKey)))
   }
 
   return packPerm(values, lengths)
