@@ -1,15 +1,23 @@
 # Autoprops
+
 [npm](https://flat.badgen.net/npm/v/autoprops)
-The tool that generates all possible combinations of props and children based on declarative config respecting `mutex` and `mutin` features.
+
+Autoprops generates all possible combinations of props and children based on declarative config.
+
 ## Installation
+
 ```sh
 yarn add autoprops
 ```
+
 ## Terminology
+
 - [ComponentConfig](#ComponentConfig)
 - [Permutation Index](#permutation-index)
 - [ChildrenMap](#ChildrenMap)
+
 ## API
+
 - [getProps](#getProps)
 - [applyPropValue](#applyPropValue)
 - [getPropsIterable](#getPropsIterable)
@@ -17,9 +25,12 @@ yarn add autoprops
 - [createChildren](#createChildren)
 - [getChildrenKeys](#getChildrenKeys)
 - [isChildrenMap](#isChildrenMap)
+
 # Terminology
+
 ## ComponentConfig
-Is a configuration object which `autoprops` uses to generate props.
+
+ComponentConfig is a configuration object which is used to generate props.
 
 The shape of the object is:
 ```ts
@@ -35,11 +46,14 @@ type TComponentConfig = {
   },
   required?: string[][],
   mutex?: string[][],
-  mutin?: string[][],
+  deps?: {
+    [k: string]: string[]
+  },
 }
 ```
 
 ## Minimal `ComponentConfig` object
+
 ```ts
 import { TComponentConfig, getPropsIterable } from 'autoprops'
 
@@ -64,12 +78,15 @@ The output will be:
 { numericProp: 1 }
 { isOk: true, numericProp: 1 }
 ```
+
 ## Children
+
 Children can be defined in two ways
 - Children as a normal prop, with values as React Elements.
 - Children as references to other `ComponentConfig` objects.
 
 ## Children as a normal prop
+
 ```tsx
 import { TComponentConfig, getPropsIterable } from 'autoprops'
 
@@ -89,7 +106,7 @@ for (const { props } of getPropsIterable(config)) {
 }
 ```
 The output will be
-```sh
+```ts
 {}
 { isOk: true }
 { children: 'text child' }
@@ -97,7 +114,9 @@ The output will be
 { children: { $$typeof: 'react.element' } }
 { isOk: true, children: { $$typeof: 'react.element' } }
 ```
+
 ## Children as references to `ComponentConfig`
+
 ```tsx
 import { TComponentConfig, getPropsIterable } from 'autoprops'
 
@@ -126,7 +145,7 @@ for (const { props } of getPropsIterable(config)) {
 }
 ```
 The output will be
-```sh
+```ts
 {}
 { isOk: true }
 { children: { $$typeof: 'react.element' } }
@@ -134,9 +153,11 @@ The output will be
 { children: { $$typeof: 'react.element', props: { childProp: true } } }
 { isOk: true, children: { $$typeof: 'react.element', props: { childProp: true } } }
 ```
+
 ## Required field
+
 `required` field in `ComponentConfig` is used to tell autoprops to
-- include property with such name in every props instance
+- include property with such name in every permutation
 - include child with such key in every permutation
 ```ts
 import { TComponentConfig, getPropsIterable } from 'autoprops'
@@ -160,8 +181,9 @@ The output will be
 { isOk: true, numericProp: 0 }
 { isOk: true, numericProp: 1 }
 ```
-As you can see - required field `isOk` is always presented in props instances.
-Let's see the example with children:
+Now required field `isOk` is always present in props instances.
+
+Example with children:
 ```ts
 import { TComponentConfig, getPropsIterable } from 'autoprops'
 
@@ -194,11 +216,11 @@ The output will be:
 { isOk: true, children: { $$typeof: 'react.element' } }
 { isOk: true, children: { $$typeof: 'react.element', props: { childProp: true } } }
 ```
+
 ## Mutex field
+
 Is used to define groups of mutually exclusive props and children.
 ```ts
-import { TComponentConfig } from 'autoprops'
-
 import { TComponentConfig, getPropsIterable } from 'autoprops'
 
 const childConfig: TComponentConfig = {
@@ -228,18 +250,18 @@ for (const { props } of getPropsIterable(config)) {
 }
 ```
 The output will be:
-```sh
+```ts
 {}
 { isOk: true }
 { children: { $$typeof: 'react.element' } }
 { children: { $$typeof: 'react.element', props: { childProp: true } } }
 ```
 `childKey` and `isOk` props are not allowed to be placed into one props instance. They are mutually exclusive now.
-## Mutin field
-Is used to define groups of mutually inclusive props and children.
-```ts
-import { TComponentConfig } from 'autoprops'
 
+## Deps field
+
+Is used to define groups of dependent props and children.
+```ts
 import { TComponentConfig, getPropsIterable } from 'autoprops'
 
 const childConfig: TComponentConfig = {
@@ -258,9 +280,10 @@ const config: TComponentConfig = {
       config: childConfig
     },
   },
-  mutin: [
-    ['isOk', 'childKey'],
-  ]
+  deps: {
+    /* isOK depends on childKey */
+    isOk: ['childKey'],
+  }
 }
 
 /* lets iterate over generated props */
@@ -269,13 +292,15 @@ for (const { props } of getPropsIterable(config)) {
 }
 ```
 The output will be:
-```sh
+```ts
 {}
-{ isOk: true, children: { $$typeof: 'react.element' } }
+{ children: { $$typeof: 'react.element' } }
 { isOk: true, children: { $$typeof: 'react.element', props: { childProp: true } } }
 ```
-`childKey` and `isOk` props are either both missing or both present in resulting props instances.
+`isOk` depends on `childKey`. When `isOk` is present, `childKey` must show up too.
+
 # Permutation Index
+
 Special `string` type identifier which can be used to get specific props instance from `autoprops`.
 Initial index is always `'0'`.
 ```ts
@@ -289,7 +314,9 @@ const currentIndex = '0'
 /* get the props by permutation index */
 const props = getProps(config, currentIndex)
 ```
+
 # ChildrenMap
+
 Special object where
 - keys are same as in `children` section of `ComponentConfig` object
 - values are objects that are child props.
@@ -338,8 +365,11 @@ const childrenMap_2 = {
 /* ChildrenMap can be converted to React children using createChildren function */
 const reactChildren = createChildren(config, childrenMap_0)
 ```
+
 # API
+
 ## `getProps`
+
 >`(config: TComponentConfig, index: string) => {[k: string]: any}`
 
 Returns single props instance identified by provided permutation index string and config object.
@@ -360,7 +390,9 @@ if (isChildrenMap(props.children)) {
   props.children = createChildren(config, props.children)
 }
 ```
+
 ## `applyPropValue`
+
 >`(config: TComponentConfig, index: string, propPath: string[], propValue: any): string => {}`
 
 Tells what permutation index it would be, if the specified `value` would change at specified `propPath` starting from specified permutation index
@@ -380,7 +412,30 @@ const nextIndex = applyPropValue(config, currentIndex, propPath, applyValue)
 /* use next index to get props */
 const nextProps = getProps(config, nextIndex)
 ```
+
+## `applyValidPerm`
+
+>`(config: TComponentConfig, index: string): string => {}`
+
+Inspects provided permutation index and applies restrictions from config.
+```ts
+import { applyValidPerm, getProps, TComponentConfig } from 'autoprops'
+
+/* get Component config somehow */
+const config: TComponentConfig
+
+/* Begin from 0 index */
+let currentIndex = '0'
+
+/* apply restrictions */
+currentIndex = applyValidPerm(config, currentIndex)
+
+/* use next index to get props */
+const nextProps = getProps(config, currentIndex)
+```
+
 ## `getPropsIterable`
+
 >`<T>(config: TComponentConfig<T>) => Iterable<{ id: string, props: T, progress: number }>`
 
 Returns `Iterable` that will iterate over all possible props instances
@@ -395,7 +450,9 @@ for (const { id, props, progress } of getPropsIterable(config)) {
   /* ... */
 }
 ```
+
 ## `mapPropsIterable`
+
 >`<T, R>(config: TComponentConfig<T>, xf: (value: { id: string, props: T, progress: number }) => R): Iterable<R>`
 
 Apply your transformation function to `Iterable`, which will lazily transform prop instances.
@@ -417,7 +474,9 @@ for (const { id, props, options } of mapPropsIterable(config, transform)) {
   /* ... */
 }
 ```
+
 ## `createChildren`
+
 >`<K>(componentConfig: TComponentConfig<any, K>, childrenMap: TChildrenMap<K>): ReactElement | ReactElement[]`
 
 Creates React children from `ChildrenMap`.
@@ -436,7 +495,9 @@ if (isChildrenMap(props.children)) {
   props.children = createChildren(config, props.children)
 }
 ```
+
 ## `getChildrenKeys`
+
 >`<K>(config: TComponentConfig<any, K>): K[]`
 
 Returns children keys in correct order. To be used instead of `Object.keys`.
