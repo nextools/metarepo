@@ -1,3 +1,7 @@
+## v2.0.1
+
+* 🐞 refactor back to single thread implementation
+
 ## v2.0.0
 
 * 💥 take multiple screenshots concurrently

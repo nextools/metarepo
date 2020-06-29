@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/plugin-ios-screenshots",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Check iOS screenshots with X-Ray",
   "keywords": [],
   "main": "src/index.ts",
