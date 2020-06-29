@@ -1,13 +1,16 @@
 import http from 'http'
-import url, { UrlWithParsedQuery } from 'url'
-import { Worker } from 'worker_threads'
+import { TTarMap, TarMap } from 'tarmap'
+import { access } from 'pifs'
 import { runIosApp } from '@rebox/ios'
 import { rsolve } from 'rsolve'
-import { unchunkBuffer } from 'unchunk'
-import { TTotalResults, TPlugin } from '@x-ray/core'
+import { unchunkJson } from 'unchunk'
+import { TTotalResults, TPlugin, getTarFilePath, TExampleResults } from '@x-ray/core'
+import { TJsonValue } from 'typeon'
 import { prepareMeta } from './prepare-meta'
-import { TMessage } from './types'
-import { WORKER_PATH, SERVER_PORT, SERVER_HOST, MAX_THREAD_COUNT } from './constants'
+import { bufferToPng } from './buffer-to-png'
+import { ApplyDpr } from './apply-dpr'
+import { hasScreenshotDiff } from './has-screenshot-diff'
+import { SERVER_PORT, SERVER_HOST } from './constants'
 
 export type TIosScreenshotsOptions = {
   fontsDir?: string,
@@ -28,9 +31,8 @@ export const iOsScreenshots = (options?: TIosScreenshotsOptions): TPlugin<Uint8A
       ...options,
     }
     const entryPointPath = await rsolve('@x-ray/native-screenshots-app', 'react-native')
-    const threadCount = Math.min(MAX_THREAD_COUNT, files.length)
 
-    await prepareMeta(entryPointPath, files, threadCount)
+    await prepareMeta(entryPointPath, files)
 
     const closeIosApp = await runIosApp({
       appName: 'X-Ray',
@@ -46,86 +48,147 @@ export const iOsScreenshots = (options?: TIosScreenshotsOptions): TPlugin<Uint8A
       isHeadless: true,
     })
 
-    const workers = Array.from({ length: threadCount }, () => new Worker(
-      WORKER_PATH,
-      {
-        workerData: {
-          dpr: 2,
-          shouldBailout: opts.shouldBailout,
-        },
-      }
-    ))
+    const applyDpr = ApplyDpr(2)
     const totalResults: TTotalResults<Uint8Array> = new Map()
-    const busyWorkerIds = new Set<number>()
-    const pathWorkers = new Map<string, number>()
-
-    Buffer.poolSize = 0
+    let results: TExampleResults<Buffer> = new Map()
+    let status = {
+      ok: 0,
+      new: 0,
+      diff: 0,
+      deleted: 0,
+    }
+    let tarMap = null as null | TTarMap
+    let currentPath: string
 
     try {
       await new Promise<void>((serverResolve, serverReject) => {
         const server = http.createServer(async (req, res) => {
           try {
-            const urlData = url.parse(req.url!, true) as UrlWithParsedQuery & {
-              query: {
-                path: string,
-              },
-            }
+            if (req.url === '/upload') {
+              const { path, name, id, meta, isDone, base64data } = await unchunkJson(req)
 
-            if (urlData.pathname === '/upload') {
-              const path = urlData.query.path as string
+              if (currentPath !== path) {
+                try {
+                  const tarFilePath = getTarFilePath({
+                    examplesFilePath: path,
+                    examplesName: name,
+                    pluginName: 'ios-screenshots',
+                  })
 
-              const body = await unchunkBuffer(req)
-              let worker: Worker
+                  await access(tarFilePath)
 
-              // no worker for path, assign new
-              if (!pathWorkers.has(path)) {
-                worker = workers.find(({ threadId }) => !busyWorkerIds.has(threadId))!
+                  tarMap = await TarMap(tarFilePath)
+                } catch {
+                  tarMap = null
+                }
 
-                busyWorkerIds.add(worker.threadId)
-                pathWorkers.set(path, worker.threadId)
-                // reuse worker
-              } else {
-                const pathThreadId = pathWorkers.get(path)!
-
-                worker = workers.find(({ threadId }) => threadId === pathThreadId)!
-                // release worker
-                worker.removeAllListeners('error')
-                worker.removeAllListeners('message')
+                currentPath = path
               }
 
-              await new Promise<void>((reqResolve, reqReject) => {
-                worker
-                  .once('error', reqReject)
-                  .on('message', (message: TMessage) => {
-                    switch (message.type) {
-                      case 'EXAMPLE': {
-                        if (!message.isDone) {
-                          reqResolve()
+              const newScreenshot = Buffer.from(base64data, 'base64')
 
-                          break
-                        }
+              // NEW
+              if (tarMap === null || !tarMap.has(id)) {
+                if (opts.shouldBailout) {
+                  throw new Error(`BAILOUT: ${path} → ${id} → NEW`)
+                }
 
-                        busyWorkerIds.delete(pathWorkers.get(path)!)
-                        pathWorkers.delete(path)
+                const png = bufferToPng(newScreenshot)
 
-                        const [filePath, result] = message.value
+                results.set(id, {
+                  type: 'NEW',
+                  meta,
+                  data: newScreenshot,
+                  width: applyDpr(png.width),
+                  height: applyDpr(png.height),
+                })
 
-                        totalResults.set(filePath, result)
+                status.new++
+              } else {
+                const origScreenshot = await tarMap.read(id) as Buffer
 
-                        console.log(result.name)
+                const origPng = bufferToPng(origScreenshot)
+                const newPng = bufferToPng(newScreenshot)
 
-                        reqResolve()
+                // DIFF
+                if (hasScreenshotDiff(origPng, newPng)) {
+                  if (opts.shouldBailout) {
+                    throw new Error(`BAILOUT: ${path} → ${id} → DIFF`)
+                  }
 
-                        break
-                      }
-                      case 'ERROR': {
-                        reqReject(message.value)
-                      }
-                    }
+                  results.set(id, {
+                    type: 'DIFF',
+                    meta,
+                    data: newScreenshot,
+                    width: applyDpr(newPng.width),
+                    height: applyDpr(newPng.height),
+                    origData: origScreenshot,
+                    origWidth: applyDpr(origPng.width),
+                    origHeight: applyDpr(origPng.height),
                   })
-                  .postMessage({ value: body }, [body.buffer])
-              })
-            } else if (urlData.pathname === '/done') {
+
+                  status.diff++
+                  // OK
+                } else {
+                  results.set(id, { type: 'OK' })
+
+                  status.ok++
+                }
+              }
+
+              if (isDone) {
+                // DELETED
+                if (tarMap !== null) {
+                  for (const id of tarMap.list()) {
+                    if (id.endsWith('-meta')) {
+                      continue
+                    }
+
+                    if (!results.has(id)) {
+                      if (opts.shouldBailout) {
+                        throw new Error(`BAILOUT: ${path} → ${id} → DELETED`)
+                      }
+
+                      const deletedScreenshot = await tarMap.read(id) as Buffer
+                      const deletedPng = bufferToPng(deletedScreenshot)
+                      const metaId = `${id}-meta`
+                      let meta
+
+                      if (tarMap.has(metaId)) {
+                        const metaBuffer = await tarMap.read(metaId) as Buffer
+
+                        meta = JSON.parse(metaBuffer.toString('utf8')) as TJsonValue
+                      }
+
+                      results.set(id, {
+                        type: 'DELETED',
+                        meta,
+                        data: deletedScreenshot,
+                        width: applyDpr(deletedPng.width),
+                        height: applyDpr(deletedPng.height),
+                      })
+
+                      status.deleted++
+                    }
+                  }
+
+                  await tarMap.close()
+                }
+
+                totalResults.set(path, { name, results, status })
+
+                status = {
+                  ok: 0,
+                  new: 0,
+                  diff: 0,
+                  deleted: 0,
+                }
+
+                results = new Map()
+
+                console.log(name)
+              }
+            } else if (req.url === '/done') {
               server.close(() => {
                 serverResolve()
               })
@@ -141,14 +204,6 @@ export const iOsScreenshots = (options?: TIosScreenshotsOptions): TPlugin<Uint8A
         server.listen(SERVER_PORT, SERVER_HOST)
       })
     } finally {
-      await Promise.all(
-        workers.map((worker) => new Promise((resolve) => {
-          worker
-            .on('exit', resolve)
-            .postMessage({ done: true })
-        }))
-      )
-
       await closeIosApp()
     }
 

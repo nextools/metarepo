@@ -7,13 +7,15 @@ const { ViewContext } = require('./view-context')
 const OrigImage = ReactNative.Image
 const OrigView = ReactNative.View
 
-module.exports = ReactNative
-
 const Image = (props) => {
-  const refId = useRef(nanoid())
+  const refId = useRef()
   const context = useContext(ImageContext)
 
+  context.onRender()
+
   useEffect(() => {
+    refId.current = nanoid()
+
     context.onMount(refId.current)
   }, [])
 
@@ -31,7 +33,7 @@ const Image = (props) => {
 
 Image.displayName = 'Image'
 
-Object.defineProperty(module.exports, 'Image', {
+Object.defineProperty(ReactNative, 'Image', {
   configurable: true,
   get() {
     return Image
@@ -40,11 +42,17 @@ Object.defineProperty(module.exports, 'Image', {
 
 const View = forwardRef((props, ref) => {
   const hasOnLayout = typeof props.onLayout === 'function'
-  const refId = useRef(nanoid())
+  const refId = useRef()
   const context = useContext(ViewContext)
+
+  if (hasOnLayout) {
+    context.onRender()
+  }
 
   useEffect(() => {
     if (hasOnLayout) {
+      refId.current = nanoid()
+
       context.onMount(refId.current)
     }
   }, [])
@@ -63,9 +71,11 @@ const View = forwardRef((props, ref) => {
 
 View.displayName = 'View'
 
-Object.defineProperty(module.exports, 'View', {
+Object.defineProperty(ReactNative, 'View', {
   configurable: true,
   get() {
     return View
   },
 })
+
+module.exports = ReactNative
