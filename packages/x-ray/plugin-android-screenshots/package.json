@@ -15,11 +15,6 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/core": "^7.9.0",
-    "@babel/plugin-syntax-bigint": "^7.8.3",
-    "@babel/preset-env": "^7.9.5",
-    "@babel/preset-react": "^7.9.4",
-    "@babel/preset-typescript": "^7.9.0",
-    "@babel/register": "^7.8.6",
     "@rebox/android": "^2.0.4",
     "@x-ray/core": "^0.1.0",
     "@x-ray/ui": "^2.0.0",
