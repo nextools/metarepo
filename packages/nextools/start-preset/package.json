@@ -54,7 +54,7 @@
     "@x-ray/core": "^0.1.1",
     "@x-ray/plugin-android-screenshots": "^0.1.1",
     "@x-ray/plugin-chromium-screenshots": "^0.1.1",
-    "@x-ray/plugin-ios-screenshots": "^0.1.2",
+    "@x-ray/plugin-ios-screenshots": "^0.1.3",
     "@x-ray/plugin-react-native-snapshots": "^0.1.1",
     "@x-ray/plugin-react-snapshots": "^0.1.1",
     "copie": "^1.0.0",
