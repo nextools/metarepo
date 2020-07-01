@@ -1,3 +1,7 @@
+## v0.1.2
+
+* 🐞 cleanup unnecessary files and deps
+
 ## v0.1.1
 
 * 🐞 refactor back to single thread implementation
