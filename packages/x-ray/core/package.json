@@ -17,7 +17,7 @@
     "@rebox/web": "^2.1.2",
     "tarmap": "^0.1.0",
     "funcom": "^0.1.0",
-    "imagemin-pngout": "^4.0.0",
+    "imagemin-pngout": "^5.0.0",
     "iterama": "^0.4.0",
     "make-dir": "^3.0.2",
     "p-all": "^2.1.0",

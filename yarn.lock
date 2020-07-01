@@ -7510,14 +7510,14 @@ image-size@^0.8.3:
   dependencies:
     queue "6.0.1"
 
-imagemin-pngout@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/imagemin-pngout/-/imagemin-pngout-4.0.0.tgz#eb5ce5ad4e278efa38df501906fc2238f55198bf"
-  integrity sha512-Rcd3DfpMWmshgDrJHmgvLzQIKssJxqRHI7RlkrnpNxGRv6nFOY9qyMpe0sYeilJJiNch92YfG1BFr8/poYEjTA==
+imagemin-pngout@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/imagemin-pngout/-/imagemin-pngout-5.0.0.tgz#319dc57e2645b2e950ad5f5396c074b16469be38"
+  integrity sha512-FzARFU10BVOPTCT+TwCJaGivKzvfjoR4Tc6px6/o9MWG3vaS9A4fbhJhFdc8A3zQjP4ItsCXelPbRNBdBlOsLQ==
   dependencies:
-    execa "^1.0.0"
-    is-png "^1.0.0"
-    pngout-bin "^4.0.0"
+    execa "^4.0.0"
+    is-png "^2.0.0"
+    pngout-bin "^5.0.0"
 
 immer@1.10.0:
   version "1.10.0"
@@ -8026,10 +8026,10 @@ is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   dependencies:
     isobject "^3.0.1"
 
-is-png@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/is-png/-/is-png-1.1.0.tgz#d574b12bf275c0350455570b0e5b57ab062077ce"
-  integrity sha1-1XSxK/J1wDUEVVcLDltXqwYgd84=
+is-png@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/is-png/-/is-png-2.0.0.tgz#ee8cbc9e9b050425cedeeb4a6fb74a649b0a4a8d"
+  integrity sha512-4KPGizaVGj2LK7xwJIz8o5B2ubu1D/vcQsgOGFEDlpcvgZHto4gBnyd0ig7Ws+67ixmwKoNmu0hYnpo6AaKb5g==
 
 is-port-reachable@^3.0.0:
   version "3.0.0"
@@ -11072,10 +11072,10 @@ pngjs@^3.4.0:
   resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.4.0.tgz#99ca7d725965fb655814eaf65f38f12bbdbf555f"
   integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
 
-pngout-bin@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/pngout-bin/-/pngout-bin-4.0.0.tgz#1ae857daa85fd54789780b8a28d8836ca0efc43d"
-  integrity sha512-8b1WMekzqGYQUllYhPsG+d//Y7JteF1ufSNP3uuU+PssHaHUg7PWWlfRfw0tS2dFviyFJiM8Cm1KIH9XPbUAJQ==
+pngout-bin@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/pngout-bin/-/pngout-bin-5.0.0.tgz#c64d61ea5b7c2acbc87ff0686a237edb1c367cdc"
+  integrity sha512-QlAzWV3XOThgQXk50oAFGg7dwsZenFpVd+sBR129q82HFD6zmpa8E1NhvzW5vongK6divVJY2+Y1LdFqKZ6/AQ==
   dependencies:
     bin-wrapper "^4.0.0"
     logalot "^2.0.0"
