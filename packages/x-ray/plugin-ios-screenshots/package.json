@@ -16,7 +16,7 @@
   "dependencies": {
     "@babel/core": "^7.9.0",
     "@rebox/ios": "^3.0.0",
-    "@x-ray/core": "^0.1.0",
+    "@x-ray/core": "^0.1.1",
     "@x-ray/native-screenshots-app": "^2.0.1",
     "@x-ray/ui": "^2.0.0",
     "pifs": "^1.0.2",
