@@ -69,13 +69,15 @@ export const lint = async () => {
       ...globs,
       'tasks/**/*.ts',
     ]),
-    plugin('weslint', () => async ({ files }) => {
+    plugin('weslint', ({ logMessage }) => async ({ files }) => {
       const result = await weslint({
         files: files.map((file) => file.path),
       })
 
       if (result.hasErrors || result.hasWarnings) {
         console.log(result.formattedReport)
+      } else {
+        logMessage('¯\\_(ツ)_/¯')
       }
 
       if (result.hasErrors) {
