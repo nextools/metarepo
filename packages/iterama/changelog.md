@@ -1,3 +1,7 @@
+## v0.4.0
+
+* 🌱 add `toValue` and `toValueAsync` methods
+
 ## v0.3.0
 
 * 💥 make `reduceAsync` to return async iterable instead of promise to value

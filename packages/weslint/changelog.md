@@ -1,3 +1,9 @@
+## v0.2.2
+
+* 🐞 upgrade `iterama`
+
+* ♻️ update dependencies `workerama`
+
 ## v0.2.1
 
 * 🐞 refactor using new `workerama`

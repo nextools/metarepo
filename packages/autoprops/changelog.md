@@ -1,3 +1,9 @@
+## v3.0.2
+
+* 🐞 upgrade `iterama`
+
+* ♻️ update dependencies `iterama`
+
 ## v3.0.1
 
 * 🐞 fix inner children restriction

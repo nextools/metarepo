@@ -1,3 +1,9 @@
+## v0.3.1
+
+* 🐞 upgrade `iterama`
+
+* ♻️ update dependencies `iterama`
+
 ## v0.3.0
 
 * 💥 pass `IteratorResult` with per-item value to worker function
