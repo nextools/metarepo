@@ -1,3 +1,7 @@
+## v0.1.3
+
+* 🐞 fix dangling `WORKER_PATH` constant
+
 ## v0.1.2
 
 * 🐞 cleanup unnecessary files and deps
