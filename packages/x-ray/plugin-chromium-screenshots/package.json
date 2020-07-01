@@ -23,7 +23,7 @@
     "@x-ray/core": "^0.1.0",
     "@x-ray/ui": "^2.0.0",
     "funcom": "^0.1.0",
-    "iterama": "^0.2.0",
+    "iterama": "^0.3.0",
     "piall": "^0.1.1",
     "pifs": "^1.0.2",
     "pixelmatch": "^5.1.0",

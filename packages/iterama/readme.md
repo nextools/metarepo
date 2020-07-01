@@ -52,6 +52,8 @@ yarn add iterama
 * [`toMapAsync`](#tomapasync)
 * [`toIterator`](#toiterator)
 * [`toIteratorAsync`](#toiteratorasync)
+* [`toValue`](#tovalue)
+* [`toValueAsync`](#tovalueasync)
 
 In the examples below we use `range()` and `rangeAsync()` helpers whenever possible just to save space and reading time.
 
@@ -1329,4 +1331,50 @@ console.log(result)
 //   { value: 3, done: false },
 //   { value: undefined, done: true },
 // ]
+```
+
+### `toValue`
+
+Extracts first value from iterable.
+
+```ts
+const toValue: <T>(iterable: Iterable<T>) => T
+```
+
+```ts
+import { toValue } from 'iterama'
+
+const iterable = {
+  *[Symbol.iterator]() {
+    yield 1
+    yield 2
+  }
+}
+const value = toValue(iterable)
+
+console.log(result)
+// 1
+```
+
+### `toValueAsync`
+
+Extracts first value from async iterable.
+
+```ts
+const toAsyncIterator: <T>(iterable: AsyncIterable<T>) => Promise<T>
+```
+
+```ts
+import { toValueAsync } from 'iterama'
+
+const iterable = {
+  *[Symbol.asyncIterator]() {
+    yield Promise.resolve(1)
+    yield Promise.resolve(2)
+  }
+}
+const value = await toValueAsync(iterable)
+
+console.log(value)
+// 1
 ```
