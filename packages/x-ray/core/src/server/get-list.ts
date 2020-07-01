@@ -1,4 +1,4 @@
-import { reduce, toArray, map } from 'iterama'
+import { map, reduce, toArray, toValue } from 'iterama'
 import { pipe } from 'funcom'
 import { TListItems, TTotalResults, TResultsType, TEncoding, TFileResults } from '../types'
 
@@ -19,46 +19,48 @@ export const getList = (options: TGetListOptions): TListResponse => {
     toArray
   )(options.results.values())
 
-  const items = reduce((acc, fileResults: TFileResults<TResultsType>) => {
-    for (const [exampleId, exampleResult] of fileResults.results) {
-      const key = `${fileResults.name}::${exampleId}`
+  const items = pipe(
+    reduce((acc, fileResults: TFileResults<TResultsType>) => {
+      for (const [exampleId, exampleResult] of fileResults.results) {
+        const key = `${fileResults.name}::${exampleId}`
 
-      switch (exampleResult.type) {
-        case 'NEW': {
-          acc[key] = {
-            type: 'NEW',
-            width: exampleResult.width,
-            height: exampleResult.height,
+        switch (exampleResult.type) {
+          case 'NEW': {
+            acc[key] = {
+              type: 'NEW',
+              width: exampleResult.width,
+              height: exampleResult.height,
+            }
+
+            break
           }
+          case 'DIFF': {
+            acc[key] = {
+              type: 'DIFF',
+              width: exampleResult.width,
+              height: exampleResult.height,
+              origWidth: exampleResult.origWidth,
+              origHeight: exampleResult.origHeight,
+            }
 
-          break
-        }
-        case 'DIFF': {
-          acc[key] = {
-            type: 'DIFF',
-            width: exampleResult.width,
-            height: exampleResult.height,
-            origWidth: exampleResult.origWidth,
-            origHeight: exampleResult.origHeight,
+            break
           }
+          case 'DELETED': {
+            acc[key] = {
+              type: 'DELETED',
+              width: exampleResult.width,
+              height: exampleResult.height,
+            }
 
-          break
-        }
-        case 'DELETED': {
-          acc[key] = {
-            type: 'DELETED',
-            width: exampleResult.width,
-            height: exampleResult.height,
+            break
           }
-
-          break
         }
       }
-    }
 
-    return acc
-  },
-  {} as TListItems)(options.results.values())
+      return acc
+    }, {} as TListItems),
+    toValue
+  )(options.results.values())
 
   return {
     type: options.encoding,
