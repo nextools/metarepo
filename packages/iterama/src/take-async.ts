@@ -1,22 +1,20 @@
 import FixedArray from 'circularr'
 import { iterate } from './iterate'
-import { iterateAsync } from './iterate-async'
 
 const takeFirstAsync = (n: number) => <T>(iterable: AsyncIterable<T>): AsyncIterable<T> => ({
   async *[Symbol.asyncIterator]() {
-    const asyncGenerator = iterateAsync(iterable)
+    if (n <= 0) {
+      return
+    }
+
     let i = 0
 
-    while (i < n) {
-      const result = await asyncGenerator.next()
+    for await (const value of iterable) {
+      yield value
 
-      if (result.done) {
+      if (++i >= n) {
         break
       }
-
-      i++
-
-      yield result.value
     }
   },
 })
@@ -31,9 +29,8 @@ const takeLastAsync = (n: number) => <T>(iterable: AsyncIterable<T>): AsyncItera
       numValues++
     }
 
-    const iterator = iterate(last)
-
     /* skip empty values */
+    const iterator = iterate(last)
     const offset = last.length - numValues
 
     for (let i = 0; i < offset; i++) {

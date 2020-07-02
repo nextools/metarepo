@@ -3,19 +3,18 @@ import { iterate } from './iterate'
 
 const takeFirst = (n: number) => <T>(iterable: Iterable<T>): Iterable<T> => ({
   *[Symbol.iterator]() {
-    const iterator = iterate(iterable)
+    if (n <= 0) {
+      return
+    }
+
     let i = 0
 
-    while (i < n) {
-      const result = iterator.next()
+    for (const value of iterable) {
+      yield value
 
-      if (result.done) {
+      if (++i >= n) {
         break
       }
-
-      i++
-
-      yield result.value
     }
   },
 })
@@ -27,12 +26,11 @@ const takeLast = (n: number) => <T>(iterable: Iterable<T>): Iterable<T> => ({
 
     for (const value of iterable) {
       last.shift(value)
-      numValues++
+      ++numValues
     }
 
-    const iterator = iterate(last)
-
     // skip empty values
+    const iterator = iterate(last)
     const offset = last.length - numValues
 
     for (let i = 0; i < offset; i++) {

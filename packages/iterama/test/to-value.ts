@@ -2,14 +2,14 @@ import test from 'tape'
 import { toValue } from '../src/to-value'
 
 test('iterama: toValue', (t) => {
-  let hasReturned = false
+  let hasClosed = false
   const iterable = {
     *[Symbol.iterator]() {
       try {
         yield 1
         yield 2
       } finally {
-        hasReturned = true
+        hasClosed = true
       }
     },
   }
@@ -22,8 +22,21 @@ test('iterama: toValue', (t) => {
   )
 
   t.true(
-    hasReturned,
+    hasClosed,
     'should close iterator'
+  )
+
+  t.end()
+})
+
+test('iterama: toValue + no return', (t) => {
+  const iterable = [1, 2]
+  const value = toValue(iterable)
+
+  t.equals(
+    value,
+    1,
+    'should return first value'
   )
 
   t.end()
