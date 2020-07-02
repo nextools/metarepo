@@ -1,6 +1,6 @@
 import path from 'path'
-import getCallerFile from 'get-caller-file'
 import { Module, uncacheKey } from '@mock/utils'
+import getCallerFile from 'get-caller-file'
 
 type TMocks = {
   [key: string]: any,

@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
-import { isDefined } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
+import { isDefined } from 'tsfn'
 import { TCommonComponentConfig } from './types'
 import { adjustLengthForOptionalProp } from './utils'
 

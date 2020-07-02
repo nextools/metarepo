@@ -1,8 +1,8 @@
-import test from 'tape'
-import { createSpy, getSpyCalls } from 'spyfn'
 import { pipe } from 'funcom'
-import { reduceAsync } from '../src/reduce-async'
+import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { rangeAsync } from '../src/range-async'
+import { reduceAsync } from '../src/reduce-async'
 import { toArrayAsync } from '../src/to-array-async'
 
 test('iterama: reduceAsync', async (t) => {

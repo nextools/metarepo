@@ -1,5 +1,5 @@
-import test from 'tape'
 import I from 'big-integer'
+import test from 'tape'
 import { parseBigInt } from '../src/parse-bigint'
 
 test('autoprops: parseBigInt', (t) => {

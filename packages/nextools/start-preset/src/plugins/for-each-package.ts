@@ -1,6 +1,6 @@
 /* eslint-disable no-throw-literal */
-import plugin, { StartPlugin } from '@start/plugin'
 import { THookProps } from '@auto/core'
+import plugin, { StartPlugin } from '@start/plugin'
 import { TReadonly } from 'tsfn'
 
 export const forEachRelease = (task: (pkgDir: string) => StartPlugin<{}, any> | Promise<StartPlugin<{}, any>>) =>

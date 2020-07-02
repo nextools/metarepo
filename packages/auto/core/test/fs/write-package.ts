@@ -1,7 +1,8 @@
+/* eslint-disable node/no-sync */
 import { promisify } from 'util'
-import test from 'tape'
 import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
+import test from 'tape'
 
 const rootDir = process.cwd()
 
@@ -23,7 +24,6 @@ test('fs:writePackage', async (t) => {
     version: '1.0.0',
   })
 
-  // eslint-disable-next-line no-sync
   const packageData = fs.readFileSync(`${rootDir}/fakes/a/package.json`, 'utf8') as string
   const packageJson = JSON.parse(packageData)
 

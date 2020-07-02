@@ -1,5 +1,5 @@
-import path from 'path'
 import _Module from 'module'
+import path from 'path'
 import resolver from 'enhanced-resolve'
 import { ReactNativeMocks } from './react-native-mocks'
 import { ReactNativeSvgMocks } from './react-native-svg-mocks'

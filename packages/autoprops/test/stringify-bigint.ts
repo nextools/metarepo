@@ -1,5 +1,5 @@
-import test from 'tape'
 import I from 'big-integer'
+import test from 'tape'
 import { stringifyBigInt } from '../src/stringify-bigint'
 
 test('autoprops: stringifyBigInt', (t) => {

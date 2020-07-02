@@ -1,9 +1,9 @@
-import test from 'tape'
-import { createSpy, getSpyCalls } from 'spyfn'
 import { pipe } from 'funcom'
+import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { forEachAsync } from '../src/for-each-async'
-import { toArrayAsync } from '../src/to-array-async'
 import { rangeAsync } from '../src/range-async'
+import { toArrayAsync } from '../src/to-array-async'
 
 test('iterama: forEachAsync', async (t) => {
   const iterable = rangeAsync(5)

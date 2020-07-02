@@ -1,5 +1,5 @@
-import plugin from '@start/plugin'
 import { Config } from '@jest/types'
+import plugin from '@start/plugin'
 
 export default (argv?: Config.Argv) =>
   plugin('jest', () => async () => {

@@ -1,6 +1,6 @@
 import { isUndefined } from 'tsfn'
-import { uniqueArray } from './unique-array'
 import { TPackageJson } from './types'
+import { uniqueArray } from './unique-array'
 
 export const getDepsToRemove = (packageJson: TPackageJson, depsFoundInFiles: string[], ignoredDeps: string[]): string[] => {
   const dependenciesKeys = !isUndefined(packageJson.dependencies)

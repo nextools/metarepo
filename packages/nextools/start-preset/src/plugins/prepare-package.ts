@@ -1,8 +1,8 @@
 import path from 'path'
 import { StartPlugin } from '@start/plugin'
-import sequence from '@start/plugin-sequence'
 import copy from '@start/plugin-copy'
 import find from '@start/plugin-find'
+import sequence from '@start/plugin-sequence'
 import buildPackageJson from './build-package-json'
 
 export default (packageDir: string): StartPlugin<{}, {}> => {

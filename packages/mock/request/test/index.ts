@@ -1,5 +1,5 @@
-import https from 'https'
 import http, { IncomingMessage, ServerResponse } from 'http'
+import https from 'https'
 import test from 'tape'
 import { unchunkString } from 'unchunk'
 import { mockRequest } from '../src'

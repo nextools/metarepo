@@ -1,8 +1,8 @@
 import { TReadonly } from 'tsfn'
-import { TPackageMap, TPackageRelease, TGitMessageMap } from '../types'
 import { TPackageBumpMap } from '../bump/types'
-import { removeAutoNamePrefix } from './remove-auto-name-prefix'
+import { TPackageMap, TPackageRelease, TGitMessageMap } from '../types'
 import { getDependentsCount } from './get-dependents-count'
+import { removeAutoNamePrefix } from './remove-auto-name-prefix'
 
 export const compilePackageReleases = (packages: TReadonly<TPackageMap>, packageBumps: TReadonly<TPackageBumpMap>, gitBumps: TReadonly<TGitMessageMap>): TReadonly<TPackageRelease[]> => {
   const result: TReadonly<TPackageRelease>[] = []

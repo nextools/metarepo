@@ -1,9 +1,9 @@
 /* eslint-disable import/no-cycle */
-import { TConfig, TSerializedElement, TMeta } from './types'
-import { serializeValue } from './serialize-value'
-import { serializeIndent } from './serialize-indent'
-import { isUndefined, sanitizeLines, optMetaValue } from './utils'
 import { TYPE_OBJECT_BRACE, TYPE_OBJECT_COMMA, TYPE_WHITESPACE, TYPE_OBJECT_COLON, TYPE_OBJECT_KEY } from './constants'
+import { serializeIndent } from './serialize-indent'
+import { serializeValue } from './serialize-value'
+import { TConfig, TSerializedElement, TMeta } from './types'
+import { isUndefined, sanitizeLines, optMetaValue } from './utils'
 
 export type TSerializeObject = {
   obj: any,

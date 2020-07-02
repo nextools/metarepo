@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithProps, mapWithPropsMemo, mapDefaultProps, mapState, mapHandlers } from 'refun'
-import { TGraphItem } from './types'
-import { Points } from './Points'
-import { GRAPH_OFFSET } from './constants'
-import { getPastMonthsDate } from './utils'
-import { Polygon } from './Polygon'
 import { Path } from './Path'
+import { Points } from './Points'
+import { Polygon } from './Polygon'
 import { Tooltips } from './Tooltips'
+import { GRAPH_OFFSET } from './constants'
+import { TGraphItem } from './types'
+import { getPastMonthsDate } from './utils'
 
 export const Graph = component(
   startWithType<TGraphItem>(),

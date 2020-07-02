@@ -1,9 +1,9 @@
+import { waitTimePromise } from '@psxcode/wait'
 import execa from 'execa'
-import { isUndefined } from 'tsfn'
 // @ts-ignore
 import isPortReachable from 'is-port-reachable'
-import { waitTimePromise } from '@psxcode/wait'
 import fetch from 'node-fetch'
+import { isUndefined } from 'tsfn'
 import { TPlatform } from './types'
 
 const REQUEST_TIMEOUT = 2 * 60 * 1000

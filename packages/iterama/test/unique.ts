@@ -1,7 +1,7 @@
-import test from 'tape'
 import { pipe } from 'funcom'
-import { unique } from '../src/unique'
+import test from 'tape'
 import { toArray } from '../src/to-array'
+import { unique } from '../src/unique'
 
 test('iterama: unique', (t) => {
   const iterable = {

@@ -1,7 +1,7 @@
-import test from 'tape'
 import I from 'big-integer'
-import { TCommonComponentConfig } from '../src/types'
+import test from 'tape'
 import { getLength } from '../src/get-length'
+import { TCommonComponentConfig } from '../src/types'
 
 test('autoprops: getLength', (t) => {
   const config: TCommonComponentConfig = {

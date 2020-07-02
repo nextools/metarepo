@@ -1,5 +1,5 @@
-import { CompilerOptions } from 'typescript'
 import plugin from '@start/plugin'
+import { CompilerOptions } from 'typescript'
 
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
 export default (inDir: string, outDir: string) =>

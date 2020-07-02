@@ -1,9 +1,9 @@
-import test from 'tape'
-import { createSpy, getSpyCalls } from 'spyfn'
 import { pipe } from 'funcom'
+import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
+import { range } from '../src/range'
 import { scan } from '../src/scan'
 import { toArray } from '../src/to-array'
-import { range } from '../src/range'
 
 test('iterama: scan', (t) => {
   const iterable = range(5)

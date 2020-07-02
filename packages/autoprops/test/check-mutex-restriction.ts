@@ -1,7 +1,7 @@
-import test from 'tape'
 import I from 'big-integer'
-import { checkMutexRestriction } from '../src/check-mutex-restriction'
+import test from 'tape'
 import { TCommonComponentConfig } from '../src'
+import { checkMutexRestriction } from '../src/check-mutex-restriction'
 import { unpackPerm } from '../src/unpack-perm'
 
 test('checkMutexRestriction', (t) => {

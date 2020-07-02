@@ -60,7 +60,7 @@
     "@x-ray/ui": "*",
     "colorido": "^1.0.1",
     "core-js": "^3.2.1",
-    "eslint": "^6.1.0",
+    "eslint": "^7.0.0",
     "graphiq": "*",
     "iterama": "*",
     "react-native-svg": "^12.1.0",

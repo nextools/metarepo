@@ -1,6 +1,6 @@
-import React, { Fragment, FC } from 'react'
-import { colorToString } from 'colorido'
 import { easeInOutCubic } from '@primitives/animation'
+import { colorToString } from 'colorido'
+import React, { Fragment, FC } from 'react'
 import { Animate } from './Animate'
 import { TGraphPolygon } from './types'
 

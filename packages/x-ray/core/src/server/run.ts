@@ -2,12 +2,12 @@ import http from 'http'
 import url, { UrlWithParsedQuery } from 'url'
 import { isDefined } from 'tsfn'
 import { unchunkJson } from 'unchunk'
-import { TGetResponseQuery, TTotalResults, TResultsType, TEncoding } from '../types'
 import { UI_HOST, UI_PORT, SERVER_PORT, SERVER_HOST } from '../constants'
+import { TGetResponseQuery, TTotalResults, TResultsType, TEncoding } from '../types'
 import { getList } from './get-list'
+import { getMeta } from './get-meta'
 import { getResult } from './get-result'
 import { save } from './save'
-import { getMeta } from './get-meta'
 
 export type TRunServerOptions = {
   results: TTotalResults<TResultsType>,
@@ -30,6 +30,7 @@ export const runServer = (options: TRunServerOptions) => new Promise<() => Promi
           res.setHeader('Access-Control-Allow-Origin', `http://${UI_HOST}:${UI_PORT}`)
 
           if (isDefined(req.url)) {
+            // eslint-disable-next-line node/no-deprecated-api
             const urlData = url.parse(req.url, true) as UrlWithParsedQuery & {
               query: TGetResponseQuery,
             }

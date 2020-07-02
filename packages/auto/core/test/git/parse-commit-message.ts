@@ -1,6 +1,6 @@
 import test from 'tape'
-import { prefixes } from '../prefixes'
 import { parseCommitMessage } from '../../src/git/parse-commit-message'
+import { prefixes } from '../prefixes'
 
 test('git:parseCommitMessage', (t) => {
   t.equals(

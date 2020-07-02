@@ -1,8 +1,8 @@
-import test from 'tape'
 import { pipe } from 'funcom'
+import test from 'tape'
+import { range } from '../src/range'
 import { skip } from '../src/skip'
 import { toArray } from '../src/to-array'
-import { range } from '../src/range'
 
 test('iterama: skip first', (t) => {
   const iterable = range(5)

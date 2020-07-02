@@ -1,8 +1,9 @@
 import path from 'path'
+// eslint-disable-next-line import/order
 import { Worker } from 'worker_threads'
 import getCallerFile from 'get-caller-file'
-import { piAll } from 'piall'
 import { map } from 'iterama'
+import { piAll } from 'piall'
 import { asyncIterableFinally } from './async-iterable-finally'
 
 type TMessage = {
@@ -23,6 +24,7 @@ export const workerama = <T>(options: TWorkeramaOptions): AsyncIterable<T> => {
     throw new Error('`maxThreadCount` should be greater than zero (tip: pass Infinity to set no limits)')
   }
 
+  // @ts-ignore
   const umask = process.umask()
   const workerPath = require.resolve('./worker')
   const callerDir = path.dirname(getCallerFile())

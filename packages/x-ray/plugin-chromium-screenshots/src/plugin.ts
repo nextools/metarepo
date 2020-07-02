@@ -1,10 +1,10 @@
-import { runBrowser } from 'xrom'
-import { workerama } from 'workerama'
-import { forEachAsync, toMapAsync } from 'iterama'
-import { pipe } from 'funcom'
 import { TPlugin } from '@x-ray/core'
-import { TCheckOptions, TWorkerResult } from './types'
+import { pipe } from 'funcom'
+import { forEachAsync, toMapAsync } from 'iterama'
+import { workerama } from 'workerama'
+import { runBrowser } from 'xrom'
 import { MAX_THREAD_COUNT, WORKER_PATH } from './constants'
+import { TCheckOptions, TWorkerResult } from './types'
 
 export type TChromiumScreenshotsOptions = {
   fontsDir?: string,

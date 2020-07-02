@@ -1,5 +1,5 @@
-import execa from 'execa'
 import { THook } from '@auto/core'
+import execa from 'execa'
 
 export const writePublishTags: THook = async ({ packages }) => {
   for (const pkg of packages) {

@@ -1,14 +1,14 @@
-import { access } from 'pifs'
-import { isArray, isString, isFunction } from 'tsfn'
-import { addFontsIos } from 'rn-fonts'
 import { serveNativeJsBundle, copyNativeTemplate } from '@rebox/native-utils'
+import { access } from 'pifs'
+import { addFontsIos } from 'rn-fonts'
+import { isArray, isString, isFunction } from 'tsfn'
 import { buildIosAppDebug } from './build-ios-app-debug'
-import { runIosSimulator } from './run-ios-simulator'
+import { getIosAppPath } from './get-ios-app-path'
+import { getIosProjectPath } from './get-ios-project-path'
 import { installIosApp } from './install-ios-app'
 import { launchIosApp } from './launch-ios-app'
-import { getIosProjectPath } from './get-ios-project-path'
 import { linkIosDependency } from './link-ios-dependency'
-import { getIosAppPath } from './get-ios-app-path'
+import { runIosSimulator } from './run-ios-simulator'
 
 const PORT = 8081
 

@@ -1,7 +1,8 @@
+/* eslint-disable node/no-sync */
 import { promisify } from 'util'
-import test from 'tape'
 import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
+import test from 'tape'
 
 const rootDir = process.cwd()
 
@@ -46,11 +47,8 @@ test('fs:writePackageVersion: single version bump', async (t) => {
     },
   ])
 
-  // eslint-disable-next-line no-sync
   const aData = fs.readFileSync(`${rootDir}/fakes/a/package.json`, 'utf8') as string
-  // eslint-disable-next-line no-sync
   const bData = fs.readFileSync(`${rootDir}/fakes/b/package.json`, 'utf8') as string
-  // eslint-disable-next-line no-sync
   const cData = fs.readFileSync(`${rootDir}/fakes/c/package.json`, 'utf8') as string
 
   t.deepEquals(

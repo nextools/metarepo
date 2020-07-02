@@ -1,6 +1,6 @@
 import test from 'tape'
-import { TCommonComponentConfig, TComponentConfig } from '../src/types'
 import { applyPropValue } from '../src'
+import { TCommonComponentConfig, TComponentConfig } from '../src/types'
 
 test('applyPropValue: boolean case', (t) => {
   const config: TCommonComponentConfig = {

@@ -1,5 +1,5 @@
-import fetch from 'node-fetch'
 import { THook, TPackageRelease, TMessage, TLogReleaseType } from '@auto/core'
+import fetch from 'node-fetch'
 import { isString, TReadonly } from 'tsfn'
 import { SLACK_HOOKS_URL, SLACK_MAX_ATTACHMENTS } from './constants'
 import { TSlackConfig } from './types'

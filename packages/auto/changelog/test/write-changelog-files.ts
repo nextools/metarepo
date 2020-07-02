@@ -1,9 +1,10 @@
+/* eslint-disable node/no-sync */
 import { promisify } from 'util'
-import test from 'tape'
 import { TPackageRelease, TAutoConfig } from '@auto/core'
-import { createFsFromVolume, Volume } from 'memfs'
 import { mockRequire } from '@mock/require'
+import { createFsFromVolume, Volume } from 'memfs'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { prefixes } from './prefixes'
 
 const rootDir = process.cwd()
@@ -135,21 +136,18 @@ test('writeChangelogFiles', async (t) => {
   })
 
   t.equals(
-    // eslint-disable-next-line no-sync
     fs.readFileSync(`${rootDir}/fakes/a/changelog.md`, 'utf-8'),
     '## v0.2.0\n\n* 🌱 minor commit\n\n* 🐞 patch commit\n\n  ```\n  patch description\n  ```\n\n## v0.1.0\n\n* 🐞 patch\n',
     'should write changelog'
   )
 
   t.equals(
-    // eslint-disable-next-line no-sync
     fs.readFileSync(`${rootDir}/fakes/b/changelog.md`, 'utf-8'),
     '## v0.1.0\n\n* 🐣️ initial commit\n\n  ```\n  initial description\n  ```\n',
     'should write changelog'
   )
 
   t.equals(
-    // eslint-disable-next-line no-sync
     fs.readFileSync(`${rootDir}/fakes/c/changelog.md`, 'utf-8'),
     '## v1.1.0\n\n* ♻️ update dependencies `@ns/a`\n\n## v0.1.0\n\n* 🐞 patch\n',
     'should write changelog'
@@ -166,7 +164,6 @@ test('writeChangelogFiles', async (t) => {
   )
 
   try {
-    // eslint-disable-next-line no-sync
     fs.readFileSync(`${rootDir}/fakes/d/changelog.md`, 'utf-8')
 
     t.fail('should not get here')

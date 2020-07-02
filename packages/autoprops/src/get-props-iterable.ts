@@ -1,13 +1,13 @@
 import BigInt from 'big-integer'
-import jssha from 'jssha'
 import { map } from 'iterama'
-import { getPropsImpl } from './get-props'
-import { TComponentConfig } from './types'
-import { serializeProps } from './serialize-props'
-import { isChildrenMap } from './is-children-map'
+import jssha from 'jssha'
 import { createChildren } from './create-children'
 import { getLength } from './get-length'
+import { getPropsImpl } from './get-props'
 import { getValidPermImpl } from './get-valid-perm'
+import { isChildrenMap } from './is-children-map'
+import { serializeProps } from './serialize-props'
+import { TComponentConfig } from './types'
 
 export const getPropsIterable = <T extends {}>(componentConfig: TComponentConfig<T, string>): Iterable<{ id: string, props: T }> => {
   const length = getLength(componentConfig)

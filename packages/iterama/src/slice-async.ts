@@ -1,6 +1,6 @@
 import { pipe } from 'funcom'
-import { takeAsync } from './take-async'
 import { skipAsync } from './skip-async'
+import { takeAsync } from './take-async'
 
 type TReturnAsyncIterable<T> = (iterable: AsyncIterable<T>) => AsyncIterable<T>
 

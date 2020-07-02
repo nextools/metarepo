@@ -1,9 +1,9 @@
 /* eslint-disable no-use-before-define */
-import { TAnyObject, isDefined, TWritable, TReadonly } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
+import { TAnyObject, isDefined, TWritable, TReadonly } from 'tsfn'
+import { parseBigInt } from './parse-bigint'
 import { TChildrenMap, TCommonRequiredConfig, TCommonComponentConfig } from './types'
 import { unpackPerm } from './unpack-perm'
-import { parseBigInt } from './parse-bigint'
 
 const getValue = (valueIndex: number, values: readonly any[], key: string, required?: TReadonly<TCommonRequiredConfig>): any => {
   if (required?.includes(key)) {

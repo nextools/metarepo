@@ -1,63 +1,63 @@
 import plugin, { StartDataFilesProps, StartDataFile } from '@start/plugin'
-import { CLIEngine } from 'eslint'
+import { ESLint } from 'eslint'
 
-export default (userOptions?: CLIEngine.Options, formatter = '') =>
+export default (userOptions?: ESLint.Options, formatterName = '') =>
   plugin('eslint', ({ logMessage, logPath }) => async ({ files }: StartDataFilesProps) => {
-    const { CLIEngine } = await import('eslint')
-    const options: CLIEngine.Options = {
+    const { ESLint } = await import('eslint')
+    const options: ESLint.Options = {
       cache: true,
       cacheLocation: 'node_modules/.cache/eslint',
       ...userOptions,
     }
 
-    const cli = new CLIEngine(options)
-    const filesToCheck = files.filter((file) => !cli.isPathIgnored(file.path))
+    const eslint = new ESLint(options)
+    const formatter = await eslint.loadFormatter(formatterName)
+    const filesToCheck = await files.reduce(async (resPromise, file) => {
+      const isIgnored = await eslint.isPathIgnored(file.path)
+      const res = await resPromise
 
-    const report: CLIEngine.LintReport = filesToCheck.reduce((acc, file) => {
-      const lintReport = cli.executeOnText(file.data, file.path)
-
-      for (const result of lintReport.results) {
-        acc.results.push(result)
-        acc.errorCount += result.errorCount
-        acc.warningCount += result.warningCount
-        acc.fixableErrorCount += result.fixableErrorCount
-        acc.fixableWarningCount += result.fixableWarningCount
+      if (!isIgnored) {
+        res.push(file)
       }
 
-      acc.usedDeprecatedRules.push(...lintReport.usedDeprecatedRules)
+      return res
+    }, Promise.resolve<StartDataFile[]>([]))
+    const fixedFiles = [] as StartDataFile[]
+    const totalResults = [] as ESLint.LintResult[]
+    let hasErrors = false
+    let hasWarnings = false
 
-      return acc
-    }, {
-      results: [] as CLIEngine.LintResult[],
-      errorCount: 0,
-      warningCount: 0,
-      fixableErrorCount: 0,
-      fixableWarningCount: 0,
-      usedDeprecatedRules: [] as CLIEngine.DeprecatedRuleUse[],
-    })
+    for (const file of filesToCheck) {
+      const results = await eslint.lintText(file.data, { filePath: file.path })
 
-    const format = cli.getFormatter(formatter)
+      hasErrors = hasErrors || results.some((result) => result.errorCount > 0)
+      hasWarnings = hasWarnings || results.some((result) => result.warningCount > 0)
 
-    if (report.errorCount > 0 || report.warningCount > 0) {
-      console.log(format(report.results))
+      totalResults.push(...results)
+
+      if (options.fix) {
+        for (const result of results) {
+          if (typeof result.output === 'string') {
+            fixedFiles.push({
+              path: result.filePath,
+              data: result.output,
+            })
+
+            logPath(result.filePath)
+          }
+        }
+      }
     }
 
-    if (!options.fix && report.errorCount > 0) {
+    if (hasErrors || hasWarnings) {
+      console.log(formatter.format(totalResults))
+    }
+
+    if (!options.fix && hasErrors) {
       throw null
     }
 
-    if (options.fix && report.results.length > 0) {
-      const fixedFiles = report.results
-        .filter(({ output }) => typeof output === 'string')
-        .map((result): StartDataFile => {
-          logPath(result.filePath)
-
-          return ({
-            path: result.filePath,
-            data: result.output!,
-          })
-        })
-
+    if (options.fix) {
       if (fixedFiles.length === 0) {
         logMessage('¯\\_(ツ)_/¯')
       }
@@ -67,7 +67,7 @@ export default (userOptions?: CLIEngine.Options, formatter = '') =>
       }
     }
 
-    if (report.errorCount === 0 && report.warningCount === 0) {
+    if (!hasErrors && !hasWarnings) {
       logMessage('¯\\_(ツ)_/¯')
     }
   })

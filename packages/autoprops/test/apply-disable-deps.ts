@@ -1,5 +1,5 @@
-import test from 'tape'
 import I from 'big-integer'
+import test from 'tape'
 import { applyDisableDeps } from '../src/apply-disable-deps'
 import { TCommonComponentConfig } from '../src/types'
 import { unpackPerm } from '../src/unpack-perm'

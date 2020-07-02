@@ -1,8 +1,8 @@
-import test from 'tape'
 import { pipe } from 'funcom'
+import test from 'tape'
+import { range } from '../src/range'
 import { slice } from '../src/slice'
 import { toArray } from '../src/to-array'
-import { range } from '../src/range'
 
 test('iterama: slice + no args', (t) => {
   const iterable = range(5)

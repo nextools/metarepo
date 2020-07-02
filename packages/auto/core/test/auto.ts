@@ -1,11 +1,11 @@
 import { promisify } from 'util'
-import test from 'tape'
-import { Volume, createFsFromVolume } from 'memfs'
 import { mockRequire } from '@mock/require'
+import { Volume, createFsFromVolume } from 'memfs'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { TAutoConfig, TPackageRelease, TGitMessageMap, TPackageMap, TPackageJson } from '../src/types'
+import test from 'tape'
 import { TPackageBumpMap } from '../src/bump/types'
 import { TPromptEditResult } from '../src/prompt/types'
+import { TAutoConfig, TPackageRelease, TGitMessageMap, TPackageMap, TPackageJson } from '../src/types'
 import { prefixes } from './prefixes'
 
 const rootDir = process.cwd()

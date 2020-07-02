@@ -1,8 +1,8 @@
-/* eslint-disable no-sync */
+/* eslint-disable node/no-sync */
 import { promisify } from 'util'
-import test from 'tape'
-import { createFsFromVolume, Volume } from 'memfs'
 import { mockRequire } from '@mock/require'
+import { createFsFromVolume, Volume } from 'memfs'
+import test from 'tape'
 
 test('copie: core', async (t) => {
   const vol = Volume.fromJSON({

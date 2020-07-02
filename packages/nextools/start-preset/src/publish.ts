@@ -1,8 +1,8 @@
-import plugin from '@start/plugin'
+import { THook } from '@auto/core'
 import { TGithubConfig } from '@auto/github'
 import { TSlackConfig } from '@auto/slack'
 import { TTelegramConfig } from '@auto/telegram'
-import { THook } from '@auto/core'
+import plugin from '@start/plugin'
 
 export const commit = () => plugin('commit', () => async () => {
   const { makeCommit } = await import('@auto/commit-prompt')

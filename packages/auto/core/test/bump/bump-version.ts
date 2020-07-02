@@ -1,6 +1,6 @@
 import test from 'tape'
-import { TResolvedReleaseType } from '../../src/types'
 import { bumpVersion } from '../../src/bump/bump-version'
+import { TResolvedReleaseType } from '../../src/types'
 
 test('bump:bumpVersion', (t) => {
   t.equals(bumpVersion('1.2.3', 'patch'), '1.2.4', '\'1.2.3\' bumped to \'1.2.4\' as patch')

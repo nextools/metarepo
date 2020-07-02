@@ -1,6 +1,6 @@
 import path from 'path'
-import { readFile, writeFile } from 'pifs'
 import execa from 'execa'
+import { readFile, writeFile } from 'pifs'
 
 export const writeChangelog = async (log: string, dir: string) => {
   const logPath = path.join(dir, 'changelog.md')

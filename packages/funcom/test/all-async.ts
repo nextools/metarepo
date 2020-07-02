@@ -1,5 +1,5 @@
-import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { allAsync } from '../src/all-async'
 import { noop, add, mult, constantAsync, addAsync, toStringAsync, throwingAsync } from './utils'
 

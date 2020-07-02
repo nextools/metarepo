@@ -1,7 +1,7 @@
-import test from 'tape'
 import I from 'big-integer'
-import { checkDepsRestriction } from '../src/check-deps-restriction'
+import test from 'tape'
 import { TCommonComponentConfig } from '../src'
+import { checkDepsRestriction } from '../src/check-deps-restriction'
 import { unpackPerm } from '../src/unpack-perm'
 
 test('checkDepsRestriction', (t) => {

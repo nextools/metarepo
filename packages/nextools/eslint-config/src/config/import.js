@@ -64,6 +64,10 @@ module.exports = {
     'import/no-duplicates': 2,
     'import/extensions': [2, 'never', { json: 'always' }],
     'import/order': [2, {
+      alphabetize: {
+        order: 'asc',
+        caseInsensitive: false,
+      },
       groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
     }],
   },

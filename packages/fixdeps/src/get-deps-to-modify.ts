@@ -1,13 +1,13 @@
-import { readFile } from 'pifs'
 import fastGlob from 'fast-glob'
+import { readFile } from 'pifs'
+import { getDependenciesInContent } from './get-dependencies-in-content'
+import { getDepsToAdd } from './get-deps-to-add'
+import { getDepsToRemove } from './get-deps-to-remove'
+import { getPackage } from './get-package-json'
+import { getPeerDevDepsToAdd } from './get-peer-dev-deps-to-add'
 import { globalIgnoreList } from './global-ignore-list'
 import { TOptions, TGetDepsToModifyResult } from './types'
 import { uniqueArray } from './unique-array'
-import { getDependenciesInContent } from './get-dependencies-in-content'
-import { getDepsToRemove } from './get-deps-to-remove'
-import { getDepsToAdd } from './get-deps-to-add'
-import { getPeerDevDepsToAdd } from './get-peer-dev-deps-to-add'
-import { getPackage } from './get-package-json'
 
 export const getDepsToModify = async ({
   packagePath,

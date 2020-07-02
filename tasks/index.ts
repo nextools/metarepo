@@ -1,4 +1,3 @@
-import plugin from '@start/plugin'
 import {
   CheckChromiumScreenshots,
   CheckIosScreenshots,
@@ -7,6 +6,7 @@ import {
   CheckReactNativeSnapshots,
   Pkg,
 } from '@nextools/start-preset'
+import plugin from '@start/plugin'
 
 const shouldBailout = Boolean(process.env.CI)
 

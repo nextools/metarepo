@@ -1,13 +1,13 @@
+import { colorToString } from 'colorido'
 import React from 'react'
 import { startWithType, pureComponent, mapContext, mapWithPropsMemo } from 'refun'
 import { TOmitKey } from 'tsfn'
-import { colorToString } from 'colorido'
-import { TRect } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
 import { DISCARD_ALPHA, BORDER_SIZE, COLOR_WHITE, COLOR_DM_BLACK, COLOR_BORDER_NEW, DASH_SPACE } from '../config'
 import { ThemeContext } from '../context/Theme'
-import { Screenshot } from './Screenshot'
+import { TRect } from '../types'
 import { Block } from './Block'
+import { Screenshot } from './Screenshot'
 
 export type TScreenshotNew = TRect & TOmitKey<TApiLoadScreenshotOpts, 'type'> & {
   isDiscarded: boolean,

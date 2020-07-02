@@ -1,6 +1,6 @@
-import pAll from 'p-all'
-import fetch from 'node-fetch'
 import { THook, TMessage, TLogReleaseType } from '@auto/core'
+import fetch from 'node-fetch'
+import pAll from 'p-all'
 import { isString, TReadonly } from 'tsfn'
 import { GITHUB_API_REPOS_URL } from './constants'
 import { TGithubConfig } from './types'

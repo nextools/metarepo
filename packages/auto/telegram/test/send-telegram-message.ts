@@ -1,7 +1,7 @@
-import test from 'tape'
-import { createSpy, getSpyCalls } from 'spyfn'
-import { mockRequire } from '@mock/require'
 import { TPackageRelease, TAutoConfig } from '@auto/core'
+import { mockRequire } from '@mock/require'
+import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { TTelegramConfig } from '../src/types'
 import { prefixes } from './prefixes'
 

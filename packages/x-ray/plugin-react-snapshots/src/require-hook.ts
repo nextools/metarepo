@@ -1,5 +1,5 @@
-import path from 'path'
 import _Module from 'module'
+import path from 'path'
 import resolver from 'enhanced-resolve'
 
 type TModule = {

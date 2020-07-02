@@ -1,6 +1,6 @@
 import test from 'tape'
-import { toSetAsync } from '../src/to-set-async'
 import { rangeAsync } from '../src/range-async'
+import { toSetAsync } from '../src/to-set-async'
 
 test('iterama: toSetAsync', async (t) => {
   const iterable = rangeAsync(5)

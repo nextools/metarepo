@@ -1,7 +1,7 @@
 import React, { createContext } from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { component, mapContext, startWithType } from '../src'
 
 test('mapContext', (t) => {

@@ -1,11 +1,11 @@
 import path from 'path'
-import webpack, { Stats, Configuration as WebpackConfig } from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 // @ts-ignore
 import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin'
 import TerserPlugin from 'terser-webpack-plugin'
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import { isObject } from 'tsfn'
+import webpack, { Stats, Configuration as WebpackConfig } from 'webpack'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import { getBabelConfigBuildRelease } from './get-babel-config'
 
 const nodeModulesRegExp = /[\\/]node_modules[\\/]/

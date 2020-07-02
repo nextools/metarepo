@@ -1,8 +1,8 @@
-import test from 'tape'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { TQuestionObj } from '../../src/prompt/types'
+import test from 'tape'
 import { TPackageBumpMap } from '../../src/bump/types'
+import { TQuestionObj } from '../../src/prompt/types'
 import { TPackageMap } from '../../src/types'
 import { makeTestPackages } from './make-test-packages'
 

@@ -1,5 +1,5 @@
-import test from 'tape'
 import { mockRequire } from '@mock/require'
+import test from 'tape'
 
 test('resolveNpmConfig', async (t) => {
   let i = 0

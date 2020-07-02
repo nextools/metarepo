@@ -92,7 +92,6 @@ module.exports = {
     'no-buffer-constructor': 2,
     'no-new-require': 2,
     'no-path-concat': 2,
-    'no-sync': 2,
     'array-bracket-newline': [2, 'consistent'],
     'array-bracket-spacing': 2,
     'array-element-newline': [2, 'consistent'],

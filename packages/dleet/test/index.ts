@@ -1,9 +1,9 @@
-/* eslint-disable no-sync */
-import test from 'tape'
-import { createFsFromVolume, Volume } from 'memfs'
-import { mockRequire } from '@mock/require'
+/* eslint-disable node/no-sync */
 import { mockFs } from '@mock/fs'
+import { mockRequire } from '@mock/require'
+import { createFsFromVolume, Volume } from 'memfs'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 
 class CustomError extends Error {
   [key: string]: any

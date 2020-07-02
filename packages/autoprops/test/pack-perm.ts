@@ -1,5 +1,5 @@
-import test from 'tape'
 import I from 'big-integer'
+import test from 'tape'
 import { packPerm } from '../src/pack-perm'
 
 test('autoprops: packPerm', (t) => {

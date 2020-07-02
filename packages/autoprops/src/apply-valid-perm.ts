@@ -1,13 +1,13 @@
 /* eslint-disable no-use-before-define */
 import BigInt, { BigInteger } from 'big-integer'
+import { applyDisableDeps } from './apply-disable-deps'
+import { applyEnableChildren } from './apply-enable-children'
+import { applyEnableDeps } from './apply-enable-deps'
+import { packPerm } from './pack-perm'
+import { parseBigInt } from './parse-bigint'
+import { stringifyBigInt } from './stringify-bigint'
 import { TCommonComponentConfig } from './types'
 import { unpackPerm } from './unpack-perm'
-import { packPerm } from './pack-perm'
-import { stringifyBigInt } from './stringify-bigint'
-import { parseBigInt } from './parse-bigint'
-import { applyDisableDeps } from './apply-disable-deps'
-import { applyEnableDeps } from './apply-enable-deps'
-import { applyEnableChildren } from './apply-enable-children'
 
 const applyChildPropValue = (int: BigInteger, childConfig: TCommonComponentConfig, isChildRequired: boolean): BigInteger => {
   if (isChildRequired) {

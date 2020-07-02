@@ -1,6 +1,6 @@
+import { Animation } from '@primitives/animation'
 import React from 'react'
 import { component, startWithType, mapState, mapHandlers, onUpdate, onChange } from 'refun'
-import { Animation } from '@primitives/animation'
 import { TAnimate } from './types'
 
 const STATE_CLOSED = 0

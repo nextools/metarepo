@@ -1,10 +1,8 @@
+import { colorToString } from 'colorido'
 import React from 'react'
 import { startWithType, mapState, mapWithPropsMemo, pureComponent, onUpdateAsync, mapContext } from 'refun'
-import { colorToString } from 'colorido'
-import { apiLoadSnapshot } from '../api'
-import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
-import { TRect } from '../types'
+import { apiLoadSnapshot } from '../api'
 import {
   SNAPSHOT_GRID_FONT_SIZE,
   SNAPSHOT_GRID_LINE_HEIGHT,
@@ -20,9 +18,11 @@ import {
   COLOR_DARK_GREY,
 } from '../config'
 import { ThemeContext } from '../context/Theme'
+import { mapStoreDispatch } from '../store'
+import { TRect } from '../types'
+import { Background } from './Background'
 import { Block } from './Block'
 import { Text } from './Text'
-import { Background } from './Background'
 
 export type TSnapshotNew = TRect & {
   id: string,

@@ -1,7 +1,7 @@
 import BigInt, { BigInteger } from 'big-integer'
-import { TPermutation, TCommonComponentConfig } from './types'
-import { getLength } from './get-length'
 import { getPropKeys, getChildrenKeys } from './get-keys'
+import { getLength } from './get-length'
+import { TPermutation, TCommonComponentConfig } from './types'
 import { adjustLengthForOptionalProp } from './utils'
 
 export const unpackPerm = (componentConfig: TCommonComponentConfig, int: BigInteger): TPermutation => {

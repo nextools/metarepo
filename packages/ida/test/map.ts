@@ -1,5 +1,5 @@
-import test from 'tape'
 import { map, filter } from 'iterama'
+import test from 'tape'
 import { Map } from '../src/map'
 
 test('ida: Map + toStringTag', (t) => {

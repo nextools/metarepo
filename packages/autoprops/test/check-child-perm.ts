@@ -1,8 +1,8 @@
-import test from 'tape'
 import I from 'big-integer'
+import test from 'tape'
+import { TCommonComponentConfig } from '../src'
 import { checkChildPerm } from '../src/check-child-perm'
 import { unpackPerm } from '../src/unpack-perm'
-import { TCommonComponentConfig } from '../src'
 
 test('checkChildPerm: child props deps', (t) => {
   const config: TCommonComponentConfig = {

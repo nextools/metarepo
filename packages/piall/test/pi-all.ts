@@ -1,5 +1,5 @@
-import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { piAll } from '../src/pi-all'
 import { waitFor } from './wait-for'
 

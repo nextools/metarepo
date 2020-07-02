@@ -1,8 +1,8 @@
-import test from 'tape'
 import { pipe } from 'funcom'
+import test from 'tape'
+import { rangeAsync } from '../src/range-async'
 import { skipAsync } from '../src/skip-async'
 import { toArrayAsync } from '../src/to-array-async'
-import { rangeAsync } from '../src/range-async'
 
 test('iterama: skipAsync first', async (t) => {
   const iterable = rangeAsync(5)
