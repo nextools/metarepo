@@ -21,6 +21,7 @@
       "@typescript-eslint/eslint-plugin",
       "@typescript-eslint/parser",
       "eslint-plugin-import",
+      "eslint-plugin-node",
       "eslint-plugin-react"
     ]
   }
