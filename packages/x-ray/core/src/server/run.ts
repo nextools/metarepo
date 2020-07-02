@@ -30,6 +30,7 @@ export const runServer = (options: TRunServerOptions) => new Promise<() => Promi
           res.setHeader('Access-Control-Allow-Origin', `http://${UI_HOST}:${UI_PORT}`)
 
           if (isDefined(req.url)) {
+            // eslint-disable-next-line node/no-deprecated-api
             const urlData = url.parse(req.url, true) as UrlWithParsedQuery & {
               query: TGetResponseQuery,
             }

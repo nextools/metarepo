@@ -1,4 +1,4 @@
-/* eslint-disable no-sync */
+/* eslint-disable node/no-sync */
 import path from 'path'
 import test from 'tape'
 import { mockFs } from '../src'

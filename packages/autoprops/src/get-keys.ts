@@ -1,5 +1,4 @@
-import { isUndefined } from 'util'
-import { TAnyObject, TReadonly } from 'tsfn'
+import { isUndefined, TAnyObject, TReadonly } from 'tsfn'
 import { TCommonComponentConfig } from './types'
 
 const isBoolean = (arg: string): boolean => {

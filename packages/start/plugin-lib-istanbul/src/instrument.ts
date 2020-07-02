@@ -1,4 +1,3 @@
-/* eslint-disable no-sync */
 import plugin, { StartFilesProps } from '@start/plugin'
 
 export default (extensions?: string[]) =>
@@ -40,6 +39,7 @@ export default (extensions?: string[]) =>
 
         // @ts-ignore
         // TODO: update @types/istanbul-lib-hook
+        // eslint-disable-next-line node/no-sync
         return instrumenter.instrumentSync(source, options.file, sourceMapObject)
       },
       { extensions }

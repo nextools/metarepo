@@ -3,6 +3,7 @@ import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
 
+// @ts-ignore
 const umask = process.umask()
 
 test('workerama: `maxThreadCount`', async (t) => {

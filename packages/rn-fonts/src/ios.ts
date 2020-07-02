@@ -1,8 +1,7 @@
-/* eslint-disable no-sync */
 import path from 'path'
-// @ts-ignore
 import { readFile, readdir, writeFile } from 'pifs'
 import plistParser, { PlistValue } from 'plist'
+// @ts-ignore
 import xcode from 'xcode'
 import { getFontPaths } from './utils'
 
@@ -23,6 +22,7 @@ export const addFontsIos = async (projectPath: string, fontsPath: string): Promi
   const projectName = path.basename(xcodeProjectPath, '.xcodeproj')
   const plistPath = path.join(projectPath, projectName, 'Info.plist')
   const pbxprojPath = path.join(projectPath, xcodeProjectPath, 'project.pbxproj')
+  // eslint-disable-next-line node/no-sync
   const project = xcode.project(pbxprojPath).parseSync()
   const projectTargetUuid = project.getFirstTarget().uuid
   const plistData = await readFile(plistPath, 'utf8')
@@ -56,5 +56,6 @@ export const addFontsIos = async (projectPath: string, fontsPath: string): Promi
   }
 
   await writeFile(plistPath, `${plistParser.build(plist, plistBuildOptions)}\n`)
+  // eslint-disable-next-line node/no-sync
   await writeFile(pbxprojPath, project.writeSync())
 }

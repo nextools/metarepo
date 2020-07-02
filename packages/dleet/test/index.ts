@@ -1,4 +1,4 @@
-/* eslint-disable no-sync */
+/* eslint-disable node/no-sync */
 import { mockFs } from '@mock/fs'
 import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'

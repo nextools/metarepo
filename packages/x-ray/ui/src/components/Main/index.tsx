@@ -5,10 +5,10 @@ import { component, startWithType, mapHandlers, onUpdate, mapState } from 'refun
 import { actionLoadList, actionSave } from '../../actions'
 import { COL_SPACE, COLOR_LIGHT_GREY, COLOR_DM_BLACK } from '../../config'
 import { ThemeContext } from '../../context/Theme'
+// @ts-ignore
 import noSignalImage from '../../images/no-signal.png'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { TSize, TType } from '../../types'
-// @ts-ignore
 import { Background } from '../Background'
 import { Block } from '../Block'
 import { Popup } from '../Popup'
