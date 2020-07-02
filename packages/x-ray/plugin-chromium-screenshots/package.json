@@ -27,7 +27,7 @@
     "piall": "^0.1.1",
     "pifs": "^1.0.2",
     "pixelmatch": "^5.1.0",
-    "pngjs": "^3.4.0",
+    "pngjs": "^5.0.0",
     "puppeteer-core": "^2.1.1",
     "react-dom": "16.11.0",
     "react": "16.11.0",
