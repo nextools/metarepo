@@ -1,4 +1,5 @@
 import path from 'path'
+// eslint-disable-next-line import/order
 import { Worker } from 'worker_threads'
 import getCallerFile from 'get-caller-file'
 import { map } from 'iterama'
