@@ -1,6 +1,6 @@
-import { TExtend } from 'tsfn'
-import { ThunkAction } from 'redux-thunk'
 import { TListItems, TItem } from '@x-ray/core'
+import { ThunkAction } from 'redux-thunk'
+import { TExtend } from 'tsfn'
 
 export type TPosition = {
   top: number,

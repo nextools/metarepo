@@ -1,5 +1,5 @@
-import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { pipe } from '../src/pipe'
 import { add, constant, mult, throwing, toString } from './utils'
 

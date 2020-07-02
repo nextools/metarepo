@@ -1,11 +1,11 @@
+import { colorToString } from 'colorido'
 import React from 'react'
 import { startWithType, pureComponent, mapContext, mapWithPropsMemo } from 'refun'
 import { TOmitKey } from 'tsfn'
-import { colorToString } from 'colorido'
-import { TRect } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
 import { COLOR_BORDER_DELETED, DISCARD_ALPHA, BORDER_SIZE, COLOR_WHITE, COLOR_DM_BLACK, DASH_SPACE } from '../config'
 import { ThemeContext } from '../context/Theme'
+import { TRect } from '../types'
 import { Block } from './Block'
 import { Screenshot } from './Screenshot'
 

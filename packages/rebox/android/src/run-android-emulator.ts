@@ -1,9 +1,9 @@
-import path from 'path'
 import { homedir } from 'os'
-import { access, writeFile } from 'pifs'
+import path from 'path'
 import execa from 'execa'
-import { isString } from 'tsfn'
 import makeDir from 'make-dir'
+import { access, writeFile } from 'pifs'
+import { isString } from 'tsfn'
 
 export type TRunAndroidEmulatorOptions = {
   portsToForward: number[],

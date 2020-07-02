@@ -1,11 +1,11 @@
 import plugin from '@start/plugin'
-import sequence from '@start/plugin-sequence'
-import find from '@start/plugin-find'
-import remove from '@start/plugin-remove'
 import env from '@start/plugin-env'
-import typescriptCheck from '@start/plugin-lib-typescript-check'
-import tape from '@start/plugin-lib-tape'
+import find from '@start/plugin-find'
 import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
+import tape from '@start/plugin-lib-tape'
+import typescriptCheck from '@start/plugin-lib-typescript-check'
+import remove from '@start/plugin-remove'
+import sequence from '@start/plugin-sequence'
 import { TPackageJson } from 'fixdeps'
 
 export const checkDeps = () => plugin('checkDeps', ({ logMessage }) => async () => {

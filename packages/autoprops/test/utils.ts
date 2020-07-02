@@ -1,5 +1,5 @@
-import test from 'tape'
 import I from 'big-integer'
+import test from 'tape'
 import { getIncrementedValueIndex } from '../src/utils'
 
 test('getChangedValueIndex', (t) => {

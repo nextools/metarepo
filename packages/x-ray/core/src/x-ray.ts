@@ -1,9 +1,9 @@
 import path from 'path'
-import prettyMs from 'pretty-ms'
 import { runWebApp } from '@rebox/web'
+import prettyMs from 'pretty-ms'
 import { rsolve } from 'rsolve'
-import { runServer } from './server/run'
 import { UI_HOST, UI_PORT } from './constants'
+import { runServer } from './server/run'
 import { TPlugin, TResultsType } from './types'
 
 export const xRay = (plugin: TPlugin<TResultsType>) => async (files: string[]): Promise<void> => {

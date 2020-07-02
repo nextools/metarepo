@@ -1,5 +1,5 @@
-import test from 'tape'
 import { pipe } from 'funcom'
+import test from 'tape'
 import { toArrayAsync } from '../src/to-array-async'
 import { uniqueAsync } from '../src/unique-async'
 

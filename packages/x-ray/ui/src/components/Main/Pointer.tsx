@@ -1,6 +1,6 @@
 import React, { MouseEvent, ReactNode } from 'react'
-import { normalizeWebStyle } from 'stili'
 import { component, startWithType, mapHandlers, mapProps } from 'refun'
+import { normalizeWebStyle } from 'stili'
 import { TRect } from '../../types'
 
 export type TPointer = TRect & {

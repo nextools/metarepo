@@ -1,7 +1,7 @@
+import { Surface, Shape } from '@primitives/svg'
+import { colorToString, TColor } from 'colorido'
 import React from 'react'
 import { component, startWithType, mapDefaultProps } from 'refun'
-import { colorToString, TColor } from 'colorido'
-import { Surface, Shape } from '@primitives/svg'
 import { COLOR_BLACK } from '../config'
 import { AnimationColor } from './AnimationColor'
 

@@ -1,9 +1,9 @@
-import test from 'tape'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { prefixes } from '../prefixes'
+import test from 'tape'
 import { TPackageBumpMap } from '../../src/bump/types'
 import { TGitMessageMap } from '../../src/types'
+import { prefixes } from '../prefixes'
 
 test('promptLog', async (t) => {
   const logSpy = createSpy(() => {})

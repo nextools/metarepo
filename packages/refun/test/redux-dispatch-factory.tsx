@@ -1,8 +1,8 @@
 import React, { createContext } from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'tape'
-import { createSpy, getSpyCalls } from 'spyfn'
 import { Store } from 'redux'
+import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { component, ReduxDispatchFactory, startWithType } from '../src'
 
 test('ReduxDispatchFactory', (t) => {

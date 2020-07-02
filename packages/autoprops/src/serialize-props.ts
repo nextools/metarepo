@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
+import BigInt, { BigInteger } from 'big-integer'
 import { isValidElement, ReactElement, FC } from 'react'
 import { isFunction, isSymbol, isRegExp, TAnyObject, isString, isDefined, isObject, isArray, TReadonly } from 'tsfn'
-import BigInt, { BigInteger } from 'big-integer'
 import { TCommonComponentConfig, TChildrenMap, TCommonRequiredConfig } from './types'
 import { unpackPerm } from './unpack-perm'
 

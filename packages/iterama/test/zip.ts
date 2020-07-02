@@ -1,6 +1,6 @@
 import test from 'tape'
-import { zip } from '../src/zip'
 import { toArray } from '../src/to-array'
+import { zip } from '../src/zip'
 
 test('iterama: zip + same length', (t) => {
   const iterable1 = {

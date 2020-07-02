@@ -1,7 +1,7 @@
 import { promisify } from 'util'
-import test from 'tape'
 import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
+import test from 'tape'
 
 const rootDir = process.cwd()
 const vol = Volume.fromJSON({

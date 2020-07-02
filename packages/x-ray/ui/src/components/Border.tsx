@@ -1,5 +1,5 @@
-import React, { FC } from 'react'
 import { Border as PrimitiveBorder, TBorder as TPrimitiveBorder } from '@primitives/border'
+import React, { FC } from 'react'
 import { AnimationColor } from './AnimationColor'
 
 export type TBorder = TPrimitiveBorder & {

@@ -1,6 +1,6 @@
-import test from 'tape'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 
 test('git:getCommitMessages', async (t) => {
   const commitMessages = `---🐣 some-package-2: init

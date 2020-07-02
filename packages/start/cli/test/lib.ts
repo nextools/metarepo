@@ -1,7 +1,7 @@
 import path from 'path'
-import test from 'tape'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 
 test('cli: export', async (t) => {
   const { default: cliLib } = await import('../src/lib')

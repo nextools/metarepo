@@ -1,7 +1,7 @@
-import test from 'tape'
 import { pipe } from 'funcom'
-import { take } from '../src/take'
+import test from 'tape'
 import { range } from '../src/range'
+import { take } from '../src/take'
 import { toArray } from '../src/to-array'
 
 test('iterama: take + positive number', (t) => {

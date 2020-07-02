@@ -1,9 +1,9 @@
+import { Animation, easeInOutCubic } from '@primitives/animation'
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithPropsMemo, mapWithProps } from 'refun'
-import { Animation, easeInOutCubic } from '@primitives/animation'
-import { TCanvas } from './types'
 import { Graph } from './Graph'
 import { CANVAS_PADDING, CONTROLS_HEIGHT_TOP, PAGE_BACKGROUND } from './constants'
+import { TCanvas } from './types'
 
 export const Canvas = component(
   startWithType<TCanvas>(),

@@ -1,7 +1,7 @@
 import path from 'path'
-import { readFile, writeFile } from 'pifs'
 import execa from 'execa'
 import moveFile from 'move-file'
+import { readFile, writeFile } from 'pifs'
 import { getAndroidAppPath } from './get-android-app-path'
 
 export type TBuildAndroidAppDebugOptions = {

@@ -1,5 +1,5 @@
-import { map, reduce, toArray, toValue } from 'iterama'
 import { pipe } from 'funcom'
+import { map, reduce, toArray, toValue } from 'iterama'
 import { TListItems, TTotalResults, TResultsType, TEncoding, TFileResults } from '../types'
 
 export type TGetListOptions = {

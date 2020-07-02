@@ -1,7 +1,7 @@
 import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { component, startWithType, onLayout } from '../src'
 
 test('onLayout: empty watch keys', (t) => {

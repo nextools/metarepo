@@ -1,7 +1,7 @@
-import test from 'tape'
 import I from 'big-integer'
-import { TCommonComponentConfig } from '../src/types'
+import test from 'tape'
 import { getValidPermImpl } from '../src/get-valid-perm'
+import { TCommonComponentConfig } from '../src/types'
 
 test('getValidPerm: simple case', (t) => {
   const config: TCommonComponentConfig = {

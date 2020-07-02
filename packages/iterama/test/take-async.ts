@@ -1,7 +1,7 @@
-import test from 'tape'
 import { pipe } from 'funcom'
-import { takeAsync } from '../src/take-async'
+import test from 'tape'
 import { rangeAsync } from '../src/range-async'
+import { takeAsync } from '../src/take-async'
 import { toArrayAsync } from '../src/to-array-async'
 
 test('iterama: takeAsync + positive number', async (t) => {

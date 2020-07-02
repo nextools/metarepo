@@ -1,7 +1,7 @@
 import { Worker, WorkerOptions } from 'worker_threads'
-import test from 'tape'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 
 const umask = process.umask()
 

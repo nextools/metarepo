@@ -1,15 +1,15 @@
 /* eslint-disable max-params, no-use-before-define */
-import { isUndefined } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
-import { TCommonRequiredConfig, TCommonComponentConfig } from './types'
-import { unpackPerm } from './unpack-perm'
-import { packPerm } from './pack-perm'
-import { stringifyBigInt } from './stringify-bigint'
-import { parseBigInt } from './parse-bigint'
+import { isUndefined } from 'tsfn'
 import { applyDisableDeps } from './apply-disable-deps'
-import { applyEnableDeps } from './apply-enable-deps'
 import { applyDisableMutexes } from './apply-disable-mutexes'
 import { applyEnableChildren } from './apply-enable-children'
+import { applyEnableDeps } from './apply-enable-deps'
+import { packPerm } from './pack-perm'
+import { parseBigInt } from './parse-bigint'
+import { stringifyBigInt } from './stringify-bigint'
+import { TCommonRequiredConfig, TCommonComponentConfig } from './types'
+import { unpackPerm } from './unpack-perm'
 
 const applyChildPropValue = (int: BigInteger, childConfig: TCommonComponentConfig, propPath: readonly string[], propValue: any, childKey: string, required?: TCommonRequiredConfig): BigInteger => {
   if (required?.includes(childKey)) {

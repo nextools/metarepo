@@ -1,9 +1,9 @@
 /* eslint-disable no-sync */
 import path from 'path'
 // @ts-ignore
-import xcode from 'xcode'
-import plistParser, { PlistValue } from 'plist'
 import { readFile, readdir, writeFile } from 'pifs'
+import plistParser, { PlistValue } from 'plist'
+import xcode from 'xcode'
 import { getFontPaths } from './utils'
 
 const plistBuildOptions = {

@@ -2,8 +2,8 @@ import path from 'path'
 import execa from 'execa'
 import { TReadonly, isFunction, isString } from 'tsfn'
 import { TNpmConfig, TPackageRelease } from '../types'
-import { TPublishPackageConfig } from './publish-packages'
 import { logError } from './log-error'
+import { TPublishPackageConfig } from './publish-packages'
 
 type TPublishPackage = Pick<TPackageRelease, 'name' | 'dir'>
 

@@ -1,5 +1,5 @@
-import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { composeAsync } from '../src/compose-async'
 import { addAsync, constantAsync, mult, toStringAsync, throwingAsync } from './utils'
 

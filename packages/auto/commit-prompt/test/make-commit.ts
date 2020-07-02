@@ -1,6 +1,6 @@
-import test from 'tape'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { prefixes } from './prefixes'
 
 test('git:makeCommit single package', async (t) => {

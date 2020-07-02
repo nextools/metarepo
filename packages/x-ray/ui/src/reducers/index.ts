@@ -14,9 +14,9 @@ import {
   isActionRemoveFilter,
   isActionResetFilter,
 } from '../actions'
-import { TAction, TState } from '../types'
-import { initialState } from '../store/initial-state'
 import { isActionUndiscardItem } from '../actions/undiscard'
+import { initialState } from '../store/initial-state'
+import { TAction, TState } from '../types'
 
 export type TReducer<S extends {}> = (state: S, action: TAction<any>) => S
 

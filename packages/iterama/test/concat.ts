@@ -1,8 +1,8 @@
 import test from 'tape'
 import { concat } from '../src/concat'
-import { toArray } from '../src/to-array'
 import { range } from '../src/range'
 import { slice } from '../src/slice'
+import { toArray } from '../src/to-array'
 
 test('iterama: concat', (t) => {
   const iterable1 = range(5)

@@ -1,15 +1,15 @@
-import { access } from 'pifs'
-import { isArray, isString, isFunction } from 'tsfn'
-import { addFontsAndroid } from 'rn-fonts'
 import { copyNativeTemplate, serveNativeJsBundle } from '@rebox/native-utils'
-import { runAndroidEmulator } from './run-android-emulator'
+import { access } from 'pifs'
+import { addFontsAndroid } from 'rn-fonts'
+import { isArray, isString, isFunction } from 'tsfn'
 import { buildAndroidAppDebug } from './build-android-app-debug'
-import { installAndroidApp } from './install-android-app'
-import { uninstallAndroidApp } from './uninstall-android-app'
-import { launchAndroidApp } from './launch-android-app'
-import { getAndroidProjectPath } from './get-android-project-path'
 import { getAndroidAppPath } from './get-android-app-path'
+import { getAndroidProjectPath } from './get-android-project-path'
+import { installAndroidApp } from './install-android-app'
+import { launchAndroidApp } from './launch-android-app'
 import { linkAndroidDependency } from './link-android-dependency'
+import { runAndroidEmulator } from './run-android-emulator'
+import { uninstallAndroidApp } from './uninstall-android-app'
 
 const PORT = 8082
 

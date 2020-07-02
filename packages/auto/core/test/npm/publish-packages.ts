@@ -1,6 +1,6 @@
-import test from 'tape'
-import { createSpy, getSpyCalls } from 'spyfn'
 import { mockRequire } from '@mock/require'
+import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { prefixes } from '../prefixes'
 
 test('npm:publishPackages: normal usecases', async (t) => {

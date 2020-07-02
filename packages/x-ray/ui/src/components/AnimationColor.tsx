@@ -1,8 +1,8 @@
-import React from 'react'
 import { TAnimation, Animation, easeInOutCubic } from '@primitives/animation'
-import { TOmitKey } from 'tsfn'
 import { TColor } from 'colorido'
+import React from 'react'
 import { component, startWithType, mapWithProps } from 'refun'
+import { TOmitKey } from 'tsfn'
 
 export type TAnimationColor = TOmitKey<TAnimation<TColor>, 'easing'>
 

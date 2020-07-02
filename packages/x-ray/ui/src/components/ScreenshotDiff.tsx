@@ -1,14 +1,14 @@
+import { colorToString } from 'colorido'
 import React, { Fragment } from 'react'
 import { startWithType, pureComponent, mapContext, mapWithPropsMemo } from 'refun'
 import { TOmitKey } from 'tsfn'
-import { colorToString } from 'colorido'
-import { TPosition } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
 import { DASH_SPACE, COLOR_WHITE, COLOR_DM_BLACK, DISCARD_ALPHA, BORDER_SIZE, COLOR_BORDER_DELETED, COLOR_BORDER_NEW } from '../config'
 import { ThemeContext } from '../context/Theme'
+import { TPosition } from '../types'
+import { Background } from './Background'
 import { Block } from './Block'
 import { Screenshot } from './Screenshot'
-import { Background } from './Background'
 
 export type TScreenshotDiff = TPosition & TOmitKey<TApiLoadScreenshotOpts, 'type'> & {
   oldWidth: number,

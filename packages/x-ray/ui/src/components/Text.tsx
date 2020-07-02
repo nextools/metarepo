@@ -1,13 +1,8 @@
-import React from 'react'
-import { normalizeWebStyle, TStyle } from 'stili'
-import {
-  component,
-  mapDefaultProps,
-  mapWithProps,
-  startWithType,
-} from 'refun'
-import { isNumber } from 'tsfn'
 import { TColor, colorToString } from 'colorido'
+import React from 'react'
+import { component, mapDefaultProps, mapWithProps, startWithType } from 'refun'
+import { normalizeWebStyle, TStyle } from 'stili'
+import { isNumber } from 'tsfn'
 import { COLOR_BLACK } from '../config'
 
 export type TTextProps = {

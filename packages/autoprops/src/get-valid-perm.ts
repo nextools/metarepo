@@ -1,13 +1,13 @@
 /* eslint-disable no-use-before-define */
 import { BigInteger } from 'big-integer'
-import { TCommonComponentConfig, TCheckPermFn } from './types'
 import { checkChildPerm } from './check-child-perm'
 import { checkChildrenRestriction } from './check-children-restriction'
-import { checkMutexRestriction } from './check-mutex-restriction'
-import { unpackPerm } from './unpack-perm'
 import { checkDepsRestriction } from './check-deps-restriction'
-import { packPerm } from './pack-perm'
+import { checkMutexRestriction } from './check-mutex-restriction'
 import { getLength } from './get-length'
+import { packPerm } from './pack-perm'
+import { TCommonComponentConfig, TCheckPermFn } from './types'
+import { unpackPerm } from './unpack-perm'
 
 const testFns: TCheckPermFn[] = [
   checkChildPerm,

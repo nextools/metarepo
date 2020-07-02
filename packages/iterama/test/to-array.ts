@@ -1,6 +1,6 @@
 import test from 'tape'
-import { toArray } from '../src/to-array'
 import { range } from '../src/range'
+import { toArray } from '../src/to-array'
 
 test('iterama: toArray', (t) => {
   const iterable = range(5)

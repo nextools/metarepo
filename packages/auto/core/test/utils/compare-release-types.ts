@@ -1,6 +1,6 @@
 import test from 'tape'
-import { compareReleaseTypes } from '../../src/utils/compare-release-types'
 import { TReleaseType } from '../../src/types'
+import { compareReleaseTypes } from '../../src/utils/compare-release-types'
 
 test('compare-release-types', (t) => {
   t.true(compareReleaseTypes('patch', 'patch') === 0, 'patch = patch')

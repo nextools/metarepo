@@ -1,7 +1,7 @@
 /* eslint-disable no-sync */
-import test from 'tape'
 import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
+import test from 'tape'
 
 const rootDir = process.cwd()
 

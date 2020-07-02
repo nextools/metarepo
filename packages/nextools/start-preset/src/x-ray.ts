@@ -1,12 +1,12 @@
-import { xRay } from '@x-ray/core'
 import plugin from '@start/plugin'
-import sequence from '@start/plugin-sequence'
 import find from '@start/plugin-find'
+import sequence from '@start/plugin-sequence'
+import { xRay } from '@x-ray/core'
+import { TAndroidScreenshotsOptions } from '@x-ray/plugin-android-screenshots'
 import { TChromiumScreenshotsOptions } from '@x-ray/plugin-chromium-screenshots'
 import { TIosScreenshotsOptions } from '@x-ray/plugin-ios-screenshots'
-import { TAndroidScreenshotsOptions } from '@x-ray/plugin-android-screenshots'
-import { TReactSnapshotsOptions } from '@x-ray/plugin-react-snapshots'
 import { TReactNativeSnapshotsOptions } from '@x-ray/plugin-react-native-snapshots'
+import { TReactSnapshotsOptions } from '@x-ray/plugin-react-snapshots'
 
 export const CheckChromiumScreenshots = (options?: TChromiumScreenshotsOptions) => async (component = '**') => {
   const { chromiumScreenshots } = await import('@x-ray/plugin-chromium-screenshots')

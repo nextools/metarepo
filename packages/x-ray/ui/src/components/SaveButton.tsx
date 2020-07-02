@@ -1,13 +1,13 @@
+import { Button } from '@primitives/button'
+import { Size } from '@primitives/size'
 import React from 'react'
 import { startWithType, component, mapHandlers, mapWithProps } from 'refun'
-import { Size } from '@primitives/size'
-import { Button } from '@primitives/button'
-import { TRect } from '../types'
 import { COLOR_BLUE, COLOR_WHITE, BORDER_SIZE_SMAL } from '../config'
-import { Block } from './Block'
-import { Text } from './Text'
+import { TRect } from '../types'
 import { Background } from './Background'
+import { Block } from './Block'
 import { CONTROLS_HEIGHT } from './Main/Controls'
+import { Text } from './Text'
 
 export const SAVE_BUTTON_HORIZONTAL_PADDING = 14
 const SAVE_BUTTON_VERTICAL_PADDING = 6

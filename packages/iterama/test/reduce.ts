@@ -1,8 +1,8 @@
-import test from 'tape'
-import { createSpy, getSpyCalls } from 'spyfn'
 import { pipe } from 'funcom'
-import { reduce } from '../src/reduce'
+import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { range } from '../src/range'
+import { reduce } from '../src/reduce'
 import { toArray } from '../src/to-array'
 
 test('iterama: reduce', (t) => {

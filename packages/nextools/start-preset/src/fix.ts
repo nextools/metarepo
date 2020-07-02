@@ -1,9 +1,9 @@
 import plugin from '@start/plugin'
-import overwrite from '@start/plugin-overwrite'
-import sequence from '@start/plugin-sequence'
 import find from '@start/plugin-find'
-import read from '@start/plugin-read'
 import eslint from '@start/plugin-lib-eslint'
+import overwrite from '@start/plugin-overwrite'
+import read from '@start/plugin-read'
+import sequence from '@start/plugin-sequence'
 import { TPackageJson } from 'fixdeps'
 
 export const fixLint = async () => {

@@ -1,16 +1,16 @@
 import http from 'http'
-import { TTarMap, TarMap } from 'tarmap'
-import { access } from 'pifs'
 import { runAndroidApp } from '@rebox/android'
-import { rsolve } from 'rsolve'
-import { unchunkJson } from 'unchunk'
 import { TTotalResults, TPlugin, getTarFilePath, TExampleResults } from '@x-ray/core'
+import { access } from 'pifs'
+import { rsolve } from 'rsolve'
+import { TTarMap, TarMap } from 'tarmap'
 import { TJsonValue } from 'typeon'
-import { prepareMeta } from './prepare-meta'
-import { bufferToPng } from './buffer-to-png'
+import { unchunkJson } from 'unchunk'
 import { ApplyDpr } from './apply-dpr'
-import { hasScreenshotDiff } from './has-screenshot-diff'
+import { bufferToPng } from './buffer-to-png'
 import { SERVER_PORT, SERVER_HOST } from './constants'
+import { hasScreenshotDiff } from './has-screenshot-diff'
+import { prepareMeta } from './prepare-meta'
 
 export type TAndroidScreenshotsOptions = {
   fontsDir?: string,

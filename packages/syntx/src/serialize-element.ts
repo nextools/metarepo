@@ -1,10 +1,10 @@
 /* eslint-disable import/no-cycle */
-import { TConfig, TSerializedElement, TMeta } from './types'
-import { filterProps, hasKeys, isValidChildren, sanitizeLines, optMetaValue } from './utils'
+import { TYPE_COMPONENT_BRACKET, TYPE_COMPONENT_NAME } from './constants'
+import { serializeChildren } from './serialize-children'
 import { serializeIndent } from './serialize-indent'
 import { serializeProps } from './serialize-props'
-import { serializeChildren } from './serialize-children'
-import { TYPE_COMPONENT_BRACKET, TYPE_COMPONENT_NAME } from './constants'
+import { TConfig, TSerializedElement, TMeta } from './types'
+import { filterProps, hasKeys, isValidChildren, sanitizeLines, optMetaValue } from './utils'
 
 export type TSerializeElement = {
   name: string,

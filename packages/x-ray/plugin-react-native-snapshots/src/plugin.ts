@@ -1,9 +1,9 @@
-import { workerama } from 'workerama'
-import { forEachAsync, toMapAsync } from 'iterama'
-import { pipe } from 'funcom'
 import { TPlugin } from '@x-ray/core'
-import { TWorkerResult } from './types'
+import { pipe } from 'funcom'
+import { forEachAsync, toMapAsync } from 'iterama'
+import { workerama } from 'workerama'
 import { MAX_THREAD_COUNT, WORKER_PATH } from './constants'
+import { TWorkerResult } from './types'
 
 export type TReactNativeSnapshotsOptions = {
   shouldBailout?: boolean,

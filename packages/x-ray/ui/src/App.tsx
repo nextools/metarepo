@@ -1,5 +1,5 @@
-import React, { FC } from 'react'
 import { Root } from '@primitives/root'
+import React, { FC } from 'react'
 import { Main } from './components/Main'
 import { RenderMetaContext, TRenderMetaContext } from './context/RenderMeta'
 

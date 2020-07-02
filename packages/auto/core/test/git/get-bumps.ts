@@ -1,7 +1,7 @@
 import test from 'tape'
+import { getBumps } from '../../src/git/get-bumps'
 import { TGitMessageMap } from '../../src/types'
 import { prefixes } from '../prefixes'
-import { getBumps } from '../../src/git/get-bumps'
 
 test('git:getBumps single package', (t) => {
   const names: string[] = ['foo', '@ns/bar', 'baz']

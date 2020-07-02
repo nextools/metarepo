@@ -1,6 +1,6 @@
 import { TReadonly } from 'tsfn'
-import { makeRegExp } from '../utils'
 import { TPrefixReleaseType, TRequiredPrefixes } from '../types'
+import { makeRegExp } from '../utils'
 
 export type TParsedMessage = {
   names: string[],

@@ -1,7 +1,7 @@
-import test from 'tape'
+import { TPackageRelease } from '@auto/core'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { TPackageRelease } from '@auto/core'
+import test from 'tape'
 import { prefixes } from './prefixes'
 
 test('writePublishTags: multiple tags', async (t) => {

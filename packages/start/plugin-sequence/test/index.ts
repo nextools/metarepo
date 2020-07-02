@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events'
 import plugin from '@start/plugin'
-import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import sequence from '../src'
 
 test('plugin-sequence: export', (t) => {

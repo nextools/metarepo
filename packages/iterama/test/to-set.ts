@@ -1,6 +1,6 @@
 import test from 'tape'
-import { toSet } from '../src/to-set'
 import { range } from '../src/range'
+import { toSet } from '../src/to-set'
 
 test('iterama: toSet', (t) => {
   const iterable = range(5)

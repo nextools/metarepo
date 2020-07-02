@@ -1,5 +1,5 @@
-import fetch from 'node-fetch'
 import { THook, TMessage, TLogReleaseType, TPackageRelease } from '@auto/core'
+import fetch from 'node-fetch'
 import { TReadonly } from 'tsfn'
 import { TELEGRAM_MESSAGE_MAX_LENGTH, TELEGRAM_API_URL } from './constants'
 import { TTelegramConfig } from './types'

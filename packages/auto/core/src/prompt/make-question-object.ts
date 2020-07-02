@@ -1,5 +1,5 @@
-import { TReadonly, isUndefined } from 'tsfn'
 import semver from 'semver'
+import { TReadonly, isUndefined } from 'tsfn'
 import { TPackageBumpMap } from '../bump/types'
 import { TPromptEditData, TPackageMap, TResolvedReleaseType } from '../types'
 import { isResolvedReleaseType } from '../utils'

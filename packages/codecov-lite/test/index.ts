@@ -1,5 +1,5 @@
-import test from 'tape'
 import { mockRequire } from '@mock/require'
+import test from 'tape'
 
 test('codecov-lite', async (t) => {
   const unmockRequire = mockRequire('../src/index', {

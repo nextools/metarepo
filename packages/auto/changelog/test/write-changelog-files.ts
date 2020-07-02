@@ -1,9 +1,9 @@
 import { promisify } from 'util'
-import test from 'tape'
 import { TPackageRelease, TAutoConfig } from '@auto/core'
-import { createFsFromVolume, Volume } from 'memfs'
 import { mockRequire } from '@mock/require'
+import { createFsFromVolume, Volume } from 'memfs'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { prefixes } from './prefixes'
 
 const rootDir = process.cwd()

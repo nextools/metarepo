@@ -1,8 +1,8 @@
 import path from 'path'
-import Webpack, { Configuration as TWebpackConfig, Stats } from 'webpack'
-import WebpackDevServer, { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
 import { isUndefined } from 'tsfn'
+import Webpack, { Configuration as TWebpackConfig, Stats } from 'webpack'
+import WebpackDevServer, { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
 import { getBabelConfigRun } from './get-babel-config'
 
 const excludeNodeModulesRegExp = /[\\/]node_modules[\\/]/

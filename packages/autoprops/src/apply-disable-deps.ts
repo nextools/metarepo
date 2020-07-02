@@ -1,9 +1,9 @@
 /* eslint-disable max-params */
 import BigInt from 'big-integer'
 import { isUndefined } from 'tsfn'
+import { applyEnableDeps } from './apply-enable-deps'
 import { TApplyRestrictionFn } from './types'
 import { getPropIndex } from './utils'
-import { applyEnableDeps } from './apply-enable-deps'
 
 export const applyDisableDeps: TApplyRestrictionFn = (values, propName, permConfig, componentConfig) => {
   const { deps } = componentConfig

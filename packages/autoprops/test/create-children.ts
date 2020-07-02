@@ -1,5 +1,5 @@
-import test from 'tape'
 import { mockRequire } from '@mock/require'
+import test from 'tape'
 import { TCommonComponentConfig } from '../src/types'
 
 test('createChildren', async (t) => {

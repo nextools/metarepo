@@ -1,9 +1,9 @@
-import prompts from 'prompts'
-import execa from 'execa'
 import { getPackages } from '@auto/core'
-import { suggestFilter } from './suggest-filter'
+import execa from 'execa'
+import prompts from 'prompts'
 import { getPrefixes } from './get-refixes'
 import { removeAutoNamePrefix } from './remove-auto-name-prefix'
+import { suggestFilter } from './suggest-filter'
 
 const toLowerCase = (str: string) => str.charAt(0).toLocaleLowerCase() + str.slice(1)
 

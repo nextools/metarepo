@@ -22,7 +22,6 @@ export default (userOptions?: ESLint.Options, formatterName = '') =>
 
       return res
     }, Promise.resolve<StartDataFile[]>([]))
-    // const filesToCheck = files.filter((file) => !eslint.isPathIgnored(file.path))
     const fixedFiles = [] as StartDataFile[]
     const totalResults = [] as ESLint.LintResult[]
     let hasErrors = false

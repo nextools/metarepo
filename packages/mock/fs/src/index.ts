@@ -1,7 +1,7 @@
 import path from 'path'
 import { mockRequire } from '@mock/require'
-import { Volume, createFsFromVolume, IFs } from 'memfs'
 import getCallerFile from 'get-caller-file'
+import { Volume, createFsFromVolume, IFs } from 'memfs'
 
 export const mockFs = (file: string): { fs: IFs, unmockFs: () => void } => {
   const vol = new Volume()

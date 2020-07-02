@@ -1,13 +1,13 @@
 import path from 'path'
-import { TarMap } from 'tarmap'
-import pAll from 'p-all'
 // @ts-ignore
 import imageminPngout from 'imagemin-pngout'
 import { map } from 'iterama'
-import { isDefined } from 'tsfn'
 import makeDir from 'make-dir'
-import { getTarFilePath } from '../get-tar-file-path'
+import pAll from 'p-all'
+import { TarMap } from 'tarmap'
+import { isDefined } from 'tsfn'
 import { WRITE_RESULT_CONCURRENCY } from '../constants'
+import { getTarFilePath } from '../get-tar-file-path'
 import { TTotalResults, TResultsType, TEncoding } from '../types'
 
 const optimizePng = imageminPngout({ strategy: 2 }) as (buf: Buffer) => Promise<Buffer>

@@ -1,7 +1,7 @@
-import test from 'tape'
 import { mockRequire } from '@mock/require'
-import { TComponentConfig } from '../src/types'
+import test from 'tape'
 import { getPropsIterable, mapPropsIterable } from '../src'
+import { TComponentConfig } from '../src/types'
 
 test('getPropsIterable: props', (t) => {
   const config: TComponentConfig<{a: boolean}, never> = {

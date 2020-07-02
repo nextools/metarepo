@@ -2,12 +2,12 @@ import semver from 'semver'
 import { TReadonly } from 'tsfn'
 import { TPackageMap, TReleaseType, TBumpConfig, TGitMessageMap, TPromptEditData } from '../types'
 import { compareReleaseTypes, getMostSignificantBumpType, makeEmptyEditData } from '../utils'
+import { bumpRange } from './bump-range'
 import { bumpVersion } from './bump-version'
 import { compileBumpConfig } from './compile-bump-config'
-import { bumpRange } from './bump-range'
 import { getDependents, getDependencyRange, getDevDependencyRange } from './get-dependents'
-import { TPackageBump, TPackageBumpMap } from './types'
 import { resolveReleaseType } from './resolve-release-type'
+import { TPackageBump, TPackageBumpMap } from './types'
 
 type TGetPackagesBumps = {
   packages: TReadonly<TPackageMap>,

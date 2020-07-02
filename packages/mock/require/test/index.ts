@@ -1,6 +1,6 @@
 import Module from 'module'
-import test from 'tape'
 import { deleteFromCache } from '@mock/utils'
+import test from 'tape'
 import { mockRequire } from '../src'
 
 const _Module = Module as any

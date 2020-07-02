@@ -1,13 +1,13 @@
-import path from 'path'
 import os from 'os'
+import path from 'path'
 import { promisify } from 'util'
-import execa from 'execa'
-import makeDir from 'make-dir'
-import fastGlob from 'fast-glob'
 import copie from 'copie'
+import dleet from 'dleet'
+import execa from 'execa'
+import fastGlob from 'fast-glob'
+import makeDir from 'make-dir'
 // @ts-ignore
 import simplePlist from 'simple-plist'
-import dleet from 'dleet'
 import { getIosAppPath } from './get-ios-app-path'
 
 const pPlistRead = promisify(simplePlist.readFile)

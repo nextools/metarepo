@@ -1,9 +1,9 @@
 /* eslint-disable import/no-cycle */
-import { TConfig, TSerializedElement, TMeta } from './types'
-import { serializeValue } from './serialize-value'
-import { serializeIndent } from './serialize-indent'
-import { isString, sanitizeLineElements, sanitizeLines, optMetaValue } from './utils'
 import { TYPE_QUOTE, TYPE_VALUE_STRING, TYPE_PROPS_BRACE, TYPE_PROPS_KEY, TYPE_PROPS_EQUALS } from './constants'
+import { serializeIndent } from './serialize-indent'
+import { serializeValue } from './serialize-value'
+import { TConfig, TSerializedElement, TMeta } from './types'
+import { isString, sanitizeLineElements, sanitizeLines, optMetaValue } from './utils'
 
 type TSerializePropertyValue = {
   value: any,

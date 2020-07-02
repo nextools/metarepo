@@ -1,5 +1,5 @@
-import test from 'tape'
 import { pipe } from 'funcom'
+import test from 'tape'
 import { distinct } from '../src/distinct'
 import { toArray } from '../src/to-array'
 

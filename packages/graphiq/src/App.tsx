@@ -1,3 +1,4 @@
+import { Root } from '@primitives/root'
 import React from 'react'
 import {
   component,
@@ -8,12 +9,11 @@ import {
   startWithType,
   onUpdate,
 } from 'refun'
-import { Root } from '@primitives/root'
 import { Canvas } from './Canvas'
 import { Header, Footer } from './Controls/index'
+import { PAGE_BACKGROUND, CONTROLS_HEIGHT_TOP, CONTROLS_HEIGHT_BOTTOM } from './constants'
 import { TApp } from './types'
 import { globalObject, getHash, updateHash } from './utils'
-import { PAGE_BACKGROUND, CONTROLS_HEIGHT_TOP, CONTROLS_HEIGHT_BOTTOM } from './constants'
 
 export const App = component(
   startWithType<TApp>(),

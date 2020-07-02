@@ -1,14 +1,14 @@
+import { Checkbox } from '@primitives/checkbox'
 import React from 'react'
 import { startWithType, component, mapState, mapHandlers, mapHovered, TMapHovered, mapContext, mapWithPropsMemo } from 'refun'
-import { Checkbox } from '@primitives/checkbox'
 import { TOmitKey } from 'tsfn'
-import { TRect } from '../types'
 import { COLOR_WHITE, BORDER_SIZE, COLOR_LIGHT_GREY, COLOR_BLUE, COLOR_DARK_GREY, COLOR_GREY, BORDER_SIZE_SMAL, COLOR_DM_DARK_GREY, COLOR_DM_LIGHT_GREY, COLOR_DM_GREY } from '../config'
 import { ThemeContext } from '../context/Theme'
-import { Block } from './Block'
-import { Text } from './Text'
+import { TRect } from '../types'
 import { Background } from './Background'
+import { Block } from './Block'
 import { Border } from './Border'
+import { Text } from './Text'
 
 export const SWITCH_HORIZONTAL_PADDING = 10
 export const SWITCH_HEIGHT = 44 + BORDER_SIZE * 2

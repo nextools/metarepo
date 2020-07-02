@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose, AnyAction } from 'redux'
-import { StoreContextFactory } from 'refun'
 import thunk, { ThunkDispatch } from 'redux-thunk'
+import { StoreContextFactory } from 'refun'
 import { reducer } from '../reducers'
 import { TState } from '../types'
 

@@ -1,10 +1,10 @@
 import path from 'path'
-import webpack, { Configuration as WebpackConfig, OutputFileSystem } from 'webpack'
-import TerserPlugin from 'terser-webpack-plugin'
-import { isObject } from 'tsfn'
+import CompressionPlugin from 'compression-webpack-plugin'
 import { Volume, createFsFromVolume } from 'memfs'
 import joinPath from 'memory-fs/lib/join'
-import CompressionPlugin from 'compression-webpack-plugin'
+import TerserPlugin from 'terser-webpack-plugin'
+import { isObject } from 'tsfn'
+import webpack, { Configuration as WebpackConfig, OutputFileSystem } from 'webpack'
 import { babelConfig } from './babel-config'
 
 const vol = Volume.fromJSON({})

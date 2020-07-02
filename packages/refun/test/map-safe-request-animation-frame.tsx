@@ -1,8 +1,8 @@
 import React from 'react'
 import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { createRafSpy } from 'spyt'
+import test from 'tape'
 import { component, mapSafeRequestAnimationFrameFactory, startWithType } from '../src'
 
 test('mapSafeRequestAnimationFrame', (t) => {

@@ -1,6 +1,6 @@
 import React, { Ref, HTMLProps, CSSProperties, ReactNode, SyntheticEvent, MouseEvent } from 'react'
-import { normalizeWebStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
+import { normalizeWebStyle, TStyle } from 'stili'
 import { isUndefined, isNumber, isFunction } from 'tsfn'
 
 export type TBlock = {

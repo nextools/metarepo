@@ -1,7 +1,7 @@
 import { Readable } from 'stream'
-import test from 'tape'
-import { createSpy, getSpyCalls } from 'spyfn'
 import { mockRequire } from '@mock/require'
+import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 
 test('stroki: empty stream', async (t) => {
   const readable = new Readable({

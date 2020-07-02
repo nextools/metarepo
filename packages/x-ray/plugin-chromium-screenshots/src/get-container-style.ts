@@ -1,6 +1,6 @@
+import { TExampleOptions } from '@x-ray/core'
 import { CSSProperties } from 'react'
 import { isNumber } from 'tsfn'
-import { TExampleOptions } from '@x-ray/core'
 
 export const getContainerStyle = (userOptions?: TExampleOptions): CSSProperties => {
   const options: TExampleOptions = {

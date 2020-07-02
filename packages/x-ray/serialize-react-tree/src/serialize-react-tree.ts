@@ -2,8 +2,8 @@
 import { ReactElement } from 'react'
 import renderer, { ReactTestRendererJSON } from 'react-test-renderer'
 import { isString, isNumber, isBoolean, isDefined } from 'tsfn'
-import serializeProps from './serialize-props'
 import { makeIndent, nextIndent } from './make-indent'
+import serializeProps from './serialize-props'
 
 export type ReactElementJson = {
   type: string,

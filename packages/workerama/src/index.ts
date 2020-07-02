@@ -1,8 +1,8 @@
 import path from 'path'
 import { Worker } from 'worker_threads'
 import getCallerFile from 'get-caller-file'
-import { piAll } from 'piall'
 import { map } from 'iterama'
+import { piAll } from 'piall'
 import { asyncIterableFinally } from './async-iterable-finally'
 
 type TMessage = {

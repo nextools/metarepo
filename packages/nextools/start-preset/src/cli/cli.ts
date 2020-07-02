@@ -1,6 +1,6 @@
 import path from 'path'
-import Reporter from '@start/reporter-verbose'
 import { StartPlugin } from '@start/plugin'
+import Reporter from '@start/reporter-verbose'
 import { getStartOptions } from '../utils'
 
 const TASK_NAME_REGEXP = /^[a-z]/

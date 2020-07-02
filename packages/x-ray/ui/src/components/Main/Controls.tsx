@@ -1,13 +1,9 @@
+import { Button } from '@primitives/button'
+import { Size } from '@primitives/size'
+import { TColor } from 'colorido'
 import React from 'react'
 import { component, startWithType, mapState, mapContext, mapWithPropsMemo } from 'refun'
-import { Size } from '@primitives/size'
 import { TOmitKey } from 'tsfn'
-import { TColor } from 'colorido'
-import { Button } from '@primitives/button'
-import { Block } from '../Block'
-import { Background } from '../Background'
-import { TSize } from '../../types'
-import { TOOLBAR_WIDTH } from '../Toolbar'
 import {
   COLOR_WHITE,
   COLOR_GREY,
@@ -19,10 +15,14 @@ import {
   COLOR_DM_DARK_GREY,
   COLOR_DM_LIGHT_GREY,
 } from '../../config'
+import { ThemeContext } from '../../context/Theme'
+import { TSize } from '../../types'
+import { Background } from '../Background'
+import { Block } from '../Block'
 import { Border } from '../Border'
 import { SaveButton } from '../SaveButton'
 import { Text } from '../Text'
-import { ThemeContext } from '../../context/Theme'
+import { TOOLBAR_WIDTH } from '../Toolbar'
 
 export const CONTROLS_HEIGHT = 48
 export const CONTROLS_PADDING = 18

@@ -1,9 +1,7 @@
-import React from 'react'
-import { startWithType, component, mapHandlers, mapState, mapWithProps, mapContext, mapWithPropsMemo } from 'refun'
 import { Button } from '@primitives/button'
 import { Size } from '@primitives/size'
-import { TPosition } from '../types'
-import { mapStoreDispatch } from '../store'
+import React from 'react'
+import { startWithType, component, mapHandlers, mapState, mapWithProps, mapContext, mapWithPropsMemo } from 'refun'
 import { actionAddFilter, actionRemoveFilter, actionResetFilter } from '../actions'
 import {
   COL_SPACE,
@@ -15,10 +13,12 @@ import {
   COLOR_DM_LIGHT_GREY,
 } from '../config'
 import { ThemeContext } from '../context/Theme'
-import { Block } from './Block'
-import { Switch, SWITCH_HEIGHT } from './Switch'
+import { mapStoreDispatch } from '../store'
+import { TPosition } from '../types'
 import { Background } from './Background'
+import { Block } from './Block'
 import { Border } from './Border'
+import { Switch, SWITCH_HEIGHT } from './Switch'
 import { Text } from './Text'
 
 export const TOOLBAR_SPACING = COL_SPACE

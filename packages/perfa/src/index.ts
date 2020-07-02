@@ -1,12 +1,12 @@
-import puppeteer from 'puppeteer-core'
 import { buildWebAppRelease } from '@rebox/web'
-import { getObjectEntries } from 'tsfn'
-import tempy from 'tempy'
 import dleet from 'dleet'
+import puppeteer from 'puppeteer-core'
+import tempy from 'tempy'
+import { getObjectEntries } from 'tsfn'
 import { runBrowser } from 'xrom'
-import { getPerfPaintEntryValue } from './get-perf-paint-entry-value'
-import { getPerfMetricsEntryValue } from './get-perf-metrics-entry-value'
 import { getPercentile } from './get-percentile'
+import { getPerfMetricsEntryValue } from './get-perf-metrics-entry-value'
+import { getPerfPaintEntryValue } from './get-perf-paint-entry-value'
 import { TPerfResult, TPerfObserverEntry, TPerfPaint, TPerfMetrics } from './types'
 
 const TRIES_COUNT = 5

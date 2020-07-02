@@ -1,10 +1,10 @@
-import path from 'path'
 import { unlinkSync } from 'fs'
 import http, { RequestListener, RequestOptions } from 'http'
-import tempy from 'tempy'
-import onExit from 'signal-exit'
+import path from 'path'
 import { mockRequire } from '@mock/require'
 import getCallerFile from 'get-caller-file'
+import onExit from 'signal-exit'
+import tempy from 'tempy'
 
 export const mockRequest = (file: string, callback: RequestListener): () => void => {
   const socketPath = tempy.file({ extension: 'sock' })

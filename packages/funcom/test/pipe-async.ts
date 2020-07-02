@@ -1,5 +1,5 @@
-import test from 'tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { pipeAsync } from '../src/pipe-async'
 import { addAsync, constantAsync, mult, toStringAsync, throwingAsync } from './utils'
 
