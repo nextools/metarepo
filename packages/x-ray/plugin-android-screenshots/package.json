@@ -16,7 +16,7 @@
   "dependencies": {
     "@babel/core": "^7.9.0",
     "@rebox/android": "^2.0.4",
-    "@x-ray/core": "^0.1.1",
+    "@x-ray/core": "^0.1.2",
     "@x-ray/ui": "^2.0.0",
     "pifs": "^1.0.2",
     "pixelmatch": "^5.1.0",
