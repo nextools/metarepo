@@ -38,7 +38,7 @@
     "@start/plugin-find": "^1.0.0",
     "@start/plugin-input-files": "^1.0.0",
     "@start/plugin-lib-babel": "^1.0.0",
-    "@start/plugin-lib-eslint": "^1.0.0",
+    "@start/plugin-lib-eslint": "^2.0.0",
     "@start/plugin-lib-istanbul": "^1.0.0",
     "@start/plugin-lib-tape": "^2.0.1",
     "@start/plugin-lib-typescript-check": "^1.0.0",
@@ -79,7 +79,7 @@
     "tap-diff": "^0.1.1",
     "tsfn": "^1.1.2",
     "typeon": "^1.0.1",
-    "weslint": "^0.2.2",
+    "weslint": "^0.3.0",
     "ws": "^7.1.2"
   },
   "devDependencies": {
