@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",
-    "@types/karma": "^4.4.0",
+    "@types/karma": "^5.0.0",
     "tape": "^5.0.0-next.5"
   }
 }
