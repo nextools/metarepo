@@ -122,10 +122,15 @@
     "commitMessageAction": "update",
     "commitMessageTopic": "{{depName}}",
     "ignoreDeps": [
+      "@jest/core",
+      "@jest/types",
       "gradle",
-      "react",
+      "karma",
+      "metro-react-native-babel-preset",
+      "prettier-eslint",
       "react-dom",
-      "react-test-renderer"
+      "react-test-renderer",
+      "react"
     ]
   },
   "engines": {
