@@ -1,3 +1,7 @@
+## v0.1.5
+
+* 🐞 upgrade `compression-webpack-plugin` to v4
+
 ## v0.1.4
 
 * 🐞 fix handling `.jsx` extension

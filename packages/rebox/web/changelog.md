@@ -1,3 +1,7 @@
+## v2.1.7
+
+* 🐞 upgrade `terser-webpack-plugin` to v3
+
 ## v2.1.6
 
 * 🐞 use alternative plugin to inline runtime chunk in `buildWebAppRelease`
