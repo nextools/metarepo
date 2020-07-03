@@ -1,3 +1,7 @@
+## v0.3.0
+
+* 💥 upgrade to ESLint v7
+
 ## v0.2.2
 
 * 🐞 upgrade `iterama`

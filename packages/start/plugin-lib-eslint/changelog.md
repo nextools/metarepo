@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 upgrade to ESLint v7
+
 ## v1.0.1
 
 * 🐞 improve handling ESLint `CLIEngine` API internally

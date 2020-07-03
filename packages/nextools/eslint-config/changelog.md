@@ -1,3 +1,9 @@
+## v0.2.0
+
+* 🌱 add `eslint-plugin-node` instead of deprecated rules
+
+* 🌱 sort imports in groups alphabetically
+
 ## v0.1.2
 
 * 🐞 tweak `lines-between-class-members` rule

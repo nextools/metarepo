@@ -1,3 +1,9 @@
+## v0.2.6
+
+* 🐞 upgrade ESLint stuff
+
+* ♻️ update dependencies `weslint`, `@start/plugin-lib-eslint`
+
 ## v0.2.5
 
 * 🐞 add `react-native-exception-handler`
