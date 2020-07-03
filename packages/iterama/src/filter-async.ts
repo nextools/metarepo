@@ -1,6 +1,6 @@
 export type TFilterFnAsync<T> = (arg: T, index: number) => Promise<boolean> | boolean
 
-export const filterAsync = <T>(filterFn: TFilterFnAsync<T>) => (iterable: AsyncIterable<T>): AsyncIterable<T> => ({
+export const filterAsync = <T>(filterFn: TFilterFnAsync<T>) => (iterable: AsyncIterable<T> | Iterable<T>): AsyncIterable<T> => ({
   async *[Symbol.asyncIterator]() {
     let i = 0
 

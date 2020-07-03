@@ -2,14 +2,14 @@ import test from 'tape'
 import { toValueAsync } from '../src/to-value-async'
 
 test('iterama: toValueAsync', async (t) => {
-  let hasReturned = false
+  let hasClosed = false
   const iterable = {
     async *[Symbol.asyncIterator]() {
       try {
         yield await Promise.resolve(1)
         yield await Promise.resolve(2)
       } finally {
-        hasReturned = true
+        hasClosed = true
       }
     },
   }
@@ -22,14 +22,14 @@ test('iterama: toValueAsync', async (t) => {
   )
 
   t.true(
-    hasReturned,
+    hasClosed,
     'should close iterator'
   )
 
   t.end()
 })
 
-test('iterama: toValueAsync + no return', async (t) => {
+test('iterama: toValueAsync + no closing', async (t) => {
   const iterable = {
     [Symbol.asyncIterator]() {
       return {
@@ -45,6 +45,27 @@ test('iterama: toValueAsync + no return', async (t) => {
     value,
     1,
     'should return first value'
+  )
+
+  t.end()
+})
+
+test('iterama: toValueAsync empty collection', async (t) => {
+  const iterable = {
+    [Symbol.asyncIterator]() {
+      return {
+        next() {
+          return Promise.resolve({ value: undefined, done: true })
+        },
+      }
+    },
+  }
+  const value = await toValueAsync(iterable)
+
+  t.equals(
+    value,
+    undefined,
+    'should return undefined'
   )
 
   t.end()

@@ -1,5 +1,6 @@
 import { pipe } from 'funcom'
 import { map, reduce, toArray, toValue } from 'iterama'
+import { isUndefined } from 'tsfn'
 import { TListItems, TTotalResults, TResultsType, TEncoding, TFileResults } from '../types'
 
 export type TGetListOptions = {
@@ -61,6 +62,10 @@ export const getList = (options: TGetListOptions): TListResponse => {
     }, {} as TListItems),
     toValue
   )(options.results.values())
+
+  if (isUndefined(items)) {
+    throw new Error('server: no results')
+  }
 
   return {
     type: options.encoding,

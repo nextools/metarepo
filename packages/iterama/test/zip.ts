@@ -1,13 +1,17 @@
 import test from 'tape'
-import { toArray } from '../src/to-array'
 import { zip } from '../src/zip'
 
 test('iterama: zip + same length', (t) => {
+  let hasClosed = false
   const iterable1 = {
     *[Symbol.iterator]() {
-      yield 1
-      yield 2
-      yield 3
+      try {
+        yield 1
+        yield 2
+        yield 3
+      } finally {
+        hasClosed = true
+      }
     },
   }
   const iterable2 = {
@@ -24,7 +28,7 @@ test('iterama: zip + same length', (t) => {
       yield 'c'
     },
   }
-  const result = toArray(
+  const result = Array.from(
     zip(iterable1, iterable2, iterable3)
   )
 
@@ -38,29 +42,31 @@ test('iterama: zip + same length', (t) => {
     'should zip multiple iterables'
   )
 
+  t.true(
+    hasClosed,
+    'should close iterator'
+  )
+
   t.end()
 })
 
 test('iterama: zip + different length', (t) => {
+  let hasClosed = false
   const iterable1 = {
     *[Symbol.iterator]() {
-      yield 1
-      yield 2
-      yield 3
+      try {
+        yield 1
+        yield 2
+        yield 3
+      } finally {
+        hasClosed = true
+      }
     },
   }
-  const iterable2 = {
-    *[Symbol.iterator]() {
-      yield '1'
-      yield '2'
-    },
-  }
-  const iterable3 = {
-    *[Symbol.iterator]() {
-      yield 'a'
-    },
-  }
-  const result = toArray(
+  const iterable2 = ['1', '2']
+  const iterable3 = ['a']
+
+  const result = Array.from(
     zip(iterable1, iterable2, iterable3)
   )
 
@@ -70,6 +76,11 @@ test('iterama: zip + different length', (t) => {
       [1, '1', 'a'],
     ],
     'should zip multiple iterables with minimal length'
+  )
+
+  t.true(
+    hasClosed,
+    'should close iterator'
   )
 
   t.end()

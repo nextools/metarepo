@@ -40,11 +40,16 @@ test('iterama: zipAsync + same length', async (t) => {
 })
 
 test('iterama: zipAsync + different length', async (t) => {
+  let hasClosed = false
   const iterable1 = {
     async *[Symbol.asyncIterator]() {
-      yield await Promise.resolve(1)
-      yield await Promise.resolve(2)
-      yield await Promise.resolve(3)
+      try {
+        yield await Promise.resolve(1)
+        yield await Promise.resolve(2)
+        yield await Promise.resolve(3)
+      } finally {
+        hasClosed = true
+      }
     },
   }
   const iterable2 = {
@@ -54,8 +59,18 @@ test('iterama: zipAsync + different length', async (t) => {
     },
   }
   const iterable3 = {
-    async *[Symbol.asyncIterator]() {
-      yield await Promise.resolve('a')
+    [Symbol.asyncIterator]() {
+      let done = false
+
+      return {
+        // eslint-disable-next-line require-await
+        async next() {
+          // eslint-disable-next-line no-return-assign
+          return done
+            ? { value: undefined, done: true }
+            : (done = true, { value: 'a', done: false })
+        },
+      }
     },
   }
   const result = await toArrayAsync(
@@ -68,6 +83,11 @@ test('iterama: zipAsync + different length', async (t) => {
       [1, '1', 'a'],
     ],
     'should zip multiple iterables with minimal length'
+  )
+
+  t.true(
+    hasClosed,
+    'should close iterator'
   )
 
   t.end()

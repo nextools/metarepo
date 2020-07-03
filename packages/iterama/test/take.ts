@@ -67,3 +67,87 @@ test('iterama: take + negative more than needed', (t) => {
 
   t.end()
 })
+
+test('iterama: take 0', (t) => {
+  const iterable = range(5)
+  const result = pipe(
+    take(0),
+    toArray
+  )(iterable)
+
+  t.deepEquals(
+    result,
+    [],
+    'should take N first elements'
+  )
+
+  t.end()
+})
+
+test('iterama: takeFirst closing', (t) => {
+  let itClosed = false
+  const iterable = {
+    *[Symbol.iterator]() {
+      try {
+        yield 1
+        yield 2
+        yield 3
+      } finally {
+        itClosed = true
+      }
+    },
+  }
+
+  const result = pipe(
+    take(2),
+    take(1),
+    toArray
+  )(iterable)
+
+  t.deepEquals(
+    result,
+    [1],
+    'should take elements'
+  )
+
+  t.true(
+    itClosed,
+    'should close iterator'
+  )
+
+  t.end()
+})
+
+test('iterama: takeLast closing', (t) => {
+  let itClosed = false
+  const iterable = {
+    *[Symbol.iterator]() {
+      try {
+        yield 1
+        yield 2
+        yield 3
+      } finally {
+        itClosed = true
+      }
+    },
+  }
+
+  const result = pipe(
+    take(-2),
+    take(1),
+    toArray
+  )(iterable)
+
+  t.deepEquals(
+    result,
+    [2],
+    'should take elements'
+  )
+
+  t.true(
+    itClosed,
+    'should close iterator'
+  )
+
+  t.end()
+})

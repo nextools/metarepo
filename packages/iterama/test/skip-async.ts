@@ -2,6 +2,7 @@ import { pipe } from 'funcom'
 import test from 'tape'
 import { rangeAsync } from '../src/range-async'
 import { skipAsync } from '../src/skip-async'
+import { takeAsync } from '../src/take-async'
 import { toArrayAsync } from '../src/to-array-async'
 
 test('iterama: skipAsync first', async (t) => {
@@ -57,5 +58,71 @@ test('iterama: skipAsync last more than needed', async (t) => {
     result,
     [],
     'should skip everything'
+  )
+})
+
+test('iterama: skipFirst closing', async (t) => {
+  let hasClosed = false
+  const iterable = {
+    // eslint-disable-next-line require-await
+    async *[Symbol.asyncIterator]() {
+      try {
+        yield 0
+        yield 1
+        yield 2
+        yield 2
+      } finally {
+        hasClosed = true
+      }
+    },
+  }
+  const result = await pipe(
+    skipAsync(1),
+    takeAsync(1),
+    toArrayAsync
+  )(iterable)
+
+  t.deepEquals(
+    result,
+    [1],
+    'should skip everything'
+  )
+
+  t.true(
+    hasClosed,
+    'should close iterator'
+  )
+})
+
+test('iterama: skipLast closing', async (t) => {
+  let hasClosed = false
+  const iterable = {
+    // eslint-disable-next-line require-await
+    async *[Symbol.asyncIterator]() {
+      try {
+        yield 0
+        yield 1
+        yield 2
+        yield 2
+      } finally {
+        hasClosed = true
+      }
+    },
+  }
+  const result = await pipe(
+    skipAsync(-1),
+    takeAsync(1),
+    toArrayAsync
+  )(iterable)
+
+  t.deepEquals(
+    result,
+    [0],
+    'should skip everything'
+  )
+
+  t.true(
+    hasClosed,
+    'should close iterator'
   )
 })
