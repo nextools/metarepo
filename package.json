@@ -124,13 +124,17 @@
     "ignoreDeps": [
       "@jest/core",
       "@jest/types",
+      "@types/karma",
+      "esm",
       "gradle",
       "karma",
       "metro-react-native-babel-preset",
+      "postcss",
       "prettier-eslint",
       "react-dom",
       "react-test-renderer",
-      "react"
+      "react",
+      "rollup"
     ]
   },
   "engines": {
