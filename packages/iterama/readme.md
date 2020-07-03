@@ -10,50 +10,53 @@ yarn add iterama
 
 ## API
 
-* [`concat`](#concat)
-* [`concatAsync`](#concatasync)
-* [`distinct`](#distinct)
-* [`distinctAsync`](#distinctasync)
-* [`filter`](#filter)
-* [`filterAsync`](#filterasync)
-* [`forEach`](#foreach)
-* [`forEachAsync`](#foreachasync)
-* [`iterate`](#iterate)
-* [`iterateAsync`](#iterateasync)
-* [`length`](#length)
-* [`lengthAsync`](#lengthasync)
-* [`map`](#map)
-* [`mapAsync`](#mapasync)
-* [`range`](#range)
-* [`rangeAsync`](#rangeasync)
-* [`reduce`](#reduce)
-* [`reduceAsync`](#reduceasync)
-* [`scan`](#scan)
-* [`scanAsync`](#scanasync)
-* [`skip`](#skip)
-* [`skipAsync`](#skipasync)
-* [`slice`](#slice)
-* [`sliceAsync`](#sliceasync)
-* [`startWith`](#startwith)
-* [`startWithAsync`](#startwithasync)
-* [`take`](#take)
-* [`takeAsync`](#takeasync)
-* [`unique`](#unique)
-* [`uniqueAsync`](#uniqueasync)
-* [`zip`](#zip)
-* [`zipAsync`](#zipasync)
-* [`toArray`](#toarray)
-* [`toArrayAsync`](#toarrayasync)
-* [`toSet`](#toset)
-* [`toSetAsync`](#tosetasync)
-* [`toObject`](#toobject)
-* [`toObjectAsync`](#toobjectasync)
-* [`toMap`](#tomap)
-* [`toMapAsync`](#tomapasync)
-* [`toIterator`](#toiterator)
-* [`toIteratorAsync`](#toiteratorasync)
-* [`toValue`](#tovalue)
-* [`toValueAsync`](#tovalueasync)
+- [iterama !npm](#iterama-img-srchttpsflatbadgennetnpmviterama-altnpm)
+  - [Install](#install)
+  - [API](#api)
+    - [`concat`](#concat)
+    - [`concatAsync`](#concatasync)
+    - [`distinct`](#distinct)
+    - [`distinctAsync`](#distinctasync)
+    - [`filter`](#filter)
+    - [`filterAsync`](#filterasync)
+    - [`forEach`](#foreach)
+    - [`forEachAsync`](#foreachasync)
+    - [`iterate`](#iterate)
+    - [`iterateAsync`](#iterateasync)
+    - [`length`](#length)
+    - [`lengthAsync`](#lengthasync)
+    - [`map`](#map)
+    - [`mapAsync`](#mapasync)
+    - [`range`](#range)
+    - [`rangeAsync`](#rangeasync)
+    - [`reduce`](#reduce)
+    - [`reduceAsync`](#reduceasync)
+    - [`scan`](#scan)
+    - [`scanAsync`](#scanasync)
+    - [`skip`](#skip)
+    - [`skipAsync`](#skipasync)
+    - [`slice`](#slice)
+    - [`sliceAsync`](#sliceasync)
+    - [`startWith`](#startwith)
+    - [`startWithAsync`](#startwithasync)
+    - [`take`](#take)
+    - [`takeAsync`](#takeasync)
+    - [`unique`](#unique)
+    - [`uniqueAsync`](#uniqueasync)
+    - [`zip`](#zip)
+    - [`zipAsync`](#zipasync)
+    - [`toArray`](#toarray)
+    - [`toArrayAsync`](#toarrayasync)
+    - [`toSet`](#toset)
+    - [`toSetAsync`](#tosetasync)
+    - [`toObject`](#toobject)
+    - [`toObjectAsync`](#toobjectasync)
+    - [`toMap`](#tomap)
+    - [`toMapAsync`](#tomapasync)
+    - [`toIterator`](#toiterator)
+    - [`toIteratorAsync`](#toiteratorasync)
+    - [`toValue`](#tovalue)
+    - [`toValueAsync`](#tovalueasync)
 
 In the examples below we use `range()` and `rangeAsync()` helpers whenever possible just to save space and reading time.
 
@@ -231,7 +234,7 @@ Filters async iterable values.
 ```ts
 type TFilterFnAsync<T> = (arg: T, index: number) => Promise<boolean> | boolean
 
-const filterAsync: <T>(filterFn: TFilterFnAsync<T>) => (iterable: AsyncIterable<T>) => AsyncIterable<T>
+const filterAsync: <T>(filterFn: TFilterFnAsync<T>) => (iterable: AsyncIterable<T> | Iterable<T>) => AsyncIterable<T>
 ```
 
 ```ts
@@ -287,7 +290,7 @@ Invokes callback with async iterable values.
 ```ts
 type TForEachFnAsync<T> = (value: T, i: number) => Promise<void> | void
 
-const forEachAsync: <T>(forEachFn: TForEachFnAsync<T>) => (iterable: AsyncIterable<T>) => AsyncIterable<T>
+const forEachAsync: <T>(forEachFn: TForEachFnAsync<T>) => (iterable: AsyncIterable<T> | Iterable<T>) => AsyncIterable<T>
 ```
 
 ```ts
@@ -439,7 +442,7 @@ Maps over async iterable.
 ```ts
 type TMapFnAsync<T, R> = (value: T, i: number) => Promise<R> | R
 
-const mapAsync: <T, R>(mapFn: TMapFnAsync<T, R>) => (iterable: AsyncIterable<T>) => AsyncIterable<R>
+const mapAsync: <T, R>(mapFn: TMapFnAsync<T, R>) => (iterable: AsyncIterable<T> | Iterable<T>) => AsyncIterable<R>
 ```
 
 ```ts
@@ -535,7 +538,7 @@ Reduces over async iterable.
 ```ts
 type TReduceFnAsync<T, R> = (acc: R, value: T, index: number) => Promise<R> | R
 
-const reduceAsync: <T, R>(reduceFn: TReduceFnAsync<T, R>, initial: Promise<R> | R) => (iterable: AsyncIterable<T>) => AsyncIterable<R>
+const reduceAsync: <T, R>(reduceFn: TReduceFnAsync<T, R>, initial: Promise<R> | R) => (iterable: AsyncIterable<T> | Iterable<T>) => AsyncIterable<R>
 ```
 
 ```ts
@@ -585,7 +588,7 @@ Scans over async iterable. Like reduce but returns async iterable with values fr
 ```ts
 type TScanFnAsync<T, R> = (acc: R, value: T, index: number) => Promise<R> | R
 
-const scanAsync: <T, R>(scanFn: TScanFnAsync<T, R>, initial: Promise<R> | R) => (iterable: AsyncIterable<T>) => AsyncIterable<R>
+const scanAsync: <T, R>(scanFn: TScanFnAsync<T, R>, initial: Promise<R> | R) => (iterable: AsyncIterable<T> | Iterable<T>) => AsyncIterable<R>
 ```
 
 ```ts
@@ -1338,7 +1341,7 @@ console.log(result)
 Extracts first value from iterable.
 
 ```ts
-const toValue: <T>(iterable: Iterable<T>) => T
+const toValue: <T>(iterable: Iterable<T>) => T | undefined
 ```
 
 ```ts
@@ -1361,7 +1364,7 @@ console.log(result)
 Extracts first value from async iterable.
 
 ```ts
-const toAsyncIterator: <T>(iterable: AsyncIterable<T>) => Promise<T>
+const toAsyncIterator: <T>(iterable: AsyncIterable<T>) => Promise<T | undefined>
 ```
 
 ```ts
