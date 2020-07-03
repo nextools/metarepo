@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/plugin-chromium-screenshots",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Check Chromium screenshots with X-Ray",
   "keywords": [],
   "main": "src/index.ts",

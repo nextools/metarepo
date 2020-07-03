@@ -1,3 +1,9 @@
+## v0.1.4
+
+* 🐞 upgrade deps
+
+* ♻️ update dependencies `@x-ray/core`
+
 ## v0.1.3
 
 * 🐞 fix dangling `WORKER_PATH` constant

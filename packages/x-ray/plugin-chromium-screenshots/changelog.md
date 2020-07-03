@@ -1,3 +1,9 @@
+## v0.1.2
+
+* 🐞 upgrade deps
+
+* ♻️ update dependencies `iterama`, `@x-ray/core`
+
 ## v0.1.1
 
 * 🐞 upgrade `iterama`

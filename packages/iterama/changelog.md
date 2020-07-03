@@ -1,3 +1,7 @@
+## v0.4.1
+
+* 🐞 add iterator closing
+
 ## v0.4.0
 
 * 🌱 add `toValue` and `toValueAsync` methods
