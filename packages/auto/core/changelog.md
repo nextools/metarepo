@@ -1,3 +1,7 @@
+## v0.1.7
+
+* 🐞 fix npm error filtering
+
 ## v0.1.6
 
 * 🐞 re-publish using new build system to fix types issue
