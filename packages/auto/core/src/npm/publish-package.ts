@@ -7,7 +7,7 @@ import { TPublishPackageConfig } from './publish-packages'
 
 type TPublishPackage = Pick<TPackageRelease, 'name' | 'dir'>
 
-const NPM_ERROR = 'npm ERR!'
+const NPM_ERROR = 'ERR!'
 
 export const publishPackage = async (packageRelease: TReadonly<TPublishPackage>, npmConfig: TReadonly<Required<TNpmConfig>>, publishConfig: TPublishPackageConfig): Promise<void> => {
   try {
