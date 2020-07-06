@@ -16,7 +16,7 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
-    "@auto/core": "^0.1.6",
+    "@auto/core": "^0.1.7",
     "escape-string-regexp": "^4.0.0",
     "execa": "^4.0.0",
     "prompts": "^2.3.0",

@@ -16,7 +16,7 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
-    "@auto/core": "^0.1.6",
+    "@auto/core": "^0.1.7",
     "node-fetch": "^2.6.0",
     "p-all": "^3.0.0",
     "tsfn": "^1.1.2"
