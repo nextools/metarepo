@@ -1,12 +1,13 @@
 import plugin from '@start/plugin'
 import { CoverageMapData } from 'istanbul-lib-coverage'
+import { ReportType } from 'istanbul-reports'
 
-export default (formats: string[] = ['lcovonly', 'text-summary']) =>
+export default (formats: ReportType[] = ['lcovonly', 'text-summary']) =>
   plugin('istanbulReport', ({ logMessage }) => async () => {
     const { createCoverageMap } = await import('istanbul-lib-coverage')
     const { createSourceMapStore } = await import('istanbul-lib-source-maps')
-    // @ts-ignore
-    const { createReporter } = await import('istanbul-api')
+    const { createContext } = await import('istanbul-lib-report')
+    const { create: createReporter } = await import('istanbul-reports')
     const hooks = await import('./hooks')
     const { default: coverageVariable } = await import('./variable')
 
@@ -22,14 +23,18 @@ export default (formats: string[] = ['lcovonly', 'text-summary']) =>
 
     const coverageMap = createCoverageMap(coverageMapData)
     const sourceMapStore = createSourceMapStore()
-    // eslint-disable-next-line @typescript-eslint/await-thenable
     const remappedCoverageMap = await sourceMapStore.transformCoverage(coverageMap)
-    const reporter = createReporter()
+
+    const context = createContext({
+      dir: 'coverage/',
+      defaultSummarizer: 'nested',
+      coverageMap: remappedCoverageMap,
+    })
 
     logMessage(formats.join(', '))
 
     formats.forEach((format) => {
-      reporter.add(format)
-      reporter.write(remappedCoverageMap, {})
+      // @ts-ignore
+      createReporter(format).execute(context)
     })
   })
