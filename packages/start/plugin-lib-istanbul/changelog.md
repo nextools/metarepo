@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 migrate to new `istanbul-lib-report` API
+
 ## v1.0.1
 
 * 🐞 fix `istanbulThresholds` to work with the latest `istanbul-lib-report`
