@@ -19,23 +19,24 @@
   "dependencies": {
     "@babel/runtime": "^7.4.2",
     "@start/plugin": "^1.0.0",
-    "@types/istanbul-lib-instrument": "^1.7.2",
     "convert-source-map": "^1.6.0",
-    "istanbul-api": "^2.1.1",
     "istanbul-lib-coverage": "^3.0.0",
     "istanbul-lib-hook": "^3.0.0",
     "istanbul-lib-instrument": "^4.0.0",
     "istanbul-lib-report": "^3.0.0",
     "istanbul-lib-source-maps": "^4.0.0",
+    "istanbul-reports": "^3.0.2",
     "tsfn": "^1.1.2"
   },
   "devDependencies": {
-    "@types/tape": "^4.2.34",
     "@types/convert-source-map": "^1.5.1",
     "@types/istanbul-lib-coverage": "^2.0.0",
     "@types/istanbul-lib-hook": "^2.0.0",
+    "@types/istanbul-lib-instrument": "^1.7.2",
     "@types/istanbul-lib-report": "^3.0.0",
     "@types/istanbul-lib-source-maps": "^4.0.0",
+    "@types/istanbul-reports": "^1.1.2",
+    "@types/tape": "^4.2.34",
     "tape": "^5.0.0-next.5"
   }
 }
