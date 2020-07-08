@@ -39,7 +39,7 @@
     "@start/plugin-input-files": "^1.0.0",
     "@start/plugin-lib-babel": "^1.0.0",
     "@start/plugin-lib-eslint": "^2.0.0",
-    "@start/plugin-lib-istanbul": "^1.0.0",
+    "@start/plugin-lib-istanbul": "^1.0.2",
     "@start/plugin-lib-tape": "^2.0.1",
     "@start/plugin-lib-typescript-check": "^1.0.0",
     "@start/plugin-lib-typescript-generate": "^2.0.2",
