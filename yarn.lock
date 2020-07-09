@@ -1374,21 +1374,18 @@
     "@hapi/bourne" "1.x.x"
     "@hapi/hoek" "8.x.x"
 
-"@haul-bundler/basic-bundle-webpack-plugin@^0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/basic-bundle-webpack-plugin/-/basic-bundle-webpack-plugin-0.18.0.tgz#cc9c1b990223aecb89325f88629d756ab5f57517"
-  integrity sha512-5TgwqVScAHePa2DhPCpgNJwmRRacAiSilYGlo8DTe9sprlHVLhrHVMhxmvT+gJJRhmxXJeXI8iKKCD9EiSItBg==
-  dependencies:
-    concat-with-sourcemaps "^1.1.0"
-
-"@haul-bundler/cli@^0.19.0":
+"@haul-bundler/basic-bundle-webpack-plugin@^0.19.0":
   version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/cli/-/cli-0.19.0.tgz#b4b662367161d1565b0ece6004986beb75b7ce53"
-  integrity sha512-WwMpnvyQp+FozSySh/etGIfHSpwbX8CafQPXJnz274d93D4Z3veDlDhw/znM53SKQ4OFVUl/oosQoK7p4O0iQw==
+  resolved "https://registry.yarnpkg.com/@haul-bundler/basic-bundle-webpack-plugin/-/basic-bundle-webpack-plugin-0.19.0.tgz#4860780e479c69fd6f800805eda2a491287b4ea0"
+  integrity sha512-0t7vJ+OI5YyPUU5LGW2fFyMa5Si+WDfliUnRhBgvqY4+O3tY+nUTsa71qZhAK7oVHyaGow2Era343MHsTKDpIA==
+
+"@haul-bundler/cli@^0.22.1":
+  version "0.22.1"
+  resolved "https://registry.yarnpkg.com/@haul-bundler/cli/-/cli-0.22.1.tgz#cff0a588b8e7b923a3869e8807f3f8e9a695b5d3"
+  integrity sha512-CrDNAlzXlOt3tVMT/hlV9D5OFMxu0XTOlE8VfjaueEgyXZHfKapJh0zrtwBX+xImVbYkyaAAM4KlkiB3juLhUQ==
   dependencies:
-    "@haul-bundler/core" "^0.19.0"
-    "@haul-bundler/core-legacy" "^0.17.0"
-    "@haul-bundler/inspector-events" "^0.16.0"
+    "@haul-bundler/core" "^0.22.1"
+    "@haul-bundler/core-legacy" "^0.18.0"
     ansi-fragments "^0.2.1"
     cpx "^1.5.0"
     dedent "^0.7.0"
@@ -1403,10 +1400,10 @@
     yargs "^15.1.0"
     yargs-parser "^16.1.0"
 
-"@haul-bundler/core-legacy@^0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/core-legacy/-/core-legacy-0.17.0.tgz#dfb19a3344cbb69f2c3c34ed15e25c94b6f47924"
-  integrity sha512-tHtrNMb2ioAS0nyc2w+ibc/dNSWZts4Zf/GRtK7X+BY7/olQFdQKBMxSxy7oSxLKCI+DdMgy6qsItvfY/TNCQg==
+"@haul-bundler/core-legacy@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@haul-bundler/core-legacy/-/core-legacy-0.18.0.tgz#5b70eb7803df08b2bbed7aed2ddd16a9325d4d4a"
+  integrity sha512-f+H/Aw33mNsZGvP7nw+z/1tH4j1LAsDprPCj2lBjVnIxJZwbz2eTPUDvsiCAuxzMtmKd708DwDIdedC9tlPKYQ==
   dependencies:
     cpx "^1.5.0"
     get-port "^5.1.0"
@@ -1414,10 +1411,10 @@
     mkdirp "^0.5.1"
     ws "^7.2.1"
 
-"@haul-bundler/core@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/core/-/core-0.19.0.tgz#5be9aa08937582bc3187a869b01f9f46657c24e0"
-  integrity sha512-3lvOLUgIEogGtZaMFkTg3b3ZfH+1B9GoxMYUk35z1qRscNzo9RsQHwOX+Wu9pqIukCxhxXsGWOKnatCY5S7IzQ==
+"@haul-bundler/core@^0.22.1":
+  version "0.22.1"
+  resolved "https://registry.yarnpkg.com/@haul-bundler/core/-/core-0.22.1.tgz#5e6e2de4be7b202afe1040b88404e53805d572a2"
+  integrity sha512-xcZZO1WZyrBwicnSG0767WsqQGESGv3WRwJfwitiHzKC7u9qv7CXzK/qIhg8vcBvrjt11YXmqNDEK6EOAhNEfw==
   dependencies:
     "@babel/core" "7.4.0"
     "@babel/plugin-proposal-class-properties" "^7.7.0"
@@ -1428,10 +1425,8 @@
     "@hapi/hapi" "^18.4.0"
     "@hapi/inert" "^5.2.2"
     "@hapi/joi" "^15.1.1"
-    "@haul-bundler/basic-bundle-webpack-plugin" "^0.18.0"
-    "@haul-bundler/core-legacy" "^0.17.0"
-    "@haul-bundler/inspector-events" "^0.16.0"
-    "@haul-bundler/ram-bundle-webpack-plugin" "^0.17.0"
+    "@haul-bundler/basic-bundle-webpack-plugin" "^0.19.0"
+    "@haul-bundler/core-legacy" "^0.18.0"
     ansi-fragments "^0.2.1"
     dedent "^0.7.0"
     enhanced-resolve "^4.1.1"
@@ -1464,11 +1459,6 @@
     wrap-ansi "^6.2.0"
     ws "^7.2.1"
 
-"@haul-bundler/inspector-events@^0.16.0":
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/inspector-events/-/inspector-events-0.16.0.tgz#62c7191ee6d0a7d5bcabd29cef70a6e43c2e9343"
-  integrity sha512-5G9CDbM5M5JOGWWRoYdUILvK6i6R+8XUUwBS/IUt4VnFtF+i6oHxc34fOT3JNmRsqINIGY92nJiCxEzTGWQJzw==
-
 "@haul-bundler/preset-0.60@^0.18.0":
   version "0.18.0"
   resolved "https://registry.yarnpkg.com/@haul-bundler/preset-0.60/-/preset-0.60-0.18.0.tgz#9b15127e3c21119eb516b94f74a95fc9b3e4d2d1"
@@ -1478,13 +1468,6 @@
     case-sensitive-paths-webpack-plugin "^2.2.0"
     is-ci "^2.0.0"
     terser-webpack-plugin "^2.3.2"
-
-"@haul-bundler/ram-bundle-webpack-plugin@^0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/ram-bundle-webpack-plugin/-/ram-bundle-webpack-plugin-0.17.0.tgz#2c5dc4ea5b80b1728cc6bdc8788982c884d41ec3"
-  integrity sha512-AK4FkO065Ks4PQLRGlubLancUXCUBPAar8BETic5Bt/nYQEYXBWMivYGp1SebyIXejdTib7lKtJKSKQ2UXqlmA==
-  dependencies:
-    jest-worker "^25.1.0"
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -4624,13 +4607,6 @@ concat-stream@^1.5.0, concat-stream@^1.6.0, concat-stream@^1.6.2:
     inherits "^2.0.3"
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
-
-concat-with-sourcemaps@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/concat-with-sourcemaps/-/concat-with-sourcemaps-1.1.0.tgz#d4ea93f05ae25790951b99e7b3b09e3908a4082e"
-  integrity sha512-4gEjHJFT9e+2W/77h/DS5SGUgwDaOwprX8L/gl5+3ixnzkVJJsZWDSelmN3Oilw3LNDZjZV0yqH1hLG3k6nghg==
-  dependencies:
-    source-map "^0.6.1"
 
 config-chain@^1.1.11:
   version "1.1.12"
