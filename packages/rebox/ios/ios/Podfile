@@ -1,5 +1,5 @@
 use_frameworks!
-platform :ios, '9.0'
+platform :ios, '10.0'
 
 target 'rebox' do
   # Pods for rebox
@@ -26,7 +26,7 @@ target 'rebox' do
   pod 'React-jsi', :path => '../../../react-native/ReactCommon/jsi'
   pod 'React-jsiexecutor', :path => '../../../react-native/ReactCommon/jsiexecutor'
   pod 'React-jsinspector', :path => '../../../react-native/ReactCommon/jsinspector'
-  pod 'ReactCommon/callinvoker', :path => "../../../react-native/ReactCommon"
+  pod 'React-callinvoker', :path => "../../../react-native/ReactCommon/callinvoker"
   pod 'ReactCommon/turbomodule/core', :path => "../../../react-native/ReactCommon"
   pod 'Yoga', :path => '../../../react-native/ReactCommon/yoga', :modular_headers => true
 

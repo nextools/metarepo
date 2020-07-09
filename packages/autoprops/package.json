@@ -22,7 +22,7 @@
     "@mock/require": "^0.1.0",
     "@types/react": "^16.8.6",
     "@types/tape": "^4.2.34",
-    "react": "16.11.0",
+    "react": "16.13.1",
     "tape": "^5.0.0-next.5"
   }
 }

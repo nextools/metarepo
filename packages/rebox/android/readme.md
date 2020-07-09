@@ -34,7 +34,7 @@ exec $SHELL -l
 mkdir $HOME/.android/
 touch $HOME/.android/repositories.cfg
 yes | sdkmanager --licenses
-sdkmanager "platform-tools" "platforms;android-28" "build-tools;28.0.3" "emulator" "extras;android;m2repository" "system-images;android-28;google_apis;x86"
+sdkmanager "platform-tools" "platforms;android-29" "build-tools;29.0.2" "emulator" "extras;android;m2repository" "system-images;android-29;google_apis;x86"
 ```
 
 ## API

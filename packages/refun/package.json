@@ -18,8 +18,8 @@
   "devDependencies": {
     "@types/react": "^16.8.6",
     "tape": "^5.0.0-next.5",
-    "react": "16.11.0",
-    "react-test-renderer": "16.11.0",
+    "react": "16.13.1",
+    "react-test-renderer": "16.13.1",
     "redux": "^4.0.0",
     "spyfn": "^1.0.0",
     "spyt": "^1.0.0"
