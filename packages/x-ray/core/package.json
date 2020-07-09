@@ -14,7 +14,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@rebox/web": "^2.1.7",
+    "@rebox/web": "^2.1.8",
     "funcom": "^0.1.0",
     "imagemin-pngout": "^5.0.0",
     "iterama": "^0.4.1",
