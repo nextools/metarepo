@@ -26,7 +26,7 @@
     "@auto/telegram": "^0.1.2",
     "@babel/core": "^7.8.0",
     "@babel/register": "^7.8.0",
-    "@nextools/babel-config": "^0.1.4",
+    "@nextools/babel-config": "^0.1.5",
     "@start/plugin": "^1.0.0",
     "@start/plugin-copy": "^1.0.0",
     "@start/plugin-env": "^1.0.0",
