@@ -42,6 +42,40 @@ export const graphiq = () =>
     logMessage('http://localhost:3000/')
   })
 
+export const rebox = (platform: 'ios'| 'android') =>
+  plugin(platform, () => async () => {
+    const path = await import('path')
+
+    const entryPointPath = path.resolve('./tasks/rebox/App.tsx')
+    const fontsDir = path.resolve('./tasks/rebox/fonts/')
+
+    if (platform === 'ios') {
+      const { runIosApp } = await import('@rebox/ios')
+
+      await runIosApp({
+        appName: 'ReboxTest',
+        appId: 'org.rebox.test',
+        iPhoneVersion: 8,
+        iOSVersion: '13.2',
+        entryPointPath,
+        fontsDir,
+        dependencyNames: ['react-native-svg'],
+      })
+    }
+
+    if (platform === 'android') {
+      const { runAndroidApp } = await import('@rebox/android')
+
+      await runAndroidApp({
+        appName: 'ReboxTest',
+        appId: 'org.rebox.test',
+        entryPointPath,
+        fontsDir,
+        dependencyNames: ['react-native-svg'],
+      })
+    }
+  })
+
 export const run = (file: string) =>
   plugin('main', () => async () => {
     const { resolve } = await import('path')
