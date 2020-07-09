@@ -1,3 +1,7 @@
+## v1.0.3
+
+* 🐞 bump React
+
 ## v1.0.2
 
 * 🐞 fix checking for empty props

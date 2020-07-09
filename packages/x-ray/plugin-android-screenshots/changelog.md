@@ -1,3 +1,9 @@
+## v0.2.0
+
+* 🐞 bump React
+
+* ♻️ update dependencies `@rebox/android`, `@x-ray/core`, `@x-ray/ui`
+
 ## v0.1.2
 
 * 🐞 upgrade deps

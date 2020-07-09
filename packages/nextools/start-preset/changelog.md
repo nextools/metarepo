@@ -1,3 +1,9 @@
+## v0.3.0
+
+* 🐞 cleanup deps
+
+* ♻️ update dependencies `@x-ray/plugin-ios-screenshots`, `@x-ray/plugin-android-screenshots`, `@x-ray/core`, `@x-ray/plugin-chromium-screenshots`, `@x-ray/plugin-react-snapshots`, `@x-ray/plugin-react-native-snapshots`
+
 ## v0.2.6
 
 * 🐞 upgrade ESLint stuff

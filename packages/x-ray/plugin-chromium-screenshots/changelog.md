@@ -1,3 +1,9 @@
+## v0.1.3
+
+* 🐞 bump React
+
+* ♻️ update dependencies `@x-ray/core`, `@x-ray/ui`
+
 ## v0.1.2
 
 * 🐞 upgrade deps

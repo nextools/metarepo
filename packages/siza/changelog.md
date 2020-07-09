@@ -1,3 +1,7 @@
+## v0.1.6
+
+* 🐞 bump React
+
 ## v0.1.5
 
 * 🐞 upgrade `compression-webpack-plugin` to v4

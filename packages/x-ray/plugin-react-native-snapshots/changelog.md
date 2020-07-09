@@ -1,3 +1,9 @@
+## v0.1.2
+
+* 🐞 bump React
+
+* ♻️ update dependencies `@x-ray/core`, `@x-ray/serialize-react-tree`, `@x-ray/ui`
+
 ## v0.1.1
 
 * 🐞 upgrade `iterama`

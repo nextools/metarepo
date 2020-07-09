@@ -1,3 +1,9 @@
+## v2.0.1
+
+* 🐞 bump React
+
+* ♻️ update dependencies `@x-ray/core`
+
 ## v2.0.0
 
 * 💥 new UI for new X-Ray

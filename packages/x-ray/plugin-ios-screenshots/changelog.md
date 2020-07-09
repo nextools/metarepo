@@ -1,3 +1,9 @@
+## v0.2.0
+
+* 🐞 bump React
+
+* ♻️ update dependencies `@x-ray/native-screenshots-app`, `@rebox/ios`, `@x-ray/core`, `@x-ray/ui`
+
 ## v0.1.4
 
 * 🐞 upgrade deps

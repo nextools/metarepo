@@ -1,3 +1,7 @@
+## v3.0.0
+
+* 💥 bump React Native to v0.63.0
+
 ## v2.0.5
 
 * 🐞 upgrade Haul deps to v0.19

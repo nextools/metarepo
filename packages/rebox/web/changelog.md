@@ -1,3 +1,7 @@
+## v2.1.8
+
+* 🐞 bump React
+
 ## v2.1.7
 
 * 🐞 upgrade `terser-webpack-plugin` to v3

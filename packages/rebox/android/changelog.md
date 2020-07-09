@@ -1,3 +1,9 @@
+## v3.0.0
+
+* 💥 bump React Native to v0.63.0
+
+* ♻️ update dependencies `@rebox/native-utils`
+
 ## v2.0.6
 
 * 🐞 support scoped npm dependencies

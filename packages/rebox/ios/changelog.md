@@ -1,3 +1,9 @@
+## v4.0.0
+
+* 💥 bump React Native to v0.63.0
+
+* ♻️ update dependencies `@rebox/native-utils`
+
 ## v3.0.0
 
 * 💥 make `killSimulator` async

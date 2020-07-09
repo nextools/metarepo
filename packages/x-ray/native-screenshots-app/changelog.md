@@ -1,3 +1,9 @@
+## v3.0.0
+
+* 💥 bump React Native to v0.63.0
+
+* 🐞 bump React
+
 ## v2.0.1
 
 * 🐞 refactor back to single thread implementation
