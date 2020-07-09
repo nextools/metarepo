@@ -1,3 +1,7 @@
+## v0.1.5
+
+* 🐞 bump `metro-react-native-babel-preset`
+
 ## v0.1.4
 
 * 🐞 support ESNext proposals already implemented in TS
