@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events'
-import { createElement } from 'react'
+import { createElement, FC } from 'react'
 
 export const ReactNativeMocks = new Proxy({}, {
   get(_, importedName: string) {
@@ -16,6 +16,10 @@ export const ReactNativeMocks = new Proxy({}, {
             ...acc,
             ...style,
           }), {}),
+          flatten: (...styles: any[]) => styles.reduce((acc, style) => ({
+            ...acc,
+            ...style,
+          }), {}),
           // TODO: ...
         }
       }
@@ -26,6 +30,7 @@ export const ReactNativeMocks = new Proxy({}, {
       }
       case 'Animated': {
         return {
+          createAnimatedComponent: (Component: FC<any>) => Component,
           View: (props: any) => createElement('Animated.View', props),
           Value: class {
             interpolate(x: any) {
