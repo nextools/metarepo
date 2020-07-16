@@ -21,15 +21,25 @@ import {
   TYPE_ARRAY_BRACKET,
   TYPE_ARRAY_COMMA,
   TYPE_VALUE_FUNCTION,
+  TLine,
 } from '../src'
 
-test('syntx: serializeComponent', (t) => {
+const serializeToText = (lines: TLine[]) => lines
+  .reduce((result, line) => {
+    const lineString = line.elements.reduce((lineResult, { value }) => lineResult + value, '')
+
+    return `${result}${lineString}\n`
+  }, '')
+
+test('syntx: serializeComponent: empty component', (t) => {
   const Comp: FC<any> = () => null
 
   Comp.displayName = 'Comp'
 
+  const result = serializeComponent(Comp, {}, { indent: 2 })
+
   t.deepEquals(
-    serializeComponent(Comp, {}, { indent: 2 }),
+    result,
     [
       {
         elements: [
@@ -51,40 +61,57 @@ test('syntx: serializeComponent', (t) => {
     'empty component'
   )
 
-  t.deepEquals(
-    serializeComponent(
-      Comp,
-      {
-        success: 123,
-        warning: true,
-        error: null,
-        access: undefined,
-        title: 'Title',
-        empty: '',
-        symbDesc: Symbol('description'),
-        symbNoDesc: Symbol(),
-        config: {
-          options: true,
-          subConfig: {
-            value: null,
-          },
-          emptyArray: [],
-          ext: [123, true, { key: 'value' }, [{}]],
+  t.equals(
+    serializeToText(result),
+    `<Comp/>
+`,
+    'should print text'
+  )
+
+  t.end()
+})
+
+test('syntx: serializeComponent: props only', (t) => {
+  const Comp: FC<any> = () => null
+
+  Comp.displayName = 'Comp'
+
+  const result = serializeComponent(
+    Comp,
+    {
+      success: 123,
+      warning: true,
+      error: null,
+      access: undefined,
+      title: 'Title',
+      empty: '',
+      symbDesc: Symbol('description'),
+      symbNoDesc: Symbol(),
+      config: {
+        options: true,
+        subConfig: {
+          value: null,
         },
-        array: [123, true, { key: 'value' }, [{}]],
-        onClick: () => {},
-        icon: (
-          <div>
-            <span>
-              <span>ICON</span>
-            </span>
-          </div>
-        ),
+        emptyArray: [],
+        ext: [123, true, { key: 'value' }, [{}]],
       },
-      {
-        indent: 2,
-      }
-    ),
+      array: [123, true, { key: 'value' }, [{}]],
+      onClick: () => {},
+      icon: (
+        <div>
+          <span>
+            <span>ICON</span>
+          </span>
+        </div>
+      ),
+    },
+    {
+      indent: 2,
+    }
+  )
+
+  t.deepEquals(
+    result,
     [
       {
         elements: [
@@ -227,19 +254,20 @@ test('syntx: serializeComponent', (t) => {
         elements: [
           { type: TYPE_WHITESPACE, value: '      ' },
           { type: TYPE_VALUE_NUMBER, value: '123' },
+          { type: TYPE_ARRAY_COMMA, value: ',' },
         ],
       },
       {
         elements: [
           { type: TYPE_WHITESPACE, value: '      ' },
           { type: TYPE_VALUE_BOOLEAN, value: 'true' },
+          { type: TYPE_ARRAY_COMMA, value: ',' },
         ],
       },
       {
         elements: [
           { type: TYPE_WHITESPACE, value: '      ' },
           { type: TYPE_OBJECT_BRACE, value: '{' },
-          { type: TYPE_ARRAY_COMMA, value: ',' },
         ],
       },
       {
@@ -304,19 +332,20 @@ test('syntx: serializeComponent', (t) => {
         elements: [
           { type: TYPE_WHITESPACE, value: '    ' },
           { type: TYPE_VALUE_NUMBER, value: '123' },
+          { type: TYPE_ARRAY_COMMA, value: ',' },
         ],
       },
       {
         elements: [
           { type: TYPE_WHITESPACE, value: '    ' },
           { type: TYPE_VALUE_BOOLEAN, value: 'true' },
+          { type: TYPE_ARRAY_COMMA, value: ',' },
         ],
       },
       {
         elements: [
           { type: TYPE_WHITESPACE, value: '    ' },
           { type: TYPE_OBJECT_BRACE, value: '{' },
-          { type: TYPE_ARRAY_COMMA, value: ',' },
         ],
       },
       {
@@ -449,29 +478,90 @@ test('syntx: serializeComponent', (t) => {
     'props only'
   )
 
-  t.deepEquals(
-    serializeComponent(
-      Comp,
+  t.equals(
+    serializeToText(result),
+    `<Comp
+  success={123}
+  warning={true}
+  error={null}
+  title="Title"
+  empty=""
+  symbDesc={description}
+  symbNoDesc={symbol}
+  config={{
+    options: true,
+    subConfig: {
+      value: null
+    },
+    emptyArray: [],
+    ext: [
+      123,
+      true,
       {
-        children: [
-          'content1',
-          'content2',
-          (
-            <div key="1">
-              <span>
-                {null}
-                {false}
-                {2}
-                conc
-                oacao<span/>asdasd
-              </span>
-            </div>
-          ),
-          'content3',
-        ],
+        key: 'value'
       },
-      { indent: 2 }
-    ),
+      [
+        {}
+      ]
+    ]
+  }}
+  array={[
+    123,
+    true,
+    {
+      key: 'value'
+    },
+    [
+      {}
+    ]
+  ]}
+  onClick={() => {}}
+  icon={
+    <div>
+      <span>
+        <span>
+          ICON
+        </span>
+      </span>
+    </div>
+  }
+/>
+`
+  )
+
+  t.end()
+})
+
+test('syntx: serializeComponent: children only', (t) => {
+  const Comp: FC<any> = () => null
+
+  Comp.displayName = 'Comp'
+
+  const result = serializeComponent(
+    Comp,
+    {
+      children: [
+        'content1',
+        'content2',
+        (
+          <div key="1">
+            <span>
+              {null}
+              {false}
+              {2}
+              conc
+              oacao<span/>asdasd
+            </span>
+          </div>
+        ),
+        'content3',
+      ],
+    },
+    { indent: 2 }
+  )
+
+  t.deepEquals(
+    result,
     [
       {
         elements: [
@@ -557,21 +647,48 @@ test('syntx: serializeComponent', (t) => {
     'children only'
   )
 
+  t.equals(
+    serializeToText(result),
+    `<Comp>
+  content1content2
+  <div>
+    <span>
+      2conc oacao
+      <span/>
+      asdasd
+    </span>
+  </div>
+  content3
+</Comp>
+`,
+    'should print exact text'
+  )
+
+  t.end()
+})
+
+test('syntx: serializeComponent: props and children', (t) => {
+  const Comp: FC<any> = () => null
+
+  Comp.displayName = 'Comp'
+
+  const result = serializeComponent(
+    Comp,
+    {
+      success: 123,
+      children: (
+        <div>
+          <span>Content</span>
+        </div>
+      ),
+    },
+    {
+      indent: 2,
+    }
+  )
+
   t.deepEquals(
-    serializeComponent(
-      Comp,
-      {
-        success: 123,
-        children: (
-          <div>
-            <span>Content</span>
-          </div>
-        ),
-      },
-      {
-        indent: 2,
-      }
-    ),
+    result,
     [
       {
         elements: [
@@ -643,22 +760,46 @@ test('syntx: serializeComponent', (t) => {
     'props and children'
   )
 
+  t.equals(
+    serializeToText(result),
+    `<Comp
+  success={123}
+>
+  <div>
+    <span>
+      Content
+    </span>
+  </div>
+</Comp>
+`
+  )
+
+  t.end()
+})
+
+test('syntx: serializeComponent: edge cases', (t) => {
+  const Comp: FC<any> = () => null
+
+  Comp.displayName = 'Comp'
+
   const Comp2 = () => null
 
+  const result = serializeComponent(
+    Comp2,
+    {
+      success: 123,
+      children: [
+        null,
+        <Comp key="1"/>,
+      ],
+    },
+    {
+      indent: 2,
+    }
+  )
+
   t.deepEquals(
-    serializeComponent(
-      Comp2,
-      {
-        success: 123,
-        children: [
-          null,
-          <Comp key="1"/>,
-        ],
-      },
-      {
-        indent: 2,
-      }
-    ),
+    result,
     [
       {
         elements: [
@@ -698,6 +839,158 @@ test('syntx: serializeComponent', (t) => {
       },
     ],
     'edge cases'
+  )
+
+  t.equals(
+    serializeToText(result),
+    `<Comp2
+  success={123}
+>
+  <Comp/>
+</Comp2>
+`
+  )
+
+  t.end()
+})
+
+test('syntx: serializeComponent: props array with objects', (t) => {
+  const Comp: FC<any> = () => null
+
+  Comp.displayName = 'Comp'
+
+  const result = serializeComponent(
+    Comp,
+    {
+      config: [
+        {
+          value: 1,
+        },
+        {
+          value: 2,
+        },
+        {
+          value: 3,
+        },
+      ],
+    },
+    {
+      indent: 2,
+    }
+  )
+
+  t.deepEquals(
+    result,
+    [
+      {
+        elements: [
+          { type: TYPE_COMPONENT_BRACKET, value: '<' },
+          { type: TYPE_COMPONENT_NAME, value: 'Comp' },
+        ],
+      },
+      {
+        elements: [
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_KEY, value: 'config' },
+          { type: TYPE_PROPS_EQUALS, value: '=' },
+          { type: TYPE_PROPS_BRACE, value: '{' },
+          { type: TYPE_ARRAY_BRACKET, value: '[' },
+        ],
+      },
+      {
+        elements: [
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_OBJECT_BRACE, value: '{' },
+        ],
+      },
+      {
+        elements: [
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_OBJECT_KEY, value: 'value' },
+          { type: TYPE_OBJECT_COLON, value: ':' },
+          { type: TYPE_WHITESPACE, value: ' ' },
+          { type: TYPE_VALUE_NUMBER, value: '1' },
+        ],
+      },
+      {
+        elements: [
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_OBJECT_BRACE, value: '}' },
+          { type: TYPE_ARRAY_COMMA, value: ',' },
+        ],
+      },
+      {
+        elements: [
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_OBJECT_BRACE, value: '{' },
+        ],
+      },
+      {
+        elements: [
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_OBJECT_KEY, value: 'value' },
+          { type: TYPE_OBJECT_COLON, value: ':' },
+          { type: TYPE_WHITESPACE, value: ' ' },
+          { type: TYPE_VALUE_NUMBER, value: '2' },
+        ],
+      },
+      {
+        elements: [
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_OBJECT_BRACE, value: '}' },
+          { type: TYPE_ARRAY_COMMA, value: ',' },
+        ],
+      },
+      {
+        elements: [
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_OBJECT_BRACE, value: '{' },
+        ],
+      },
+      {
+        elements: [
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_OBJECT_KEY, value: 'value' },
+          { type: TYPE_OBJECT_COLON, value: ':' },
+          { type: TYPE_WHITESPACE, value: ' ' },
+          { type: TYPE_VALUE_NUMBER, value: '3' },
+        ],
+      },
+      {
+        elements: [
+          { type: TYPE_WHITESPACE, value: '    ' }, { type: TYPE_OBJECT_BRACE, value: '}' },
+        ],
+      },
+      {
+        elements: [
+          { type: TYPE_WHITESPACE, value: '  ' }, { type: TYPE_ARRAY_BRACKET, value: ']' }, { type: TYPE_PROPS_BRACE, value: '}' },
+        ],
+      },
+      {
+        elements: [
+          { type: TYPE_COMPONENT_BRACKET, value: '/>' },
+        ],
+      },
+    ],
+    'props only'
+  )
+
+  t.equals(
+    serializeToText(result),
+    `<Comp
+  config={[
+    {
+      value: 1
+    },
+    {
+      value: 2
+    },
+    {
+      value: 3
+    }
+  ]}
+/>
+`
   )
 
   t.end()
@@ -781,406 +1074,408 @@ test('syntx: serializeComponent meta', (t) => {
     [
       {
         elements: [
-          { type: 'COMPONENT_BRACKET', value: '<' },
-          { type: 'COMPONENT_NAME', value: 'Comp' },
+          { type: TYPE_COMPONENT_BRACKET, value: '<' },
+          { type: TYPE_COMPONENT_NAME, value: 'Comp' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'PROPS_KEY', value: 'success' },
-          { type: 'PROPS_EQUALS', value: '=' },
-          { type: 'PROPS_BRACE', value: '{' },
-          { type: 'VALUE_NUMBER', value: '123' },
-          { type: 'PROPS_BRACE', value: '}' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_KEY, value: 'success' },
+          { type: TYPE_PROPS_EQUALS, value: '=' },
+          { type: TYPE_PROPS_BRACE, value: '{' },
+          { type: TYPE_VALUE_NUMBER, value: '123' },
+          { type: TYPE_PROPS_BRACE, value: '}' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'PROPS_KEY', value: 'warning' },
-          { type: 'PROPS_EQUALS', value: '=' },
-          { type: 'PROPS_BRACE', value: '{' },
-          { type: 'VALUE_BOOLEAN', value: 'true' },
-          { type: 'PROPS_BRACE', value: '}' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_KEY, value: 'warning' },
+          { type: TYPE_PROPS_EQUALS, value: '=' },
+          { type: TYPE_PROPS_BRACE, value: '{' },
+          { type: TYPE_VALUE_BOOLEAN, value: 'true' },
+          { type: TYPE_PROPS_BRACE, value: '}' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'PROPS_KEY', value: 'error' },
-          { type: 'PROPS_EQUALS', value: '=' },
-          { type: 'PROPS_BRACE', value: '{' },
-          { type: 'VALUE_NULL', value: 'null' },
-          { type: 'PROPS_BRACE', value: '}' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_KEY, value: 'error' },
+          { type: TYPE_PROPS_EQUALS, value: '=' },
+          { type: TYPE_PROPS_BRACE, value: '{' },
+          { type: TYPE_VALUE_NULL, value: 'null' },
+          { type: TYPE_PROPS_BRACE, value: '}' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'PROPS_KEY', value: 'title' },
-          { type: 'PROPS_EQUALS', value: '=' },
-          { type: 'QUOTE', value: '"' },
-          { type: 'VALUE_STRING', value: 'Title' },
-          { type: 'QUOTE', value: '"' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_KEY, value: 'title' },
+          { type: TYPE_PROPS_EQUALS, value: '=' },
+          { type: TYPE_QUOTE, value: '"' },
+          { type: TYPE_VALUE_STRING, value: 'Title' },
+          { type: TYPE_QUOTE, value: '"' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'PROPS_KEY', value: 'empty' },
-          { type: 'PROPS_EQUALS', value: '=' },
-          { type: 'QUOTE', value: '""' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_KEY, value: 'empty' },
+          { type: TYPE_PROPS_EQUALS, value: '=' },
+          { type: TYPE_QUOTE, value: '""' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'PROPS_KEY', value: 'symbDesc' },
-          { type: 'PROPS_EQUALS', value: '=' },
-          { type: 'PROPS_BRACE', value: '{' },
-          { type: 'VALUE_SYMBOL', value: 'description' },
-          { type: 'PROPS_BRACE', value: '}' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_KEY, value: 'symbDesc' },
+          { type: TYPE_PROPS_EQUALS, value: '=' },
+          { type: TYPE_PROPS_BRACE, value: '{' },
+          { type: TYPE_VALUE_SYMBOL, value: 'description' },
+          { type: TYPE_PROPS_BRACE, value: '}' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'PROPS_KEY', value: 'symbNoDesc' },
-          { type: 'PROPS_EQUALS', value: '=' },
-          { type: 'PROPS_BRACE', value: '{' },
-          { type: 'VALUE_SYMBOL', value: 'symbol' },
-          { type: 'PROPS_BRACE', value: '}' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_KEY, value: 'symbNoDesc' },
+          { type: TYPE_PROPS_EQUALS, value: '=' },
+          { type: TYPE_PROPS_BRACE, value: '{' },
+          { type: TYPE_VALUE_SYMBOL, value: 'symbol' },
+          { type: TYPE_PROPS_BRACE, value: '}' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'PROPS_KEY', value: 'config' },
-          { type: 'PROPS_EQUALS', value: '=' },
-          { type: 'PROPS_BRACE', value: '{' },
-          { type: 'OBJECT_BRACE', value: '{' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_KEY, value: 'config' },
+          { type: TYPE_PROPS_EQUALS, value: '=' },
+          { type: TYPE_PROPS_BRACE, value: '{' },
+          { type: TYPE_OBJECT_BRACE, value: '{' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'OBJECT_KEY', value: 'options' },
-          { type: 'OBJECT_COLON', value: ':' },
-          { type: 'WHITESPACE', value: ' ' },
-          { type: 'VALUE_BOOLEAN', value: 'true' },
-          { type: 'OBJECT_COMMA', value: ',' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_OBJECT_KEY, value: 'options' },
+          { type: TYPE_OBJECT_COLON, value: ':' },
+          { type: TYPE_WHITESPACE, value: ' ' },
+          { type: TYPE_VALUE_BOOLEAN, value: 'true' },
+          { type: TYPE_OBJECT_COMMA, value: ',' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'OBJECT_KEY', value: 'subConfig' },
-          { type: 'OBJECT_COLON', value: ':' },
-          { type: 'WHITESPACE', value: ' ' },
-          { type: 'OBJECT_BRACE', value: '{' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_OBJECT_KEY, value: 'subConfig' },
+          { type: TYPE_OBJECT_COLON, value: ':' },
+          { type: TYPE_WHITESPACE, value: ' ' },
+          { type: TYPE_OBJECT_BRACE, value: '{' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'OBJECT_KEY', value: 'value' },
-          { type: 'OBJECT_COLON', value: ':' },
-          { type: 'WHITESPACE', value: ' ' },
-          { type: 'VALUE_NULL', value: 'null' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_OBJECT_KEY, value: 'value' },
+          { type: TYPE_OBJECT_COLON, value: ':' },
+          { type: TYPE_WHITESPACE, value: ' ' },
+          { type: TYPE_VALUE_NULL, value: 'null' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'OBJECT_BRACE', value: '}' },
-          { type: 'OBJECT_COMMA', value: ',' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_OBJECT_BRACE, value: '}' },
+          { type: TYPE_OBJECT_COMMA, value: ',' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'OBJECT_KEY', value: 'emptyArray' },
-          { type: 'OBJECT_COLON', value: ':' },
-          { type: 'WHITESPACE', value: ' ' },
-          { type: 'ARRAY_BRACKET', value: '[]' },
-          { type: 'OBJECT_COMMA', value: ',' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_OBJECT_KEY, value: 'emptyArray' },
+          { type: TYPE_OBJECT_COLON, value: ':' },
+          { type: TYPE_WHITESPACE, value: ' ' },
+          { type: TYPE_ARRAY_BRACKET, value: '[]' },
+          { type: TYPE_OBJECT_COMMA, value: ',' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'OBJECT_KEY', value: 'ext' },
-          { type: 'OBJECT_COLON', value: ':' },
-          { type: 'WHITESPACE', value: ' ' },
-          { type: 'ARRAY_BRACKET', value: '[' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_OBJECT_KEY, value: 'ext' },
+          { type: TYPE_OBJECT_COLON, value: ':' },
+          { type: TYPE_WHITESPACE, value: ' ' },
+          { type: TYPE_ARRAY_BRACKET, value: '[' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'VALUE_NUMBER', value: '123' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_VALUE_NUMBER, value: '123' },
+          { type: TYPE_ARRAY_COMMA, value: ',' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'VALUE_BOOLEAN', value: 'true' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_VALUE_BOOLEAN, value: 'true' },
+          { type: TYPE_ARRAY_COMMA, value: ',' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'OBJECT_BRACE', value: '{' },
-          { type: 'ARRAY_COMMA', value: ',' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_OBJECT_BRACE, value: '{' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '        ' },
-          { type: 'OBJECT_KEY', value: 'key' },
-          { type: 'OBJECT_COLON', value: ':' },
-          { type: 'WHITESPACE', value: ' ' },
-          { type: 'QUOTE', value: '\'' },
-          { type: 'VALUE_STRING', value: 'value' },
-          { type: 'QUOTE', value: '\'' },
+          { type: TYPE_WHITESPACE, value: '        ' },
+          { type: TYPE_OBJECT_KEY, value: 'key' },
+          { type: TYPE_OBJECT_COLON, value: ':' },
+          { type: TYPE_WHITESPACE, value: ' ' },
+          { type: TYPE_QUOTE, value: '\'' },
+          { type: TYPE_VALUE_STRING, value: 'value' },
+          { type: TYPE_QUOTE, value: '\'' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'OBJECT_BRACE', value: '}' },
-          { type: 'ARRAY_COMMA', value: ',' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_OBJECT_BRACE, value: '}' },
+          { type: TYPE_ARRAY_COMMA, value: ',' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'ARRAY_BRACKET', value: '[' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_ARRAY_BRACKET, value: '[' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '        ' },
-          { type: 'OBJECT_BRACE', value: '{}' },
+          { type: TYPE_WHITESPACE, value: '        ' },
+          { type: TYPE_OBJECT_BRACE, value: '{}' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'ARRAY_BRACKET', value: ']' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_ARRAY_BRACKET, value: ']' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'ARRAY_BRACKET', value: ']' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_ARRAY_BRACKET, value: ']' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'OBJECT_BRACE', value: '}' },
-          { type: 'PROPS_BRACE', value: '}' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_OBJECT_BRACE, value: '}' },
+          { type: TYPE_PROPS_BRACE, value: '}' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'PROPS_KEY', value: 'array' },
-          { type: 'PROPS_EQUALS', value: '=' },
-          { type: 'PROPS_BRACE', value: '{' },
-          { type: 'ARRAY_BRACKET', value: '[' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_KEY, value: 'array' },
+          { type: TYPE_PROPS_EQUALS, value: '=' },
+          { type: TYPE_PROPS_BRACE, value: '{' },
+          { type: TYPE_ARRAY_BRACKET, value: '[' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'VALUE_NUMBER', value: '123' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_VALUE_NUMBER, value: '123' },
+          { type: TYPE_ARRAY_COMMA, value: ',' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'VALUE_BOOLEAN', value: 'true' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_VALUE_BOOLEAN, value: 'true' },
+          { type: TYPE_ARRAY_COMMA, value: ',' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'OBJECT_BRACE', value: '{' },
-          { type: 'ARRAY_COMMA', value: ',' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_OBJECT_BRACE, value: '{' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'OBJECT_KEY', value: 'key' },
-          { type: 'OBJECT_COLON', value: ':' },
-          { type: 'WHITESPACE', value: ' ' },
-          { type: 'QUOTE', value: '\'' },
-          { type: 'VALUE_STRING', value: 'value' },
-          { type: 'QUOTE', value: '\'' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_OBJECT_KEY, value: 'key' },
+          { type: TYPE_OBJECT_COLON, value: ':' },
+          { type: TYPE_WHITESPACE, value: ' ' },
+          { type: TYPE_QUOTE, value: '\'' },
+          { type: TYPE_VALUE_STRING, value: 'value' },
+          { type: TYPE_QUOTE, value: '\'' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'OBJECT_BRACE', value: '}' },
-          { type: 'ARRAY_COMMA', value: ',' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_OBJECT_BRACE, value: '}' },
+          { type: TYPE_ARRAY_COMMA, value: ',' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'ARRAY_BRACKET', value: '[' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_ARRAY_BRACKET, value: '[' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'OBJECT_BRACE', value: '{}' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_OBJECT_BRACE, value: '{}' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'ARRAY_BRACKET', value: ']' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_ARRAY_BRACKET, value: ']' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'ARRAY_BRACKET', value: ']' },
-          { type: 'PROPS_BRACE', value: '}' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_ARRAY_BRACKET, value: ']' },
+          { type: TYPE_PROPS_BRACE, value: '}' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'PROPS_KEY', value: 'onClick' },
-          { type: 'PROPS_EQUALS', value: '=' },
-          { type: 'PROPS_BRACE', value: '{' },
-          { type: 'VALUE_FUNCTION', value: '() => {}' },
-          { type: 'PROPS_BRACE', value: '}' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_KEY, value: 'onClick' },
+          { type: TYPE_PROPS_EQUALS, value: '=' },
+          { type: TYPE_PROPS_BRACE, value: '{' },
+          { type: TYPE_VALUE_FUNCTION, value: '() => {}' },
+          { type: TYPE_PROPS_BRACE, value: '}' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'PROPS_KEY', value: 'icon' },
-          { type: 'PROPS_EQUALS', value: '=' },
-          { type: 'PROPS_BRACE', value: '{' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_KEY, value: 'icon' },
+          { type: TYPE_PROPS_EQUALS, value: '=' },
+          { type: TYPE_PROPS_BRACE, value: '{' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'COMPONENT_BRACKET', value: '<' },
-          { type: 'COMPONENT_NAME', value: 'div' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '<' },
+          { type: TYPE_COMPONENT_NAME, value: 'div' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'COMPONENT_BRACKET', value: '<' },
-          { type: 'COMPONENT_NAME', value: 'span' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '<' },
+          { type: TYPE_COMPONENT_NAME, value: 'span' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '        ' },
-          { type: 'COMPONENT_BRACKET', value: '<' },
-          { type: 'COMPONENT_NAME', value: 'span' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_WHITESPACE, value: '        ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '<' },
+          { type: TYPE_COMPONENT_NAME, value: 'span' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '          ' },
-          { type: 'VALUE_STRING', value: 'ICON' },
+          { type: TYPE_WHITESPACE, value: '          ' },
+          { type: TYPE_VALUE_STRING, value: 'ICON' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '        ' },
-          { type: 'COMPONENT_BRACKET', value: '</' },
-          { type: 'COMPONENT_NAME', value: 'span' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_WHITESPACE, value: '        ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '</' },
+          { type: TYPE_COMPONENT_NAME, value: 'span' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'COMPONENT_BRACKET', value: '</' },
-          { type: 'COMPONENT_NAME', value: 'span' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '</' },
+          { type: TYPE_COMPONENT_NAME, value: 'span' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'COMPONENT_BRACKET', value: '</' },
-          { type: 'COMPONENT_NAME', value: 'div' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '</' },
+          { type: TYPE_COMPONENT_NAME, value: 'div' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'PROPS_BRACE', value: '}' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_PROPS_BRACE, value: '}' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'COMPONENT_BRACKET', value: '/>' },
+          { type: TYPE_COMPONENT_BRACKET, value: '/>' },
         ],
         meta: ['root'],
       },
@@ -1236,92 +1531,92 @@ test('syntx: serializeComponent meta', (t) => {
     [
       {
         elements: [
-          { type: 'COMPONENT_BRACKET', value: '<' },
-          { type: 'COMPONENT_NAME', value: 'Comp' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_COMPONENT_BRACKET, value: '<' },
+          { type: TYPE_COMPONENT_NAME, value: 'Comp' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'VALUE_STRING', value: 'content1' },
-          { type: 'VALUE_STRING', value: 'content2' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_VALUE_STRING, value: 'content1' },
+          { type: TYPE_VALUE_STRING, value: 'content2' },
         ],
         meta: ['cont2'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'COMPONENT_BRACKET', value: '<' },
-          { type: 'COMPONENT_NAME', value: 'div' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '<' },
+          { type: TYPE_COMPONENT_NAME, value: 'div' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['View'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'COMPONENT_BRACKET', value: '<' },
-          { type: 'COMPONENT_NAME', value: 'span' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '<' },
+          { type: TYPE_COMPONENT_NAME, value: 'span' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['span'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'VALUE_STRING', value: '2' },
-          { type: 'VALUE_STRING', value: 'conc oacao' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_VALUE_STRING, value: '2' },
+          { type: TYPE_VALUE_STRING, value: 'conc oacao' },
         ],
         meta: ['text'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'COMPONENT_BRACKET', value: '<' },
-          { type: 'COMPONENT_NAME', value: 'span' },
-          { type: 'COMPONENT_BRACKET', value: '/>' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '<' },
+          { type: TYPE_COMPONENT_NAME, value: 'span' },
+          { type: TYPE_COMPONENT_BRACKET, value: '/>' },
         ],
         meta: ['span'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '      ' },
-          { type: 'VALUE_STRING', value: 'asdasd' },
+          { type: TYPE_WHITESPACE, value: '      ' },
+          { type: TYPE_VALUE_STRING, value: 'asdasd' },
         ],
         meta: ['span'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'COMPONENT_BRACKET', value: '</' },
-          { type: 'COMPONENT_NAME', value: 'span' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '</' },
+          { type: TYPE_COMPONENT_NAME, value: 'span' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['span'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'COMPONENT_BRACKET', value: '</' },
-          { type: 'COMPONENT_NAME', value: 'div' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '</' },
+          { type: TYPE_COMPONENT_NAME, value: 'div' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['View'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'VALUE_STRING', value: 'content3' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_VALUE_STRING, value: 'content3' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'COMPONENT_BRACKET', value: '</' },
-          { type: 'COMPONENT_NAME', value: 'Comp' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_COMPONENT_BRACKET, value: '</' },
+          { type: TYPE_COMPONENT_NAME, value: 'Comp' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['root'],
       },
@@ -1507,44 +1802,44 @@ test('syntx: serializeComponent meta', (t) => {
     [
       {
         elements: [
-          { type: 'COMPONENT_BRACKET', value: '<' },
-          { type: 'COMPONENT_NAME', value: 'Comp' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_COMPONENT_BRACKET, value: '<' },
+          { type: TYPE_COMPONENT_NAME, value: 'Comp' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['root'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'COMPONENT_BRACKET', value: '<' },
-          { type: 'COMPONENT_NAME', value: 'Comp2' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '<' },
+          { type: TYPE_COMPONENT_NAME, value: 'Comp2' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['Comp'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '    ' },
-          { type: 'COMPONENT_BRACKET', value: '<' },
-          { type: 'COMPONENT_NAME', value: 'span' },
-          { type: 'COMPONENT_BRACKET', value: '/>' },
+          { type: TYPE_WHITESPACE, value: '    ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '<' },
+          { type: TYPE_COMPONENT_NAME, value: 'span' },
+          { type: TYPE_COMPONENT_BRACKET, value: '/>' },
         ],
         meta: ['Comp'],
       },
       {
         elements: [
-          { type: 'WHITESPACE', value: '  ' },
-          { type: 'COMPONENT_BRACKET', value: '</' },
-          { type: 'COMPONENT_NAME', value: 'Comp2' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_WHITESPACE, value: '  ' },
+          { type: TYPE_COMPONENT_BRACKET, value: '</' },
+          { type: TYPE_COMPONENT_NAME, value: 'Comp2' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['Comp'],
       },
       {
         elements: [
-          { type: 'COMPONENT_BRACKET', value: '</' },
-          { type: 'COMPONENT_NAME', value: 'Comp' },
-          { type: 'COMPONENT_BRACKET', value: '>' },
+          { type: TYPE_COMPONENT_BRACKET, value: '</' },
+          { type: TYPE_COMPONENT_NAME, value: 'Comp' },
+          { type: TYPE_COMPONENT_BRACKET, value: '>' },
         ],
         meta: ['root'],
       },

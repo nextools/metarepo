@@ -42,7 +42,7 @@ export const serializeArray = ({ arr, currentIndent, meta, config }: TSerializeA
             elements: [
               serializeIndent(currentIndent),
               ...head,
-              body.length > 0 && !isLast(i) && ({ type: TYPE_ARRAY_COMMA, value: ',' }),
+              body.length === 0 && !isLast(i) && ({ type: TYPE_ARRAY_COMMA, value: ',' }),
             ],
           }),
           ...body,
