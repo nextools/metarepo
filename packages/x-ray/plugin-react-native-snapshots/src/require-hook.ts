@@ -2,6 +2,7 @@ import _Module from 'module'
 import path from 'path'
 import resolver from 'enhanced-resolve'
 import { ReactNativeMocks } from './react-native-mocks'
+import { ReactNativeSafeModulesMocks } from './react-native-safe-modules-mocks'
 import { ReactNativeSvgMocks } from './react-native-svg-mocks'
 
 type TModule = {
@@ -17,12 +18,20 @@ const cache = new Map()
 const resolve = resolver.create.sync({
   mainFields: ['react-native', 'main'],
   extensions: [
+    '.ios.ts',
+    '.android.ts',
     '.native.ts',
     '.ts',
+    '.ios.tsx',
+    '.android.tsx',
     '.native.tsx',
     '.tsx',
+    '.ios.js',
+    '.android.js',
     '.native.js',
     '.js',
+    '.ios.jsx',
+    '.android.jsx',
     '.native.jsx',
     '.jsx',
     '.json',
@@ -39,7 +48,11 @@ Module._load = (request, parent, isMain) => {
     return ReactNativeSvgMocks
   }
 
-  if (!request.startsWith('.') && !path.isAbsolute(request) && !Module.builtinModules.includes(request)) {
+  if (request === 'react-native-safe-modules') {
+    return ReactNativeSafeModulesMocks
+  }
+
+  if (!path.isAbsolute(request) && !Module.builtinModules.includes(request)) {
     const callerDir = path.dirname(parent.filename)
     const cacheKey = `${callerDir}@${request}`
 
