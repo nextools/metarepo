@@ -1,3 +1,7 @@
+## v0.1.3
+
+* 🐞 add missing file extensions and missing mocks
+
 ## v0.1.2
 
 * 🐞 bump React
