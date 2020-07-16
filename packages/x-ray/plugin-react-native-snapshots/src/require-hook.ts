@@ -2,8 +2,8 @@ import _Module from 'module'
 import path from 'path'
 import resolver from 'enhanced-resolve'
 import { ReactNativeMocks } from './react-native-mocks'
-import { ReactNativeSvgMocks } from './react-native-svg-mocks'
 import { ReactNativeSafeModulesMocks } from './react-native-safe-modules-mocks'
+import { ReactNativeSvgMocks } from './react-native-svg-mocks'
 
 type TModule = {
   _load: (request: string, parent: NodeModule, isMain: boolean) => any,
