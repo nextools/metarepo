@@ -1,3 +1,7 @@
+## v3.0.2
+
+* 🐞 add asset loader to haul config
+
 ## v3.0.1
 
 * 🐞 bump Haul deps
