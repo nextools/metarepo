@@ -1,4 +1,5 @@
 import path from 'path'
+import { AssetResolver, ASSET_LOADER_PATH } from '@haul-bundler/core'
 import { makeConfig, withPolyfills } from '@haul-bundler/preset-0.60'
 
 const appPath = path.resolve(process.env.REBOX_ENTRY_POINT)
@@ -7,7 +8,7 @@ export default makeConfig({
   bundles: {
     index: {
       entry: withPolyfills(appPath),
-      transform({ env, config }) {
+      transform({ env, config, runtime }) {
         config.module.rules = [
           {
             test: appPath,
@@ -58,6 +59,17 @@ export default makeConfig({
                 },
               },
             ],
+          },
+          {
+            test: AssetResolver.test,
+            use: {
+              loader: ASSET_LOADER_PATH,
+              options: {
+                runtime,
+                platform: env.platform,
+                bundle: env.bundleTarget === 'file',
+              },
+            },
           },
         ]
 
