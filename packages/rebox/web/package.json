@@ -1,6 +1,6 @@
 {
   "name": "@rebox/web",
-  "version": "2.1.8",
+  "version": "2.1.9",
   "description": "Set of helpers to deal with React applications using our Babel config",
   "keywords": [
     "react"

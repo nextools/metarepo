@@ -1,3 +1,7 @@
+## v2.1.9
+
+* 🐞 fix watching entire project
+
 ## v2.1.8
 
 * 🐞 bump React
