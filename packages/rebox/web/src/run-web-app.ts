@@ -4,6 +4,7 @@ import { isUndefined } from 'tsfn'
 import Webpack, { Configuration as TWebpackConfig, Stats } from 'webpack'
 import WebpackDevServer, { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
 import { getBabelConfigRun } from './get-babel-config'
+import { WatchPlugin } from './watch-plugin'
 
 const excludeNodeModulesRegExp = /[\\/]node_modules[\\/]/
 
@@ -109,6 +110,7 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
       new HTMLWebpackPlugin({
         template: path.resolve(options.htmlTemplatePath),
       }),
+      new WatchPlugin(),
     ],
   }
   const compiler = Webpack(config)
@@ -122,6 +124,9 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
     open: options.shouldOpenBrowser,
     stats: options.isQuiet === true ? 'errors-only' : statsOptions,
     noInfo: options.isQuiet,
+    watchOptions: {
+      ignored: excludeNodeModulesRegExp,
+    },
   })
 
   return new Promise<() => Promise<void>>((resolve, reject) => {
