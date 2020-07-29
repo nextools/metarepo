@@ -1,3 +1,7 @@
+## v0.3.2
+
+* 🐞 upgrade to Puppeteer v5
+
 ## v0.3.1
 
 * 🐞 refactor using new `xrom`
