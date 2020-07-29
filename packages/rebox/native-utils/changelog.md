@@ -1,3 +1,7 @@
+## v3.0.3
+
+* 🐞 upgrade to React Native v0.63.2
+
 ## v3.0.2
 
 * 🐞 add asset loader to haul config

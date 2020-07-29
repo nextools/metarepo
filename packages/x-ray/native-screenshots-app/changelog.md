@@ -1,3 +1,7 @@
+## v3.0.1
+
+* 🐞 upgrade to React Native v0.63.2
+
 ## v3.0.0
 
 * 💥 bump React Native to v0.63.0
