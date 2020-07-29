@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@rebox/native-utils": "^3.0.2",
+    "@rebox/native-utils": "^3.0.3",
     "copie": "^1.0.0",
     "dleet": "^1.0.0",
     "execa": "^4.0.0",
