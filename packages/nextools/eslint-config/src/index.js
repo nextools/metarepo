@@ -5,6 +5,7 @@ module.exports = {
     'node',
     'react',
     '@typescript-eslint',
+    '@nextools',
   ],
   extends: [
     require.resolve('./config/core'),
