@@ -1,6 +1,6 @@
 {
   "name": "pifs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Promisified graceful-fs",
   "keywords": [
     "fs",

@@ -1,3 +1,7 @@
+## v1.0.3
+
+* 🐞 add `types/graceful-fs` as dependencies
+
 ## v1.0.2
 
 * 🐞 align with Node.js v10 exports and automate tests for that
