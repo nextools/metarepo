@@ -1,9 +1,9 @@
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { TPackageBumpMap } from '../../src/bump/types'
-import { TQuestionObj } from '../../src/prompt/types'
-import { TPackageMap } from '../../src/types'
+import type { TPackageBumpMap } from '../../src/bump/types'
+import type { TQuestionObj } from '../../src/prompt/types'
+import type { TPackageMap } from '../../src/types'
 import { makeTestPackages } from './make-test-packages'
 
 test('makePrompt: yes', async (t) => {

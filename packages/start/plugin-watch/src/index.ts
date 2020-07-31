@@ -1,4 +1,5 @@
-import plugin, { StartFile, StartFilesProps, StartPlugin } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartFile, StartFilesProps, StartPlugin } from '@start/plugin'
 
 export default (glob: string | string[], userOptions?: {}) => (target: StartPlugin<StartFilesProps, any>) =>
   plugin('watch', (utils) => async () => {

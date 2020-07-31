@@ -2,7 +2,7 @@ import path from 'path'
 import copie from 'copie'
 import fastGlob from 'fast-glob'
 import makeDir from 'make-dir'
-import { TPlatform } from './types'
+import type { TPlatform } from './types'
 
 export type TCopyNativeTemplateOptions = {
   projectPath: string,

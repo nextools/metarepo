@@ -1,5 +1,5 @@
-import { TReadonly } from 'tsfn'
-import { TPackageRelease } from '../types'
+import type { TReadonly } from 'tsfn'
+import type { TPackageRelease } from '../types'
 
 type TGetDependentCount = Pick<TPackageRelease, 'deps' | 'devDeps'>
 

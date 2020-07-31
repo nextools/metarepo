@@ -1,4 +1,4 @@
-import { TActionWithPayload, TAnyAction, TScreenshotGridItem, TSnapshotGridItem } from '../types'
+import type { TActionWithPayload, TAnyAction, TScreenshotGridItem, TSnapshotGridItem } from '../types'
 
 const TYPE_SELECT_SCREENSHOT = 'SELECT_SCREENSHOT'
 const TYPE_SELECT_SNAPSHOT = 'SELECT_SNAPSHOT'

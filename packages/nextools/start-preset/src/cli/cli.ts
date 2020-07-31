@@ -1,5 +1,5 @@
 import path from 'path'
-import { StartPlugin } from '@start/plugin'
+import type { StartPlugin } from '@start/plugin'
 import Reporter from '@start/reporter-verbose'
 import { getStartOptions } from '../utils'
 

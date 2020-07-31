@@ -1,4 +1,4 @@
-import { TActionWithPayload, TAnyAction } from '../types'
+import type { TActionWithPayload, TAnyAction } from '../types'
 
 const TYPE_DISCARD_ITEM = 'DISCARD_ITEM'
 

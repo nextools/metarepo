@@ -1,4 +1,4 @@
-import { TExampleResults } from '@x-ray/core'
+import type { TExampleResults } from '@x-ray/core'
 
 export type TCheckOptions = {
   shouldBailout: boolean,

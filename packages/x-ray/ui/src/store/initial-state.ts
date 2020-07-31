@@ -1,4 +1,4 @@
-import { TState } from '../types'
+import type { TState } from '../types'
 
 export const initialState: TState = {
   isSaved: false,

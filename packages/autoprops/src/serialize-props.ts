@@ -1,8 +1,11 @@
 /* eslint-disable no-use-before-define */
-import BigInt, { BigInteger } from 'big-integer'
-import { isValidElement, ReactElement, FC } from 'react'
-import { isFunction, isSymbol, isRegExp, TAnyObject, isString, isDefined, isObject, isArray, TReadonly } from 'tsfn'
-import { TCommonComponentConfig, TChildrenMap, TCommonRequiredConfig } from './types'
+import BigInt from 'big-integer'
+import type { BigInteger } from 'big-integer'
+import { isValidElement } from 'react'
+import type { FC, ReactElement } from 'react'
+import { isFunction, isSymbol, isRegExp, isString, isDefined, isObject, isArray } from 'tsfn'
+import type { TAnyObject, TReadonly } from 'tsfn'
+import type { TCommonComponentConfig, TChildrenMap, TCommonRequiredConfig } from './types'
 import { unpackPerm } from './unpack-perm'
 
 const getElementName = (element: ReactElement) => {

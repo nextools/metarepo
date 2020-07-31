@@ -1,7 +1,8 @@
+import type { TColor } from 'colorido'
+import { App as GraphsApp } from 'graphiq'
+import type { TGraph } from 'graphiq'
 import React from 'react'
-import { App as GraphsApp, TGraph } from 'graphiq'
 import { getObjectEntries, isDefined } from 'tsfn'
-import { TColor } from 'colorido'
 import { data } from './data'
 
 const theme = {

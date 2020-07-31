@@ -1,6 +1,7 @@
-import BigInt, { BigInteger } from 'big-integer'
-import { TReadonly } from 'tsfn'
-import { TCommonRequiredConfig } from './types'
+import BigInt from 'big-integer'
+import type { BigInteger } from 'big-integer'
+import type { TReadonly } from 'tsfn'
+import type { TCommonRequiredConfig } from './types'
 
 export const getIncrementedValueIndex = (values: readonly BigInteger[]): number => {
   for (let i = 0; i < values.length; ++i) {

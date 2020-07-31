@@ -1,4 +1,4 @@
-import { TColor } from 'colorido'
+import type { TColor } from 'colorido'
 
 export const HOST = 'localhost'
 export const PORT = 3001

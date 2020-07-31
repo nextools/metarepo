@@ -1,8 +1,10 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { component, mapKeyboardFocused, startWithType, TMapKeyboardFocused } from '../src'
+import { component, mapKeyboardFocused, startWithType } from '../src'
+import type { TMapKeyboardFocused } from '../src'
 
 test('mapKeyboardFocused: no props, focus by press in', (t) => {
   const componentSpy = createSpy(() => null)

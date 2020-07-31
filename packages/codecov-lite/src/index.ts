@@ -1,7 +1,7 @@
 import querystring from 'querystring'
 import got from 'got'
 import getConfig from './getConfig'
-import { TConfig } from './types'
+import type { TConfig } from './types'
 
 const ENDPOINT = 'https://codecov.io/upload/v2'
 const TIMEOUT = 10000

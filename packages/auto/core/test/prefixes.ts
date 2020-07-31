@@ -1,4 +1,4 @@
-import { TPrefixes } from '../src/types'
+import type { TPrefixes } from '../src/types'
 
 export const prefixes: TPrefixes = {
   major: '💥',

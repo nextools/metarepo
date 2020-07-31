@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react'
-import { TExtend, requestAnimationFrame, cancelAnimationFrame, UNDEFINED, EMPTY_ARRAY, EMPTY_OBJECT, NOOP } from 'tsfn'
+import { requestAnimationFrame, cancelAnimationFrame, UNDEFINED, EMPTY_ARRAY, EMPTY_OBJECT, NOOP } from 'tsfn'
+import type { TExtend } from 'tsfn'
 
 export type TSafeRequestAnimationFrame = (cb: () => void) => () => void
 

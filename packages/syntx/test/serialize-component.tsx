@@ -1,4 +1,5 @@
-import React, { FC } from 'react'
+import React from 'react'
+import type { FC } from 'react'
 import test from 'tape'
 import {
   serializeComponent,
@@ -21,8 +22,8 @@ import {
   TYPE_ARRAY_BRACKET,
   TYPE_ARRAY_COMMA,
   TYPE_VALUE_FUNCTION,
-  TLine,
 } from '../src'
+import type { TLine } from '../src'
 
 const serializeToText = (lines: TLine[]) => lines
   .reduce((result, line) => {

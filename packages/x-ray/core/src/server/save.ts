@@ -8,7 +8,7 @@ import { TarMap } from 'tarmap'
 import { isDefined } from 'tsfn'
 import { WRITE_RESULT_CONCURRENCY } from '../constants'
 import { getTarFilePath } from '../get-tar-file-path'
-import { TTotalResults, TResultsType, TEncoding } from '../types'
+import type { TTotalResults, TResultsType, TEncoding } from '../types'
 
 const optimizePng = imageminPngout({ strategy: 2 }) as (buf: Buffer) => Promise<Buffer>
 

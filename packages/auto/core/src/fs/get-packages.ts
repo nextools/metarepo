@@ -1,5 +1,5 @@
 import pAll from 'p-all'
-import { TPackageMap } from '../types'
+import type { TPackageMap } from '../types'
 import { getPackageDirs } from './get-package-dirs'
 import { readPackage } from './read-package'
 

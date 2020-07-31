@@ -1,5 +1,7 @@
-import { Background as PrimitiveBackground, TBackground as TPrimitiveBackground } from '@primitives/background'
-import React, { FC } from 'react'
+import { Background as PrimitiveBackground } from '@primitives/background'
+import type { TBackground as TPrimitiveBackground } from '@primitives/background'
+import React from 'react'
+import type { FC } from 'react'
 import { AnimationColor } from './AnimationColor'
 
 export type TBackground = TPrimitiveBackground & {

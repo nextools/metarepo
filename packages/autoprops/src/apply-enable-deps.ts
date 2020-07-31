@@ -1,7 +1,7 @@
 import BigInt from 'big-integer'
 import { isUndefined } from 'tsfn'
 import { applyDisableMutexes } from './apply-disable-mutexes'
-import { TApplyRestrictionFn } from './types'
+import type { TApplyRestrictionFn } from './types'
 import { getPropIndex } from './utils'
 
 export const applyEnableDeps: TApplyRestrictionFn = (values, changedPropName, permConfig, componentConfig) => {

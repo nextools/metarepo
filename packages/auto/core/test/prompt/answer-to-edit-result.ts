@@ -1,7 +1,7 @@
 import test from 'tape'
 import { answerToEditResult } from '../../src/prompt/answer-to-edit-result'
-import { TQuestionObj } from '../../src/prompt/types'
-import { TPromptEditData } from '../../src/types'
+import type { TQuestionObj } from '../../src/prompt/types'
+import type { TPromptEditData } from '../../src/types'
 
 test('answerToEditResult', (t) => {
   const question: TQuestionObj = {

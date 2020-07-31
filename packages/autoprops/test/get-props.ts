@@ -1,6 +1,6 @@
 import test from 'tape'
 import { getProps } from '../src'
-import { TCommonComponentConfig } from '../src/types'
+import type { TCommonComponentConfig } from '../src/types'
 
 test('autoprops: getProps single prop', (t) => {
   const config: TCommonComponentConfig = {

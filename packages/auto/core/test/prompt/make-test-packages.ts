@@ -1,5 +1,5 @@
-import { TPackageBumpMap } from '../../src/bump/types'
-import { TPackageMap, TPromptEditData } from '../../src/types'
+import type { TPackageBumpMap } from '../../src/bump/types'
+import type { TPackageMap, TPromptEditData } from '../../src/types'
 
 export const makeTestPackages = () => {
   const packages: TPackageMap = new Map()

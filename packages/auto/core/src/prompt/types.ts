@@ -1,5 +1,5 @@
-import { TReadonly } from 'tsfn'
-import { TPromptEditData, TResolvedReleaseType } from '../types'
+import type { TReadonly } from 'tsfn'
+import type { TPromptEditData, TResolvedReleaseType } from '../types'
 
 export type TQuestionObj = {
   dependencyBumps?: {

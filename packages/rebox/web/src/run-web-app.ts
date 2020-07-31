@@ -1,8 +1,10 @@
 import path from 'path'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
 import { isUndefined } from 'tsfn'
-import Webpack, { Configuration as TWebpackConfig, Stats } from 'webpack'
-import WebpackDevServer, { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
+import Webpack from 'webpack'
+import type { Configuration as TWebpackConfig, Stats } from 'webpack'
+import WebpackDevServer from 'webpack-dev-server'
+import type { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
 import { getBabelConfigRun } from './get-babel-config'
 import { WatchPlugin } from './watch-plugin'
 

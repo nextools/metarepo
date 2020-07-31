@@ -1,4 +1,4 @@
-import { TransformOptions } from '@babel/core'
+import type { TransformOptions } from '@babel/core'
 
 // had to explicitly include proposal plugins because Acorn (and therefore Webpack)
 // is unable to parse Nullish Coalescing and Optional Chaining

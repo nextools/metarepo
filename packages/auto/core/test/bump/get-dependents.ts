@@ -1,6 +1,6 @@
 import test from 'tape'
 import { getDependents } from '../../src/bump/get-dependents'
-import { TPackageMap } from '../../src/types'
+import type { TPackageMap } from '../../src/types'
 
 test('bump:getDependents no cross dependencies', (t) => {
   const packages: TPackageMap = new Map()

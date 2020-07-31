@@ -1,6 +1,6 @@
 import test from 'tape'
 import { getBumps } from '../../src/git/get-bumps'
-import { TGitMessageMap } from '../../src/types'
+import type { TGitMessageMap } from '../../src/types'
 import { prefixes } from '../prefixes'
 
 test('git:getBumps single package', (t) => {

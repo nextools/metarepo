@@ -1,5 +1,5 @@
 import plugin from '@start/plugin'
-import { ConfigOptions } from 'karma'
+import type { ConfigOptions } from 'karma'
 
 export default (options: ConfigOptions) =>
   plugin('karma', () => async () => {

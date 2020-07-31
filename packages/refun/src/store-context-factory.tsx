@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { Store } from 'redux'
+import type { Store } from 'redux'
 import { ReduxDispatchFactory } from './redux-dispatch-factory'
 import { ReduxStateFactory } from './redux-state-factory'
 

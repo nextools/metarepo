@@ -1,6 +1,6 @@
 import I from 'big-integer'
 import test from 'tape'
-import { TCommonComponentConfig } from '../src'
+import type { TCommonComponentConfig } from '../src'
 import { checkChildrenRestriction } from '../src/check-children-restriction'
 import { unpackPerm } from '../src/unpack-perm'
 

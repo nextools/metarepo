@@ -1,4 +1,4 @@
-import { TFulfilled, TRejected, TMaybePromise } from './types'
+import type { TFulfilled, TRejected, TMaybePromise } from './types'
 
 export const piAllSettled = <T>(iterable: Iterable<() => TMaybePromise<T>>, concurrency: number = Infinity): AsyncIterable<TFulfilled<T> | TRejected> => {
   if ((!Number.isSafeInteger(concurrency) && concurrency !== Infinity) || concurrency < 1) {

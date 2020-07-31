@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react'
-import { TExtend, UNDEFINED, EMPTY_OBJECT, EMPTY_ARRAY, NOOP } from 'tsfn'
+import { UNDEFINED, EMPTY_OBJECT, EMPTY_ARRAY, NOOP } from 'tsfn'
+import type { TExtend } from 'tsfn'
 
 export type TSetSafeTimeout = (cb: () => void, delay: number) => () => void
 

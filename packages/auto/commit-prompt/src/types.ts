@@ -1,4 +1,4 @@
-import { TAutoConfig, TRequiredPrefixes } from '@auto/core'
+import type { TAutoConfig, TRequiredPrefixes } from '@auto/core'
 
 export type TPrefixesWithTitles = {
   [k: string]: {

@@ -1,4 +1,5 @@
-import BigInt, { BigInteger } from 'big-integer'
+import BigInt from 'big-integer'
+import type { BigInteger } from 'big-integer'
 
 export const packPerm = (values: readonly BigInteger[], lengths: readonly BigInteger[]): BigInteger => {
   if (values.length === 0) {

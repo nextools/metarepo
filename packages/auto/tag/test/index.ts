@@ -1,4 +1,4 @@
-import { TPackageRelease } from '@auto/core'
+import type { TPackageRelease } from '@auto/core'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'

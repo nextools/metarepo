@@ -1,8 +1,8 @@
-import { TPackageRelease, TAutoConfig } from '@auto/core'
+import type { TPackageRelease, TAutoConfig } from '@auto/core'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { TTelegramConfig } from '../src/types'
+import type { TTelegramConfig } from '../src/types'
 import { prefixes } from './prefixes'
 
 const telegramOptions: TTelegramConfig = {

@@ -1,7 +1,7 @@
 import I from 'big-integer'
 import test from 'tape'
 import { applyDisableDeps } from '../src/apply-disable-deps'
-import { TCommonComponentConfig } from '../src/types'
+import type { TCommonComponentConfig } from '../src/types'
 import { unpackPerm } from '../src/unpack-perm'
 
 test('applyDisableDeps: props and children', (t) => {

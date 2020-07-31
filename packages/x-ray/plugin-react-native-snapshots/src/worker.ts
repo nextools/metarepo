@@ -1,14 +1,16 @@
-import { getTarFilePath, TExample, TExampleResult } from '@x-ray/core'
+import { getTarFilePath } from '@x-ray/core'
+import type { TExample, TExampleResult } from '@x-ray/core'
 import serialize from '@x-ray/serialize-react-tree'
 import { map, toMapAsync } from 'iterama'
 import { piAll } from 'piall'
 import { access } from 'pifs'
-import { TarMap, TTarMap } from 'tarmap'
-import { TJsonValue } from 'typeon'
+import { TarMap } from 'tarmap'
+import type { TTarMap } from 'tarmap'
+import type { TJsonValue } from 'typeon'
 import { SNAPSHOTS_PER_WORKER_COUNT, REQUIRE_HOOK_PATH } from './constants'
 import { getSnapshotDimensions } from './get-snapshot-dimensions'
 import { hasSnapshotDiff } from './has-snapshot-diff'
-import { TWorkerResultInternal, TCheckOptions } from './types'
+import type { TWorkerResultInternal, TCheckOptions } from './types'
 
 export const check = (options: TCheckOptions) => {
   let tarMap = null as null | TTarMap

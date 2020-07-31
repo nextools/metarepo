@@ -1,6 +1,6 @@
 import { isUndefined } from 'tsfn'
 import { skipToPerm } from './skip-to-perm'
-import { TCheckPermFn } from './types'
+import type { TCheckPermFn } from './types'
 
 export const checkChildrenRestriction: TCheckPermFn = (values, permConfig, { required }) => {
   const { propKeys, childrenKeys } = permConfig

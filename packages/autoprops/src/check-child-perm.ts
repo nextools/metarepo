@@ -1,7 +1,8 @@
-import BigInt, { BigInteger } from 'big-integer'
+import BigInt from 'big-integer'
+import type { BigInteger } from 'big-integer'
 import { getValidPermImpl } from './get-valid-perm'
 import { skipToPerm } from './skip-to-perm'
-import { TCommonComponentConfig, TCheckPermFn } from './types'
+import type { TCommonComponentConfig, TCheckPermFn } from './types'
 
 const getValidChildPerm = (childConfig: TCommonComponentConfig, int: BigInteger, isChildRequired: boolean): BigInteger | null => {
   if (isChildRequired) {

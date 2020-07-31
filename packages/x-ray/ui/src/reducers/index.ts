@@ -1,4 +1,4 @@
-import { Reducer } from 'redux'
+import type { Reducer } from 'redux'
 import { isUndefined } from 'tsfn'
 import {
   isActionLoadingStart,
@@ -16,7 +16,7 @@ import {
 } from '../actions'
 import { isActionUndiscardItem } from '../actions/undiscard'
 import { initialState } from '../store/initial-state'
-import { TAction, TState } from '../types'
+import type { TAction, TState } from '../types'
 
 export type TReducer<S extends {}> = (state: S, action: TAction<any>) => S
 

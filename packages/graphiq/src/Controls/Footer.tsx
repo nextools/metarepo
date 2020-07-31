@@ -1,6 +1,7 @@
-import React, { FC } from 'react'
+import React from 'react'
+import type { FC } from 'react'
 import { CONTROLS_HEIGHT_BOTTOM } from '../constants'
-import { TFooterControls } from '../types'
+import type { TFooterControls } from '../types'
 import { Button } from './Button'
 
 export const Footer: FC<TFooterControls> = ({

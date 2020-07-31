@@ -1,7 +1,7 @@
-import { THook } from '@auto/core'
-import { TGithubConfig } from '@auto/github'
-import { TSlackConfig } from '@auto/slack'
-import { TTelegramConfig } from '@auto/telegram'
+import type { THook } from '@auto/core'
+import type { TGithubConfig } from '@auto/github'
+import type { TSlackConfig } from '@auto/slack'
+import type { TTelegramConfig } from '@auto/telegram'
 import plugin from '@start/plugin'
 
 export const commit = () => plugin('commit', () => async () => {

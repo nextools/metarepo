@@ -1,4 +1,4 @@
-import { TServiceConfig } from '../types'
+import type { TServiceConfig } from '../types'
 
 // https://docs.gitlab.com/ce/ci/variables/README.html
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {

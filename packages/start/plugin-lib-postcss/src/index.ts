@@ -1,5 +1,6 @@
-import plugin, { StartDataFilesProps } from '@start/plugin'
-import { AcceptedPlugin, ProcessOptions } from 'postcss'
+import plugin from '@start/plugin'
+import type { StartDataFilesProps } from '@start/plugin'
+import type { AcceptedPlugin, ProcessOptions } from 'postcss'
 
 export type Options = {
   plugins?: AcceptedPlugin[],

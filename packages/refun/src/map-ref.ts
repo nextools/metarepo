@@ -1,5 +1,6 @@
-import { useRef, MutableRefObject } from 'react'
-import { TExtend } from 'tsfn'
+import { useRef } from 'react'
+import type { MutableRefObject } from 'react'
+import type { TExtend } from 'tsfn'
 
 export const mapRef = <N extends string, T> (name: N, initialValue: T) =>
   <P extends {}> (props: P): TExtend<P, { [K in N]: MutableRefObject<T> }> => {

@@ -1,12 +1,11 @@
-/* eslint-disable no-use-before-define */
-import { BigInteger } from 'big-integer'
+import type { BigInteger } from 'big-integer'
 import { checkChildPerm } from './check-child-perm'
 import { checkChildrenRestriction } from './check-children-restriction'
 import { checkDepsRestriction } from './check-deps-restriction'
 import { checkMutexRestriction } from './check-mutex-restriction'
 import { getLength } from './get-length'
 import { packPerm } from './pack-perm'
-import { TCommonComponentConfig, TCheckPermFn } from './types'
+import type { TCommonComponentConfig, TCheckPermFn } from './types'
 import { unpackPerm } from './unpack-perm'
 
 const testFns: TCheckPermFn[] = [

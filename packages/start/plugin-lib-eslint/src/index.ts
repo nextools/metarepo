@@ -1,4 +1,5 @@
-import plugin, { StartDataFilesProps, StartDataFile } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartDataFilesProps, StartDataFile } from '@start/plugin'
 import { ESLint } from 'eslint'
 
 export default (userOptions?: ESLint.Options, formatterName = '') =>

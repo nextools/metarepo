@@ -1,5 +1,5 @@
-import { TReadonly } from 'tsfn'
-import { TReleaseType, TMessage } from '../types'
+import type { TReadonly } from 'tsfn'
+import type { TReleaseType, TMessage } from '../types'
 import { compareReleaseTypes } from './compare-release-types'
 
 export const getMostSignificantBumpType = (messages: TReadonly<TMessage<TReleaseType>[]>): TReleaseType => {

@@ -1,6 +1,7 @@
-import BigInt, { BigInteger } from 'big-integer'
-import { TReadonly } from 'tsfn'
-import { TPermutationConfig, TCheckPermFn } from './types'
+import BigInt from 'big-integer'
+import type { BigInteger } from 'big-integer'
+import type { TReadonly } from 'tsfn'
+import type { TPermutationConfig, TCheckPermFn } from './types'
 
 export const skipToPerm = (values: readonly BigInteger[], { lengths }: TReadonly<TPermutationConfig>, skipUpToIndex: number): ReturnType<TCheckPermFn> => {
   const nextValues = values.slice()

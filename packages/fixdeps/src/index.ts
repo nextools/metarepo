@@ -1,3 +1,10 @@
 export * from './fix-deps'
 export * from './has-deps-to-modify'
-export * from './types'
+export type {
+  TDepsEntries,
+  TDepsObject,
+  TGetDepsToModifyResult,
+  TOptions,
+  TPackageJson,
+  TResult,
+} from './types'

@@ -1,8 +1,7 @@
-/* eslint-disable import/no-cycle */
 import { TYPE_ARRAY_BRACKET, TYPE_ARRAY_COMMA } from './constants'
 import { serializeIndent } from './serialize-indent'
 import { serializeValue } from './serialize-value'
-import { TConfig, TSerializedElement, TMeta } from './types'
+import type { TConfig, TSerializedElement, TMeta } from './types'
 import { sanitizeLines, optMetaValue } from './utils'
 
 export type TSerializeArray = {

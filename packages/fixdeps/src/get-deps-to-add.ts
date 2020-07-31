@@ -1,5 +1,5 @@
 import { isUndefined } from 'tsfn'
-import { TPackageJson } from './types'
+import type { TPackageJson } from './types'
 
 export const getDepsToAdd = (packageJson: TPackageJson, depNames: string[], ignoredPackages: string[]): string[] => {
   const dependenciesKeys = !isUndefined(packageJson.dependencies)

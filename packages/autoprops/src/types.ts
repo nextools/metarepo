@@ -1,6 +1,6 @@
-import { BigInteger } from 'big-integer'
-import { FC } from 'react'
-import { TAnyObject, TKeyOf, TRequiredKeys, TOptionalKeys, TReadonly } from 'tsfn'
+import type { BigInteger } from 'big-integer'
+import type { FC } from 'react'
+import type { TAnyObject, TKeyOf, TRequiredKeys, TOptionalKeys, TReadonly } from 'tsfn'
 
 export type TCommonRequiredConfig = string[]
 export type TCommonMutexConfig = string[][]

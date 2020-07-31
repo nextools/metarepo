@@ -1,7 +1,7 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
 import { CONTROLS_HEIGHT_TOP, BUTTON_FONT_SIZE } from '../constants'
-import { THeaderControls } from '../types'
+import type { THeaderControls } from '../types'
 
 const getButtonStyle = (month: number, currentMonth: number) => ({
   border: 'none',

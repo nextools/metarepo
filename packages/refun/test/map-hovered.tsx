@@ -1,8 +1,10 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { component, mapHovered, startWithType, TMapHovered } from '../src'
+import { component, mapHovered, startWithType } from '../src'
+import type { TMapHovered } from '../src'
 
 test('mapHovered: no props', (t) => {
   const componentSpy = createSpy(() => null)

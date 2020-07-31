@@ -1,5 +1,6 @@
 import { App as XRayUiApp, SourceCode } from '@x-ray/ui'
-import React, { FC } from 'react'
+import React from 'react'
+import type { FC } from 'react'
 
 export const App: FC = () => (
   <XRayUiApp

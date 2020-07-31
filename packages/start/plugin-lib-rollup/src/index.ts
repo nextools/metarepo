@@ -1,5 +1,5 @@
 import plugin from '@start/plugin'
-import { RollupOptions } from 'rollup'
+import type { RollupOptions } from 'rollup'
 import { isArray } from 'tsfn'
 
 export default (config: RollupOptions) =>

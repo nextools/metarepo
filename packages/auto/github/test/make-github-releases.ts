@@ -1,8 +1,8 @@
-import { TPackageRelease, TAutoConfig } from '@auto/core'
+import type { TPackageRelease, TAutoConfig } from '@auto/core'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { TGithubConfig } from '../src/types'
+import type { TGithubConfig } from '../src/types'
 import { prefixes } from './prefixes'
 
 const githubConfig: TGithubConfig = {

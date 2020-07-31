@@ -1,5 +1,5 @@
 import plugin from '@start/plugin'
-import { Configuration, Stats } from 'webpack'
+import type { Configuration, Stats } from 'webpack'
 
 type Webpack = (options: Configuration, cb: (err: any, stats: Stats) => void) => void
 

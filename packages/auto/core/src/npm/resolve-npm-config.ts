@@ -1,6 +1,6 @@
-import { TReadonly } from 'tsfn'
+import type { TReadonly } from 'tsfn'
 import { readPackage } from '../fs/read-package'
-import { TNpmConfig } from '../types'
+import type { TNpmConfig } from '../types'
 
 const defaultConfig: TReadonly<Required<TNpmConfig>> = {
   registry: 'https://registry.npmjs.org/',

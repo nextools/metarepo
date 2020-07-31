@@ -1,8 +1,8 @@
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { TPackageBumpMap } from '../../src/bump/types'
-import { TGitMessageMap } from '../../src/types'
+import type { TPackageBumpMap } from '../../src/bump/types'
+import type { TGitMessageMap } from '../../src/types'
 import { prefixes } from '../prefixes'
 
 test('promptLog', async (t) => {

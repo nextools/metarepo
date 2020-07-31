@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
-import { TExtend3, EMPTY_OBJECT } from 'tsfn'
+import { EMPTY_OBJECT } from 'tsfn'
+import type { TExtend3 } from 'tsfn'
 import { shallowEqualByKeys } from './utils'
 
 export const mapState = <SN extends string, SSN extends string, P extends {}, R> (stateName: SN, stateSetterName: SSN, getValue: (props: P) => R, watchKeys: (keyof P)[]) =>

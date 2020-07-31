@@ -1,8 +1,9 @@
 import { easeInOutCubic } from '@primitives/animation'
 import { colorToString } from 'colorido'
-import React, { Fragment, FC } from 'react'
+import React, { Fragment } from 'react'
+import type { FC } from 'react'
 import { Animate } from './Animate'
-import { TGraphPolygon } from './types'
+import type { TGraphPolygon } from './types'
 
 export const Polygon: FC<TGraphPolygon> = ({
   colors,

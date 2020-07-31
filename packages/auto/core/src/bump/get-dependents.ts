@@ -1,5 +1,6 @@
-import { isString, TReadonly } from 'tsfn'
-import { TPackageJson, TPackageMap } from '../types'
+import { isString } from 'tsfn'
+import type { TReadonly } from 'tsfn'
+import type { TPackageJson, TPackageMap } from '../types'
 
 export const getDependencyRange = ({ dependencies }: TReadonly<TPackageJson>, jsonName: string): string | null =>
   dependencies?.[jsonName] || null

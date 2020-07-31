@@ -1,4 +1,5 @@
-import plugin, { StartDataFile, StartDataFilesProps } from '@start/plugin/'
+import plugin from '@start/plugin'
+import type { StartDataFile, StartDataFilesProps } from '@start/plugin'
 
 export default (callback: (file: string) => string) =>
   plugin('rename', ({ logPath }) => async ({ files }: StartDataFilesProps) => {

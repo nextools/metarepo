@@ -1,6 +1,6 @@
 import plugin from '@start/plugin'
-import { CoverageMapData } from 'istanbul-lib-coverage'
-import { ReportNode } from 'istanbul-lib-report'
+import type { CoverageMapData } from 'istanbul-lib-coverage'
+import type { ReportNode } from 'istanbul-lib-report'
 
 export type TOptions = {
   branches?: number,

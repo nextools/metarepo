@@ -1,5 +1,5 @@
-import { TReadonly } from 'tsfn'
-import { TGitMessageMap, TRequiredPrefixes, TMessage, TReleaseType } from '../types'
+import type { TReadonly } from 'tsfn'
+import type { TGitMessageMap, TRequiredPrefixes, TMessage, TReleaseType } from '../types'
 import { compareReleaseTypes } from '../utils'
 import { parseCommitMessage } from './parse-commit-message'
 

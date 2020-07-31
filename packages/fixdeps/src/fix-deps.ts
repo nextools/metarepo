@@ -5,7 +5,7 @@ import { getDepsToModify } from './get-deps-to-modify'
 import { getDepsVersions } from './get-deps-versions'
 import { getPackage } from './get-package-json'
 import { objectFromEntries } from './object-from-entries'
-import { TOptions, TDepsEntries, TResult } from './types'
+import type { TOptions, TDepsEntries, TResult } from './types'
 
 export const fixdeps = async (options: TOptions): Promise<TResult> => {
   const {

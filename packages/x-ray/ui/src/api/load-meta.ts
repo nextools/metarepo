@@ -1,4 +1,4 @@
-import { TJsonValue } from 'typeon'
+import type { TJsonValue } from 'typeon'
 import { HOST, PORT } from '../config'
 
 const apiLoadMetaCache = new Map<string, TJsonValue>()

@@ -1,6 +1,6 @@
 import test from 'tape'
 import { resolveReleaseType } from '../../src/bump/resolve-release-type'
-import { TPromptEditData } from '../../src/types'
+import type { TPromptEditData } from '../../src/types'
 
 test('resolveReleaseType', (t) => {
   t.equals(

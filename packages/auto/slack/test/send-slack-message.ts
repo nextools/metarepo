@@ -1,8 +1,8 @@
-import { TPackageRelease, TAutoConfig } from '@auto/core'
+import type { TPackageRelease, TAutoConfig } from '@auto/core'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { TSlackConfig } from '../src/types'
+import type { TSlackConfig } from '../src/types'
 import { prefixes } from './prefixes'
 
 const slackConfig: TSlackConfig = {

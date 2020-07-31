@@ -14,7 +14,7 @@ import {
 } from '../config'
 import { ThemeContext } from '../context/Theme'
 import { mapStoreDispatch } from '../store'
-import { TPosition } from '../types'
+import type { TPosition } from '../types'
 import { Background } from './Background'
 import { Block } from './Block'
 import { Border } from './Border'

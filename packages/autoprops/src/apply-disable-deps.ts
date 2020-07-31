@@ -2,7 +2,7 @@
 import BigInt from 'big-integer'
 import { isUndefined } from 'tsfn'
 import { applyEnableDeps } from './apply-enable-deps'
-import { TApplyRestrictionFn } from './types'
+import type { TApplyRestrictionFn } from './types'
 import { getPropIndex } from './utils'
 
 export const applyDisableDeps: TApplyRestrictionFn = (values, propName, permConfig, componentConfig) => {

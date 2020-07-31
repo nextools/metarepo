@@ -1,6 +1,6 @@
-import { THookProps } from '@auto/core'
+import type { THookProps } from '@auto/core'
 import plugin from '@start/plugin'
-import { TReadonly } from 'tsfn'
+import type { TReadonly } from 'tsfn'
 
 export default plugin<TReadonly<THookProps>, any>('removeYarnCache', ({ logMessage }) => async ({ packages }) => {
   const path = await import('path')

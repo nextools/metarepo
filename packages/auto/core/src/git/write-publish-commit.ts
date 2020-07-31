@@ -1,6 +1,6 @@
 import path from 'path'
 import execa from 'execa'
-import { THook } from '../types'
+import type { THook } from '../types'
 
 export const writePublishCommit = (): THook => async ({ packages, prefixes }) => {
   const bumps = packages.filter((pkg) => pkg.type !== null && pkg.version !== null)

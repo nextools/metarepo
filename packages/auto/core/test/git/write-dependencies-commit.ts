@@ -1,7 +1,7 @@
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { TPackageRelease } from '../../src/types'
+import type { TPackageRelease } from '../../src/types'
 import { prefixes } from '../prefixes'
 
 test('git:writeDependenciesCommit: no dependencies', async (t) => {

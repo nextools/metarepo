@@ -1,7 +1,8 @@
-import React, { MouseEvent, ReactNode } from 'react'
+import React from 'react'
+import type { MouseEvent, ReactNode } from 'react'
 import { component, startWithType, mapHandlers, mapProps } from 'refun'
 import { normalizeWebStyle } from 'stili'
-import { TRect } from '../../types'
+import type { TRect } from '../../types'
 
 export type TPointer = TRect & {
   children: ReactNode,

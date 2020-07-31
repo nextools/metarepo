@@ -1,7 +1,7 @@
 import { pipe } from 'funcom'
 import { map, reduce, toArray, toValue } from 'iterama'
 import { isUndefined } from 'tsfn'
-import { TListItems, TTotalResults, TResultsType, TEncoding, TFileResults } from '../types'
+import type { TListItems, TTotalResults, TResultsType, TEncoding, TFileResults } from '../types'
 
 export type TGetListOptions = {
   results: TTotalResults<TResultsType>,

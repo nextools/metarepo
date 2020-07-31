@@ -1,4 +1,5 @@
-import plugin, { StartDataFile, StartFilesProps } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartDataFile, StartFilesProps } from '@start/plugin'
 
 export default plugin('read', ({ logPath }) => async ({ files }: StartFilesProps) => {
   const { readFile } = await import('pifs')

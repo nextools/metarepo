@@ -1,6 +1,6 @@
 import plugin from '@start/plugin'
-import { Configuration as WebpackConfig } from 'webpack'
-import { Configuration as TWebpackDevServerConfig } from 'webpack-dev-server'
+import type { Configuration as WebpackConfig } from 'webpack'
+import type { Configuration as TWebpackDevServerConfig } from 'webpack-dev-server'
 
 export type TWebpackConfig = WebpackConfig & {
   devServer?: TWebpackDevServerConfig,

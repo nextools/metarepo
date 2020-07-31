@@ -1,4 +1,5 @@
-import plugin, { StartDataFilesProps, StartDataFile } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartDataFilesProps, StartDataFile } from '@start/plugin'
 
 export default (outDirRelative: string) =>
   plugin('write', ({ logPath }) => async ({ files }: StartDataFilesProps) => {

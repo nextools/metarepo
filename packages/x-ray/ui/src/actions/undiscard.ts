@@ -1,4 +1,4 @@
-import { TActionWithPayload, TAnyAction } from '../types'
+import type { TActionWithPayload, TAnyAction } from '../types'
 
 const TYPE_UNDISCARD_ITEM = 'UNDISCARD_ITEM'
 

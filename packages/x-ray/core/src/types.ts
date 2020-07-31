@@ -1,5 +1,5 @@
-import { ReactElement } from 'react'
-import { TJsonValue } from 'typeon'
+import type { ReactElement } from 'react'
+import type { TJsonValue } from 'typeon'
 
 export type TResultsType = Uint8Array | string
 

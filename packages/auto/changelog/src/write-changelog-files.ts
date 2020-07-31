@@ -1,5 +1,6 @@
-import { THook, TPackageRelease, TMessage, TLogReleaseType } from '@auto/core'
-import { TReadonly, isString } from 'tsfn'
+import type { THook, TPackageRelease, TMessage, TLogReleaseType } from '@auto/core'
+import { isString } from 'tsfn'
+import type { TReadonly } from 'tsfn'
 import { writeChangelog } from './write-changelog'
 
 export const writeChangelogFiles: THook = async ({ packages, prefixes }) => {

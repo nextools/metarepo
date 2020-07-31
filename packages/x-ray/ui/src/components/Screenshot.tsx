@@ -1,9 +1,10 @@
 import React from 'react'
 import { startWithType, component, mapHandlers, mapState, onUpdateAsync } from 'refun'
 import { actionError } from '../actions'
-import { apiLoadScreenshot, TApiLoadScreenshotOpts } from '../api'
+import { apiLoadScreenshot } from '../api'
+import type { TApiLoadScreenshotOpts } from '../api'
 import { mapStoreDispatch } from '../store'
-import { TSize } from '../types'
+import type { TSize } from '../types'
 
 export type TScreenshot = TSize & TApiLoadScreenshotOpts
 

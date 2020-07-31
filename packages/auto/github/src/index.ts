@@ -1,2 +1,2 @@
 export * from './make-github-releases'
-export * from './types'
+export type { TGithubConfig } from './types'

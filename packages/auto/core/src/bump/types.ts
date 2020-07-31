@@ -1,4 +1,4 @@
-import { TReleaseType } from '../types'
+import type { TReleaseType } from '../types'
 
 export type TPackageBump = {
   type: TReleaseType | null,

@@ -1,9 +1,8 @@
-/* eslint-disable import/no-cycle */
 import { TYPE_COMPONENT_BRACKET, TYPE_COMPONENT_NAME } from './constants'
 import { serializeChildren } from './serialize-children'
 import { serializeIndent } from './serialize-indent'
 import { serializeProps } from './serialize-props'
-import { TConfig, TSerializedElement, TMeta } from './types'
+import type { TConfig, TSerializedElement, TMeta } from './types'
 import { filterProps, hasKeys, isValidChildren, sanitizeLines, optMetaValue } from './utils'
 
 export type TSerializeElement = {

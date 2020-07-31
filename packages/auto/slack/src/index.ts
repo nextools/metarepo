@@ -1,2 +1,2 @@
 export * from './send-slack-message'
-export * from './types'
+export type { TSlackConfig } from './types'

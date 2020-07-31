@@ -1,7 +1,7 @@
-/* eslint-disable no-use-before-define */
-import BigInt, { BigInteger } from 'big-integer'
+import BigInt from 'big-integer'
+import type { BigInteger } from 'big-integer'
 import { isDefined } from 'tsfn'
-import { TCommonComponentConfig } from './types'
+import type { TCommonComponentConfig } from './types'
 import { adjustLengthForOptionalProp } from './utils'
 
 export const getLength = (componentConfig: TCommonComponentConfig): BigInteger => {

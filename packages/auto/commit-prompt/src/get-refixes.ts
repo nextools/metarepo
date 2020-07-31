@@ -1,7 +1,7 @@
 import path from 'path'
-import { TPackageJson } from '@auto/core'
+import type { TPackageJson } from '@auto/core'
 import { isUndefined } from 'tsfn'
-import { TPrefixesWithTitles, TCommitAutoConfig } from './types'
+import type { TPrefixesWithTitles, TCommitAutoConfig } from './types'
 
 export const getPrefixes = async (): Promise<TPrefixesWithTitles> => {
   const { auto: autoConfig }: TPackageJson = await import(path.resolve('package.json'))

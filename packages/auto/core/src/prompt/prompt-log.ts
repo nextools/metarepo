@@ -1,6 +1,6 @@
-import { TReadonly } from 'tsfn'
-import { TPackageBumpMap, TPackageBump } from '../bump/types'
-import { TMessage, TLogReleaseType, TRequiredPrefixes, TGitMessageMap } from '../types'
+import type { TReadonly } from 'tsfn'
+import type { TPackageBumpMap, TPackageBump } from '../bump/types'
+import type { TMessage, TLogReleaseType, TRequiredPrefixes, TGitMessageMap } from '../types'
 import { isResolvedReleaseType } from '../utils'
 import { log } from './log'
 

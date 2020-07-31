@@ -1,6 +1,6 @@
 import plugin from '@start/plugin'
-import { CoverageMapData } from 'istanbul-lib-coverage'
-import { ReportType } from 'istanbul-reports'
+import type { CoverageMapData } from 'istanbul-lib-coverage'
+import type { ReportType } from 'istanbul-reports'
 
 export default (formats: ReportType[] = ['lcovonly', 'text-summary']) =>
   plugin('istanbulReport', ({ logMessage }) => async () => {

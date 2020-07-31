@@ -1,8 +1,8 @@
-import { THook, TMessage, TLogReleaseType, TPackageRelease } from '@auto/core'
+import type { THook, TMessage, TLogReleaseType, TPackageRelease } from '@auto/core'
 import fetch from 'node-fetch'
-import { TReadonly } from 'tsfn'
+import type { TReadonly } from 'tsfn'
 import { TELEGRAM_MESSAGE_MAX_LENGTH, TELEGRAM_API_URL } from './constants'
-import { TTelegramConfig } from './types'
+import type { TTelegramConfig } from './types'
 
 export const sendTelegramMessage = (telegramConfig: TReadonly<TTelegramConfig>): THook => async ({ packages, prefixes }) => {
   if (typeof telegramConfig.token !== 'string') {

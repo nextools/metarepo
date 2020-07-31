@@ -1,10 +1,10 @@
-import { TPlugin } from '@x-ray/core'
+import type { TPlugin } from '@x-ray/core'
 import { pipe } from 'funcom'
 import { forEachAsync, toMapAsync } from 'iterama'
 import { workerama } from 'workerama'
 import { runBrowser } from 'xrom'
 import { MAX_THREAD_COUNT, WORKER_PATH } from './constants'
-import { TCheckOptions, TWorkerResult } from './types'
+import type { TCheckOptions, TWorkerResult } from './types'
 
 export type TChromiumScreenshotsOptions = {
   fontsDir?: string,

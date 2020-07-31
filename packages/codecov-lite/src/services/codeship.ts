@@ -1,4 +1,4 @@
-import { TServiceConfig } from '../types'
+import type { TServiceConfig } from '../types'
 
 // https:// documentation.codeship.com/basic/builds-and-configuration/set-environment-variables/#default-environment-variables
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {

@@ -1,5 +1,5 @@
 import test from 'tape'
-import { TReleaseType } from '../../src/types'
+import type { TReleaseType } from '../../src/types'
 import { compareReleaseTypes } from '../../src/utils/compare-release-types'
 
 test('compare-release-types', (t) => {

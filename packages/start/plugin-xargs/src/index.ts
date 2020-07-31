@@ -1,5 +1,5 @@
 import plugin from '@start/plugin'
-import { Options as TExecaOptions } from 'execa'
+import type { Options as TExecaOptions } from 'execa'
 
 export type Options = {
   maxProcesses?: number,

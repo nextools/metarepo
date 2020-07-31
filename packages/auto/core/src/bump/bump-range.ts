@@ -1,4 +1,4 @@
-import { TReleaseType } from '../types'
+import type { TReleaseType } from '../types'
 
 const getRangeSymbol = (range: string): '^' | '~' | null => {
   const matches = range.match(/^([\^~])?\d.+$/)

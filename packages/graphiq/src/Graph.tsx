@@ -5,7 +5,7 @@ import { Points } from './Points'
 import { Polygon } from './Polygon'
 import { Tooltips } from './Tooltips'
 import { GRAPH_OFFSET } from './constants'
-import { TGraphItem } from './types'
+import type { TGraphItem } from './types'
 import { getPastMonthsDate } from './utils'
 
 export const Graph = component(

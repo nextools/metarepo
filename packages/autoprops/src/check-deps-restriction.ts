@@ -1,7 +1,9 @@
-import BigInt, { BigInteger } from 'big-integer'
-import { TReadonly, isUndefined } from 'tsfn'
+import BigInt from 'big-integer'
+import type { BigInteger } from 'big-integer'
+import { isUndefined } from 'tsfn'
+import type { TReadonly } from 'tsfn'
 import { skipToPerm } from './skip-to-perm'
-import { TPermutationConfig, TCommonComponentConfig, TCheckPermFn } from './types'
+import type { TPermutationConfig, TCommonComponentConfig, TCheckPermFn } from './types'
 import { getPropIndex } from './utils'
 
 const isPropActive = (propKey: string, values: readonly BigInteger[], { propKeys, childrenKeys }: TReadonly<TPermutationConfig>, { required }: TCommonComponentConfig): boolean => {

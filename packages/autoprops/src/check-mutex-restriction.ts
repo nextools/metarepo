@@ -1,8 +1,8 @@
-/* eslint-disable max-params */
-import { BigInteger } from 'big-integer'
-import { TReadonly, isUndefined } from 'tsfn'
+import type { BigInteger } from 'big-integer'
+import { isUndefined } from 'tsfn'
+import type { TReadonly } from 'tsfn'
 import { skipToPerm } from './skip-to-perm'
-import { TPermutationConfig, TCheckPermFn } from './types'
+import type { TPermutationConfig, TCheckPermFn } from './types'
 import { getPropNameByIndex, getPropIndex } from './utils'
 
 const isPropActive = (propKey: string, values: readonly BigInteger[], { propKeys, childrenKeys }: TReadonly<TPermutationConfig>): boolean => {

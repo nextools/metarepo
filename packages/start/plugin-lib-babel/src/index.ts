@@ -1,5 +1,6 @@
-import { TransformOptions } from '@babel/core'
-import plugin, { StartDataFile, StartDataFilesProps } from '@start/plugin'
+import type { TransformOptions } from '@babel/core'
+import plugin from '@start/plugin'
+import type { StartDataFile, StartDataFilesProps } from '@start/plugin'
 
 export default (userOptions?: TransformOptions) =>
   plugin('babel', ({ logPath }) => async ({ files }: StartDataFilesProps) => {

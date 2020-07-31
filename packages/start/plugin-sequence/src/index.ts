@@ -1,5 +1,5 @@
-/* eslint-disable space-infix-ops */
-import plugin, { StartPlugin, StartReporter, MaybeObject } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartPlugin, StartReporter, MaybeObject } from '@start/plugin'
 
 export type StartPluginOrFalse<P0, P1> = StartPlugin<P0, P1> | false
 

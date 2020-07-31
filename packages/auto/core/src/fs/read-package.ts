@@ -1,6 +1,6 @@
 import path from 'path'
 import { readFile } from 'pifs'
-import { TPackageJson } from '../types'
+import type { TPackageJson } from '../types'
 
 export const readPackage = async (packageDir: string): Promise<TPackageJson> => {
   const packageJsonPath = path.join(packageDir, 'package.json')

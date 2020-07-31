@@ -1,5 +1,5 @@
-import { TReadonly } from 'tsfn'
-import { TPrefixReleaseType, TRequiredPrefixes } from '../types'
+import type { TReadonly } from 'tsfn'
+import type { TPrefixReleaseType, TRequiredPrefixes } from '../types'
 import { makeRegExp } from '../utils'
 
 export type TParsedMessage = {
