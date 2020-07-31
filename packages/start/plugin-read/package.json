@@ -19,7 +19,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.2",
     "@start/plugin": "^1.0.0",
-    "pifs": "^1.0.0"
+    "pifs": "^1.0.3"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",

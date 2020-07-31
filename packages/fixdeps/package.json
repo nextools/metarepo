@@ -17,7 +17,7 @@
     "execa": "^4.0.0",
     "fast-glob": "^3.0.3",
     "p-all": "^3.0.0",
-    "pifs": "^1.0.0",
+    "pifs": "^1.0.3",
     "tsfn": "^1.1.2"
   },
   "devDependencies": {

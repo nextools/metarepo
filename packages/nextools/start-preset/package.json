@@ -63,7 +63,7 @@
     "move-path": "^1.0.0",
     "nanomatch": "^1.2.13",
     "node-fetch": "^2.6.0",
-    "pifs": "^1.0.0",
+    "pifs": "^1.0.3",
     "prompts": "^2.1.0",
     "rplace": "^0.2.0",
     "stroki": "^0.1.0",

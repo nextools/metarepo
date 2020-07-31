@@ -25,6 +25,6 @@
     "tape": "^5.0.0-next.5"
   },
   "dependencies": {
-    "pifs": "^1.0.0"
+    "pifs": "^1.0.3"
   }
 }
