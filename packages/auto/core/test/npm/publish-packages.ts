@@ -5,6 +5,7 @@ import { prefixes } from '../prefixes'
 
 test('npm:publishPackages: normal usecases', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
+  const messageSpy = createSpy(() => {})
   const errorSpy = createSpy(() => {})
 
   const packageJsons: any = {
@@ -27,10 +28,14 @@ test('npm:publishPackages: normal usecases', async (t) => {
 
   const unmockRequire = mockRequire('../../src/npm/publish-packages', {
     execa: { default: execaSpy },
+    prompts: {
+      default: () => Promise.resolve({ value: 'YES' }),
+    },
     '../../src/fs/read-package': {
       readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
     },
-    '../../src/npm/log-error': {
+    '../../src/npm/log': {
+      logMessage: messageSpy,
       logError: errorSpy,
     },
   })
@@ -69,6 +74,18 @@ test('npm:publishPackages: normal usecases', async (t) => {
       deps: null,
       devDeps: null,
       messages: null,
+    }, {
+      name: 'c',
+      version: null,
+      type: null,
+      dir: 'packages/c',
+      json: {
+        name: 'c',
+        version: '0.0.1',
+      },
+      deps: null,
+      devDeps: null,
+      messages: null,
     }],
     prefixes,
   })
@@ -83,9 +100,15 @@ test('npm:publishPackages: normal usecases', async (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(errorSpy).length,
-    0,
-    'should not call onError'
+    getSpyCalls(messageSpy),
+    [],
+    'should not call logMessage'
+  )
+
+  t.deepEquals(
+    getSpyCalls(errorSpy),
+    [],
+    'should not call logError'
   )
 
   unmockRequire()
@@ -93,7 +116,8 @@ test('npm:publishPackages: normal usecases', async (t) => {
 
 test('npm:publishPackages: registry override', async (t) => {
   const execaSpy = createSpy(() => Promise.resolve())
-  const onErrorSpy = createSpy(() => {})
+  const messageSpy = createSpy(() => {})
+  const errorSpy = createSpy(() => {})
 
   const packageJsons: any = {
     'packages/a': {
@@ -117,9 +141,18 @@ test('npm:publishPackages: registry override', async (t) => {
   }
 
   const unmockRequire = mockRequire('../../src/npm/publish-packages', {
-    execa: { default: execaSpy },
+    execa: {
+      default: execaSpy,
+    },
+    prompts: {
+      default: () => Promise.resolve({ value: 'YES' }),
+    },
     '../../src/fs/read-package': {
       readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
+    },
+    '../../src/npm/log': {
+      logMessage: () => {},
+      logError: () => {},
     },
   })
 
@@ -127,7 +160,8 @@ test('npm:publishPackages: registry override', async (t) => {
 
   await publishPackages({
     registry: 'https://override',
-    onError: onErrorSpy,
+    logMessage: messageSpy,
+    logError: errorSpy,
   })({
     config: {},
     packages: [{
@@ -168,17 +202,123 @@ test('npm:publishPackages: registry override', async (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(onErrorSpy).length,
+    getSpyCalls(messageSpy),
+    [],
+    'should not call logMessage'
+  )
+
+  t.deepEquals(
+    getSpyCalls(errorSpy),
+    [],
+    'should not call logError'
+  )
+
+  unmockRequire()
+})
+
+test('npm:publishPackages: npm errors', async (t) => {
+  const execaSpy = createSpy(({ index }) => (
+    index % 2 === 0
+      ? Promise.reject({ stderr: 'EPUBLISHCONFLICT' })
+      : Promise.resolve()
+  ))
+  const promptsSpy = createSpy(() => Promise.reject())
+  const messageSpy = createSpy(() => {})
+  const errorSpy = createSpy(() => {})
+
+  const packageJsons: any = {
+    'packages/a': {},
+    'packages/b': {},
+  }
+
+  const unmockRequire = mockRequire('../../src/npm/publish-packages', {
+    execa: { default: execaSpy },
+    prompts: { default: promptsSpy },
+    '../../src/fs/read-package': {
+      readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
+    },
+    '../../src/npm/log.ts': {
+      logMessage: messageSpy,
+      logError: errorSpy,
+    },
+  })
+
+  const { publishPackages } = await import('../../src/npm/publish-packages')
+
+  await publishPackages({
+    logMessage: messageSpy,
+    logError: errorSpy,
+  })({
+    config: {},
+    packages: [{
+      name: 'a',
+      version: '0.0.1',
+      type: 'patch',
+      dir: 'packages/a',
+      json: {
+        name: 'a',
+        version: '0.0.1',
+      },
+      deps: null,
+      devDeps: null,
+      messages: null,
+    }, {
+      name: 'b',
+      version: '0.0.1',
+      type: 'patch',
+      dir: 'packages/b',
+      json: {
+        name: 'b',
+        version: '0.0.1',
+      },
+      deps: null,
+      devDeps: null,
+      messages: null,
+    }],
+    prefixes,
+  })
+
+  t.deepEquals(
+    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    [
+      ['npm', ['publish', '--registry', 'https://registry.npmjs.org/', '--access', 'restricted', 'packages/a']],
+      ['npm', ['publish', '--registry', 'https://registry.npmjs.org/', '--access', 'restricted', 'packages/b']],
+    ],
+    'should spawn NPM with necessary arguments'
+  )
+
+  t.deepEquals(
+    getSpyCalls(promptsSpy).length,
     0,
+    'should call prompts'
+  )
+
+  t.deepEquals(
+    getSpyCalls(messageSpy),
+    [
+      ['Package "a@0.0.1" has already been published'],
+    ],
+    'should not call logMessage'
+  )
+
+  t.deepEquals(
+    getSpyCalls(errorSpy),
+    [],
     'should call onError'
   )
 
   unmockRequire()
 })
 
-test('npm:publishPackages: errors', async (t) => {
-  const execaSpy = createSpy(() => Promise.reject({ stderr: 'npm ERR!' }))
-  const onErrorSpy = createSpy(() => {})
+test('npm:publishPackages: npm errors', async (t) => {
+  const execaSpy = createSpy(({ index }) => (
+    index % 2 === 0
+      ? Promise.reject({ stderr: 'npm ERR!' })
+      : Promise.resolve()
+  ))
+  const promptsSpy = createSpy(() => Promise.resolve({ value: 'YES' }))
+  const messageSpy = createSpy(() => {})
+  const errorSpy = createSpy(() => {})
 
   const packageJsons: any = {
     'packages/a': {
@@ -203,18 +343,21 @@ test('npm:publishPackages: errors', async (t) => {
 
   const unmockRequire = mockRequire('../../src/npm/publish-packages', {
     execa: { default: execaSpy },
+    prompts: { default: promptsSpy },
     '../../src/fs/read-package': {
       readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
     },
-    '../../src/npm/log-error': {
-      logError: onErrorSpy,
+    '../../src/npm/log.ts': {
+      logMessage: messageSpy,
+      logError: errorSpy,
     },
   })
 
   const { publishPackages } = await import('../../src/npm/publish-packages')
 
   await publishPackages({
-    onError: onErrorSpy,
+    logMessage: messageSpy,
+    logError: errorSpy,
   })({
     config: {},
     packages: [{
@@ -269,14 +412,29 @@ test('npm:publishPackages: errors', async (t) => {
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
     [
       ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
+      ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
       ['npm', ['publish', '--registry', 'http://registry', '--access', 'invalid', 'packages/b']],
+      ['npm', ['publish', '--registry', 'http://registry', '--access', 'invalid', 'packages/b']],
+      ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
       ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
     ],
     'should spawn NPM with necessary arguments'
   )
 
   t.deepEquals(
-    getSpyCalls(onErrorSpy),
+    getSpyCalls(promptsSpy).length,
+    3,
+    'should call prompts'
+  )
+
+  t.deepEquals(
+    getSpyCalls(messageSpy),
+    [],
+    'should not call logMessage'
+  )
+
+  t.deepEquals(
+    getSpyCalls(errorSpy),
     [
       ['npm ERR!'],
       ['npm ERR!'],
@@ -289,8 +447,14 @@ test('npm:publishPackages: errors', async (t) => {
 })
 
 test('npm:publishPackages: other errors', async (t) => {
-  const execaSpy = createSpy(() => Promise.reject({ stderr: 'other error' }))
-  const onErrorSpy = createSpy(() => {})
+  const execaSpy = createSpy(({ index }) => (
+    index % 2 === 0
+      ? Promise.reject({ stderr: 'other error' })
+      : Promise.resolve()
+  ))
+  const promptsSpy = createSpy(() => Promise.resolve({ value: 'YES' }))
+  const messageSpy = createSpy(() => {})
+  const errorSpy = createSpy(() => {})
 
   const packageJsons: any = {
     'packages/a': {
@@ -315,18 +479,21 @@ test('npm:publishPackages: other errors', async (t) => {
 
   const unmockRequire = mockRequire('../../src/npm/publish-packages', {
     execa: { default: execaSpy },
+    prompts: { default: promptsSpy },
     '../../src/fs/read-package': {
       readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
     },
-    '../../src/npm/log-error': {
-      logError: onErrorSpy,
+    '../../src/npm/log.ts': {
+      logMessage: messageSpy,
+      logError: errorSpy,
     },
   })
 
   const { publishPackages } = await import('../../src/npm/publish-packages')
 
   await publishPackages({
-    onError: onErrorSpy,
+    logError: errorSpy,
+    logMessage: messageSpy,
   })({
     config: {},
     packages: [{
@@ -361,14 +528,25 @@ test('npm:publishPackages: other errors', async (t) => {
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
     [
       ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
+      ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
+      ['npm', ['publish', '--registry', 'http://registry', '--access', 'invalid', 'packages/b']],
       ['npm', ['publish', '--registry', 'http://registry', '--access', 'invalid', 'packages/b']],
     ],
     'should spawn NPM with necessary arguments'
   )
 
   t.deepEquals(
-    getSpyCalls(onErrorSpy),
+    getSpyCalls(messageSpy),
     [],
+    'should call logMessage'
+  )
+
+  t.deepEquals(
+    getSpyCalls(errorSpy),
+    [
+      ['other error'],
+      ['other error'],
+    ],
     'should call onError'
   )
 

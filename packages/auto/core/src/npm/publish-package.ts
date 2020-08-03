@@ -1,18 +1,17 @@
 import path from 'path'
 import execa from 'execa'
-import { isFunction, isString } from 'tsfn'
+import { isString } from 'tsfn'
 import type { TReadonly } from 'tsfn'
+import { makeRetryPrompt } from '../prompt/make-retry-prompt'
 import type { TNpmConfig, TPackageRelease } from '../types'
-import { logError } from './log-error'
-import type { TPublishPackageConfig } from './publish-packages'
 
-type TPublishPackage = Pick<TPackageRelease, 'name' | 'dir'>
+type TPublishPackage = Pick<TPackageRelease, 'name' | 'dir' | 'version'>
 
-const NPM_ERROR = 'ERR!'
+const isNpmAlreadyExistsError = (err: unknown) => isString(err) && err.includes('EPUBLISHCONFLICT')
 
-export const publishPackage = async (packageRelease: TReadonly<TPublishPackage>, npmConfig: TReadonly<Required<TNpmConfig>>, publishConfig: TPublishPackageConfig): Promise<void> => {
-  try {
-    await execa('npm', [
+export const publishPackage = async (packageRelease: TReadonly<TPublishPackage>, npmConfig: TReadonly<Required<TNpmConfig>>, logMessage: (message: string) => void, logError: (err: string) => void): Promise<void> => {
+  const invokePublish = () =>
+    execa('npm', [
       'publish',
       '--registry',
       npmConfig.registry,
@@ -24,13 +23,22 @@ export const publishPackage = async (packageRelease: TReadonly<TPublishPackage>,
       stdout: process.stdout,
       stderr: 'pipe',
     })
-  } catch (e) {
-    if (isString(e.stderr) && e.stderr.includes(NPM_ERROR)) {
-      if (isFunction(publishConfig.onError)) {
-        publishConfig.onError(e.stderr)
+
+  let shouldRetry: boolean
+
+  do {
+    try {
+      await invokePublish()
+      shouldRetry = false
+    } catch (e) {
+      if (isNpmAlreadyExistsError(e.stderr)) {
+        logMessage(`Package "${packageRelease.name}@${packageRelease.version}" has already been published`)
+        shouldRetry = false
       } else {
         logError(e.stderr)
+        await makeRetryPrompt()
+        shouldRetry = true
       }
     }
-  }
+  } while (shouldRetry)
 }
