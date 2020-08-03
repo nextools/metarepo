@@ -1,4 +1,5 @@
-import plugin, { StartFile, StartFilesProps, StartPlugin, MaybeObject } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartFile, StartFilesProps, StartPlugin, MaybeObject } from '@start/plugin'
 
 export default <R extends MaybeObject> (target: StartPlugin<StartFilesProps, R>) => (...files: string[]) =>
   plugin('inputFiles', (utils) => async () => {

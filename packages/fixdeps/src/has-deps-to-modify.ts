@@ -1,5 +1,5 @@
 import { getDepsToModify } from './get-deps-to-modify'
-import { TOptions } from './types'
+import type { TOptions } from './types'
 
 export const hasDepsToModify = async (options: TOptions): Promise<boolean> => {
   const {

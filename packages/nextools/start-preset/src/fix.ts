@@ -4,7 +4,7 @@ import eslint from '@start/plugin-lib-eslint'
 import overwrite from '@start/plugin-overwrite'
 import read from '@start/plugin-read'
 import sequence from '@start/plugin-sequence'
-import { TPackageJson } from 'fixdeps'
+import type { TPackageJson } from 'fixdeps'
 
 export const fixLint = async () => {
   const path = await import('path')

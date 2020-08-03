@@ -2,7 +2,7 @@ import I from 'big-integer'
 import React, { Fragment } from 'react'
 import test from 'tape'
 import { serializeProps } from '../src/serialize-props'
-import { TCommonComponentConfig } from '../src/types'
+import type { TCommonComponentConfig } from '../src/types'
 
 test('serializeProps: props', (t) => {
   const Comp = () => null

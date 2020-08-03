@@ -1,4 +1,4 @@
-import { TBumpConfig, TResolvedReleaseType } from '../types'
+import type { TBumpConfig, TResolvedReleaseType } from '../types'
 
 export const bumpTypes: TResolvedReleaseType[] = ['patch', 'minor', 'major']
 

@@ -1,6 +1,6 @@
 import path from 'path'
 import execa from 'execa'
-import { TPlatform } from './types'
+import type { TPlatform } from './types'
 
 export type TBuildJsBundleOptions = {
   entryPointPath: string,

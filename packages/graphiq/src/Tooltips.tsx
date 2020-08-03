@@ -1,7 +1,8 @@
-import React, { Fragment, FC } from 'react'
+import React, { Fragment } from 'react'
+import type { FC } from 'react'
 import { Tooltip } from './Tooltip'
 import { GRAPH_OFFSET } from './constants'
-import { TGraphTooltips } from './types'
+import type { TGraphTooltips } from './types'
 
 export const Tooltips: FC<TGraphTooltips> = ({
   isActive,

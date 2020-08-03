@@ -1,6 +1,6 @@
 import { isUndefined } from 'tsfn'
 import { objectFromEntries } from './object-from-entries'
-import { TDepsEntries, TDepsObject } from './types'
+import type { TDepsEntries, TDepsObject } from './types'
 
 export const composeDependencies = (dependenciesObject: TDepsObject | undefined, depsToAddWithVersions: TDepsEntries, depsToRemove: string[]): TDepsObject => {
   if (isUndefined(dependenciesObject)) {

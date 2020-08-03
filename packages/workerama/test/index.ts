@@ -1,5 +1,6 @@
-// eslint-disable-next-line import/order
-import { Worker, WorkerOptions } from 'worker_threads'
+/* eslint-disable import/order */
+import { Worker } from 'worker_threads'
+import type { WorkerOptions } from 'worker_threads'
 import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'

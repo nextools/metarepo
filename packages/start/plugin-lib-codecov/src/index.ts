@@ -1,4 +1,5 @@
-import plugin, { StartDataFilesProps } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartDataFilesProps } from '@start/plugin'
 
 export default plugin('codecov', ({ logMessage }) => async ({ files }: StartDataFilesProps) => {
   const { default: codecovLite } = await import('codecov-lite')

@@ -1,6 +1,6 @@
-/* eslint-disable import/no-cycle */
-import { ReactElement } from 'react'
-import renderer, { ReactTestRendererJSON } from 'react-test-renderer'
+import type { ReactElement } from 'react'
+import renderer from 'react-test-renderer'
+import type { ReactTestRendererJSON } from 'react-test-renderer'
 import { isString, isNumber, isBoolean, isDefined } from 'tsfn'
 import { makeIndent, nextIndent } from './make-indent'
 import serializeProps from './serialize-props'

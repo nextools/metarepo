@@ -1,7 +1,7 @@
 /* eslint-disable max-params */
 import BigInt from 'big-integer'
 import { isUndefined } from 'tsfn'
-import { TApplyRestrictionFn } from './types'
+import type { TApplyRestrictionFn } from './types'
 import { getPropIndex } from './utils'
 
 export const applyDisableMutexes: TApplyRestrictionFn = (values, propName, permConfig, componentConfig) => {

@@ -1,4 +1,5 @@
-import plugin, { StartFilesProps } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartFilesProps } from '@start/plugin'
 
 export default plugin('remove', ({ logPath }) => async ({ files }: StartFilesProps) => {
   const { default: dleet } = await import('dleet')

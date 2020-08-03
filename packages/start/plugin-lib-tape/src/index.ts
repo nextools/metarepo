@@ -1,7 +1,6 @@
 /* eslint-disable no-invalid-this */
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable @typescript-eslint/no-require-imports */
-import plugin, { StartFilesProps } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartFilesProps } from '@start/plugin'
 
 export default (reporter?: () => NodeJS.ReadWriteStream) =>
   plugin('tape', () => async ({ files }: StartFilesProps) => {

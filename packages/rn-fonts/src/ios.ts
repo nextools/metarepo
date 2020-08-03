@@ -1,6 +1,7 @@
 import path from 'path'
 import { readFile, readdir, writeFile } from 'pifs'
-import plistParser, { PlistValue } from 'plist'
+import plistParser from 'plist'
+import type { PlistValue } from 'plist'
 // @ts-ignore
 import xcode from 'xcode'
 import { getFontPaths } from './utils'

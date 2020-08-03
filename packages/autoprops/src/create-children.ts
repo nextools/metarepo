@@ -1,8 +1,10 @@
-import { ReactElement, createElement } from 'react'
-import { isUndefined, TAnyObject, TReadonly } from 'tsfn'
+import { createElement } from 'react'
+import type { ReactElement } from 'react'
+import { isUndefined } from 'tsfn'
+import type { TAnyObject, TReadonly } from 'tsfn'
 import { getChildrenKeys } from './get-keys'
 import { isChildrenMap } from './is-children-map'
-import { TChildrenMap, TCommonComponentConfig } from './types'
+import type { TChildrenMap, TCommonComponentConfig } from './types'
 
 export const createChildren = (componentConfig: TCommonComponentConfig, childrenMap: TReadonly<TChildrenMap>): ReactElement | ReactElement[] => {
   const childrenConfig = componentConfig.children

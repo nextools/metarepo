@@ -1,4 +1,5 @@
-import plugin, { StartFile } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartFile } from '@start/plugin'
 
 export default (glob: string | string[], userOptions?: {}) =>
   plugin('find', ({ logPath }) => async () => {

@@ -1,6 +1,6 @@
-import { TReadonly } from 'tsfn'
-import { TPackageBumpMap } from '../bump/types'
-import { TPackageMap, TPackageRelease, TGitMessageMap } from '../types'
+import type { TReadonly } from 'tsfn'
+import type { TPackageBumpMap } from '../bump/types'
+import type { TPackageMap, TPackageRelease, TGitMessageMap } from '../types'
 import { getDependentsCount } from './get-dependents-count'
 import { removeAutoNamePrefix } from './remove-auto-name-prefix'
 

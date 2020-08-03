@@ -1,4 +1,4 @@
-import { TServiceConfig } from '../types'
+import type { TServiceConfig } from '../types'
 
 // https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {

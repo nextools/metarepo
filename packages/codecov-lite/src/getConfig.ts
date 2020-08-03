@@ -1,5 +1,5 @@
 import services from './services'
-import { TConfig } from './types'
+import type { TConfig } from './types'
 
 export default (): TConfig => {
   let config = null

@@ -1,7 +1,7 @@
 import path from 'path'
 import { writeFile } from 'pifs'
-import { TReadonly } from 'tsfn'
-import { TPackageJson } from '../types'
+import type { TReadonly } from 'tsfn'
+import type { TPackageJson } from '../types'
 
 export const writePackage = async (packageDir: string, packageJson: TReadonly<TPackageJson>): Promise<void> => {
   const packageJsonPath = path.join(packageDir, 'package.json')

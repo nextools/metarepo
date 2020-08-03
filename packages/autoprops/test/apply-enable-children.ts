@@ -1,7 +1,7 @@
 import I from 'big-integer'
 import test from 'tape'
 import { applyEnableChildren } from '../src/apply-enable-children'
-import { TCommonComponentConfig } from '../src/types'
+import type { TCommonComponentConfig } from '../src/types'
 import { unpackPerm } from '../src/unpack-perm'
 
 test('applyEnableChildren: children restriction', (t) => {

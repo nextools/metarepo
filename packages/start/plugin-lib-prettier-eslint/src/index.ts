@@ -1,4 +1,5 @@
-import plugin, { StartFile, StartFilesProps } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartFile, StartFilesProps } from '@start/plugin'
 
 type Options = {
   [key: string]: any,

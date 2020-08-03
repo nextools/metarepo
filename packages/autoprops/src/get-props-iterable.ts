@@ -7,7 +7,7 @@ import { getPropsImpl } from './get-props'
 import { getValidPermImpl } from './get-valid-perm'
 import { isChildrenMap } from './is-children-map'
 import { serializeProps } from './serialize-props'
-import { TComponentConfig } from './types'
+import type { TComponentConfig } from './types'
 
 export const getPropsIterable = <T extends {}>(componentConfig: TComponentConfig<T, string>): Iterable<{ id: string, props: T }> => {
   const length = getLength(componentConfig)

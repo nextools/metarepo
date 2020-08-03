@@ -1,5 +1,6 @@
 import test from 'tape'
-import { applyValidPerm, TCommonComponentConfig } from '../src'
+import { applyValidPerm } from '../src'
+import type { TCommonComponentConfig } from '../src'
 
 test('applyValidPerm: normal case', (t) => {
   const childMeta = {

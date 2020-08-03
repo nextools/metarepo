@@ -1,5 +1,5 @@
-import { TJsonValue } from 'typeon'
-import { TGetResponseQuery, TTotalResults, TResultsType } from '../types'
+import type { TJsonValue } from 'typeon'
+import type { TGetResponseQuery, TTotalResults, TResultsType } from '../types'
 
 export type TGetMetaOptions = {
   results: TTotalResults<TResultsType>,

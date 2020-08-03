@@ -1,10 +1,9 @@
-/* eslint-disable import/no-cycle */
 import { isValidElement } from 'react'
 import { TYPE_VALUE_FUNCTION, TYPE_VALUE_NULL, TYPE_VALUE_NUMBER, TYPE_VALUE_BOOLEAN, TYPE_VALUE_SYMBOL, TYPE_VALUE_STRING, TYPE_QUOTE } from './constants'
 import { serializeArray } from './serialize-array'
 import { serializeElement } from './serialize-element'
 import { serializeObject } from './serialize-object'
-import { TConfig, TSerializedElement, TMeta } from './types'
+import type { TConfig, TSerializedElement, TMeta } from './types'
 import { isArray, isBoolean, isFunction, isNull, isNumber, isObject, isSymbol, getElementName } from './utils'
 
 export type TSerializeValue = {

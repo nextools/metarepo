@@ -1,4 +1,4 @@
-import { TScreenshotGridItem } from '../../types'
+import type { TScreenshotGridItem } from '../../types'
 import { isVisibleItem } from './is-visible-item'
 
 export const hasDiffItems = (cols: TScreenshotGridItem[][], top: number, height: number): boolean => {

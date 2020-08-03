@@ -6,7 +6,7 @@ import { getDepsToRemove } from './get-deps-to-remove'
 import { getPackage } from './get-package-json'
 import { getPeerDevDepsToAdd } from './get-peer-dev-deps-to-add'
 import { globalIgnoreList } from './global-ignore-list'
-import { TOptions, TGetDepsToModifyResult } from './types'
+import type { TOptions, TGetDepsToModifyResult } from './types'
 import { uniqueArray } from './unique-array'
 
 export const getDepsToModify = async ({

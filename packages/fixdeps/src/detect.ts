@@ -1,5 +1,4 @@
 import {
-  Node,
   isExportAllDeclaration,
   isExportNamedDeclaration,
   isCallExpression,
@@ -9,6 +8,7 @@ import {
   isStringLiteral,
   isMemberExpression,
 } from '@babel/types'
+import type { Node } from '@babel/types'
 import { isString } from 'tsfn'
 
 const detectExportDeclaration = (node: Node): string | null => {

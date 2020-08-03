@@ -1,7 +1,9 @@
 import { Root } from '@primitives/root'
-import React, { FC } from 'react'
+import React from 'react'
+import type { FC } from 'react'
 import { Main } from './components/Main'
-import { RenderMetaContext, TRenderMetaContext } from './context/RenderMeta'
+import { RenderMetaContext } from './context/RenderMeta'
+import type { TRenderMetaContext } from './context/RenderMeta'
 
 export type TApp = TRenderMetaContext
 

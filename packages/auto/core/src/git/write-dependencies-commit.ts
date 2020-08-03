@@ -1,6 +1,6 @@
 import path from 'path'
 import execa from 'execa'
-import { THook } from '../types'
+import type { THook } from '../types'
 
 export const writeDependenciesCommit = (): THook => async ({ prefixes, packages }) => {
   const packageJsonPaths = packages

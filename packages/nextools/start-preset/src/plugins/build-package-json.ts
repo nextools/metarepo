@@ -1,5 +1,5 @@
 import plugin from '@start/plugin'
-import { TJsonMap } from 'typeon'
+import type { TJsonMap } from 'typeon'
 
 export default (dir: string) =>
   plugin('buildPackageJson', ({ logPath }) => async () => {

@@ -1,6 +1,7 @@
 import { Text as PrimitiveText } from '@primitives/text'
-import { TColor } from 'colorido'
-import React, { FC } from 'react'
+import type { TColor } from 'colorido'
+import React from 'react'
+import type { FC } from 'react'
 import { LINE_HEIGHT } from './constants'
 
 export type TText = {

@@ -1,4 +1,3 @@
-/* eslint-disable no-sync */
 import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
 import test from 'tape'

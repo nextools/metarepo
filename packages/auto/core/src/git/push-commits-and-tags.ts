@@ -1,5 +1,5 @@
 import execa from 'execa'
-import { THook } from '../types'
+import type { THook } from '../types'
 
 export const pushCommitsAndTags = (): THook => async () => {
   await execa(

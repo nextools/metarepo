@@ -1,6 +1,6 @@
-import { TEasingFn } from '@primitives/animation'
-import { TColor } from 'colorido'
-import { ChangeEvent, ReactElement } from 'react'
+import type { TEasingFn } from '@primitives/animation'
+import type { TColor } from 'colorido'
+import type { ChangeEvent, ReactElement } from 'react'
 
 export type TEntry = {
   version: string,

@@ -1,6 +1,6 @@
 import test from 'tape'
 import { getPropKeys, getChildrenKeys } from '../src/get-keys'
-import { TCommonComponentConfig } from '../src/types'
+import type { TCommonComponentConfig } from '../src/types'
 
 test('getPropKeys', (t) => {
   const props = {

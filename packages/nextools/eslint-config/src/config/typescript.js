@@ -37,5 +37,6 @@ module.exports = {
     '@typescript-eslint/consistent-type-definitions': [2, 'type'],
     '@typescript-eslint/await-thenable': 2,
     '@typescript-eslint/no-floating-promises': 2,
+    '@nextools/type-only-import-export': 2,
   },
 }

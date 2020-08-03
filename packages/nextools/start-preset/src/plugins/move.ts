@@ -1,4 +1,5 @@
-import plugin, { StartFilesProps } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartFilesProps } from '@start/plugin'
 
 export default (renamer: (oldPath: string) => string) =>
   plugin<StartFilesProps, StartFilesProps>('move', ({ logPath }) => async ({ files }) => {

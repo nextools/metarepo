@@ -1,4 +1,4 @@
-import { TReadonly } from 'tsfn'
+import type { TReadonly } from 'tsfn'
 
 export type TResolvedReleaseType = 'major' | 'minor' | 'patch'
 

@@ -6,10 +6,10 @@ import { actionError } from '../actions'
 import { apiLoadSnapshot } from '../api'
 import { COLOR_LINE_BG_REMOVED, COLOR_LINE_BG_ADDED, COLOR_LIGHT_GREY } from '../config'
 import { mapStoreDispatch } from '../store'
-import { TRect, TSnapshotGridItem } from '../types'
+import type { TRect, TSnapshotGridItem } from '../types'
 import { Background } from './Background'
 import { Block } from './Block'
-import { TDiffLine } from './SnapshotDiff'
+import type { TDiffLine } from './SnapshotDiff'
 
 const LINE_HEIGHT = 18
 const CHAR_WIDTH = 8.39

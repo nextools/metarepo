@@ -3,7 +3,7 @@ import React, { Fragment } from 'react'
 import { component, startWithType, mapWithPropsMemo, mapWithProps } from 'refun'
 import { Graph } from './Graph'
 import { CANVAS_PADDING, CONTROLS_HEIGHT_TOP, PAGE_BACKGROUND } from './constants'
-import { TCanvas } from './types'
+import type { TCanvas } from './types'
 
 export const Canvas = component(
   startWithType<TCanvas>(),

@@ -1,6 +1,6 @@
 import { mockRequire } from '@mock/require'
 import test from 'tape'
-import { TCommonComponentConfig } from '../src/types'
+import type { TCommonComponentConfig } from '../src/types'
 
 test('createChildren', async (t) => {
   const unmockRequire = mockRequire('../src/create-children', {

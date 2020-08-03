@@ -12,7 +12,7 @@ import {
 import { Canvas } from './Canvas'
 import { Header, Footer } from './Controls/index'
 import { PAGE_BACKGROUND, CONTROLS_HEIGHT_TOP, CONTROLS_HEIGHT_BOTTOM } from './constants'
-import { TApp } from './types'
+import type { TApp } from './types'
 import { globalObject, getHash, updateHash } from './utils'
 
 export const App = component(

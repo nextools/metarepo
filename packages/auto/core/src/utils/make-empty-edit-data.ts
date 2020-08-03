@@ -1,4 +1,4 @@
-import { TPromptEditData } from '../types'
+import type { TPromptEditData } from '../types'
 
 export const makeEmptyEditData = (): TPromptEditData => ({
   dependencyBumpIgnoreMap: new Map(),

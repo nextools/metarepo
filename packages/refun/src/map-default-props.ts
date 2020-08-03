@@ -1,4 +1,5 @@
-import { UNDEFINED, TOptionalKeys, getObjectKeys } from 'tsfn'
+import { UNDEFINED, getObjectKeys } from 'tsfn'
+import type { TOptionalKeys } from 'tsfn'
 
 export const mapDefaultProps = <P extends {}, K extends TOptionalKeys<P>> (defaultProps: { [k in K]: Exclude<P[k], undefined> }) => {
   const defaultPropsKeys = getObjectKeys(defaultProps)

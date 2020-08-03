@@ -1,6 +1,6 @@
-import { TPromptEditData } from '../types'
+import type { TPromptEditData } from '../types'
 import { isResolvedReleaseType, makeEmptyEditData } from '../utils'
-import { TQuestionObj } from './types'
+import type { TQuestionObj } from './types'
 
 const makeQuestionReqired = (q: TQuestionObj): Required<TQuestionObj> => {
   const result: Required<TQuestionObj> = {

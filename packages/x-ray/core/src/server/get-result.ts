@@ -1,4 +1,4 @@
-import { TGetResponseQuery, TTotalResults, TResultsType } from '../types'
+import type { TGetResponseQuery, TTotalResults, TResultsType } from '../types'
 
 export type TGetResultOptions = {
   results: TTotalResults<TResultsType>,

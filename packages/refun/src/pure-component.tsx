@@ -1,7 +1,7 @@
-/* eslint-disable import/export */
-import { useRef, ReactElement, FC } from 'react'
+import { useRef } from 'react'
+import type { ReactElement, FC } from 'react'
 import { EMPTY_OBJECT } from 'tsfn'
-import { TComponent } from './component'
+import type { TComponent } from './component'
 import { shallowEqualByKeys } from './utils'
 
 export function pureComponent<T1, R> (fn: (p: T1) => R): (Component: FC<R>) => TComponent<T1>

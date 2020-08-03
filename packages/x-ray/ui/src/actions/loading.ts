@@ -1,4 +1,4 @@
-import { TAction, TAnyAction } from '../types'
+import type { TAction, TAnyAction } from '../types'
 
 const TYPE_LOADING_START = 'LOADING_START'
 const TYPE_LOADING_END = 'LOADING_END'

@@ -1,7 +1,7 @@
 import { pipe } from '@psxcode/compose'
 import { startWithType, mapState, mapSafeTimeout, mapHandlers, mapRef, onChange } from 'refun'
 import { DIFF_TIMEOUT } from '../../config'
-import { TScreenshotGridItem } from '../../types'
+import type { TScreenshotGridItem } from '../../types'
 import { hasDiffItems } from './has-diff-items'
 
 export type TMapDiffState = {

@@ -2,7 +2,7 @@ import { promisify } from 'util'
 import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
 import test from 'tape'
-import { TPackageMap } from '../../src/types'
+import type { TPackageMap } from '../../src/types'
 
 const rootDir = process.cwd()
 

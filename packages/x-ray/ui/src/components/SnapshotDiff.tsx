@@ -26,7 +26,7 @@ import {
 } from '../config'
 import { ThemeContext } from '../context/Theme'
 import { mapStoreDispatch } from '../store'
-import { TRect } from '../types'
+import type { TRect } from '../types'
 import { Background } from './Background'
 import { Block } from './Block'
 import { Text } from './Text'

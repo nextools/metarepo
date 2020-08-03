@@ -1,5 +1,5 @@
 import pAll from 'p-all'
-import { THook } from '../types'
+import type { THook } from '../types'
 import { publishPackage } from './publish-package'
 import { resolveNpmConfig } from './resolve-npm-config'
 

@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events'
 import { resolve } from 'path'
-import { StartFile } from '@start/plugin'
+import type { StartFile } from '@start/plugin'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
 import inputFiles from '../src'

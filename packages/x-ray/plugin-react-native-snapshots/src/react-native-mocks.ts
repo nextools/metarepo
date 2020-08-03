@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events'
-import { createElement, FC } from 'react'
+import { createElement } from 'react'
+import type { FC } from 'react'
 
 export const ReactNativeMocks = new Proxy({}, {
   get(_, importedName: string) {

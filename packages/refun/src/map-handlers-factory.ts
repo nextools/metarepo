@@ -1,6 +1,7 @@
 import { useRef } from 'react'
-import { getObjectKeys, TExtend, EMPTY_OBJECT } from 'tsfn'
-import { THandlers, TActualHandlers } from './map-handlers'
+import { getObjectKeys, EMPTY_OBJECT } from 'tsfn'
+import type { TExtend } from 'tsfn'
+import type { THandlers, TActualHandlers } from './map-handlers'
 
 export const mapHandlersFactory = <P extends {}, R extends THandlers<P>> (getHandlers: (props: P) => R) =>
   (props: P): TExtend<P, TActualHandlers<R>> => {

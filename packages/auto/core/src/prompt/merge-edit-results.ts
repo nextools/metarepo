@@ -1,5 +1,5 @@
-import { TReadonly } from 'tsfn'
-import { TPromptEditData } from '../types'
+import type { TReadonly } from 'tsfn'
+import type { TPromptEditData } from '../types'
 import { makeEmptyEditData } from '../utils'
 
 const mergeArrayUnique = <T>(a: readonly T[] = [], b: readonly T[]): T[] => {

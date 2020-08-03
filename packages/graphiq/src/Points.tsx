@@ -1,9 +1,10 @@
 import { easeInOutCubic } from '@primitives/animation'
 import { colorToString } from 'colorido'
-import React, { Fragment, FC } from 'react'
+import React, { Fragment } from 'react'
+import type { FC } from 'react'
 import { Animate } from './Animate'
 import { POINT_BORDER, POINT_RADIUS } from './constants'
-import { TGraphPoints } from './types'
+import type { TGraphPoints } from './types'
 
 export const Points: FC<TGraphPoints> = ({
   fill,

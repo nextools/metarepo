@@ -1,6 +1,6 @@
 import pAll from 'p-all'
-import { TReadonly } from 'tsfn'
-import { TPackageRelease } from '../types'
+import type { TReadonly } from 'tsfn'
+import type { TPackageRelease } from '../types'
 import { readPackage } from './read-package'
 import { writePackage } from './write-package'
 

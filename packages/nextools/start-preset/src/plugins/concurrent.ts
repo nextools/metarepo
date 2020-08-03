@@ -1,4 +1,5 @@
-import plugin, { StartPlugin } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartPlugin } from '@start/plugin'
 
 export type StartPluginOrFalse<P, R> = StartPlugin<P, R> | false
 

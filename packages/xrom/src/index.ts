@@ -1,6 +1,7 @@
 import path from 'path'
 import execa from 'execa'
-import { isArray, isString, TRequireKeys, isNumber } from 'tsfn'
+import { isArray, isString, isNumber } from 'tsfn'
+import type { TRequireKeys } from 'tsfn'
 import { getDebuggerUrl } from './get-debugger-url'
 
 export type TRunBrowserOptions = {

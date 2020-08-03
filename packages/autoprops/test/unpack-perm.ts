@@ -1,6 +1,6 @@
 import I from 'big-integer'
 import test from 'tape'
-import { TCommonComponentConfig, TPermutation } from '../src/types'
+import type { TCommonComponentConfig, TPermutation } from '../src/types'
 import { unpackPerm } from '../src/unpack-perm'
 
 test('autoprops: unpackPerm props', (t) => {

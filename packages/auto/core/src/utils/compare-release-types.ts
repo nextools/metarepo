@@ -1,4 +1,4 @@
-import { TReleaseType } from '../types'
+import type { TReleaseType } from '../types'
 
 const types: TReleaseType[] = ['patch', 'minor', 'major', 'initial']
 

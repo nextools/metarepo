@@ -1,5 +1,5 @@
-import { TReadonly } from 'tsfn'
-import { TResolvedReleaseType, TReleaseType, TPromptEditData } from '../types'
+import type { TReadonly } from 'tsfn'
+import type { TResolvedReleaseType, TReleaseType, TPromptEditData } from '../types'
 
 const INITIAL_TYPE: TResolvedReleaseType = 'minor'
 const ZERO_BREAKING_TYPE: TResolvedReleaseType = 'minor'

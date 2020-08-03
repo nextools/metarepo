@@ -1,4 +1,5 @@
-import plugin, { StartFile, StartFilesProps } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartFile, StartFilesProps } from '@start/plugin'
 
 export default (outDir: string) =>
   plugin('unpack', ({ logPath }) => async ({ files }: StartFilesProps) => {

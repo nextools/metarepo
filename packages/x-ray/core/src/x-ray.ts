@@ -4,7 +4,7 @@ import prettyMs from 'pretty-ms'
 import { rsolve } from 'rsolve'
 import { UI_HOST, UI_PORT } from './constants'
 import { runServer } from './server/run'
-import { TPlugin, TResultsType } from './types'
+import type { TPlugin, TResultsType } from './types'
 
 export const xRay = (plugin: TPlugin<TResultsType>) => async (files: string[]): Promise<void> => {
   const startTime = Date.now()

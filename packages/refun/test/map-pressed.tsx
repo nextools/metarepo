@@ -1,8 +1,10 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { component, mapPressed, startWithType, TMapPressed } from '../src'
+import { component, mapPressed, startWithType } from '../src'
+import type { TMapPressed } from '../src'
 
 test('mapPressed: no props', (t) => {
   const componentSpy = createSpy(() => null)

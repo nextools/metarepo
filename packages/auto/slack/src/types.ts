@@ -1,4 +1,4 @@
-import { TReleaseType } from '@auto/core'
+import type { TReleaseType } from '@auto/core'
 
 export type TSlackConfig = {
   token: string,

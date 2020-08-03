@@ -18,6 +18,10 @@ exports.babelConfigNodeBuild = {
   ],
   plugins: [
     [
+      require.resolve('@babel/plugin-transform-modules-commonjs'),
+      { strictMode: false },
+    ],
+    [
       require.resolve('@babel/plugin-transform-runtime'),
       { regenerator: false },
     ],

@@ -1,8 +1,8 @@
 import test from 'tape'
-import { TPackageBumpMap } from '../../src/bump/types'
+import type { TPackageBumpMap } from '../../src/bump/types'
 import { makeQuestionObject } from '../../src/prompt/make-question-object'
-import { TQuestionObj } from '../../src/prompt/types'
-import { TPromptEditData, TPackageMap } from '../../src/types'
+import type { TQuestionObj } from '../../src/prompt/types'
+import type { TPromptEditData, TPackageMap } from '../../src/types'
 import { makeTestPackages } from './make-test-packages'
 
 test('bumpToQuestion', (t) => {

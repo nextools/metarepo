@@ -1,2 +1,2 @@
 export * from './send-telegram-message'
-export * from './types'
+export type { TTelegramConfig } from './types'

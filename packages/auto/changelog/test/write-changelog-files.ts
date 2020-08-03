@@ -1,6 +1,6 @@
 /* eslint-disable node/no-sync */
 import { promisify } from 'util'
-import { TPackageRelease, TAutoConfig } from '@auto/core'
+import type { TPackageRelease, TAutoConfig } from '@auto/core'
 import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
 import { createSpy, getSpyCalls } from 'spyfn'

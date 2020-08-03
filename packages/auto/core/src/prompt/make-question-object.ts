@@ -1,9 +1,10 @@
 import semver from 'semver'
-import { TReadonly, isUndefined } from 'tsfn'
-import { TPackageBumpMap } from '../bump/types'
-import { TPromptEditData, TPackageMap, TResolvedReleaseType } from '../types'
+import { isUndefined } from 'tsfn'
+import type { TReadonly } from 'tsfn'
+import type { TPackageBumpMap } from '../bump/types'
+import type { TPromptEditData, TPackageMap, TResolvedReleaseType } from '../types'
 import { isResolvedReleaseType } from '../utils'
-import { TQuestionObj } from './types'
+import type { TQuestionObj } from './types'
 
 export const makeQuestionObject = (packages: TReadonly<TPackageMap>, bumps: TReadonly<TPackageBumpMap>, { dependencyBumpIgnoreMap, initialTypeOverrideMap, zeroBreakingTypeOverrideMap }: TReadonly<TPromptEditData>): TQuestionObj => {
   const result: TQuestionObj = {}

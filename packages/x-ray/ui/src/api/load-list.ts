@@ -1,4 +1,4 @@
-import { TListItems } from '@x-ray/core'
+import type { TListItems } from '@x-ray/core'
 import { HOST, PORT } from '../config'
 
 export type TApiLoadListResult = {

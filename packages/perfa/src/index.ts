@@ -7,7 +7,7 @@ import { runBrowser } from 'xrom'
 import { getPercentile } from './get-percentile'
 import { getPerfMetricsEntryValue } from './get-perf-metrics-entry-value'
 import { getPerfPaintEntryValue } from './get-perf-paint-entry-value'
-import { TPerfResult, TPerfObserverEntry, TPerfPaint, TPerfMetrics } from './types'
+import type { TPerfResult, TPerfObserverEntry, TPerfPaint, TPerfMetrics } from './types'
 
 const TRIES_COUNT = 5
 const INJECTED_BUILD_FOLDER_PATH = '/home/chromium/html'

@@ -1,4 +1,5 @@
-import { colorToString, TColor } from 'colorido'
+import { colorToString } from 'colorido'
+import type { TColor } from 'colorido'
 import React from 'react'
 import { component, mapDefaultProps, startWithType } from 'refun'
 import { Block } from './Block'

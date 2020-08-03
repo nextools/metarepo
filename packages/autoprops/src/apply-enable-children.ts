@@ -1,7 +1,7 @@
 import BigInt from 'big-integer'
 import { isUndefined } from 'tsfn'
 import { applyEnableDeps } from './apply-enable-deps'
-import { TApplyRestrictionFn } from './types'
+import type { TApplyRestrictionFn } from './types'
 
 export const applyEnableChildren: TApplyRestrictionFn = (values, _, permConfig, componentConfig) => {
   const { propKeys, childrenKeys } = permConfig

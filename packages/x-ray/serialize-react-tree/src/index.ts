@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import serializeReactTree from './serialize-react-tree'
 
 export default (reactElement: ReactElement<any>): string => {

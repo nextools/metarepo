@@ -4,7 +4,7 @@ import execa from 'execa'
 import isPortReachable from 'is-port-reachable'
 import fetch from 'node-fetch'
 import { isUndefined } from 'tsfn'
-import { TPlatform } from './types'
+import type { TPlatform } from './types'
 
 const REQUEST_TIMEOUT = 2 * 60 * 1000
 

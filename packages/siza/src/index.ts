@@ -4,7 +4,8 @@ import { Volume, createFsFromVolume } from 'memfs'
 import joinPath from 'memory-fs/lib/join'
 import TerserPlugin from 'terser-webpack-plugin'
 import { isObject } from 'tsfn'
-import webpack, { Configuration as WebpackConfig, OutputFileSystem } from 'webpack'
+import webpack from 'webpack'
+import type { Configuration as WebpackConfig, OutputFileSystem } from 'webpack'
 import { babelConfig } from './babel-config'
 
 const vol = Volume.fromJSON({})

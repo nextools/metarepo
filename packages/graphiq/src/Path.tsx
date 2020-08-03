@@ -1,9 +1,10 @@
 import { easeInOutCubic } from '@primitives/animation'
 import { colorToString } from 'colorido'
-import React, { Fragment, FC } from 'react'
+import React, { Fragment } from 'react'
+import type { FC } from 'react'
 import { Animate } from './Animate'
 import { PATH_WIDTH } from './constants'
-import { TGraphPath } from './types'
+import type { TGraphPath } from './types'
 
 export const Path: FC<TGraphPath> = ({
   colors,

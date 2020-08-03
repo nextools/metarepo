@@ -1,5 +1,6 @@
 import { unlinkSync } from 'fs'
-import http, { RequestListener, RequestOptions } from 'http'
+import http from 'http'
+import type { RequestListener, RequestOptions } from 'http'
 import path from 'path'
 import { mockRequire } from '@mock/require'
 import getCallerFile from 'get-caller-file'

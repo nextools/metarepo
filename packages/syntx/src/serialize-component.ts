@@ -1,6 +1,6 @@
-import { FC } from 'react'
+import type { FC } from 'react'
 import { serializeElement } from './serialize-element'
-import { TConfig, TLine } from './types'
+import type { TConfig, TLine } from './types'
 import { getDisplayName } from './utils'
 
 export const serializeComponent = (Component: FC<any>, props: any, config: TConfig): TLine[] => {

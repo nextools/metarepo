@@ -1,5 +1,5 @@
 import path from 'path'
-import { TPackageJson, TPrefixes } from '@auto/core'
+import type { TPackageJson, TPrefixes } from '@auto/core'
 import { isUndefined } from 'tsfn'
 
 export const getPrefixes = async (): Promise<TPrefixes> => {

@@ -1,4 +1,4 @@
-import { TMaybePromise } from './types'
+import type { TMaybePromise } from './types'
 
 export const piAll = <T>(iterable: Iterable<() => TMaybePromise<T>>, concurrency: number = Infinity): AsyncIterable<T> => {
   if ((!Number.isSafeInteger(concurrency) && concurrency !== Infinity) || concurrency < 1) {

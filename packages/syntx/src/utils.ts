@@ -1,6 +1,8 @@
-import { ReactElement, ComponentClass, FC, isValidElement } from 'react'
-import { isDefined, TWritable } from 'tsfn'
-import { TLine, TLineElement, TMeta } from './types'
+import { isValidElement } from 'react'
+import type { ReactElement, ComponentClass, FC } from 'react'
+import { isDefined } from 'tsfn'
+import type { TWritable } from 'tsfn'
+import type { TLine, TLineElement, TMeta } from './types'
 
 export const hasKeys = (obj: any) => Object.keys(obj).length > 0
 

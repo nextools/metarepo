@@ -1,8 +1,9 @@
-import { THook, TPackageRelease, TMessage, TLogReleaseType } from '@auto/core'
+import type { THook, TPackageRelease, TMessage, TLogReleaseType } from '@auto/core'
 import fetch from 'node-fetch'
-import { isString, TReadonly } from 'tsfn'
+import { isString } from 'tsfn'
+import type { TReadonly } from 'tsfn'
 import { SLACK_HOOKS_URL, SLACK_MAX_ATTACHMENTS } from './constants'
-import { TSlackConfig } from './types'
+import type { TSlackConfig } from './types'
 
 export const sendSlackMessage = (slackConfig: TReadonly<TSlackConfig>): THook => async ({ packages, prefixes }) => {
   const compileMessages = (pkg: TReadonly<TPackageRelease>): string => {

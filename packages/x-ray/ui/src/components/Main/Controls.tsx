@@ -1,9 +1,9 @@
 import { Button } from '@primitives/button'
 import { Size } from '@primitives/size'
-import { TColor } from 'colorido'
+import type { TColor } from 'colorido'
 import React from 'react'
 import { component, startWithType, mapState, mapContext, mapWithPropsMemo } from 'refun'
-import { TOmitKey } from 'tsfn'
+import type { TOmitKey } from 'tsfn'
 import {
   COLOR_WHITE,
   COLOR_GREY,
@@ -16,7 +16,7 @@ import {
   COLOR_DM_LIGHT_GREY,
 } from '../../config'
 import { ThemeContext } from '../../context/Theme'
-import { TSize } from '../../types'
+import type { TSize } from '../../types'
 import { Background } from '../Background'
 import { Block } from '../Block'
 import { Border } from '../Border'

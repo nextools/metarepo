@@ -1,4 +1,4 @@
-import { TServiceConfig } from '../types'
+import type { TServiceConfig } from '../types'
 
 // http://docs.drone.io/env.html
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {

@@ -1,4 +1,4 @@
-import { THook } from '@auto/core'
+import type { THook } from '@auto/core'
 import execa from 'execa'
 
 export const writePublishTags: THook = async ({ packages }) => {
