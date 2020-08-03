@@ -1,3 +1,9 @@
+## v0.3.1
+
+* 🐞 lint `.tsx` files in `tasks/`
+
+* ♻️ update dependencies `@start/plugin-lib-babel`, `@nextools/babel-config`
+
 ## v0.3.0
 
 * 🐞 cleanup deps

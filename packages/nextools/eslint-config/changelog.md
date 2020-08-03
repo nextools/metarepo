@@ -1,3 +1,7 @@
+## v0.3.0
+
+* 🌱 enforce type-only imports/exports
+
 ## v0.2.0
 
 * 🌱 add `eslint-plugin-node` instead of deprecated rules

@@ -1,3 +1,7 @@
+## v0.1.6
+
+* 🐞 remove `use strict` from Node.js builds
+
 ## v0.1.5
 
 * 🐞 bump `metro-react-native-babel-preset`
