@@ -1,3 +1,9 @@
+## v0.3.2
+
+* 🐞 update `auto/core`
+
+* ♻️ update dependencies `@auto/commit-prompt`, `@auto/changelog`, `@auto/github`, `@auto/slack`, `@auto/tag`, `@auto/telegram`, `@auto/core`
+
 ## v0.3.1
 
 * 🐞 lint `.tsx` files in `tasks/`

@@ -1,3 +1,9 @@
+## v0.1.3
+
+* 🐞 update `auto/core`
+
+* ♻️ update dependencies `@auto/core`
+
 ## v0.1.2
 
 * 🐞 re-publish using new build system to fix types issue

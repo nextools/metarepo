@@ -1,3 +1,7 @@
+## v0.2.0
+
+* 🌱 prompt to retry on publish failure
+
 ## v0.1.7
 
 * 🐞 fix npm error filtering
