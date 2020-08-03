@@ -67,7 +67,7 @@ export const lint = async () => {
   return sequence(
     find([
       ...globs,
-      'tasks/**/*.ts',
+      'tasks/**/*.{ts,tsx}',
     ]),
     plugin('weslint', ({ logMessage }) => async ({ files }) => {
       const result = await weslint({
