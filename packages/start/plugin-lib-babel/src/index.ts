@@ -18,7 +18,7 @@ export default (userOptions?: TransformOptions) =>
           const transformed = transform(file.data, options)
 
           if (transformed !== null) {
-            if (typeof transformed.code !== 'string') {
+            if (typeof transformed.code !== 'string' || transformed.code === '') {
               return result
             }
 
