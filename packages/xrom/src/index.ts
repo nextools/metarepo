@@ -42,6 +42,7 @@ export const runBrowser = async (options: TRunBrowserOptions): Promise<TRunBrows
     'run',
     '-d',
     '--rm',
+    '--shm-size=1g',
     '-p',
     `${opts.port}:${opts.port}`,
     '-e',
