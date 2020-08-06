@@ -23,7 +23,7 @@ test('fixdeps: getRemotePackageVersionNpm result', async (t) => {
 
   t.deepEquals(
     getSpyCalls(spy),
-    [['npm', ['info', 'pkg', 'version'], { stdout: 'ignore', stderr: 'ignore' }]],
+    [['npm', ['info', 'pkg', 'version']]],
     'should call npm with arguments'
   )
 
