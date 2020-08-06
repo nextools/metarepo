@@ -1,3 +1,11 @@
+## v2.0.1
+
+* 🐞 add `--shm-size=1g` to fix "Out of memory. size=262144" error
+
+  ```
+  already existing `--disable-dev-shm-usage` Chromium flag doesn't help
+  ```
+
 ## v2.0.0
 
 * 💥 rename export function to `runBrowser` and make it run Chromium or Firefox
