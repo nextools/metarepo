@@ -87,7 +87,7 @@ export const fixDeps = (packageDir?: string) => plugin('fixDeps', ({ logPath, lo
       }
     } catch (e) {
       logMessage(`${json.name}:`)
-      logMessage(`  error: ${e.message}`)
+      console.error(e)
     }
   }
 
