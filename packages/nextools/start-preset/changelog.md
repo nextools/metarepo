@@ -1,3 +1,9 @@
+## v0.3.3
+
+* 🐞 fix show `fixDeps` error stacktrace
+
+* ♻️ update dependencies `fixdeps`
+
 ## v0.3.2
 
 * 🐞 update `auto/core`

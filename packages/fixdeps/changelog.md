@@ -1,3 +1,7 @@
+## v1.1.3
+
+* 🐞 fix npm fetch error
+
 ## v1.1.2
 
 * 🐞 parse `classPrivateProperties` and `classPrivateMethods` ESNext features
