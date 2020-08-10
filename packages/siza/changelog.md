@@ -1,3 +1,7 @@
+## v0.1.7
+
+* 🐞 upgrade Terser Webpack Plugin to v4
+
 ## v0.1.6
 
 * 🐞 bump React

@@ -1,3 +1,7 @@
+## v2.1.10
+
+* 🐞 upgrade Terser Webpack Plugin to v4
+
 ## v2.1.9
 
 * 🐞 fix watching entire project
