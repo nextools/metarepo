@@ -10,8 +10,8 @@ $ yarn add @rebox/ios
 
 ## Requirements
 
-* Xcode 11.4
-* iOS Simulator 13.2
+* Xcode
+* iOS Simulator
 
 ## Setup
 

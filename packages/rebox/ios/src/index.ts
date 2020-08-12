@@ -1,6 +1,7 @@
 export * from './build-ios-app-debug'
 export * from './install-ios-app'
 export * from './launch-ios-app'
+export * from './get-ios-simulator-device'
 export * from './link-ios-dependency'
 export * from './run-ios-app'
 export * from './run-ios-simulator'

@@ -55,8 +55,8 @@ export const rebox = (platform: 'ios'| 'android') =>
       await runIosApp({
         appName: 'ReboxTest',
         appId: 'org.rebox.test',
-        iPhoneVersion: 8,
-        iOSVersion: '13.2',
+        iPhoneModel: '8',
+        iOSVersion: '13',
         entryPointPath,
         fontsDir,
         dependencyNames: ['react-native-svg'],

@@ -17,7 +17,7 @@ export type TRunIosOptions = {
   appId: string,
   entryPointPath: string,
   iOSVersion: string,
-  iPhoneVersion: number,
+  iPhoneModel: string,
   fontsDir?: string,
   dependencyNames?: string[],
   globalConstants?: {
@@ -88,7 +88,7 @@ export const runIosApp = async (options: TRunIosOptions): Promise<() => Promise<
   const killSimulator = await runIosSimulator({
     iOSVersion: options.iOSVersion,
     isHeadless: options.isHeadless,
-    iPhoneVersion: options.iPhoneVersion,
+    iPhoneModel: options.iPhoneModel,
   })
 
   log('simulator has been launched')

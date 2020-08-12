@@ -39,8 +39,8 @@ export const iOsScreenshots = (options?: TIosScreenshotsOptions): TPlugin<Uint8A
     const closeIosApp = await runIosApp({
       appName: 'X-Ray',
       appId: 'org.nextools.x-ray',
-      iPhoneVersion: 8,
-      iOSVersion: '13.2',
+      iPhoneModel: '8',
+      iOSVersion: '13',
       entryPointPath,
       fontsDir: opts?.fontsDir,
       dependencyNames: [
