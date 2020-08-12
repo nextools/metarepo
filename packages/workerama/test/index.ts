@@ -5,9 +5,6 @@ import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
 
-// @ts-ignore
-const umask = process.umask()
-
 test('workerama: `maxThreadCount`', async (t) => {
   const workerSpy = createSpy(() => {})
 
@@ -58,7 +55,6 @@ test('workerama: `maxThreadCount`', async (t) => {
             fnFilePath,
             fnName: 'test',
             fnArgs: [1],
-            umask,
           },
         },
       ],
@@ -69,7 +65,6 @@ test('workerama: `maxThreadCount`', async (t) => {
             fnFilePath,
             fnName: 'test',
             fnArgs: [1],
-            umask,
           },
         },
       ],
@@ -80,7 +75,6 @@ test('workerama: `maxThreadCount`', async (t) => {
             fnFilePath,
             fnName: 'test',
             fnArgs: [1],
-            umask,
           },
         },
       ],
@@ -147,7 +141,6 @@ test('workerama: not more than needed', async (t) => {
             fnFilePath,
             fnName: 'test',
             fnArgs: [1],
-            umask,
           },
         },
       ],
@@ -158,7 +151,6 @@ test('workerama: not more than needed', async (t) => {
             fnFilePath,
             fnName: 'test',
             fnArgs: [1],
-            umask,
           },
         },
       ],

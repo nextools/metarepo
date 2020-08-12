@@ -24,8 +24,6 @@ export const workerama = <T>(options: TWorkeramaOptions): AsyncIterable<T> => {
     throw new Error('`maxThreadCount` should be greater than zero (tip: pass Infinity to set no limits)')
   }
 
-  // @ts-ignore
-  const umask = process.umask()
   const workerPath = require.resolve('./worker')
   const callerDir = path.dirname(getCallerFile())
   const fullFnFilePath = require.resolve(path.resolve(callerDir, options.fnFilePath))
@@ -38,9 +36,6 @@ export const workerama = <T>(options: TWorkeramaOptions): AsyncIterable<T> => {
         fnFilePath: fullFnFilePath,
         fnName: options.fnName,
         fnArgs: options.fnArgs,
-        // https://github.com/nodejs/node/issues/25448
-        // https://github.com/nodejs/node/pull/25526
-        umask,
       },
     })
   })

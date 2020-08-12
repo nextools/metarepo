@@ -13,7 +13,7 @@
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "auto": {
     "bump": {

@@ -34,7 +34,7 @@
 
 ## v1.0.0
 
-* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+* 💥 drop Node.js v8 support and require >=12.13.0 (first v10 LTS)
 
 * ♻️ update dependencies: `@x-ray/snapshots`, `bsc`, `@primitives/background`, `@primitives/border`, `@primitives/text`, `colorido`, `elegir`, `@x-ray/screenshot-utils`, `@primitives/checkbox`, `@primitives/button`, `@primitives/image`, `@primitives/root`, `@primitives/size`, `refun`, `stili`, `@x-ray/common-utils`, `syntx`, `@primitives/animation`, `tsfn`, `typeon`, `@primitives/svg`
 

@@ -1,10 +1,6 @@
 const { workerData, parentPort } = require('worker_threads')
 
-const { umask, fnFilePath, fnName, fnArgs } = workerData
-
-// https://github.com/nodejs/node/issues/25448
-// https://github.com/nodejs/node/pull/25526
-process.umask = () => umask
+const { fnFilePath, fnName, fnArgs } = workerData
 
 const fnPromise = require(fnFilePath)[fnName](...fnArgs)
 
