@@ -1,3 +1,7 @@
+## v0.1.2
+
+* 🐞 cleanup deps
+
 ## v0.1.1
 
 * 🐞 cleanup deps
