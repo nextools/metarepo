@@ -20,6 +20,12 @@ export type TRunIosOptions = {
   iPhoneVersion: number,
   fontsDir?: string,
   dependencyNames?: string[],
+  globalConstants?: {
+    [key: string]: string,
+  },
+  globalAliases?: {
+    [key: string]: string,
+  },
   isHeadless?: boolean,
   logMessage?: (msg: string) => void,
 }
@@ -95,6 +101,8 @@ export const runIosApp = async (options: TRunIosOptions): Promise<() => Promise<
     entryPointPath: options.entryPointPath,
     port: PORT,
     platform: 'ios',
+    globalAliases: options.globalAliases,
+    globalConstants: options.globalConstants,
   })
 
   log('bundle has been served')

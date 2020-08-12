@@ -20,11 +20,17 @@ export type TRunAndroidAppOptions = {
   portsToForward?: number[],
   fontsDir?: string,
   dependencyNames?: string[],
+  globalConstants?: {
+    [key: string]: string,
+  },
+  globalAliases?: {
+    [key: string]: string,
+  },
   isHeadless?: boolean,
   logMessage?: (msg: string) => void,
 }
 
-export const runAndroidApp = async (options: TRunAndroidAppOptions): Promise<() => void> => {
+export const runAndroidApp = async (options: TRunAndroidAppOptions): Promise<() => Promise<void>> => {
   const projectPath = getAndroidProjectPath(options.appName)
   const appPath = getAndroidAppPath(options.appName)
   const log = (message: string): void => {
@@ -93,6 +99,8 @@ export const runAndroidApp = async (options: TRunAndroidAppOptions): Promise<() 
     entryPointPath: options.entryPointPath,
     port: PORT,
     platform: 'android',
+    globalAliases: options.globalAliases,
+    globalConstants: options.globalConstants,
   })
 
   log('bundle has been served')

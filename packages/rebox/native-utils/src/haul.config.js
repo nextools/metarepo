@@ -88,6 +88,18 @@ export default makeConfig({
           })
         }
 
+        if (typeof process.env.REBOX_GLOBAL_ALIASES === 'string') {
+          config.resolve.alias = JSON.parse(process.env.REBOX_GLOBAL_ALIASES)
+        }
+
+        if (typeof process.env.REBOX_GLOBAL_CONSTANTS === 'string') {
+          config.plugins.push(
+            new webpack.DefinePlugin(
+              JSON.parse(process.env.REBOX_GLOBAL_CONSTANTS)
+            )
+          )
+        }
+
         config.resolve.extensions = [
           ...config.resolve.extensions,
           `.${env.platform}.js`,
