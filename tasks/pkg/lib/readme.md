@@ -10,7 +10,7 @@ $ yarn add $name$
 
 ## Usage
 
-```js
+```ts
 import { $exportedName$ } from '$name$'
 
 // …

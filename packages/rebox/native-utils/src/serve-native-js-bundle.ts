@@ -12,11 +12,17 @@ export type TServeNativeJsBundleOptions = {
   entryPointPath: string,
   port: number,
   platform: TPlatform,
+  globalConstants?: {
+    [key: string]: string,
+  },
+  globalAliases?: {
+    [key: string]: string,
+  },
   isDev?: boolean,
   shouldMinify?: boolean,
 }
 
-export const serveNativeJsBundle = async (options: TServeNativeJsBundleOptions): Promise<() => void> => {
+export const serveNativeJsBundle = async (options: TServeNativeJsBundleOptions): Promise<() => Promise<void>> => {
   const isDevString = isUndefined(options.isDev) ? 'true' : String(options.isDev)
   const shouldMinifyString = isUndefined(options.shouldMinify) ? 'false' : String(options.shouldMinify)
 
@@ -40,6 +46,8 @@ export const serveNativeJsBundle = async (options: TServeNativeJsBundleOptions):
     {
       env: {
         REBOX_ENTRY_POINT: options.entryPointPath,
+        REBOX_GLOBAL_ALIASES: JSON.stringify(options.globalAliases),
+        REBOX_GLOBAL_CONSTANTS: JSON.stringify(options.globalConstants),
       },
     }
   )
@@ -53,5 +61,9 @@ export const serveNativeJsBundle = async (options: TServeNativeJsBundleOptions):
     { timeout: REQUEST_TIMEOUT }
   )
 
-  return () => proc.kill()
+  return () => new Promise((resolve) => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    proc.on('close', () => resolve())
+    proc.kill()
+  })
 }

@@ -1,0 +1,32 @@
+{
+  "name": "briew",
+  "version": "0.0.0",
+  "description": "Count React Native `createView` events passing through the Bridge",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@rebox/android": "^3.0.0",
+    "@rebox/ios": "^4.0.0",
+    "react": "16.13.1",
+    "react-native": "0.63.2",
+    "tsfn": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.45",
+    "@types/react-native": "^0.63.6"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "__BRIEW_TARGET_APP_PATH__"
+    ]
+  }
+}

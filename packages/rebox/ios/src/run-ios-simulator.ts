@@ -1,42 +1,31 @@
-import { isUndefined } from 'tsfn'
+import execa from 'execa'
+import { getIosSimulatorDevice } from './get-ios-simulator-device'
 
-type TDeviceList = {
-  devices: {
-    [k: string]: {
-      name: string,
-      udid: string,
-      state: string,
-    }[],
-  },
-}
-
-export type TRunSimulatorOptions = {
-  iPhoneVersion: number,
+export type TRunIosSimulatorOptions = {
+  iPhoneModel: string,
   iOSVersion: string,
   isHeadless?: boolean,
 }
 
-export const runIosSimulator = async (options: TRunSimulatorOptions): Promise<() => Promise<void>> => {
-  const { default: execa } = await import('execa')
-  const { stdout: xcrunList } = await execa('xcrun', ['simctl', 'list', '--json'])
+export const runIosSimulator = async (options: TRunIosSimulatorOptions): Promise<() => Promise<void>> => {
+  const device = await getIosSimulatorDevice({
+    iPhoneModel: options.iPhoneModel,
+    iOSVersion: options.iOSVersion,
+  })
 
-  const devicesList = JSON.parse(xcrunList) as TDeviceList
-  const devices = devicesList.devices[`com.apple.CoreSimulator.SimRuntime.iOS-${options.iOSVersion.replace('.', '-')}`]
-  const deviceInfo = devices.find((device) => device.name === `iPhone ${options.iPhoneVersion}`)
-
-  if (isUndefined(deviceInfo)) {
-    throw new Error(`Unable to find iOS ${options.iOSVersion} + iPhone ${options.iPhoneVersion} Simulator`)
+  if (device === null) {
+    throw new Error(`Unable to find iOS ${options.iOSVersion} + iPhone ${options.iPhoneModel} Simulator`)
   }
 
-  if (deviceInfo.state !== 'Booted') {
-    await execa('xcrun', ['simctl', 'boot', deviceInfo.udid])
+  if (device.state !== 'Booted') {
+    await execa('xcrun', ['simctl', 'boot', device.udid])
   }
 
   if (!options.isHeadless) {
-    await execa('open', ['-a', 'Simulator', '--args', '-CurrentDeviceUDID', deviceInfo.udid])
+    await execa('open', ['-a', 'Simulator', '--args', '-CurrentDeviceUDID', device.udid])
   }
 
   return async () => {
-    await execa('xcrun', ['simctl', 'shutdown', deviceInfo.udid])
+    await execa('xcrun', ['simctl', 'shutdown', device.udid])
   }
 }
