@@ -114,8 +114,7 @@ export const runIosApp = async (options: TRunIosOptions): Promise<() => Promise<
   log('app has been launched')
 
   return async () => {
-    killServer()
-
+    await killServer()
     await killSimulator()
   }
 }

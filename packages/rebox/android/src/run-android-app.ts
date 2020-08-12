@@ -109,8 +109,8 @@ export const runAndroidApp = async (options: TRunAndroidAppOptions): Promise<() 
 
   log('app has been launched')
 
-  return () => {
-    killServer()
-    killEmulator()
+  return async () => {
+    await killServer()
+    await killEmulator()
   }
 }

@@ -203,7 +203,7 @@ export const androidScreenshots = (options?: TAndroidScreenshotsOptions): TPlugi
         server.listen(SERVER_PORT, SERVER_HOST)
       })
     } finally {
-      closeAndroidApp()
+      await closeAndroidApp()
     }
 
     return totalResults

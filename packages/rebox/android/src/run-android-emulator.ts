@@ -10,7 +10,7 @@ export type TRunAndroidEmulatorOptions = {
   isHeadless?: boolean,
 }
 
-export const runAndroidEmulator = async (options: TRunAndroidEmulatorOptions): Promise<() => void> => {
+export const runAndroidEmulator = async (options: TRunAndroidEmulatorOptions): Promise<() => Promise<void>> => {
   let avdHomePath = null
 
   if (isString(process.env.ANDROID_AVD_HOME)) {
@@ -110,7 +110,9 @@ export const runAndroidEmulator = async (options: TRunAndroidEmulatorOptions): P
     )
   }
 
-  return () => {
+  return () => new Promise((resolve) => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    emulatorProcess.on('close', () => resolve())
     emulatorProcess.kill('SIGKILL')
-  }
+  })
 }

@@ -61,5 +61,9 @@ export const serveNativeJsBundle = async (options: TServeNativeJsBundleOptions):
     { timeout: REQUEST_TIMEOUT }
   )
 
-  return () => proc.kill()
+  return () => new Promise((resolve) => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    proc.on('close', () => resolve())
+    proc.kill()
+  })
 }
