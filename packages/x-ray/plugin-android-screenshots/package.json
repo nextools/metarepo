@@ -15,7 +15,7 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/core": "^7.9.0",
-    "@rebox/android": "^3.0.0",
+    "@rebox/android": "^3.1.0",
     "@x-ray/core": "^0.1.3",
     "@x-ray/ui": "^2.0.1",
     "pifs": "^1.0.3",

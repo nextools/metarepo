@@ -14,8 +14,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@rebox/android": "^3.0.0",
-    "@rebox/ios": "^4.0.0",
+    "@rebox/android": "^3.1.0",
+    "@rebox/ios": "^5.0.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "tsfn": "^1.1.2"
