@@ -17,12 +17,7 @@
     "@rebox/android": "^3.1.0",
     "@rebox/ios": "^5.0.0",
     "react": "16.13.1",
-    "react-native": "0.63.2",
     "tsfn": "^1.1.2"
-  },
-  "devDependencies": {
-    "@types/react": "^16.9.45",
-    "@types/react-native": "^0.63.6"
   },
   "fixdeps": {
     "ignoredPackages": [
