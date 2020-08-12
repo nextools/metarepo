@@ -1,3 +1,13 @@
+## v5.0.0
+
+* 💥 rename `iPhoneVersion` option to `iPhoneModel` and make it string
+
+* 🌱 add `globalConstants` and `globalAliases` options to `run-` methods
+
+* 🐞 make `closeIosApp` and `closeAndroidApp` async
+
+* ♻️ update dependencies `@rebox/native-utils`
+
 ## v4.0.0
 
 * 💥 bump React Native to v0.63.0

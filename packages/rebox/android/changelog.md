@@ -1,3 +1,11 @@
+## v3.1.0
+
+* 🌱 add `globalConstants` and `globalAliases` options to `run-` methods
+
+* 🐞 make `closeIosApp` and `closeAndroidApp` async
+
+* ♻️ update dependencies `@rebox/native-utils`
+
 ## v3.0.0
 
 * 💥 bump React Native to v0.63.0

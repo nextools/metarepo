@@ -1,3 +1,9 @@
+## v3.1.0
+
+* 🌱 add `globalConstants` and `globalAliases` options to `run-` methods
+
+* 🐞 make `closeIosApp` and `closeAndroidApp` async
+
 ## v3.0.4
 
 * 🐞 upgrade to React Native v0.63.2

@@ -1,3 +1,9 @@
+## v0.2.1
+
+* 🐞 bump rebox/ios
+
+* ♻️ update dependencies `@rebox/ios`
+
 ## v0.2.0
 
 * 🐞 bump React
