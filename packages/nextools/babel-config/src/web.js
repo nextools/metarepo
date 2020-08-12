@@ -22,7 +22,10 @@ exports.babelConfigWebBuild = {
   plugins: [
     [
       require.resolve('@babel/plugin-transform-runtime'),
-      { regenerator: false },
+      {
+        useESModules: true,
+        regenerator: false,
+      },
     ],
     require.resolve('@babel/plugin-syntax-bigint'),
     require.resolve('@babel/plugin-proposal-class-properties'),
