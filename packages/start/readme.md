@@ -304,22 +304,22 @@ $ yarn start ci
 #### Build and bundle
 
 * 🏭 [plugin-lib-babel](plugin-lib-babel) – transform files using [Babel](https://babeljs.io/)
-* 🏭 [plugin-lib-esm-loader](plugin-lib-esm-loader) – copy a predefined [ESM loader](https://github.com/standard-things/esm) file to a directory
+* 🏭 [plugin-lib-esm-loader](https://github.com/nextools/unmaintained/tree/master/plugin-lib-esm-loader) – copy a predefined [ESM loader](https://github.com/standard-things/esm) file to a directory [unmaintained]
 * 🏭 [plugin-lib-webpack](plugin-lib-webpack) – bundle files using [Webpack](https://webpack.js.org/)
 * 🏭 [plugin-lib-webpack-dev-server](plugin-lib-webpack-dev-server) – run [Webpack development server](https://github.com/webpack/webpack-dev-server)
-* 🏭 [plugin-lib-rollup](plugin-lib-rollup) – bundle files using [Rollup](https://rollupjs.org/)
+* 🏭 [plugin-lib-rollup](https://github.com/nextools/unmaintained/tree/master/plugin-lib-rollup) – bundle files using [Rollup](https://rollupjs.org/) [unmaintained]
 * 🏭 [plugin-lib-typescript-generate](plugin-lib-typescript-generate) – generate `.d.ts` files using [TypeScript](https://www.typescriptlang.org/)
-* 🏭 [plugin-lib-flow-generate](plugin-lib-flow-generate) – generate `.js.flow` files using [Flow](https://flow.org/)
-* 🏭 [plugin-lib-postcss](plugin-lib-postcss) – transform files using [PostCSS](https://postcss.org/)
+* 🏭 [plugin-lib-flow-generate](https://github.com/nextools/unmaintained/tree/master/plugin-lib-flow-generate) – generate `.js.flow` files using [Flow](https://flow.org/) [unmaintained]
+* 🏭 [plugin-lib-postcss](https://github.com/nextools/unmaintained/tree/master/plugin-lib-postcss) – transform files using [PostCSS](https://postcss.org/) [unmaintained]
 * 🏭 plugin-lib-less – [to be migrated](https://github.com/start-runner/less)
 * 🏭 plugin-lib-clean-css – [to be migrated](https://github.com/start-runner/clean-css)
 * 🏭 plugin-lib-uglify – [to be migrated](https://github.com/start-runner/uglify)
 
 #### Tests
 
-* ✅ [plugin-lib-jest](plugin-lib-jest) – run tests using [Jest](https://facebook.github.io/jest/)
+* ✅ [plugin-lib-jest](https://github.com/nextools/unmaintained/tree/master/plugin-lib-jest) – run tests using [Jest](https://facebook.github.io/jest/) [unmaintained]
 * ✅ [plugin-lib-tape](plugin-lib-tape) – run tests using [Tape](https://github.com/substack/tape)
-* ✅ [plugin-lib-karma](plugin-lib-karma) – run tests using [Karma](https://github.com/karma-runner/karma)
+* ✅ [plugin-lib-karma](https://github.com/nextools/unmaintained/tree/master/plugin-lib-karma) – run tests using [Karma](https://github.com/karma-runner/karma) [unmaintained]
 * 💯 [plugin-lib-instanbul](plugin-lib-istanbul) – collect, report and check code coverage using [Istanbul](https://istanbul.js.org/)
 * ✅ plugin-lib-ava – [to be migrated](https://github.com/start-runner/ava)
 * ✅ plugin-lib-mocha – [to be migrated](https://github.com/start-runner/mocha)
@@ -328,15 +328,15 @@ $ yarn start ci
 #### Lint, check and fix
 
 * 🚷 [plugin-lib-eslint](plugin-lib-eslint) – lint and/or fix code using [ESLint](https://eslint.org/)
-* 🚷 [plugin-lib-prettier-eslint](plugin-lib-prettier-eslint) – fix code(style) using [Prettier + ESLint](https://github.com/prettier/prettier-eslint)
+* 🚷 [plugin-lib-prettier-eslint](https://github.com/nextools/unmaintained/tree/master/plugin-lib-prettier-eslint) – fix code(style) using [Prettier + ESLint](https://github.com/prettier/prettier-eslint) [unmaintained]
 * 🚷 [plugin-lib-typescript-check](plugin-lib-typescript-check) – check types using [TypeScript](https://www.typescriptlang.org/)
-* 🚷 [plugin-lib-flow-check](plugin-lib-flow-check) – check types using [Flow](https://flow.org/)
+* 🚷 [plugin-lib-flow-check](https://github.com/nextools/unmaintained/tree/master/plugin-lib-flow-check) – check types using [Flow](https://flow.org/) [unmaintained]
 
 #### CI and publish
 
-* 💯 [plugin-lib-codecov](plugin-lib-codecov) – send code coverage report to [codecov.io](https://codecov.io/)
-* 🔢 [plugin-lib-npm-version](plugin-lib-npm-version) – bump package version
-* 📦 [plugin-lib-npm-publish](plugin-lib-npm-publish) – publish package to NPM
+* 💯 [plugin-lib-codecov](https://github.com/nextools/unmaintained/tree/master/plugin-lib-codecov) – send code coverage report to [codecov.io](https://codecov.io/) [unmaintained]
+* 🔢 [plugin-lib-npm-version](https://github.com/nextools/unmaintained/tree/master/plugin-lib-npm-version) – bump package version [unmaintained]
+* 📦 [plugin-lib-npm-publish](https://github.com/nextools/unmaintained/tree/master/plugin-lib-npm-publish) – publish package to NPM [unmaintained]
 * 💯 plugin-lib-coveralls – [to be migrated](https://github.com/start-runner/coveralls)
 
 ### Tasks
