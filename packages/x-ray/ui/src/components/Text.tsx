@@ -1,9 +1,8 @@
 import { colorToString } from 'colorido'
 import type { TColor } from 'colorido'
 import React from 'react'
+import type { CSSProperties } from 'react'
 import { component, mapDefaultProps, mapWithProps, startWithType } from 'refun'
-import { normalizeWebStyle } from 'stili'
-import type { TStyle } from 'stili'
 import { isNumber } from 'tsfn'
 import { COLOR_BLACK } from '../config'
 
@@ -11,7 +10,7 @@ export type TTextProps = {
   id?: string,
   color?: TColor,
   fontFamily?: string,
-  fontWeight?: TStyle['fontWeight'],
+  fontWeight?: CSSProperties['fontWeight'],
   fontSize?: number,
   lineHeight?: number,
   letterSpacing?: number,
@@ -45,13 +44,10 @@ export const Text = component(
     shouldPreventWrap,
     shouldHideOverflow,
   }) => {
-    const style: TStyle = {
-      _webOnly: {
-        display: 'block',
-        fontSmoothing: 'antialiased',
-        textRendering: 'geometricPrecision',
-        textSizeAdjust: 'none',
-      },
+    const style: CSSProperties = {
+      display: 'block',
+      textRendering: 'geometricPrecision',
+      textSizeAdjust: 'none',
       color: colorToString(color),
       fontFamily,
       fontWeight,
@@ -60,25 +56,25 @@ export const Text = component(
     }
 
     if (shouldPreserveWhitespace) {
-      style._webOnly!.whiteSpace = 'pre'
+      style.whiteSpace = 'pre'
     }
 
     if (shouldPreventWrap) {
-      style._webOnly!.whiteSpace = 'nowrap'
+      style.whiteSpace = 'nowrap'
     }
 
     if (shouldPreventSelection) {
-      style._webOnly!.userSelect = 'none'
+      style.userSelect = 'none'
     }
 
     if (shouldHideOverflow) {
-      style._webOnly!.whiteSpace = 'nowrap'
-      style._webOnly!.textOverflow = 'ellipsis'
+      style.whiteSpace = 'nowrap'
+      style.textOverflow = 'ellipsis'
       style.overflow = 'hidden'
     }
 
     if (isNumber(letterSpacing)) {
-      style._webOnly!.letterSpacing = `${letterSpacing}px`
+      style.letterSpacing = `${letterSpacing}px`
     }
 
     if (isNumber(lineHeight)) {
@@ -86,11 +82,11 @@ export const Text = component(
     }
 
     if (isUnderlined) {
-      style._webOnly!.textDecoration = 'underline'
+      style.textDecoration = 'underline'
     }
 
     return {
-      style: normalizeWebStyle(style),
+      style,
     }
   })
 )(({ children, style, id }) => (

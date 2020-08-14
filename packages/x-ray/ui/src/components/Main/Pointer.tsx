@@ -1,7 +1,6 @@
 import React from 'react'
-import type { MouseEvent, ReactNode } from 'react'
+import type { MouseEvent, ReactNode, CSSProperties } from 'react'
 import { component, startWithType, mapHandlers, mapProps } from 'refun'
-import { normalizeWebStyle } from 'stili'
 import type { TRect } from '../../types'
 
 export type TPointer = TRect & {
@@ -10,11 +9,9 @@ export type TPointer = TRect & {
   onPress: (x: number, y: number) => void,
 }
 
-const style = normalizeWebStyle({
-  _webOnly: {
-    boxSizing: 'border-box',
-    overflowY: 'scroll',
-  },
+const style: CSSProperties = {
+  boxSizing: 'border-box',
+  overflowY: 'scroll',
   flexDirection: 'row',
   display: 'flex',
   borderStyle: 'solid',
@@ -24,7 +21,7 @@ const style = normalizeWebStyle({
   left: 0,
   right: 0,
   bottom: 0,
-})
+}
 
 export const Pointer = component(
   startWithType<TPointer>(),
