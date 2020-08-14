@@ -20,8 +20,6 @@ export default (taskNames: string[], options: Options = {}) => (...args: string[
             cliPath: process.argv[1],
             taskName,
             args,
-            // @ts-ignore
-            umask: process.umask(),
           },
         })
 

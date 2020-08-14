@@ -7,7 +7,7 @@
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "publishConfig": {
     "access": "public"
@@ -17,7 +17,7 @@
     "@rebox/android": "^3.1.0",
     "@rebox/ios": "^5.0.0",
     "react": "16.13.1",
-    "react-native": "^0.63.2",
+    "react-native": "0.63.2",
     "tsfn": "^1.1.2"
   },
   "fixdeps": {

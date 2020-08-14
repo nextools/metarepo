@@ -15,7 +15,7 @@
   "author": "psxcode <psxcode@gmail.com> (https://github.com/psxcode)",
   "repository": "nextools/metarepo",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "publishConfig": {
     "access": "public"

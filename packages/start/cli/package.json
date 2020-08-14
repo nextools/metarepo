@@ -16,7 +16,7 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.4.2"
