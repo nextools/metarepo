@@ -23,12 +23,12 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.3.1",
-    "circularr": "^0.2.2",
-    "funcom": "^0.1.0"
+    "circularr": "^0.3.0",
+    "funcom": "^0.2.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",
-    "spyfn": "^1.0.0",
+    "spyfn": "^2.0.0",
     "tape": "^5.0.0-next.5"
   }
 }

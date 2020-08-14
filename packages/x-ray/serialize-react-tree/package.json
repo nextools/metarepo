@@ -13,7 +13,7 @@
     "@babel/runtime": "^7.1.2",
     "react": "16.13.1",
     "react-test-renderer": "16.13.1",
-    "tsfn": "^1.1.2"
+    "tsfn": "^2.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

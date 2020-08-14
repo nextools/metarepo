@@ -19,14 +19,14 @@
   },
   "sideEffects": false,
   "devDependencies": {
-    "@mock/fs": "^0.1.0",
-    "@mock/require": "^0.1.0",
+    "@mock/fs": "^0.2.0",
+    "@mock/require": "^0.2.0",
     "@types/tape": "^4.2.34",
     "memfs": "^3.0.3",
-    "spyfn": "^1.0.0",
+    "spyfn": "^2.0.0",
     "tape": "^5.0.0-next.5"
   },
   "dependencies": {
-    "pifs": "^1.0.3"
+    "pifs": "^2.0.0"
   }
 }

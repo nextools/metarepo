@@ -19,7 +19,7 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.4.2",
-    "@mock/utils": "^0.1.0",
+    "@mock/utils": "^0.2.0",
     "get-caller-file": "^2.0.5"
   },
   "devDependencies": {

@@ -16,15 +16,15 @@
     "node": ">=12.13.0"
   },
   "dependencies": {
-    "@auto/core": "^0.2.0",
+    "@auto/core": "^0.3.0",
     "execa": "^4.0.0",
-    "pifs": "^1.0.3",
-    "tsfn": "^1.1.2"
+    "pifs": "^2.0.0",
+    "tsfn": "^2.0.0"
   },
   "devDependencies": {
-    "@mock/require": "^0.1.0",
+    "@mock/require": "^0.2.0",
     "memfs": "^3.1.1",
-    "spyfn": "^1.0.0",
+    "spyfn": "^2.0.0",
     "tape": "^5.0.0-next.5"
   }
 }

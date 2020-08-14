@@ -15,18 +15,18 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/core": "^7.9.0",
-    "@rebox/ios": "^5.0.0",
-    "@x-ray/core": "^0.1.3",
-    "@x-ray/native-screenshots-app": "^3.0.1",
-    "@x-ray/ui": "^2.0.1",
-    "pifs": "^1.0.3",
+    "@rebox/ios": "^6.0.0",
+    "@x-ray/core": "^0.2.0",
+    "@x-ray/native-screenshots-app": "^4.0.0",
+    "@x-ray/ui": "^3.0.0",
+    "pifs": "^2.0.0",
     "pixelmatch": "^5.1.0",
     "pngjs": "^5.0.0",
     "react": "16.13.1",
-    "rsolve": "^0.1.0",
-    "tarmap": "^0.1.0",
-    "typeon": "^1.0.0",
-    "unchunk": "^0.1.0"
+    "rsolve": "^0.2.0",
+    "tarmap": "^0.2.0",
+    "typeon": "^2.0.0",
+    "unchunk": "^0.2.0"
   },
   "devDependencies": {
     "@types/pixelmatch": "^5.1.0",

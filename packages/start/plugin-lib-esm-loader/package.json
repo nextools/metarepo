@@ -17,8 +17,8 @@
     "node": ">=12.13.0"
   },
   "dependencies": {
-    "@start/plugin": "^1.0.0",
-    "copie": "^1.0.0"
+    "@start/plugin": "^2.0.0",
+    "copie": "^2.0.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",

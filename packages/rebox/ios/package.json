@@ -18,16 +18,16 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@rebox/native-utils": "^3.1.0",
-    "copie": "^1.0.0",
-    "dleet": "^1.0.0",
+    "@rebox/native-utils": "^4.0.0",
+    "copie": "^2.0.0",
+    "dleet": "^2.0.0",
     "execa": "^4.0.0",
     "fast-glob": "^3.0.0",
     "make-dir": "^3.0.0",
-    "pifs": "^1.0.3",
-    "rn-fonts": "^1.0.1",
+    "pifs": "^2.0.0",
+    "rn-fonts": "^2.0.0",
     "simple-plist": "^1.0.0",
-    "tsfn": "^1.1.2"
+    "tsfn": "^2.0.0"
   },
   "fixdeps": {
     "ignoredPackages": [

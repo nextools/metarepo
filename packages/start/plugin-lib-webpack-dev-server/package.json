@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.2",
-    "@start/plugin": "^1.0.0",
+    "@start/plugin": "^2.0.0",
     "webpack": "^4.29.6",
     "webpack-dev-server": "^3.2.1"
   },
