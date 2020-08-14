@@ -1,3 +1,29 @@
+import { getObjectKeys } from 'tsfn'
+
+export const shallowEquals = <T extends {}>(a: T, b: T) => {
+  if (a === b) {
+    return true
+  }
+
+  const bKeys = getObjectKeys(b)
+
+  for (const key of bKeys) {
+    if (a[key] !== b[key]) {
+      return false
+    }
+  }
+
+  const aKeys = getObjectKeys(a)
+
+  for (const key of aKeys) {
+    if (a[key] !== b[key]) {
+      return false
+    }
+  }
+
+  return true
+}
+
 export const shallowEqualByKeys = <T extends {}>(a: T, b: T, keys: (keyof T)[]) => {
   if (a === b) {
     return true
