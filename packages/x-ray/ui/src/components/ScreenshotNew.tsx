@@ -30,10 +30,8 @@ export const ScreenshotNew = pureComponent(
     height={height}
     opacity={isDiscarded ? DISCARD_ALPHA : 1}
     style={{
-      _webOnly: {
-        cursor: 'pointer',
-        backgroundImage: hasNoBorder ? 'none' : `repeating-linear-gradient(45deg,${colorToString(color.border)},${colorToString(color.border)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${DASH_SPACE}px)`,
-      },
+      cursor: 'pointer',
+      backgroundImage: hasNoBorder ? 'none' : `repeating-linear-gradient(45deg,${colorToString(color.border)},${colorToString(color.border)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${BORDER_SIZE}px,${colorToString(COLOR_BORDER_NEW)} ${DASH_SPACE}px)`,
     }}
   >
     <Block

@@ -245,9 +245,7 @@ export const Popup = component(
             width={width}
             height={height}
             style={{
-              _webOnly: {
-                cursor: 'pointer',
-              },
+              cursor: 'pointer',
             }}
             onPress={onBackdropPress}
           >
