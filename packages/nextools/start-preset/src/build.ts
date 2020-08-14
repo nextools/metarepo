@@ -109,7 +109,7 @@ export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, 
 
   const tasks = []
 
-  if (Reflect.has(packageJson, 'main')) {
+  if (Reflect.has(packageJson, 'main') || Reflect.has(packageJson, 'bin')) {
     tasks.push('buildNode')
   }
 
@@ -121,10 +121,6 @@ export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, 
     tasks.push('buildReactNative')
   }
 
-  if (Reflect.has(packageJson, 'bin') && !tasks.includes('buildNode')) {
-    tasks.push('buildNode')
-  }
-
   if (Reflect.has(packageJson, 'buildAssets')) {
     tasks.push('buildAssets')
   }
@@ -133,7 +129,9 @@ export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, 
     tasks.push(...packageJson.buildTasks)
   }
 
-  tasks.push('buildTypes')
+  if (Reflect.has(packageJson, 'main') || Reflect.has(packageJson, 'browser') || Reflect.has(packageJson, 'react-native')) {
+    tasks.push('buildTypes')
+  }
 
   return sequence(
     env({ NODE_ENV: 'production' }),
