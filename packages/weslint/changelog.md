@@ -1,3 +1,9 @@
+## v0.4.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `workerama`
+
 ## v0.3.0
 
 * 💥 upgrade to ESLint v7

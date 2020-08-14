@@ -1,3 +1,9 @@
+## v2.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `pifs`, `tsfn`
+
 ## v1.1.3
 
 * 🐞 fix npm fetch error

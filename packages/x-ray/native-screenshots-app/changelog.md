@@ -1,3 +1,7 @@
+## v4.0.0
+
+* 💥 drop Node.js v10
+
 ## v3.0.1
 
 * 🐞 upgrade to React Native v0.63.2

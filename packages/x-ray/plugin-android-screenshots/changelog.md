@@ -1,3 +1,9 @@
+## v0.3.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `pifs`, `rsolve`, `tarmap`, `typeon`, `unchunk`, `@rebox/android`, `@x-ray/core`, `@x-ray/ui`
+
 ## v0.2.0
 
 * 🐞 bump React

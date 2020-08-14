@@ -1,3 +1,9 @@
+## v3.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `tsfn`
+
 ## v2.0.1
 
 * 🐞 add `--shm-size=1g` to fix "Out of memory. size=262144" error

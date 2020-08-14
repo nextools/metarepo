@@ -1,3 +1,9 @@
+## v0.3.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `dleet`, `pifs`, `tsfn`
+
 ## v0.2.0
 
 * 🌱 prompt to retry on publish failure

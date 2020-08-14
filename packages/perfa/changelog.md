@@ -1,3 +1,9 @@
+## v0.4.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `dleet`, `tsfn`, `xrom`, `@rebox/web`
+
 ## v0.3.2
 
 * 🐞 upgrade to Puppeteer v5

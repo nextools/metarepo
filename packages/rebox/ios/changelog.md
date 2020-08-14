@@ -1,3 +1,9 @@
+## v6.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `copie`, `dleet`, `pifs`, `rn-fonts`, `tsfn`, `@rebox/native-utils`
+
 ## v5.0.0
 
 * 💥 rename `iPhoneVersion` option to `iPhoneModel` and make it string

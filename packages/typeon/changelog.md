@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 drop Node.js v10
+
 ## v1.0.1
 
 * 🐞 add readonly types

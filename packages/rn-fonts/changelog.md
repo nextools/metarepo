@@ -1,3 +1,9 @@
+## v2.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `copie`, `pifs`
+
 ## v1.0.1
 
 * 🐞 upgrade `xcode` to v3

@@ -1,3 +1,9 @@
+## v0.2.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `funcom`, `iterama`, `rsolve`, `tarmap`, `tsfn`, `typeon`, `unchunk`, `@rebox/web`
+
 ## v0.1.3
 
 * 🐞 bump React

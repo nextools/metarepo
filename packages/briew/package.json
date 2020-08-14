@@ -1,6 +1,6 @@
 {
   "name": "briew",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Count React Native `createView` events passing through the Bridge",
   "keywords": [],
   "main": "src/index.ts",

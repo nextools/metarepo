@@ -1,3 +1,11 @@
+## v3.0.0
+
+* 💥 drop Node.js v10
+
+* 🐞 fix incorrect shallow equal for pure component
+
+* ♻️ update dependencies `tsfn`
+
 ## v2.0.1
 
 * 🐞 fix `mapState` to deliver fresh state early

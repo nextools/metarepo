@@ -1,3 +1,9 @@
+## v3.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `tsfn`, `@start/plugin`
+
 ## v2.0.0
 
 * 💥 upgrade to Rollup v2

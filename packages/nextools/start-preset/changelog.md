@@ -1,3 +1,11 @@
+## v0.4.0
+
+* 💥 drop Node.js v10
+
+* 🐞 fix build of packages without any entry points
+
+* ♻️ update dependencies `@nextools/babel-config`, `copie`, `dleet`, `fixdeps`, `move-path`, `pifs`, `rplace`, `stroki`, `tsfn`, `typeon`, `weslint`, `@auto/changelog`, `@auto/commit-prompt`, `@auto/github`, `@auto/core`, `@auto/slack`, `@auto/tag`, `@auto/telegram`, `@start/plugin`, `@start/plugin-find`, `@start/plugin-copy`, `@start/plugin-env`, `@start/plugin-input-files`, `@start/plugin-lib-babel`, `@start/plugin-lib-eslint`, `@start/plugin-lib-istanbul`, `@start/plugin-lib-tape`, `@start/plugin-lib-typescript-check`, `@start/plugin-lib-typescript-generate`, `@start/plugin-overwrite`, `@start/plugin-parallel`, `@start/plugin-read`, `@start/plugin-remove`, `@start/plugin-rename`, `@start/plugin-sequence`, `@start/plugin-write`, `@start/reporter-verbose`, `@x-ray/core`, `@x-ray/plugin-chromium-screenshots`, `@x-ray/plugin-android-screenshots`, `@x-ray/plugin-ios-screenshots`, `@x-ray/plugin-react-native-snapshots`, `@x-ray/plugin-react-snapshots`
+
 ## v0.3.3
 
 * 🐞 fix show `fixDeps` error stacktrace

@@ -1,3 +1,9 @@
+## v4.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `copie`, `tsfn`
+
 ## v3.1.0
 
 * 🌱 add `globalConstants` and `globalAliases` options to `run-` methods

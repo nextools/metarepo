@@ -1,3 +1,9 @@
+## v0.5.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `circularr`, `funcom`
+
 ## v0.4.1
 
 * 🐞 add iterator closing

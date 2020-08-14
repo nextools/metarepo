@@ -1,3 +1,9 @@
+## v2.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `@start/plugin`
+
 ## v1.0.3
 
 * 🐞 workaround for missing `process.umask()` in Node.js v10 in a Worker thread

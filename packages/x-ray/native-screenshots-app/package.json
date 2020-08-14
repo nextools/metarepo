@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/native-screenshots-app",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "",
   "keywords": [],
   "react-native": "src/index.js",

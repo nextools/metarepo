@@ -1,3 +1,9 @@
+## v4.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `iterama`, `tsfn`
+
 ## v3.0.2
 
 * 🐞 upgrade `iterama`

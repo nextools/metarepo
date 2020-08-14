@@ -1,3 +1,9 @@
+## v3.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `@start/plugin`
+
 ## v2.0.1
 
 * 🐞 clean CJS cache before running tests

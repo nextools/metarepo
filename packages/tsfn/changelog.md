@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 drop Node.js v10
+
 ## v1.1.2
 
 * 🐞 fix `TRequiredKeys` and `TOptionalKeys` to use string as keyof

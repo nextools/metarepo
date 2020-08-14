@@ -1,3 +1,9 @@
+## v0.3.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `refun`
+
 ## v0.2.3
 
 * 🐞 upgrade primitives

@@ -1,3 +1,9 @@
+## v2.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `tsfn`
+
 ## v1.0.3
 
 * 🐞 fix serialized incorrect comma

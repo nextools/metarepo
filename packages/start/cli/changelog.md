@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 drop Node.js v10
+
 ## v1.0.3
 
 * 🐞 fix `bin` entry points with tricky shebang for running Node.js with flags

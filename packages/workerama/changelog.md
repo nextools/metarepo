@@ -1,3 +1,9 @@
+## v0.4.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `iterama`, `piall`
+
 ## v0.3.1
 
 * 🐞 upgrade `iterama`

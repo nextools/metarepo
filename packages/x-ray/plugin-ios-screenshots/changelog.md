@@ -1,3 +1,9 @@
+## v0.3.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `pifs`, `rsolve`, `tarmap`, `typeon`, `unchunk`, `@rebox/ios`, `@x-ray/core`, `@x-ray/native-screenshots-app`, `@x-ray/ui`
+
 ## v0.2.1
 
 * 🐞 bump rebox/ios

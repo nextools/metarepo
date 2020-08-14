@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 drop Node.js v10
+
 ## v1.0.3
 
 * 🐞 add `types/graceful-fs` as dependencies

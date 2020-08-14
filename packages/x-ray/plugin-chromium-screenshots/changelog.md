@@ -1,3 +1,9 @@
+## v0.2.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `funcom`, `iterama`, `piall`, `pifs`, `tarmap`, `tsfn`, `typeon`, `workerama`, `xrom`, `@x-ray/core`, `@x-ray/ui`
+
 ## v0.1.3
 
 * 🐞 bump React

@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/plugin-react-snapshots",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Check React snapshots with X-Ray",
   "keywords": [],
   "main": "src/index.ts",

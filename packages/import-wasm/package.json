@@ -1,6 +1,6 @@
 {
   "name": "import-wasm",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Async/sync helpers to import `.wasm` modules in Node.js",
   "keywords": [
     "wasm",

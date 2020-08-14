@@ -1,3 +1,7 @@
+## v0.4.0
+
+* 💥 drop Node.js v10
+
 ## v0.3.0
 
 * 🌱 enforce type-only imports/exports

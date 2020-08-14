@@ -1,3 +1,9 @@
+## v3.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `tsfn`
+
 ## v2.1.10
 
 * 🐞 upgrade Terser Webpack Plugin to v4

@@ -1,3 +1,11 @@
+## v0.2.0
+
+* 💥 drop Node.js v10
+
+* 🐞 use ESM for Babel runtime helpers in web builds
+
+* ♻️ update dependencies `@nextools/browsers-list`
+
 ## v0.1.6
 
 * 🐞 remove `use strict` from Node.js builds

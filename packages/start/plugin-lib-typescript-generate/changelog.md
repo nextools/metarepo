@@ -1,3 +1,9 @@
+## v3.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `@start/plugin`
+
 ## v2.0.2
 
 * 🐞 ignore non-TS files if there is no `allowJs` option

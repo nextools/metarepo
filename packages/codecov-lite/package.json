@@ -1,6 +1,6 @@
 {
   "name": "codecov-lite",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "LCOV uploader for codecov.io service",
   "keywords": [
     "coverage",
