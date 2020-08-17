@@ -27,6 +27,6 @@
     "@types/tape": "^4.2.34",
     "@babel/runtime": "^7.4.2",
     "@types/decompress": "^4.2.2",
-    "tape": "^5.0.0-next.5"
+    "tape": "^5.0.0"
   }
 }
