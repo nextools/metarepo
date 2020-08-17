@@ -7,6 +7,7 @@ import {
   Pkg,
 } from '@nextools/start-preset'
 import plugin from '@start/plugin'
+import { Sandbox } from './sandbox'
 
 const shouldBailout = Boolean(process.env.CI)
 
@@ -76,6 +77,11 @@ export const rebox = (platform: 'ios'| 'android') =>
     }
   })
 
+export const sandbox = Sandbox({
+  entryPointPath: 'tasks/sandbox/App.tsx',
+  htmlTemplatePath: 'tasks/sandbox/templates/dev.html',
+})
+
 export const run = (file: string) =>
   plugin('main', () => async () => {
     const { resolve } = await import('path')
@@ -83,3 +89,12 @@ export const run = (file: string) =>
 
     await main()
   })
+
+export const revert = () => plugin('revert', () => async () => {
+  const { runWebApp } = await import('@rebox/web')
+
+  await runWebApp({
+    entryPointPath: './tasks/revert/index.tsx',
+    htmlTemplatePath: './tasks/revert/templates/dev.html',
+  })
+})

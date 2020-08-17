@@ -1,0 +1,30 @@
+{
+  "name": "@revert/animation",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@revert/color": "^0.0.0",
+    "refun": "^3.0.0",
+    "tsfn": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.6",
+    "@types/react-native": "^0.63.0",
+    "react": "16.13.1",
+    "react-native": "0.63.2"
+  },
+  "peerDependencies": {
+    "react": "16.13.1",
+    "react-native": "0.63.2"
+  }
+}

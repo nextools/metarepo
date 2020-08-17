@@ -1,0 +1,22 @@
+{
+  "name": "@revert/svg",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "react-native-svg": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.6",
+    "react": "16.13.1"
+  }
+}
