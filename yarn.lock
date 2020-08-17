@@ -3630,7 +3630,7 @@ cacache@^14.0.0:
     tar "^6.0.0"
     unique-filename "^1.1.1"
 
-cacache@^15.0.3, cacache@^15.0.5:
+cacache@^15.0.5:
   version "15.0.5"
   resolved "https://registry.yarnpkg.com/cacache/-/cacache-15.0.5.tgz#69162833da29170d6732334643c60e005f5f17d0"
   integrity sha512-lloiL22n7sOjEEXdL8NAjTgv9a1u43xICE9/203qonkZUCj5X1UEWIdf2/Y0d6QcCtMzbKQyhrcDbdvlZTs/+A==
@@ -4107,15 +4107,15 @@ compressible@~2.0.16:
   dependencies:
     mime-db ">= 1.43.0 < 2"
 
-compression-webpack-plugin@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/compression-webpack-plugin/-/compression-webpack-plugin-4.0.0.tgz#7599f592050002a49cd3ad3ee18ae7371e266bca"
-  integrity sha512-DRoFQNTkQ8gadlk117Y2wxANU+MDY56b1FIZj/yJXucBOTViTHXjthM7G9ocnitksk4kLzt1N2RLF0gDjxI+hg==
+compression-webpack-plugin@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/compression-webpack-plugin/-/compression-webpack-plugin-5.0.0.tgz#3903c5eb35af61ed4e773f1675895465479d4201"
+  integrity sha512-7igJXv3WgdLpAr+ix4Q0jbnyL43c2kpxhvGXxpP1aQ+Am4zLngU8GoemPZh22OmDCNJ73/DUwV+uumIdp2ltmA==
   dependencies:
-    cacache "^15.0.3"
+    cacache "^15.0.5"
     find-cache-dir "^3.3.1"
-    schema-utils "^2.6.6"
-    serialize-javascript "^3.0.0"
+    schema-utils "^2.7.0"
+    serialize-javascript "^4.0.0"
     webpack-sources "^1.4.3"
 
 compression@^1.7.1, compression@^1.7.4:
@@ -10490,7 +10490,7 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
-schema-utils@^2.6.5, schema-utils@^2.6.6:
+schema-utils@^2.6.5, schema-utils@^2.6.6, schema-utils@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-2.7.0.tgz#17151f76d8eae67fbbf77960c33c676ad9f4efc7"
   integrity sha512-0ilKFI6QQF5nxDZLFn2dMjvc4hjg/Wkg7rHd3jK6/A4a1Hl9VFdQWvgB1UMGoU94pad1P/8N7fMcEnLnSiju8A==
@@ -10574,7 +10574,7 @@ serialize-error@^2.1.0:
   resolved "https://registry.yarnpkg.com/serialize-error/-/serialize-error-2.1.0.tgz#50b679d5635cdf84667bdc8e59af4e5b81d5f60a"
   integrity sha1-ULZ51WNc34Rme9yOWa9OW4HV9go=
 
-serialize-javascript@^3.0.0, serialize-javascript@^3.1.0:
+serialize-javascript@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-3.1.0.tgz#8bf3a9170712664ef2561b44b691eafe399214ea"
   integrity sha512-JIJT1DGiWmIKhzRsG91aS6Ze4sFUrYbltlkg2onR5OrnNM02Kl/hnY/T4FN2omvyeBbQmMJv+K4cPOpGzOTFBg==
