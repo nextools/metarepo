@@ -15,7 +15,7 @@ export const AnimationColor = component(
   mapWithPropsMemo(({ easing }) => ({
     mapColor: easeColor(easing),
   }), ['easing'])
-)(({ fromColor, toColor, time, children, mapColor, shouldNotAnimate }) => (
+)(({ fromColor, toColor, time, children, mapColor, shouldNotAnimate, onAnimationEnd }) => (
   <Animation
     time={time}
     from={fromColor}
@@ -23,6 +23,7 @@ export const AnimationColor = component(
     shouldNotAnimate={shouldNotAnimate}
     valuesEqualFn={isValueEqual}
     animationMapFn={mapColor}
+    onAnimationEnd={onAnimationEnd}
   >
     {children}
   </Animation>

@@ -1,4 +1,6 @@
+export * from './Animation'
 export * from './AnimationValue'
+export * from './AnimationValues'
 export * from './AnimationColor'
 export * from './easing'
 export * from './types'

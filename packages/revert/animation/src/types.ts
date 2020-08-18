@@ -23,6 +23,7 @@ export type TAnimationColor = {
   shouldNotAnimate?: boolean,
   time?: number,
   easing?: TEasingFn,
+  onAnimationEnd?: () => void,
 }
 
 export type TAnimationValue = {
@@ -32,4 +33,15 @@ export type TAnimationValue = {
   shouldNotAnimate?: boolean,
   time?: number,
   easing?: TEasingFn,
+  onAnimationEnd?: () => void,
+}
+
+export type TAnimationValues = {
+  fromValues?: number[],
+  toValues: number[],
+  children: (value: number[]) => ReactElement | null,
+  shouldNotAnimate?: boolean,
+  time?: number,
+  easing?: TEasingFn,
+  onAnimationEnd?: () => void,
 }
