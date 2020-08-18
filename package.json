@@ -27,6 +27,7 @@
     "packages/pifs",
     "packages/rebox/*",
     "packages/refun",
+    "packages/revert/*",
     "packages/rn-fonts",
     "packages/rplace",
     "packages/rsolve",
@@ -52,6 +53,7 @@
     "@start/plugin": "*",
     "@types/node": "^14.0.0",
     "@types/react-native": "^0.63.2",
+    "@types/ws": "^7.2.6",
     "colorido": "^1.0.1",
     "core-js": "^3.2.1",
     "eslint": "^7.0.0",
@@ -60,7 +62,8 @@
     "react-native": "0.63.2",
     "react-native-svg": "^12.1.0",
     "tsfn": "*",
-    "typescript": "^3.8.0"
+    "typescript": "^3.8.0",
+    "ws": "^7.3.1"
   },
   "scripts": {
     "start": "packages/nextools/start-preset/src/cli/index.js"

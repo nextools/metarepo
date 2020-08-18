@@ -1,0 +1,59 @@
+{
+  "name": "@revert/sandbox",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@psxcode/compose": "^0.1.4",
+    "@revert/background": "^0.0.0",
+    "@revert/block": "^0.0.0",
+    "@revert/border": "^0.0.0",
+    "@revert/button": "^0.0.0",
+    "@revert/checkbox": "^0.0.0",
+    "@revert/color": "^0.0.0",
+    "@revert/input": "^0.0.0",
+    "@revert/label": "^0.0.0",
+    "@revert/layout": "^0.0.0",
+    "@revert/link": "^0.0.0",
+    "@revert/pointer": "^0.0.0",
+    "@revert/root": "^0.0.0",
+    "@revert/select": "^0.0.0",
+    "@revert/shadow": "^0.0.0",
+    "@revert/size": "^0.0.0",
+    "@revert/svg": "^0.0.0",
+    "@revert/text": "^0.0.0",
+    "@revert/transform": "^0.0.0",
+    "autoprops": "^4.0.0",
+    "elegir": "^1.0.0",
+    "leven": "^3.1.0",
+    "nanoid": "^3.1.11",
+    "query-string": "^6.13.1",
+    "react-dom": "^16.13.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "refun": "^3.0.0",
+    "syntx": "^2.0.0",
+    "tsfn": "^2.0.0",
+    "typeon": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/query-string": "^6.3.0",
+    "@types/react": "^16.9.6",
+    "@types/react-native": "^0.63.0",
+    "react": "16.13.1",
+    "react-native": "0.63.2"
+  },
+  "peerDependencies": {
+    "react": "16.13.1",
+    "react-native": "0.63.2"
+  }
+}

@@ -37,6 +37,6 @@
     "@types/istanbul-lib-source-maps": "^4.0.0",
     "@types/istanbul-reports": "^3.0.0",
     "@types/tape": "^4.2.34",
-    "tape": "^5.0.0-next.5"
+    "tape": "^5.0.0"
   }
 }

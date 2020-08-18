@@ -28,7 +28,7 @@
     "@types/get-caller-file": "^1.0.0",
     "@types/signal-exit": "^3.0.0",
     "@types/tape": "^4.2.34",
-    "tape": "^5.0.0-next.5",
+    "tape": "^5.0.0",
     "unchunk": "^0.2.0"
   },
   "fixdeps": {

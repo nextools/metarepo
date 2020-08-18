@@ -19,7 +19,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.2",
     "@start/plugin": "^2.0.0",
-    "tape": "^5.0.0-next.5",
+    "tape": "^5.0.0",
     "through": "^2.3.8"
   },
   "devDependencies": {
