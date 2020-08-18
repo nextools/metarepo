@@ -13,7 +13,6 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@psxcode/compose": "^0.1.4",
     "@revert/background": "^0.1.0",
     "@revert/block": "^0.1.0",
     "@revert/border": "^0.1.0",
@@ -34,6 +33,7 @@
     "@revert/transform": "^0.1.0",
     "autoprops": "^4.0.0",
     "elegir": "^1.0.0",
+    "funcom": "^0.2.0",
     "leven": "^3.1.0",
     "nanoid": "^3.1.11",
     "query-string": "^6.13.1",

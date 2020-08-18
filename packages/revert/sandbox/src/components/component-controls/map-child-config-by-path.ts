@@ -1,6 +1,6 @@
-import { pipe } from '@psxcode/compose'
 import { isChildrenMap } from 'autoprops'
 import type { TCommonComponentConfig } from 'autoprops'
+import { pipe } from 'funcom'
 import { startWithType, mapWithProps } from 'refun'
 import { isUndefined, isDefined } from 'tsfn'
 import type { TAnyObject } from 'tsfn'

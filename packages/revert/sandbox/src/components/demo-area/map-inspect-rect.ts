@@ -1,5 +1,5 @@
-import { pipe } from '@psxcode/compose'
 import type { TCommonComponentConfig } from 'autoprops'
+import { pipe } from 'funcom'
 import type { FC } from 'react'
 import { startWithType, mapState, onUpdate } from 'refun'
 import { isFunction, isDefined, isUndefined } from 'tsfn'

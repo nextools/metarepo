@@ -1,4 +1,4 @@
-import { pipe } from '@psxcode/compose'
+import { pipe } from 'funcom'
 import { startWithType } from 'refun'
 import type { TAlert } from './types'
 
