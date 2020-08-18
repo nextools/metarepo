@@ -1,6 +1,6 @@
-import { Animation, easeInOutCubic } from '@primitives/animation'
-import { Size } from '@primitives/size'
-import { pipe } from '@psxcode/compose'
+import { AnimationValue, easeInOutCubic } from '@revert/animation'
+import { Size } from '@revert/size'
+import { pipe } from 'funcom'
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithProps, mapState, mapSafeTimeout, mapHandlers, mapRef, onChange } from 'refun'
 import { DIFF_TIMEOUT, BORDER_SIZE, COLOR_GREEN, COLOR_DARK_GREY, COLOR_RED, COLOR_LIGHT_GREEN, COLOR_LIGHT_RED } from '../config'
@@ -72,14 +72,8 @@ const Label = component(
   >
     <Border
       color={color}
-      topWidth={BORDER_WIDTH}
-      leftWidth={BORDER_WIDTH}
-      rightWidth={BORDER_WIDTH}
-      bottomWidth={BORDER_WIDTH}
-      bottomLeftRadius={BORDER_RADIUS}
-      bottomRightRadius={BORDER_RADIUS}
-      topLeftRadius={BORDER_RADIUS}
-      topRightRadius={BORDER_RADIUS}
+      borderWidth={BORDER_WIDTH}
+      radius={BORDER_RADIUS}
     />
     <Block top={VERTICAL_PADDING} left={HORIZONTAL_PADDING}>
       <Size
@@ -136,8 +130,8 @@ export const ScreenshotPreview = component(
         )}
 
         {item.type === 'DIFF' && (
-          <Animation time={200} easing={easeInOutCubic} values={[diffState ? 1 : 0]}>
-            {([alpha]) => (
+          <AnimationValue time={200} easing={easeInOutCubic} toValue={diffState ? 1 : 0}>
+            {(alpha) => (
               <Fragment>
                 <Background color={diffState ? COLOR_LIGHT_GREEN : COLOR_LIGHT_RED}/>
                 <Label type={diffState ? 'NEW' : 'DELETED'}/>
@@ -157,7 +151,7 @@ export const ScreenshotPreview = component(
                 />
               </Fragment>
             )}
-          </Animation>
+          </AnimationValue>
         )}
 
         {item.type === 'DELETED' && (

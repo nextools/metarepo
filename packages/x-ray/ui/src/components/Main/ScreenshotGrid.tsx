@@ -1,5 +1,5 @@
-import { easeInOutCubic, Animation } from '@primitives/animation'
-import { Border } from '@primitives/border'
+import { easeInOutCubic, AnimationValue } from '@revert/animation'
+import { PrimitiveBorder as Border } from '@revert/border'
 import type { TListItems } from '@x-ray/core'
 import bsc from 'bsc'
 import React, { Fragment } from 'react'
@@ -147,8 +147,8 @@ export const ScreenshotGrid = pureComponent(
     onPress={onPress}
   >
     <Block left={0} top={0} width={0} height={maxHeight} shouldFlow/>
-    <Animation values={[diffState ? 1 : 0]} time={500} easing={easeInOutCubic}>
-      {([alpha]) => (
+    <AnimationValue toValue={diffState ? 1 : 0} time={500} easing={easeInOutCubic}>
+      {(alpha) => (
         <Fragment>
           {cols.reduce((result, col) => (
             result.concat(
@@ -167,10 +167,7 @@ export const ScreenshotGrid = pureComponent(
                     >
                       <Border
                         color={COLOR_BLACK}
-                        topWidth={BORDER_SIZE}
-                        leftWidth={BORDER_SIZE}
-                        rightWidth={BORDER_SIZE}
-                        bottomWidth={BORDER_SIZE}
+                        borderWidth={BORDER_SIZE}
                       />
                     </Block>
                   )
@@ -233,7 +230,7 @@ export const ScreenshotGrid = pureComponent(
           ), [] as ReactNode[])}
         </Fragment>
       )}
-    </Animation>
+    </AnimationValue>
   </Pointer>
 ))
 

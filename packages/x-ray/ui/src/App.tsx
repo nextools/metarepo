@@ -1,4 +1,4 @@
-import { Root } from '@primitives/root'
+import { PrimitiveRoot } from '@revert/root'
 import React from 'react'
 import type { FC } from 'react'
 import { Main } from './components/Main'
@@ -9,10 +9,10 @@ export type TApp = TRenderMetaContext
 
 export const App: FC<TApp> = ({ renderMeta }) => (
   <RenderMetaContext.Provider value={{ renderMeta }}>
-    <Root>
+    <PrimitiveRoot>
       {({ width, height }) => (
         <Main width={width} height={height}/>
       )}
-    </Root>
+    </PrimitiveRoot>
   </RenderMetaContext.Provider>
 )

@@ -1,4 +1,4 @@
-import { Image } from '@primitives/image'
+import { PrimitiveImage as Image } from '@revert/image'
 import type { TListItems } from '@x-ray/core'
 import React, { Fragment } from 'react'
 import { component, startWithType, mapHandlers, onUpdate, mapState } from 'refun'

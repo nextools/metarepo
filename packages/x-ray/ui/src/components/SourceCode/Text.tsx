@@ -1,12 +1,10 @@
-import { Text as PrimitiveText } from '@primitives/text'
-import type { TColor } from 'colorido'
+import { PrimitiveText } from '@revert/text'
+import type { TText as TPrimitiveText } from '@revert/text'
 import React from 'react'
 import type { FC } from 'react'
 import { LINE_HEIGHT } from './constants'
 
-export type TText = {
-  color: TColor,
-}
+export type TText = Pick<TPrimitiveText, 'color' | 'children'>
 
 export const Text: FC<TText> = ({ color, children }) => (
   <PrimitiveText

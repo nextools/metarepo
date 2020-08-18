@@ -1,5 +1,5 @@
-import { Button } from '@primitives/button'
-import { Size } from '@primitives/size'
+import { PrimitiveButton as Button } from '@revert/button'
+import { Size } from '@revert/size'
 import React from 'react'
 import { startWithType, component, mapHandlers, mapWithProps } from 'refun'
 import { COLOR_BLUE, COLOR_WHITE, BORDER_SIZE_SMAL } from '../config'
@@ -49,10 +49,7 @@ export const SaveButton = component(
   >
     <Background
       color={COLOR_BLUE}
-      topLeftRadius={SAVE_BUTTON_BORDER_RADIUS}
-      topRightRadius={SAVE_BUTTON_BORDER_RADIUS}
-      bottomRightRadius={SAVE_BUTTON_BORDER_RADIUS}
-      bottomLeftRadius={SAVE_BUTTON_BORDER_RADIUS}
+      radius={SAVE_BUTTON_BORDER_RADIUS}
     />
     <Button onPress={onPress}>
       <Block

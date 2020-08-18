@@ -1,5 +1,5 @@
-import { colorToString } from 'colorido'
-import type { TColor } from 'colorido'
+import { colorToString } from '@revert/color'
+import type { TColor } from '@revert/color'
 import React from 'react'
 import type { CSSProperties } from 'react'
 import { component, mapDefaultProps, mapWithProps, startWithType } from 'refun'
@@ -78,7 +78,7 @@ export const Text = component(
     }
 
     if (isNumber(lineHeight)) {
-      style.lineHeight = lineHeight
+      style.lineHeight = `${lineHeight}px`
     }
 
     if (isUnderlined) {

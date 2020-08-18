@@ -49,10 +49,7 @@ export const Meta = component(
     >
       <Border
         color={COLOR_GREY}
-        topWidth={0}
-        leftWidth={0}
-        rightWidth={BORDER_SIZE_SMAL}
-        bottomWidth={0}
+        borderRightWidth={BORDER_SIZE_SMAL}
       />
       <Block
         top={SPACING}

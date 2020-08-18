@@ -1,5 +1,5 @@
-import { Button } from '@primitives/button'
-import { Size } from '@primitives/size'
+import { PrimitiveButton as Button } from '@revert/button'
+import { Size } from '@revert/size'
 import React from 'react'
 import { startWithType, component, mapHandlers, mapState, mapWithProps, mapContext, mapWithPropsMemo } from 'refun'
 import { actionAddFilter, actionRemoveFilter, actionResetFilter } from '../actions'
@@ -65,10 +65,7 @@ const Controls = component(
     <Background color={props.color.background}/>
     <Border
       color={props.color.border}
-      topWidth={0}
-      leftWidth={0}
-      rightWidth={0}
-      bottomWidth={BORDER_SIZE_SMAL}
+      borderBottomWidth={BORDER_SIZE_SMAL}
     />
     <Block
       top={CONTROLS_HEIGHT / 2 - props.resetButtonHeight / 2 - BORDER_SIZE_SMAL}
@@ -79,10 +76,7 @@ const Controls = component(
     >
       <Background
         color={COLOR_GREY}
-        topLeftRadius={RESET_BUTTON_BORDER_RADIUS}
-        topRightRadius={RESET_BUTTON_BORDER_RADIUS}
-        bottomRightRadius={RESET_BUTTON_BORDER_RADIUS}
-        bottomLeftRadius={RESET_BUTTON_BORDER_RADIUS}
+        radius={RESET_BUTTON_BORDER_RADIUS}
       />
       <Block
         top={RESET_BUTTON_VERTICAL_PADDING}
@@ -144,10 +138,7 @@ export const Toolbar = component(
       <Background color={color.background}/>
       <Border
         color={color.border}
-        topWidth={0}
-        leftWidth={0}
-        rightWidth={BORDER_SIZE_SMAL}
-        bottomWidth={0}
+        borderRightWidth={BORDER_SIZE_SMAL}
       />
     </Block>
     <Controls

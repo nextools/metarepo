@@ -1,8 +1,9 @@
-import { Animation, easeInOutCubic } from '@primitives/animation'
-import { Background } from '@primitives/background'
-import { Button as ButtonCore } from '@primitives/button'
-import { Size } from '@primitives/size'
-import type { TColor } from 'colorido'
+import { AnimationValues, easeInOutCubic } from '@revert/animation'
+import { PrimitiveBackground as Background } from '@revert/background'
+import { PrimitiveButton as ButtonCore } from '@revert/button'
+import { rgba } from '@revert/color'
+import type { TColor } from '@revert/color'
+import { Size } from '@revert/size'
 import React, { Fragment } from 'react'
 import { component, startWithType, mapHandlers, mapState, mapWithProps, onUpdate } from 'refun'
 import { actionDeselect, actionDiscardItem } from '../actions'
@@ -57,42 +58,38 @@ type TButton = {
 export const Button = component(
   startWithType<TButton>()
 )(({ backgroundColor, fontColor, text, textWidth, textHeight, top, left, width, height, onPress, onWidthChange, onHeightChange }) => (
-  <ButtonCore onPress={onPress}>
-    <Block
-      top={top}
-      left={left}
-      width={width}
-      height={height}
-    >
-      <Background
-        color={backgroundColor}
-        topLeftRadius={BUTTON_BORDER_RADIUS}
-        topRightRadius={BUTTON_BORDER_RADIUS}
-        bottomRightRadius={BUTTON_BORDER_RADIUS}
-        bottomLeftRadius={BUTTON_BORDER_RADIUS}
-      />
+  <ButtonCore
+    top={top}
+    left={left}
+    width={width}
+    height={height}
+    onPress={onPress}
+  >
+    <Background
+      color={backgroundColor}
+      radius={BUTTON_BORDER_RADIUS}
+    />
 
-      <Block
-        top={BUTTON_VERTICAL_PADDING}
-        left={BUTTON_HORIZONTAL_PADDING}
+    <Block
+      top={BUTTON_VERTICAL_PADDING}
+      left={BUTTON_HORIZONTAL_PADDING}
+    >
+      <Size
+        width={textWidth}
+        height={textHeight}
+        onWidthChange={onWidthChange}
+        onHeightChange={onHeightChange}
       >
-        <Size
-          width={textWidth}
-          height={textHeight}
-          onWidthChange={onWidthChange}
-          onHeightChange={onHeightChange}
+        <Text
+          fontSize={13}
+          fontWeight={600}
+          color={fontColor}
+          fontFamily="sans-serif"
+          shouldPreserveWhitespace
         >
-          <Text
-            fontSize={13}
-            fontWeight={600}
-            color={fontColor}
-            fontFamily="sans-serif"
-            shouldPreserveWhitespace
-          >
-            {text}
-          </Text>
-        </Size>
-      </Block>
+          {text}
+        </Text>
+      </Size>
     </Block>
   </ButtonCore>
 ))
@@ -116,8 +113,8 @@ export const Popup = component(
       setState(STATE_OPEN)
     },
     onDiscardToggle: ({ dispatch, item, setState, isDiscarded }) => () => {
-      dispatch(isDiscarded ? actionUndiscardItem(item.id) : actionDiscardItem(item.id))
       setState(STATE_CLOSING)
+      dispatch(isDiscarded ? actionUndiscardItem(item.id) : actionDiscardItem(item.id))
     },
   }),
   mapHandlers({
@@ -230,9 +227,9 @@ export const Popup = component(
   onClose,
 }) => (
   <Block left={left} top={top} width={width} height={height}>
-    <Animation
+    <AnimationValues
       time={300}
-      values={[popupLeft, popupTop, popupWidth, popupHeight, popupAlpha, backdropAlpha]}
+      toValues={[popupLeft, popupTop, popupWidth, popupHeight, popupAlpha, backdropAlpha]}
       easing={easeInOutCubic}
       onAnimationEnd={onAnimationEnd}
       shouldNotAnimate={shouldNotAnimate}
@@ -249,7 +246,7 @@ export const Popup = component(
             }}
             onPress={onBackdropPress}
           >
-            <Background color={[0, 0, 0, backdropAlpha]}/>
+            <Background color={rgba(0, 0, 0, backdropAlpha)}/>
           </Block>
           <Block
             left={popupLeft}
@@ -257,11 +254,11 @@ export const Popup = component(
             width={popupWidth}
             height={popupHeight}
           >
-            <Background color={[255, 255, 255, popupAlpha]}/>
+            <Background color={rgba(255, 255, 255, popupAlpha)}/>
           </Block>
         </Fragment>
       )}
-    </Animation>
+    </AnimationValues>
     {state === STATE_OPEN && item !== null && (
       <Fragment>
         <Block
@@ -273,10 +270,7 @@ export const Popup = component(
           <Background color={COLOR_WHITE}/>
           <Border
             color={COLOR_GREY}
-            topWidth={0}
-            leftWidth={0}
-            rightWidth={0}
-            bottomWidth={BORDER_SIZE_SMAL}
+            borderBottomWidth={BORDER_SIZE_SMAL}
           />
           <Button
             top={CONTROLS_HEIGHT / 2 - (discardTextHeight + BUTTON_VERTICAL_PADDING * 2) / 2}

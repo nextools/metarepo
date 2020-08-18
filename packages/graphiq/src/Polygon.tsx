@@ -1,5 +1,5 @@
-import { easeInOutCubic } from '@primitives/animation'
-import { colorToString } from 'colorido'
+import { easeInOutCubic } from '@revert/animation'
+import { colorToString } from '@revert/color'
 import React, { Fragment } from 'react'
 import type { FC } from 'react'
 import { Animate } from './Animate'
@@ -18,7 +18,7 @@ export const Polygon: FC<TGraphPolygon> = ({
     to={0.15}
     isActive={isActive}
   >
-    {([opacity]) => (
+    {(opacity) => (
       <Fragment>
         <defs>
           <linearGradient id={`gradient-${id}`} x1="0%" y1="0%" x2="0%" y2="100%">

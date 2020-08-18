@@ -1,4 +1,4 @@
-import { colorToString } from 'colorido'
+import { colorToString } from '@revert/color'
 import React from 'react'
 import { startWithType, mapState, mapWithPropsMemo, pureComponent, onUpdateAsync, mapContext } from 'refun'
 import { actionError } from '../actions'

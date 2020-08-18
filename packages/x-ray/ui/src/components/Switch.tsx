@@ -1,4 +1,4 @@
-import { Checkbox } from '@primitives/checkbox'
+import { PrimitiveCheckbox as Checkbox } from '@revert/checkbox'
 import React from 'react'
 import { startWithType, component, mapState, mapHandlers, mapHovered, mapContext, mapWithPropsMemo } from 'refun'
 import type { TMapHovered } from 'refun'
@@ -60,10 +60,7 @@ export const Switch = component(
     />
     <Border
       color={isActive || isHovered ? COLOR_BLUE : color.border}
-      topWidth={0}
-      leftWidth={0}
-      rightWidth={isActive || isHovered ? BORDER_SIZE : BORDER_SIZE_SMAL}
-      bottomWidth={0}
+      borderRightWidth={isActive || isHovered ? BORDER_SIZE : BORDER_SIZE_SMAL}
     />
     <Checkbox
       isChecked={isActive}

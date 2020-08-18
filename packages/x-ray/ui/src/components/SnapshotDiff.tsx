@@ -1,5 +1,5 @@
-import { Block as PrimitiveBlock } from '@primitives/block'
-import { colorToString } from 'colorido'
+import { PrimitiveBlock } from '@revert/block'
+import { colorToString } from '@revert/color'
 import { diffArrays } from 'diff'
 import React from 'react'
 import { startWithType, mapState, mapWithPropsMemo, pureComponent, onUpdateAsync, mapContext } from 'refun'

@@ -1,4 +1,4 @@
-import { Animation, easeInOutCubic } from '@primitives/animation'
+import { AnimationValue, easeInOutCubic } from '@revert/animation'
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithPropsMemo, mapWithProps } from 'refun'
 import { Graph } from './Graph'
@@ -63,12 +63,12 @@ export const Canvas = component(
         }
       }
       />
-      <Animation
+      <AnimationValue
         easing={easeInOutCubic}
         time={200}
-        values={[scale]}
+        toValue={scale}
       >
-        {([scale]) => (
+        {(scale) => (
           <Fragment>
             {graphs.map((graph) => (
               <Graph
@@ -88,7 +88,7 @@ export const Canvas = component(
             ))}
           </Fragment>
         )}
-      </Animation>
+      </AnimationValue>
     </svg>
     <input
       style={{

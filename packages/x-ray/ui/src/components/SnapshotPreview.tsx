@@ -1,4 +1,4 @@
-import { Text } from '@primitives/text'
+import { PrimitiveText as Text } from '@revert/text'
 import { diffArrays } from 'diff'
 import React from 'react'
 import { component, startWithType, mapState, onUpdateAsync } from 'refun'
