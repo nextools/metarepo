@@ -1,27 +1,27 @@
 import React from 'react'
 import { component, startWithType, mapDefaultProps, mapWithPropsMemo } from 'refun'
 import { Animation } from './Animation'
-import { easeValue } from './ease-value'
+import { easeArray } from './ease-array'
 import { easeInOutCubic } from './easing'
-import { isValueEqual } from './is-value-equal'
-import type { TAnimationValue } from './types'
+import { isShallowEqualArray } from './is-shallow-equal-array'
+import type { TAnimationValues } from './types'
 
-export const AnimationValue = component(
-  startWithType<TAnimationValue>(),
+export const AnimationValues = component(
+  startWithType<TAnimationValues>(),
   mapDefaultProps({
     time: 200,
     easing: easeInOutCubic,
   }),
   mapWithPropsMemo(({ easing }) => ({
-    mapValue: easeValue(easing),
+    mapValue: easeArray(easing),
   }), ['easing'])
-)(({ fromValue, toValue, time, children, mapValue, shouldNotAnimate, onAnimationEnd }) => (
+)(({ fromValues, toValues, time, children, mapValue, shouldNotAnimate, onAnimationEnd }) => (
   <Animation
     time={time}
-    from={fromValue}
-    to={toValue}
+    from={fromValues}
+    to={toValues}
     shouldNotAnimate={shouldNotAnimate}
-    valuesEqualFn={isValueEqual}
+    valuesEqualFn={isShallowEqualArray}
     animationMapFn={mapValue}
     onAnimationEnd={onAnimationEnd}
   >
@@ -29,4 +29,4 @@ export const AnimationValue = component(
   </Animation>
 ))
 
-AnimationValue.displayName = 'AnimationValue'
+AnimationValues.displayName = 'AnimationValues'

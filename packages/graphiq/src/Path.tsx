@@ -1,5 +1,5 @@
-import { easeInOutCubic } from '@primitives/animation'
-import { colorToString } from 'colorido'
+import { easeInOutCubic } from '@revert/animation'
+import { colorToString } from '@revert/color'
 import React, { Fragment } from 'react'
 import type { FC } from 'react'
 import { Animate } from './Animate'
@@ -21,7 +21,7 @@ export const Path: FC<TGraphPath> = ({
     to={1}
     isActive={isActive}
   >
-    {([opacity]) => (
+    {(opacity) => (
       <Fragment>
         <defs>
           <linearGradient

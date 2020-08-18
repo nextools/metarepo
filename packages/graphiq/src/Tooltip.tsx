@@ -1,4 +1,4 @@
-import { easeInOutCubic } from '@primitives/animation'
+import { easeInOutCubic } from '@revert/animation'
 import React from 'react'
 import { component, startWithType, mapWithProps, mapRef, onLayout, mapState } from 'refun'
 import { Animate } from './Animate'
@@ -74,7 +74,7 @@ export const Tooltip = component(
     from={0}
     isActive={isActive}
   >
-    {([opacity]) => (
+    {(opacity) => (
       <g
         opacity={opacity}
         style={{ pointerEvents: (isActive) ? 'auto' : 'none' }}

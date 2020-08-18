@@ -1,4 +1,4 @@
-import { colorToString } from 'colorido'
+import { colorToString } from '@revert/color'
 import React from 'react'
 import { component, startWithType, mapRef, onUpdate } from 'refun'
 import type { TButton } from '../types'

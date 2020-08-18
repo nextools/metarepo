@@ -1,4 +1,4 @@
-import { Border } from '@primitives/border'
+import { PrimitiveBorder as Border } from '@revert/border'
 import type { TListItems } from '@x-ray/core'
 import bsc from 'bsc'
 import React from 'react'
@@ -152,10 +152,7 @@ export const SnapshotGrid = pureComponent(
               >
                 <Border
                   color={COLOR_BLACK}
-                  topWidth={BORDER_SIZE}
-                  leftWidth={BORDER_SIZE}
-                  rightWidth={BORDER_SIZE}
-                  bottomWidth={BORDER_SIZE}
+                  borderWidth={BORDER_SIZE}
                 />
               </Block>
             )

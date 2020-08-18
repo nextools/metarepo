@@ -1,4 +1,4 @@
-import { Root } from '@primitives/root'
+import { PrimitiveRoot } from '@revert/root'
 import React from 'react'
 import {
   component,
@@ -90,8 +90,8 @@ export const App = component(
   onSliderChange,
   onMonthsAgo,
 }) => (
-  <Root>
-    {({ width, height }: { width: number, height: number }) => (
+  <PrimitiveRoot>
+    {({ width, height }) => (
       <div style={{ background: PAGE_BACKGROUND, width, height, position: 'absolute' }}>
         <Header
           monthsAgo={monthsAgo}
@@ -117,7 +117,7 @@ export const App = component(
         />
       </div>
     )}
-  </Root>
+  </PrimitiveRoot>
 ))
 
 App.displayName = 'App'

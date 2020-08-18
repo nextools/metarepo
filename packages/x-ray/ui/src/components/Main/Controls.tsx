@@ -1,6 +1,6 @@
-import { Button } from '@primitives/button'
-import { Size } from '@primitives/size'
-import type { TColor } from 'colorido'
+import { Button } from '@revert/button'
+import type { TColor } from '@revert/color'
+import { Size } from '@revert/size'
 import React from 'react'
 import { component, startWithType, mapState, mapContext, mapWithPropsMemo } from 'refun'
 import type { TOmitKey } from 'tsfn'
@@ -82,14 +82,8 @@ const InfoItem = component(
   >
     <Border
       color={props.color}
-      topWidth={INFO_BORDER_WIDTH}
-      leftWidth={INFO_BORDER_WIDTH}
-      rightWidth={INFO_BORDER_WIDTH}
-      bottomWidth={INFO_BORDER_WIDTH}
-      bottomLeftRadius={INFO_BORDER_RADIUS}
-      bottomRightRadius={INFO_BORDER_RADIUS}
-      topLeftRadius={INFO_BORDER_RADIUS}
-      topRightRadius={INFO_BORDER_RADIUS}
+      borderWidth={INFO_BORDER_WIDTH}
+      radius={INFO_BORDER_RADIUS}
     />
     <Block
       top={INFO_VERTICAL_PADDING}
@@ -145,10 +139,7 @@ const ThemeButton = component(
   >
     <Background
       color={props.color.background}
-      topLeftRadius={SAVE_BUTTON_BORDER_RADIUS}
-      topRightRadius={SAVE_BUTTON_BORDER_RADIUS}
-      bottomRightRadius={SAVE_BUTTON_BORDER_RADIUS}
-      bottomLeftRadius={SAVE_BUTTON_BORDER_RADIUS}
+      radius={SAVE_BUTTON_BORDER_RADIUS}
     />
     <Button onPress={props.onPress}>
       <Block
@@ -246,10 +237,7 @@ export const Controls = component(
     <Background color={props.color.background}/>
     <Border
       color={props.color.border}
-      topWidth={0}
-      leftWidth={0}
-      rightWidth={0}
-      bottomWidth={BORDER_SIZE_SMAL}
+      borderBottomWidth={BORDER_SIZE_SMAL}
     />
     <Info elements={props.elements}/>
     <ThemeButton

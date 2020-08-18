@@ -1,4 +1,4 @@
-import { colorToString } from 'colorido'
+import { colorToString } from '@revert/color'
 import React from 'react'
 import { startWithType, pureComponent, mapContext, mapWithPropsMemo } from 'refun'
 import type { TOmitKey } from 'tsfn'

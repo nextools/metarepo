@@ -1,4 +1,4 @@
-import { pipe } from '@psxcode/compose'
+import { pipe } from 'funcom'
 import { startWithType, mapState, mapSafeTimeout, mapHandlers, mapRef, onChange } from 'refun'
 import { DIFF_TIMEOUT } from '../../config'
 import type { TScreenshotGridItem } from '../../types'

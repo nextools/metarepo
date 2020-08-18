@@ -1,15 +1,15 @@
-import { Border as PrimitiveBorder } from '@primitives/border'
-import type { TBorder as TPrimitiveBorder } from '@primitives/border'
+import { AnimationColor } from '@revert/animation'
+import { PrimitiveBorder } from '@revert/border'
+import type { TPrimitiveBorder } from '@revert/border'
 import React from 'react'
 import type { FC } from 'react'
-import { AnimationColor } from './AnimationColor'
 
 export type TBorder = TPrimitiveBorder & {
   animationTime?: number,
 }
 
 export const Border: FC<TBorder> = ({ color, animationTime = 200, ...props }) => (
-  <AnimationColor values={color} time={animationTime}>
+  <AnimationColor toColor={color} time={animationTime}>
     {(color) => (
       <PrimitiveBorder
         color={color}
