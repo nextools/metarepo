@@ -1,3 +1,7 @@
+## v3.0.1
+
+* 🐞 remove `stili` dependency
+
 ## v3.0.0
 
 * 💥 drop Node.js v10
