@@ -24,7 +24,7 @@
     "@revert/layout": "^0.1.0",
     "@revert/link": "^0.1.0",
     "@revert/pointer": "^0.1.0",
-    "@revert/root": "^0.1.0",
+    "@revert/root": "^0.2.0",
     "@revert/select": "^0.1.0",
     "@revert/shadow": "^0.1.0",
     "@revert/size": "^0.1.0",
