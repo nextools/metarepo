@@ -1,3 +1,9 @@
+## v0.3.1
+
+* 🐞 replace `primitives` with `revert`
+
+* ♻️ update dependencies `@revert/root`, `@revert/animation`
+
 ## v0.3.0
 
 * 💥 drop Node.js v10

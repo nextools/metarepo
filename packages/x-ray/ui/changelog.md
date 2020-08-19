@@ -1,3 +1,9 @@
+## v3.0.2
+
+* 🐞 replace `primitives` with `revert`
+
+* ♻️ update dependencies `@revert/root`, `@revert/animation`
+
 ## v3.0.1
 
 * 🐞 remove `stili` dependency
