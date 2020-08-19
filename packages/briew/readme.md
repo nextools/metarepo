@@ -12,7 +12,8 @@ $ yarn add briew
 
 ```ts
 type TOptions = {
-  entryPointPath: string
+  entryPointPath: string,
+  dependencyNames?: string[],
 }
 
 const getAndroidViewCount: (options: TOptions) => Promise<number>

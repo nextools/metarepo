@@ -4,6 +4,7 @@ import { runServer } from './run-server'
 
 export type TGetIosViewCountOptions = {
   entryPointPath: string,
+  dependencyNames?: string[],
 }
 
 export const getIosViewCount = async (options: TGetIosViewCountOptions): Promise<number> => {
@@ -15,6 +16,7 @@ export const getIosViewCount = async (options: TGetIosViewCountOptions): Promise
     appId: 'org.nextools.briew',
     iPhoneModel: '8',
     iOSVersion: '13',
+    dependencyNames: options.dependencyNames,
     globalAliases: {
       __BRIEW_TARGET_APP_PATH__: path.resolve(options.entryPointPath),
     },

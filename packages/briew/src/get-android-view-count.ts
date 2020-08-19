@@ -4,6 +4,7 @@ import { runServer } from './run-server'
 
 export type TGetAndroidViewCountOptions = {
   entryPointPath: string,
+  dependencyNames?: string[],
 }
 
 export const getAndroidViewCount = async (options: TGetAndroidViewCountOptions): Promise<number> => {
@@ -14,6 +15,7 @@ export const getAndroidViewCount = async (options: TGetAndroidViewCountOptions):
     appName: 'Briew',
     appId: 'org.nextools.briew',
     portsToForward: [3005],
+    dependencyNames: options.dependencyNames,
     globalAliases: {
       __BRIEW_TARGET_APP_PATH__: path.resolve(options.entryPointPath),
     },
