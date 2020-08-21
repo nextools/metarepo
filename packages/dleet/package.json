@@ -20,7 +20,7 @@
   "sideEffects": false,
   "devDependencies": {
     "@mock/fs": "^0.2.0",
-    "@mock/require": "^0.2.0",
+    "@mock/require": "^0.2.1",
     "@types/tape": "^4.2.34",
     "memfs": "^3.0.3",
     "spyfn": "^2.0.0",
