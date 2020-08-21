@@ -45,7 +45,8 @@
     "packages/weslint",
     "packages/workerama",
     "packages/x-ray/*",
-    "packages/xrom"
+    "packages/xrom",
+    "packages/yupg"
   ],
   "devDependencies": {
     "@nextools/eslint-config": "*",
