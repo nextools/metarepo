@@ -36,6 +36,7 @@ export const mockRequire = (file: string, mocks: TMocks): () => void => {
 
   const resolve = createRequire(callerFile).resolve
 
+  require(fullPath)
   uncacheKey(fullPath)
 
   const fileMocks = new Map<string, string>()
