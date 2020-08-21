@@ -1,8 +1,8 @@
 {
-  "name": "$name$",
+  "name": "yupg",
   "version": "0.0.0",
-  "description": "$description$",
-  "keywords": [],
+  "description": "Yarn upgrade package",
+  "keywords": ["yarn", "upgrade"],
   "main": "src/index.ts",
   "repository": "nextools/metarepo",
   "license": "MIT",
@@ -13,8 +13,17 @@
     "access": "public"
   },
   "sideEffects": false,
+  "dependencies": {
+    "execa": "^4.0.0",
+    "rwrw": "^0.0.0",
+    "stroki": "^0.2.0"
+  },
   "devDependencies": {
+    "@mock/fs": "^0.2.0",
+    "@mock/require": "^0.2.0",
     "@types/tape": "^4.2.34",
+    "memfs": "^3.2.0",
+    "spyfn": "^2.0.0",
     "tape": "^5.0.0"
   }
 }

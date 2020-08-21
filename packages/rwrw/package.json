@@ -1,8 +1,8 @@
 {
-  "name": "$name$",
+  "name": "rwrw",
   "version": "0.0.0",
-  "description": "$description$",
-  "keywords": [],
+  "description": "temp",
+  "keywords": ["stream", "rewrite"],
   "main": "src/index.ts",
   "repository": "nextools/metarepo",
   "license": "MIT",
@@ -13,8 +13,14 @@
     "access": "public"
   },
   "sideEffects": false,
+  "dependencies": {
+    "pifs": "^2.0.0"
+  },
   "devDependencies": {
+    "@mock/fs": "^0.2.0",
     "@types/tape": "^4.2.34",
+    "memfs": "^3.2.0",
+    "rplace": "^0.3.0",
     "tape": "^5.0.0"
   }
 }

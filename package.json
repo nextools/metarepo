@@ -31,6 +31,7 @@
     "packages/rn-fonts",
     "packages/rplace",
     "packages/rsolve",
+    "packages/rwrw",
     "packages/siza",
     "packages/spyfn",
     "packages/spyt",
@@ -44,7 +45,8 @@
     "packages/weslint",
     "packages/workerama",
     "packages/x-ray/*",
-    "packages/xrom"
+    "packages/xrom",
+    "packages/yupg"
   ],
   "devDependencies": {
     "@nextools/eslint-config": "*",

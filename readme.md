@@ -34,6 +34,7 @@ Check the individual documentations for more details:
 * [rn-fonts](packages/rn-fonts): custom fonts linker for React Native (iOS/Android)
 * [rplace](packages/rplace): transform stream by replacing strings on per-line basis, especially efficient with large multiline text file formats
 * [rsolve](packages/rsolve): resolve module path with custom entry point `package.json` field relative to caller file
+* [rwrw](packages/rwrw): rewrite file stream
 * [siza](packages/siza): get bundle size of a React application
 * [spyfn](packages/spyfn): spy function
 * [spyt](packages/spyt): `setTimeout`/`requestAnimationFrame` spies
@@ -47,3 +48,4 @@ Check the individual documentations for more details:
 * [workerama](packages/workerama): run sync/async function across Worker Threads
 * [@x-ray](packages/x-ray): extremely fast set of libraries for regressions testing of Chrome/Firefox/iOS/Android screenshots and Web/React Native snapshots
 * [xrom](packages/xrom): run dockerized Chromium in headless remote debugging mode and return `browserWSEndpoint` needed for `puppeteer.connect()`
+* [yupg](packages/yupg): Yarn upgrade package
