@@ -2,7 +2,7 @@
 
 Promisified [graceful-fs](https://github.com/isaacs/node-graceful-fs).
 
-* aligned with Node.js v10
+* aligned with Node.js v12
 * native `util.promisify()`
 * no sync methods
 * no deprecated methods like `exists`
