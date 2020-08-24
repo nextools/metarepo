@@ -1,7 +1,7 @@
+import { AnimationValue } from '@revert/animation'
 import React from 'react'
 import { component, startWithType, mapState, mapHandlers, onUpdate, onChange } from 'refun'
-import { Animation } from '@primitives/animation'
-import { TAnimate } from './types'
+import type { TAnimate } from './types'
 
 const STATE_CLOSED = 0
 const STATE_OPENING = 1
@@ -40,13 +40,13 @@ export const Animate = component(
   }
 
   return (
-    <Animation
+    <AnimationValue
       time={time}
       easing={easing}
-      values={[state === STATE_OPENED ? to : from]}
+      toValue={state === STATE_OPENED ? to : from}
       onAnimationEnd={onAnimationEnd}
     >
       {children}
-    </Animation>
+    </AnimationValue>
   )
 })

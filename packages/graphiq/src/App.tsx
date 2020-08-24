@@ -1,3 +1,4 @@
+import { PrimitiveRoot } from '@revert/root'
 import React from 'react'
 import {
   component,
@@ -5,16 +6,14 @@ import {
   mapHandlers,
   mapState,
   mapWithPropsMemo,
-  onMount,
   startWithType,
   onUpdate,
 } from 'refun'
-import { Root } from '@primitives/root'
 import { Canvas } from './Canvas'
 import { Header, Footer } from './Controls/index'
-import { TApp } from './types'
-import { globalObject, getHash, updateHash } from './utils'
 import { PAGE_BACKGROUND, CONTROLS_HEIGHT_TOP, CONTROLS_HEIGHT_BOTTOM } from './constants'
+import type { TApp } from './types'
+import { globalObject, getHash, updateHash } from './utils'
 
 export const App = component(
   startWithType<TApp>(),
@@ -41,7 +40,7 @@ export const App = component(
       }
     },
   }),
-  onMount(({ setScale, graphs, setSelectedGraph, setHoveredGraph }) => {
+  onUpdate(({ setScale, graphs, setSelectedGraph, setHoveredGraph }) => {
     setTimeout(() => {
       setScale(50)
     }, 200)
@@ -53,7 +52,7 @@ export const App = component(
       setSelectedGraph(hash)
       updateHash(hash)
     })
-  }),
+  }, []),
   onUpdate(({ selectedGraph }) => {
     updateHash(selectedGraph)
   }, ['selectedGraph']),
@@ -91,7 +90,7 @@ export const App = component(
   onSliderChange,
   onMonthsAgo,
 }) => (
-  <Root>
+  <PrimitiveRoot>
     {({ width, height }) => (
       <div style={{ background: PAGE_BACKGROUND, width, height, position: 'absolute' }}>
         <Header
@@ -118,7 +117,7 @@ export const App = component(
         />
       </div>
     )}
-  </Root>
+  </PrimitiveRoot>
 ))
 
 App.displayName = 'App'

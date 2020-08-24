@@ -1,5 +1,5 @@
-/* eslint-disable no-sync */
-import plugin, { StartFilesProps } from '@start/plugin'
+import plugin from '@start/plugin'
+import type{ StartFilesProps } from '@start/plugin'
 
 export default (extensions?: string[]) =>
   plugin('istanbulInstrument', ({ logMessage }) => async ({ files }: StartFilesProps) => {
@@ -40,6 +40,7 @@ export default (extensions?: string[]) =>
 
         // @ts-ignore
         // TODO: update @types/istanbul-lib-hook
+        // eslint-disable-next-line node/no-sync
         return instrumenter.instrumentSync(source, options.file, sourceMapObject)
       },
       { extensions }

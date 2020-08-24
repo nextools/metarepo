@@ -1,10 +1,12 @@
-import { ReactElement, createElement } from 'react'
-import { isUndefined, TAnyObject } from 'tsfn'
-import { TChildrenMap, TComponentConfig } from './types'
-import { isChildrenMap } from './is-children-map'
+import { createElement } from 'react'
+import type { ReactElement } from 'react'
+import { isUndefined } from 'tsfn'
+import type { TAnyObject, TReadonly } from 'tsfn'
 import { getChildrenKeys } from './get-keys'
+import { isChildrenMap } from './is-children-map'
+import type { TChildrenMap, TCommonComponentConfig } from './types'
 
-export const createChildren = <ChildrenKeys extends string>(componentConfig: TComponentConfig<any, ChildrenKeys>, childrenMap: TChildrenMap<ChildrenKeys>): ReactElement | ReactElement[] => {
+export const createChildren = (componentConfig: TCommonComponentConfig, childrenMap: TReadonly<TChildrenMap>): ReactElement | ReactElement[] => {
   const childrenConfig = componentConfig.children
 
   if (isUndefined(childrenConfig)) {
@@ -17,7 +19,7 @@ export const createChildren = <ChildrenKeys extends string>(componentConfig: TCo
   for (let i = 0; i < childrenKeys.length; ++i) {
     const childKey = childrenKeys[i]
     const childrenProps = childrenMap[childKey]
-    const childMeta = childrenConfig[childKey]
+    const childMeta = childrenConfig[childKey]!
 
     if (isUndefined(childrenProps)) {
       continue

@@ -1,9 +1,9 @@
-import test from 'blue-tape'
-import { TComponentConfig } from '../src/types'
+import test from 'tape'
 import { getProps } from '../src'
+import type { TCommonComponentConfig } from '../src/types'
 
 test('autoprops: getProps single prop', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
     },
@@ -27,7 +27,7 @@ test('autoprops: getProps single prop', (t) => {
 })
 
 test('autoprops: getProps required props', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],
@@ -56,7 +56,7 @@ test('autoprops: getProps required props', (t) => {
 })
 
 test('autoprops: getProps empty childrenMap', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {},
     children: {
       child: {
@@ -87,7 +87,7 @@ test('autoprops: getProps empty childrenMap', (t) => {
 })
 
 test('autoprops: getProps children with required', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {},
     children: {
       child: {
@@ -131,7 +131,7 @@ test('autoprops: getProps children with required', (t) => {
 })
 
 test('autoprops: getProps same child placed multiple times', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {},
     children: {
       child0: {

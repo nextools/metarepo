@@ -1,1 +1,0 @@
-AnimationColor.web.tsx

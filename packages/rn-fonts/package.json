@@ -1,21 +1,21 @@
 {
   "name": "rn-fonts",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "sideEffects": false,
   "dependencies": {
     "@types/plist": "^3.0.2",
-    "copie": "^1.0.0",
+    "copie": "^2.0.0",
     "make-dir": "^3.0.0",
-    "pifs": "^1.0.0",
+    "pifs": "^2.0.0",
     "plist": "^3.0.1",
-    "xcode": "^2.0.0"
+    "xcode": "^3.0.0"
   }
 }

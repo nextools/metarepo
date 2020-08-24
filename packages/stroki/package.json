@@ -1,0 +1,26 @@
+{
+  "name": "stroki",
+  "version": "0.2.0",
+  "description": "Read stream line by line",
+  "keywords": [
+    "stream",
+    "transform",
+    "lines"
+  ],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@mock/require": "^0.2.1",
+    "@types/tape": "^4.2.34",
+    "spyfn": "^2.0.0",
+    "tape": "^5.0.0"
+  }
+}

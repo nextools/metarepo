@@ -25,11 +25,11 @@ const rm = async (targetPath: string): Promise<void> => {
   }
 }
 
-const dleet = async (targetPath: string) => {
+const dleet = async (targetPath: string): Promise<void> => {
   let ebusyTries = 1
   let hasFixedMode = false
 
-  const tryToRm = async () => {
+  const tryToRm = async (): Promise<void> => {
     try {
       await rm(targetPath)
     } catch (error) {

@@ -1,3 +1,11 @@
+## v2.0.0
+
+* 💥 drop Node.js v10
+
+## v1.0.1
+
+* 🐞 re-publish using updated Start preset
+
 ## v1.0.0
 
 * 💥 transfer package and make breaking changes

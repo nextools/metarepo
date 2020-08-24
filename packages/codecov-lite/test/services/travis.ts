@@ -1,18 +1,20 @@
-import test from 'blue-tape'
+import test from 'tape'
 import travis from '../../src/services/travis'
 
-test('services/travis', async (t) => {
+test('services/travis', (t) => {
   t.equal(
-    await travis({ FOO: '1' }),
+    travis({ FOO: '1' }),
     null,
     'should return null if not detected'
   )
 
-  const result = await travis({ TRAVIS: '1' })
+  const result = travis({ TRAVIS: '1' })
 
   t.equal(
     result!.service,
     'travis',
     'should return config'
   )
+
+  t.end()
 })

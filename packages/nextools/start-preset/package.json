@@ -1,0 +1,84 @@
+{
+  "name": "@nextools/start-preset",
+  "version": "0.4.0",
+  "description": "",
+  "keywords": [],
+  "bin": {
+    "start": "src/cli/index.js"
+  },
+  "main": "src/index.ts",
+  "buildAssets": {
+    "src/config/*.yml": "node/"
+  },
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "dependencies": {
+    "@auto/changelog": "^0.2.0",
+    "@auto/commit-prompt": "^0.2.0",
+    "@auto/core": "^0.3.0",
+    "@auto/fs": "^1.0.0",
+    "@auto/github": "^0.2.0",
+    "@auto/slack": "^0.2.0",
+    "@auto/tag": "^0.2.0",
+    "@auto/telegram": "^0.2.0",
+    "@babel/core": "^7.8.0",
+    "@babel/register": "^7.8.0",
+    "@nextools/babel-config": "^0.2.0",
+    "@start/plugin": "^2.0.0",
+    "@start/plugin-copy": "^2.0.0",
+    "@start/plugin-env": "^2.0.0",
+    "@start/plugin-find": "^2.0.0",
+    "@start/plugin-input-files": "^2.0.0",
+    "@start/plugin-lib-babel": "^3.0.0",
+    "@start/plugin-lib-eslint": "^3.0.0",
+    "@start/plugin-lib-istanbul": "^2.0.0",
+    "@start/plugin-lib-tape": "^3.0.0",
+    "@start/plugin-lib-typescript-check": "^2.0.0",
+    "@start/plugin-lib-typescript-generate": "^3.0.0",
+    "@start/plugin-overwrite": "^2.0.0",
+    "@start/plugin-parallel": "^2.0.0",
+    "@start/plugin-read": "^2.0.0",
+    "@start/plugin-remove": "^2.0.0",
+    "@start/plugin-rename": "^2.0.0",
+    "@start/plugin-sequence": "^2.0.0",
+    "@start/plugin-write": "^2.0.0",
+    "@start/reporter-verbose": "^2.0.0",
+    "@x-ray/core": "^0.2.0",
+    "@x-ray/plugin-android-screenshots": "^0.3.0",
+    "@x-ray/plugin-chromium-screenshots": "^0.2.0",
+    "@x-ray/plugin-ios-screenshots": "^0.3.0",
+    "@x-ray/plugin-react-native-snapshots": "^0.2.0",
+    "@x-ray/plugin-react-snapshots": "^0.2.0",
+    "copie": "^2.0.0",
+    "dleet": "^2.0.0",
+    "dotenv": "^8.0.0",
+    "escape-string-regexp": "^4.0.0",
+    "execa": "^4.0.0",
+    "fixdeps": "^2.0.1",
+    "globby": "^11.0.0",
+    "make-dir": "^3.0.0",
+    "move-path": "^2.0.0",
+    "nanomatch": "^1.2.13",
+    "node-fetch": "^2.6.0",
+    "pifs": "^2.0.0",
+    "prompts": "^2.1.0",
+    "rplace": "^0.3.0",
+    "stroki": "^0.2.0",
+    "tap-diff": "^0.1.1",
+    "tsfn": "^2.0.0",
+    "typeon": "^2.0.0",
+    "weslint": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/babel__core": "^7.1.1",
+    "@types/node-fetch": "^2.5.4"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/core"
+    ]
+  }
+}

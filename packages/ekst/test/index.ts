@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { appendExt, prependExt, replaceExt, removeExt } from '../src'
 
 test('ekst: appendExt', (t) => {

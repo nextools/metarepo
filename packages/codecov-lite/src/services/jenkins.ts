@@ -1,4 +1,4 @@
-import { TServiceConfig } from '../types'
+import type { TServiceConfig } from '../types'
 
 // https://wiki.jenkins-ci.org/display/JENKINS/Building+a+software+project#Buildingasoftwareproject-JenkinsSeNodeJS.ProcessEnvironmentVariables
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {

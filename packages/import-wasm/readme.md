@@ -1,4 +1,4 @@
-# import-wasm
+# import-wasm ![npm](https://flat.badgen.net/npm/v/import-wasm)
 
 Async/sync helpers to import `.wasm` modules in Node.js without `--experimental-wasm-modules` flag which was added only in v12.3.0.
 

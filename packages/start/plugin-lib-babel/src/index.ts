@@ -1,5 +1,6 @@
-import plugin, { StartDataFile, StartDataFilesProps } from '@start/plugin'
-import { TransformOptions } from '@babel/core'
+import type { TransformOptions } from '@babel/core'
+import plugin from '@start/plugin'
+import type { StartDataFile, StartDataFilesProps } from '@start/plugin'
 
 export default (userOptions?: TransformOptions) =>
   plugin('babel', ({ logPath }) => async ({ files }: StartDataFilesProps) => {
@@ -17,7 +18,7 @@ export default (userOptions?: TransformOptions) =>
           const transformed = transform(file.data, options)
 
           if (transformed !== null) {
-            if (typeof transformed.code !== 'string') {
+            if (typeof transformed.code !== 'string' || transformed.code === '') {
               return result
             }
 

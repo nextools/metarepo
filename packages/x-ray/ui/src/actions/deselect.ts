@@ -1,4 +1,4 @@
-import { TAnyAction, TAction } from '../types'
+import type { TAnyAction, TAction } from '../types'
 
 const TYPE_DESELECT = 'DESELECT'
 

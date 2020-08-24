@@ -1,5 +1,5 @@
 import { isUndefined } from 'tsfn'
-import { TPerfPaint } from './types'
+import type { TPerfPaint } from './types'
 
 export const getPerfPaintEntryValue = (perf: TPerfPaint, key: string): number => {
   const entry = perf.find((entry) => entry.name === key)

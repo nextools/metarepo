@@ -1,12 +1,14 @@
 /* eslint-disable no-use-before-define */
-import { TAnyObject, isDefined, TWritable } from 'tsfn'
-import BigInt, { BigInteger } from 'big-integer'
-import { TComponentConfig, TChildrenMap, TRequiredConfig } from './types'
-import { unpackPerm } from './unpack-perm'
+import BigInt from 'big-integer'
+import type { BigInteger } from 'big-integer'
+import { isDefined } from 'tsfn'
+import type { TAnyObject, TWritable, TReadonly } from 'tsfn'
 import { parseBigInt } from './parse-bigint'
+import type { TChildrenMap, TCommonRequiredConfig, TCommonComponentConfig } from './types'
+import { unpackPerm } from './unpack-perm'
 
-const getValue = (valueIndex: number, values: readonly any[], key: string, required?: TRequiredConfig): any => {
-  if (isDefined(required) && required.includes(key)) {
+const getValue = (valueIndex: number, values: readonly any[], key: string, required?: TReadonly<TCommonRequiredConfig>): any => {
+  if (required?.includes(key)) {
     return values[valueIndex]
   }
 
@@ -15,8 +17,8 @@ const getValue = (valueIndex: number, values: readonly any[], key: string, requi
   }
 }
 
-const getChildValue = (childConfig: TComponentConfig, int: BigInteger, childKey: string, required?: TRequiredConfig): any => {
-  if (isDefined(required) && required.includes(childKey)) {
+const getChildValue = (childConfig: TCommonComponentConfig, int: BigInteger, childKey: string, required?: TReadonly<TCommonRequiredConfig>): any => {
+  if (required?.includes(childKey)) {
     return getPropsImpl(childConfig, int)
   }
 
@@ -25,7 +27,7 @@ const getChildValue = (childConfig: TComponentConfig, int: BigInteger, childKey:
   }
 }
 
-export const getPropsImpl = (componentConfig: TComponentConfig, int: BigInteger): TAnyObject => {
+export const getPropsImpl = (componentConfig: TCommonComponentConfig, int: BigInteger): TAnyObject => {
   const result: TAnyObject = {}
   const { values, propKeys, childrenKeys } = unpackPerm(componentConfig, int)
 
@@ -34,7 +36,7 @@ export const getPropsImpl = (componentConfig: TComponentConfig, int: BigInteger)
   for (; i < propKeys.length; ++i) {
     const propKey = propKeys[i]
     const valueIndex = values[i]
-    const value = getValue(valueIndex.toJSNumber(), componentConfig.props[propKey], propKey, componentConfig.required)
+    const value = getValue(valueIndex.toJSNumber(), componentConfig.props[propKey]!, propKey, componentConfig.required)
 
     if (isDefined(value)) {
       result[propKey] = value
@@ -48,7 +50,7 @@ export const getPropsImpl = (componentConfig: TComponentConfig, int: BigInteger)
     for (; i < values.length; ++i) {
       const childKey = childrenKeys[i - propKeys.length]
       const valueInt = values[i]
-      const value = getChildValue(componentConfig.children[childKey].config, valueInt, childKey, componentConfig.required)
+      const value = getChildValue(componentConfig.children[childKey]!.config, valueInt, childKey, componentConfig.required)
 
       if (isDefined(value)) {
         childrenMap[childKey] = value
@@ -64,6 +66,6 @@ export const getPropsImpl = (componentConfig: TComponentConfig, int: BigInteger)
   return result
 }
 
-export const getProps = (componentConfig: TComponentConfig, intStr: string): TAnyObject => {
+export const getProps = (componentConfig: TCommonComponentConfig, intStr: string): TAnyObject => {
   return getPropsImpl(componentConfig, parseBigInt(intStr))
 }

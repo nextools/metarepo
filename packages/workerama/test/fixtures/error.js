@@ -1,7 +1,9 @@
-exports.test = (item, arg) => {
-  if (item === 13) {
-    return Promise.reject(new Error('oops'))
-  }
+exports.test = (arg) => (item) => {
+  if (!item.done) {
+    if (item.value === 13) {
+      return Promise.reject(new Error('oops'))
+    }
 
-  return Promise.resolve(item + arg)
+    return Promise.resolve({ value: item.value + arg })
+  }
 }

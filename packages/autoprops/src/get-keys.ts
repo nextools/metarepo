@@ -1,6 +1,6 @@
-import { isUndefined } from 'util'
-import { TAnyObject, getObjectKeys } from 'tsfn'
-import { TComponentConfig } from './types'
+import { isUndefined } from 'tsfn'
+import type { TAnyObject, TReadonly } from 'tsfn'
+import type { TCommonComponentConfig } from './types'
 
 const isBoolean = (arg: string): boolean => {
   return arg.startsWith('is') || arg.startsWith('has') || arg.startsWith('should')
@@ -30,7 +30,7 @@ const compareBoolean = (bool: string, other: string): number => {
   return 1
 }
 
-export const getPropKeys = (props: TAnyObject): string[] => {
+export const getPropKeys = (props: TReadonly<TAnyObject>): string[] => {
   return Object.keys(props).sort((a, b) => {
     if (isBoolean(a)) {
       return compareBoolean(a, b)
@@ -60,10 +60,10 @@ export const getPropKeys = (props: TAnyObject): string[] => {
   })
 }
 
-export const getChildrenKeys = <ChildrenKeys extends string>(componentConfig: TComponentConfig<any, ChildrenKeys>): ChildrenKeys[] => {
+export const getChildrenKeys = (componentConfig: TCommonComponentConfig): string[] => {
   if (isUndefined(componentConfig.children)) {
     return []
   }
 
-  return getObjectKeys(componentConfig.children)
+  return Object.keys(componentConfig.children)
 }

@@ -1,9 +1,9 @@
-/* eslint-disable no-sync */
 import path from 'path'
+import { readFile, readdir, writeFile } from 'pifs'
+import plistParser from 'plist'
+import type { PlistValue } from 'plist'
 // @ts-ignore
 import xcode from 'xcode'
-import plistParser, { PlistValue } from 'plist'
-import { readFile, readdir, writeFile } from 'pifs'
 import { getFontPaths } from './utils'
 
 const plistBuildOptions = {
@@ -11,7 +11,7 @@ const plistBuildOptions = {
   offset: -1,
 }
 
-export const addFontsIos = async (projectPath: string, fontsPath: string) => {
+export const addFontsIos = async (projectPath: string, fontsPath: string): Promise<void> => {
   const fontPaths = await getFontPaths(fontsPath)
   const projectFiles = await readdir(projectPath)
   const xcodeProjectPath = projectFiles.find((file) => path.extname(file) === '.xcodeproj')
@@ -23,6 +23,7 @@ export const addFontsIos = async (projectPath: string, fontsPath: string) => {
   const projectName = path.basename(xcodeProjectPath, '.xcodeproj')
   const plistPath = path.join(projectPath, projectName, 'Info.plist')
   const pbxprojPath = path.join(projectPath, xcodeProjectPath, 'project.pbxproj')
+  // eslint-disable-next-line node/no-sync
   const project = xcode.project(pbxprojPath).parseSync()
   const projectTargetUuid = project.getFirstTarget().uuid
   const plistData = await readFile(plistPath, 'utf8')
@@ -56,5 +57,6 @@ export const addFontsIos = async (projectPath: string, fontsPath: string) => {
   }
 
   await writeFile(plistPath, `${plistParser.build(plist, plistBuildOptions)}\n`)
+  // eslint-disable-next-line node/no-sync
   await writeFile(pbxprojPath, project.writeSync())
 }

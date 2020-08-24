@@ -1,5 +1,7 @@
-import { useState, useRef, MutableRefObject } from 'react'
-import { TExtend3, EMPTY_OBJECT, NOOP } from 'tsfn'
+import { useState, useRef } from 'react'
+import type { MutableRefObject } from 'react'
+import { EMPTY_OBJECT, NOOP } from 'tsfn'
+import type { TExtend3 } from 'tsfn'
 import { shallowEqualByKeys } from './utils'
 
 export const mapStateRef = <SN extends string, SSN extends string, P extends {}, R> (stateName: SN, stateFlusherName: SSN, getValue: (props: P) => R, watchKeys: (keyof P)[]) =>
@@ -9,7 +11,7 @@ export const mapStateRef = <SN extends string, SSN extends string, P extends {},
     const stateRef = useRef<R>(EMPTY_OBJECT)
     const stateFlushRef = useRef(NOOP)
 
-    if (prevProps.current === EMPTY_OBJECT) {
+    if (stateFlushRef.current === NOOP) {
       stateFlushRef.current = () => {
         useStateResult[1]({} as R)
       }

@@ -23,7 +23,9 @@ istanbulInstrument(extensions?: string[])
 File extensions to instrument, for example `['.ts']`
 
 ```ts
-istanbulReports(formats: string[] = ['lcovonly', 'text-summary'])
+import type { ReportType } from 'istanbul-reports'
+
+istanbulReports(formats: ReportType[] = ['lcovonly', 'text-summary'])
 ```
 
 ```ts

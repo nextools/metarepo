@@ -1,4 +1,4 @@
-import { TAction, TAnyAction } from '../types'
+import type { TAction, TAnyAction } from '../types'
 
 const TYPE_ERROR = 'ERROR'
 

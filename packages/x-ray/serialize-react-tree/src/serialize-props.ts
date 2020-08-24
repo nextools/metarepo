@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle, no-use-before-define */
 import { isValidElement } from 'react'
 import { isObject, isArray, isFunction, isNull, isUndefined, isString, isNumber, isSymbol } from 'tsfn'
-import serializeReactTree from './serialize-react-tree'
 import { makeIndent, nextIndent, prevIndent } from './make-indent'
+import serializeReactTree from './serialize-react-tree'
 
 const serializeArray = (array: any[], indent: number) => {
   if (array.length === 0) {

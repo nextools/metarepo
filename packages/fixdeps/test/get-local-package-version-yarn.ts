@@ -1,13 +1,27 @@
-import test from 'blue-tape'
-import { mock } from 'mocku'
+import { mockRequire } from '@mock/require'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 
 test('fixdeps: getLocalPackageVersionYarn result', async (t) => {
   const spy = createSpy(() => ({
-    stdout: ' pkg@1.0.0',
+    stdout: JSON.stringify({
+      type: 'tree',
+      data: {
+        type: 'list',
+        trees: [
+          {
+            name: 'pkg@1.0.0',
+            children: [],
+            hint: null,
+            color: null,
+            depth: 0,
+          },
+        ],
+      },
+    }),
   }))
 
-  const unmock = mock('../src/get-local-package-version-yarn', {
+  const unmockRequire = mockRequire('../src/get-local-package-version-yarn', {
     execa: { default: spy },
   })
 
@@ -23,44 +37,25 @@ test('fixdeps: getLocalPackageVersionYarn result', async (t) => {
 
   t.deepEquals(
     getSpyCalls(spy),
-    [['yarn', ['list', '--pattern', 'pkg'], { stderr: 'ignore' }]],
+    [['yarn', ['list', '--json', '--depth=0', '--pattern', 'pkg'], { stderr: 'ignore' }]],
     'should call yarn with arguments'
   )
 
-  unmock()
-})
-
-test('fixdeps: getLocalPackageVersionYarn more than one version', async (t) => {
-  const spy = createSpy(() => ({
-    stdout: ' pkg@1.0.0\n pkg@2.0.0',
-  }))
-
-  const unmock = mock('../src/get-local-package-version-yarn', {
-    execa: { default: spy },
-  })
-
-  const { getLocalPackageVersionYarn } = await import('../src/get-local-package-version-yarn')
-
-  try {
-    await getLocalPackageVersionYarn('pkg')
-    t.fail()
-  } catch (e) {
-    t.equals(
-      e.message,
-      'More than one version of "pkg" exists',
-      'should throw error'
-    )
-  }
-
-  unmock()
+  unmockRequire()
 })
 
 test('fixdeps: getLocalPackageVersionYarn no result', async (t) => {
   const spy = createSpy(() => ({
-    stdout: '',
+    stdout: JSON.stringify({
+      type: 'tree',
+      data: {
+        type: 'list',
+        trees: [],
+      },
+    }),
   }))
 
-  const unmock = mock('../src/get-local-package-version-yarn', {
+  const unmockRequire = mockRequire('../src/get-local-package-version-yarn', {
     execa: { default: spy },
   })
 
@@ -74,5 +69,31 @@ test('fixdeps: getLocalPackageVersionYarn no result', async (t) => {
     'should return null'
   )
 
-  unmock()
+  unmockRequire()
+})
+
+test('fixdeps: getLocalPackageVersionYarn no output', async (t) => {
+  const spy = createSpy(() => ({
+    stdout: '',
+  }))
+
+  const unmockRequire = mockRequire('../src/get-local-package-version-yarn', {
+    execa: { default: spy },
+  })
+
+  const { getLocalPackageVersionYarn } = await import('../src/get-local-package-version-yarn')
+
+  try {
+    await getLocalPackageVersionYarn('pkg')
+
+    t.fail('should not get here')
+  } catch (e) {
+    t.equals(
+      e.message,
+      'Unexpected end of JSON input',
+      'should throw error'
+    )
+  }
+
+  unmockRequire()
 })

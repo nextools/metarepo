@@ -1,7 +1,10 @@
-import { TActionWithPayload, TActionAsync, TAnyAction } from '../types'
-import { apiLoadList, TApiLoadListResult } from '../api'
-import { TActionError, actionError } from './error'
-import { TActionLoadingStart, TActionLoadingEnd, actionLoadingStart, actionLoadingEnd } from './loading'
+import { apiLoadList } from '../api'
+import type { TApiLoadListResult } from '../api'
+import type { TActionWithPayload, TActionAsync, TAnyAction } from '../types'
+import { actionError } from './error'
+import type { TActionError } from './error'
+import { actionLoadingStart, actionLoadingEnd } from './loading'
+import type { TActionLoadingStart, TActionLoadingEnd } from './loading'
 
 const TYPE_LOAD_LIST = 'LOAD_LIST'
 

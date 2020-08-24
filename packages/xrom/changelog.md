@@ -1,3 +1,25 @@
+## v3.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `tsfn`
+
+## v2.0.1
+
+* 🐞 add `--shm-size=1g` to fix "Out of memory. size=262144" error
+
+  ```
+  already existing `--disable-dev-shm-usage` Chromium flag doesn't help
+  ```
+
+## v2.0.0
+
+* 💥 rename export function to `runBrowser` and make it run Chromium or Firefox
+
+## v1.0.4
+
+* 🐞 handle Docker errors more properly
+
 ## v1.0.3
 
 * 🐞 switch from deprecated `request` to `node-fetch` dependency

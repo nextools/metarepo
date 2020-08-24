@@ -1,4 +1,5 @@
-import plugin, { StartDataFilesProps } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartDataFilesProps } from '@start/plugin'
 
 export default plugin('overwrite', ({ logPath }) => async ({ files }: StartDataFilesProps) => {
   const { writeFile } = await import('pifs')

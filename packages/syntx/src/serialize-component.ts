@@ -1,9 +1,9 @@
-import { FC } from 'react'
-import { TConfig, TLine } from './types'
+import type { FC } from 'react'
 import { serializeElement } from './serialize-element'
+import type { TConfig, TLine } from './types'
 import { getDisplayName } from './utils'
 
-export const serializeComponent = (Component: FC<any>, props: any, config: TConfig): readonly TLine[] => {
+export const serializeComponent = (Component: FC<any>, props: any, config: TConfig): TLine[] => {
   const name = getDisplayName(Component)
   const { body } = serializeElement({
     name,

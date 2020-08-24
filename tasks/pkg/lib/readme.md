@@ -1,4 +1,4 @@
-# $name$
+# $name$ ![npm](https://flat.badgen.net/npm/v/$name$)
 
 $description$.
 
@@ -10,7 +10,7 @@ $ yarn add $name$
 
 ## Usage
 
-```js
+```ts
 import { $exportedName$ } from '$name$'
 
 // …

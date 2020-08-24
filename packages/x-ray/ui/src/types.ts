@@ -1,13 +1,6 @@
-import { TJsonValue } from 'typeon'
-import { TExtend } from 'tsfn'
-import { ThunkAction } from 'redux-thunk'
-import { TScreenshotItem, TScreenshotItems } from '@x-ray/screenshot-utils'
-import { TSnapshotItem, TSnapshotItems } from '@x-ray/snapshots'
-import { TItem } from '@x-ray/common-utils'
-
-export { TItem } from '@x-ray/common-utils'
-export { TSnapshotItem, TSnapshotItems } from '@x-ray/snapshots'
-export { TScreenshotItem, TScreenshotItems } from '@x-ray/screenshot-utils'
+import type { TListItems, TItem } from '@x-ray/core'
+import type { ThunkAction } from 'redux-thunk'
+import type { TExtend } from 'tsfn'
 
 export type TPosition = {
   top: number,
@@ -23,28 +16,26 @@ export type TRect = TPosition & TSize
 
 export type TAnyAction = {
   type: string,
-  payload?: TJsonValue,
+  payload?: any,
   error?: string,
-  meta?: TJsonValue,
+  meta?: any,
 }
 
 export type TAction<T extends string> = TExtend<TAnyAction, { type: T }>
-export type TActionWithPayload<T extends string, P extends TJsonValue> = TExtend<TAnyAction, { type: T, payload: P }>
+export type TActionWithPayload<T extends string, P extends any> = TExtend<TAnyAction, { type: T, payload: P }>
 export type TActionAsync<A extends TAnyAction> = ThunkAction<Promise<void>, TState, undefined, A>
 
 export type TType = 'image' | 'text'
 
-export type TItemType = 'new' | 'deleted' | 'diff'
-
-export type TGridItem = TItem & TPosition & {
+export type TGridItem = TPosition & {
   id: string,
   gridWidth: number,
   gridHeight: number,
 }
 
-export type TScreenshotGridItem = TScreenshotItem & TGridItem
+export type TScreenshotGridItem = TItem & TGridItem
 
-export type TSnapshotGridItem = TSnapshotItem & TGridItem
+export type TSnapshotGridItem = TItem & TGridItem
 
 export type TState = {
   error?: string,
@@ -55,10 +46,10 @@ export type TState = {
   files: string[],
 } & ({
   type: 'text' | null,
-  items: TSnapshotItems,
+  items: TListItems,
   selectedItem: TSnapshotGridItem | null,
 } | {
   type: 'image' | null,
-  items: TScreenshotItems,
+  items: TListItems,
   selectedItem: TScreenshotGridItem | null,
 })

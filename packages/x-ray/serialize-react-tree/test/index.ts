@@ -1,5 +1,5 @@
-import test from 'tape'
 import { createElement } from 'react'
+import test from 'tape'
 import serialize from '../src/index'
 
 test('serialize-react-tree', (t) => {

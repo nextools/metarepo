@@ -1,6 +1,8 @@
-import { useContext, Context, useRef, useEffect, useState } from 'react'
-import { EMPTY_OBJECT, TExtend, EMPTY_ARRAY, NOOP } from 'tsfn'
-import { Store } from 'redux'
+import { useContext, useRef, useEffect, useState } from 'react'
+import type { Context } from 'react'
+import type { Store } from 'redux'
+import { EMPTY_OBJECT, EMPTY_ARRAY, NOOP } from 'tsfn'
+import type { TExtend } from 'tsfn'
 import { shallowEqualByKeys } from './utils'
 
 export const ReduxStateFactory = <S>(context: Context<Store<S>>) => <P extends {}, SP extends {}>(mapStateToProps: (state: S) => SP, stateKeysToWatch: (keyof S)[]) =>

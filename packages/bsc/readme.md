@@ -1,4 +1,4 @@
-# bsc
+# bsc ![npm](https://flat.badgen.net/npm/v/bsc)
 
 Binary search with comparator.
 

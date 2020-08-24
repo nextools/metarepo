@@ -1,17 +1,17 @@
-import BigInt, { BigInteger } from 'big-integer'
-import jssha from 'jssha'
+import BigInt from 'big-integer'
 import { map } from 'iterama'
-import { getPropsImpl } from './get-props'
-import { getNextPermImpl } from './get-next-perm'
-import { TComponentConfig } from './types'
-import { serializeProps } from './serialize-props'
-import { isChildrenMap } from './is-children-map'
+import jssha from 'jssha'
 import { createChildren } from './create-children'
 import { getLength } from './get-length'
+import { getPropsImpl } from './get-props'
+import { getValidPermImpl } from './get-valid-perm'
+import { isChildrenMap } from './is-children-map'
+import { serializeProps } from './serialize-props'
+import type { TComponentConfig } from './types'
 
-export const getPropsIterable = <T extends {}>(componentConfig: TComponentConfig<T>): Iterable<{ id: string, props: T }> => {
+export const getPropsIterable = <T extends {}>(componentConfig: TComponentConfig<T, string>): Iterable<{ id: string, props: T }> => {
   const length = getLength(componentConfig)
-  let int: BigInteger | null = BigInt.zero
+  let int = getValidPermImpl(componentConfig, BigInt.zero)
 
   return {
     *[Symbol.iterator]() {
@@ -27,17 +27,17 @@ export const getPropsIterable = <T extends {}>(componentConfig: TComponentConfig
         sha.update(serializeProps(componentConfig, int))
 
         yield {
-          id: sha.getHash('B64'),
+          id: sha.getHash('HEX'),
           props: props as T,
           progress: int.plus(BigInt.one).multiply(10000).divide(length).toJSNumber() / 100, // eslint-disable-line
         }
 
-        int = getNextPermImpl(componentConfig, int)
+        int = getValidPermImpl(componentConfig, int.plus(BigInt.one))
       }
     },
   }
 }
 
-export const mapPropsIterable = <T, R>(componentConfig: TComponentConfig<T>, xf: (value: { id: string, props: T }) => R): Iterable<R> => {
+export const mapPropsIterable = <T, R>(componentConfig: TComponentConfig<T, string>, xf: (value: { id: string, props: T }) => R): Iterable<R> => {
   return map(xf)(getPropsIterable(componentConfig))
 }

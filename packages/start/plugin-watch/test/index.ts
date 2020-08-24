@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import watch from '../src'
 
 test('plugin-watch: export', (t) => {

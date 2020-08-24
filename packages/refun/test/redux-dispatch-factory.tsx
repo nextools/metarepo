@@ -1,23 +1,25 @@
 import React, { createContext } from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
+import type { Store } from 'redux'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { Store } from 'redux'
+import test from 'tape'
 import { component, ReduxDispatchFactory, startWithType } from '../src'
 
 test('ReduxDispatchFactory', (t) => {
   const dispatch = (_: any) => _
-  const compSpy = createSpy(() => null)
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const store = { dispatch, getState: void 0 as any, subscribe: void 0 as any } as Store<{a: number, b: string}>
   const MyComp = component(
     startWithType<{ foo: string }>(),
     ReduxDispatchFactory(createContext(store))('disp')
-  )(compSpy)
+  )(componentSpy)
+
+  let testRenderer: ReactTestRenderer
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
-
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -25,7 +27,7 @@ test('ReduxDispatchFactory', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', disp: dispatch }], // Mount
     ],
@@ -33,6 +35,7 @@ test('ReduxDispatchFactory', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -40,7 +43,7 @@ test('ReduxDispatchFactory', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', disp: dispatch }], // Mount
       [{ foo: 'bar', disp: dispatch }], // Update

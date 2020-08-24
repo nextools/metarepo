@@ -1,0 +1,28 @@
+{
+  "name": "@nextools/eslint-config",
+  "version": "0.4.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.js",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.5.0",
+    "@typescript-eslint/parser": "^3.5.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-react": "^7.20.3"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@typescript-eslint/eslint-plugin",
+      "@typescript-eslint/parser",
+      "eslint-plugin-import",
+      "eslint-plugin-node",
+      "eslint-plugin-react"
+    ]
+  }
+}

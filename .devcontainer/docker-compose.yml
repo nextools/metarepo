@@ -3,23 +3,20 @@ version: "3"
 # https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
 
 services:
-  bubble-dev:
-    container_name: vscode-bubble-dev
-    image: vscode-bubble-dev
+  nextools:
+    container_name: vscode-nextools
+    image: vscode-nextools
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - $HOME/.gitconfig:/root/.gitconfig
       - $HOME/.gnupg/pubring.kbx:/root/.gnupg/pubring.kbx
       - $HOME/.gnupg/trustdb.gpg:/root/.gnupg/trustdb.gpg
       - ssh-agent-forward:/ssh-agent-forward
       - workspace:/workspace
       - /workspace/node_modules
     command: sleep infinity
-    environment:
-      - SSH_AUTH_SOCK=/ssh-agent-forward/ssh-agent.sock
 
 volumes:
   workspace:

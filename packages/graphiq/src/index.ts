@@ -1,2 +1,2 @@
 export * from './App'
-export * from './types'
+export type { TGraph } from './types'

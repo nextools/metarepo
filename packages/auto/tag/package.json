@@ -1,0 +1,28 @@
+{
+  "name": "@auto/tag",
+  "version": "0.2.0",
+  "description": "Write Git tags with Auto Tools",
+  "keywords": [
+    "monorepo",
+    "workspaces",
+    "auto",
+    "commits",
+    "changelog"
+  ],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "dependencies": {
+    "@auto/core": "^0.3.0",
+    "execa": "^4.0.0"
+  },
+  "devDependencies": {
+    "@mock/require": "^0.2.1",
+    "@types/tape": "^4.2.34",
+    "spyfn": "^2.0.0",
+    "tape": "^5.0.0"
+  }
+}

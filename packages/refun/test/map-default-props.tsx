@@ -1,11 +1,12 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { getSpyCalls, createSpy } from 'spyfn'
+import test from 'tape'
 import { component, mapDefaultProps, startWithType } from '../src'
 
 test('mapDefaultProps', (t) => {
-  const compSpy = createSpy(() => null)
+  const componentSpy = createSpy(() => null)
   const MyComp = component(
     startWithType<{
       a?: string,
@@ -16,11 +17,12 @@ test('mapDefaultProps', (t) => {
       a: 'foo',
       b: 42,
     })
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp/>
@@ -28,7 +30,7 @@ test('mapDefaultProps', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ a: 'foo', b: 42 }],
     ],
@@ -36,6 +38,7 @@ test('mapDefaultProps', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -46,7 +49,7 @@ test('mapDefaultProps', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ a: 'foo', b: 42 }],
       [{ a: 'somevalue', b: 42, c: true }],

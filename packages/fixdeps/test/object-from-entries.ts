@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { objectFromEntries } from '../src/object-from-entries'
 
 test('objectFromEntries', (t) => {

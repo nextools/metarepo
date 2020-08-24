@@ -1,6 +1,6 @@
-import { join, resolve } from 'path'
 import { homedir } from 'os'
-import test from 'blue-tape'
+import { join, resolve } from 'path'
+import test from 'tape'
 import movePath from '../src'
 
 test('move-path: intersected paths', (t) => {

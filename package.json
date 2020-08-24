@@ -1,89 +1,124 @@
 {
   "private": true,
-  "description": "_",
+  "description": "metarepo",
   "workspaces": [
     "packages/auto/*",
     "packages/autoprops",
-    "packages/bro-resolve",
+    "packages/briew",
     "packages/bsc",
     "packages/bubble-dev/*",
     "packages/check/*",
+    "packages/circularr",
     "packages/codecov-lite",
-    "packages/colorido",
     "packages/copie",
     "packages/dleet",
     "packages/ekst",
-    "packages/elegir",
-    "packages/fantasy-color/*",
     "packages/fixdeps",
+    "packages/funcom",
     "packages/graphiq",
+    "packages/ida",
     "packages/import-wasm",
-    "packages/lada/*",
+    "packages/iterama",
     "packages/makethen",
-    "packages/math-playground",
     "packages/mnth",
-    "packages/mocku",
+    "packages/mock/*",
     "packages/move-path",
-    "packages/msked",
+    "packages/nextools/*",
     "packages/perfa",
+    "packages/piall",
     "packages/pifs",
-    "packages/primitives/*",
     "packages/rebox/*",
     "packages/refun",
+    "packages/revert/*",
     "packages/rn-fonts",
-    "packages/rn-resolve",
     "packages/rplace",
-    "packages/sandbox/*",
+    "packages/rsolve",
+    "packages/rwrw",
     "packages/siza",
     "packages/spyfn",
     "packages/spyt",
     "packages/start/*",
-    "packages/stili",
+    "packages/stroki",
     "packages/syntx",
-    "packages/themeables/*",
+    "packages/tarmap",
     "packages/tsfn",
     "packages/typeon",
+    "packages/unchunk",
     "packages/weslint",
     "packages/workerama",
     "packages/x-ray/*",
-    "packages/xrom"
+    "packages/xrom",
+    "packages/yupg"
   ],
   "devDependencies": {
-    "@bubble-dev/eslint-config": "*",
-    "@bubble-dev/start-preset": "*",
-    "@bubble-dev/typescript-config": "*",
-    "@sandbox/ui": "*",
+    "@nextools/eslint-config": "*",
+    "@nextools/start-preset": "*",
+    "@nextools/typescript-config": "*",
+    "@revert/color": "*",
     "@start/plugin": "*",
-    "@types/node": "^13.5.0",
-    "colorido": "*",
+    "@types/node": "^14.0.0",
+    "@types/react-native": "^0.63.2",
+    "@types/ws": "^7.2.6",
     "core-js": "^3.2.1",
-    "eslint": "^6.1.0",
+    "eslint": "^7.0.0",
     "graphiq": "*",
-    "react": "^16.8.6",
-    "react-native": "0.61.5",
+    "react": "16.13.1",
+    "react-native": "0.63.2",
+    "react-native-svg": "^12.1.0",
     "tsfn": "*",
-    "typescript": "bubble-dev/TypeScript#ext-3.7.3"
+    "typescript": "^3.8.0",
+    "ws": "^7.3.1"
   },
   "scripts": {
-    "start": "packages/bubble-dev/start-preset/src/cli/index.js"
+    "start": "packages/nextools/start-preset/src/cli/index.js"
   },
   "start": {
     "file": "tasks/",
     "auto": {
-      "initialType": "minor",
-      "autoNamePrefix": "@",
-      "zeroBreakingChangeType": "major",
-      "npm": {
-        "publishSubDirectory": "build",
-        "access": "public"
-      },
       "shouldMakeGitTags": true,
-      "shouldSendTelegramMessage": true,
+      "shouldSendTelegramMessage": false,
       "shouldWriteChangelogFiles": true
     }
   },
+  "auto": {
+    "bump": {
+      "initialType": "minor",
+      "zeroBreakingChangeType": "minor"
+    },
+    "npm": {
+      "publishSubDirectory": "build",
+      "access": "public"
+    },
+    "prefixes": {
+      "major": "💥",
+      "minor": "🌱",
+      "patch": "🐞",
+      "publish": "📦",
+      "dependencies": "♻️",
+      "initial": "🐣",
+      "lint": "🚷",
+      "test": "👾",
+      "docs": "📝",
+      "refactor": "🛠",
+      "wip": "🚧",
+      "screenshots": "📸"
+    },
+    "commit": {
+      "major": "Breaking Change",
+      "minor": "New feature",
+      "patch": "Bugfix",
+      "initial": "Initial",
+      "depepdencies": "Dependencies",
+      "lint": "Lint",
+      "test": "Test",
+      "docs": "Docs",
+      "refactor": "Refactor",
+      "wip": "WIP",
+      "screenshots": "Snapshots / Screenshots"
+    }
+  },
   "eslintConfig": {
-    "extends": "@bubble-dev/eslint-config"
+    "extends": "@nextools/eslint-config"
   },
   "eslintIgnore": [
     "build/",
@@ -96,18 +131,13 @@
     "commitMessageTopic": "{{depName}}",
     "ignoreDeps": [
       "gradle",
-      "typescript"
-    ],
-    "packageRules": [
-      {
-        "packageNames": [
-          "@types/node"
-        ],
-        "allowedVersions": "<12"
-      }
+      "metro-react-native-babel-preset",
+      "react-dom",
+      "react-test-renderer",
+      "react"
     ]
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

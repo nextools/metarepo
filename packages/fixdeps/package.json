@@ -1,13 +1,13 @@
 {
   "name": "fixdeps",
-  "version": "1.1.0",
+  "version": "2.0.1",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "dependencies": {
     "@babel/parser": "^7.3.1",
@@ -16,15 +16,14 @@
     "@babel/types": "^7.3.0",
     "execa": "^4.0.0",
     "fast-glob": "^3.0.3",
-    "p-all": "^2.1.0",
-    "pifs": "^1.0.0",
-    "tsfn": "^1.0.0",
-    "typeon": "^1.0.0"
+    "p-all": "^3.0.0",
+    "pifs": "^2.0.0",
+    "tsfn": "^2.0.0"
   },
   "devDependencies": {
-    "blue-tape": "^1.0.0",
+    "@mock/require": "^0.2.1",
     "memfs": "^3.0.3",
-    "mocku": "^1.0.0",
-    "spyfn": "^1.0.0"
+    "spyfn": "^2.0.0",
+    "tape": "^5.0.0"
   }
 }

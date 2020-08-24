@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import tape from '../src'
 
 test('plugin-lib-tape: export', (t) => {

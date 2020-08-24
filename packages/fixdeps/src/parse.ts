@@ -1,5 +1,5 @@
 import { parse as babelParse } from '@babel/parser'
-import { File } from '@babel/types'
+import type { File } from '@babel/types'
 
 export const parse = (content: string): File => (
   babelParse(content, {
@@ -9,6 +9,8 @@ export const parse = (content: string): File => (
       'typescript',
       'objectRestSpread',
       'classProperties',
+      'classPrivateProperties',
+      'classPrivateMethods',
       'exportDefaultFrom',
       'exportNamespaceFrom',
       'asyncGenerators',

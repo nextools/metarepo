@@ -1,3 +1,65 @@
+## v4.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `copie`, `tsfn`
+
+## v3.1.0
+
+* 🌱 add `globalConstants` and `globalAliases` options to `run-` methods
+
+* 🐞 make `closeIosApp` and `closeAndroidApp` async
+
+## v3.0.4
+
+* 🐞 upgrade to React Native v0.63.2
+
+## v3.0.3
+
+* 🐞 upgrade to React Native v0.63.2
+
+## v3.0.2
+
+* 🐞 add asset loader to haul config
+
+## v3.0.1
+
+* 🐞 bump Haul deps
+
+## v3.0.0
+
+* 💥 bump React Native to v0.63.0
+
+## v2.0.5
+
+* 🐞 upgrade Haul deps to v0.19
+
+## v2.0.4
+
+* 🐞 upgrade React Native to 0.62.2
+
+## v2.0.3
+
+* 🐞 fix missing `.js` and `.jsx` extensions
+
+## v2.0.2
+
+* 🐞 bump React Native to 0.62.1
+
+* 🐞 sync `metro-react-native-babel-preset` version with React Native 0.62.0
+
+## v2.0.1
+
+* 🐞 add readme
+
+* 🐞 add package description and keywords
+
+* 🐞 tweak child process env
+
+## v2.0.0
+
+* 💥 change API
+
 ## v1.0.6
 
 * 🐞 bump Haul stuff
@@ -30,7 +92,7 @@
 
 ## v1.0.0
 
-* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+* 💥 drop Node.js v8 support and require >=12.13.0 (first v10 LTS)
 
 * ♻️ update dependencies: `copie`, `tsfn`
 

@@ -1,8 +1,9 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
+import type { Store } from 'redux'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { Store } from 'redux'
+import test from 'tape'
 import { component, startWithType, StoreContextFactory } from '../src'
 
 test('StoreContextFactory', (t) => {
@@ -23,17 +24,18 @@ test('StoreContextFactory', (t) => {
   const dispatch = (_: any) => _
   const store = { getState: getStateSpy, dispatch, subscribe: subscribeSpy } as Store<{a: number, b: string}>
   const { mapStoreState, mapStoreDispatch } = StoreContextFactory(store)
-  const compSpy = createSpy(() => null)
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: string }>(),
     mapStoreState(mapStateSpy, ['a']),
     mapStoreDispatch('dispatch')
-  )(compSpy)
+  )(componentSpy)
 
-  /* Mount */
   let testRenderer: ReactTestRenderer
 
+  /* Mount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -73,7 +75,7 @@ test('StoreContextFactory', (t) => {
   )
   // render
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', result: 8, dispatch }], // Mount
     ],
@@ -81,6 +83,7 @@ test('StoreContextFactory', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -120,7 +123,7 @@ test('StoreContextFactory', (t) => {
   )
   // render
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', result: 8, dispatch }], // Mount
       [{ foo: 'bar', result: 8, dispatch }], // Update
@@ -129,6 +132,7 @@ test('StoreContextFactory', (t) => {
   )
 
   /* Update Store unwatched value */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     // kick subscriber
     subscriber()
@@ -166,7 +170,7 @@ test('StoreContextFactory', (t) => {
   )
   // render
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', result: 8, dispatch }], // Mount
       [{ foo: 'bar', result: 8, dispatch }], // Update
@@ -175,6 +179,7 @@ test('StoreContextFactory', (t) => {
   )
 
   /* Store watched update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     // kick subscriber
     subscriber()
@@ -214,7 +219,7 @@ test('StoreContextFactory', (t) => {
   )
   // render
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', result: 8, dispatch }], // Mount
       [{ foo: 'bar', result: 8, dispatch }], // Update
@@ -224,6 +229,7 @@ test('StoreContextFactory', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

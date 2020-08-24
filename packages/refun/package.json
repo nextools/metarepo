@@ -1,27 +1,27 @@
 {
   "name": "refun",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "sideEffects": false,
   "dependencies": {
-    "tsfn": "^1.0.0"
+    "tsfn": "^2.0.0"
   },
   "devDependencies": {
-    "@types/react": "^16.8.6",
-    "blue-tape": "^1.0.0",
-    "react": "^16.8.6",
-    "react-test-renderer": "^16.9.0",
+    "@types/react": "^16.9.6",
+    "tape": "^5.0.0",
+    "react": "16.13.1",
+    "react-test-renderer": "16.13.1",
     "redux": "^4.0.0",
-    "spyfn": "^1.0.0",
-    "spyt": "^1.0.0"
+    "spyfn": "^2.0.0",
+    "spyt": "^2.0.0"
   }
 }

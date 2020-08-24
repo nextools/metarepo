@@ -1,4 +1,5 @@
 import path from 'path'
+import { AssetResolver, ASSET_LOADER_PATH } from '@haul-bundler/core'
 import { makeConfig, withPolyfills } from '@haul-bundler/preset-0.60'
 
 const appPath = path.resolve(process.env.REBOX_ENTRY_POINT)
@@ -7,7 +8,7 @@ export default makeConfig({
   bundles: {
     index: {
       entry: withPolyfills(appPath),
-      transform({ env, config }) {
+      transform({ env, config, runtime }) {
         config.module.rules = [
           {
             test: appPath,
@@ -59,6 +60,17 @@ export default makeConfig({
               },
             ],
           },
+          {
+            test: AssetResolver.test,
+            use: {
+              loader: ASSET_LOADER_PATH,
+              options: {
+                runtime,
+                platform: env.platform,
+                bundle: env.bundleTarget === 'file',
+              },
+            },
+          },
         ]
 
         config.performance = {
@@ -76,14 +88,30 @@ export default makeConfig({
           })
         }
 
+        if (typeof process.env.REBOX_GLOBAL_ALIASES === 'string') {
+          config.resolve.alias = JSON.parse(process.env.REBOX_GLOBAL_ALIASES)
+        }
+
+        if (typeof process.env.REBOX_GLOBAL_CONSTANTS === 'string') {
+          config.plugins.push(
+            new webpack.DefinePlugin(
+              JSON.parse(process.env.REBOX_GLOBAL_CONSTANTS)
+            )
+          )
+        }
+
         config.resolve.extensions = [
           ...config.resolve.extensions,
           `.${env.platform}.js`,
+          `.${env.platform}.jsx`,
           `.${env.platform}.ts`,
           `.${env.platform}.tsx`,
           '.native.js',
+          '.native.jsx',
           '.native.ts',
           '.native.tsx',
+          '.js',
+          '.jsx',
           '.ts',
           '.tsx',
         ]

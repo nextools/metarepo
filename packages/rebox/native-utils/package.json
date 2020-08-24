@@ -1,12 +1,17 @@
 {
   "name": "@rebox/native-utils",
-  "version": "1.0.6",
-  "description": "",
-  "keywords": [],
-  "repository": "bubble-dev/_",
+  "version": "4.0.0",
+  "description": "Set of common helpers to deal with React Native on iOS and Android",
+  "keywords": [
+    "react",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "main": "src/index.ts",
   "dependencies": {
@@ -15,21 +20,21 @@
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
     "@babel/plugin-syntax-bigint": "^7.4.4",
     "@babel/runtime": "^7.4.3",
-    "@haul-bundler/cli": "^0.18.0",
-    "@haul-bundler/core": "^0.18.0",
+    "@haul-bundler/cli": "^0.22.1",
+    "@haul-bundler/core": "^0.22.1",
     "@haul-bundler/preset-0.60": "^0.18.0",
     "@psxcode/wait": "^0.1.1",
     "babel-loader": "^8.0.5",
-    "copie": "^1.0.0",
+    "copie": "^2.0.0",
     "execa": "^4.0.0",
     "fast-glob": "^3.0.0",
     "is-port-reachable": "^3.0.0",
     "make-dir": "^3.0.0",
-    "metro-react-native-babel-preset": "0.56.4",
+    "metro-react-native-babel-preset": "0.59.0",
     "node-fetch": "^2.6.0",
-    "react": "^16.8.0",
-    "react-native": "^0.61.5",
-    "tsfn": "^1.0.0",
+    "react": "16.13.1",
+    "react-native": "0.63.2",
+    "tsfn": "^2.0.0",
     "webpack": "^4.30.0"
   },
   "fixdeps": {

@@ -1,24 +1,26 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { component, startWithType, mapRef } from '../src'
 
 test('mapRef', (t) => {
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{
       foo: number,
       bar?: string,
     }>(),
     mapRef('valueRef', 42)
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -36,7 +38,7 @@ test('mapRef', (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 2, valueRef }],
     ],
@@ -44,6 +46,7 @@ test('mapRef', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -53,7 +56,7 @@ test('mapRef', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 2, valueRef }],
       [{ foo: 4, valueRef }],
@@ -62,12 +65,13 @@ test('mapRef', (t) => {
   )
 
   /* Write to Ref */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     valueRef.current = 99
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 2, valueRef }],
       [{ foo: 4, valueRef }],

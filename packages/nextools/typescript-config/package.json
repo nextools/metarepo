@@ -1,0 +1,14 @@
+{
+  "name": "@nextools/typescript-config",
+  "version": "0.2.0",
+  "description": "",
+  "keywords": [],
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "buildAssets": {
+    "tsconfig.json": "."
+  },
+  "engines": {
+    "node": ">=12.13.0"
+  }
+}

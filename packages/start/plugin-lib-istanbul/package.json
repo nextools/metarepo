@@ -1,6 +1,6 @@
 {
   "name": "@start/plugin-lib-istanbul",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "💯 Collect, report and check code coverage using Istanbul",
   "keywords": "tasks, runner, start, start-plugin, coverage, istanbul",
   "repository": "deepsweet/start",
@@ -14,28 +14,29 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.4.2",
-    "@start/plugin": "^1.0.0",
-    "@types/istanbul-lib-instrument": "^1.7.2",
+    "@start/plugin": "^2.0.0",
     "convert-source-map": "^1.6.0",
-    "istanbul-api": "^2.1.1",
     "istanbul-lib-coverage": "^3.0.0",
     "istanbul-lib-hook": "^3.0.0",
     "istanbul-lib-instrument": "^4.0.0",
     "istanbul-lib-report": "^3.0.0",
     "istanbul-lib-source-maps": "^4.0.0",
-    "tsfn": "^1.0.0"
+    "istanbul-reports": "^3.0.2",
+    "tsfn": "^2.0.0"
   },
   "devDependencies": {
-    "@types/blue-tape": "^0.1.32",
     "@types/convert-source-map": "^1.5.1",
     "@types/istanbul-lib-coverage": "^2.0.0",
     "@types/istanbul-lib-hook": "^2.0.0",
+    "@types/istanbul-lib-instrument": "^1.7.2",
     "@types/istanbul-lib-report": "^3.0.0",
-    "@types/istanbul-lib-source-maps": "^1.2.1",
-    "blue-tape": "^1.0.0"
+    "@types/istanbul-lib-source-maps": "^4.0.0",
+    "@types/istanbul-reports": "^3.0.0",
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0"
   }
 }

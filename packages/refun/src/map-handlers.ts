@@ -1,5 +1,6 @@
 import { useRef } from 'react'
-import { getObjectKeys, TExtend, EMPTY_OBJECT } from 'tsfn'
+import { getObjectKeys, EMPTY_OBJECT } from 'tsfn'
+import type { TExtend } from 'tsfn'
 
 export type TActualHandlers <T> = {
   [key in keyof T]: (...args: any[]) => void

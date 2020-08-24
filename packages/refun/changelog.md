@@ -1,6 +1,37 @@
+## v3.0.0
+
+* 💥 drop Node.js v10
+
+* 🐞 fix incorrect shallow equal for pure component
+
+* ♻️ update dependencies `tsfn`
+
+## v2.0.1
+
+* 🐞 fix `mapState` to deliver fresh state early
+
+## v2.0.0
+
+* 💥 refactor API
+
+  ```
+  * add onLayout
+  * add onUpdateAsync
+  * change onUpdate
+  * delete mapWithAsyncProps
+  * delete mapRefLayout
+  * delete onMount
+  * delete onUnmount
+  * delete onMountUnmount
+  ```
+
+## v1.0.1
+
+* 🐞 re-publish using new build system to fix `tsfn` issues
+
 ## v1.0.0
 
-* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+* 💥 drop Node.js v8 support and require >=12.13.0 (first v10 LTS)
 
 * 💥 require explicit name for dispatch prop
 

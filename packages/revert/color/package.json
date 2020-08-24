@@ -1,0 +1,19 @@
+{
+  "name": "@revert/color",
+  "version": "0.1.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0"
+  }
+}

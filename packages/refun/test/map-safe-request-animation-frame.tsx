@@ -1,8 +1,9 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { createRafSpy } from 'spyt'
+import test from 'tape'
 import { component, mapSafeRequestAnimationFrameFactory, startWithType } from '../src'
 
 test('mapSafeRequestAnimationFrame', (t) => {
@@ -11,17 +12,18 @@ test('mapSafeRequestAnimationFrame', (t) => {
   const timeoutSpy3 = createSpy(() => null)
   const timeout = createRafSpy()
   const mapSafeRequestAnimationFrame = mapSafeRequestAnimationFrameFactory(timeout.requestAnimationFrame, timeout.cancelAnimationFrame)
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: string }>(),
     mapSafeRequestAnimationFrame('raf')
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -31,7 +33,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   const { raf } = getProps(0)
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', raf }],
     ],
@@ -39,6 +41,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -46,7 +49,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', raf }],
       [{ foo: 'bar', raf }],
@@ -54,9 +57,10 @@ test('mapSafeRequestAnimationFrame', (t) => {
     'Update: should pass props'
   )
 
-  /* Call setTimeout */
   let unsub: any
 
+  /* Call setTimeout */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     raf(timeoutSpy1)
     raf(timeoutSpy2)
@@ -98,6 +102,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   )
 
   /* Cancel setTimeout */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     unsub()
   })
@@ -111,6 +116,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -137,6 +143,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
     'Timeout Tick: should not call timeoutSpy3'
   )
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     /* Call setTimeout before Unmount */
     raf(timeoutSpy1)
@@ -146,6 +153,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   })
 
   /* Call setTimeout after Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     raf(timeoutSpy2)
   })
@@ -171,6 +179,7 @@ test('mapSafeRequestAnimationFrame', (t) => {
   )
 
   /* Timeout Tick after Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })

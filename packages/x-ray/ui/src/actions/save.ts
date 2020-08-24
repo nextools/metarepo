@@ -1,7 +1,9 @@
-import { TAction, TActionAsync, TAnyAction } from '../types'
 import { apiSave } from '../api'
-import { TActionError, actionError } from './error'
-import { TActionLoadingStart, TActionLoadingEnd, actionLoadingStart, actionLoadingEnd } from './loading'
+import type { TAction, TActionAsync, TAnyAction } from '../types'
+import { actionError } from './error'
+import type { TActionError } from './error'
+import { actionLoadingStart, actionLoadingEnd } from './loading'
+import type { TActionLoadingStart, TActionLoadingEnd } from './loading'
 
 const TYPE_SAVE = 'SAVE'
 

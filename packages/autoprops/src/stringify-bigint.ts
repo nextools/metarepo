@@ -1,4 +1,4 @@
-import { BigInteger } from 'big-integer'
+import type { BigInteger } from 'big-integer'
 import { ALPHABET } from './alphabet'
 
 export const stringifyBigInt = (int: BigInteger) => {

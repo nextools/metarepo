@@ -1,25 +1,27 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { component, mapHandlers, startWithType } from '../src'
 
 test('mapHandlers', (t) => {
   const eventSpy = createSpy(() => null)
   const propsSpy = createSpy(() => eventSpy)
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: string, bar: string }>(),
     mapHandlers({
       onClick: propsSpy,
     })
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -32,7 +34,7 @@ test('mapHandlers', (t) => {
   const { onClick } = getProps(0)
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', bar: 'bar', onClick }],
     ],
@@ -52,6 +54,7 @@ test('mapHandlers', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -62,7 +65,7 @@ test('mapHandlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', bar: 'bar', onClick }],
       [{ foo: 'bar', bar: 'foo', onClick }],
@@ -83,6 +86,7 @@ test('mapHandlers', (t) => {
   )
 
   /* Invoke Handler */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onClick(1, 2)
   })
@@ -104,6 +108,7 @@ test('mapHandlers', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

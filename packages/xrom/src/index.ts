@@ -1,16 +1,13 @@
 import path from 'path'
 import execa from 'execa'
-import onExit from 'signal-exit'
-import { isNumber, TRequireKeys, isArray, isString } from 'tsfn'
-import fetch from 'node-fetch'
-import { waitForChromium } from './wait-for-chromium'
+import { isArray, isString, isNumber } from 'tsfn'
+import type { TRequireKeys } from 'tsfn'
+import { getDebuggerUrl } from './get-debugger-url'
 
-const CHROMIUM_VERSION = 79
-const DEBUGGER_ENDPOINT_HOST = 'localhost'
-const DEBUGGER_ENDPOINT_PORT = 9222
-
-export type TRunChromiumOptions = {
-  containerName?: string,
+export type TRunBrowserOptions = {
+  browser: 'chromium' | 'firefox',
+  version: string,
+  port?: number,
   fontsDir?: string,
   mountVolumes?: {
     from: string,
@@ -18,64 +15,73 @@ export type TRunChromiumOptions = {
   }[],
   cpus?: number,
   cpusetCpus?: number[],
-  shouldCloseOnExit?: boolean,
 }
 
-export const runChromium = async (userOptions?: TRunChromiumOptions): Promise<string> => {
-  const options: TRequireKeys<TRunChromiumOptions, 'containerName' | 'shouldCloseOnExit'> = {
-    containerName: 'chromium-headless-remote',
-    shouldCloseOnExit: false,
-    ...userOptions,
-  }
+export type TRunBrowserResult = {
+  browserWSEndpoint: string,
+  closeBrowser: () => Promise<void>,
+}
 
-  if (options.shouldCloseOnExit) {
-    onExit(() => {
-      execa('docker', ['stop', options.containerName], {
-        reject: false,
-      })
-    })
+export const runBrowser = async (options: TRunBrowserOptions): Promise<TRunBrowserResult> => {
+  const opts: TRequireKeys<TRunBrowserOptions, 'port'> = {
+    port: 9222,
+    ...options,
   }
+  const containerName = `xrom-${opts.browser}`
 
-  await execa('docker', ['stop', options.containerName], {
+  const stopProcess = await execa('docker', ['stop', containerName], {
+    stdout: 'ignore',
     reject: false,
   })
 
-  await execa(
-    'docker',
-    [
-      'run',
-      '-d',
-      '--rm',
-      '-p',
-      '9222:9222',
-      isNumber(options.cpus) ? `--cpus=${options.cpus}` : '',
-      isArray(options.cpusetCpus) ? `--cpuset-cpus=${options.cpusetCpus.join(',')}` : '',
-      ...(isArray(options.mountVolumes)
-        ? options.mountVolumes.reduce((acc, vol) =>
-          acc.concat(
-            '-v',
-            `${path.resolve(vol.from)}:${vol.to}:delegated,ro`
-          ),
-        [] as string[])
-        : []
-      ),
-      ...(isString(options.fontsDir)
-        ? ['-v', `${path.resolve(options.fontsDir)}:/home/chromium/.fonts:delegated,ro`]
-        : []
-      ),
-      '--name',
-      options.containerName,
-      `deepsweet/chromium-headless-remote:${CHROMIUM_VERSION}`,
-    ],
-    {
-      reject: false,
+  if (stopProcess.exitCode > 0 && !stopProcess.stderr.includes('No such container')) {
+    throw new Error(stopProcess.stderr)
+  }
+
+  const args = [
+    'run',
+    '-d',
+    '--rm',
+    '--shm-size=1g',
+    '-p',
+    `${opts.port}:${opts.port}`,
+    '-e',
+    `RD_PORT=${opts.port}`,
+  ]
+
+  if (isArray(opts.mountVolumes)) {
+    for (const volume of opts.mountVolumes) {
+      args.push('-v', `${path.resolve(volume.from)}:${volume.to}:delegated,ro`)
     }
+  }
+
+  if (isString(opts.fontsDir)) {
+    args.push('-v', `${path.resolve(opts.fontsDir)}:/home/chromium/.fonts:delegated,ro`)
+  }
+
+  if (isNumber(options.cpus)) {
+    args.push(`--cpus=${options.cpus}`)
+  }
+
+  if (isArray(options.cpusetCpus)) {
+    args.push(`--cpuset-cpus=${options.cpusetCpus.join(',')}`)
+  }
+
+  args.push(
+    '--name',
+    containerName,
+    `nextools/${opts.browser}:${opts.version}`
   )
 
-  await waitForChromium()
+  await execa('docker', args)
 
-  const response = await fetch(`http://${DEBUGGER_ENDPOINT_HOST}:${DEBUGGER_ENDPOINT_PORT}/json/version`)
-  const { webSocketDebuggerUrl } = await response.json() as { webSocketDebuggerUrl: string }
+  const browserWSEndpoint = await getDebuggerUrl(opts.port)
 
-  return webSocketDebuggerUrl
+  const closeBrowser = async () => {
+    await execa('docker', ['stop', containerName], {
+      stdout: 'ignore',
+    })
+  }
+
+  return { browserWSEndpoint, closeBrowser }
 }

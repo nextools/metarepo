@@ -1,4 +1,4 @@
-# siza
+# siza ![npm](https://flat.badgen.net/npm/v/siza)
 
 Get bundle size of a React application.
 

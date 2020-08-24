@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { jsonParse, jsonStringify } from '../src'
 
 test('typeon: parse', (t) => {

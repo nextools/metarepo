@@ -1,4 +1,5 @@
-import plugin, { StartFilesProps } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartFilesProps } from '@start/plugin'
 
 export default (outDirRelative: string) =>
   plugin('copy', ({ logPath }) => async ({ files }: StartFilesProps) => {

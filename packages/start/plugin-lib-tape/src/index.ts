@@ -1,11 +1,11 @@
 /* eslint-disable no-invalid-this */
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable @typescript-eslint/no-require-imports */
-import plugin, { StartFilesProps } from '@start/plugin'
+import plugin from '@start/plugin'
+import type { StartFilesProps } from '@start/plugin'
 
 export default (reporter?: () => NodeJS.ReadWriteStream) =>
   plugin('tape', () => async ({ files }: StartFilesProps) => {
     const path = await import('path')
+    const Module = await import('module') as any
     const { default: test } = await import('tape')
     const { default: through } = await import('through')
 
@@ -50,5 +50,9 @@ export default (reporter?: () => NodeJS.ReadWriteStream) =>
       })
 
       files.forEach((file) => require(path.resolve(file.path)))
+
+      Object.keys(Module._cache).forEach((key) => {
+        Reflect.deleteProperty(Module._cache, key)
+      })
     })
   })

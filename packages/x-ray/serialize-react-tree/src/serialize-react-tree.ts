@@ -1,9 +1,9 @@
-/* eslint-disable import/no-cycle */
-import { ReactElement } from 'react'
-import renderer, { ReactTestRendererJSON } from 'react-test-renderer'
-import { isString, isNumber, isBoolean } from 'tsfn'
-import serializeProps from './serialize-props'
+import type { ReactElement } from 'react'
+import renderer from 'react-test-renderer'
+import type { ReactTestRendererJSON } from 'react-test-renderer'
+import { isString, isNumber, isBoolean, isDefined } from 'tsfn'
 import { makeIndent, nextIndent } from './make-indent'
+import serializeProps from './serialize-props'
 
 export type ReactElementJson = {
   type: string,
@@ -11,7 +11,7 @@ export type ReactElementJson = {
   children: ReactElementJson[] | null,
 } | string | number | boolean
 
-const hasKeys = (obj: any) => Object.keys(obj).length > 0
+const hasValidProps = (obj: any) => Object.values(obj).some((v) => isDefined(v))
 
 const serializeReactTree = (reactNode: ReactElement<any>, indent: number) => {
   const go = (json: ReactElementJson, indent: number) => {
@@ -31,16 +31,18 @@ const serializeReactTree = (reactNode: ReactElement<any>, indent: number) => {
       return result + json
     }
 
+    const hasProps = hasValidProps(json.props)
+
     result += '<'
     result += json.type
 
-    if (hasKeys(json.props)) {
+    if (hasProps) {
       result += '\n'
       result += serializeProps(json.props, nextIndent(indent))
     }
 
     if (Array.isArray(json.children)) {
-      if (hasKeys(json.props)) {
+      if (hasProps) {
         result += '\n'
         result += makeIndent(indent)
       }
@@ -57,7 +59,7 @@ const serializeReactTree = (reactNode: ReactElement<any>, indent: number) => {
       result += json.type
       result += '>'
     } else {
-      if (hasKeys(json.props)) {
+      if (hasProps) {
         result += '\n'
         result += makeIndent(indent)
       }

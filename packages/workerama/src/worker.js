@@ -1,19 +1,25 @@
 const { workerData, parentPort } = require('worker_threads')
 
-const fn = require(workerData.fnFilePath)[workerData.fnName]
+const { fnFilePath, fnName, fnArgs } = workerData
 
-parentPort.on('message', async (items) => {
+const fnPromise = require(fnFilePath)[fnName](...fnArgs)
+
+parentPort.on('message', async (item) => {
   try {
-    await Promise.all(
-      items.map(async (item) => {
-        const result = await fn(item, ...workerData.fnArgs)
+    const fn = await fnPromise
 
-        parentPort.postMessage({ type: 'data', value: result })
-      })
-    )
+    if (item.done) {
+      await fn(item)
 
-    parentPort.postMessage({ type: 'next' })
-  } catch (e) {
-    parentPort.postMessage({ type: 'error', value: e instanceof Error ? e.message : e })
+      process.exit()
+    }
+
+    const { value, transferList } = await fn(item)
+
+    parentPort.postMessage({ type: 'done', value }, transferList)
+  } catch (error) {
+    const value = error instanceof Error ? error.message : error
+
+    parentPort.postMessage({ type: 'error', value })
   }
 })

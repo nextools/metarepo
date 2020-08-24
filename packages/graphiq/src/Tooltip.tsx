@@ -1,37 +1,33 @@
+import { easeInOutCubic } from '@revert/animation'
 import React from 'react'
-import { component, startWithType, mapRefLayout, mapWithProps } from 'refun'
-import { easeInOutCubic } from '@primitives/animation'
+import { component, startWithType, mapWithProps, mapRef, onLayout, mapState } from 'refun'
 import { Animate } from './Animate'
 import { TOOLTIP_FONT_SIZE, TOOLTIP_X_OFFSET, TOOLTIP_Y_OFFSET, TOOLTIP_PADDING } from './constants'
-import { TTooltip } from './types'
+import type { TTooltip } from './types'
 
 export const Tooltip = component(
   startWithType<TTooltip>(),
-  mapRefLayout('textRef', (ref) => {
-    if (ref !== null) {
-      const bBox = ref.getBBox()
+  mapState('textSize', 'setTextSize', () => ({ width: 0, height: 0 }), []),
+  mapRef('textRef', null as SVGTextElement | null),
+  onLayout(({ textRef, setTextSize }) => {
+    if (textRef.current !== null) {
+      const { width, height } = textRef.current.getBBox()
 
-      return {
-        textWidth: bBox.width,
-        textHeight: bBox.height,
-      }
-    }
-
-    return {
-      textWidth: 0,
-      textHeight: 0,
+      setTextSize({
+        width,
+        height,
+      })
     }
   }, ['isActive']),
   mapWithProps(({
     viewportRight,
     viewportTop,
-    textHeight,
-    textWidth,
+    textSize,
     x,
     y,
   }) => {
-    const width = textWidth + TOOLTIP_PADDING * 2
-    const height = textHeight + TOOLTIP_PADDING * 2
+    const width = textSize.width + TOOLTIP_PADDING * 2
+    const height = textSize.height + TOOLTIP_PADDING * 2
     let posX = x + TOOLTIP_X_OFFSET
     let posY = y - height - TOOLTIP_Y_OFFSET
     let textY = posY + TOOLTIP_PADDING + TOOLTIP_Y_OFFSET + 2
@@ -78,7 +74,7 @@ export const Tooltip = component(
     from={0}
     isActive={isActive}
   >
-    {([opacity]) => (
+    {(opacity) => (
       <g
         opacity={opacity}
         style={{ pointerEvents: (isActive) ? 'auto' : 'none' }}
@@ -98,10 +94,12 @@ export const Tooltip = component(
           </tspan>
           <tspan x={tooltip.spanX} dy={tooltip.spanY}>
             {value}
-            {valueDifference ? (
-              <tspan fill={valueDifference > 0 ? 'red' : 'green'}>({valueDifference > 0 ? `+${valueDifference}` : valueDifference}%)
-              </tspan>
-            ) : null}
+            {valueDifference ?
+              (
+                <tspan fill={valueDifference > 0 ? 'red' : 'green'}>({valueDifference > 0 ? `+${valueDifference}` : valueDifference}%)
+                </tspan>
+              )
+              : null}
           </tspan>
         </text>
       </g>

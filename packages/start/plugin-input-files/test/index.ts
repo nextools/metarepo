@@ -1,8 +1,8 @@
-import { resolve } from 'path'
 import { EventEmitter } from 'events'
-import test from 'blue-tape'
+import { resolve } from 'path'
+import type { StartFile } from '@start/plugin'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { StartFile } from '@start/plugin'
+import test from 'tape'
 import inputFiles from '../src'
 
 test('plugin-input-files: export', (t) => {

@@ -1,22 +1,25 @@
 import path from 'path'
+// eslint-disable-next-line import/order
 import { Worker } from 'worker_threads'
 import getCallerFile from 'get-caller-file'
+import { map } from 'iterama'
+import { piAll } from 'piall'
+import { asyncIterableFinally } from './async-iterable-finally'
 
-export type TWorkerama = {
+type TMessage = {
+  type: 'done' | 'error',
+  value: any,
+}
+
+export type TWorkeramaOptions = {
   items: any[],
-  itemsPerThreadCount: number,
   maxThreadCount: number,
   fnFilePath: string,
   fnName: string,
   fnArgs: any[],
-  onItemResult: (result: any, workerId: number) => void,
 }
 
-export const workerama = async (options: TWorkerama): Promise<void> => {
-  if (options.itemsPerThreadCount <= 0) {
-    throw new Error('`itemsPerThreadCount` should be greater than zero')
-  }
-
+export const workerama = <T>(options: TWorkeramaOptions): AsyncIterable<T> => {
   if (options.maxThreadCount <= 0) {
     throw new Error('`maxThreadCount` should be greater than zero (tip: pass Infinity to set no limits)')
   }
@@ -24,64 +27,58 @@ export const workerama = async (options: TWorkerama): Promise<void> => {
   const workerPath = require.resolve('./worker')
   const callerDir = path.dirname(getCallerFile())
   const fullFnFilePath = require.resolve(path.resolve(callerDir, options.fnFilePath))
-  const workers = [] as Worker[]
   // not more than needed but max to maxTheadCount
-  const threadCount = Math.min(Math.ceil(options.items.length / options.itemsPerThreadCount), options.maxThreadCount)
-  let itemsIndex = 0
+  const threadCount = Math.min(options.items.length, options.maxThreadCount)
 
-  await Promise.all(
-    new Array(threadCount).fill(null).map(() => {
-      return new Promise<void>((resolve, reject) => {
-        let hasFailed = false
-        const worker = new Worker(workerPath, {
-          workerData: {
-            fnFilePath: fullFnFilePath,
-            fnName: options.fnName,
-            fnArgs: options.fnArgs,
-          },
-        })
-
-        workers.push(worker)
-
-        worker.on('message', async ({ type, value }) => {
-          switch (type) {
-            case 'next': {
-              if (itemsIndex >= options.items.length) {
-                await worker.terminate()
-              } else {
-                worker.postMessage(options.items.slice(itemsIndex, itemsIndex + options.itemsPerThreadCount))
-                itemsIndex += options.itemsPerThreadCount
-              }
-
-              return
-            }
-
-            case 'error': {
-              hasFailed = true
-
-              await Promise.all(workers.map((worker) => worker.terminate()))
-
-              reject(value)
-
-              return
-            }
-
-            case 'data': {
-              options.onItemResult(value, worker.threadId)
-            }
-          }
-        })
-        worker.on('error', reject)
-        worker.on('exit', () => {
-          if (!hasFailed) {
-            resolve()
-          }
-        })
-
-        worker.postMessage(options.items.slice(itemsIndex, itemsIndex + options.itemsPerThreadCount))
-
-        itemsIndex += options.itemsPerThreadCount
-      })
+  const workers = Array.from({ length: threadCount }, () => {
+    return new Worker(workerPath, {
+      workerData: {
+        fnFilePath: fullFnFilePath,
+        fnName: options.fnName,
+        fnArgs: options.fnArgs,
+      },
     })
+  })
+  const busyWorkerIds = new Set<number>()
+
+  const resultsIterable = asyncIterableFinally(
+    piAll(
+      map((item: any) => () => {
+        const worker = workers.find(({ threadId }) => !busyWorkerIds.has(threadId))!
+
+        busyWorkerIds.add(worker.threadId)
+
+        return new Promise<T>((resolve, reject) => {
+          worker
+            .on('error', reject)
+            .on('message', (message: TMessage) => {
+              worker.removeAllListeners('error')
+              worker.removeAllListeners('message')
+
+              busyWorkerIds.delete(worker.threadId)
+
+              /* istanbul ignore else */
+              if (message.type === 'done') {
+                resolve(message.value)
+              } else if (message.type === 'error') {
+                reject(message.value)
+              }
+            })
+            .postMessage({ value: item })
+        })
+      })(options.items),
+      threadCount
+    ),
+    () => piAll(
+      map((worker: Worker) => () => {
+        return new Promise((resolve) => {
+          worker
+            .on('exit', resolve)
+            .postMessage({ done: true })
+        })
+      })(workers)
+    )
   )
+
+  return resultsIterable
 }

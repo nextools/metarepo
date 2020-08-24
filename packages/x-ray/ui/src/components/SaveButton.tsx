@@ -1,23 +1,22 @@
+import { PrimitiveButton as Button } from '@revert/button'
+import { Size } from '@revert/size'
 import React from 'react'
 import { startWithType, component, mapHandlers, mapWithProps } from 'refun'
-import { Size } from '@primitives/size'
-import { TOmitKey } from 'tsfn'
-import { Button } from '@primitives/button'
-import { TRect } from '../types'
-import { COLOR_GREEN } from '../config'
-import { Block } from './Block'
-import { Text } from './Text'
+import { COLOR_BLUE, COLOR_WHITE, BORDER_SIZE_SMAL } from '../config'
+import type { TRect } from '../types'
 import { Background } from './Background'
+import { Block } from './Block'
+import { CONTROLS_HEIGHT } from './Main/Controls'
+import { Text } from './Text'
 
-const SAVE_BUTTON_HORIZONTAL_PADDING = 10
-const SAVE_BUTTON_LINE_HEIGHT = 18
-const SAVE_BUTTON_FONT_SIZE = 16
+export const SAVE_BUTTON_HORIZONTAL_PADDING = 14
+const SAVE_BUTTON_VERTICAL_PADDING = 6
+const SAVE_BUTTON_FONT_SIZE = 13
+const SAVE_BUTTON_BORDER_RADIUS = 14
 
-export const SAVE_BUTTON_HEIGHT = 24
-
-export type TSaveButton = TOmitKey<TRect, 'height'> & {
-  width: number,
+export type TSaveButton = TRect & {
   onWidthChange: (width: number) => void,
+  onHeightChange: (width: number) => void,
   onPress: () => void,
 }
 
@@ -28,29 +27,46 @@ export const SaveButton = component(
       onWidthChange(width + SAVE_BUTTON_HORIZONTAL_PADDING * 2)
     },
   }),
-  mapWithProps(({ width }) => ({
+  mapWithProps(({ width, height }) => ({
     textWidth: width - SAVE_BUTTON_HORIZONTAL_PADDING * 2,
+    textHeight: height + SAVE_BUTTON_VERTICAL_PADDING * 2,
   }))
-)(({ left, top, width, textWidth, onWidthChange, onPress }) => (
+)(({
+  left,
+  width,
+  textWidth,
+  textHeight,
+  onWidthChange,
+  onHeightChange,
+  onPress,
+}) => (
   <Block
+    top={CONTROLS_HEIGHT / 2 - textHeight / 2 - BORDER_SIZE_SMAL / 2}
     left={left}
-    top={top}
     width={width}
-    height={SAVE_BUTTON_HEIGHT}
+    height={textHeight}
     isFlexbox
   >
-    <Background color={COLOR_GREEN}/>
+    <Background
+      color={COLOR_BLUE}
+      radius={SAVE_BUTTON_BORDER_RADIUS}
+    />
     <Button onPress={onPress}>
       <Block
         left={SAVE_BUTTON_HORIZONTAL_PADDING}
-        height={SAVE_BUTTON_HEIGHT}
-        top={(SAVE_BUTTON_HEIGHT - SAVE_BUTTON_LINE_HEIGHT) / 2}
+        top={SAVE_BUTTON_VERTICAL_PADDING}
         shouldIgnorePointerEvents
       >
-        <Size width={textWidth} onWidthChange={onWidthChange}>
+        <Size
+          width={textWidth}
+          onWidthChange={onWidthChange}
+          height={textHeight}
+          onHeightChange={onHeightChange}
+        >
           <Text
-            lineHeight={SAVE_BUTTON_LINE_HEIGHT}
             fontSize={SAVE_BUTTON_FONT_SIZE}
+            fontWeight={600}
+            color={COLOR_WHITE}
             fontFamily="sans-serif"
             shouldPreserveWhitespace
           >

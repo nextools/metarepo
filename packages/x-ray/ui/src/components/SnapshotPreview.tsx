@@ -1,18 +1,19 @@
+import { PrimitiveText as Text } from '@revert/text'
+import { diffArrays } from 'diff'
 import React from 'react'
-import { component, startWithType, mapState } from 'refun'
-import { TFileResultLine } from '@x-ray/snapshots'
-import { Text } from '@primitives/text'
-import { TRect, TSnapshotGridItem } from '../types'
-import { mapStoreDispatch } from '../store'
-import { apiLoadSnapshot } from '../api'
+import { component, startWithType, mapState, onUpdateAsync } from 'refun'
 import { actionError } from '../actions'
-import { COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED } from '../config'
-import { Block } from './Block'
+import { apiLoadSnapshot } from '../api'
+import { COLOR_LINE_BG_REMOVED, COLOR_LINE_BG_ADDED, COLOR_LIGHT_GREY } from '../config'
+import { mapStoreDispatch } from '../store'
+import type { TRect, TSnapshotGridItem } from '../types'
 import { Background } from './Background'
-import { onMountAsync } from './on-mount-async'
+import { Block } from './Block'
+import type { TDiffLine } from './SnapshotDiff'
 
 const LINE_HEIGHT = 18
 const CHAR_WIDTH = 8.39
+const MARGIN = 20
 
 export type TSnapshotPreview = TRect & {
   item: TSnapshotGridItem,
@@ -21,19 +22,47 @@ export type TSnapshotPreview = TRect & {
 export const SnapshotPreview = component(
   startWithType<TSnapshotPreview>(),
   mapStoreDispatch('dispatch'),
-  mapState('state', 'setState', () => null as TFileResultLine[] | null, []),
-  onMountAsync(async ({ setState, item, dispatch, isMountedRef }) => {
+  mapState('state', 'setState', () => null as TDiffLine[] | null, []),
+  onUpdateAsync((props) => function *() {
     try {
-      const data = await apiLoadSnapshot(item)
+      const [dataOrig, dataNew] = yield Promise.all([
+        apiLoadSnapshot({ id: props.current.item.id, type: 'ORIG' }),
+        apiLoadSnapshot({ id: props.current.item.id, type: 'NEW' }),
+      ])
+      const linesOrig = dataOrig.split('\n') as string[]
+      const linesNew = dataNew.split('\n') as string[]
+      const linesDiff = diffArrays(linesOrig, linesNew).reduce((result, chunk) => {
+        result.push(
+          ...chunk.value.map((line) => {
+            if (chunk.added) {
+              return {
+                value: line,
+                type: 'added' as const,
+              }
+            }
 
-      if (isMountedRef.current) {
-        setState(data)
-      }
+            if (chunk.removed) {
+              return {
+                value: line,
+                type: 'removed' as const,
+              }
+            }
+
+            return {
+              value: line,
+            }
+          })
+        )
+
+        return result
+      }, [] as TDiffLine[])
+
+      props.current.setState(linesDiff)
     } catch (err) {
-      console.log(err)
-      dispatch(actionError(err.message))
+      console.error(err)
+      props.current.dispatch(actionError(err.message))
     }
-  })
+  }, [])
 )(({ top, left, width, height, state, item }) => {
   if (state === null) {
     return null
@@ -48,32 +77,42 @@ export const SnapshotPreview = component(
       shouldScrollX
       shouldScrollY
     >
-      <Block height={state.length * LINE_HEIGHT}/>
-      {state.map((line, i) => (
-        <Block
-          top={i * LINE_HEIGHT}
-          height={LINE_HEIGHT}
-          width={item.width * CHAR_WIDTH}
-          key={i}
-        >
-          {line.type === 'added' && (
-            <Background color={COLOR_LINE_BG_ADDED}/>
-          )}
-          {line.type === 'removed' && (
-            <Background color={COLOR_LINE_BG_REMOVED}/>
-          )}
-          <Block>
-            <Text
-              fontFamily="monospace"
-              fontSize={14}
-              lineHeight={LINE_HEIGHT}
-              shouldPreserveWhitespace
-            >
-              {line.value}
-            </Text>
+      <Background color={COLOR_LIGHT_GREY}/>
+      <Block
+        top={MARGIN}
+        left={MARGIN}
+        width={width - MARGIN}
+        height={height - MARGIN}
+        shouldScrollX
+        shouldScrollY
+      >
+        <Block height={state.length * LINE_HEIGHT}/>
+        {state.map((line, i) => (
+          <Block
+            top={i * LINE_HEIGHT}
+            height={LINE_HEIGHT}
+            width={item.width * CHAR_WIDTH}
+            key={i}
+          >
+            {line.type === 'added' && (
+              <Background color={COLOR_LINE_BG_ADDED}/>
+            )}
+            {line.type === 'removed' && (
+              <Background color={COLOR_LINE_BG_REMOVED}/>
+            )}
+            <Block>
+              <Text
+                fontFamily="monospace"
+                fontSize={14}
+                lineHeight={LINE_HEIGHT}
+                shouldPreserveWhitespace
+              >
+                {line.value}
+              </Text>
+            </Block>
           </Block>
-        </Block>
-      ))}
+        ))}
+      </Block>
     </Block>
   )
 })

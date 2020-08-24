@@ -1,6 +1,36 @@
+## v4.0.0
+
+* 💥 drop Node.js v10
+
+## v3.0.1
+
+* 🐞 upgrade to React Native v0.63.2
+
+## v3.0.0
+
+* 💥 bump React Native to v0.63.0
+
+* 🐞 bump React
+
+## v2.0.1
+
+* 🐞 refactor back to single thread implementation
+
+## v2.0.0
+
+* 💥 take multiple screenshots concurrently
+
+## v1.0.2
+
+* 🐞 add `react-native-exception-handler`
+
+## v1.0.1
+
+* 🐞 upgrade primitives
+
 ## v1.0.0
 
-* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+* 💥 drop Node.js v8 support and require >=12.13.0 (first v10 LTS)
 
 * ♻️ update dependencies: `@primitives/image`, `@primitives/size`
 

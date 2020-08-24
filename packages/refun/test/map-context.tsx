@@ -1,20 +1,22 @@
 import React, { createContext } from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { component, mapContext, startWithType } from '../src'
 
 test('mapContext', (t) => {
-  const compSpy = createSpy(() => null)
+  const componentSpy = createSpy(() => null)
   const Context = createContext({ ctxA: 'foo', ctxB: 42 })
   const MyComp = component(
     startWithType<{ foo: string }>(),
     mapContext(Context)
-  )(compSpy)
+  )(componentSpy)
+
+  let testRenderer: ReactTestRenderer
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
-
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <Context.Provider value={{ ctxA: 'foo', ctxB: 42 }}>
@@ -24,14 +26,15 @@ test('mapContext', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{ ctxA: 'foo', ctxB: 42, foo: 'bar' }],
+      [{ ctxA: 'foo', ctxB: 42, foo: 'bar' }], // Mount
     ],
     'Mount: should pass context as props'
   )
 
   /* Update Context */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <Context.Provider value={{ ctxA: 'bar', ctxB: 1337 }}>
@@ -41,10 +44,10 @@ test('mapContext', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{ ctxA: 'foo', ctxB: 42, foo: 'bar' }],
-      [{ ctxA: 'bar', ctxB: 1337, foo: 'bar' }],
+      [{ ctxA: 'foo', ctxB: 42, foo: 'bar' }], // Mount
+      [{ ctxA: 'bar', ctxB: 1337, foo: 'bar' }], // Update Context
     ],
     'Update Context: should pass context as props'
   )

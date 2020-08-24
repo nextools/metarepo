@@ -1,17 +1,20 @@
+import { AnimationValues, easeInOutCubic } from '@revert/animation'
+import { PrimitiveBackground as Background } from '@revert/background'
+import { PrimitiveButton as ButtonCore } from '@revert/button'
+import { rgba } from '@revert/color'
+import type { TColor } from '@revert/color'
+import { Size } from '@revert/size'
 import React, { Fragment } from 'react'
-import { component, startWithType, mapHandlers, mapState, mapWithProps, onMount } from 'refun'
-import { Animation, easeInOutCubic } from '@primitives/animation'
-import { Background } from '@primitives/background'
-import { Button } from '@primitives/button'
-import { Size } from '@primitives/size'
-import { mapStoreDispatch } from '../store'
-import { TRect, TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
+import { component, startWithType, mapHandlers, mapState, mapWithProps, onUpdate } from 'refun'
 import { actionDeselect, actionDiscardItem } from '../actions'
-import { COLOR_RED, COLOR_GREEN } from '../config'
-import { onKeyDown } from '../maps/on-keydown'
 import { actionUndiscardItem } from '../actions/undiscard'
-import { SourceCode } from './SourceCode'
+import { COLOR_BLUE, COLOR_DARK_GREY, COLOR_GREY, BORDER_SIZE_SMAL, COLOR_WHITE } from '../config'
+import { onKeyDown } from '../maps/on-keydown'
+import { mapStoreDispatch } from '../store'
+import type { TRect, TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
 import { Block } from './Block'
+import { Border } from './Border'
+import { Meta } from './Meta'
 import { ScreenshotPreview } from './ScreenshotPreview'
 import { SnapshotPreview } from './SnapshotPreview'
 import { Text } from './Text'
@@ -20,10 +23,11 @@ const isScreenshotGridItem = (type: TType | undefined, item: TGridItem | null): 
 const isSnapshotGridItem = (type: TType | undefined, item: TGridItem | null): item is TSnapshotGridItem => type === 'text' && item !== null
 
 const POPUP_OFFSET = 50
-const POPUP_SPACING = 20
-const DISCARD_BUTTON_HEIGHT = 30
-const DISCARD_LINE_HEIGHT = 18
-const DISCARD_FONT_SIZE = 18
+const CONTROLS_HEIGHT = 48
+
+const BUTTON_HORIZONTAL_PADDING = 14
+const BUTTON_VERTICAL_PADDING = 6
+const BUTTON_BORDER_RADIUS = 14
 
 const STATE_CLOSE = 0
 const STATE_OPENING = 1
@@ -35,6 +39,60 @@ export type TPopup = TRect & {
   item: TGridItem,
   discardedItems: string[],
 }
+
+type TButton = {
+  backgroundColor: TColor,
+  fontColor: TColor,
+  text: string,
+  textWidth: number,
+  textHeight: number,
+  top: number,
+  left: number,
+  width: number,
+  height: number,
+  onPress: () => void,
+  onWidthChange: (w: number) => void,
+  onHeightChange: (h: number) => void,
+}
+
+export const Button = component(
+  startWithType<TButton>()
+)(({ backgroundColor, fontColor, text, textWidth, textHeight, top, left, width, height, onPress, onWidthChange, onHeightChange }) => (
+  <ButtonCore
+    top={top}
+    left={left}
+    width={width}
+    height={height}
+    onPress={onPress}
+  >
+    <Background
+      color={backgroundColor}
+      radius={BUTTON_BORDER_RADIUS}
+    />
+
+    <Block
+      top={BUTTON_VERTICAL_PADDING}
+      left={BUTTON_HORIZONTAL_PADDING}
+    >
+      <Size
+        width={textWidth}
+        height={textHeight}
+        onWidthChange={onWidthChange}
+        onHeightChange={onHeightChange}
+      >
+        <Text
+          fontSize={13}
+          fontWeight={600}
+          color={fontColor}
+          fontFamily="sans-serif"
+          shouldPreserveWhitespace
+        >
+          {text}
+        </Text>
+      </Size>
+    </Block>
+  </ButtonCore>
+))
 
 export const Popup = component(
   startWithType<TPopup>(),
@@ -55,8 +113,8 @@ export const Popup = component(
       setState(STATE_OPEN)
     },
     onDiscardToggle: ({ dispatch, item, setState, isDiscarded }) => () => {
-      dispatch(isDiscarded ? actionUndiscardItem(item.id) : actionDiscardItem(item.id))
       setState(STATE_CLOSING)
+      dispatch(isDiscarded ? actionUndiscardItem(item.id) : actionDiscardItem(item.id))
     },
   }),
   mapHandlers({
@@ -108,24 +166,29 @@ export const Popup = component(
       shouldNotAnimate,
     }
   }),
-  onMount(({ setState }) => {
+  onUpdate(({ setState }) => {
     setState(STATE_OPENING)
-  }),
-  mapWithProps(({ popupWidth, popupHeight }) => {
+  }, []),
+  mapWithProps(({ popupLeft, popupTop, popupWidth, popupHeight }) => {
     const halfWidth = popupWidth / 2
+    const hasSourceCode = true
 
     return ({
-      sourceCodeWidth: halfWidth - POPUP_SPACING * 2,
-      sourceCodeHeight: popupHeight - DISCARD_BUTTON_HEIGHT - POPUP_SPACING * 2,
-      sourceCodeLeft: POPUP_SPACING,
-      sourceCodeTop: DISCARD_BUTTON_HEIGHT + POPUP_SPACING,
-      previewWidth: halfWidth - POPUP_SPACING * 2,
-      previewHeight: popupHeight - DISCARD_BUTTON_HEIGHT - POPUP_SPACING * 2,
-      previewLeft: halfWidth + POPUP_SPACING,
-      previewTop: DISCARD_BUTTON_HEIGHT + POPUP_SPACING,
+      sourceCodeWidth: halfWidth,
+      sourceCodeHeight: popupHeight - CONTROLS_HEIGHT,
+      sourceCodeLeft: popupLeft,
+      sourceCodeTop: popupTop + CONTROLS_HEIGHT,
+      previewWidth: hasSourceCode ? halfWidth : popupWidth,
+      previewHeight: popupHeight - CONTROLS_HEIGHT,
+      previewLeft: hasSourceCode ? popupLeft + halfWidth : popupLeft,
+      previewTop: popupTop + CONTROLS_HEIGHT,
+      hasSourceCode,
     })
   }),
-  mapState('discardTextWidth', 'setDiscardTextWidth', () => 0, [])
+  mapState('discardTextWidth', 'setDiscardTextWidth', () => 0, []),
+  mapState('discardTextHeight', 'setDiscardTextHeight', () => 0, []),
+  mapState('closeTextWidth', 'setCloseTextWidth', () => 0, []),
+  mapState('closeTextHeight', 'setCloseTextHeight', () => 0, [])
 )(({
   left,
   top,
@@ -149,17 +212,24 @@ export const Popup = component(
   previewWidth,
   previewHeight,
   discardTextWidth,
+  discardTextHeight,
+  closeTextWidth,
+  closeTextHeight,
   setDiscardTextWidth,
+  setDiscardTextHeight,
+  setCloseTextWidth,
+  setCloseTextHeight,
   shouldNotAnimate,
   isDiscarded,
   onDiscardToggle,
   onBackdropPress,
   onAnimationEnd,
+  onClose,
 }) => (
   <Block left={left} top={top} width={width} height={height}>
-    <Animation
+    <AnimationValues
       time={300}
-      values={[popupLeft, popupTop, popupWidth, popupHeight, popupAlpha, backdropAlpha]}
+      toValues={[popupLeft, popupTop, popupWidth, popupHeight, popupAlpha, backdropAlpha]}
       easing={easeInOutCubic}
       onAnimationEnd={onAnimationEnd}
       shouldNotAnimate={shouldNotAnimate}
@@ -176,7 +246,7 @@ export const Popup = component(
             }}
             onPress={onBackdropPress}
           >
-            <Background color={[0, 0, 0, backdropAlpha]}/>
+            <Background color={rgba(0, 0, 0, backdropAlpha)}/>
           </Block>
           <Block
             left={popupLeft}
@@ -184,62 +254,91 @@ export const Popup = component(
             width={popupWidth}
             height={popupHeight}
           >
-            <Background color={[255, 255, 255, popupAlpha]}/>
-            {state === STATE_OPEN && item !== null && (
-              <Fragment>
-                <Block width={popupWidth} height={DISCARD_BUTTON_HEIGHT} isFlexbox>
-                  <Background color={isDiscarded ? COLOR_GREEN : COLOR_RED}/>
-                  <Button onPress={onDiscardToggle}>
-                    <Block
-                      top={(DISCARD_BUTTON_HEIGHT - DISCARD_LINE_HEIGHT) / 2}
-                      left={(popupWidth - discardTextWidth) / 2}
-                      height={DISCARD_LINE_HEIGHT}
-                      shouldIgnorePointerEvents
-                    >
-                      <Size width={discardTextWidth} onWidthChange={setDiscardTextWidth}>
-                        <Text
-                          lineHeight={DISCARD_LINE_HEIGHT}
-                          fontSize={DISCARD_FONT_SIZE}
-                          fontFamily="sans-serif"
-                          shouldPreserveWhitespace
-                        >
-                          {isDiscarded ? 'Undiscard' : 'Discard'}
-                        </Text>
-                      </Size>
-                    </Block>
-                  </Button>
-                </Block>
-                <SourceCode
-                  top={sourceCodeTop}
-                  left={sourceCodeLeft}
-                  width={sourceCodeWidth}
-                  height={sourceCodeHeight}
-                  item={item}
-                />
-                {isScreenshotGridItem(type, item) && (
-                  <ScreenshotPreview
-                    top={previewTop}
-                    left={previewLeft}
-                    width={previewWidth}
-                    height={previewHeight}
-                    item={item}
-                  />
-                )}
-                {isSnapshotGridItem(type, item) && (
-                  <SnapshotPreview
-                    top={previewTop}
-                    left={previewLeft}
-                    width={previewWidth}
-                    height={previewHeight}
-                    item={item}
-                  />
-                )}
-              </Fragment>
-            )}
+            <Background color={rgba(255, 255, 255, popupAlpha)}/>
           </Block>
         </Fragment>
       )}
-    </Animation>
+    </AnimationValues>
+    {state === STATE_OPEN && item !== null && (
+      <Fragment>
+        <Block
+          left={popupLeft}
+          top={popupTop}
+          width={popupWidth}
+          height={CONTROLS_HEIGHT}
+        >
+          <Background color={COLOR_WHITE}/>
+          <Border
+            color={COLOR_GREY}
+            borderBottomWidth={BORDER_SIZE_SMAL}
+          />
+          <Button
+            top={CONTROLS_HEIGHT / 2 - (discardTextHeight + BUTTON_VERTICAL_PADDING * 2) / 2}
+            left={popupWidth / 2 - (discardTextWidth + BUTTON_HORIZONTAL_PADDING * 2) / 2}
+            width={discardTextWidth + BUTTON_HORIZONTAL_PADDING * 2}
+            height={discardTextHeight + BUTTON_VERTICAL_PADDING * 2}
+            backgroundColor={COLOR_BLUE}
+            fontColor={COLOR_WHITE}
+            text={isDiscarded ? 'Undiscard' : 'Discard'}
+            textWidth={discardTextWidth}
+            textHeight={discardTextHeight}
+            onPress={onDiscardToggle}
+            onWidthChange={setDiscardTextWidth}
+            onHeightChange={setDiscardTextHeight}
+          />
+          <Button
+            top={CONTROLS_HEIGHT / 2 - (closeTextHeight + BUTTON_VERTICAL_PADDING * 2) / 2}
+            left={popupWidth - (closeTextWidth + BUTTON_HORIZONTAL_PADDING * 2) - 15}
+            width={closeTextWidth + BUTTON_HORIZONTAL_PADDING * 2}
+            height={closeTextHeight + BUTTON_VERTICAL_PADDING * 2}
+            backgroundColor={COLOR_GREY}
+            fontColor={COLOR_DARK_GREY}
+            text="Close"
+            textWidth={closeTextWidth}
+            textHeight={closeTextHeight}
+            onPress={onClose}
+            onWidthChange={setCloseTextWidth}
+            onHeightChange={setCloseTextHeight}
+          />
+        </Block>
+        {isScreenshotGridItem(type, item) && (
+          <Fragment>
+            <Meta
+              id={item.id}
+              left={sourceCodeLeft}
+              top={sourceCodeTop}
+              width={sourceCodeWidth}
+              height={sourceCodeHeight}
+            />
+            <ScreenshotPreview
+              top={previewTop}
+              left={previewLeft}
+              width={previewWidth}
+              height={previewHeight}
+              item={item}
+            />
+          </Fragment>
+        )}
+        {isSnapshotGridItem(type, item) && (
+          <Fragment>
+            <Meta
+              id={item.id}
+              left={sourceCodeLeft}
+              top={sourceCodeTop}
+              width={sourceCodeWidth}
+              height={sourceCodeHeight}
+            />
+            <SnapshotPreview
+              item={item}
+              left={previewLeft}
+              top={previewTop}
+              width={previewWidth}
+              height={previewHeight}
+            />
+          </Fragment>
+        )}
+      </Fragment>
+    )}
   </Block>
 ))
 

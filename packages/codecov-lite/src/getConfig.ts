@@ -1,10 +1,5 @@
 import services from './services'
-import { TServiceConfig } from './types'
-
-export type TConfig = TServiceConfig & {
-  package: string,
-  token?: string,
-}
+import type { TConfig } from './types'
 
 export default (): TConfig => {
   let config = null

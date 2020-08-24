@@ -1,12 +1,16 @@
 {
   "name": "@rebox/ios",
-  "version": "1.0.1",
-  "description": "",
-  "keywords": [],
-  "repository": "bubble-dev/_",
+  "version": "6.0.0",
+  "description": "Set of helpers to deal with React Native applications on iOS",
+  "keywords": [
+    "react",
+    "react-native",
+    "ios"
+  ],
+  "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "main": "src/index.ts",
   "buildAssets": {
@@ -14,24 +18,21 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@rebox/native-utils": "^1.0.0",
-    "copie": "^1.0.0",
-    "cpy": "^8.0.0",
-    "dleet": "^1.0.0",
+    "@rebox/native-utils": "^4.0.0",
+    "copie": "^2.0.0",
+    "dleet": "^2.0.0",
     "execa": "^4.0.0",
     "fast-glob": "^3.0.0",
     "make-dir": "^3.0.0",
-    "pifs": "^1.0.0",
-    "rn-fonts": "^1.0.0",
+    "pifs": "^2.0.0",
+    "rn-fonts": "^2.0.0",
     "simple-plist": "^1.0.0",
-    "tsfn": "^1.0.0"
+    "tsfn": "^2.0.0"
   },
-  "devDependencies": {
-    "react": "^16.9.0",
-    "react-native": "^0.61.5"
-  },
-  "peerDependencies": {
-    "react": "^16.9.0",
-    "react-native": "^0.61.5"
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/runtime",
+      "react-native"
+    ]
   }
 }

@@ -1,7 +1,8 @@
 # The MIT License (MIT)
 
-Copyright (c) 2015–2019 Kir "deepsweet" Belevich
-Copyright (c) 2019–present Bubble Dev
+* Copyright (c) 2015–2019 Kir Belevich
+* Copyright (c) 2019–2020 Bubble Dev
+* Copyright (c) 2020–present NexTools
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

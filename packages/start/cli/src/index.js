@@ -1,7 +1,3 @@
-#!/bin/sh
-':' //# comment; exec /usr/bin/env node --experimental-worker "$0" "$@"
-// http://sambal.org/2014/02/passing-options-node-shebang-line/
-
 /* eslint-disable no-global-assign */
 /* eslint-disable no-process-exit */
 /* eslint-disable import/no-dynamic-require */

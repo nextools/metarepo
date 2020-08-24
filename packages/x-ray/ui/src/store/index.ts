@@ -1,8 +1,10 @@
-import { createStore, applyMiddleware, compose, AnyAction } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
+import type { AnyAction } from 'redux'
+import thunk from 'redux-thunk'
+import type { ThunkDispatch } from 'redux-thunk'
 import { StoreContextFactory } from 'refun'
-import thunk, { ThunkDispatch } from 'redux-thunk'
 import { reducer } from '../reducers'
-import { TState } from '../types'
+import type { TState } from '../types'
 
 const composeWithDevTools: typeof compose = (global as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 

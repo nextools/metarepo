@@ -1,8 +1,8 @@
-/* eslint-disable no-sync */
+/* eslint-disable node/no-sync */
 import { promisify } from 'util'
-import test from 'blue-tape'
+import { mockRequire } from '@mock/require'
 import { createFsFromVolume, Volume } from 'memfs'
-import { mock } from 'mocku'
+import test from 'tape'
 
 test('copie: core', async (t) => {
   const vol = Volume.fromJSON({
@@ -10,7 +10,7 @@ test('copie: core', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/', {
+  const unmockRequire = mockRequire('../src/', {
     pifs: {
       createReadStream: fs.createReadStream,
       createWriteStream: fs.createWriteStream,
@@ -34,7 +34,7 @@ test('copie: core', async (t) => {
     'should copy file'
   )
 
-  unmock()
+  unmockRequire()
   vol.reset()
 })
 
@@ -44,7 +44,7 @@ test('copie: preserve stats', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/', {
+  const unmockRequire = mockRequire('../src/', {
     pifs: {
       createReadStream: fs.createReadStream,
       createWriteStream: fs.createWriteStream,
@@ -92,7 +92,7 @@ test('copie: preserve stats', async (t) => {
     'should preserve mtime'
   )
 
-  unmock()
+  unmockRequire()
   vol.reset()
 })
 
@@ -103,7 +103,7 @@ test('copie: read error', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/', {
+  const unmockRequire = mockRequire('../src/', {
     pifs: {
       createReadStream: fs.createReadStream,
       createWriteStream: fs.createWriteStream,
@@ -126,7 +126,7 @@ test('copie: read error', async (t) => {
     )
   }
 
-  unmock()
+  unmockRequire()
   vol.reset()
 })
 
@@ -137,7 +137,7 @@ test('copie: write error', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const unmock = mock('../src/', {
+  const unmockRequire = mockRequire('../src/', {
     pifs: {
       createReadStream: fs.createReadStream,
       createWriteStream: fs.createWriteStream,
@@ -160,6 +160,6 @@ test('copie: write error', async (t) => {
     )
   }
 
-  unmock()
+  unmockRequire()
   vol.reset()
 })

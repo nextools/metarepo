@@ -1,4 +1,4 @@
-import { TServiceConfig } from '../types'
+import type { TServiceConfig } from '../types'
 
 // http://docs.shippable.com/ci/advancedOptions/environmentVariables/
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {

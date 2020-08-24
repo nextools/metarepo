@@ -1,10 +1,9 @@
-/* eslint-disable import/no-cycle */
 import { isValidElement } from 'react'
-import { TConfig, TSerializedElement, TLineElement, TMeta } from './types'
-import { serializeIndent } from './serialize-indent'
-import { isNumber, isString, getElementName, sanitizeLines, optChildMeta, optMetaValue } from './utils'
-import { serializeElement } from './serialize-element'
 import { TYPE_VALUE_STRING } from './constants'
+import { serializeElement } from './serialize-element'
+import { serializeIndent } from './serialize-indent'
+import type { TConfig, TSerializedElement, TLineElement, TMeta } from './types'
+import { isNumber, isString, getElementName, sanitizeLines, optChildMeta, optMetaValue } from './utils'
 
 type TSerializeChildrenValue = {
   value: any,

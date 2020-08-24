@@ -1,6 +1,22 @@
+## v2.0.0
+
+* 💥 drop Node.js v10
+
+## v1.1.2
+
+* 🐞 fix `TRequiredKeys` and `TOptionalKeys` to use string as keyof
+
+## v1.1.1
+
+* 🐞 re-publish using updated Start preset
+
+## v1.1.0
+
+* 🌱 add `TReadonly` and `TNonNullableObject`
+
 ## v1.0.0
 
-* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+* 💥 drop Node.js v8 support and require >=12.13.0 (first v10 LTS)
 
 ## v0.2.4
 

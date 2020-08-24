@@ -1,9 +1,9 @@
-import test from 'blue-tape'
-import { mock } from 'mocku'
-import { TComponentConfig } from '../src/types'
+import { mockRequire } from '@mock/require'
+import test from 'tape'
+import type { TCommonComponentConfig } from '../src/types'
 
 test('createChildren', async (t) => {
-  const unmockCreateChildren = mock('../src/create-children', {
+  const unmockRequire = mockRequire('../src/create-children', {
     react: {
       createElement: (comp: any, props: any, children: any) => ({
         comp,
@@ -17,7 +17,7 @@ test('createChildren', async (t) => {
   const { createChildren } = await import('../src/create-children')
 
   const Comp = () => null
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {},
     children: {
       child: {
@@ -80,7 +80,7 @@ test('createChildren', async (t) => {
     'should return proper children'
   )
 
-  unmockCreateChildren()
+  unmockRequire()
 })
 
 test('createChildren: errors', async (t) => {

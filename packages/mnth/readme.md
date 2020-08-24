@@ -1,4 +1,4 @@
-# mnth
+# mnth ![npm](https://flat.badgen.net/npm/v/mnth)
 
 Framework-agnostic base block to build calendars, datepickers, etc by rendering 2d array of Dates.
 

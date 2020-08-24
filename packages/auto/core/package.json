@@ -1,0 +1,43 @@
+{
+  "name": "@auto/core",
+  "version": "0.3.0",
+  "description": "Auto Tools core",
+  "keywords": [
+    "monorepo",
+    "workspaces",
+    "auto",
+    "commits",
+    "changelog"
+  ],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "auto": {
+    "bump": {
+      "initialType": "major"
+    }
+  },
+  "dependencies": {
+    "dleet": "^2.0.0",
+    "escape-string-regexp": "^4.0.0",
+    "execa": "^4.0.0",
+    "fast-glob": "^3.0.0",
+    "p-all": "^3.0.0",
+    "pifs": "^2.0.0",
+    "prompts": "^2.3.1",
+    "semver": "^7.0.0",
+    "tsfn": "^2.0.0"
+  },
+  "devDependencies": {
+    "@mock/require": "^0.2.1",
+    "@types/prompts": "^2.0.4",
+    "@types/semver": "^7.0.0",
+    "@types/tape": "^4.2.34",
+    "memfs": "^3.0.3",
+    "spyfn": "^2.0.0",
+    "tape": "^5.0.0"
+  }
+}

@@ -1,19 +1,19 @@
 {
   "name": "tsfn",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "contributors": [
     "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
     "Alex Feinstein <psxcode@gmail.com> (https://github.com/psxcode)"
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "sideEffects": false
 }

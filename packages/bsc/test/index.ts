@@ -1,5 +1,5 @@
-import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import bsc from '../src'
 
 const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]

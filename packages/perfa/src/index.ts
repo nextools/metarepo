@@ -1,13 +1,13 @@
-import puppeteer from 'puppeteer-core'
-import { buildRelease } from '@rebox/web'
-import { getObjectEntries } from 'tsfn'
-import tempy from 'tempy'
+import { buildWebAppRelease } from '@rebox/web'
 import dleet from 'dleet'
-import { runChromium } from 'xrom'
-import { getPerfPaintEntryValue } from './get-perf-paint-entry-value'
-import { getPerfMetricsEntryValue } from './get-perf-metrics-entry-value'
+import puppeteer from 'puppeteer-core'
+import tempy from 'tempy'
+import { getObjectEntries } from 'tsfn'
+import { runBrowser } from 'xrom'
 import { getPercentile } from './get-percentile'
-import { TPerfResult, TPerfObserverEntry, TPerfPaint, TPerfMetrics } from './types'
+import { getPerfMetricsEntryValue } from './get-perf-metrics-entry-value'
+import { getPerfPaintEntryValue } from './get-perf-paint-entry-value'
+import type { TPerfResult, TPerfObserverEntry, TPerfPaint, TPerfMetrics } from './types'
 
 const TRIES_COUNT = 5
 const INJECTED_BUILD_FOLDER_PATH = '/home/chromium/html'
@@ -16,17 +16,17 @@ export type TGetPerfDataOptions = {
   entryPointPath: string,
   triesCount?: number,
   fontsDir?: string,
-  isQuiet?: boolean,
 }
 
 export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPerfResult> => {
   const options = {
     triesCount: TRIES_COUNT,
-    isQuiet: false,
     ...userOptions,
   }
   const tempBuildDir = tempy.directory()
-  const browserWSEndpoint = await runChromium({
+  const { browserWSEndpoint, closeBrowser } = await runBrowser({
+    browser: 'chromium',
+    version: 'latest',
     cpus: 1,
     cpusetCpus: [1],
     fontsDir: options.fontsDir,
@@ -36,14 +36,14 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
         to: INJECTED_BUILD_FOLDER_PATH,
       },
     ],
-    shouldCloseOnExit: true,
   })
   const browser = await puppeteer.connect({ browserWSEndpoint })
 
-  await buildRelease({
+  await buildWebAppRelease({
     entryPointPath: options.entryPointPath,
     outputPath: tempBuildDir,
     htmlTemplatePath: require.resolve('./app.html'),
+    browsersList: ['last 1 Chrome version'],
     isQuiet: true,
     shouldGenerateSourceMaps: false,
     shouldGenerateBundleAnalyzerReport: false,
@@ -63,10 +63,6 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
   }
 
   for (let i = 0; i < options.triesCount; i++) {
-    if (!options.isQuiet) {
-      console.log('tries:', `${i + 1}/${options.triesCount}`)
-    }
-
     const page = await browser.newPage()
     const client = await page.target().createCDPSession()
 
@@ -108,6 +104,7 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
   }
 
   await browser.close()
+  await closeBrowser()
   await dleet(tempBuildDir)
 
   return getObjectEntries(result).reduce((acc, [key, value]) => {

@@ -1,7 +1,7 @@
 {
-  "name": "Bubble Dev",
+  "name": "NexTools",
   "dockerComposeFile": "docker-compose.yml",
-  "service": "bubble-dev",
+  "service": "nextools",
   "shutdownAction": "stopCompose",
   "workspaceFolder": "/workspace",
   "extensions": [

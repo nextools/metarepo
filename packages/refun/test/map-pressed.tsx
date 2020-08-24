@@ -1,21 +1,24 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { component, mapPressed, startWithType, TMapPressed } from '../src'
+import test from 'tape'
+import { component, mapPressed, startWithType } from '../src'
+import type { TMapPressed } from '../src'
 
 test('mapPressed: no props', (t) => {
-  const compSpy = createSpy(() => null)
-  const getProps = () => getSpyCalls(compSpy)[getSpyCalls(compSpy).length - 1][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = () => getSpyCalls(componentSpy)[getSpyCalls(componentSpy).length - 1][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapPressed>(),
     mapPressed
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -27,7 +30,7 @@ test('mapPressed: no props', (t) => {
   const { onPressIn, onPressOut } = getProps()
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
     ],
@@ -35,6 +38,7 @@ test('mapPressed: no props', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -44,7 +48,7 @@ test('mapPressed: no props', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isPressed: false, onPressIn, onPressOut }], // Update
@@ -53,12 +57,13 @@ test('mapPressed: no props', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isPressed: false, onPressIn, onPressOut }], // Update
@@ -68,12 +73,13 @@ test('mapPressed: no props', (t) => {
   )
 
   /* Call onPressIn again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isPressed: false, onPressIn, onPressOut }], // Update
@@ -84,12 +90,13 @@ test('mapPressed: no props', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isPressed: false, onPressIn, onPressOut }], // Update
@@ -101,12 +108,13 @@ test('mapPressed: no props', (t) => {
   )
 
   /* Call onPressOut again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isPressed: false, onPressIn, onPressOut }], // Update
@@ -130,17 +138,18 @@ test('mapPressed: no props', (t) => {
 test('mapPressed: external handlers', (t) => {
   const onPressInSpy = createSpy(() => {})
   const onPressOutSpy = createSpy(() => {})
-  const compSpy = createSpy(() => null)
-  const getProps = () => getSpyCalls(compSpy)[getSpyCalls(compSpy).length - 1][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = () => getSpyCalls(componentSpy)[getSpyCalls(componentSpy).length - 1][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapPressed>(),
     mapPressed
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -154,7 +163,7 @@ test('mapPressed: external handlers', (t) => {
   const { onPressIn, onPressOut } = getProps()
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
     ],
@@ -174,6 +183,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -185,7 +195,7 @@ test('mapPressed: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isPressed: false, onPressIn, onPressOut }], // Update
@@ -206,12 +216,13 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isPressed: false, onPressIn, onPressOut }], // Update
@@ -235,12 +246,13 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressIn again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isPressed: false, onPressIn, onPressOut }], // Update
@@ -266,12 +278,13 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isPressed: false, onPressIn, onPressOut }], // Update
@@ -300,12 +313,13 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressOut again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isPressed: false, onPressIn, onPressOut }], // Update
@@ -339,6 +353,7 @@ test('mapPressed: external handlers', (t) => {
   const onPressInSpy1 = createSpy(() => {})
   const onPressOutSpy1 = createSpy(() => {})
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -350,7 +365,7 @@ test('mapPressed: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isPressed: false, onPressIn, onPressOut }], // Update
@@ -394,6 +409,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -431,6 +447,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -470,6 +487,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Remove handlers */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -479,7 +497,7 @@ test('mapPressed: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 8, isPressed: false, onPressIn, onPressOut }], // Update
@@ -530,6 +548,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
@@ -569,6 +588,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
@@ -608,6 +628,7 @@ test('mapPressed: external handlers', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -656,17 +677,18 @@ test('mapPressed: external handlers', (t) => {
 })
 
 test('mapPressed: external isPressed', (t) => {
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapPressed>(),
     mapPressed
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -678,7 +700,7 @@ test('mapPressed: external isPressed', (t) => {
   const { onPressIn, onPressOut } = getProps(0)
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
     ],
@@ -686,6 +708,7 @@ test('mapPressed: external isPressed', (t) => {
   )
 
   /* Provide exteranal value */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -696,7 +719,7 @@ test('mapPressed: external isPressed', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 4, isPressed: true, onPressIn, onPressOut }], // Update
@@ -705,12 +728,13 @@ test('mapPressed: external isPressed', (t) => {
   )
 
   /* Call onPressIn */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressIn()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 4, isPressed: true, onPressIn, onPressOut }], // Update
@@ -720,12 +744,13 @@ test('mapPressed: external isPressed', (t) => {
   )
 
   /* Call onPressOut */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onPressOut()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isPressed: false, onPressIn, onPressOut }], // Mount
       [{ foo: 4, isPressed: true, onPressIn, onPressOut }], // Update

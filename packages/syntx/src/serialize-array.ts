@@ -1,12 +1,11 @@
-/* eslint-disable import/no-cycle */
-import { TConfig, TSerializedElement, TMeta } from './types'
-import { serializeValue } from './serialize-value'
-import { serializeIndent } from './serialize-indent'
-import { sanitizeLines, optMetaValue } from './utils'
 import { TYPE_ARRAY_BRACKET, TYPE_ARRAY_COMMA } from './constants'
+import { serializeIndent } from './serialize-indent'
+import { serializeValue } from './serialize-value'
+import type { TConfig, TSerializedElement, TMeta } from './types'
+import { sanitizeLines, optMetaValue } from './utils'
 
 export type TSerializeArray = {
-  arr: readonly any[],
+  arr: any[],
   currentIndent: number,
   config: TConfig,
   meta?: TMeta,
@@ -42,7 +41,7 @@ export const serializeArray = ({ arr, currentIndent, meta, config }: TSerializeA
             elements: [
               serializeIndent(currentIndent),
               ...head,
-              body.length > 0 && !isLast(i) && ({ type: TYPE_ARRAY_COMMA, value: ',' }),
+              body.length === 0 && !isLast(i) && ({ type: TYPE_ARRAY_COMMA, value: ',' }),
             ],
           }),
           ...body,

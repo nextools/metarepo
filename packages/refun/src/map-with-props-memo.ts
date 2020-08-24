@@ -1,5 +1,6 @@
 import { useRef } from 'react'
-import { TExtend, EMPTY_OBJECT } from 'tsfn'
+import { EMPTY_OBJECT } from 'tsfn'
+import type { TExtend } from 'tsfn'
 import { shallowEqualByKeys } from './utils'
 
 export const mapWithPropsMemo = <P extends {}, R extends {}>(getFn: (props: P) => R, watchKeys: (keyof P)[]) => (props: P): TExtend<P, R> => {

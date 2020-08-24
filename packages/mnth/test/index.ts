@@ -1,7 +1,7 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { getCalendarMonth } from '../src'
 
-const formatMonth = (month: Date[][]) => month.map((week) =>
+const formatMonth = (month: Date[][]): string[][] => month.map((week) =>
   week.map((day) => {
     const yearString = day.getFullYear().toString()
     const monthString = (day.getMonth() + 1).toString().padStart(2, '0')

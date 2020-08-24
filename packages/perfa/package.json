@@ -1,29 +1,24 @@
 {
   "name": "perfa",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
   "buildAssets": {
     "src/*.html": "node/"
   },
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.0",
-    "@rebox/web": "^1.1.0",
-    "dleet": "^1.0.0",
-    "puppeteer-core": "^2.1.0",
-    "tempy": "^0.4.0",
-    "tsfn": "^1.0.0",
-    "xrom": "^1.0.1"
-  },
-  "fixdeps": {
-    "ignoredPackages": [
-      "@babel/runtime"
-    ]
+    "@rebox/web": "^3.0.0",
+    "dleet": "^2.0.0",
+    "puppeteer-core": "^5.2.1",
+    "tempy": "^0.6.0",
+    "tsfn": "^2.0.0",
+    "xrom": "^3.0.0"
   }
 }

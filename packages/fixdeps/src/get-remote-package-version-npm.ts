@@ -1,4 +1,5 @@
 import execa from 'execa'
+import { isString } from 'tsfn'
 
 export const getRemotePackageVersionNpm = async (packageName: string): Promise<string> => {
   const { stdout } = await execa(
@@ -7,14 +8,10 @@ export const getRemotePackageVersionNpm = async (packageName: string): Promise<s
       'info',
       packageName,
       'version',
-    ],
-    {
-      stdout: 'ignore',
-      stderr: 'ignore',
-    }
+    ]
   )
 
-  if (stdout.length === 0) {
+  if (!isString(stdout) || stdout.length === 0) {
     throw new Error(`Cannot find package "${packageName}"`)
   }
 

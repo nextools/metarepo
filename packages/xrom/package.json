@@ -1,24 +1,22 @@
 {
   "name": "xrom",
-  "version": "1.0.3",
+  "version": "3.0.0",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.0",
     "execa": "^4.0.0",
     "node-fetch": "^2.6.0",
-    "signal-exit": "^3.0.2",
-    "tsfn": "^1.0.0"
+    "tsfn": "^2.0.0"
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.5.4",
-    "@types/signal-exit": "^3.0.0"
+    "@types/node-fetch": "^2.5.4"
   },
   "fixdeps": {
     "ignoredPackages": [

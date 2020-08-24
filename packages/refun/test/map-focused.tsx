@@ -1,21 +1,24 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
-import { component, mapFocused, startWithType, TMapFocused } from '../src'
+import test from 'tape'
+import { component, mapFocused, startWithType } from '../src'
+import type { TMapFocused } from '../src'
 
 test('mapFocused: no props', (t) => {
-  const compSpy = createSpy(() => null)
-  const getProps = () => getSpyCalls(compSpy)[getSpyCalls(compSpy).length - 1][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = () => getSpyCalls(componentSpy)[getSpyCalls(componentSpy).length - 1][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapFocused>(),
     mapFocused
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -27,7 +30,7 @@ test('mapFocused: no props', (t) => {
   const { onFocus, onBlur } = getProps()
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
     ],
@@ -35,6 +38,7 @@ test('mapFocused: no props', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -44,7 +48,7 @@ test('mapFocused: no props', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 8, isFocused: false, onFocus, onBlur }], // Update
@@ -53,12 +57,13 @@ test('mapFocused: no props', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 8, isFocused: false, onFocus, onBlur }], // Update
@@ -68,12 +73,13 @@ test('mapFocused: no props', (t) => {
   )
 
   /* Call onFocus again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 8, isFocused: false, onFocus, onBlur }], // Update
@@ -84,12 +90,13 @@ test('mapFocused: no props', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 8, isFocused: false, onFocus, onBlur }], // Update
@@ -101,12 +108,13 @@ test('mapFocused: no props', (t) => {
   )
 
   /* Call onBlur again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 8, isFocused: false, onFocus, onBlur }], // Update
@@ -130,17 +138,18 @@ test('mapFocused: no props', (t) => {
 test('mapFocused: external handlers', (t) => {
   const onFocusSpy = createSpy(() => {})
   const onBlurSpy = createSpy(() => {})
-  const compSpy = createSpy(() => null)
-  const getProps = () => getSpyCalls(compSpy)[getSpyCalls(compSpy).length - 1][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = () => getSpyCalls(componentSpy)[getSpyCalls(componentSpy).length - 1][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapFocused>(),
     mapFocused
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -154,7 +163,7 @@ test('mapFocused: external handlers', (t) => {
   const { onFocus, onBlur } = getProps()
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
     ],
@@ -174,6 +183,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -185,7 +195,7 @@ test('mapFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 8, isFocused: false, onFocus, onBlur }], // Update
@@ -206,12 +216,13 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 8, isFocused: false, onFocus, onBlur }], // Update
@@ -235,12 +246,13 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onFocus again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 8, isFocused: false, onFocus, onBlur }], // Update
@@ -266,12 +278,13 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 8, isFocused: false, onFocus, onBlur }], // Update
@@ -300,12 +313,13 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onBlur again */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 8, isFocused: false, onFocus, onBlur }], // Update
@@ -339,6 +353,7 @@ test('mapFocused: external handlers', (t) => {
   const onFocusSpy1 = createSpy(() => {})
   const onBlurSpy1 = createSpy(() => {})
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -350,7 +365,7 @@ test('mapFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 8, isFocused: false, onFocus, onBlur }], // Update
@@ -394,6 +409,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -431,6 +447,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -470,6 +487,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Remove handlers */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -479,7 +497,7 @@ test('mapFocused: external handlers', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 8, isFocused: false, onFocus, onBlur }], // Update
@@ -530,6 +548,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
@@ -569,6 +588,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
@@ -608,6 +628,7 @@ test('mapFocused: external handlers', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -656,17 +677,18 @@ test('mapFocused: external handlers', (t) => {
 })
 
 test('mapFocused: external isFocused', (t) => {
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: number } & TMapFocused>(),
     mapFocused
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -678,7 +700,7 @@ test('mapFocused: external isFocused', (t) => {
   const { onFocus, onBlur } = getProps(0)
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
     ],
@@ -686,6 +708,7 @@ test('mapFocused: external isFocused', (t) => {
   )
 
   /* Provide external value */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -696,7 +719,7 @@ test('mapFocused: external isFocused', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 4, isFocused: true, onFocus, onBlur }], // Update
@@ -705,12 +728,13 @@ test('mapFocused: external isFocused', (t) => {
   )
 
   /* Call onFocus */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onFocus()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 4, isFocused: true, onFocus, onBlur }], // Update
@@ -720,12 +744,13 @@ test('mapFocused: external isFocused', (t) => {
   )
 
   /* Call onBlur */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     onBlur()
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 4, isFocused: false, onFocus, onBlur }], // Mount
       [{ foo: 4, isFocused: true, onFocus, onBlur }], // Update

@@ -1,17 +1,19 @@
 /* eslint-disable max-params, no-use-before-define */
-import { isUndefined, isDefined } from 'tsfn'
-import BigInt, { BigInteger } from 'big-integer'
-import { TComponentConfig, TRequiredConfig } from './types'
-import { unpackPerm } from './unpack-perm'
-import { packPerm } from './pack-perm'
-import { stringifyBigInt } from './stringify-bigint'
-import { parseBigInt } from './parse-bigint'
-import { applyDisableMutins } from './apply-disable-mutins'
-import { applyEnableMutins } from './apply-enable-mutins'
+import BigInt from 'big-integer'
+import type { BigInteger } from 'big-integer'
+import { isUndefined } from 'tsfn'
+import { applyDisableDeps } from './apply-disable-deps'
 import { applyDisableMutexes } from './apply-disable-mutexes'
+import { applyEnableChildren } from './apply-enable-children'
+import { applyEnableDeps } from './apply-enable-deps'
+import { packPerm } from './pack-perm'
+import { parseBigInt } from './parse-bigint'
+import { stringifyBigInt } from './stringify-bigint'
+import type { TCommonRequiredConfig, TCommonComponentConfig } from './types'
+import { unpackPerm } from './unpack-perm'
 
-const applyChildPropValue = (int: BigInteger, childConfig: TComponentConfig, propPath: readonly string[], propValue: any, childKey: string, required?: TRequiredConfig): BigInteger => {
-  if (isDefined(required) && required.includes(childKey)) {
+const applyChildPropValue = (int: BigInteger, childConfig: TCommonComponentConfig, propPath: readonly string[], propValue: any, childKey: string, required?: TCommonRequiredConfig): BigInteger => {
+  if (required?.includes(childKey)) {
     return applyPropValueImpl(childConfig, int, propPath, propValue)
   }
 
@@ -22,81 +24,74 @@ const applyChildPropValue = (int: BigInteger, childConfig: TComponentConfig, pro
   throw new Error(`path error: child "${childKey}" was not enabled, but path points inside it`)
 }
 
-const applyPropValueImpl = (componentConfig: TComponentConfig, int: BigInteger, propPath: readonly string[], propValue: any): BigInteger => {
-  const { values, length, propKeys, childrenKeys } = unpackPerm(componentConfig, int)
-  const pathValue = propPath[0]
-  const propIndex = propKeys.indexOf(pathValue)
+const applyPropValueImpl = (componentConfig: TCommonComponentConfig, int: BigInteger, propPath: readonly string[], propValue: any): BigInteger => {
+  const perm = unpackPerm(componentConfig, int)
+  const { values, lengths, propKeys, childrenKeys } = perm
+  const pathKey = propPath[0]
 
   // check path pointing to prop
+  const propIndex = propKeys.indexOf(pathKey)
+
   if (propPath.length === 1 && propIndex >= 0) {
-    const propValues = componentConfig.props[pathValue]
-    const isPropRequired = isDefined(componentConfig.required) && componentConfig.required.includes(pathValue)
+    const propValues = componentConfig.props[pathKey]!
+    const isPropRequired = Boolean(componentConfig.required?.includes(pathKey))
     const propValueIndex = propValues.indexOf(propValue) + (isPropRequired ? 0 : 1)
 
-    // check selected value = undefined
+    // Check if disables prop
     if (propValueIndex <= 0) {
       values[propIndex] = BigInt.zero
+      // Disable dependent props
+      applyDisableDeps(values, pathKey, perm, componentConfig)
 
-      // check mutin
-      if (isDefined(componentConfig.mutin)) {
-        applyDisableMutins(values, pathValue, propKeys, childrenKeys, componentConfig.mutin)
-      }
-
-      return packPerm(values, length)
+      return packPerm(values, lengths)
     }
 
+    // Enables prop
     values[propIndex] = BigInt(propValueIndex)
+    // Disable Mutexes
+    applyDisableMutexes(values, pathKey, perm, componentConfig)
+    // Enable Deps
+    applyEnableDeps(values, pathKey, perm, componentConfig)
 
-    // check mutin
-    if (isDefined(componentConfig.mutin)) {
-      applyEnableMutins(values, pathValue, propKeys, childrenKeys, componentConfig.mutin, componentConfig.required)
-    }
-
-    // check mutex
-    if (isDefined(componentConfig.mutex)) {
-      applyDisableMutexes(values, pathValue, propKeys, childrenKeys, componentConfig.mutex)
-    }
-
-    return packPerm(values, length)
+    return packPerm(values, lengths)
   }
 
   // check path pointing to child
-  const childIndex = childrenKeys.indexOf(pathValue) + propKeys.length
+  const childIndex = childrenKeys.indexOf(pathKey) + propKeys.length
 
   if (childIndex >= propKeys.length) {
     // check path pointing inside child
     if (propPath.length > 1) {
-      values[childIndex] = applyChildPropValue(values[childIndex], componentConfig.children![pathValue].config, propPath.slice(1), propValue, pathValue, componentConfig.required)
+      values[childIndex] = applyChildPropValue(values[childIndex], componentConfig.children![pathKey]!.config, propPath.slice(1), propValue, pathKey, componentConfig.required)
 
-      return packPerm(values, length)
+      return packPerm(values, lengths)
     }
 
+    // Path points at the child
+    // Check if tries to disable child
     if (isUndefined(propValue)) {
       values[childIndex] = BigInt.zero
+      // Disable dependent props
+      applyDisableDeps(values, pathKey, perm, componentConfig)
+      // Check children restriction
+      applyEnableChildren(values, pathKey, perm, componentConfig)
 
-      if (isDefined(componentConfig.mutin)) {
-        applyDisableMutins(values, pathValue, propKeys, childrenKeys, componentConfig.mutin)
-      }
-
-      return packPerm(values, length)
+      return packPerm(values, lengths)
     }
 
+    // Enables child
     values[childIndex] = BigInt.one
+    // Disable mutexes
+    applyDisableMutexes(values, pathKey, perm, componentConfig)
+    // Enable deps
+    applyEnableDeps(values, pathKey, perm, componentConfig)
 
-    if (isDefined(componentConfig.mutin)) {
-      applyEnableMutins(values, pathValue, propKeys, childrenKeys, componentConfig.mutin)
-    }
-
-    if (isDefined(componentConfig.mutex)) {
-      applyDisableMutexes(values, pathValue, propKeys, childrenKeys, componentConfig.mutex)
-    }
-
-    return packPerm(values, length)
+    return packPerm(values, lengths)
   }
 
   throw new Error(`prop path error: incorrect path "[${propPath}]"`)
 }
 
-export const applyPropValue = (componentConfig: TComponentConfig, intStr: string, propPath: string[], propValue: any): string => {
+export const applyPropValue = (componentConfig: TCommonComponentConfig, intStr: string, propPath: string[], propValue: any): string => {
   return stringifyBigInt(applyPropValueImpl(componentConfig, parseBigInt(intStr), propPath, propValue))
 }

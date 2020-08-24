@@ -1,4 +1,4 @@
-import { TServiceConfig } from '../types'
+import type { TServiceConfig } from '../types'
 
 // https://semaphoreci.com/docs/available-environment-variables.html
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {

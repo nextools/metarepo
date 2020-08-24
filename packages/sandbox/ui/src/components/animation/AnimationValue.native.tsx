@@ -1,1 +1,0 @@
-AnimationValue.web.tsx

@@ -1,6 +1,6 @@
 {
   "name": "@start/plugin-overwrite",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "✏️ Overwrite files",
   "keywords": "tasks, runner, start, start-plugin",
   "repository": "deepsweet/start",
@@ -14,15 +14,15 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.4.2",
-    "@start/plugin": "^1.0.0",
-    "pifs": "^1.0.0"
+    "@start/plugin": "^2.0.0",
+    "pifs": "^2.0.0"
   },
   "devDependencies": {
-    "@types/blue-tape": "^0.1.32",
-    "blue-tape": "^1.0.0"
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0"
   }
 }

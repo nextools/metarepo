@@ -1,6 +1,6 @@
 import pAll from 'p-all'
-import { TDepsEntries } from './types'
 import { getPackageVersion } from './get-package-version'
+import type { TDepsEntries } from './types'
 
 export const getDepsVersions = (names: string[]): Promise<TDepsEntries> =>
   pAll(

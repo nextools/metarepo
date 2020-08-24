@@ -1,5 +1,5 @@
-/* eslint-disable import/export, @typescript-eslint/consistent-type-definitions */
-import { FC } from 'react'
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
+import type { FC } from 'react'
 
 // Generator
 // let str = 'export function component<T1, T2, R> (fn1: (p: T1) => T2, fn2: (p: T2) => R): (Component: FC<R>) => TComponent<T1>'

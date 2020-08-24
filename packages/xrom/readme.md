@@ -1,6 +1,6 @@
-# xrom
+# xrom ![npm](https://flat.badgen.net/npm/v/xrom)
 
-Run [dockerized Chromium in headless remote debugging mode](https://github.com/deepsweet/chromium-headless-remote) and return `browserWSEndpoint` needed for `puppeteer.connect()`.
+Run [dockerized Chromium or Firefox in headless remote debugging mode](https://github.com/nextools/images) and return `browserWSEndpoint` needed for `puppeteer.connect()`.
 
 ## Install
 
@@ -11,25 +11,31 @@ $ yarn add xrom
 ## Usage
 
 ```ts
-type Options = {
-  containerName?: string,
+type TRunBrowserOptions = {
+  browser: 'chromium' | 'firefox',
+  version: string,
+  port?: number,
   fontsDir?: string,
   mountVolumes?: {
     from: string,
     to: string,
   }[],
   cpus?: number,
-  cpusetCpus?: number[],
-  shouldCloseOnExit?: boolean,
+  cpusetCpus?: number[]
 }
 
-runChromium(options: Options) => Promise<string>
+type TRunBrowserResult = {
+  browserWSEndpoint: string,
+  closeBrowser: () => Promise<void>,
+}
+
+runBrowser(options: TRunBrowserOptions) => Promise<TRunBrowserResult>
 ```
 
 ```js
-import { runChromium } from 'xrom'
+import { runBrowser } from 'xrom'
 import puppeteer from 'puppeteer-core'
 
-const browserWSEndpoint = await runChromium({ shouldCloseOnExit: true })
+const { browserWSEndpoint } = await runBrowser({ browser: 'chromium' })
 const browser = await puppeteer.connect({ browserWSEndpoint })
 ```

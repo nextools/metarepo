@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import webpack from '../src'
 
 test('plugin-lib-webpack: export', (t) => {

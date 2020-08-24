@@ -1,4 +1,4 @@
-import { TServiceConfig } from '../types'
+import type { TServiceConfig } from '../types'
 
 // https://www.appveyor.com/docs/environment-variables/
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {

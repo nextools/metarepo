@@ -1,4 +1,4 @@
-import { TServiceConfig } from '../types'
+import type { TServiceConfig } from '../types'
 
 // http://devcenter.wercker.com/docs/environment-variables/available-env-vars.html
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {

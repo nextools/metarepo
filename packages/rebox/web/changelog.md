@@ -1,3 +1,69 @@
+## v3.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `tsfn`
+
+## v2.1.10
+
+* 🐞 upgrade Terser Webpack Plugin to v4
+
+## v2.1.9
+
+* 🐞 fix watching entire project
+
+## v2.1.8
+
+* 🐞 bump React
+
+## v2.1.7
+
+* 🐞 upgrade `terser-webpack-plugin` to v3
+
+## v2.1.6
+
+* 🐞 use alternative plugin to inline runtime chunk in `buildWebAppRelease`
+
+## v2.1.5
+
+* 🐞 support `.web.jsx` extension
+
+## v2.1.4
+
+* 🐞 upgrade html-webpack-plugin to v4
+
+* 🐞 upgrade file-loader to v6
+
+## v2.1.3
+
+* 🐞 fix missing `.js` and `.jsx` extensions
+
+## v2.1.2
+
+* 🐞 workaround for Nullish Coalescing and Optional Chaining
+
+## v2.1.1
+
+* 🐞 workaround for Nullish Coalescing and Optional Chaining
+
+## v2.1.0
+
+* 🌱 use built-in Babel config and expose `browsersList` option
+
+## v2.0.1
+
+* 🐞 add package description and keywords
+
+* 🐞 add readme
+
+## v2.0.0
+
+* 💥 change API
+
+* 🐞 sync React Native and React versions
+
+* ♻️ update dependencies `@nextools/babel-config`
+
 ## v1.1.2
 
 * 🐞 rethink peer deps and fix missing deps
@@ -12,15 +78,13 @@
 
 * 🐞 refactor using shared Babel config
 
-* ♻️ update dependencies: `@bubble-dev/babel-config`
-
 ## v1.0.1
 
 * 🐞 bump compatible deps
 
 ## v1.0.0
 
-* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+* 💥 drop Node.js v8 support and require >=12.13.0 (first v10 LTS)
 
 * 🌱 add `globalAliases` option to `buildRelease`
 
@@ -34,7 +98,7 @@
 
 * 🐞 fix `NODE_ENV=production` in `buildRelease`
 
-* ♻️ update dependencies: `tsfn`, `@bubble-dev/browsers-list`
+* ♻️ update dependencies: `tsfn`
 
 ## v0.5.0
 

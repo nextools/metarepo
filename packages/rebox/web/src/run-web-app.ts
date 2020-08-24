@@ -1,0 +1,149 @@
+import path from 'path'
+import HTMLWebpackPlugin from 'html-webpack-plugin'
+import { isUndefined } from 'tsfn'
+import Webpack from 'webpack'
+import type { Configuration as TWebpackConfig, Stats } from 'webpack'
+import WebpackDevServer from 'webpack-dev-server'
+import type { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
+import { getBabelConfigRun } from './get-babel-config'
+import { WatchPlugin } from './watch-plugin'
+
+const excludeNodeModulesRegExp = /[\\/]node_modules[\\/]/
+
+const statsOptions: Stats.ToStringOptionsObject = {
+  colors: true,
+  assets: true,
+  assetsSort: '!size',
+  builtAt: false,
+  children: false,
+  entrypoints: false,
+  errors: true,
+  errorDetails: true,
+  excludeAssets: [/\.js\.map$/],
+  hash: false,
+  modules: false,
+  performance: true,
+  timings: false,
+  version: false,
+  warnings: true,
+}
+
+export type TRunWebAppOptions = {
+  entryPointPath: string,
+  htmlTemplatePath: string,
+  browsersList?: string[],
+  assetsPath?: string,
+  isQuiet?: boolean,
+  shouldOpenBrowser?: boolean,
+}
+
+export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<void>> => {
+  const config: TWebpackConfig = {
+    mode: 'development',
+    entry: path.resolve(options.entryPointPath),
+    output: {
+      chunkFilename: '[name].[chunkhash].js',
+      publicPath: '/',
+      pathinfo: true,
+    },
+    devtool: 'cheap-module-source-map',
+    resolve: {
+      extensions: [
+        '.web.js',
+        '.web.jsx',
+        '.web.ts',
+        '.web.tsx',
+        '.js',
+        '.jsx',
+        '.ts',
+        '.tsx',
+        '.json',
+      ],
+    },
+    module: {
+      rules: [
+        {
+          test: path.resolve(options.entryPointPath),
+          loader: require.resolve('./loader.js'),
+        },
+        {
+          test: /\.(ts|js)x?$/,
+          exclude: excludeNodeModulesRegExp,
+          loader: require.resolve('babel-loader'),
+          options: {
+            ...getBabelConfigRun(options.browsersList),
+            cacheDirectory: true,
+          },
+        },
+        {
+          test: /\.(gif|jpg|jpeg|tiff|png)$/,
+          // exclude: excludeNodeModulesRegExp,
+          loader: require.resolve('file-loader'),
+          options: {
+            name: '[name].[hash].[ext]',
+            outputPath: 'images',
+          },
+        },
+        {
+          test: /\.mp4$/,
+          // exclude: excludeNodeModulesRegExp,
+          loader: require.resolve('file-loader'),
+          options: {
+            name: '[name].[hash].[ext]',
+            outputPath: 'videos',
+          },
+        },
+      ],
+    },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          default: false,
+          vendor: {
+            name: 'vendor',
+            test: excludeNodeModulesRegExp,
+            enforce: true,
+            chunks: 'all',
+          },
+        },
+      },
+    },
+    plugins: [
+      new HTMLWebpackPlugin({
+        template: path.resolve(options.htmlTemplatePath),
+      }),
+      new WatchPlugin(),
+    ],
+  }
+  const compiler = Webpack(config)
+  const { host, port, ...devConfig }: TWebpackDevConfig = {
+    host: '127.0.0.1',
+    port: 3000,
+    contentBase: isUndefined(options.assetsPath) ? false : path.resolve(options.assetsPath),
+  }
+  const server = new WebpackDevServer(compiler, {
+    ...devConfig,
+    open: options.shouldOpenBrowser,
+    stats: options.isQuiet === true ? 'errors-only' : statsOptions,
+    noInfo: options.isQuiet,
+    watchOptions: {
+      ignored: excludeNodeModulesRegExp,
+    },
+  })
+
+  return new Promise<() => Promise<void>>((resolve, reject) => {
+    compiler.hooks.done.tap('done', () => {
+      resolve(() => new Promise((resolve) => {
+        server.close(resolve)
+      }))
+    })
+
+    server
+      .listen(port, host, (error) => {
+        if (error) {
+          reject(error)
+        }
+      })
+      .on('error', reject)
+  })
+}

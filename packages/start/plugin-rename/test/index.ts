@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import rename from '../src'
 
 test('plugin-rename: export', (t) => {

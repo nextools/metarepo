@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import read from '../src'
 
 test('plugin-read: export', (t) => {

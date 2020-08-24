@@ -1,11 +1,12 @@
 import path from 'path'
-import webpack, { Configuration as WebpackConfig, OutputFileSystem } from 'webpack'
-import TerserPlugin from 'terser-webpack-plugin'
-import { isObject } from 'tsfn'
+import CompressionPlugin from 'compression-webpack-plugin'
 import { Volume, createFsFromVolume } from 'memfs'
 import joinPath from 'memory-fs/lib/join'
-import CompressionPlugin from 'compression-webpack-plugin'
-import { babelConfigWebApp } from '@bubble-dev/babel-config'
+import TerserPlugin from 'terser-webpack-plugin'
+import { isObject } from 'tsfn'
+import webpack from 'webpack'
+import type { Configuration as WebpackConfig, OutputFileSystem } from 'webpack'
+import { babelConfig } from './babel-config'
 
 const vol = Volume.fromJSON({})
 const fs = createFsFromVolume(vol) as unknown as OutputFileSystem
@@ -66,9 +67,11 @@ export const getBundleSize = (userOptions: TGetBuildReleaseStatsOptions): Promis
     resolve: {
       extensions: [
         '.web.js',
+        '.web.jsx',
         '.web.ts',
         '.web.tsx',
         '.js',
+        '.jsx',
         '.ts',
         '.tsx',
         '.json',
@@ -82,11 +85,11 @@ export const getBundleSize = (userOptions: TGetBuildReleaseStatsOptions): Promis
           loader: require.resolve('./loader.js'),
         },
         {
-          test: /\.(js|jsx|ts|tsx)$/,
+          test: /\.(js|ts)x?$/,
           exclude: nodeModulesRegExp,
           loader: require.resolve('babel-loader'),
           options: {
-            ...babelConfigWebApp,
+            ...babelConfig,
             cacheDirectory: false,
           },
         },
@@ -153,6 +156,7 @@ export const getBundleSize = (userOptions: TGetBuildReleaseStatsOptions): Promis
       }),
       new CompressionPlugin({
         filename: '[name][ext].gz',
+        cache: false,
       }),
     ],
   }

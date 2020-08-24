@@ -1,4 +1,4 @@
-import { pipe } from '@psxcode/compose'
+import { pipe } from 'funcom'
 import { mapState, mapHandlers, mapThrottledHandlerAnimationFrame, mapDebouncedHandlerTimeout, startWithType } from 'refun'
 
 export const mapScrollState = <P extends {}>() => pipe(

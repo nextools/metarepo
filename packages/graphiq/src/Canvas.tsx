@@ -1,9 +1,9 @@
+import { AnimationValue, easeInOutCubic } from '@revert/animation'
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithPropsMemo, mapWithProps } from 'refun'
-import { Animation, easeInOutCubic } from '@primitives/animation'
-import { TCanvas } from './types'
 import { Graph } from './Graph'
 import { CANVAS_PADDING, CONTROLS_HEIGHT_TOP, PAGE_BACKGROUND } from './constants'
+import type { TCanvas } from './types'
 
 export const Canvas = component(
   startWithType<TCanvas>(),
@@ -63,12 +63,12 @@ export const Canvas = component(
         }
       }
       />
-      <Animation
+      <AnimationValue
         easing={easeInOutCubic}
         time={200}
-        values={[scale]}
+        toValue={scale}
       >
-        {([scale]) => (
+        {(scale) => (
           <Fragment>
             {graphs.map((graph) => (
               <Graph
@@ -88,7 +88,7 @@ export const Canvas = component(
             ))}
           </Fragment>
         )}
-      </Animation>
+      </AnimationValue>
     </svg>
     <input
       style={{

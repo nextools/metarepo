@@ -1,3 +1,25 @@
+## v2.0.1
+
+* 🐞 fix getting local version of a package
+
+## v2.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `pifs`, `tsfn`
+
+## v1.1.3
+
+* 🐞 fix npm fetch error
+
+## v1.1.2
+
+* 🐞 parse `classPrivateProperties` and `classPrivateMethods` ESNext features
+
+## v1.1.1
+
+* 🐞 fix TPackageJson types
+
 ## v1.1.0
 
 * 🌱 add `hasDepsToModify` function
@@ -8,7 +30,7 @@
 
 ## v1.0.0
 
-* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+* 💥 drop Node.js v8 support and require >=12.13.0 (first v10 LTS)
 
 * ♻️ update dependencies: `pifs`, `tsfn`, `typeon`
 

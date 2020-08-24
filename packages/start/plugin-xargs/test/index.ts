@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import xargs from '../src'
 
 test('plugin-xargs: export', (t) => {

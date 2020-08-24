@@ -1,17 +1,19 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { pureComponent, startWithType } from '../src'
 
 test('pureComponent: props', (t) => {
   const mapSpy = createSpy(({ args }) => args[0])
-  const compSpy = createSpy(() => null)
-  const MyComp = pureComponent(mapSpy)(compSpy)
+  const componentSpy = createSpy(() => null)
+  const MyComp = pureComponent(mapSpy)(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -26,7 +28,7 @@ test('pureComponent: props', (t) => {
     'Mount: should call map functions'
   )
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo' }],
     ],
@@ -34,6 +36,7 @@ test('pureComponent: props', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -50,7 +53,7 @@ test('pureComponent: props', (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo' }],
       [{ foo: 'bar' }],
@@ -59,6 +62,7 @@ test('pureComponent: props', (t) => {
   )
 
   /* Pure Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -76,7 +80,7 @@ test('pureComponent: props', (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo' }],
       [{ foo: 'bar' }],
@@ -85,6 +89,7 @@ test('pureComponent: props', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -103,16 +108,17 @@ test('pureComponent: props', (t) => {
 })
 
 test('pureComponent: multiple map functions', (t) => {
-  const compSpy = createSpy(() => null)
+  const componentSpy = createSpy(() => null)
   const MyComp = pureComponent(
     startWithType<{ initial: number }>(),
     ({ initial }) => ({ foo: `foo${initial}` }),
     ({ foo }) => ({ bar: `${foo}bar` })
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp initial={2}/>
@@ -120,7 +126,7 @@ test('pureComponent: multiple map functions', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ bar: 'foo2bar' }],
     ],
@@ -128,6 +134,7 @@ test('pureComponent: multiple map functions', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp initial={4}/>
@@ -135,7 +142,7 @@ test('pureComponent: multiple map functions', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ bar: 'foo2bar' }],
       [{ bar: 'foo4bar' }],
@@ -144,6 +151,7 @@ test('pureComponent: multiple map functions', (t) => {
   )
 
   /* Pure Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp initial={4}/>
@@ -151,7 +159,7 @@ test('pureComponent: multiple map functions', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ bar: 'foo2bar' }],
       [{ bar: 'foo4bar' }],

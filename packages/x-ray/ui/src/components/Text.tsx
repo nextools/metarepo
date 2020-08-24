@@ -1,20 +1,16 @@
+import { colorToString } from '@revert/color'
+import type { TColor } from '@revert/color'
 import React from 'react'
-import { normalizeStyle, TStyle } from 'stili'
-import {
-  component,
-  mapDefaultProps,
-  mapWithProps,
-  startWithType,
-} from 'refun'
+import type { CSSProperties } from 'react'
+import { component, mapDefaultProps, mapWithProps, startWithType } from 'refun'
 import { isNumber } from 'tsfn'
-import { TColor, colorToString } from 'colorido'
 import { COLOR_BLACK } from '../config'
 
 export type TTextProps = {
   id?: string,
   color?: TColor,
   fontFamily?: string,
-  fontWeight?: TStyle['fontWeight'],
+  fontWeight?: CSSProperties['fontWeight'],
   fontSize?: number,
   lineHeight?: number,
   letterSpacing?: number,
@@ -48,15 +44,14 @@ export const Text = component(
     shouldPreventWrap,
     shouldHideOverflow,
   }) => {
-    const style: TStyle = {
+    const style: CSSProperties = {
+      display: 'block',
+      textRendering: 'geometricPrecision',
+      textSizeAdjust: 'none',
       color: colorToString(color),
       fontFamily,
       fontWeight,
       fontSize,
-      fontSmoothing: 'antialiased',
-      textRendering: 'geometricPrecision',
-      textSizeAdjust: 'none',
-      display: 'block',
       position: 'relative',
     }
 
@@ -91,7 +86,7 @@ export const Text = component(
     }
 
     return {
-      style: normalizeStyle(style),
+      style,
     }
   })
 )(({ children, style, id }) => (

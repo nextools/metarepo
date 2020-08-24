@@ -1,6 +1,8 @@
-import { ReactElement, ComponentClass, FC, isValidElement } from 'react'
-import { isDefined, TWritable } from 'tsfn'
-import { TLine, TLineElement, TMeta } from './types'
+import { isValidElement } from 'react'
+import type { ReactElement, ComponentClass, FC } from 'react'
+import { isDefined } from 'tsfn'
+import type { TWritable } from 'tsfn'
+import type { TLine, TLineElement, TMeta } from './types'
 
 export const hasKeys = (obj: any) => Object.keys(obj).length > 0
 
@@ -65,10 +67,10 @@ export const getElementName = (element: ReactElement<any>) => {
   return getDisplayName(element.type)
 }
 
-export const flatten = (array: readonly any[]) => {
+export const flatten = (array: any[]) => {
   const flattened: any[] = []
 
-  const flat = (array: readonly any[]) => {
+  const flat = (array: any[]) => {
     array.forEach((el) => {
       if (Array.isArray(el)) {
         flat(el)
@@ -91,11 +93,11 @@ export const isLineElement = (obj: any): obj is TLineElement => {
   return !isNull(obj) && !isBoolean(obj) && !isUndefined(obj)
 }
 
-export const sanitizeLineElements = (lineElements: readonly any[]): readonly any[] => {
+export const sanitizeLineElements = (lineElements: any[]): any[] => {
   return lineElements.filter(isLineElement)
 }
 
-export const sanitizeLines = (lines: readonly any[]): TLine[] => {
+export const sanitizeLines = (lines: any[]): TLine[] => {
   return flatten(lines)
     .reduce((result: TLine[], line) => {
       if (isLine(line)) {

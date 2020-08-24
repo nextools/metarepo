@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import overwrite from '../src'
 
 test('plugin-overwrite: export', (t) => {

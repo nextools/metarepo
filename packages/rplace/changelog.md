@@ -1,3 +1,11 @@
+## v0.3.0
+
+* 💥 drop Node.js v10
+
+## v0.2.0
+
+* 💥 delegate line by line stream reading to `stroki`, fix cross-platform EOL
+
 ## v0.1.1
 
 * 🐞 fix replacing all occurrences

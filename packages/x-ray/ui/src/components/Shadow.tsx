@@ -1,6 +1,7 @@
+import { colorToString } from '@revert/color'
+import type { TColor } from '@revert/color'
 import React from 'react'
 import { component, mapDefaultProps, startWithType } from 'refun'
-import { colorToString, TColor } from 'colorido'
 import { Block } from './Block'
 
 export type TShadow = {

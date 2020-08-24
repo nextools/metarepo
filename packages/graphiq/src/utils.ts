@@ -1,4 +1,4 @@
-import { TGraph } from './types'
+import type { TGraph } from './types'
 
 export const globalObject = global as unknown as Window
 

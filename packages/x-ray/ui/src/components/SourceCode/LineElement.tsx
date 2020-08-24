@@ -1,4 +1,5 @@
-import React, { FC } from 'react'
+import React from 'react'
+import type { FC } from 'react'
 import {
   TYPE_ARRAY_BRACKET,
   TYPE_ARRAY_COMMA,
@@ -21,10 +22,12 @@ import {
   TYPE_WHITESPACE,
 } from 'syntx'
 import { Text } from './Text'
+import type { TText } from './Text'
 import { COLOR_BLACK, COLOR_COMPONENT_NAME } from './constants'
 
 export type TLineElement = {
   type: string,
+  children: TText['children'],
 }
 
 export const LineElement: FC<TLineElement> = ({ type, children }) => {

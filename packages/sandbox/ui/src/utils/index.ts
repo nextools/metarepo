@@ -1,5 +1,0 @@
-export * from './global-object'
-export * from './on-idle'
-export * from './get-element-name'
-export * from './get-element-path'
-export * from './is-handler'

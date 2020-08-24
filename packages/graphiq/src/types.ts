@@ -1,6 +1,6 @@
-import { ChangeEvent, ReactElement } from 'react'
-import { TColor } from 'colorido'
-import { TEasingFn } from '@primitives/animation'
+import type { TEasingFn } from '@revert/animation'
+import type { TColor } from '@revert/color'
+import type { ChangeEvent, ReactElement } from 'react'
 
 export type TEntry = {
   version: string,
@@ -137,5 +137,5 @@ export type TAnimate = {
   time: number,
   easing: TEasingFn,
   isActive: boolean,
-  children: (arg: [number]) => ReactElement,
+  children: (arg: number) => ReactElement,
 }

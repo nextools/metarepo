@@ -1,4 +1,4 @@
-import { Reducer } from 'redux'
+import type { Reducer } from 'redux'
 import { isUndefined } from 'tsfn'
 import {
   isActionLoadingStart,
@@ -12,10 +12,11 @@ import {
   isActionDiscardItem,
   isActionAddFilter,
   isActionRemoveFilter,
+  isActionResetFilter,
 } from '../actions'
-import { TAction, TState } from '../types'
-import { initialState } from '../store/initial-state'
 import { isActionUndiscardItem } from '../actions/undiscard'
+import { initialState } from '../store/initial-state'
+import type { TAction, TState } from '../types'
 
 export type TReducer<S extends {}> = (state: S, action: TAction<any>) => S
 
@@ -134,6 +135,13 @@ export const reducer: Reducer<TState> = (state, action) => {
     return {
       ...state,
       filteredFiles: state.filteredFiles.filter((item) => item !== action.payload),
+    }
+  }
+
+  if (isActionResetFilter(action)) {
+    return {
+      ...state,
+      filteredFiles: [],
     }
   }
 

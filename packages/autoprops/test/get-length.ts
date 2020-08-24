@@ -1,10 +1,10 @@
-import test from 'blue-tape'
 import I from 'big-integer'
-import { TComponentConfig } from '../src/types'
+import test from 'tape'
 import { getLength } from '../src/get-length'
+import type { TCommonComponentConfig } from '../src/types'
 
 test('autoprops: getLength', (t) => {
-  const config: TComponentConfig = {
+  const config: TCommonComponentConfig = {
     props: {
       a: [true],
       b: [true],

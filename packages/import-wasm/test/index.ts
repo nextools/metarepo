@@ -1,5 +1,5 @@
-import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { importWasm, importWasmSync } from '..'
 
 const WASM_FILE_PATH = './fixtures/rust/pkg/rust.wasm'

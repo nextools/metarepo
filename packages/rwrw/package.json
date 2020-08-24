@@ -1,0 +1,29 @@
+{
+  "name": "rwrw",
+  "version": "0.1.0",
+  "description": "temp",
+  "keywords": [
+    "stream",
+    "rewrite"
+  ],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "pifs": "^2.0.0"
+  },
+  "devDependencies": {
+    "@mock/fs": "^0.2.0",
+    "@types/tape": "^4.2.34",
+    "memfs": "^3.2.0",
+    "rplace": "^0.3.0",
+    "tape": "^5.0.0"
+  }
+}

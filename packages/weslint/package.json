@@ -1,6 +1,6 @@
 {
   "name": "weslint",
-  "version": "0.1.1",
+  "version": "0.4.0",
   "description": "Worker Threads + ESlint",
   "keywords": [
     "workers",
@@ -9,20 +9,20 @@
     "eslint"
   ],
   "main": "src/index.ts",
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "publishConfig": {
     "access": "public"
   },
   "sideEffects": false,
   "dependencies": {
-    "eslint": "^6.8.0",
-    "workerama": "^0.1.0"
+    "eslint": "^7.3.1",
+    "workerama": "^0.4.0"
   },
   "devDependencies": {
-    "@types/eslint": "^6.1.8"
+    "@types/eslint": "^7.0.0"
   }
 }

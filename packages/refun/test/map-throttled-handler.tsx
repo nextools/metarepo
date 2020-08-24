@@ -1,17 +1,18 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { createTimeoutSpy } from 'spyt'
+import test from 'tape'
 import { component, mapThrottledHandlerFactory, startWithType } from '../src'
 
 test('mapThrottledHandler: Common usecases', (t) => {
   let spy = createSpy(() => null)
   const timeout = createTimeoutSpy()
   const mapThrottledHandler = mapThrottledHandlerFactory(timeout.setTimeout, timeout.clearTimeout)
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{
       handler: () => void, // eslint-disable-line func-call-spacing
@@ -19,11 +20,12 @@ test('mapThrottledHandler: Common usecases', (t) => {
       b: number,
     }>(),
     mapThrottledHandler('handler', 100)
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -37,7 +39,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   const { handler } = getProps(0)
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ a: 'foo', b: 42, handler }],
     ],
@@ -63,6 +65,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -74,7 +77,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ a: 'foo', b: 42, handler }],
       [{ a: 'bar', b: 1337, handler }],
@@ -101,6 +104,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Update Handler */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     spy = createSpy(() => null)
 
@@ -114,7 +118,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ a: 'foo', b: 42, handler }],
       [{ a: 'bar', b: 1337, handler }],
@@ -124,6 +128,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* First Call */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler(42, 'foo')
   })
@@ -149,6 +154,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Second Call, interrupting first one */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler(13, 'bar')
   })
@@ -172,6 +178,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -195,6 +202,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Third Call, after completing secont call timeout */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler('third call')
   })
@@ -218,6 +226,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -241,6 +250,7 @@ test('mapThrottledHandler: Common usecases', (t) => {
   )
 
   /* Timeout Tick after Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -275,17 +285,18 @@ test('mapThrottledHandler: Common usecases', (t) => {
 test('mapThrottledHandler: Invalid handler', (t) => {
   const timeout = createTimeoutSpy()
   const mapThrottledHandler = mapThrottledHandlerFactory(timeout.setTimeout, timeout.clearTimeout)
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ handler?: () => void }>(), // eslint-disable-line func-call-spacing
     mapThrottledHandler('handler', 50)
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp/>
@@ -301,6 +312,7 @@ test('mapThrottledHandler: Invalid handler', (t) => {
   )
 
   /* Call handler */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler()
   })
@@ -318,6 +330,7 @@ test('mapThrottledHandler: Invalid handler', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -335,6 +348,7 @@ test('mapThrottledHandler: Invalid handler', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
@@ -364,17 +378,18 @@ test('mapThrottledHandler: Handler is removed during timeout period', (t) => {
   const spy = createSpy(() => {})
   const timeout = createTimeoutSpy()
   const mapThrottledHandler = mapThrottledHandlerFactory(timeout.setTimeout, timeout.clearTimeout)
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ handler?: () => void }>(), // eslint-disable-line func-call-spacing
     mapThrottledHandler('handler', 50)
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp handler={spy}/>
@@ -384,6 +399,7 @@ test('mapThrottledHandler: Handler is removed during timeout period', (t) => {
   const { handler } = getProps(0)
 
   /* Call Handler */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     handler()
   })
@@ -409,6 +425,7 @@ test('mapThrottledHandler: Handler is removed during timeout period', (t) => {
   )
 
   /* Remove handler before Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp/>
@@ -436,6 +453,7 @@ test('mapThrottledHandler: Handler is removed during timeout period', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -461,6 +479,7 @@ test('mapThrottledHandler: Handler is removed during timeout period', (t) => {
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })

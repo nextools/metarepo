@@ -1,35 +1,62 @@
-import { FC } from 'react'
-import { TAnyObject, TKeyOf, TRequiredKeys, TOptionalKeys } from 'tsfn'
-import { BigInteger } from 'big-integer'
+import type { BigInteger } from 'big-integer'
+import type { FC } from 'react'
+import type { TAnyObject, TKeyOf, TRequiredKeys, TOptionalKeys, TReadonly } from 'tsfn'
 
-export type TRequiredConfig <TProps = any, TChildrenKeys extends string = string> = readonly (TRequiredKeys<TProps> | TChildrenKeys)[]
-export type TMutexConfig <TProps = any, TChildrenKeys extends string = string> = readonly (readonly (TKeyOf<TProps> | TChildrenKeys)[])[]
-export type TMutinConfig <TProps = any, TChildrenKeys extends string = string> = readonly (readonly (TKeyOf<TProps> | TChildrenKeys)[])[]
+export type TCommonRequiredConfig = string[]
+export type TCommonMutexConfig = string[][]
+export type TCommonDepsConfig = {
+  [K: string]: string[] | undefined,
+}
 
-export type TComponentConfig<TProps = any, TChildrenKeys extends string = string> = {
-  readonly props: {
-    readonly [k in Exclude<TRequiredKeys<TProps>, 'children'>]: readonly TProps[k][];
-  } & {
-    readonly [k in TOptionalKeys<TProps> | Extract<keyof TProps, 'children'>]?: readonly (Exclude<TProps[k], undefined>)[];
+export type TCommonComponentConfig = {
+  props: {
+    [K: string]: any[] | undefined,
   },
-  readonly children?: {
-    readonly [K in TChildrenKeys]: {
-      readonly Component: FC<any>,
-      readonly config: TComponentConfig,
+  children?: {
+    [K: string]: {
+      Component: FC<any>,
+      config: TCommonComponentConfig,
+    } | undefined,
+  },
+  required?: string[],
+  mutex?: string[][],
+  deps?: {
+    [K: string]: string[] | undefined,
+  },
+}
+
+export type TComponentConfig<TProps, TChildrenKeys extends string = never> = {
+  props: {
+    [K in Exclude<TRequiredKeys<TProps>, 'children'>]: TProps[K][];
+  } & {
+    [K in TOptionalKeys<TProps> | Extract<keyof TProps, 'children'>]?: (Exclude<TProps[K], undefined>)[];
+  },
+  children?: {
+    [K in TChildrenKeys]: {
+      Component: FC<any>,
+      config: TCommonComponentConfig,
     }
   },
-  readonly required?: TRequiredConfig<TProps, TChildrenKeys>,
-  readonly mutex?: TMutexConfig<TProps, TChildrenKeys>,
-  readonly mutin?: TMutinConfig<TProps, TChildrenKeys>,
+  required?: (TKeyOf<TProps> | TChildrenKeys)[],
+  mutex?: (TKeyOf<TProps> | TChildrenKeys)[][],
+  deps?: {
+    [K in TKeyOf<TProps> | TChildrenKeys]?: (TKeyOf<TProps> | TChildrenKeys)[]
+  },
 }
 
-export type TChildrenMap<TChildrenKeys extends string = string> = {
-  readonly [K in TChildrenKeys]?: Readonly<TAnyObject>
+export type TChildrenMap = {
+  [K: string]: (Readonly<TAnyObject>) | undefined,
 }
 
-export type Permutation = Readonly<{
+export type TPermutationConfig = {
+  lengths: BigInteger[],
+  propKeys: string[],
+  childrenKeys: string[],
+}
+
+export type TPermutation = TPermutationConfig & {
   values: BigInteger[],
-  length: readonly BigInteger[],
-  propKeys: readonly string[],
-  childrenKeys: readonly string[],
-}>
+}
+
+export type TCheckPermFn = (values: readonly BigInteger[], permConfig: TReadonly<TPermutationConfig>, componentConfig: TCommonComponentConfig) => readonly BigInteger[] | null
+export type TApplyRestrictionFn = (mutValues: BigInteger[], changedPropName: string, permConfig: TReadonly<TPermutationConfig>, componentConfig: TCommonComponentConfig) => void

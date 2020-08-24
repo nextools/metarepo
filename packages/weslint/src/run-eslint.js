@@ -1,21 +1,30 @@
 const fs = require('fs')
 const { promisify } = require('util')
-const { CLIEngine } = require('eslint')
+const { ESLint } = require('eslint')
 
 const readFile = promisify(fs.readFile)
-let cli = null
 
-exports.run = async (file, options) => {
-  if (cli === null) {
-    cli = new CLIEngine({
-      cache: true,
-      cacheLocation: 'node_modules/.cache/eslint',
-      ...options,
-    })
+exports.run = (options) => {
+  const eslint = new ESLint({
+    cache: true,
+    cacheLocation: 'node_modules/.cache/eslint',
+    ...options,
+  })
+
+  return async (item) => {
+    if (!item.done) {
+      const data = await readFile(item.value, 'utf8')
+      const results = await eslint.lintText(data, { filePath: item.value })
+      const hasErrors = results.some((result) => result.errorCount > 0)
+      const hasWarnings = results.some((result) => result.warningCount > 0)
+
+      return {
+        value: {
+          results,
+          hasErrors,
+          hasWarnings,
+        },
+      }
+    }
   }
-
-  const data = await readFile(file, 'utf8')
-  const report = cli.executeOnText(data, file)
-
-  return report
 }

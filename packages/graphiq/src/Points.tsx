@@ -1,9 +1,10 @@
-import React, { Fragment, FC } from 'react'
-import { colorToString } from 'colorido'
-import { easeInOutCubic } from '@primitives/animation'
+import { easeInOutCubic } from '@revert/animation'
+import { colorToString } from '@revert/color'
+import React, { Fragment } from 'react'
+import type { FC } from 'react'
 import { Animate } from './Animate'
 import { POINT_BORDER, POINT_RADIUS } from './constants'
-import { TGraphPoints } from './types'
+import type { TGraphPoints } from './types'
 
 export const Points: FC<TGraphPoints> = ({
   fill,
@@ -19,7 +20,7 @@ export const Points: FC<TGraphPoints> = ({
     to={POINT_RADIUS}
     isActive={isActive}
   >
-    {([radius]) => (
+    {(radius) => (
       <Fragment>
         {points.map((point, index) => {
           const tooltipKeyID = `${point.value}-tooltip-${index}`

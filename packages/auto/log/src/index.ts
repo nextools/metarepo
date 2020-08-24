@@ -1,7 +1,0 @@
-export { getLog } from './get-log'
-export { getMarkdownLog } from './get-markdown-log'
-export { sendSlackMessage } from './send-slack-message'
-export { sendTelegramMessage } from './send-telegram-message'
-export { makeGithubReleases } from './make-github-releases'
-export { writeChangelogFiles } from './write-changelog-files'
-export * from './types'

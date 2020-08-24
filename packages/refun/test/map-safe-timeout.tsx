@@ -1,8 +1,9 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { createTimeoutSpy } from 'spyt'
+import test from 'tape'
 import { component, mapSafeTimeoutFactory, startWithType } from '../src'
 
 test('mapSafeTimeout', (t) => {
@@ -11,17 +12,18 @@ test('mapSafeTimeout', (t) => {
   const timeoutSpy3 = createSpy(() => null)
   const timeout = createTimeoutSpy()
   const mapSafeTimeout = mapSafeTimeoutFactory(timeout.setTimeout, timeout.clearTimeout)
-  const compSpy = createSpy(() => null)
-  const getProps = (renderIndex: number) => getSpyCalls(compSpy)[renderIndex][0]
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const componentSpy = createSpy(() => null)
+  const getProps = (renderIndex: number) => getSpyCalls(componentSpy)[renderIndex][0]
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{ foo: string }>(),
     mapSafeTimeout('setSafeTimeout')
-  )(compSpy)
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -31,7 +33,7 @@ test('mapSafeTimeout', (t) => {
   const { setSafeTimeout } = getProps(0)
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', setSafeTimeout }],
     ],
@@ -39,6 +41,7 @@ test('mapSafeTimeout', (t) => {
   )
 
   /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp foo="bar"/>
@@ -46,7 +49,7 @@ test('mapSafeTimeout', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
       [{ foo: 'foo', setSafeTimeout }],
       [{ foo: 'bar', setSafeTimeout }],
@@ -57,6 +60,7 @@ test('mapSafeTimeout', (t) => {
   /* Call setTimeout */
   let unsub: any
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     setSafeTimeout(timeoutSpy1, 100)
     setSafeTimeout(timeoutSpy2, 70)
@@ -98,6 +102,7 @@ test('mapSafeTimeout', (t) => {
   )
 
   /* Cancel setTimeout */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     unsub()
   })
@@ -111,6 +116,7 @@ test('mapSafeTimeout', (t) => {
   )
 
   /* Timeout Tick */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })
@@ -137,6 +143,7 @@ test('mapSafeTimeout', (t) => {
     'Timeout Tick: should not call timeoutSpy3'
   )
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     /* Call setTimeout before Unmount */
     setSafeTimeout(timeoutSpy1, 30)
@@ -146,6 +153,7 @@ test('mapSafeTimeout', (t) => {
   })
 
   /* Call setTimeout after Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     setSafeTimeout(timeoutSpy2, 80)
   })
@@ -171,6 +179,7 @@ test('mapSafeTimeout', (t) => {
   )
 
   /* Timeout Tick after Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     timeout.tick()
   })

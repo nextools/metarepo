@@ -1,0 +1,44 @@
+{
+  "name": "@x-ray/plugin-react-snapshots",
+  "version": "0.2.0",
+  "description": "Check React snapshots with X-Ray",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-syntax-bigint": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/preset-typescript": "^7.9.0",
+    "@babel/register": "^7.8.6",
+    "@x-ray/core": "^0.2.0",
+    "@x-ray/serialize-react-tree": "^2.0.0",
+    "@x-ray/ui": "^3.0.2",
+    "enhanced-resolve": "^4.1.1",
+    "funcom": "^0.2.0",
+    "iterama": "^0.5.0",
+    "piall": "^0.2.0",
+    "pifs": "^2.0.0",
+    "react": "16.13.1",
+    "tarmap": "^0.2.0",
+    "typeon": "^2.0.0",
+    "workerama": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.6"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/core"
+    ]
+  }
+}

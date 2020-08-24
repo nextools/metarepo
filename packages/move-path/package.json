@@ -1,6 +1,6 @@
 {
   "name": "move-path",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Move path to destination folder",
   "keywords": [
     "fs",
@@ -9,11 +9,11 @@
     "destination"
   ],
   "main": "src/index.ts",
-  "repository": "bubble-dev/_",
+  "repository": "nextools/metarepo",
   "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "publishConfig": {
     "access": "public"
@@ -23,7 +23,7 @@
     "@babel/runtime": "^7.4.2"
   },
   "devDependencies": {
-    "@types/blue-tape": "^0.1.32",
-    "blue-tape": "^1.0.0"
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0"
   }
 }

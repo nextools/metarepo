@@ -1,24 +1,26 @@
 import React from 'react'
-import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
-import test from 'blue-tape'
+import TestRenderer, { act } from 'react-test-renderer'
+import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
+import test from 'tape'
 import { component, startWithType, onChange } from '../src'
 
 test('onChange: sync function', (t) => {
-  const updateSpy = createSpy(() => {})
-  const compSpy = createSpy(() => null)
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const onChangeSpy = createSpy(() => {})
+  const componentSpy = createSpy(() => null)
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{
       foo: string,
       watch?: string,
     }>(),
-    onChange(updateSpy, ['watch'])
-  )(compSpy)
+    onChange(onChangeSpy, ['watch'])
+  )(componentSpy)
+
+  let testRenderer: ReactTestRenderer
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
-
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp foo="foo"/>
@@ -26,22 +28,23 @@ test('onChange: sync function', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{ foo: 'foo' }],
+      [{ foo: 'foo' }], // Mount
     ],
     'Mount: should pass props'
   )
 
   t.deepEquals(
-    getSpyCalls(updateSpy),
+    getSpyCalls(onChangeSpy),
     [
-      [{ foo: 'foo' }],
+      [{ foo: 'foo' }], // Mount
     ],
     'Mount: should call update'
   )
 
   /* Update unwatched props */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -51,23 +54,24 @@ test('onChange: sync function', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{ foo: 'foo' }],
-      [{ foo: 'bar' }],
+      [{ foo: 'foo' }], // Mount
+      [{ foo: 'bar' }], // Update not watched prop
     ],
     'Update unwatched props: should pass props'
   )
 
   t.deepEquals(
-    getSpyCalls(updateSpy),
+    getSpyCalls(onChangeSpy),
     [
-      [{ foo: 'foo' }],
+      [{ foo: 'foo' }], // Mount
     ],
     'Update unwatched props: should not call update'
   )
 
   /* Update watched props */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -78,34 +82,35 @@ test('onChange: sync function', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{ foo: 'foo' }],
-      [{ foo: 'bar' }],
-      [{ foo: 'bar', watch: 'watch' }],
+      [{ foo: 'foo' }], // Mount
+      [{ foo: 'bar' }], // Update not watched prop
+      [{ foo: 'bar', watch: 'watch' }], // Update watched prop
     ],
     'Update watched props: should pass props'
   )
 
   t.deepEquals(
-    getSpyCalls(updateSpy),
+    getSpyCalls(onChangeSpy),
     [
-      [{ foo: 'foo' }],
-      [{ foo: 'bar', watch: 'watch' }],
+      [{ foo: 'foo' }], // Mount
+      [{ foo: 'bar', watch: 'watch' }], // Update watched prop
     ],
     'Update watched props: should call update'
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
 
   t.deepEquals(
-    getSpyCalls(updateSpy),
+    getSpyCalls(onChangeSpy),
     [
-      [{ foo: 'foo' }],
-      [{ foo: 'bar', watch: 'watch' }],
+      [{ foo: 'foo' }], // Mount
+      [{ foo: 'bar', watch: 'watch' }], // Update watched prop
     ],
     'Unmount: should not call update'
   )
@@ -120,20 +125,21 @@ test('onChange: sync function', (t) => {
 })
 
 test('onChange: async function', (t) => {
-  const updateSpy = createSpy(async () => {})
-  const compSpy = createSpy(() => null)
-  const getNumRenders = () => getSpyCalls(compSpy).length
+  const onChangeSpy = createSpy(async () => {})
+  const componentSpy = createSpy(() => null)
+  const getNumRenders = () => getSpyCalls(componentSpy).length
   const MyComp = component(
     startWithType<{
       foo: string,
       watch?: string,
     }>(),
-    onChange(updateSpy, ['watch'])
-  )(compSpy)
+    onChange(onChangeSpy, ['watch'])
+  )(componentSpy)
 
   /* Mount */
-  let testRenderer!: ReactTestRenderer
+  let testRenderer: ReactTestRenderer
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer = TestRenderer.create(
       <MyComp
@@ -143,22 +149,23 @@ test('onChange: async function', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{ foo: 'foo' }],
+      [{ foo: 'foo' }], // Mount
     ],
     'Mount: should pass props'
   )
 
   t.deepEquals(
-    getSpyCalls(updateSpy),
+    getSpyCalls(onChangeSpy),
     [
-      [{ foo: 'foo' }],
+      [{ foo: 'foo' }], // Mount
     ],
     'Mount: should call update'
   )
 
   /* Update not watched prop */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -168,23 +175,24 @@ test('onChange: async function', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{ foo: 'foo' }],
-      [{ foo: 'foo' }],
+      [{ foo: 'foo' }], // Mount
+      [{ foo: 'foo' }], // Update not watched prop
     ],
     'Update not watched prop: should pass props'
   )
 
   t.deepEquals(
-    getSpyCalls(updateSpy),
+    getSpyCalls(onChangeSpy),
     [
-      [{ foo: 'foo' }],
+      [{ foo: 'foo' }], // Mount
     ],
     'Update not watched prop: should not call update if changed props were not watched'
   )
 
   /* Update watched prop */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.update(
       <MyComp
@@ -195,34 +203,35 @@ test('onChange: async function', (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(compSpy),
+    getSpyCalls(componentSpy),
     [
-      [{ foo: 'foo' }],
-      [{ foo: 'foo' }],
-      [{ foo: 'foo', watch: 'watch' }],
+      [{ foo: 'foo' }], // Mount
+      [{ foo: 'foo' }], // Update not watched prop
+      [{ foo: 'foo', watch: 'watch' }], // Update watched prop
     ],
     'Update watched prop: should pass props'
   )
 
   t.deepEquals(
-    getSpyCalls(updateSpy),
+    getSpyCalls(onChangeSpy),
     [
-      [{ foo: 'foo' }],
-      [{ foo: 'foo', watch: 'watch' }],
+      [{ foo: 'foo' }], // Mount
+      [{ foo: 'foo', watch: 'watch' }], // Update watched values
     ],
     'Update watched prop: should call update if changed props were watched'
   )
 
   /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     testRenderer.unmount()
   })
 
   t.deepEquals(
-    getSpyCalls(updateSpy),
+    getSpyCalls(onChangeSpy),
     [
-      [{ foo: 'foo' }],
-      [{ foo: 'foo', watch: 'watch' }],
+      [{ foo: 'foo' }], // Mount
+      [{ foo: 'foo', watch: 'watch' }], // Update watched values
     ],
     'Unmount: should not call update'
   )

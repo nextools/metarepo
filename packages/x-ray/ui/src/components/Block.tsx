@@ -1,5 +1,5 @@
-import React, { Ref, HTMLProps, CSSProperties, ReactNode, SyntheticEvent, MouseEvent } from 'react'
-import { normalizeStyle, TStyle } from 'stili'
+import React from 'react'
+import type { Ref, HTMLProps, CSSProperties, ReactNode, SyntheticEvent, MouseEvent } from 'react'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isUndefined, isNumber, isFunction } from 'tsfn'
 
@@ -26,9 +26,14 @@ export type TBlock = {
   blendMode?: CSSProperties['mixBlendMode'],
   children?: ReactNode,
   ref?: Ref<HTMLDivElement>,
-  style?: TStyle,
+  style?: CSSProperties,
   onScroll?: (scrollTop: number) => void,
   onPress?: (x: number, y: number) => void,
+  onPointerEnter?: () => void,
+  onPointerLeave?: () => void,
+  onPointerDown?: () => void,
+  onPointerUp?: () => void,
+  onPointerMove?: () => void,
 }
 
 export const Block = component(
@@ -57,7 +62,7 @@ export const Block = component(
       opacity,
       children,
       blendMode,
-      style,
+      style: userStyle,
       shouldScrollX,
       shouldScrollY,
       shouldHideOverflow,
@@ -68,106 +73,111 @@ export const Block = component(
       isFlexbox,
       onScroll,
       onPress,
+      onPointerEnter,
+      onPointerLeave,
+      onPointerDown,
+      onPointerUp,
+      onPointerMove,
     }) => {
-      const styles: TStyle = {
-        ...style,
+      const style: CSSProperties = {
+        ...userStyle,
         position: 'absolute',
         left: 0,
         top: 0,
-        // lineHeight: 0,
       }
 
       if (isFlexbox) {
-        styles.display = 'flex'
-      }
-
-      if (!isUndefined(styles.lineHeight)) {
-        styles.lineHeight = `${styles.lineHeight}px`
+        style.display = 'flex'
       }
 
       if (!isUndefined(width)) {
-        styles.width = width
+        style.width = width
       }
 
       if (!isUndefined(height)) {
-        styles.height = height
+        style.height = height
       }
 
       if (isNumber(maxWidth)) {
-        styles.maxWidth = maxWidth
+        style.maxWidth = maxWidth
       }
 
       if (!isUndefined(minWidth)) {
-        styles.minWidth = minWidth
+        style.minWidth = minWidth
       }
 
       if (!isUndefined(minHeight)) {
-        styles.minHeight = minHeight
+        style.minHeight = minHeight
       }
 
       if (!isUndefined(left)) {
-        styles.left = left
+        style.left = left
       }
 
       if (!isUndefined(top)) {
-        styles.top = top
+        style.top = top
       }
 
       if (!isUndefined(right)) {
-        styles.right = right
+        style.right = right
       }
 
       if (!isUndefined(bottom)) {
-        styles.bottom = bottom
+        style.bottom = bottom
       }
 
       if (!isUndefined(floatingIndex)) {
-        styles.zIndex = floatingIndex
+        style.zIndex = floatingIndex
       }
 
       if (shouldIgnorePointerEvents) {
-        styles.pointerEvents = 'none'
+        style.pointerEvents = 'none'
       }
 
       if (shouldPreventWrap) {
-        styles.whiteSpace = 'nowrap'
+        style.whiteSpace = 'nowrap'
       }
 
       if (shouldHideOverflow) {
-        styles.overflow = 'hidden'
+        style.overflow = 'hidden'
       }
 
       if (shouldFlow) {
-        styles.position = 'relative'
-        styles.alignSelf = 'flex-start'
-        styles.flexGrow = 0
-        styles.flexShrink = 0
-        styles.flexBasis = 'auto'
+        style.position = 'relative'
+        style.alignSelf = 'flex-start'
+        style.flexGrow = 0
+        style.flexShrink = 0
+        style.flexBasis = 'auto'
       }
 
       if (shouldScrollX) {
-        styles.overflowX = 'scroll'
+        style.overflowX = 'scroll'
       }
 
       if (shouldScrollY) {
-        styles.overflowY = 'scroll'
+        style.overflowY = 'scroll'
       }
 
       if (shouldForceAcceleration) {
-        styles.transform = 'translateZ(0)'
+        style.transform = 'translateZ(0)'
       }
 
       if (!isUndefined(blendMode)) {
-        styles.mixBlendMode = blendMode
+        style.mixBlendMode = blendMode
       }
 
       if (!isUndefined(opacity)) {
-        styles.opacity = opacity
+        style.opacity = opacity
       }
 
       const props: HTMLProps<HTMLDivElement> = {
-        style: normalizeStyle(styles),
+        style,
         children,
+        onMouseEnter: onPointerEnter,
+        onMouseLeave: onPointerLeave,
+        onMouseDown: onPointerDown,
+        onMouseUp: onPointerUp,
+        onMouseMove: onPointerMove,
       }
 
       if (!isUndefined(ref)) {

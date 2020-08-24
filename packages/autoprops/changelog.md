@@ -1,6 +1,67 @@
+## v4.0.0
+
+* 💥 drop Node.js v10
+
+* ♻️ update dependencies `iterama`, `tsfn`
+
+## v3.0.2
+
+* 🐞 upgrade `iterama`
+
+* ♻️ update dependencies `iterama`
+
+## v3.0.1
+
+* 🐞 fix inner children restriction
+
+## v3.0.0
+
+* 💥 use `HEX` format for `id` hash in `mapPropsIterable`
+
+  ```
+  instead of base64 to avoid `/` symbols
+  ```
+
+## v2.0.1
+
+* 🐞 fix deps and required case
+
+## v2.0.0
+
+* 💥 refactor
+
+  ```
+  * add special handling for `children` in `required`
+  * add `deps` feature
+  * remove `mutin` feature
+  * change `required` field to allow all prop keys
+  ```
+
+## v1.0.4
+
+* 🐞 upgrade `iterama`
+
+* ♻️ update dependencies `iterama`
+
+## v1.0.3
+
+* 🐞 fix recursive meta type
+
+* ♻️ update dependencies `tsfn`
+
+## v1.0.2
+
+* 🐞 upgrade jsSHA to v3
+
+## v1.0.1
+
+* 🐞 re-publish using updated Start preset
+
+* ♻️ update dependencies `tsfn`
+
 ## v1.0.0
 
-* 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)
+* 💥 drop Node.js v8 support and require >=12.13.0 (first v10 LTS)
 
 * ♻️ update dependencies: `tsfn`
 

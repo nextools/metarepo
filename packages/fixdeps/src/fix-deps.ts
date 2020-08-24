@@ -1,11 +1,11 @@
 import path from 'path'
 import { writeFile } from 'pifs'
-import { TOptions, TDepsEntries, TResult } from './types'
-import { getDepsVersions } from './get-deps-versions'
 import { composeDependencies } from './compose-dependencies'
-import { objectFromEntries } from './object-from-entries'
 import { getDepsToModify } from './get-deps-to-modify'
+import { getDepsVersions } from './get-deps-versions'
 import { getPackage } from './get-package-json'
+import { objectFromEntries } from './object-from-entries'
+import type { TOptions, TDepsEntries, TResult } from './types'
 
 export const fixdeps = async (options: TOptions): Promise<TResult> => {
   const {

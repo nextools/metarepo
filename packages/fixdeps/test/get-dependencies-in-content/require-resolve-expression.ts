@@ -1,4 +1,4 @@
-import test from 'blue-tape'
+import test from 'tape'
 import { getDependenciesInContent } from '../../src/get-dependencies-in-content'
 
 test('fixdeps: require-expression: package dependency', (t) => {

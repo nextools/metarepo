@@ -5,6 +5,8 @@ export const getLocalPackageVersionYarn = async (packageName: string): Promise<s
     'yarn',
     [
       'list',
+      '--json',
+      '--depth=0',
       '--pattern',
       packageName,
     ],
@@ -13,21 +15,30 @@ export const getLocalPackageVersionYarn = async (packageName: string): Promise<s
     }
   )
 
-  const packageRegExp = new RegExp(` ${packageName}@(.+)$`)
+  const { data } = JSON.parse(stdout)
 
-  const matchedLines = stdout.split('\n')
-    .map((line) => line.match(packageRegExp))
-    .filter((match) => match !== null)
-
-  if (matchedLines.length > 1) {
-    throw new Error(`More than one version of "${packageName}" exists`)
+  if (data.trees.length === 0) {
+    return null
   }
 
-  if (matchedLines.length === 1) {
-    const versionMatch = matchedLines[0] as RegExpMatchArray
+  const name: string = data.trees[0].name
+  const matches = name.match(/^.+@(.+)$/)
 
-    return versionMatch[1]
-  }
-
-  return null
+  return matches![1]
 }
+
+// {
+//   "type": "tree",
+//   "data": {
+//     "type": "list",
+//     "trees": [
+//       {
+//         "name": "execa@4.0.3",
+//         "children": [],
+//         "hint": null,
+//         "color": null,
+//         "depth": 0
+//       }
+//     ]
+//   }
+// }

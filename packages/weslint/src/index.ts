@@ -1,13 +1,12 @@
 import { cpus } from 'os'
+import { ESLint } from 'eslint'
 import { workerama } from 'workerama'
-import { CLIEngine } from 'eslint'
 
 export type TWeslintOptions = {
   files: string[],
   maxThreadCount?: number,
-  filesPerThreadCount?: number,
   formatter?: string,
-  eslint?: CLIEngine.Options,
+  eslint?: ESLint.Options,
 }
 
 export type TWeslintResult = {
@@ -16,10 +15,15 @@ export type TWeslintResult = {
   formattedReport: string,
 }
 
+type TReport = {
+  results: ESLint.LintResult[],
+  hasErrors: boolean,
+  hasWarnings: boolean,
+}
+
 export const weslint = async (userOptions: TWeslintOptions): Promise<TWeslintResult> => {
   const options = {
     maxThreadCount: cpus().length,
-    filesPerThreadCount: 5,
     ...userOptions,
     eslint: {
       cache: true,
@@ -27,47 +31,43 @@ export const weslint = async (userOptions: TWeslintOptions): Promise<TWeslintRes
       ...userOptions.eslint,
     },
   }
-  const cli = new CLIEngine(options.eslint)
-  const reports = [] as CLIEngine.LintReport[]
+  const eslint = new ESLint(options.eslint)
+  const filesToCheck = await options.files.reduce(async (accPromise, file) => {
+    const isIgnored = await eslint.isPathIgnored(file)
+    const acc = await accPromise
 
-  await workerama({
-    items: options.files,
-    itemsPerThreadCount: options.filesPerThreadCount,
+    if (!isIgnored) {
+      acc.push(file)
+    }
+
+    return acc
+  }, Promise.resolve<string[]>([]))
+  const formatter = await eslint.loadFormatter(options.formatter)
+
+  const reportsIterable = workerama<TReport>({
+    items: filesToCheck,
     maxThreadCount: options.maxThreadCount,
     fnFilePath: './run-eslint',
     fnName: 'run',
-    fnArgs: [options],
-    onItemResult: (report) => {
-      reports.push(report)
-    },
+    fnArgs: [options.eslint],
   })
 
-  const result: CLIEngine.LintReport = reports.reduce((acc, report) => {
-    for (const result of report.results) {
-      acc.results.push(result)
-      acc.errorCount += result.errorCount
-      acc.warningCount += result.warningCount
-      acc.fixableErrorCount += result.fixableErrorCount
-      acc.fixableWarningCount += result.fixableWarningCount
-    }
+  let hasErrors = false
+  let hasWarnings = false
+  const totalResults = [] as ESLint.LintResult[]
 
-    acc.usedDeprecatedRules.push(...report.usedDeprecatedRules)
+  for await (const report of reportsIterable) {
+    hasErrors = hasErrors || report.hasErrors
+    hasWarnings = hasWarnings || report.hasWarnings
 
-    return acc
-  }, {
-    results: [] as CLIEngine.LintResult[],
-    errorCount: 0,
-    warningCount: 0,
-    fixableErrorCount: 0,
-    fixableWarningCount: 0,
-    usedDeprecatedRules: [] as CLIEngine.DeprecatedRuleUse[],
-  })
+    totalResults.push(...report.results)
+  }
 
-  const format = cli.getFormatter(options.formatter)
+  const formattedReport = formatter.format(totalResults)
 
   return {
-    hasErrors: result.errorCount > 0,
-    hasWarnings: result.warningCount > 0,
-    formattedReport: format(result.results),
+    hasErrors,
+    hasWarnings,
+    formattedReport,
   }
 }
