@@ -1,18 +1,19 @@
 import type { Reducer } from 'redux'
 import { isUndefined } from 'tsfn'
 import {
-  isActionLoadingStart,
-  isActionLoadingEnd,
-  isActionError,
-  isActionLoadList,
-  isActionSave,
-  isActionSelectSnapshot,
-  isActionSelectScreenshot,
+  isActionAddFilter,
   isActionDeselect,
   isActionDiscardItem,
-  isActionAddFilter,
+  isActionError,
+  isActionLoadingEnd,
+  isActionLoadingStart,
+  isActionLoadList,
   isActionRemoveFilter,
   isActionResetFilter,
+  isActionSave,
+  isActionSelectScreenshot,
+  isActionSelectSnapshot,
+  isActionTab,
 } from '../actions'
 import { isActionUndiscardItem } from '../actions/undiscard'
 import { initialState } from '../store/initial-state'
@@ -149,6 +150,13 @@ export const reducer: Reducer<TState> = (state, action) => {
     return {
       ...initialState,
       isSaved: true,
+    }
+  }
+
+  if (isActionTab(action)) {
+    return {
+      ...state,
+      activeTab: state.activeTab === action.payload ? null : action.payload,
     }
   }
 

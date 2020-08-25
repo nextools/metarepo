@@ -37,7 +37,10 @@ export type TScreenshotGridItem = TItem & TGridItem
 
 export type TSnapshotGridItem = TItem & TGridItem
 
+export type TTypeVariants = 'New' | 'Diff' | 'Deleted'
+
 export type TState = {
+  activeTab: TTypeVariants | null,
   error?: string,
   isSaved: boolean,
   isLoading: boolean,
