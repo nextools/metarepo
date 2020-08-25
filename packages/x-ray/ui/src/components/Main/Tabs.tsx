@@ -1,6 +1,5 @@
 import { Button } from '@revert/button'
 import type { TColor } from '@revert/color'
-import type { TTypeVariants } from '../../types'
 import { Size } from '@revert/size'
 import React from 'react'
 import { component, startWithType, mapState, mapContext } from 'refun'
@@ -12,6 +11,7 @@ import {
   COLOR_RED,
 } from '../../config'
 import { ThemeContext } from '../../context/Theme'
+import type { TTypeVariants } from '../../types'
 import { Block } from '../Block'
 import { Border } from '../Border'
 import { Text } from '../Text'
@@ -71,7 +71,8 @@ const Tab = component(
     />
     <Button onPress={() => {
       props.onPress(props.type)
-    }}>
+    }}
+    >
       <Block
         top={INFO_VERTICAL_PADDING}
         left={INFO_HORIZONTAL_PADDING}

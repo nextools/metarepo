@@ -27,29 +27,31 @@ type TSortedDataResult = {
   elements: {
     new: number,
     diff: number,
-    deleted: number
-  }
+    deleted: number,
+  },
 }
 
 const getSortedData = (activeTab: TTypeVariants | null, items: TListItems): TSortedDataResult => {
   return Object.keys(items).reduce((acc, key) => {
     let data = acc
+
     if (!activeTab || activeTab && items[key].type === activeTab.toUpperCase()) {
       data = {
         ...acc,
         items: {
           ...acc.items,
-          [key]: items[key]
-        }
+          [key]: items[key],
+        },
       }
     }
+
     if (items[key].type === 'NEW') {
       data = {
         ...data,
         elements: {
           ...data.elements,
           new: data.elements.new + 1,
-        }
+        },
       }
     } else if (items[key].type === 'DIFF') {
       data = {
@@ -57,14 +59,15 @@ const getSortedData = (activeTab: TTypeVariants | null, items: TListItems): TSor
         elements: {
           ...data.elements,
           diff: data.elements.diff + 1,
-        }}
+        },
+      }
     } else if (items[key].type === 'DELETED') {
       data = {
         ...data,
         elements: {
           ...data.elements,
           deleted: data.elements.deleted + 1,
-        }
+        },
       }
     }
 
@@ -74,15 +77,16 @@ const getSortedData = (activeTab: TTypeVariants | null, items: TListItems): TSor
     elements: {
       new: 0,
       diff: 0,
-      deleted: 0
-    }
+      deleted: 0,
+    },
   })
 }
 
 export const Main = component(
   startWithType<TMain>(),
   mapStoreState(({ activeTab, type, selectedItem, files, items, discardedItems, filteredFiles, isSaved }) => {
-    const {items: sortedItems, elements} = getSortedData(activeTab, items)
+    const { items: sortedItems, elements } = getSortedData(activeTab, items)
+
     return {
       activeTab,
       type,
