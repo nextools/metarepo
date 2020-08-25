@@ -10,6 +10,7 @@
     "node": ">=12.13.0"
   },
   "dependencies": {
+    "@nextools/eslint-plugin": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^3.5.0",
     "@typescript-eslint/parser": "^3.5.0",
     "eslint-plugin-import": "^2.22.0",
@@ -18,6 +19,7 @@
   },
   "fixdeps": {
     "ignoredPackages": [
+      "@nextools/eslint-plugin",
       "@typescript-eslint/eslint-plugin",
       "@typescript-eslint/parser",
       "eslint-plugin-import",
