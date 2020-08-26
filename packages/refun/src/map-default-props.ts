@@ -1,13 +1,12 @@
-import { UNDEFINED, getObjectKeys } from 'tsfn'
+import { UNDEFINED } from 'tsfn'
 import type { TOptionalKeys } from 'tsfn'
 
-export const mapDefaultProps = <P extends {}, K extends TOptionalKeys<P>> (defaultProps: { [k in K]: Exclude<P[k], undefined> }) => {
-  const defaultPropsKeys = getObjectKeys(defaultProps)
-
-  return (props: P): P & typeof defaultProps => {
+export const mapDefaultProps = <P extends {}, K extends TOptionalKeys<P>> (defaultProps: { [k in K]: Exclude<P[k], undefined> }) =>
+  (props: P): P & typeof defaultProps => {
     const mergedProps = { ...props } as any
 
-    for (const key of defaultPropsKeys) {
+    // eslint-disable-next-line guard-for-in
+    for (const key in defaultProps) {
       const value = props[key]
 
       if (value === UNDEFINED) {
@@ -17,4 +16,3 @@ export const mapDefaultProps = <P extends {}, K extends TOptionalKeys<P>> (defau
 
     return mergedProps
   }
-}
