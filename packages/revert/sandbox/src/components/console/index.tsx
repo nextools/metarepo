@@ -1,8 +1,8 @@
+import { Scroll } from '@revert/scroll'
 import React from 'react'
 import { startWithType, pureComponent } from 'refun'
 import { mapConsoleStoreState } from '../../store-console'
 import { SYMBOL_CONSOLE } from '../../symbols'
-import { Scroll } from '../scroll'
 import { LinesBlock } from './LinesBlock'
 
 export type TConsole = {}

@@ -1,34 +1,19 @@
-import { PrimitiveShadow } from '@revert/shadow'
+import { AnimationColor } from '@revert/animation'
+import {
+  PrimitiveShadow as RevertPrimitiveShadow,
+  Shadow as RevertShadow,
+} from '@revert/shadow'
 import type { TShadow } from '@revert/shadow'
 import React from 'react'
-import { component, startWithType } from 'refun'
-import { AnimationColor } from '../animation'
+import type { TComponent } from 'refun'
 
-export const Shadow = component(
-  startWithType<TShadow>()
-)(({
-  color,
-  radius,
-  blurRadius,
-  spreadRadius,
-  offsetX,
-  offsetY,
-  overflow,
-}) => (
-  <AnimationColor toColor={color}>
+export const Shadow: TComponent<TShadow> = (props) => (
+  <AnimationColor toColor={props.color}>
     {(color) => (
-      <PrimitiveShadow
-        color={color}
-        offsetX={offsetX}
-        offsetY={offsetY}
-        overflow={overflow}
-        radius={radius}
-        blurRadius={blurRadius}
-        spreadRadius={spreadRadius}
-      />
+      <RevertPrimitiveShadow {...props} color={color}/>
     )}
   </AnimationColor>
-))
+)
 
-Shadow.displayName = 'Shadow'
-Shadow.componentSymbol = Symbol('SHADOW')
+Shadow.displayName = RevertShadow.displayName
+Shadow.componentSymbol = RevertShadow.componentSymbol

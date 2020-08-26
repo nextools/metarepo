@@ -1,5 +1,5 @@
+import { AnimationValue } from '@revert/animation'
 import { PrimitiveBlock } from '@revert/block'
-import { PrimitiveBorder } from '@revert/border'
 import { PrimitiveButton } from '@revert/button'
 import { PrimitiveTransform } from '@revert/transform'
 import { elegir } from 'elegir'
@@ -8,7 +8,7 @@ import { startWithType, mapKeyboardFocused, mapHovered, mapPressed, mapContext, 
 import type { TMapHovered, TMapPressed, TMapKeyboardFocused } from 'refun'
 import { TRANSPARENT } from '../../colors'
 import { mapContextOverride } from '../../map/map-context-override'
-import { AnimationValue } from '../animation'
+import { PrimitiveBorder } from '../border'
 import { IconSourceCollapseArrowDownSmall } from '../icons'
 import { ThemeContext, TextThemeContext } from '../theme-context'
 

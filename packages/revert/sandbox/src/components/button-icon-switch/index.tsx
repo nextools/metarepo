@@ -1,6 +1,4 @@
-import { Background } from '@revert/background'
 import { Block, InlineBlock } from '@revert/block'
-import { Border } from '@revert/border'
 import { Checkbox } from '@revert/checkbox'
 import { Layout, Layout_Item } from '@revert/layout'
 import { elegir } from 'elegir'
@@ -21,6 +19,8 @@ import { TRANSPARENT } from '../../colors'
 import { mapChildren } from '../../map/children'
 import { mapContextOverride } from '../../map/map-context-override'
 import { SYMBOL_ICON, SYMBOL_TOOLTIP, SYMBOL_BUTTON_ICON } from '../../symbols'
+import { Background } from '../background'
+import { Border } from '../border'
 import { ButtonIconSwitchThemeContext, TextThemeContext } from '../theme-context'
 
 const BORDER_WIDTH = 2

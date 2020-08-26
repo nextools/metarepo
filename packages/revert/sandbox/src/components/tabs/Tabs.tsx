@@ -1,10 +1,10 @@
-import { Border } from '@revert/border'
 import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
 import React from 'react'
 import type { ReactNode } from 'react'
 import { component, startWithType, mapState, onChange, mapContext } from 'refun'
 import { mapChildren } from '../../map/children'
 import { SYMBOL_TABS, SYMBOL_TABS_ITEM } from '../../symbols'
+import { Border } from '../border'
 import { ThemeContext } from '../theme-context'
 import { TabsTitle } from './TabsTitle'
 

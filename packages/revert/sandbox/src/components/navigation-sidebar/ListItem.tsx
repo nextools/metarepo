@@ -1,10 +1,10 @@
-import { Background } from '@revert/background'
 import { Button } from '@revert/button'
 import { elegir } from 'elegir'
 import React from 'react'
 import { startWithType, mapHovered, mapPressed, mapKeyboardFocused, pureComponent, mapContext, mapWithProps, mapHandlers } from 'refun'
 import type { TMapKeyboardFocused, TMapHovered, TMapPressed } from 'refun'
 import { mapContextOverride } from '../../map/map-context-override'
+import { Background } from '../background'
 import { Text } from '../text'
 import { ThemeContext, TextThemeContext } from '../theme-context'
 
