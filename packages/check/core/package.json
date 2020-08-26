@@ -14,7 +14,12 @@
   },
   "sideEffects": false,
   "dependencies": {
+    "@babel/generator": "^7.11.4",
+    "@babel/parser": "^7.11.4",
+    "@babel/traverse": "^7.11.0",
+    "@babel/types": "^7.11.0",
     "chalk": "^3.0.0",
+    "eslint": "^5.1.0",
     "get-caller-file": "^2.0.5",
     "pifs": "^1.0.2",
     "stack-utils": "^2.0.1"
