@@ -18,10 +18,10 @@ export const App = component(
   onChange(({ components }) => {
     setComponentsList(components)
   }, ['components'])
-)(({ theme, icons, getImportPackageName, popoverPlugin, Provider }) => (
+)(({ theme, icons, getImportPackageName, popoverPlugin, ComponentWrapperPlugin }) => (
   <Root>
     <ThemeProvider theme={theme} icons={icons}>
-      <PluginProvider popover={popoverPlugin} Provider={Provider}>
+      <PluginProvider popoverPlugin={popoverPlugin} ComponentWrapperPlugin={ComponentWrapperPlugin}>
         <ImportPackageNameProvider getImportPackageName={getImportPackageName}>
           <AlertProvider>
             <NotificationProvider>

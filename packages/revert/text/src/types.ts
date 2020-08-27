@@ -14,5 +14,5 @@ export type TText = {
   shouldPreventWrap?: boolean,
   shouldPreventSelection?: boolean,
   shouldHideOverflow?: boolean,
-  children: ReactText,
+  children: ReactText | ReactText[],
 }

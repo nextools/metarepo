@@ -12,8 +12,8 @@ import {
   mapWithPropsMemo,
   mapContext,
   component,
+  mapDefaultProps,
 } from 'refun'
-import { isDefined } from 'tsfn'
 import { BLACK, WHITE } from '../../colors'
 import { mapStoreState, setTransform } from '../../store'
 import { mapMetaStoreState } from '../../store-meta/index'
@@ -38,6 +38,9 @@ export const DemoArea = component(
   mapContext(ThemeContext),
   mapContext(LayoutContext),
   mapContext(PluginContext),
+  mapDefaultProps({
+    ComponentWrapperPlugin: PureComponent,
+  }),
   mapStoreState(({ isCanvasDarkMode, width, height, hasGrid, shouldStretch, shouldInspect, transformX, transformY, transformZ }) => ({
     canvasWidth: width,
     canvasHeight: height,
@@ -102,7 +105,7 @@ export const DemoArea = component(
   setComponentHeight,
   selectedInspectRect,
   setBlockNode,
-  Provider,
+  ComponentWrapperPlugin,
   theme,
   isCanvasDarkMode,
   isTransforming,
@@ -143,13 +146,7 @@ export const DemoArea = component(
               }}
             >
               <PrimitiveBlockRef ref={setBlockNode} shouldFlow>
-                {isDefined(Provider)
-                  ? (
-                    <Provider Component={Component} props={componentProps}/>
-                  )
-                  : (
-                    <PureComponent Component={Component} props={componentProps}/>
-                  )}
+                <ComponentWrapperPlugin Component={Component} props={componentProps}/>
               </PrimitiveBlockRef>
             </LayoutContext.Provider>
           )}

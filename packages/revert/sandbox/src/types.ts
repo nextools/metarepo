@@ -3,7 +3,7 @@ import type { TCommonComponentConfig } from 'autoprops'
 import type { FC } from 'react'
 import type { TRequiredKeys, TOptionalKeys } from 'tsfn'
 import type { TJsonMap } from 'typeon'
-import type { TPopoverPlugin, TProviderPlugin } from './components/plugin-provider/types'
+import type { TPopoverPlugin, TComponentWrapperPlugin } from './components/plugin-provider/types'
 import { SYMBOL_CONTROL_COLOR, SYMBOL_CONTROL_SWITCH, SYMBOL_CONTROL_DROPDOWN } from './symbols'
 
 export type TApp = {
@@ -12,7 +12,7 @@ export type TApp = {
   icons?: TThemeIcons,
   getImportPackageName?: (symbolName: string) => string,
   popoverPlugin?: TPopoverPlugin,
-  Provider?: TProviderPlugin,
+  ComponentWrapperPlugin?: TComponentWrapperPlugin,
 }
 
 export type TPackageJson = {
