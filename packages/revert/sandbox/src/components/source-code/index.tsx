@@ -1,9 +1,9 @@
+import { Scroll } from '@revert/scroll'
 import React from 'react'
 import { startWithType, pureComponent } from 'refun'
 import { serializeComponent } from 'syntx'
 import { mapMetaStoreState } from '../../store-meta'
 import { SYMBOL_SOURCE_CODE } from '../../symbols'
-import { Scroll } from '../scroll'
 import { LinesBlock } from './LinesBlock'
 import { createChildrenMeta } from './create-children-meta'
 

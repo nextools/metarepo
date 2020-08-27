@@ -13,6 +13,7 @@
   },
   "sideEffects": false,
   "dependencies": {
+    "@revert/animation": "^0.2.0",
     "@revert/background": "^0.1.0",
     "@revert/block": "^0.1.0",
     "@revert/border": "^0.1.0",
@@ -25,6 +26,7 @@
     "@revert/link": "^0.1.0",
     "@revert/pointer": "^0.1.0",
     "@revert/root": "^0.2.0",
+    "@revert/scroll": "^0.1.0",
     "@revert/select": "^0.1.0",
     "@revert/shadow": "^0.1.0",
     "@revert/size": "^0.1.0",

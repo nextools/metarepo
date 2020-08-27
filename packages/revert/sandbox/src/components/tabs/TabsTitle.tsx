@@ -1,4 +1,3 @@
-import { Border } from '@revert/border'
 import { Button } from '@revert/button'
 import { elegir } from 'elegir'
 import React from 'react'
@@ -6,6 +5,7 @@ import { component, startWithType, mapHandlers, mapContext, mapWithProps, mapKey
 import type { TMapKeyboardFocused } from 'refun'
 import { TRANSPARENT } from '../../colors'
 import { mapContextOverride } from '../../map/map-context-override'
+import { Border } from '../border'
 import { Text } from '../text'
 import { ThemeContext, TextThemeContext } from '../theme-context'
 

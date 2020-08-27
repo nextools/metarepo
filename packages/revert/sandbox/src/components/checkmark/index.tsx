@@ -1,6 +1,4 @@
-import { Background } from '@revert/background'
 import { PrimitiveBlock, Block } from '@revert/block'
-import { Border } from '@revert/border'
 import { Checkbox } from '@revert/checkbox'
 import { elegir } from 'elegir'
 import React from 'react'
@@ -22,6 +20,8 @@ import type {
 import { TRANSPARENT } from '../../colors'
 import { mapContextOverride } from '../../map/map-context-override'
 import { SYMBOL_CHECKMARK } from '../../symbols'
+import { Background } from '../background'
+import { Border } from '../border'
 import { IconCheckmarkSmall } from '../icons'
 import { CheckmarkThemeContext, TextThemeContext } from '../theme-context'
 

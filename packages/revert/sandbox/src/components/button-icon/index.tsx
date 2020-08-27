@@ -1,6 +1,4 @@
-import { PrimitiveBackground } from '@revert/background'
 import { Block, InlineBlock } from '@revert/block'
-import { PrimitiveBorder } from '@revert/border'
 import { PrimitiveButton } from '@revert/button'
 import { Layout, Layout_Item } from '@revert/layout'
 import { elegir } from 'elegir'
@@ -25,6 +23,8 @@ import { TRANSPARENT } from '../../colors'
 import { mapChildren } from '../../map/children'
 import { mapContextOverride } from '../../map/map-context-override'
 import { SYMBOL_ICON, SYMBOL_TOOLTIP, SYMBOL_BUTTON_ICON } from '../../symbols'
+import { PrimitiveBackground } from '../background'
+import { PrimitiveBorder } from '../border'
 import { TextThemeContext, ButtonIconThemeContext } from '../theme-context'
 
 const BORDER_WIDTH = 2

@@ -27,6 +27,19 @@ exports.babelConfigWebBuild = {
         regenerator: false,
       },
     ],
+    [
+      require.resolve('@babel/plugin-proposal-object-rest-spread'),
+      {
+        useBuiltIns: true,
+        loose: true,
+      },
+    ],
+    [
+      require.resolve('@babel/plugin-transform-destructuring'),
+      {
+        useBuiltIns: true,
+      },
+    ],
     require.resolve('@babel/plugin-syntax-bigint'),
     require.resolve('@babel/plugin-proposal-class-properties'),
     require.resolve('@babel/plugin-proposal-private-methods'),

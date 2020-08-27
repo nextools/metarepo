@@ -1,3 +1,4 @@
+import { AnimationColor } from '@revert/animation'
 import { PrimitiveBlock, Block } from '@revert/block'
 import { PrimitiveInput } from '@revert/input'
 import { PrimitiveText } from '@revert/text'
@@ -12,7 +13,6 @@ import type { TMapHovered, TMapFocused } from 'refun'
 import { isFunction, isString } from 'tsfn'
 import { SYMBOL_FIELD } from '../../symbols'
 import type { TId } from '../../types'
-import { AnimationColor } from '../animation'
 import { FieldThemeContext } from '../theme-context'
 
 const HEIGHT = 20

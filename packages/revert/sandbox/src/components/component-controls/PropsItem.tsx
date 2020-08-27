@@ -1,5 +1,4 @@
 /* eslint-disable no-nested-ternary */
-import { Background } from '@revert/background'
 import { Label } from '@revert/label'
 import { Layout, Layout_Item } from '@revert/layout'
 import { Pointer } from '@revert/pointer'
@@ -9,6 +8,7 @@ import { startWithType, mapHovered, mapWithProps, pureComponent, mapPressed, map
 import type { TMapHovered, TMapPressed } from 'refun'
 import { SYMBOL_CONTROL_DROPDOWN, SYMBOL_CONTROL_SWITCH, SYMBOL_CONTROL_COLOR } from '../../symbols'
 import type { TComponentControlSymbols } from '../../types'
+import { Background } from '../background'
 import { Text } from '../text'
 import { ThemeContext } from '../theme-context'
 import { ValueCheckbox } from './ValueCheckbox'

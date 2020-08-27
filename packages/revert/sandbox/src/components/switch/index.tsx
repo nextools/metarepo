@@ -1,6 +1,5 @@
-import { PrimitiveBackground } from '@revert/background'
+import { AnimationValue } from '@revert/animation'
 import { PrimitiveBlock, Block } from '@revert/block'
-import { PrimitiveBorder } from '@revert/border'
 import { Checkbox } from '@revert/checkbox'
 import { PrimitiveTransform } from '@revert/transform'
 import { elegir } from 'elegir'
@@ -21,7 +20,8 @@ import type {
 } from 'refun'
 import { TRANSPARENT } from '../../colors'
 import { SYMBOL_SWITCH } from '../../symbols'
-import { AnimationValue } from '../animation'
+import { PrimitiveBackground } from '../background'
+import { PrimitiveBorder } from '../border'
 import { SwitchThemeContext } from '../theme-context'
 
 const SWITCH_TIME = 100
