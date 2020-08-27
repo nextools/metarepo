@@ -73,7 +73,7 @@ export const Toolbar = component(
   }), ['isCanvasDarkMode', 'isNavigationSidebarVisible', 'isControlsSidebarVisible', 'transformZ', 'shouldInspect', 'shouldStretch', 'hasGrid'])
 )(({
   zoomLevel,
-  popover,
+  popoverPlugin,
   theme,
   ButtonIconThemeProvider,
   ButtonIconSwitchThemeProvider,
@@ -181,13 +181,13 @@ export const Toolbar = component(
             </SwitchPopover>
           </Layout_Item>
 
-          {isDefined(popover) && (
+          {isDefined(popoverPlugin) && (
             <Layout_Item width={LAYOUT_SIZE_FIT} vAlign="center">
               <SwitchPopover>
-                <popover.Icon/>
-                <popover.Popover/>
+                <popoverPlugin.Icon/>
+                <popoverPlugin.Popover/>
                 <Tooltip>
-                  {popover.tooltip}
+                  {popoverPlugin.tooltipText}
                 </Tooltip>
               </SwitchPopover>
             </Layout_Item>

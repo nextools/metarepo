@@ -4,10 +4,11 @@ import { SYMBOL_TOOLTIP } from '../../symbols'
 import { ContentTooltip } from '../content-tooltip'
 import type { TContentTooltip } from '../content-tooltip'
 import { Text } from '../text'
+import type { TText } from '../text'
 
 export type TTooltip = {
   arrowPosition?: TContentTooltip['arrowPosition'],
-  children: string,
+  children: TText['children'],
 }
 
 export const Tooltip = component(

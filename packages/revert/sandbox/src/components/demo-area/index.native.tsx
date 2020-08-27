@@ -11,8 +11,8 @@ import {
   mapHandlers,
   mapWithPropsMemo,
   mapContext,
+  mapDefaultProps,
 } from 'refun'
-import { isDefined } from 'tsfn'
 import { BLACK, WHITE } from '../../colors'
 import { mapStoreState, setTransform } from '../../store'
 import { mapMetaStoreState } from '../../store-meta'
@@ -34,6 +34,9 @@ export const DemoArea = pureComponent(
   mapContext(ThemeContext),
   mapContext(LayoutContext),
   mapContext(PluginContext),
+  mapDefaultProps({
+    ComponentWrapperPlugin: PureComponent,
+  }),
   mapStoreState(({ width, height, hasGrid, shouldStretch, isCanvasDarkMode, transformX, transformY, transformZ }) => ({
     canvasWidth: width,
     canvasHeight: height,
@@ -92,7 +95,7 @@ export const DemoArea = pureComponent(
   componentTop,
   componentHeight,
   setComponentHeight,
-  Provider,
+  ComponentWrapperPlugin,
   theme,
   isCanvasDarkMode,
 }) => (
@@ -128,13 +131,7 @@ export const DemoArea = pureComponent(
               _onHeightChange: setComponentHeight,
             }}
           >
-            {isDefined(Provider)
-              ? (
-                <Provider Component={Component} props={componentProps}/>
-              )
-              : (
-                <PureComponent Component={Component} props={componentProps}/>
-              )}
+            <ComponentWrapperPlugin Component={Component} props={componentProps}/>
           </LayoutContext.Provider>
         )}
 

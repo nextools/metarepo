@@ -1,15 +1,9 @@
 import React from 'react'
-import type { FC } from 'react'
 import { pureComponent, startWithType } from 'refun'
-import type { TAnyObject } from 'tsfn'
-
-export type TPureComponent = {
-  Component: FC<any>,
-  props: TAnyObject,
-}
+import type { TComponentWrapper } from '../plugin-provider'
 
 export const PureComponent = pureComponent(
-  startWithType<TPureComponent>()
+  startWithType<TComponentWrapper>()
 )(({ Component, props }) => (
   <Component {...props}/>
 ))
