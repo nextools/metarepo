@@ -31,7 +31,7 @@
     "@revert/shadow": "^0.1.0",
     "@revert/size": "^0.1.0",
     "@revert/svg": "^0.1.0",
-    "@revert/text": "^0.1.0",
+    "@revert/text": "^0.1.1",
     "@revert/transform": "^0.1.0",
     "autoprops": "^4.0.0",
     "elegir": "^1.0.0",
@@ -42,7 +42,7 @@
     "react-dom": "^16.13.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "refun": "^3.0.0",
+    "refun": "^3.0.1",
     "syntx": "^2.0.0",
     "tsfn": "^2.0.0",
     "typeon": "^2.0.0"

@@ -15,7 +15,7 @@
   "dependencies": {
     "@revert/layout": "^0.1.0",
     "@revert/size": "^0.1.0",
-    "refun": "^3.0.0",
+    "refun": "^3.0.1",
     "tsfn": "^2.0.0"
   },
   "devDependencies": {

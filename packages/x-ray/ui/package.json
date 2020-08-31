@@ -27,7 +27,7 @@
     "@revert/root": "^0.2.0",
     "@revert/size": "^0.1.0",
     "@revert/svg": "^0.1.0",
-    "@revert/text": "^0.1.0",
+    "@revert/text": "^0.1.1",
     "@types/diff": "^4.0.2",
     "@x-ray/core": "^0.2.0",
     "bsc": "^2.0.0",
@@ -36,7 +36,7 @@
     "react": "16.13.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "refun": "^3.0.0",
+    "refun": "^3.0.1",
     "syntx": "^2.0.0",
     "tsfn": "^2.0.0",
     "typeon": "^2.0.0"
