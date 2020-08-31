@@ -63,6 +63,8 @@ export const Switch = component(
       borderRightWidth={isActive || isHovered ? BORDER_SIZE : BORDER_SIZE_SMAL}
     />
     <Checkbox
+      width={width}
+      height={SWITCH_HEIGHT}
       isChecked={isActive}
       onToggle={onToggle}
     />
