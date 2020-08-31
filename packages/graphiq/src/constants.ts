@@ -1,12 +1,14 @@
 export const CANVAS_PADDING = 80
 export const CONTROLS_HEIGHT_BOTTOM = 94
 export const CONTROLS_HEIGHT_TOP = 94
-export const PAGE_BACKGROUND = '#1e2730'
+export const PAGE_BACKGROUND_COLOR = 0x1e2730ff
+export const COLOR_WHITE = 0xffffffff
+export const COLOR_RED = 0xff0000ff
+export const COLOR_GREEN = 0x00ff00ff
 export const PATH_WIDTH = 8
 export const POINT_BORDER = 6
 export const POINT_RADIUS = 6
 export const TOOLTIP_FONT_SIZE = 16
-export const BUTTON_FONT_SIZE = 14
 export const TOOLTIP_PADDING = 4
 export const TOOLTIP_X_OFFSET = 12
 export const TOOLTIP_Y_OFFSET = 12

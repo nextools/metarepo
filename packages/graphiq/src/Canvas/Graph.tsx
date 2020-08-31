@@ -1,21 +1,32 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapWithProps, mapWithPropsMemo, mapDefaultProps, mapState, mapHandlers } from 'refun'
+import { component, startWithType, mapWithProps, mapWithPropsMemo, mapState, mapHandlers } from 'refun'
+import { GRAPH_OFFSET } from '../constants'
+import type { TEntry, TGraphColors } from '../types'
 import { Path } from './Path'
 import { Points } from './Points'
 import { Polygon } from './Polygon'
 import { Tooltips } from './Tooltips'
-import { GRAPH_OFFSET } from './constants'
-import type { TGraphItem } from './types'
-import { getPastMonthsDate } from './utils'
+import type { TGraphPoint } from './types'
+import { getPastMonthsDate, pointsToString } from './utils'
+
+export type TGraph = {
+  colors: TGraphColors,
+  entries: TEntry[],
+  height: number,
+  id: string,
+  isSelected: boolean,
+  isHovered: boolean,
+  selectedMonths: number,
+  scale: number,
+  width: number,
+  onHover: (key: string | null) => void,
+  onSelect: (key: string) => void,
+}
 
 export const Graph = component(
-  startWithType<TGraphItem>(),
-  mapDefaultProps({
-    shouldShowDots: false,
-    isActive: false,
-  }),
-  mapWithPropsMemo(({ entries, monthsAgo }) => {
-    const monthsAgoDate = getPastMonthsDate(monthsAgo)
+  startWithType<TGraph>(),
+  mapWithPropsMemo(({ entries, selectedMonths }) => {
+    const monthsAgoDate = getPastMonthsDate(selectedMonths)
 
     let timedEntries = entries.filter((entry) => {
       const entryDate = new Date(entry.timestamp * 1000)
@@ -37,7 +48,7 @@ export const Graph = component(
       minValue,
       values,
     }
-  }, ['entries', 'monthsAgo']),
+  }, ['entries', 'selectedMonths']),
   mapWithProps(({ width, height, scale, maxValue, minValue, values }) => ({
     stepX: (width - GRAPH_OFFSET * 2) / (values.length === 1 ? 1 : values.length - 1),
     stepY: (height - GRAPH_OFFSET * 2) * scale / 100 / Math.abs(maxValue - minValue === 0 ? 1 : maxValue - minValue),
@@ -47,7 +58,7 @@ export const Graph = component(
     halfPathHeight: (maxValue - minValue) * stepY / 2,
   })),
   mapWithPropsMemo(({ width, height, entries, minValue, halfHeight, halfPathHeight, stepX, stepY }) => {
-    const points = entries.map(({ value, version }, index) => {
+    const points = entries.map(({ value, version }, index): TGraphPoint => {
       const x = stepX * index + GRAPH_OFFSET
       const y = height - (value * stepY + halfHeight - halfPathHeight - minValue * stepY) - GRAPH_OFFSET
 
@@ -59,9 +70,7 @@ export const Graph = component(
       }
     })
 
-    const pointsString = points.length === 1
-      ? `${points[0].x}, ${points[0].y} ${points[0].x}, ${points[0].y}`
-      : points.map(({ x, y }) => `${x}, ${y}`).join(' ')
+    const pointsString = pointsToString(points)
 
     return {
       points: points.slice(0).reverse(),
@@ -82,7 +91,7 @@ export const Graph = component(
   activePoint,
   colors,
   id,
-  isActive,
+  isSelected,
   isHovered,
   onSelect,
   points,
@@ -98,7 +107,7 @@ export const Graph = component(
       <Polygon
         colors={colors}
         id={id}
-        isActive={isActive}
+        isActive={isSelected}
         points={polygonPointsString}
       />
 
@@ -106,20 +115,20 @@ export const Graph = component(
     <Path
       colors={colors}
       id={id}
-      isActive={isHovered}
+      isActive={isHovered || isSelected}
       points={pointsString}
       onHover={onHover}
       onSelect={onSelect}
     />
     <Points
-      isActive={isActive}
+      isActive={isSelected}
       fill={colors[0]}
       points={points}
       onPointerEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}
     />
     <Tooltips
-      isActive={isActive}
+      isActive={isSelected}
       activePoint={activePoint}
       points={points}
       width={width}
