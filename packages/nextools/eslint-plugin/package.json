@@ -13,6 +13,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@typescript-eslint/experimental-utils": "^3.7.1"
+    "@typescript-eslint/experimental-utils": "^4.0.0"
   }
 }
