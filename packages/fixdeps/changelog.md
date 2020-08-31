@@ -1,3 +1,7 @@
+## v2.0.2
+
+* 🐞 fix getting local version of a package
+
 ## v2.0.1
 
 * 🐞 fix getting local version of a package

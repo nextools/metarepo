@@ -1,3 +1,7 @@
+## v0.2.1
+
+* 🐞 add `plugin-proposal-object-rest-spread` and `plugin-transform-destructuring`
+
 ## v0.2.0
 
 * 💥 drop Node.js v10

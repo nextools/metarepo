@@ -1,3 +1,9 @@
+## v3.0.1
+
+* 🐞 remove `Object.keys` in `mapDefaultProps`
+
+* 🐞 optimize `shallowEqual` keys
+
 ## v3.0.0
 
 * 💥 drop Node.js v10

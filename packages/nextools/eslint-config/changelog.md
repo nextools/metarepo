@@ -1,3 +1,7 @@
+## v0.4.1
+
+* 🐞 add `nextools/eslint-plugin` dependency
+
 ## v0.4.0
 
 * 💥 drop Node.js v10
