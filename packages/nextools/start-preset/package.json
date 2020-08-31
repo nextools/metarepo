@@ -18,7 +18,7 @@
   "dependencies": {
     "@auto/changelog": "^0.2.0",
     "@auto/commit-prompt": "^0.2.0",
-    "@auto/core": "^0.3.0",
+    "@auto/core": "^0.3.1",
     "@auto/fs": "^1.0.0",
     "@auto/github": "^0.2.0",
     "@auto/slack": "^0.2.0",
