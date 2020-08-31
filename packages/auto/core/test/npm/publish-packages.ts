@@ -219,7 +219,7 @@ test('npm:publishPackages: registry override', async (t) => {
 test('npm:publishPackages: npm errors', async (t) => {
   const execaSpy = createSpy(({ index }) => (
     index % 2 === 0
-      ? Promise.reject({ stderr: 'EPUBLISHCONFLICT' })
+      ? Promise.reject({ stderr: '403 Forbidden: You cannot do this' })
       : Promise.resolve()
   ))
   const promptsSpy = createSpy(() => Promise.reject())
