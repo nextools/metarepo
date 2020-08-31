@@ -1,3 +1,7 @@
+## v0.3.1
+
+* 🐞 fix npm skip on publish conflict
+
 ## v0.3.0
 
 * 💥 drop Node.js v10
