@@ -62,6 +62,14 @@ export const PrimitiveBlock = component(
       style.left = 0
     }
 
+    if (isUndefined(right)) {
+      style.right = 0
+    }
+
+    if (isUndefined(bottom)) {
+      style.bottom = 0
+    }
+
     if (isNumber(style.lineHeight)) {
       style.lineHeight = `${style.lineHeight}px`
     }
