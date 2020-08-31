@@ -1,0 +1,29 @@
+{
+  "name": "r11y",
+  "version": "0.0.0",
+  "description": "Get a11y data of React app",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/tape": "^4.2.34",
+    "react": "^16.13.1",
+    "tape": "^5.0.0"
+  },
+  "dependencies": {
+    "@rebox/web": "^3.0.0",
+    "axe-core": "^4.0.1",
+    "dleet": "^2.0.0",
+    "puppeteer-core": "^2.0.0",
+    "tempy": "^0.6.0",
+    "xrom": "^3.0.0"
+  }
+}

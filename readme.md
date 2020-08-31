@@ -29,6 +29,7 @@ Check the individual documentations for more details:
 * [perfa](packages/perfa): measure React app performance using dockerized Chromium through [xrom](packages/xrom) lib
 * [piall](packages/piall): `Promise.all` and `Promise.allSettled` with concurrency option and async iterable result
 * [pifs](packages/pifs): promisified [graceful-fs](https://github.com/isaacs/node-graceful-fs)
+* [r11y](packages/r11y): get a11y data of React app
 * [@rebox](packages/rebox): set of helpers to dev and build React/React Native apps, completely abstracts out of `ios` and `android` folders
 * [refun](packages/refun): strongly-typed React Hook-enabled functions that compose harmoniously with each other
 * [rn-fonts](packages/rn-fonts): custom fonts linker for React Native (iOS/Android)

@@ -37,7 +37,7 @@ test('fixdeps: getLocalPackageVersionYarn result', async (t) => {
 
   t.deepEquals(
     getSpyCalls(spy),
-    [['yarn', ['list', '--json', '--depth=0', '--pattern', 'pkg'], { stderr: 'ignore' }]],
+    [['yarn', ['list', '--json', '--depth=0', 'pkg'], { stderr: 'ignore' }]],
     'should call yarn with arguments'
   )
 

@@ -25,6 +25,7 @@
     "packages/perfa",
     "packages/piall",
     "packages/pifs",
+    "packages/r11y",
     "packages/rebox/*",
     "packages/refun",
     "packages/revert/*",
