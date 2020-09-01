@@ -1,3 +1,11 @@
+## v0.5.0
+
+* 💥 tweak rules
+
+* 💥 upgrade typescript-eslint deps to v4
+
+* 🐞 use new `consistent-type-imports` rule instead of our local one
+
 ## v0.4.1
 
 * 🐞 add `nextools/eslint-plugin` dependency

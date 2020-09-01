@@ -1,3 +1,7 @@
+## v3.0.0
+
+* 💥 upgrade TypeScript to v4
+
 ## v2.0.0
 
 * 💥 drop Node.js v10
