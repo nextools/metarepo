@@ -9308,7 +9308,7 @@ picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1:
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
   integrity sha512-q0M/9eZHzmr0AulXyPwNfZjtwZ/RBZlbN3K3CErVrk50T2ASYI7Bye0EvekFY3IP1Nt2DHu0re+V2ZHIpMkuWg==
 
-pifs@^1.0.0, pifs@^1.0.2:
+pifs@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/pifs/-/pifs-1.0.3.tgz#45d5b3d8ca8b7be0df7329648f840f99e02dcb97"
   integrity sha512-m+3kvjiuKwoyUaUt+BiDPpoTmyurUzUM3c6XI2UwH8Rd7jPCfs8rUoo00cdimw/Mxvp6hicssM7lJd2RLh7osg==

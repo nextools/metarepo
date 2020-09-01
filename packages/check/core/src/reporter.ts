@@ -13,6 +13,22 @@ reporter.on('testStart', (suiteName: string, testName: string) => {
   console.log(`${suiteName}: ${testName}`)
 })
 
+reporter.on('testError', (error: Error | string) => {
+  if (error instanceof Error) {
+    console.error(`error: ${chalk.red(error.message)}`)
+
+    if (typeof error.stack === 'string') {
+      const stackTrace = stackUtils.clean(error.stack).trim()
+
+      stackTrace.split('\n').forEach((line) => {
+        console.error(`  ${chalk.red(line)}`)
+      })
+    }
+  } else {
+    console.error(`  error: ${chalk.red(error)}`)
+  }
+})
+
 reporter.on('checkOk', (message: string) => {
   console.log(`  ${chalk.green('✔')}︎ ${message}`)
 })
@@ -24,29 +40,11 @@ reporter.on('checkError', (error: Error | string) => {
     if (typeof error.stack === 'string') {
       const stackTrace = stackUtils.clean(error.stack).trim()
 
-      console.error(`  ${chalk.red('stack trace:')}`)
       stackTrace.split('\n').forEach((line) => {
-        console.error(`  - ${chalk.red(line)}`)
+        console.error(`  ${chalk.red(line)}`)
       })
     }
   } else {
     console.error(`  ${chalk.red('✘')} ${error}`)
-  }
-})
-
-reporter.on('testError', (error: Error | string) => {
-  if (error instanceof Error) {
-    console.error(`  error: ${chalk.red(error.message)}`)
-
-    if (typeof error.stack === 'string') {
-      const stackTrace = stackUtils.clean(error.stack).trim()
-
-      console.error(`  ${chalk.red('stack trace:')}`)
-      stackTrace.split('\n').forEach((line) => {
-        console.error(`  - ${chalk.red(line)}`)
-      })
-    }
-  } else {
-    console.error(`  error: ${chalk.red(error)}`)
   }
 })
