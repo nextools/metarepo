@@ -22,7 +22,7 @@
     "@rebox/web": "^3.0.0",
     "axe-core": "^4.0.1",
     "dleet": "^2.0.0",
-    "puppeteer-core": "^2.0.0",
+    "puppeteer-core": "^5.2.1",
     "tempy": "^0.6.0",
     "xrom": "^3.0.0"
   }
