@@ -1,4 +1,5 @@
-/* eslint-disable max-params, no-use-before-define */
+/* eslint-disable max-params */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import BigInt from 'big-integer'
 import type { BigInteger } from 'big-integer'
 import { isUndefined } from 'tsfn'

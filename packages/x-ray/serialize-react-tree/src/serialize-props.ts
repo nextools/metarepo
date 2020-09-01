@@ -1,4 +1,5 @@
-/* eslint-disable import/no-cycle, no-use-before-define */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable import/no-cycle */
 import { isValidElement } from 'react'
 import { isObject, isArray, isFunction, isNull, isUndefined, isString, isNumber, isSymbol } from 'tsfn'
 import { makeIndent, nextIndent, prevIndent } from './make-indent'

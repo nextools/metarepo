@@ -1,4 +1,4 @@
-/* eslint-disable no-use-before-define */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import { join } from 'path'
 import { chmod, lstat, readdir, rmdir, unlink } from 'pifs'
 import { delay } from './delay'

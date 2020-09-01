@@ -8,7 +8,6 @@ module.exports = {
       default: 'array',
       readonly: 'array',
     }],
-    '@typescript-eslint/no-unused-vars': 2,
     '@typescript-eslint/indent': [2, 2, {
       ignoredNodes: ['JSXElement', 'JSXElement > *', 'JSXAttribute', 'JSXIdentifier', 'JSXNamespacedName', 'JSXMemberExpression', 'JSXSpreadAttribute', 'JSXExpressionContainer', 'JSXOpeningElement', 'JSXClosingElement', 'JSXText', 'JSXEmptyExpression', 'JSXSpreadChild', 'TSIntersectionType'],
       SwitchCase: 1,
@@ -37,6 +36,14 @@ module.exports = {
     '@typescript-eslint/consistent-type-definitions': [2, 'type'],
     '@typescript-eslint/await-thenable': 2,
     '@typescript-eslint/no-floating-promises': 2,
-    '@nextools/type-only-import-export': 2,
+    '@typescript-eslint/consistent-type-imports': [2, { prefer: 'type-imports' }],
+    'no-redeclare': 0,
+    '@typescript-eslint/no-redeclare': 2,
+    'no-unused-vars': 0,
+    '@typescript-eslint/no-unused-vars': 2,
+    'no-use-before-define': 0,
+    '@typescript-eslint/no-use-before-define': 2,
+    semi: 'off',
+    '@typescript-eslint/semi': [2, 'never'],
   },
 }

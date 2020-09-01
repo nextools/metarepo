@@ -1,4 +1,5 @@
-import http, { IncomingMessage, ServerResponse } from 'http'
+import type { IncomingMessage, ServerResponse } from 'http'
+import http from 'http'
 import https from 'https'
 import test from 'tape'
 import { unchunkString } from 'unchunk'

@@ -1,6 +1,6 @@
 /* eslint-disable max-params */
 import path from 'path'
-import { Plugin, Compiler } from 'webpack'
+import type { Plugin, Compiler } from 'webpack'
 
 type IWatch = {
   watch: (files: string[], dirs: string[], missing: {}, startTime: number, options: {}, callback: () => {}, callbackUndelayed: () => {}) => void,

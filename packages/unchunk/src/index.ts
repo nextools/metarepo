@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events'
+import type { EventEmitter } from 'events'
 
 export const unchunkBuffer = (emitter: EventEmitter): Promise<Buffer> => {
   let result = Buffer.alloc(0)

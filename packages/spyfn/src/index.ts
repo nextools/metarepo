@@ -1,16 +1,15 @@
 const GET_SPY_CALLS_SYMBOL = Symbol('get-spy-calls')
 
-type TProps <T extends any[]> = {
+type TProps = {
   index: number,
-  args: T,
+  args: any[],
 }
-type TCalls <T extends any> = T[]
-type TSpy <T extends any[], R> = (...args: T) => R
+type TSpy<R> = (...args: any[]) => R
 
-export const createSpy = <T extends any[], R>(getResult: (props: TProps<T>) => R): TSpy<T, R> => {
-  const calls: TCalls<T> = []
+export const createSpy = <R>(getResult: (props: TProps) => R): TSpy<R> => {
+  const calls = [] as any[]
 
-  const spy: TSpy<T, R> = (...args) => {
+  const spy: TSpy<R> = (...args) => {
     if (args[0] === GET_SPY_CALLS_SYMBOL) {
       return calls as any
     }
@@ -28,4 +27,4 @@ export const createSpy = <T extends any[], R>(getResult: (props: TProps<T>) => R
   return spy
 }
 
-export const getSpyCalls = (spy: TSpy<any, any>): TCalls<any> => spy(GET_SPY_CALLS_SYMBOL)
+export const getSpyCalls = (spy: TSpy<any>): any[] => spy(GET_SPY_CALLS_SYMBOL)
