@@ -1,6 +1,6 @@
 import plugin from '@start/plugin'
 import type { StartDataFilesProps, StartDataFile } from '@start/plugin'
-import { ESLint } from 'eslint'
+import type { ESLint } from 'eslint'
 
 export default (userOptions?: ESLint.Options, formatterName = '') =>
   plugin('eslint', ({ logMessage, logPath }) => async ({ files }: StartDataFilesProps) => {

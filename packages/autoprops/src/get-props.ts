@@ -1,4 +1,4 @@
-/* eslint-disable no-use-before-define */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import BigInt from 'big-integer'
 import type { BigInteger } from 'big-integer'
 import { isDefined } from 'tsfn'

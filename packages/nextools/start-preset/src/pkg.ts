@@ -1,5 +1,5 @@
-import { ReadStream, Dirent, Stats } from 'fs'
-import { Transform } from 'stream'
+import type { ReadStream, Dirent, Stats } from 'fs'
+import type { Transform } from 'stream'
 import plugin from '@start/plugin'
 
 const TEMPLATES_PATH = './tasks/pkg/'

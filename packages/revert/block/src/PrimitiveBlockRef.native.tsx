@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 import type { ForwardRefExoticComponent } from 'react'
-import { View } from 'react-native'
+import type { View } from 'react-native'
 import { PrimitiveBlock } from './PrimitiveBlock'
 import type { TPrimitiveBlock } from './types'
 
