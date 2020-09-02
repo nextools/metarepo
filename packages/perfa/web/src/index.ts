@@ -7,7 +7,7 @@ import { runBrowser } from 'xrom'
 import { getPercentile } from './get-percentile'
 import { getPerfMetricsEntryValue } from './get-perf-metrics-entry-value'
 import { getPerfPaintEntryValue } from './get-perf-paint-entry-value'
-import type { TPerfResult, TPerfObserverEntry, TPerfPaint, TPerfMetrics } from './types'
+import type { TPerfData, TPerfObserverEntry, TPerfPaint, TPerfMetrics } from './types'
 
 const TRIES_COUNT = 5
 const INJECTED_BUILD_FOLDER_PATH = '/home/chromium/html'
@@ -18,7 +18,7 @@ export type TGetPerfDataOptions = {
   fontsDir?: string,
 }
 
-export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPerfResult> => {
+export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPerfData> => {
   const options = {
     triesCount: TRIES_COUNT,
     ...userOptions,
@@ -111,5 +111,5 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
     acc[key] = getPercentile(value.sort((a, b) => a - b), 0.5)
 
     return acc
-  }, {} as TPerfResult)
+  }, {} as TPerfData)
 }

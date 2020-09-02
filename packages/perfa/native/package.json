@@ -1,7 +1,7 @@
 {
-  "name": "briew",
-  "version": "0.3.0",
-  "description": "Count React Native `createView` events passing through the Bridge",
+  "name": "@perfa/native",
+  "version": "0.0.0",
+  "description": "Measure React Native app performance",
   "keywords": [],
   "main": "src/index.ts",
   "repository": "nextools/metarepo",
@@ -16,13 +16,14 @@
   "dependencies": {
     "@rebox/android": "^4.0.0",
     "@rebox/ios": "^6.0.0",
-    "react": "16.13.1",
+    "react-native-device-info": "^6.0.1",
     "react-native": "0.63.2",
+    "react": "16.13.1",
     "tsfn": "^2.0.0"
   },
   "fixdeps": {
     "ignoredPackages": [
-      "__BRIEW_TARGET_APP_PATH__"
+      "__PERFA_TARGET_APP_PATH__"
     ]
   }
 }

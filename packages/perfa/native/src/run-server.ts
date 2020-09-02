@@ -2,8 +2,9 @@ import http from 'http'
 import { URL } from 'url'
 import { isDefined } from 'tsfn'
 import { SERVER_HOST, SERVER_PORT } from './constants'
+import type { TPerfData } from './types'
 
-export const runServer = (): Promise<number> =>
+export const runServer = (): Promise<TPerfData> =>
   new Promise((resolve, reject) => {
     const server = http.createServer(async (req, res) => {
       if (isDefined(req.url)) {
@@ -22,9 +23,10 @@ export const runServer = (): Promise<number> =>
             })
           })
 
-          const count = Number(url.searchParams.get('count'))
+          const viewCount = Number(url.searchParams.get('viewCount'))
+          const usedMemory = Number(url.searchParams.get('usedMemory'))
 
-          resolve(count)
+          resolve({ viewCount, usedMemory })
         }
       }
     })

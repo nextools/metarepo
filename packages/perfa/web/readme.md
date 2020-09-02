@@ -1,11 +1,11 @@
-# perfa ![npm](https://flat.badgen.net/npm/v/perfa)
+# @perfa/web ![npm](https://flat.badgen.net/npm/v/@perfa/web)
 
 Measure React app performance using dockerized Chromium through [`xrom`](https://github.com/nextools/metarepo/tree/master/packages/xrom) lib.
 
 ## Install
 
 ```sh
-$ yarn add perfa
+$ yarn add @perfa/web
 ```
 
 ## API
@@ -17,7 +17,7 @@ type TGetPerfDataOptions = {
   fontsDir?: string, // path to a directory with custom fonts to be installed
 }
 
-type TGetPerfDataResult = {
+type TPerfData = {
   firstContentfulPaint: number,
   firstMeaningfulPaint: number,
   largestContentfulPaint: number,
@@ -30,13 +30,13 @@ type TGetPerfDataResult = {
   usedJsHeapSize: number,
 }
 
-const getPerfData: (options: TGetPerfDataOptions) => Promise<TGetPerfDataResult>
+const getPerfData: (options: TGetPerfDataOptions) => Promise<TPerfData>
 ```
 
 ## Usage
 
 ```js
-import { getPerfData } from 'perfa'
+import { getPerfData } from '@perfa/web'
 
 const perfData = await getPerfData({
   entryPointPath: './App.tsx'
