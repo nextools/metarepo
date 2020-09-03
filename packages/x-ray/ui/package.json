@@ -18,7 +18,7 @@
     "@babel/runtime": "^7.1.2",
     "@revert/animation": "^0.2.0",
     "@revert/background": "^0.1.0",
-    "@revert/block": "^0.1.0",
+    "@revert/block": "^0.2.0",
     "@revert/border": "^0.1.0",
     "@revert/button": "^0.1.0",
     "@revert/checkbox": "^0.1.0",
