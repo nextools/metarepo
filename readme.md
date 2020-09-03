@@ -8,7 +8,6 @@ Check the individual documentations for more details:
 
 * [@auto](packages/auto): set of helpers for managing and developing monorepos
 * [autoprops](packages/autoprops): tool that generates all possible combinations of React props and children based on declarative config, respecting "mutex" and "mutin" features
-* [briew](packages/briew): count React Native `createView` events passing through the Bridge
 * [bsc](packages/bsc): binary search with comparator
 * [circularr](packages/circularr): circular fixed size array
 * [codecov-lite](packages/codecov-lite): LCOV (code coverage data) uploader for [codecov.io](https://codecov.io/) service.
@@ -26,7 +25,7 @@ Check the individual documentations for more details:
 * [@mock](packages/mock): `require`, `fs`, `request` and `global` mocking libraries
 * [move-path](packages/move-path): move path to destination folder
 * [@nextools](packages/nextools): [start](packages/start) preset and various shared configs to develop, test, build and publish packages in this metarepo
-* [perfa](packages/perfa): measure React app performance using dockerized Chromium through [xrom](packages/xrom) lib
+* [@perfa](packages/perfa): set of helpers to measure React and React Native app performance
 * [piall](packages/piall): `Promise.all` and `Promise.allSettled` with concurrency option and async iterable result
 * [pifs](packages/pifs): promisified [graceful-fs](https://github.com/isaacs/node-graceful-fs)
 * [r11y](packages/r11y): get a11y data of React app
