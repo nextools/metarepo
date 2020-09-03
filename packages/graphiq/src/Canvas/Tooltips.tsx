@@ -1,8 +1,15 @@
 import React, { Fragment } from 'react'
 import type { FC } from 'react'
+import { GRAPH_OFFSET } from '../constants'
 import { Tooltip } from './Tooltip'
-import { GRAPH_OFFSET } from './constants'
-import type { TGraphTooltips } from './types'
+import type { TGraphPoint } from './types'
+
+export type TGraphTooltips = {
+  activePoint: string | null,
+  isActive: boolean,
+  points: TGraphPoint[],
+  width: number,
+}
 
 export const Tooltips: FC<TGraphTooltips> = ({
   isActive,
@@ -18,8 +25,8 @@ export const Tooltips: FC<TGraphTooltips> = ({
 
       return (
         <Tooltip
-          isActive={isActive && (index === points.length - 1 || index === 0 || activePoint === keyID)}
           key={keyID}
+          isActive={isActive && (index === points.length - 1 || index === 0 || activePoint === keyID)}
           value={Math.round(point.value * 1000) / 1000}
           valueDifference={differenceWithPrePoint}
           version={point.version}

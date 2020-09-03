@@ -14,7 +14,7 @@ export const PrimitiveBlock = component(
     shouldScroll: false,
   }),
   mapProps(({
-    ref,
+    onRef,
     width,
     height,
     maxWidth,
@@ -95,8 +95,8 @@ export const PrimitiveBlock = component(
       children,
     }
 
-    if (isDefined(ref)) {
-      props.ref = ref
+    if (isDefined(onRef)) {
+      props.ref = onRef
     }
 
     if (isNumber(tabIndex)) {

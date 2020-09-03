@@ -1,9 +1,18 @@
-import { easeInOutCubic } from '@revert/animation'
 import React from 'react'
 import { component, startWithType, mapWithProps, mapRef, onLayout, mapState } from 'refun'
-import { Animate } from './Animate'
-import { TOOLTIP_FONT_SIZE, TOOLTIP_X_OFFSET, TOOLTIP_Y_OFFSET, TOOLTIP_PADDING } from './constants'
-import type { TTooltip } from './types'
+import { Animate } from '../Animate'
+import { TOOLTIP_FONT_SIZE, TOOLTIP_X_OFFSET, TOOLTIP_Y_OFFSET, TOOLTIP_PADDING } from '../constants'
+
+export type TTooltip = {
+  isActive: boolean,
+  version: string,
+  value: number,
+  valueDifference: number,
+  x: number,
+  y: number,
+  viewportRight: number,
+  viewportTop: number,
+}
 
 export const Tooltip = component(
   startWithType<TTooltip>(),
@@ -68,11 +77,8 @@ export const Tooltip = component(
   valueDifference,
 }) => (
   <Animate
-    easing={easeInOutCubic}
-    time={300}
-    to={1}
-    from={0}
-    isActive={isActive}
+    toValue={1}
+    isEnabled={isActive}
   >
     {(opacity) => (
       <g
@@ -96,7 +102,8 @@ export const Tooltip = component(
             {value}
             {valueDifference ?
               (
-                <tspan fill={valueDifference > 0 ? 'red' : 'green'}>({valueDifference > 0 ? `+${valueDifference}` : valueDifference}%)
+                <tspan fill={valueDifference > 0 ? 'red' : 'green'}>
+                  ({valueDifference > 0 ? `+${valueDifference}` : valueDifference}%)
                 </tspan>
               )
               : null}

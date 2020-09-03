@@ -22,6 +22,7 @@ export const ParentBlock = component(
   _onHeightChange,
   _maxWidth,
   _maxHeight,
+  onRef,
   shouldIgnorePointerEvents,
   children,
 }) => (
@@ -30,6 +31,7 @@ export const ParentBlock = component(
     top={_parentTop}
     width={_parentWidth}
     height={_parentHeight}
+    onRef={onRef}
     shouldIgnorePointerEvents={shouldIgnorePointerEvents}
   >
     <LayoutContext.Provider

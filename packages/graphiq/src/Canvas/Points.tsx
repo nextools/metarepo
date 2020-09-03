@@ -1,10 +1,18 @@
-import { easeInOutCubic } from '@revert/animation'
 import { colorToString } from '@revert/color'
+import type { TColor } from '@revert/color'
 import React, { Fragment } from 'react'
 import type { FC } from 'react'
-import { Animate } from './Animate'
-import { POINT_BORDER, POINT_RADIUS } from './constants'
-import type { TGraphPoints } from './types'
+import { Animate } from '../Animate'
+import { POINT_BORDER, POINT_RADIUS } from '../constants'
+import type { TGraphPoint } from './types'
+
+export type TGraphPoints = {
+  isActive: boolean,
+  fill: TColor,
+  points: TGraphPoint[],
+  onPointerEnter: (id: string) => void,
+  onPointerLeave: () => void,
+}
 
 export const Points: FC<TGraphPoints> = ({
   fill,
@@ -14,11 +22,9 @@ export const Points: FC<TGraphPoints> = ({
   onPointerLeave,
 }) => (
   <Animate
-    easing={easeInOutCubic}
-    time={300}
-    from={0}
-    to={POINT_RADIUS}
-    isActive={isActive}
+    fromValue={0}
+    toValue={POINT_RADIUS}
+    isEnabled={isActive}
   >
     {(radius) => (
       <Fragment>
@@ -31,16 +37,14 @@ export const Points: FC<TGraphPoints> = ({
               cx={point.x}
               cy={point.y}
               fill={colorToString(fill)}
-              key={`${point.value}-${index}`}
+              key={index}
               r={radius}
               stroke="white"
               strokeWidth={POINT_BORDER}
               onPointerEnter={() => {
                 onPointerEnter(tooltipKeyID)
               }}
-              onPointerLeave={() => {
-                onPointerLeave()
-              }}
+              onPointerLeave={onPointerLeave}
             />
           )
         })}

@@ -1,7 +1,7 @@
 import type { TColor } from '@revert/color'
 import { rgba } from '@revert/color'
 import { App as GraphsApp } from 'graphiq'
-import type { TGraph } from 'graphiq'
+import type { TApp } from 'graphiq'
 import React from 'react'
 import { getObjectEntries, isDefined } from 'tsfn'
 import { data } from './data'
@@ -23,7 +23,7 @@ const theme = {
 }
 const graphs = data.reduce((acc, cur) => {
   for (const [key, value] of getObjectEntries(cur.values)) {
-    const graph = acc.find((el) => el.key === key)
+    const graph = acc.find((el) => el.graphName === key)
 
     // if (key !== 'firstContentfulPaint') {
     //   return acc
@@ -37,7 +37,7 @@ const graphs = data.reduce((acc, cur) => {
       })
     } else {
       acc.push({
-        key,
+        graphName: key,
         colors: theme[key],
         values: [
           {
@@ -51,7 +51,7 @@ const graphs = data.reduce((acc, cur) => {
   }
 
   return acc
-}, [] as TGraph[])
+}, [] as TApp['graphs'])
 
 export const App = () => (
   <GraphsApp graphs={graphs}/>

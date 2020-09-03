@@ -1,25 +1,45 @@
-import { easeInOutCubic } from '@revert/animation'
 import { colorToString } from '@revert/color'
 import React, { Fragment } from 'react'
-import type { FC } from 'react'
-import { Animate } from './Animate'
-import { PATH_WIDTH } from './constants'
-import type { TGraphPath } from './types'
+import { pureComponent, startWithType, mapHandlers } from 'refun'
+import { Animate } from '../Animate'
+import { PATH_WIDTH } from '../constants'
+import type { TGraphColors } from '../types'
 
-export const Path: FC<TGraphPath> = ({
+export type TPath = {
+  colors: TGraphColors,
+  id: string,
+  isActive: boolean,
+  points: string,
+  onHover: (key: string | null) => void,
+  onSelect: (key: string) => void,
+}
+
+export const Path = pureComponent(
+  startWithType<TPath>(),
+  mapHandlers({
+    onClick: ({ id, onSelect }) => () => {
+      onSelect(id)
+    },
+    onPointerEnter: ({ id, onHover }) => () => {
+      onHover(id)
+    },
+    onPointerLeave: ({ onHover }) => () => {
+      onHover(null)
+    },
+  })
+)(({
   colors,
   isActive,
   id,
   points,
-  onHover,
-  onSelect,
+  onClick,
+  onPointerEnter,
+  onPointerLeave,
 }) => (
   <Animate
-    easing={easeInOutCubic}
-    time={300}
-    from={0.15}
-    to={1}
-    isActive={isActive}
+    fromValue={0.15}
+    toValue={1}
+    isEnabled={isActive}
   >
     {(opacity) => (
       <Fragment>
@@ -45,19 +65,13 @@ export const Path: FC<TGraphPath> = ({
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={PATH_WIDTH}
-          onClick={() => {
-            onSelect(id)
-          }}
-          onPointerEnter={() => {
-            onHover(id)
-          }}
-          onPointerLeave={() => {
-            onHover(null)
-          }}
+          onClick={onClick}
+          onPointerEnter={onPointerEnter}
+          onPointerLeave={onPointerLeave}
         />
       </Fragment>
     )}
   </Animate>
-)
+))
 
 Path.displayName = 'Path'

@@ -20,7 +20,7 @@ export const PrimitiveBlock = component(
     bottom: 0,
   }),
   mapProps(({
-    ref,
+    onRef,
     width,
     height,
     maxWidth,
@@ -100,8 +100,8 @@ export const PrimitiveBlock = component(
       props.pointerEvents = 'none'
     }
 
-    if (isDefined(ref)) {
-      (props as any).ref = ref
+    if (isDefined(onRef)) {
+      (props as any).ref = onRef
     }
 
     props.style = style

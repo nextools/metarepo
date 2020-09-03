@@ -1,9 +1,15 @@
-import { easeInOutCubic } from '@revert/animation'
 import { colorToString } from '@revert/color'
 import React, { Fragment } from 'react'
 import type { FC } from 'react'
-import { Animate } from './Animate'
-import type { TGraphPolygon } from './types'
+import { Animate } from '../Animate'
+import type { TGraphColors } from '../types'
+
+export type TGraphPolygon = {
+  colors: TGraphColors,
+  id: string,
+  isActive: boolean,
+  points: string,
+}
 
 export const Polygon: FC<TGraphPolygon> = ({
   colors,
@@ -12,11 +18,9 @@ export const Polygon: FC<TGraphPolygon> = ({
   points,
 }) => (
   <Animate
-    easing={easeInOutCubic}
-    time={300}
-    from={0}
-    to={0.15}
-    isActive={isActive}
+    fromValue={0}
+    toValue={0.15}
+    isEnabled={isActive}
   >
     {(opacity) => (
       <Fragment>

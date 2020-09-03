@@ -1,38 +1,44 @@
-import { PrimitiveRoot } from '@revert/root'
+import { Background } from '@revert/background'
+import { Layout_Item, Layout } from '@revert/layout'
+import { Root } from '@revert/root'
 import React from 'react'
 import {
   component,
   mapDebouncedHandlerTimeout,
   mapHandlers,
   mapState,
-  mapWithPropsMemo,
   startWithType,
   onUpdate,
 } from 'refun'
 import { Canvas } from './Canvas'
-import { Header, Footer } from './Controls/index'
-import { PAGE_BACKGROUND, CONTROLS_HEIGHT_TOP, CONTROLS_HEIGHT_BOTTOM } from './constants'
-import type { TApp } from './types'
+import { Footer } from './Footer'
+import { Header } from './Header'
+import { PAGE_BACKGROUND_COLOR, CONTROLS_HEIGHT_TOP, CONTROLS_HEIGHT_BOTTOM, CANVAS_PADDING } from './constants'
+import type { TGraphEntry } from './types'
 import { globalObject, getHash, updateHash } from './utils'
+
+export type TApp = {
+  graphs: TGraphEntry[],
+}
 
 export const App = component(
   startWithType<TApp>(),
-  mapState('scale', 'setScale', () => 0, []),
   mapState('monthsAgo', 'setMonthsAgo', () => 1, []),
   mapState('selectedGraph', 'setSelectedGraph', ({ graphs }) => getHash(graphs), []),
   mapState('hoveredGraph', 'setHoveredGraph', () => null as string | null, []),
   mapHandlers({
-    onMonthsAgo: ({ setMonthsAgo }) => (months) => {
+    onSelectMonths: ({ setMonthsAgo }) => (months) => {
       setMonthsAgo(months)
     },
-    onSliderChange: ({ setScale }) => (e) => {
-      setScale(e.target.value)
-    },
-    onSelectGraph: ({ selectedGraph, setSelectedGraph, setHoveredGraph }) => (name) => {
+    onSelectGraph: ({ selectedGraph, setSelectedGraph, setHoveredGraph }) => (name: string) => {
       if (selectedGraph !== name) {
         setSelectedGraph(name)
         setHoveredGraph(name)
       }
+    },
+    onShowAllGraphs: ({ setSelectedGraph, setHoveredGraph }) => () => {
+      setSelectedGraph(null)
+      setHoveredGraph(null)
     },
     onHoverGraph: ({ selectedGraph, setHoveredGraph }) => (id) => {
       if (selectedGraph === null) {
@@ -40,15 +46,11 @@ export const App = component(
       }
     },
   }),
-  onUpdate(({ setScale, graphs, setSelectedGraph, setHoveredGraph }) => {
-    setTimeout(() => {
-      setScale(50)
-    }, 200)
-
+  onUpdate(({ graphs, setSelectedGraph, setHoveredGraph }) => {
     globalObject.addEventListener('hashchange', () => {
       const hash = getHash(graphs)
 
-      setHoveredGraph(hash)
+      setHoveredGraph(null)
       setSelectedGraph(hash)
       updateHash(hash)
     })
@@ -56,68 +58,49 @@ export const App = component(
   onUpdate(({ selectedGraph }) => {
     updateHash(selectedGraph)
   }, ['selectedGraph']),
-  mapDebouncedHandlerTimeout('onHoverGraph', 100),
-  mapWithPropsMemo(({ graphs }) => ({
-    graphControls: graphs.map((graph) => {
-      let lastDifference
-
-      if (graph.values.length === 1) {
-        lastDifference = 100
-      } else {
-        const lastValue = graph.values[graph.values.length - 1].value
-        const preLastValue = graph.values[graph.values.length - 2].value
-
-        lastDifference = Math.round((lastValue - preLastValue) / preLastValue * 100.0)
-      }
-
-      return {
-        colors: graph.colors,
-        key: graph.key,
-        lastDifference,
-        name: graph.key.replace(/[A-Z]/g, ' $&'),
-      }
-    }),
-  }), ['graphs'])
+  mapDebouncedHandlerTimeout('onHoverGraph', 100)
 )(({
-  graphControls,
   graphs,
   hoveredGraph,
   monthsAgo,
-  scale,
   selectedGraph,
   onHoverGraph,
   onSelectGraph,
-  onSliderChange,
-  onMonthsAgo,
+  onShowAllGraphs,
+  onSelectMonths,
 }) => (
-  <PrimitiveRoot>
-    {({ width, height }) => (
-      <div style={{ background: PAGE_BACKGROUND, width, height, position: 'absolute' }}>
+  <Root>
+    <Layout direction="vertical">
+      <Background color={PAGE_BACKGROUND_COLOR}/>
+
+      <Layout_Item height={CONTROLS_HEIGHT_TOP}>
         <Header
-          monthsAgo={monthsAgo}
-          onMonthsAgo={onMonthsAgo}
+          selectedMonths={monthsAgo}
+          onSelectMonths={onSelectMonths}
         />
+      </Layout_Item>
+
+      <Layout_Item hPadding={CANVAS_PADDING}>
         <Canvas
           graphs={graphs}
-          height={height - CONTROLS_HEIGHT_TOP - CONTROLS_HEIGHT_BOTTOM}
+          selectedMonths={monthsAgo}
           hoveredGraph={hoveredGraph}
-          monthsAgo={monthsAgo}
-          scale={scale}
           selectedGraph={selectedGraph}
-          width={width}
           onHoverGraph={onHoverGraph}
           onSelectGraph={onSelectGraph}
-          onSliderChange={onSliderChange}
         />
+      </Layout_Item>
+
+      <Layout_Item height={CONTROLS_HEIGHT_BOTTOM}>
         <Footer
-          width={width}
-          graphControls={graphControls}
+          graphs={graphs}
           selectedGraph={selectedGraph}
           onSelectGraph={onSelectGraph}
+          onShowAllGraphs={onShowAllGraphs}
         />
-      </div>
-    )}
-  </PrimitiveRoot>
+      </Layout_Item>
+    </Layout>
+  </Root>
 ))
 
 App.displayName = 'App'
