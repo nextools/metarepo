@@ -1,6 +1,6 @@
 {
   "name": "@perfa/native",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Measure React Native app performance",
   "keywords": [],
   "main": "src/index.ts",

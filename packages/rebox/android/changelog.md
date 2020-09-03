@@ -1,3 +1,7 @@
+## v4.0.1
+
+* 🐞 fix native deps linking
+
 ## v4.0.0
 
 * 💥 drop Node.js v10

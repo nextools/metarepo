@@ -1,6 +1,6 @@
 {
   "name": "@perfa/web",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Measure React app performance using dockerized Chromium",
   "keywords": [],
   "main": "src/index.ts",
