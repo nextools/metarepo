@@ -1,4 +1,4 @@
-import { PrimitiveBlock, Block, PrimitiveBlockRef } from '@revert/block'
+import { PrimitiveBlock, Block } from '@revert/block'
 import { LayoutContext } from '@revert/layout'
 import { Pointer } from '@revert/pointer'
 import { PrimitiveTransform } from '@revert/transform'
@@ -145,9 +145,9 @@ export const DemoArea = component(
                 _onHeightChange: setComponentHeight,
               }}
             >
-              <PrimitiveBlockRef ref={setBlockNode} shouldFlow>
+              <PrimitiveBlock onRef={setBlockNode} shouldFlow>
                 <ComponentWrapperPlugin Component={Component} props={componentProps}/>
-              </PrimitiveBlockRef>
+              </PrimitiveBlock>
             </LayoutContext.Provider>
           )}
 

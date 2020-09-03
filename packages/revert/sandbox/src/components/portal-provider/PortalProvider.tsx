@@ -1,4 +1,4 @@
-import { PrimitiveBlockRef } from '@revert/block'
+import { PrimitiveBlock } from '@revert/block'
 import { RootContext } from '@revert/root'
 import React from 'react'
 import { component, startWithType, mapContext, mapState } from 'refun'
@@ -11,11 +11,11 @@ export const PortalProvider = component(
   mapContext(RootContext),
   mapState('ref', 'setRef', () => null as TPortalContext['portalElement'], [])
 )(({ ref, setRef, _rootWidth, _rootHeight, children }) => (
-  <PrimitiveBlockRef left={0} top={0} width={_rootWidth} height={_rootHeight} ref={setRef}>
+  <PrimitiveBlock left={0} top={0} width={_rootWidth} height={_rootHeight} onRef={setRef}>
     <PortalContext.Provider value={{ portalElement: ref }}>
       {children}
     </PortalContext.Provider>
-  </PrimitiveBlockRef>
+  </PrimitiveBlock>
 ))
 
 PortalProvider.displayName = 'PortalProvider'
