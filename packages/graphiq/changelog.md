@@ -1,3 +1,9 @@
+## v0.4.0
+
+* 💥 use `revert` primitives
+
+* ♻️ update dependencies `@revert/block`, `@revert/linear-gradient`
+
 ## v0.3.1
 
 * 🐞 replace `primitives` with `revert`

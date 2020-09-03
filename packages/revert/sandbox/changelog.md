@@ -1,3 +1,9 @@
+## v0.1.3
+
+* 🐞 remove `PrimitiveBlockRef` component
+
+* ♻️ update dependencies `@revert/block`
+
 ## v0.1.2
 
 * 🐞 separate component and popover plugin
