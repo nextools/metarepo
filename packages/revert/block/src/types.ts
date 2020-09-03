@@ -22,7 +22,7 @@ export type TPrimitiveBlock = {
   shouldHideOverflow?: boolean,
   shouldForceAcceleration?: boolean,
   children?: ReactNode,
-  ref?: Ref<any>,
+  onRef?: Ref<any>,
 }
 
 export type TBlock = {
@@ -32,10 +32,12 @@ export type TBlock = {
   minHeight?: number,
   shouldIgnorePointerEvents?: boolean,
   shouldHideOverflow?: boolean,
+  onRef?: Ref<any>,
 }
 
 export type TInlineBlock = Pick<TSize, 'shouldPreventWrap' | 'children'>
 
 export type TParentBlock = {
   shouldIgnorePointerEvents?: boolean,
+  onRef?: Ref<any>,
 }

@@ -28,6 +28,7 @@ export const Block = component(
   _top,
   width,
   height,
+  onRef,
   shouldIgnorePointerEvents,
   shouldHideOverflow,
   children,
@@ -37,6 +38,7 @@ export const Block = component(
     top={_top}
     width={width}
     height={height}
+    onRef={onRef}
     shouldIgnorePointerEvents={shouldIgnorePointerEvents}
     shouldHideOverflow={shouldHideOverflow}
   >
