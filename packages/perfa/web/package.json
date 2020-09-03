@@ -1,7 +1,7 @@
 {
-  "name": "perfa",
-  "version": "0.4.0",
-  "description": "",
+  "name": "@perfa/web",
+  "version": "0.0.0",
+  "description": "Measure React app performance using dockerized Chromium",
   "keywords": [],
   "main": "src/index.ts",
   "buildAssets": {

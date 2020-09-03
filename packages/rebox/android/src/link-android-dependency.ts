@@ -1,5 +1,6 @@
 import path from 'path'
-import { readFile, writeFile, readdir } from 'pifs'
+import { readFile, writeFile } from 'pifs'
+import { getPackageClassName } from './get-package-class-name'
 
 export type TLinkAndroidDependencyOptions = {
   projectPath: string,
@@ -44,14 +45,18 @@ export const linkAndroidDependency = async (options: TLinkAndroidDependencyOptio
   const dependencyManifestPath = path.join(dependencyAndroidSourcePath, 'src', 'main', 'AndroidManifest.xml')
   const dependencyManifestData = await readFile(dependencyManifestPath, { encoding: 'utf8' })
   const packageId = /package="(.+)"/.exec(dependencyManifestData)![1]
-  const packageDirFiles = await readdir(path.join(dependencyAndroidSourcePath, 'src', 'main', 'java', ...packageId.split('.')))
-  const packageName = packageDirFiles.find((filename) => filename.endsWith('Package.java'))!.replace('.java', '')
+  const packageClassName = await getPackageClassName(dependencyAndroidSourcePath, packageId)
+
+  if (packageClassName === null) {
+    throw new Error(`Unable to get "${cleanDependencyName}" dependency package class name`)
+  }
+
   const mainApplicationJavaPath = path.join(options.projectPath, 'app', 'src', 'main', 'java', 'com', 'rebox', 'MainApplication.java')
   let mainApplicationJavaData = await readFile(mainApplicationJavaPath, { encoding: 'utf8' })
 
   mainApplicationJavaData = mainApplicationJavaData
-    .replace('// REBOX_IMPORT', `import ${packageId}.${packageName};\n// REBOX_IMPORT`)
-    .replace('// REBOX_PACKAGE', `packages.add(new ${packageName}());\n      // REBOX_PACKAGE`)
+    .replace('// REBOX_IMPORT', `import ${packageId}.${packageClassName};\n// REBOX_IMPORT`)
+    .replace('// REBOX_PACKAGE', `packages.add(new ${packageClassName}());\n      // REBOX_PACKAGE`)
 
   await writeFile(mainApplicationJavaPath, mainApplicationJavaData)
 }

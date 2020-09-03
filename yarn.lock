@@ -9825,6 +9825,11 @@ react-is@^16.12.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-native-device-info@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-6.0.1.tgz#4aae636cd826e9ab53c0db68bb3baec86f81890f"
+  integrity sha512-cE3TbTcJ6jrKHD+IHsdKGJISz4UpBo6xwwDWYr+EqvlZ+OMCIcPjjDzApuFCiHhNDvbxJgcElG3eAq8tl6ojKw==
+
 react-native-svg@^12.1.0:
   version "12.1.0"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-12.1.0.tgz#acfe48c35cd5fca3d5fd767abae0560c36cfc03d"

@@ -15,7 +15,7 @@ export type TPerfObserverEntry = {
   loadTime: number,
 }
 
-export type TPerfResult = {
+export type TPerfData = {
   firstContentfulPaint: number,
   firstMeaningfulPaint: number,
   largestContentfulPaint: number,
