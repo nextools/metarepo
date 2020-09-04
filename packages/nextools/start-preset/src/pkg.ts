@@ -1,6 +1,7 @@
 import type { ReadStream, Dirent, Stats } from 'fs'
 import type { Transform } from 'stream'
 import plugin from '@start/plugin'
+import binaryExtensions from 'binary-extensions'
 
 const TEMPLATES_PATH = './tasks/pkg/'
 
@@ -170,6 +171,7 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
         continue
       }
 
+      const fileExt = path.extname(file.path).substr(1)
       const readStream = createReadStream(file.path)
       const writeStream = createWriteStream(newFilePath)
 
@@ -177,10 +179,13 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
         let stream: ReadStream | Transform = readStream.on('error', reject)
 
         for (const [key, value] of Object.entries(allReplacers)) {
-          stream = stream
-            .pipe(lineStream())
-            .pipe(replaceStream(key, value))
-            .on('error', reject)
+          if (!binaryExtensions.includes(fileExt)) {
+            stream = stream
+              .pipe(lineStream())
+              .pipe(replaceStream(key, value))
+          }
+
+          stream.on('error', reject)
         }
 
         stream

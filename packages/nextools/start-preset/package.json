@@ -52,6 +52,7 @@
     "@x-ray/plugin-ios-screenshots": "^0.3.0",
     "@x-ray/plugin-react-native-snapshots": "^0.2.0",
     "@x-ray/plugin-react-snapshots": "^0.2.0",
+    "binary-extensions": "^2.1.0",
     "copie": "^2.0.0",
     "dleet": "^2.0.0",
     "dotenv": "^8.0.0",
