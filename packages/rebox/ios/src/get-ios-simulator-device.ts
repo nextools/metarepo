@@ -19,16 +19,22 @@ export type TGetIosSuimulatorDeviceOptions = {
 }
 
 export const getIosSimulatorDevice = async (options: TGetIosSuimulatorDeviceOptions): Promise<TDevice | null> => {
+  const iOSVersion = options.iOSVersion.replace('.', '-')
+  const iPhoneModel = options.iPhoneModel.replace(' ', '-')
   const { stdout: xcrunList } = await execa('xcrun', ['simctl', 'list', '--json'])
   const devicesList = JSON.parse(xcrunList) as TDeviceList
   const devices = Object.entries(devicesList.devices)
     .filter((entry) =>
-      entry[0].startsWith(`com.apple.CoreSimulator.SimRuntime.iOS-${options.iOSVersion}`) &&
+      entry[0].startsWith(`com.apple.CoreSimulator.SimRuntime.iOS-${iOSVersion}`) &&
       entry[1].some((value) => value.isAvailable))
     .sort((entryA, entryB) => (entryA[0] > entryB[0] ? -1 : 1))
     .map((entry) => entry[1])
 
-  const device = devices[0].find((value) => value.deviceTypeIdentifier.startsWith(`com.apple.CoreSimulator.SimDeviceType.iPhone-${options.iPhoneModel}`))
+  if (devices.length === 0) {
+    return null
+  }
+
+  const device = devices[0].find((value) => value.deviceTypeIdentifier.startsWith(`com.apple.CoreSimulator.SimDeviceType.iPhone-${iPhoneModel}`))
 
   return device || null
 }

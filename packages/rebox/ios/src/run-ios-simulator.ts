@@ -14,7 +14,7 @@ export const runIosSimulator = async (options: TRunIosSimulatorOptions): Promise
   })
 
   if (device === null) {
-    throw new Error(`Unable to find iOS ${options.iOSVersion} + iPhone ${options.iPhoneModel} Simulator`)
+    throw new Error(`Unable to find iOS Simulator runtime for iPhone model "${options.iPhoneModel}" + iOS version "${options.iOSVersion}"`)
   }
 
   if (device.state !== 'Booted') {

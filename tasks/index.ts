@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import {
   CheckChromiumScreenshots,
   CheckIosScreenshots,
@@ -5,9 +6,11 @@ import {
   CheckReactSnapshots,
   CheckReactNativeSnapshots,
   Pkg,
+  RunApp,
 } from '@nextools/start-preset'
 import plugin from '@start/plugin'
-import { Sandbox } from './sandbox'
+import sequence from '@start/plugin-sequence'
+import syncState from './sandbox/plugins/sync-state'
 
 const shouldBailout = Boolean(process.env.CI)
 
@@ -26,22 +29,29 @@ export const pkg = Pkg({
     $exportedName$: null,
     $year$: String(new Date().getFullYear()),
   },
+  app: {
+    $year$: String(new Date().getFullYear()),
+  },
 })
 
-export const graphiq = () =>
-  plugin('demo', ({ logMessage }) => async () => {
-    const { runWebApp } = await import('@rebox/web')
-    const entryPointPath = './tasks/graphiq/index.tsx'
-    const htmlTemplatePath = './tasks/graphiq/index.html'
+export const graphiq = RunApp({
+  name: 'Graphiq',
+  entryPointPath: 'tasks/graphiq/index.tsx',
+  htmlTemplatePath: 'packages/graphiq/templates/dev.html',
+})
 
-    await runWebApp({
-      entryPointPath,
-      htmlTemplatePath,
-      isQuiet: true,
-    })
-
-    logMessage('http://localhost:3000/')
+export const sandbox = (...args: string[]) => {
+  const runSandbox = RunApp({
+    name: 'Sandbox',
+    entryPointPath: 'tasks/sandbox/index.tsx',
+    htmlTemplatePath: 'packages/revert/sandbox/templates/dev.html',
   })
+
+  return sequence(
+    syncState,
+    runSandbox(...args)
+  )
+}
 
 export const rebox = (platform: 'ios'| 'android') =>
   plugin(platform, () => async () => {
@@ -76,11 +86,6 @@ export const rebox = (platform: 'ios'| 'android') =>
       })
     }
   })
-
-export const sandbox = Sandbox({
-  entryPointPath: 'tasks/sandbox/App.tsx',
-  htmlTemplatePath: 'tasks/sandbox/templates/dev.html',
-})
 
 export const run = (file: string) =>
   plugin('main', () => async () => {

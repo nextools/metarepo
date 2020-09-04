@@ -1,0 +1,27 @@
+{
+  "name": "@start/plugin-concurrent",
+  "version": "0.0.0",
+  "description": "🔀 Run plugins concurrently",
+  "keywords": "tasks, runner, start, start-plugin, concurrency",
+  "repository": "deepsweet/start",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.2",
+    "@start/plugin": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0"
+  }
+}
