@@ -38,6 +38,7 @@
     "@start/plugin-lib-tape": "^3.0.0",
     "@start/plugin-lib-typescript-check": "^3.0.0",
     "@start/plugin-lib-typescript-generate": "^4.0.0",
+    "@start/plugin-concurrent": "^0.0.0",
     "@start/plugin-overwrite": "^2.0.0",
     "@start/plugin-parallel": "^2.0.0",
     "@start/plugin-read": "^2.0.0",
