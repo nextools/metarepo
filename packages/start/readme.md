@@ -281,6 +281,7 @@ $ yarn start ci
 #### Misc
 
 * ⏩ [plugin-sequence](plugin-sequence) – run plugins in sequence
+* 🔀 [plugin-concurrent](plugin-concurrent) – run plugins concurrently
 * 🔀 [plugin-parallel](plugin-parallel) – run tasks as parallel child processes with same agruments
 * 🔂 [plugin-xargs](plugin-xargs) – run task as parallel child process for each argument
 * 🐣 [plugin-spawn](plugin-spawn) – spawn new child process
