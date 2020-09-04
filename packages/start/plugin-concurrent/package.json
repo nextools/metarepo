@@ -1,6 +1,6 @@
 {
   "name": "@start/plugin-concurrent",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "🔀 Run plugins concurrently",
   "keywords": "tasks, runner, start, start-plugin, concurrency",
   "repository": "deepsweet/start",

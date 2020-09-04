@@ -1,3 +1,7 @@
+## v6.0.1
+
+* 🐞 fix finding iOS Simulator device
+
 ## v6.0.0
 
 * 💥 drop Node.js v10

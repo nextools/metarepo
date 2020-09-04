@@ -1,3 +1,11 @@
+## v0.5.0
+
+* 🌱 add `RunApp` and `BuildApp` task factories
+
+* 🐞 skip replacing content of binary files in `pkg` task
+
+* ♻️ update dependencies `@rebox/ios`, `@start/plugin-concurrent`
+
 ## v0.4.0
 
 * 💥 drop Node.js v10
