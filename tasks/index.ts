@@ -5,6 +5,7 @@ import {
   CheckReactSnapshots,
   CheckReactNativeSnapshots,
   Pkg,
+  RunApp,
 } from '@nextools/start-preset'
 import plugin from '@start/plugin'
 import { Sandbox } from './sandbox'
@@ -31,20 +32,11 @@ export const pkg = Pkg({
   },
 })
 
-export const graphiq = () =>
-  plugin('demo', ({ logMessage }) => async () => {
-    const { runWebApp } = await import('@rebox/web')
-    const entryPointPath = './tasks/graphiq/index.tsx'
-    const htmlTemplatePath = './tasks/graphiq/index.html'
-
-    await runWebApp({
-      entryPointPath,
-      htmlTemplatePath,
-      isQuiet: true,
-    })
-
-    logMessage('http://localhost:3000/')
-  })
+export const graphiq = RunApp({
+  name: 'Graphiq',
+  entryPointPath: 'tasks/graphiq/index.tsx',
+  htmlTemplatePath: 'packages/graphiq/templates/dev.html',
+})
 
 export const rebox = (platform: 'ios'| 'android') =>
   plugin(platform, () => async () => {
