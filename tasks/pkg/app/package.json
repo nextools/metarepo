@@ -1,0 +1,35 @@
+{
+  "name": "$name$",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "browser": "src/index.tsx",
+  "react-native": "src/index.tsx",
+  "appName": "$appName$",
+  "buildAssets": {
+    "assets/*": "assets/",
+    "templates/*": "templates/"
+  },
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@revert/background": "0.1.0",
+    "@revert/button": "^0.1.0",
+    "@revert/root": "^0.2.0",
+    "@revert/layout": "^0.1.0",
+    "@revert/text": "^0.1.1",
+    "react": "16.13.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "refun": "^3.0.1",
+    "tsfn": "^2.0.0",
+    "typeon": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.6"
+  }
+}

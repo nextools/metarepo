@@ -26,6 +26,9 @@ export const pkg = Pkg({
     $exportedName$: null,
     $year$: String(new Date().getFullYear()),
   },
+  app: {
+    $year$: String(new Date().getFullYear()),
+  },
 })
 
 export const graphiq = () =>
