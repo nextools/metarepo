@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import {
   CheckChromiumScreenshots,
   CheckIosScreenshots,
@@ -8,7 +9,8 @@ import {
   RunApp,
 } from '@nextools/start-preset'
 import plugin from '@start/plugin'
-import { Sandbox } from './sandbox'
+import sequence from '@start/plugin-sequence'
+import syncState from './sandbox/plugins/sync-state'
 
 const shouldBailout = Boolean(process.env.CI)
 
@@ -37,6 +39,19 @@ export const graphiq = RunApp({
   entryPointPath: 'tasks/graphiq/index.tsx',
   htmlTemplatePath: 'packages/graphiq/templates/dev.html',
 })
+
+export const sandbox = (...args: string[]) => {
+  const runSandbox = RunApp({
+    name: 'Sandbox',
+    entryPointPath: 'tasks/sandbox/index.tsx',
+    htmlTemplatePath: 'packages/revert/sandbox/templates/dev.html',
+  })
+
+  return sequence(
+    syncState,
+    runSandbox(...args)
+  )
+}
 
 export const rebox = (platform: 'ios'| 'android') =>
   plugin(platform, () => async () => {
@@ -71,11 +86,6 @@ export const rebox = (platform: 'ios'| 'android') =>
       })
     }
   })
-
-export const sandbox = Sandbox({
-  entryPointPath: 'tasks/sandbox/App.tsx',
-  htmlTemplatePath: 'tasks/sandbox/templates/dev.html',
-})
 
 export const run = (file: string) =>
   plugin('main', () => async () => {

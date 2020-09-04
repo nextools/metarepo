@@ -6,6 +6,9 @@
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
+  "buildAssets": {
+    "templates/*": "templates/"
+  },
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
