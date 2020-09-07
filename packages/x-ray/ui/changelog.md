@@ -1,3 +1,11 @@
+## v3.1.0
+
+* 🌱 sort element by tab
+
+* 🐞 fix size issue
+
+* 🐞 fix checkbox ui
+
 ## v3.0.2
 
 * 🐞 replace `primitives` with `revert`
