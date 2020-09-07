@@ -7,7 +7,7 @@ const inspect = (arg: any): string => util.inspect(arg, false, null, true)
 
 const compare = (a: any, b: any) => {
   try {
-    assert.deepEqual(a, b)
+    assert.deepStrictEqual(a, b)
   } catch {
     throw `${inspect(a)} is not equal to ${inspect(b)}`
   }
