@@ -2,13 +2,13 @@ import { PrimitiveImage as Image } from '@revert/image'
 import type { TListItems } from '@x-ray/core'
 import React, { Fragment } from 'react'
 import { component, startWithType, mapHandlers, onUpdate, mapState } from 'refun'
-import { actionLoadList, actionSave } from '../../actions'
+import { actionLoadList, actionSave, actionTab } from '../../actions'
 import { COL_SPACE, COLOR_LIGHT_GREY, COLOR_DM_BLACK } from '../../config'
 import { ThemeContext } from '../../context/Theme'
 // @ts-ignore
 import noSignalImage from '../../images/no-signal.png'
 import { mapStoreState, mapStoreDispatch } from '../../store'
-import type { TSize, TType } from '../../types'
+import type { TSize, TType, TTypeVariants } from '../../types'
 import { Background } from '../Background'
 import { Block } from '../Block'
 import { Popup } from '../Popup'
@@ -22,41 +22,83 @@ const isSnapshots = (items: any, type: TType | null): items is TListItems => typ
 
 export type TMain = TSize
 
-export const Main = component(
-  startWithType<TMain>(),
-  mapStoreState(({ type, selectedItem, files, items, discardedItems, filteredFiles, isSaved }) => ({
-    type,
-    selectedItem,
-    files,
-    items,
-    discardedItems,
-    filteredFiles,
-    isSaved,
-    elements: Object.keys(items).reduce((acc, key) => {
-      if (items[key].type === 'NEW') {
-        return {
-          ...acc,
-          new: acc.new + 1,
-        }
-      } else if (items[key].type === 'DIFF') {
-        return {
-          ...acc,
-          diff: acc.diff + 1,
-        }
-      } else if (items[key].type === 'DELETED') {
-        return {
-          ...acc,
-          deleted: acc.deleted + 1,
-        }
-      }
+type TSortedDataResult = {
+  items: TListItems,
+  elements: {
+    new: number,
+    diff: number,
+    deleted: number,
+  },
+}
 
-      return acc
-    }, {
+const getSortedData = (activeTab: TTypeVariants | null, items: TListItems): TSortedDataResult => {
+  return Object.keys(items).reduce((acc, key) => {
+    let data = acc
+
+    if (!activeTab || activeTab && items[key].type === activeTab.toUpperCase()) {
+      data = {
+        ...acc,
+        items: {
+          ...acc.items,
+          [key]: items[key],
+        },
+      }
+    }
+
+    if (items[key].type === 'NEW') {
+      data = {
+        ...data,
+        elements: {
+          ...data.elements,
+          new: data.elements.new + 1,
+        },
+      }
+    } else if (items[key].type === 'DIFF') {
+      data = {
+        ...data,
+        elements: {
+          ...data.elements,
+          diff: data.elements.diff + 1,
+        },
+      }
+    } else if (items[key].type === 'DELETED') {
+      data = {
+        ...data,
+        elements: {
+          ...data.elements,
+          deleted: data.elements.deleted + 1,
+        },
+      }
+    }
+
+    return data
+  }, {
+    items: {},
+    elements: {
       new: 0,
       diff: 0,
       deleted: 0,
-    }),
-  }), ['selectedItem', 'files', 'items', 'type', 'discardedItems', 'filteredFiles', 'isSaved']),
+    },
+  })
+}
+
+export const Main = component(
+  startWithType<TMain>(),
+  mapStoreState(({ activeTab, type, selectedItem, files, items, discardedItems, filteredFiles, isSaved }) => {
+    const { items: sortedItems, elements } = getSortedData(activeTab, items)
+
+    return {
+      activeTab,
+      type,
+      selectedItem,
+      files,
+      items: sortedItems,
+      discardedItems,
+      filteredFiles,
+      isSaved,
+      elements,
+    }
+  }, ['activeTab', 'selectedItem', 'files', 'items', 'type', 'discardedItems', 'filteredFiles', 'isSaved']),
   mapStoreDispatch('dispatch'),
   mapState('darkMode', 'setDarkMode', () => false, []),
   onUpdate(({ dispatch }) => {
@@ -71,23 +113,28 @@ export const Main = component(
         await dispatch(actionSave(itemKeys, discardedItems))
       }
     },
+    onTab: ({ dispatch }) => (type) => {
+      dispatch(actionTab(type))
+    },
     onToggleTheme: ({ darkMode, setDarkMode }) => () => {
       setDarkMode(!darkMode)
     },
   })
 )(({
-  width,
-  height,
-  selectedItem,
-  items,
-  elements,
-  discardedItems,
-  filteredFiles,
-  files,
-  type,
+  activeTab,
   darkMode,
+  discardedItems,
+  elements,
+  files,
+  filteredFiles,
+  height,
   isSaved,
+  items,
+  selectedItem,
+  type,
+  width,
   onSave,
+  onTab,
   onToggleTheme,
 }) => {
   if (isSaved) {
@@ -112,9 +159,11 @@ export const Main = component(
           filteredFiles={filteredFiles}
         />
         <Controls
-          width={width}
+          activeTab={activeTab}
           elements={elements}
+          width={width}
           onSave={onSave}
+          onTab={onTab}
         />
         <Block
           top={CONTROLS_HEIGHT}

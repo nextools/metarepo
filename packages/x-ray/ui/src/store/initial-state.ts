@@ -1,12 +1,13 @@
 import type { TState } from '../types'
 
 export const initialState: TState = {
-  isSaved: false,
-  isLoading: false,
-  type: null,
-  selectedItem: null,
-  files: [],
-  items: {},
+  activeTab: null,
   discardedItems: [],
+  files: [],
   filteredFiles: [],
+  isLoading: false,
+  isSaved: false,
+  items: {},
+  selectedItem: null,
+  type: null,
 }
