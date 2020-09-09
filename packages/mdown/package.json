@@ -1,8 +1,11 @@
 {
   "name": "mdown",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Markdown to React",
-  "keywords": ["markdown", "react"],
+  "keywords": [
+    "markdown",
+    "react"
+  ],
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
