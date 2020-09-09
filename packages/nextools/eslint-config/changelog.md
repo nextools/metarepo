@@ -1,3 +1,7 @@
+## v0.5.1
+
+* 🐞 upgrade typescript-eslint deps
+
 ## v0.5.0
 
 * 💥 tweak rules
