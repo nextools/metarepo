@@ -4,7 +4,6 @@ import type { FC } from 'react'
 import type { TRequiredKeys, TOptionalKeys } from 'tsfn'
 import type { TJsonMap } from 'typeon'
 import type { TPopoverPlugin, TComponentWrapperPlugin } from './components/plugin-provider/types'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { SYMBOL_CONTROL_COLOR, SYMBOL_CONTROL_SWITCH, SYMBOL_CONTROL_DROPDOWN } from './symbols'
 
 export type TApp = {
