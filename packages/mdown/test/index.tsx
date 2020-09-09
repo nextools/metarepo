@@ -532,6 +532,9 @@ test('mdown: list + listItem', (t) => {
     em: ({ children }) => (
       <em>{ children }</em>
     ),
+    strong: ({ children }) => (
+      <strong>{ children }</strong>
+    ),
     text: ({ children }) => (
       <span>{ children }</span>
     ),
@@ -545,7 +548,10 @@ test('mdown: list + listItem', (t) => {
           <span>item 1</span>
         </li>
         <li>
-            <span>item **2**</span>
+            <span>item </span>
+            <strong>
+              <span>2</span>
+            </strong>
             <ol>
                 <li>
                   <span>item 2.1</span>

@@ -228,6 +228,10 @@ export const markdownToReact = (makrdown: string, config: TMarkdownToReactConfig
               throw new Error('Token type "text" is unhandled')
             }
 
+            if (Array.isArray(token.tokens)) {
+              return mapTokens(token.tokens)
+            }
+
             return (
               <config.text key={i}>
                 { token.text }
