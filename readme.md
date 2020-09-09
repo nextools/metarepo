@@ -21,6 +21,7 @@ Check the individual documentations for more details:
 * [import-wasm](packages/import-wasm): async/sync helpers to import `.wasm` modules in Node.js
 * [iterama](packages/iterama): composable functional (async) iterable helpers
 * [makethen](packages/makethen): strongly typed (up to 3 arguments and 3 result params) promisify for Node.js-style callbacks
+* [mdown](packages/mdown): markdown to React
 * [mnth](packages/mnth): framework-agnostic base block to build calendars, datepickers, etc by rendering 2d array of Dates
 * [@mock](packages/mock): `require`, `fs`, `request` and `global` mocking libraries
 * [move-path](packages/move-path): move path to destination folder
