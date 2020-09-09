@@ -8,6 +8,8 @@ export const InlineBlock = component(
   startWithType<TInlineBlock>(),
   mapContext(LayoutContext)
 )(({
+  _x,
+  _y,
   _left,
   _top,
   _width,
@@ -30,7 +32,24 @@ export const InlineBlock = component(
     onHeightChange={_onHeightChange}
     shouldPreventWrap={shouldPreventWrap}
   >
-    {children}
+    <LayoutContext.Provider
+      value={{
+        _x,
+        _y,
+        _left: 0,
+        _top: 0,
+        _width,
+        _height,
+        _parentTop: 0,
+        _parentLeft: 0,
+        _parentWidth: _width,
+        _parentHeight: _height,
+        _maxWidth,
+        _maxHeight,
+      }}
+    >
+      {children}
+    </LayoutContext.Provider>
   </Size>
 ))
 
