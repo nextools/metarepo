@@ -17,6 +17,7 @@
     "packages/import-wasm",
     "packages/iterama",
     "packages/makethen",
+    "packages/mdown",
     "packages/mnth",
     "packages/mock/*",
     "packages/move-path",

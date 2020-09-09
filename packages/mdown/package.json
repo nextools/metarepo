@@ -1,0 +1,34 @@
+{
+  "name": "mdown",
+  "version": "0.0.0",
+  "description": "Markdown to React",
+  "keywords": ["markdown", "react"],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "marked": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/dedent": "^0.7.0",
+    "@types/marked": "^1.1.0",
+    "@types/react": "^16.9.49",
+    "@types/tape": "^4.2.34",
+    "dedent": "^0.7.0",
+    "react-dom": "^16.13.1",
+    "react": "^16.13.1",
+    "tape": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1"
+  }
+}
