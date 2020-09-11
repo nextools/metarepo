@@ -1,6 +1,13 @@
+export type TImageContext = {
+  onImageLoad?: () => void,
+  onImageError?: () => void,
+}
+
 export type TImage = {
   id?: string,
   alt?: string,
+  width?: number,
+  height?: number,
   source: string,
   resizeMode?: 'cover' | 'contain',
   radius?: number,
@@ -13,6 +20,6 @@ export type TImage = {
 }
 
 export type TPrimitiveImage = TImage & {
-  width: number,
-  height: number,
+  width?: number,
+  height?: number,
 }

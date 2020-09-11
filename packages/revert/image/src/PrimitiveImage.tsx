@@ -1,11 +1,14 @@
 import React from 'react'
 import type { CSSProperties } from 'react'
-import { component, startWithType, mapWithProps } from 'refun'
+import { component, startWithType, mapWithProps, mapContext, mapHandlers } from 'refun'
+import { ImageContext } from './ImageContext'
 import type { TPrimitiveImage } from './types'
 
 export const PrimitiveImage = component(
   startWithType<TPrimitiveImage>(),
   mapWithProps(({
+    width,
+    height,
     bottomLeftRadius,
     bottomRightRadius,
     topLeftRadius,
@@ -20,19 +23,32 @@ export const PrimitiveImage = component(
       borderTopLeftRadius: topLeftRadius,
       borderTopRightRadius: topRightRadius,
       objectFit: resizeMode,
+      width,
+      height,
+      verticalAlign: 'bottom',
+      display: 'inline-block',
     }
 
     return {
       style,
     }
+  }),
+  mapContext(ImageContext),
+  mapHandlers({
+    onLoad: ({ onImageLoad, onLoad }) => () => {
+      onLoad?.()
+      onImageLoad?.()
+    },
+    onError: ({ onImageError, onError }) => () => {
+      onError?.()
+      onImageError?.()
+    },
   })
-)(({ alt, source, id, height, width, style, onLoad, onError }) => (
+)(({ alt, source, id, style, onLoad, onError }) => (
   <img
     id={id}
     alt={alt}
     src={source}
-    height={height}
-    width={width}
     style={style}
     onLoad={onLoad}
     onError={onError}

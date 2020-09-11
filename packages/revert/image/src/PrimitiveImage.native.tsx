@@ -1,12 +1,15 @@
 import React from 'react'
 import { Image as NativeImage } from 'react-native'
 import type { ImageStyle } from 'react-native'
-import { component, startWithType, mapWithProps } from 'refun'
+import { component, startWithType, mapWithProps, mapContext, mapHandlers } from 'refun'
+import { ImageContext } from './ImageContext'
 import type { TPrimitiveImage } from './types'
 
-export const Image = component(
+export const PrimitiveImage = component(
   startWithType<TPrimitiveImage>(),
   mapWithProps(({
+    width,
+    height,
     radius,
     bottomLeftRadius,
     bottomRightRadius,
@@ -21,11 +24,24 @@ export const Image = component(
       borderTopLeftRadius: topLeftRadius,
       borderTopRightRadius: topRightRadius,
       resizeMode,
+      width,
+      height,
     }
 
     return {
       style,
     }
+  }),
+  mapContext(ImageContext),
+  mapHandlers({
+    onLoad: ({ onImageLoad, onLoad }) => () => {
+      onLoad?.()
+      onImageLoad?.()
+    },
+    onError: ({ onImageError, onError }) => () => {
+      onError?.()
+      onImageError?.()
+    },
   })
 )(({ source, id, height, width, style, onLoad, onError }) => (
   <NativeImage
@@ -42,4 +58,4 @@ export const Image = component(
   />
 ))
 
-Image.displayName = 'Image'
+PrimitiveImage.displayName = 'PrimitiveImage'
