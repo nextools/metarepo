@@ -1,5 +1,3 @@
-import type { ReactElement } from 'react'
-
 export type TSize = {
   left?: number,
   top?: number,
@@ -10,5 +8,4 @@ export type TSize = {
   shouldPreventWrap?: boolean,
   onWidthChange?: (width: number) => void,
   onHeightChange?: (height: number) => void,
-  children: ReactElement,
 }
