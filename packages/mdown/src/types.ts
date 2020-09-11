@@ -147,6 +147,7 @@ export type TComponentLink = {
 }
 
 export type TComponentList = {
+  depth: number,
   isOrdered: boolean,
   children: ReactNode,
 }

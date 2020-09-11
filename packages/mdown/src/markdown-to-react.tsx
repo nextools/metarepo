@@ -9,7 +9,7 @@ export const markdownToReact = (makrdown: string, config: TMarkdownToReactConfig
     breaks: false,
   }) as TToken[]
 
-  const mapTokens = (tokens: TToken[]): ReactNode => {
+  const mapTokens = (tokens: TToken[], depth = 0): ReactNode => {
     return tokens
       .filter((token) => token.type !== 'space')
       .map((token, i) => {
@@ -128,8 +128,12 @@ export const markdownToReact = (makrdown: string, config: TMarkdownToReactConfig
             }
 
             return (
-              <config.list key={i} isOrdered={token.ordered}>
-                { mapTokens(token.items) }
+              <config.list
+                key={i}
+                isOrdered={token.ordered}
+                depth={depth}
+              >
+                { mapTokens(token.items, depth) }
               </config.list>
             )
           }
@@ -145,7 +149,7 @@ export const markdownToReact = (makrdown: string, config: TMarkdownToReactConfig
                 isTask={token.task}
                 isChecked={Boolean(token.checked)}
               >
-                { mapTokens(token.tokens) }
+                { mapTokens(token.tokens, depth + 1) }
               </config.listItem>
             )
           }
