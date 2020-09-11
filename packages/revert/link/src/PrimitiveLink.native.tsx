@@ -1,4 +1,3 @@
-import { PrimitiveText } from '@revert/text'
 import React from 'react'
 import { Linking, TouchableWithoutFeedback } from 'react-native'
 import { component, mapHandlers, startWithType } from 'refun'
@@ -19,17 +18,6 @@ export const PrimitiveLink = component(
   })
 )(({
   id,
-  color,
-  fontFamily,
-  fontSize,
-  fontWeight,
-  isUnderlined,
-  letterSpacing,
-  lineHeight,
-  shouldHideOverflow,
-  shouldPreserveWhitespace,
-  shouldPreventSelection,
-  shouldPreventWrap,
   isDisabled,
   children,
   onBlur,
@@ -39,6 +27,7 @@ export const PrimitiveLink = component(
   onPressOut,
 }) => (
   <TouchableWithoutFeedback
+    testID={id}
     disabled={isDisabled}
     onPress={onPress}
     onPressIn={onPressIn}
@@ -46,22 +35,7 @@ export const PrimitiveLink = component(
     onFocus={onFocus}
     onBlur={onBlur}
   >
-    <PrimitiveText
-      id={id}
-      color={color}
-      fontFamily={fontFamily}
-      fontSize={fontSize}
-      fontWeight={fontWeight}
-      isUnderlined={isUnderlined}
-      letterSpacing={letterSpacing}
-      lineHeight={lineHeight}
-      shouldHideOverflow={shouldHideOverflow}
-      shouldPreserveWhitespace={shouldPreserveWhitespace}
-      shouldPreventSelection={shouldPreventSelection}
-      shouldPreventWrap={shouldPreventWrap}
-    >
-      {children}
-    </PrimitiveText>
+    {children}
   </TouchableWithoutFeedback>
 ))
 

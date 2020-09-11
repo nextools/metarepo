@@ -14,7 +14,6 @@
   "sideEffects": false,
   "dependencies": {
     "@revert/block": "^0.2.0",
-    "@revert/text": "^0.1.1",
     "refun": "^3.0.1",
     "tsfn": "^2.0.0"
   },
