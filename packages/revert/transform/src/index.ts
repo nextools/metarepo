@@ -1,2 +1,2 @@
 export * from './PrimitiveTransform'
-export * from './types'
+export type { TTransform } from './types'

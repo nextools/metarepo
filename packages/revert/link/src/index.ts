@@ -1,3 +1,3 @@
 export * from './Link'
 export * from './PrimitiveLink'
-export * from './types'
+export type { TLink } from './types'

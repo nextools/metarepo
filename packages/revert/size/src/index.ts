@@ -1,2 +1,2 @@
 export * from './Root'
-export * from './types'
+export type { TSize } from './types'

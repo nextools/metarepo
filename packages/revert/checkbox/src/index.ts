@@ -1,3 +1,6 @@
 export * from './PrimitiveCheckbox'
 export * from './Checkbox'
-export * from './types'
+export type {
+  TCheckbox,
+  TPrimitiveCheckbox,
+} from './types'

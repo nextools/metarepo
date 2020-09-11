@@ -1,3 +1,3 @@
 export * from './PrimitiveText'
 export * from './Text'
-export * from './types'
+export type { TText } from './types'

@@ -1,3 +1,6 @@
 export * from './Label'
 export * from './PrimitiveLabel'
-export * from './types'
+export type {
+  TLabel,
+  TPrimitiveLabel,
+} from './types'
