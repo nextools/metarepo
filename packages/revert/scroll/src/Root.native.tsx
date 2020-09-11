@@ -1,9 +1,9 @@
 import { LayoutContext } from '@revert/layout'
 import React from 'react'
-import { View } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import type { ViewStyle } from 'react-native'
-import { component, startWithType, mapContext, mapState, mapDefaultProps, mapHandlers, mapWithProps } from 'refun'
-import { isNumber } from 'tsfn'
+import { component, startWithType, mapContext, mapDefaultProps, mapHandlers, mapWithProps, mapStateRef } from 'refun'
+import { isFunction, isNumber } from 'tsfn'
 import type { TScroll } from './types'
 
 export const Scroll = component(
@@ -14,39 +14,39 @@ export const Scroll = component(
     shouldScrollToBottom: false,
   }),
   mapContext(LayoutContext),
-  mapState('contentWidth', 'onContentWidthChange', () => 0, []),
-  mapState('contentHeight', 'onContentHeightChange', () => 0, []),
+  mapStateRef('contentWidthRef', 'flushWidthChange', () => 0, []),
+  mapStateRef('contentHeightRef', 'flushHeightChange', () => 0, []),
   mapHandlers({
-    onWidthChange: ({ onContentWidthChange, _maxWidth, _onWidthChange }) => (value: number) => {
-      onContentWidthChange(value)
-      _onWidthChange?.(isNumber(_maxWidth) && _maxWidth > 0 ? Math.min(_maxWidth, value) : value)
+    onWidthChange: ({ contentWidthRef, flushWidthChange, _maxWidth, _onWidthChange }) => (value: number) => {
+      contentWidthRef.current = value
+
+      if (isFunction(_onWidthChange)) {
+        _onWidthChange(isNumber(_maxWidth) && _maxWidth > 0 ? Math.min(_maxWidth, value) : value)
+      } else {
+        flushWidthChange()
+      }
     },
-    onHeightChange: ({ onContentHeightChange, _maxHeight, _onHeightChange }) => (value: number) => {
-      onContentHeightChange(value)
-      _onHeightChange?.(isNumber(_maxHeight) && _maxHeight > 0 ? Math.min(_maxHeight, value) : value)
+    onHeightChange: ({ contentHeightRef, flushHeightChange, _maxHeight, _onHeightChange }) => (value: number) => {
+      contentHeightRef.current = value
+
+      if (isFunction(_onHeightChange)) {
+        _onHeightChange(isNumber(_maxHeight) && _maxHeight > 0 ? Math.min(_maxHeight, value) : value)
+      } else {
+        flushHeightChange()
+      }
     },
   }),
-  mapWithProps(({ _left, _top, _width, _height, contentWidth, contentHeight, shouldScrollHorizontally, shouldScrollVertically }) => {
+  mapWithProps(({ _left, _top, _width, _height, contentWidthRef, contentHeightRef }) => {
     const wrapperStyle: ViewStyle = {
-      display: 'flex',
       position: 'absolute',
       left: _left,
       top: _top,
       width: _width,
       height: _height,
-      overflow: 'hidden',
     }
     const childStyle: ViewStyle = {
-      width: contentWidth,
-      height: contentHeight,
-    }
-
-    if (shouldScrollHorizontally) {
-      wrapperStyle.overflow = 'scroll'
-    }
-
-    if (shouldScrollVertically) {
-      wrapperStyle.overflow = 'scroll'
+      width: contentWidthRef.current,
+      height: contentHeightRef.current,
     }
 
     return {
@@ -59,8 +59,8 @@ export const Scroll = component(
   _y,
   _width,
   _height,
-  contentWidth,
-  contentHeight,
+  contentWidthRef,
+  contentHeightRef,
   onWidthChange,
   onHeightChange,
   wrapperStyle,
@@ -69,7 +69,7 @@ export const Scroll = component(
   shouldScrollVertically,
   children,
 }) => (
-  <View style={wrapperStyle}>
+  <ScrollView style={wrapperStyle}>
     <View style={childStyle}/>
     <LayoutContext.Provider
       value={{
@@ -81,15 +81,15 @@ export const Scroll = component(
         _parentHeight: _height,
         _left: 0,
         _top: 0,
-        _width: shouldScrollHorizontally ? contentWidth : _width,
-        _height: shouldScrollVertically ? contentHeight : _height,
+        _width: shouldScrollHorizontally ? contentWidthRef.current : _width,
+        _height: shouldScrollVertically ? contentHeightRef.current : _height,
         _onWidthChange: shouldScrollHorizontally ? onWidthChange : undefined,
         _onHeightChange: shouldScrollVertically ? onHeightChange : undefined,
       }}
     >
       {children}
     </LayoutContext.Provider>
-  </View>
+  </ScrollView>
 ))
 
 Scroll.displayName = 'Scroll'
