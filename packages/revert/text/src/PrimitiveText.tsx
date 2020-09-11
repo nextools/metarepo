@@ -14,7 +14,9 @@ export const PrimitiveText = component(
     fontFamily,
     fontWeight,
     fontSize,
-    isUnderlined = false,
+    isUnderline = false,
+    isItalic = false,
+    isStrikeThrough = false,
     shouldPreserveWhitespace = false,
     shouldPreventSelection = false,
     shouldPreventWrap = false,
@@ -63,8 +65,16 @@ export const PrimitiveText = component(
       style.lineHeight = `${lineHeight}px`
     }
 
-    if (isUnderlined) {
+    if (isUnderline && isStrikeThrough) {
+      style.textDecorationLine = 'underline line-through'
+    } else if (isUnderline) {
       style.textDecoration = 'underline'
+    } else if (isStrikeThrough) {
+      style.textDecoration = 'line-through'
+    }
+
+    if (isItalic) {
+      style.fontStyle = 'italic'
     }
 
     return {
