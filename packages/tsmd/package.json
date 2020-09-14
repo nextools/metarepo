@@ -1,0 +1,23 @@
+{
+  "name": "tsmd",
+  "version": "0.0.0",
+  "description": "TypeScript to Markdown",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0"
+  },
+  "dependencies": {
+    "typescript": "^4.0.2"
+  }
+}

@@ -41,6 +41,7 @@
     "packages/syntx",
     "packages/tarmap",
     "packages/tsfn",
+    "packages/tsmd",
     "packages/typeon",
     "packages/unchunk",
     "packages/weslint",
