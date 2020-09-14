@@ -18,7 +18,7 @@
     "@babel/preset-typescript": "^7.9.0",
     "@babel/runtime": "^7.8.4",
     "babel-loader": "^8.0.6",
-    "compression-webpack-plugin": "^5.0.0",
+    "compression-webpack-plugin": "^6.0.0",
     "core-js": "^3.1.4",
     "file-loader": "^6.0.0",
     "memfs": "^3.1.1",
