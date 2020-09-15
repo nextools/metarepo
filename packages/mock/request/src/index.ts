@@ -1,22 +1,16 @@
-import { unlinkSync } from 'fs'
+import { unlinkSync, realpathSync } from 'fs'
 import http from 'http'
 import type { RequestListener, RequestOptions } from 'http'
+import { tmpdir } from 'os'
 import path from 'path'
 import { mockRequire } from '@mock/require'
 import getCallerFile from 'get-caller-file'
-import onExit from 'signal-exit'
-import tempy from 'tempy'
+import { nanoid } from 'nanoid'
 
 export const mockRequest = (file: string, callback: RequestListener): () => void => {
-  const socketPath = tempy.file({ extension: 'sock' })
-
-  onExit((code) => {
-    if (code === null || code > 0) {
-      try {
-        unlinkSync(socketPath)
-      } catch {}
-    }
-  })
+  const tmpDir = realpathSync(tmpdir())
+  const uid = nanoid(32)
+  const socketPath = path.join(tmpDir, `${uid}.sock`)
 
   const server = http.createServer((req, res) => {
     const { $mockurl$, ...headers } = req.headers
@@ -109,5 +103,9 @@ export const mockRequest = (file: string, callback: RequestListener): () => void
   return () => {
     server.close()
     unmockImport()
+
+    try {
+      unlinkSync(socketPath)
+    } catch {}
   }
 }
