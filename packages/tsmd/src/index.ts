@@ -44,9 +44,12 @@ export const tsToMd = async (filePath: string): Promise<TResult[]> => {
         })
 
         if (doc !== null || hasInlineDoc) {
+          const typeName = typeNode.name.getText()
+          const typeBody = typeNode.type.getText()
+
           const result: TResult = {
             type: 'type-alias',
-            source: node.getText(),
+            source: `type ${typeName} = ${typeBody}`,
           }
 
           if (doc !== null) {

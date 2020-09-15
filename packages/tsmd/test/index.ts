@@ -121,7 +121,7 @@ test('tsmd: type alias + description', async (t) => {
     [
       {
         type: 'type-alias',
-        source: 'export type TTest = {\n  foo: string,\n  bar: number,\n}',
+        source: 'type TTest = {\n  foo: string,\n  bar: number,\n}',
         doc: {
           description: 'Description line 1.\nDescription line 2.',
         },
@@ -140,7 +140,7 @@ test('tsmd: type alias + description + tags', async (t) => {
     [
       {
         type: 'type-alias',
-        source: 'export type TTest = {\n  foo: string,\n  bar: number,\n}',
+        source: 'type TTest = {\n  foo: string,\n  bar: number,\n}',
         doc: {
           description: 'Description line 1.\nDescription line 2.',
           tags: [
@@ -164,7 +164,7 @@ test('tsmd: type alias + description + inline', async (t) => {
     [
       {
         type: 'type-alias',
-        source: 'export type TTest = {\n  /** inline description */\n  foo: string,\n  bar: number,\n}',
+        source: 'type TTest = {\n  /** inline description */\n  foo: string,\n  bar: number,\n}',
         doc: {
           description: 'Description line 1.\nDescription line 2.',
         },
@@ -183,7 +183,7 @@ test('tsmd: type alias + inline', async (t) => {
     [
       {
         type: 'type-alias',
-        source: 'export type TTest = {\n  /** inline description */\n  foo: string,\n  bar: number,\n}',
+        source: 'type TTest = {\n  /** inline description */\n  foo: string,\n  bar: number,\n}',
       },
     ],
     'should work'
