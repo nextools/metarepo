@@ -1,8 +1,11 @@
 {
   "name": "tmpa",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Get unique temp file or dir path",
-  "keywords": ["tmp", "temp"],
+  "keywords": [
+    "tmp",
+    "temp"
+  ],
   "main": "src/index.ts",
   "repository": "nextools/metarepo",
   "license": "MIT",
