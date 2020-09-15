@@ -1,0 +1,26 @@
+{
+  "name": "tmpa",
+  "version": "0.0.0",
+  "description": "Get unique temp file or dir path",
+  "keywords": ["tmp", "temp"],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@mock/fs": "^0.2.0",
+    "@mock/require": "^0.2.1",
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0"
+  },
+  "dependencies": {
+    "nanoid": "^3.1.12",
+    "pifs": "^2.0.0"
+  }
+}

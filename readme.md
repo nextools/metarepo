@@ -42,6 +42,7 @@ Check the individual documentations for more details:
 * [@start](packages/start): functional, fast and shareable task runner
 * [stroki](packages/stroki): transform stream by reading it line by line
 * [syntx](packages/syntx): serialize React component into a flat array of typed elements to build a custom syntax highlighting
+* [tmpa](packages/tmpa): get unique temp file or dir path
 * [tsfn](packages/tsfn): set of strongly-typed helpers and various utility types
 * [typeon](packages/typeon): typed JSON parse and stringify for TypeScript
 * [unchunk](packages/unchunk): unchunk readable stream into Promise
