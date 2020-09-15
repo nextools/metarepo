@@ -18,6 +18,8 @@
     "tape": "^5.0.0"
   },
   "dependencies": {
+    "pifs": "^2.0.0",
+    "tsfn": "^2.0.0",
     "typescript": "^4.0.2"
   }
 }

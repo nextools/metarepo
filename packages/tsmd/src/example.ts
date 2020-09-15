@@ -7,7 +7,6 @@
  * @param x The first input number
  * @param y The second input number
  * @returns The arithmetic mean of `x` and `y`
- * @jopa sdfsdf
  *
  * @beta
  */
@@ -18,8 +17,8 @@ export const getAverage = (x: number, y: number): number => {
 /**
  * sfsdf
  */
-const a = {
-  foo: true,
+type a = {
+  foo: boolean,
   /** sdfsdf */
-  bar: 123,
+  bar: string,
 }

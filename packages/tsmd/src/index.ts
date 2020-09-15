@@ -1,6 +1,6 @@
 import { readFile } from 'pifs'
 import { isArray, isDefined } from 'tsfn'
-import type { Identifier, Node, VariableStatement } from 'typescript'
+import type { ArrowFunction, Identifier, Node, VariableStatement } from 'typescript'
 import { forEachChild, createSourceFile, ScriptTarget, SyntaxKind } from 'typescript'
 
 type TNode = Node & {
@@ -11,6 +11,7 @@ type TNode = Node & {
       name?: Identifier,
       comment?: string,
     }[],
+    getText: () => string,
   }[],
 }
 
@@ -71,16 +72,31 @@ export const tsToMd = async (filePath: string) => {
         const jsDoc = getJsDoc(node)
 
         if (jsDoc !== null) {
-          const variableName = (node as VariableStatement).declarationList.declarations[0].name.getText()
+          const varNode = node as VariableStatement
+          const decl = varNode.declarationList.declarations[0]
+          const variableName = decl.name.getText()
 
-          console.log(variableName)
-          console.log(jsDoc)
+          if (decl.initializer?.kind === SyntaxKind.ArrowFunction) {
+            const fnNode = decl.initializer as ArrowFunction
+            const paramTypes = fnNode.parameters.map((param) => param.getText())
+            const returnType = fnNode.type?.getText() ?? 'unknown'
+
+            console.log(jsDoc)
+            console.log(`const ${variableName}: (${paramTypes.join(', ')}) => ${returnType}`)
+          }
         }
+
+        return
       }
 
-      // case SyntaxKind.PropertyAssignment: {
+      case SyntaxKind.TypeAliasDeclaration: {
+        const jsDoc = getJsDoc(node)
 
-      // }
+        if (jsDoc !== null) {
+          console.log(jsDoc)
+          console.log(node.getText())
+        }
+      }
     }
 
     forEachChild(node, visit)
