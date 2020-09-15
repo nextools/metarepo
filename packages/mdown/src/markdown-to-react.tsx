@@ -3,6 +3,13 @@ import React from 'react'
 import type { ReactNode } from 'react'
 import type { TMarkdownToReactConfig, TToken } from './types'
 
+/**
+ * Convert Markdown string into React Node.
+ *
+ * @param markdown original Markdown string
+ * @param config configuration
+ * @returns ReactNode that needs to be wrapped into Fragment
+ */
 export const markdownToReact = (makrdown: string, config: TMarkdownToReactConfig): ReactNode => {
   const tokens = marked.lexer(makrdown, {
     gfm: true,

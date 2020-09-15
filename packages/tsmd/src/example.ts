@@ -14,10 +14,7 @@ export const getAverage = (x: number, y: number): number => {
   return (x + y) / 2.0
 }
 
-/**
- * sfsdf
- */
-type a = {
+export type TTest = {
   foo: boolean,
   /** sdfsdf */
   bar: string,
