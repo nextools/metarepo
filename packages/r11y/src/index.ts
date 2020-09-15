@@ -1,7 +1,7 @@
 import { buildWebAppRelease } from '@rebox/web'
 import dleet from 'dleet'
 import puppeteer from 'puppeteer-core'
-import tempy from 'tempy'
+import { getTempDirPath } from 'tmpa'
 import { runBrowser } from 'xrom'
 import { getErrors } from './get-errors'
 import { getNavigationFlow } from './get-navigation-flow'
@@ -11,14 +11,14 @@ import type { TGetA11yDataOptions, TA11Data } from './types'
 const INJECTED_BUILD_FOLDER_PATH = '/home/chromium/html'
 
 export const getA11yData = async (options: TGetA11yDataOptions): Promise<TA11Data> => {
-  const tempBuildDir = tempy.directory()
+  const tempBuildDirPath = await getTempDirPath()
   const { browserWSEndpoint, closeBrowser } = await runBrowser({
     browser: 'chromium',
     version: 'latest',
     fontsDir: options.fontsDir,
     mountVolumes: [
       {
-        from: tempBuildDir,
+        from: tempBuildDirPath,
         to: INJECTED_BUILD_FOLDER_PATH,
       },
     ],
@@ -27,7 +27,7 @@ export const getA11yData = async (options: TGetA11yDataOptions): Promise<TA11Dat
 
   await buildWebAppRelease({
     entryPointPath: options.entryPointPath,
-    outputPath: tempBuildDir,
+    outputPath: tempBuildDirPath,
     htmlTemplatePath: require.resolve('./app.html'),
     browsersList: ['last 1 Chrome version'],
     isQuiet: true,
@@ -47,7 +47,7 @@ export const getA11yData = async (options: TGetA11yDataOptions): Promise<TA11Dat
   await page.close()
   await browser.close()
   await closeBrowser()
-  await dleet(tempBuildDir)
+  await dleet(tempBuildDirPath)
 
   return {
     errors,

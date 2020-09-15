@@ -1,7 +1,7 @@
 import { buildWebAppRelease } from '@rebox/web'
 import dleet from 'dleet'
 import puppeteer from 'puppeteer-core'
-import tempy from 'tempy'
+import { getTempDirPath } from 'tmpa'
 import { getObjectEntries } from 'tsfn'
 import { runBrowser } from 'xrom'
 import { getPercentile } from './get-percentile'
@@ -23,7 +23,7 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
     triesCount: TRIES_COUNT,
     ...userOptions,
   }
-  const tempBuildDir = tempy.directory()
+  const tempBuildDirPath = await getTempDirPath()
   const { browserWSEndpoint, closeBrowser } = await runBrowser({
     browser: 'chromium',
     version: 'latest',
@@ -32,7 +32,7 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
     fontsDir: options.fontsDir,
     mountVolumes: [
       {
-        from: tempBuildDir,
+        from: tempBuildDirPath,
         to: INJECTED_BUILD_FOLDER_PATH,
       },
     ],
@@ -41,7 +41,7 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
 
   await buildWebAppRelease({
     entryPointPath: options.entryPointPath,
-    outputPath: tempBuildDir,
+    outputPath: tempBuildDirPath,
     htmlTemplatePath: require.resolve('./app.html'),
     browsersList: ['last 1 Chrome version'],
     isQuiet: true,
@@ -105,7 +105,7 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
 
   await browser.close()
   await closeBrowser()
-  await dleet(tempBuildDir)
+  await dleet(tempBuildDirPath)
 
   return getObjectEntries(result).reduce((acc, [key, value]) => {
     acc[key] = getPercentile(value.sort((a, b) => a - b), 0.5)
