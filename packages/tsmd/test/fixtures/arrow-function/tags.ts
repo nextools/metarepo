@@ -1,7 +1,4 @@
 /**
- * Description line 1.
- * Description line 2.
- *
  * @remarks
  * Remarks line 1.
  * Remarks line 2.
