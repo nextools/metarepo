@@ -1,9 +1,9 @@
 import test from 'tape'
-import { tsToMd } from '../src'
+import { parse } from '../src/parse'
 
-test('tsmd: arrow function + description + tags', async (t) => {
+test('tsmd: parse(): arrow function + description + tags', async (t) => {
   const fixturePath = require.resolve('./fixtures/arrow-function/description-tags.ts')
-  const result = await tsToMd(fixturePath)
+  const result = await parse(fixturePath)
 
   t.deepEqual(
     result,
@@ -27,9 +27,9 @@ test('tsmd: arrow function + description + tags', async (t) => {
   )
 })
 
-test('tsmd: arrow function + description', async (t) => {
+test('tsmd: parse(): arrow function + description', async (t) => {
   const fixturePath = require.resolve('./fixtures/arrow-function/description.ts')
-  const result = await tsToMd(fixturePath)
+  const result = await parse(fixturePath)
 
   t.deepEqual(
     result,
@@ -46,9 +46,9 @@ test('tsmd: arrow function + description', async (t) => {
   )
 })
 
-test('tsmd: arrow function + tags', async (t) => {
+test('tsmd: parse(): arrow function + tags', async (t) => {
   const fixturePath = require.resolve('./fixtures/arrow-function/tags.ts')
-  const result = await tsToMd(fixturePath)
+  const result = await parse(fixturePath)
 
   t.deepEqual(
     result,
@@ -71,9 +71,9 @@ test('tsmd: arrow function + tags', async (t) => {
   )
 })
 
-test('tsmd: arrow function + no return type', async (t) => {
+test('tsmd: parse(): arrow function + no return type', async (t) => {
   const fixturePath = require.resolve('./fixtures/arrow-function/no-return-type.ts')
-  const result = await tsToMd(fixturePath)
+  const result = await parse(fixturePath)
 
   t.deepEqual(
     result,
@@ -90,9 +90,9 @@ test('tsmd: arrow function + no return type', async (t) => {
   )
 })
 
-test('tsmd: arrow function + no doc', async (t) => {
+test('tsmd: parse(): arrow function + no doc', async (t) => {
   const fixturePath = require.resolve('./fixtures/arrow-function/no-doc.ts')
-  const result = await tsToMd(fixturePath)
+  const result = await parse(fixturePath)
 
   t.deepEqual(
     result,
@@ -101,9 +101,9 @@ test('tsmd: arrow function + no doc', async (t) => {
   )
 })
 
-test('tsmd: var but not arrow function', async (t) => {
+test('tsmd: parse(): var but not arrow function', async (t) => {
   const fixturePath = require.resolve('./fixtures/arrow-function/var-but-not-arrow-function.ts')
-  const result = await tsToMd(fixturePath)
+  const result = await parse(fixturePath)
 
   t.deepEqual(
     result,
@@ -112,9 +112,9 @@ test('tsmd: var but not arrow function', async (t) => {
   )
 })
 
-test('tsmd: type alias + description', async (t) => {
+test('tsmd: parse(): type alias + description', async (t) => {
   const fixturePath = require.resolve('./fixtures/type-alias/description.ts')
-  const result = await tsToMd(fixturePath)
+  const result = await parse(fixturePath)
 
   t.deepEqual(
     result,
@@ -131,9 +131,9 @@ test('tsmd: type alias + description', async (t) => {
   )
 })
 
-test('tsmd: type alias + description + tags', async (t) => {
+test('tsmd: parse(): type alias + description + tags', async (t) => {
   const fixturePath = require.resolve('./fixtures/type-alias/description-tags.ts')
-  const result = await tsToMd(fixturePath)
+  const result = await parse(fixturePath)
 
   t.deepEqual(
     result,
@@ -155,9 +155,9 @@ test('tsmd: type alias + description + tags', async (t) => {
   )
 })
 
-test('tsmd: type alias + description + inline', async (t) => {
+test('tsmd: parse(): type alias + description + inline', async (t) => {
   const fixturePath = require.resolve('./fixtures/type-alias/description-inline.ts')
-  const result = await tsToMd(fixturePath)
+  const result = await parse(fixturePath)
 
   t.deepEqual(
     result,
@@ -174,9 +174,28 @@ test('tsmd: type alias + description + inline', async (t) => {
   )
 })
 
-test('tsmd: type alias + inline', async (t) => {
-  const fixturePath = require.resolve('./fixtures/type-alias/inline.ts')
-  const result = await tsToMd(fixturePath)
+test('tsmd: parse(): type alias + description + union', async (t) => {
+  const fixturePath = require.resolve('./fixtures/type-alias/description-union.ts')
+  const result = await parse(fixturePath)
+
+  t.deepEqual(
+    result,
+    [
+      {
+        type: 'type-alias',
+        source: 'type TTest = string | number',
+        doc: {
+          description: 'Description line 1.\nDescription line 2.',
+        },
+      },
+    ],
+    'should work'
+  )
+})
+
+test('tsmd: parse(): type alias + literal', async (t) => {
+  const fixturePath = require.resolve('./fixtures/type-alias/literal.ts')
+  const result = await parse(fixturePath)
 
   t.deepEqual(
     result,
@@ -190,9 +209,9 @@ test('tsmd: type alias + inline', async (t) => {
   )
 })
 
-test('tsmd: type alias + no doc', async (t) => {
+test('tsmd: parse(): type alias + no doc', async (t) => {
   const fixturePath = require.resolve('./fixtures/type-alias/no-doc.ts')
-  const result = await tsToMd(fixturePath)
+  const result = await parse(fixturePath)
 
   t.deepEqual(
     result,
