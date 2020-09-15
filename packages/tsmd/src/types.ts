@@ -15,10 +15,16 @@ export type TNode = Node & {
 export type TTag = {
   tag: string,
   name?: string,
-  comment?: string,
+  description?: string,
 }
 
-export type TJSDoc = {
-  comment?: string,
+export type TDoc = {
+  description?: string,
   tags?: TTag[],
+}
+
+export type TResult = {
+  type: string,
+  source: string,
+  doc?: TDoc,
 }
