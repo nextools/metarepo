@@ -11,7 +11,7 @@ export const uncacheKey = (key: string): void => {
   const module = cache[key]!
 
   /* istanbul ignore else */
-  if (module.parent !== null) {
+  if (module.parent !== null && typeof module.parent !== 'undefined') {
     const i = module.parent.children.findIndex((child) => child.id === key)
 
     /* istanbul ignore else */

@@ -16,7 +16,7 @@ const getMocks = (module: NodeModule): Set<Map<string, any>> | null => {
     return mocksMap.get(module.id)!
   }
 
-  if (module.parent !== null) {
+  if (module.parent !== null && typeof module.parent !== 'undefined') {
     return getMocks(module.parent)
   }
 
