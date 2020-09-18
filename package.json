@@ -9,6 +9,7 @@
     "packages/codecov-lite",
     "packages/copie",
     "packages/dleet",
+    "packages/dupdep",
     "packages/ekst",
     "packages/fixdeps",
     "packages/funcom",

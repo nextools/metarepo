@@ -1,0 +1,31 @@
+{
+  "name": "dupdep",
+  "version": "0.0.0",
+  "description": "Check for duplicated dependencies across packages in Yarn Workspaces",
+  "keywords": [
+    "yarn",
+    "duplicates",
+    "dedup"
+  ],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "iterama": "^0.5.0",
+    "itobj": "^0.0.0",
+    "pkgu": "^0.1.0",
+    "semver": "^7.3.2"
+  },
+  "devDependencies": {
+    "@mock/fs": "^0.2.0",
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0"
+  }
+}

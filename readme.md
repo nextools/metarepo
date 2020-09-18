@@ -13,6 +13,7 @@ Check the individual documentations for more details:
 * [codecov-lite](packages/codecov-lite): LCOV (code coverage data) uploader for [codecov.io](https://codecov.io/) service.
 * [copie](packages/copie): copy a file
 * [dleet](packages/dleet): delete directories and files
+* [dupdep](packages/dupdep): check for duplicated dependencies across packages in Yarn Workspaces
 * [ekst](packages/ekst): append, prepend, replace or remove file basename extensions
 * [fixdeps](packages/fixdeps): automatically add missing or remove unnecessary (dev)dependencies
 * [funcom](packages/funcom): functional composition helpers
