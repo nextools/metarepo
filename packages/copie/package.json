@@ -19,7 +19,7 @@
   },
   "sideEffects": false,
   "devDependencies": {
-    "@mock/require": "^0.2.1",
+    "@mock/require": "^0.2.2",
     "@types/tape": "^4.2.34",
     "memfs": "^3.0.3",
     "tape": "^5.0.0"
