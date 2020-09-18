@@ -1,0 +1,28 @@
+{
+  "name": "pkgu",
+  "version": "0.0.0",
+  "description": "Yarn Workspaces package utils.",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@mock/fs": "^0.2.0",
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0"
+  },
+  "dependencies": {
+    "fast-glob": "^3.2.4",
+    "iterama": "^0.5.0",
+    "p-all": "^3.0.0",
+    "pifs": "^2.0.0",
+    "tsfn": "^2.0.0"
+  }
+}
