@@ -8,7 +8,7 @@ export const rsolve = (id: string, fieldName: string) => new Promise<string>((re
     mainFields: [fieldName],
   })
 
-  resolver(callerDir, id, (err, result) => {
+  resolver(callerDir, id, (err: Error | null, result: string) => {
     if (err !== null) {
       return reject(err)
     }
