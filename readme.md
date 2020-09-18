@@ -20,6 +20,7 @@ Check the individual documentations for more details:
 * [ida](packages/ida): iterable data structures
 * [import-wasm](packages/import-wasm): async/sync helpers to import `.wasm` modules in Node.js
 * [iterama](packages/iterama): composable functional (async) iterable helpers
+* [itobj](packages/itobj): iterate Object
 * [makethen](packages/makethen): strongly typed (up to 3 arguments and 3 result params) promisify for Node.js-style callbacks
 * [mdown](packages/mdown): markdown to React
 * [mnth](packages/mnth): framework-agnostic base block to build calendars, datepickers, etc by rendering 2d array of Dates

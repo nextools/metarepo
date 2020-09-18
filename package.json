@@ -16,6 +16,7 @@
     "packages/ida",
     "packages/import-wasm",
     "packages/iterama",
+    "packages/itobj",
     "packages/makethen",
     "packages/mdown",
     "packages/mnth",
