@@ -1,3 +1,7 @@
+## v0.6.0
+
+* 🌱 add `dupdep` task and run it with `ci`
+
 ## v0.5.0
 
 * 🌱 add `RunApp` and `BuildApp` task factories
