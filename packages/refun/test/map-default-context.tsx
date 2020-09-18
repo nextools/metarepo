@@ -3,14 +3,14 @@ import TestRenderer, { act } from 'react-test-renderer'
 import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { component, mapContext, startWithType } from '../src'
+import { component, mapDefaultContext, startWithType } from '../src'
 
 test('mapContext', (t) => {
   const componentSpy = createSpy(() => null)
   const Context = createContext({ ctxA: 'foo', ctxB: 42 })
   const MyComp = component(
     startWithType<{ ctxA?: string, foo: string }>(),
-    mapContext(Context)
+    mapDefaultContext(Context)
   )(componentSpy)
 
   let testRenderer: ReactTestRenderer
@@ -67,9 +67,9 @@ test('mapContext', (t) => {
     [
       [{ ctxA: 'foo', ctxB: 42, foo: 'bar' }], // Mount
       [{ ctxA: 'bar', ctxB: 1337, foo: 'bar' }], // Update Context
-      [{ ctxA: 'bar', ctxB: 1337, foo: 'bar' }], // Update Props
+      [{ ctxA: 'foo', ctxB: 1337, foo: 'bar' }], // Update Props
     ],
-    'Update Props: should override prop values'
+    'Update Props: should pass context as props'
   )
 
   t.end()

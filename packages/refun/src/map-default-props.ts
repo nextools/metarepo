@@ -7,9 +7,7 @@ export const mapDefaultProps = <P extends {}, K extends TOptionalKeys<P>> (defau
 
     // eslint-disable-next-line guard-for-in
     for (const key in defaultProps) {
-      const value = props[key]
-
-      if (value === UNDEFINED) {
+      if (props[key] === UNDEFINED) {
         mergedProps[key] = defaultProps[key]
       }
     }

@@ -2,6 +2,13 @@ import test from 'tape'
 import { shallowEquals, shallowEqualByKeys } from '../src'
 
 test('shallowEquals', (t) => {
+  const obj = {}
+
+  t.true(
+    shallowEquals(obj, obj),
+    'same objects'
+  )
+
   t.true(
     shallowEquals({}, {}),
     'empty objects'
