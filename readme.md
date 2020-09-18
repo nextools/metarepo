@@ -29,6 +29,7 @@ Check the individual documentations for more details:
 * [@perfa](packages/perfa): set of helpers to measure React and React Native app performance
 * [piall](packages/piall): `Promise.all` and `Promise.allSettled` with concurrency option and async iterable result
 * [pifs](packages/pifs): promisified [graceful-fs](https://github.com/isaacs/node-graceful-fs)
+* [pkgu](packages/pkgu): Yarn Workspaces package utils
 * [r11y](packages/r11y): get a11y data of React app
 * [@rebox](packages/rebox): set of helpers to dev and build React/React Native apps, completely abstracts out of `ios` and `android` folders
 * [refun](packages/refun): strongly-typed React Hook-enabled functions that compose harmoniously with each other
