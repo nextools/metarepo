@@ -95,15 +95,11 @@ export const run = (file: string) =>
     await main()
   })
 
-export const revert = () =>
-  plugin('web', () => async () => {
-    const { runWebApp } = await import('@rebox/web')
-
-    await runWebApp({
-      entryPointPath: './tasks/revert/index.tsx',
-      htmlTemplatePath: './tasks/revert/templates/dev.html',
-    })
-  })
+export const revert = RunApp({
+  name: 'Revert',
+  entryPointPath: 'tasks/revert/index.tsx',
+  htmlTemplatePath: 'tasks/revert/templates/dev.html',
+})
 
 export const upgrade = (depName: string) =>
   plugin('dependency', () => async () => {

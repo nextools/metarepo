@@ -29,6 +29,7 @@ export const config: TComponentConfig<TButton, 'text'> = {
   props: {
     accessibilityLabel: ['Button'],
     isDisabled: [true],
+    onPress: [() => {}],
   },
   children: {
     text: TextMeta,

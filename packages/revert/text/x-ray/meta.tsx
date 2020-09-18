@@ -1,7 +1,7 @@
 import type { TComponentConfig } from 'autoprops'
-import type { TText } from '../src'
+import type { TPrimitiveText } from '../src'
 
-export const config: TComponentConfig<TText> = {
+export const config: TComponentConfig<TPrimitiveText> = {
   props: {
     color: [0xeeeeeeff],
     fontFamily: ['Arial'],
@@ -9,7 +9,7 @@ export const config: TComponentConfig<TText> = {
     fontWeight: [400],
     letterSpacing: [1],
     lineHeight: [20],
-    isUnderlined: [true],
+    isUnderline: [true],
     shouldHideOverflow: [true],
     shouldPreserveWhitespace: [true],
     shouldPreventSelection: [true],

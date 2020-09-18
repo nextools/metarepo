@@ -1,6 +1,5 @@
-import type { CSSProperties } from 'react'
+import type { CSSProperties, FC } from 'react'
 import React from 'react'
-import { component, startWithType } from 'refun'
 import { UNDEFINED } from 'tsfn'
 import type { TLink } from './types'
 
@@ -9,9 +8,7 @@ const style: CSSProperties = {
   textDecoration: 'none',
 }
 
-export const PrimitiveLink = component(
-  startWithType<TLink>()
-)(({
+export const PrimitiveLink: FC<TLink> = ({
   id,
   isDisabled,
   children,
@@ -42,6 +39,6 @@ export const PrimitiveLink = component(
   >
     {children}
   </a>
-))
+)
 
 PrimitiveLink.displayName = 'PrimitiveLink'

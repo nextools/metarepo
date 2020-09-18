@@ -1,16 +1,16 @@
 import { Text } from '@revert/text'
-import type { TText } from '@revert/text'
+import type { TPrimitiveText } from '@revert/text'
 import type { TComponentConfig } from 'autoprops'
 import type { TLabel } from '../src'
 
-const TextConfig: TComponentConfig<TText> = {
+const TextConfig: TComponentConfig<TPrimitiveText> = {
   props: {
     color: [0xeeeeeeff],
     fontSize: [16],
-    isUnderlined: [true],
+    isUnderline: [true],
     children: ['label text'],
   },
-  required: ['children', 'color', 'fontSize', 'isUnderlined'],
+  required: ['children', 'color', 'fontSize', 'isUnderline'],
 }
 
 export const config: TComponentConfig<TLabel, 'text'> = {

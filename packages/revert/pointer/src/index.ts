@@ -1,4 +1,4 @@
-export * from './Root'
+export * from './Pointer'
 export type {
   TPointer,
   TPointerEvent,

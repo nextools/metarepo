@@ -5,6 +5,7 @@ import React from 'react'
 import type { FC } from 'react'
 
 export type TBorder = TPrimitiveBorder & {
+  color: number,
   animationTime?: number,
 }
 
