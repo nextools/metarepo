@@ -39,6 +39,10 @@ Module._load = (request, parent, isMain) => {
 
     const resolvedPath = resolve(callerDir, request)
 
+    if (resolvedPath === false) {
+      throw new Error(`Unable to resolve \`${request}\` from \`${callerDir}\` dir`)
+    }
+
     const result = originalLoad(resolvedPath, parent, isMain)
 
     cache.set(cacheKey, result)

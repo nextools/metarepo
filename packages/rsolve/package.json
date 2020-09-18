@@ -15,11 +15,10 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.4.0",
-    "enhanced-resolve": "^4.1.0",
+    "enhanced-resolve": "^5.0.0",
     "get-caller-file": "^2.0.5"
   },
   "devDependencies": {
-    "@types/enhanced-resolve": "^3.0.6",
     "@types/get-caller-file": "^1.0.0",
     "@types/tape": "^4.2.34",
     "tape": "^5.0.0"
