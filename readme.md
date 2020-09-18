@@ -13,6 +13,7 @@ Check the individual documentations for more details:
 * [codecov-lite](packages/codecov-lite): LCOV (code coverage data) uploader for [codecov.io](https://codecov.io/) service.
 * [copie](packages/copie): copy a file
 * [dleet](packages/dleet): delete directories and files
+* [dupdep](packages/dupdep): check for duplicated dependencies across packages in Yarn Workspaces
 * [ekst](packages/ekst): append, prepend, replace or remove file basename extensions
 * [fixdeps](packages/fixdeps): automatically add missing or remove unnecessary (dev)dependencies
 * [funcom](packages/funcom): functional composition helpers
@@ -20,6 +21,7 @@ Check the individual documentations for more details:
 * [ida](packages/ida): iterable data structures
 * [import-wasm](packages/import-wasm): async/sync helpers to import `.wasm` modules in Node.js
 * [iterama](packages/iterama): composable functional (async) iterable helpers
+* [itobj](packages/itobj): iterate Object
 * [makethen](packages/makethen): strongly typed (up to 3 arguments and 3 result params) promisify for Node.js-style callbacks
 * [mdown](packages/mdown): markdown to React
 * [mnth](packages/mnth): framework-agnostic base block to build calendars, datepickers, etc by rendering 2d array of Dates
