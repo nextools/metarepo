@@ -1,11 +1,14 @@
 import type { TColor } from '@revert/color'
 import type { ReactText } from 'react'
 
-export type TText = {
-  id?: string,
+export type TTextChildren = ReactText | ReactText[]
+
+export type TFontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+
+export type TTextStyle = {
   color?: TColor,
   fontFamily?: string,
-  fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900,
+  fontWeight?: TFontWeight,
   fontSize?: number,
   lineHeight?: number,
   letterSpacing?: number,
@@ -16,5 +19,9 @@ export type TText = {
   shouldPreventWrap?: boolean,
   shouldPreventSelection?: boolean,
   shouldHideOverflow?: boolean,
-  children: ReactText | ReactText[],
+}
+
+export type TPrimitiveText = TTextStyle & {
+  id?: string,
+  children: TTextChildren,
 }

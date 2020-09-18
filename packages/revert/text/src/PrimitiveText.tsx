@@ -1,14 +1,14 @@
-import { isColor, colorToString } from '@revert/color'
+import { colorToString } from '@revert/color'
 import React from 'react'
 import type { CSSProperties } from 'react'
 import { component, mapWithProps, startWithType } from 'refun'
 import { isNumber } from 'tsfn'
-import type { TText } from './types'
+import type { TPrimitiveText } from './types'
 
 export const PrimitiveText = component(
-  startWithType<TText>(),
+  startWithType<TPrimitiveText>(),
   mapWithProps(({
-    color,
+    color = 0xff,
     letterSpacing,
     lineHeight,
     fontFamily,
@@ -30,10 +30,7 @@ export const PrimitiveText = component(
       textSizeAdjust: 'none',
       minWidth: 0,
       maxWidth: '100%',
-    }
-
-    if (isColor(color)) {
-      style.color = colorToString(color)
+      color: colorToString(color),
     }
 
     if (shouldPreserveWhitespace) {

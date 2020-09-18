@@ -1,15 +1,15 @@
-import { colorToString, isColor } from '@revert/color'
+import { colorToString } from '@revert/color'
 import React from 'react'
 import { Text as NativeText } from 'react-native'
 import type { TextProps, TextStyle } from 'react-native'
 import { component, mapWithProps, startWithType } from 'refun'
 import { isNumber } from 'tsfn'
-import type { TText } from './types'
+import type { TPrimitiveText } from './types'
 
 export const PrimitiveText = component(
-  startWithType<TText>(),
+  startWithType<TPrimitiveText>(),
   mapWithProps(({
-    color,
+    color = 0xff,
     letterSpacing,
     lineHeight,
     fontFamily,
@@ -28,14 +28,11 @@ export const PrimitiveText = component(
       fontFamily,
       fontSize,
       letterSpacing,
+      color: colorToString(color),
     }
 
     if (isNumber(fontWeight)) {
       style.fontWeight = String(fontWeight) as TextStyle['fontWeight']
-    }
-
-    if (isColor(color)) {
-      style.color = colorToString(color)
     }
 
     if (isUnderline && isStrikeThrough) {
