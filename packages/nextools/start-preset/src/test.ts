@@ -107,9 +107,33 @@ export const test = async (packageDir: string = '**') => {
   )
 }
 
+export const dupdep = () =>
+  plugin('check', () => async () => {
+    const { getDuplicatedDependencies } = await import('dupdep')
+    const { default: chalk } = await import('chalk')
+    const result = await getDuplicatedDependencies()
+
+    for (const [pkg, deps] of result) {
+      console.error(chalk.cyan(pkg))
+
+      for (const [dep, { range, dependents }] of deps) {
+        console.error(`  ${chalk.red(dep)} is ${chalk.blue(range)} but`)
+
+        for (const dependent of dependents) {
+          console.error(`    ${chalk.yellow(dependent.pkgName)} has ${chalk.blue(dependent.range)}`)
+        }
+      }
+    }
+
+    if (result.size > 0) {
+      throw 'duplicated dependencies'
+    }
+  })
+
 export const ci = () =>
   sequence(
     lint(),
     test(),
-    checkDeps()
+    checkDeps(),
+    dupdep()
   )
