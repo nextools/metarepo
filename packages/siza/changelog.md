@@ -1,3 +1,7 @@
+## v0.2.2
+
+* 🐞 upgrade `compression-webpack-plugin` to v6
+
 ## v0.2.1
 
 * 🐞 upgrade `compression-webpack-plugin` to v5
