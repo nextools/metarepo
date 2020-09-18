@@ -1,6 +1,6 @@
 import type { TColor } from '@revert/color'
 import { createContext } from 'react'
-import { WHITE, BLACK } from '../../colors'
+import { COLOR_WHITE, COLOR_BLACK } from '../../colors'
 
 export type TCheckmarkThemeContext = {
   backgroundColor: TColor,
@@ -28,26 +28,26 @@ export type TCheckmarkThemeContext = {
 }
 
 export const CheckmarkThemeContext = createContext<TCheckmarkThemeContext>({
-  backgroundColor: WHITE,
-  activeBackgroundColor: WHITE,
-  hoveredBackgroundColor: WHITE,
-  activeHoveredBackgroundColor: WHITE,
-  pressedBackgroundColor: WHITE,
-  activePressedBackgroundColor: WHITE,
-  disabledBackgroundColor: WHITE,
-  activeDisabledBackgroundColor: WHITE,
-  borderColor: WHITE,
-  hoveredBorderColor: WHITE,
-  activeBorderColor: WHITE,
-  activeHoveredBorderColor: WHITE,
-  pressedBorderColor: WHITE,
-  activePressedBorderColor: WHITE,
-  disabledBorderColor: WHITE,
-  activeDisabledBorderColor: WHITE,
-  activeFocusedOuterBorderColor: WHITE,
-  focusedOuterBorderColor: WHITE,
-  iconColor: BLACK,
-  hoveredIconColor: BLACK,
-  pressedIconColor: BLACK,
-  disabledIconColor: BLACK,
+  backgroundColor: COLOR_WHITE,
+  activeBackgroundColor: COLOR_WHITE,
+  hoveredBackgroundColor: COLOR_WHITE,
+  activeHoveredBackgroundColor: COLOR_WHITE,
+  pressedBackgroundColor: COLOR_WHITE,
+  activePressedBackgroundColor: COLOR_WHITE,
+  disabledBackgroundColor: COLOR_WHITE,
+  activeDisabledBackgroundColor: COLOR_WHITE,
+  borderColor: COLOR_WHITE,
+  hoveredBorderColor: COLOR_WHITE,
+  activeBorderColor: COLOR_WHITE,
+  activeHoveredBorderColor: COLOR_WHITE,
+  pressedBorderColor: COLOR_WHITE,
+  activePressedBorderColor: COLOR_WHITE,
+  disabledBorderColor: COLOR_WHITE,
+  activeDisabledBorderColor: COLOR_WHITE,
+  activeFocusedOuterBorderColor: COLOR_WHITE,
+  focusedOuterBorderColor: COLOR_WHITE,
+  iconColor: COLOR_BLACK,
+  hoveredIconColor: COLOR_BLACK,
+  pressedIconColor: COLOR_BLACK,
+  disabledIconColor: COLOR_BLACK,
 })

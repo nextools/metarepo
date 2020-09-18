@@ -1,13 +1,12 @@
 import { Button } from '@revert/button'
 import { elegir } from 'elegir'
-import React from 'react'
+import React, { Fragment } from 'react'
 import { component, startWithType, mapHandlers, mapContext, mapWithProps, mapKeyboardFocused } from 'refun'
 import type { TMapKeyboardFocused } from 'refun'
-import { TRANSPARENT } from '../../colors'
-import { mapContextOverride } from '../../map/map-context-override'
+import { COLOR_TRANSPARENT } from '../../colors'
 import { Border } from '../border'
 import { Text } from '../text'
-import { ThemeContext, TextThemeContext } from '../theme-context'
+import { ThemeContext } from '../theme-context'
 
 export type TTabsTitle = {
   index: number,
@@ -36,10 +35,9 @@ export const TabsTitle = component(
       isKeyboardFocused,
       theme.tabsBorderColor,
       true,
-      TRANSPARENT
+      COLOR_TRANSPARENT
     ),
   })),
-  mapContextOverride('TextThemeProvider', TextThemeContext, ({ color }) => ({ color })),
   mapHandlers({
     onPress: ({ index, onPress }) => () => {
       onPress(index)
@@ -47,7 +45,7 @@ export const TabsTitle = component(
   })
 )(({
   title,
-  TextThemeProvider,
+  color,
   borderColor,
   isDisabled,
   onPress,
@@ -56,7 +54,7 @@ export const TabsTitle = component(
   onFocus,
   onBlur,
 }) => (
-  <TextThemeProvider>
+  <Fragment>
     <Border color={borderColor} borderBottomWidth={2}/>
     <Button
       isDisabled={isDisabled}
@@ -66,9 +64,9 @@ export const TabsTitle = component(
       onFocus={onFocus}
       onBlur={onBlur}
     >
-      <Text>
+      <Text color={color}>
         {title}
       </Text>
     </Button>
-  </TextThemeProvider>
+  </Fragment>
 ))

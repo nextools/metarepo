@@ -12,4 +12,5 @@ export const initialState: TMetaState = {
   componentProps: EMPTY_OBJECT,
   componentPropsChildrenMap: EMPTY_OBJECT,
   packageJson: null,
+  readme: null,
 }

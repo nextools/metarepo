@@ -1,6 +1,6 @@
 import type { TColor } from '@revert/color'
 import { createContext } from 'react'
-import { WHITE, BLACK } from '../../colors'
+import { COLOR_WHITE, COLOR_BLACK } from '../../colors'
 
 export type TSwitchThemeContext = {
   backgroundColor: TColor,
@@ -20,18 +20,18 @@ export type TSwitchThemeContext = {
 }
 
 export const SwitchThemeContext = createContext<TSwitchThemeContext>({
-  backgroundColor: WHITE,
-  activeBackgroundColor: WHITE,
-  hoveredBackgroundColor: WHITE,
-  activeHoveredBackgroundColor: WHITE,
-  pressedBackgroundColor: WHITE,
-  activePressedBackgroundColor: WHITE,
-  focusedOuterBorderColor: WHITE,
-  activeFocusedOuterBorderColor: WHITE,
-  iconColor: BLACK,
-  activeIconColor: BLACK,
-  hoveredIconColor: BLACK,
-  activeHoveredIconColor: BLACK,
-  pressedIconColor: BLACK,
-  activePressedIconColor: BLACK,
+  backgroundColor: COLOR_WHITE,
+  activeBackgroundColor: COLOR_WHITE,
+  hoveredBackgroundColor: COLOR_WHITE,
+  activeHoveredBackgroundColor: COLOR_WHITE,
+  pressedBackgroundColor: COLOR_WHITE,
+  activePressedBackgroundColor: COLOR_WHITE,
+  focusedOuterBorderColor: COLOR_WHITE,
+  activeFocusedOuterBorderColor: COLOR_WHITE,
+  iconColor: COLOR_BLACK,
+  activeIconColor: COLOR_BLACK,
+  hoveredIconColor: COLOR_BLACK,
+  activeHoveredIconColor: COLOR_BLACK,
+  pressedIconColor: COLOR_BLACK,
+  activePressedIconColor: COLOR_BLACK,
 })

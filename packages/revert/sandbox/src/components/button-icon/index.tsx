@@ -1,6 +1,7 @@
 import { Block, InlineBlock } from '@revert/block'
 import { PrimitiveButton } from '@revert/button'
 import { Layout, Layout_Item } from '@revert/layout'
+import { TextThemeContext } from '@revert/text'
 import { elegir } from 'elegir'
 import React from 'react'
 import type { ReactNode } from 'react'
@@ -19,13 +20,13 @@ import type {
   TMapKeyboardFocused,
   TMapHovered,
 } from 'refun'
-import { TRANSPARENT } from '../../colors'
+import { COLOR_TRANSPARENT } from '../../colors'
 import { mapChildren } from '../../map/children'
 import { mapContextOverride } from '../../map/map-context-override'
 import { SYMBOL_ICON, SYMBOL_TOOLTIP, SYMBOL_BUTTON_ICON } from '../../symbols'
 import { PrimitiveBackground } from '../background'
 import { PrimitiveBorder } from '../border'
-import { TextThemeContext, ButtonIconThemeContext } from '../theme-context'
+import { ButtonIconThemeContext } from '../theme-context'
 
 const BORDER_WIDTH = 2
 const BORDER_OVERFLOW = 4
@@ -83,7 +84,7 @@ export const ButtonIcon = component(
       isKeyboardFocused,
       focusedBorderColor,
       true,
-      TRANSPARENT
+      COLOR_TRANSPARENT
     ),
     color: elegir(
       isPressed,

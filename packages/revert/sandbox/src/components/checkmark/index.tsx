@@ -1,5 +1,6 @@
 import { PrimitiveBlock, Block } from '@revert/block'
 import { Checkbox } from '@revert/checkbox'
+import { TextThemeContext } from '@revert/text'
 import { elegir } from 'elegir'
 import React from 'react'
 import {
@@ -17,13 +18,13 @@ import type {
   TMapPressed,
   TMapKeyboardFocused,
 } from 'refun'
-import { TRANSPARENT } from '../../colors'
+import { COLOR_TRANSPARENT } from '../../colors'
 import { mapContextOverride } from '../../map/map-context-override'
 import { SYMBOL_CHECKMARK } from '../../symbols'
 import { Background } from '../background'
 import { Border } from '../border'
 import { IconCheckmarkSmall } from '../icons'
-import { CheckmarkThemeContext, TextThemeContext } from '../theme-context'
+import { CheckmarkThemeContext } from '../theme-context'
 
 const WIDTH = 20
 const HEIGHT = 20
@@ -82,7 +83,7 @@ export const Checkmark = pureComponent(
   }) => ({
     color: elegir(
       !isChecked,
-      TRANSPARENT,
+      COLOR_TRANSPARENT,
       isDisabled,
       disabledIconColor,
       isPressed,
@@ -134,7 +135,7 @@ export const Checkmark = pureComponent(
       isKeyboardFocused,
       focusedOuterBorderColor,
       true,
-      TRANSPARENT
+      COLOR_TRANSPARENT
     ),
   })),
   mapContextOverride('IconThemeProvider', TextThemeContext, ({ color }) => ({ color }))

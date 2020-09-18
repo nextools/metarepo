@@ -56,6 +56,7 @@ export const reducer: Reducer<TMetaState, TAllActions> = (state, action) => {
         componentPropsChildrenMap,
         components,
         packageJson,
+        readme,
         propsIndex,
         selectedElementPath,
       } = action.payload
@@ -69,6 +70,7 @@ export const reducer: Reducer<TMetaState, TAllActions> = (state, action) => {
         componentPropsChildrenMap,
         components,
         packageJson,
+        readme,
         propsIndex,
         selectedElementPath,
       }

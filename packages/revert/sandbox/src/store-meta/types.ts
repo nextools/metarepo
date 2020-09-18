@@ -19,6 +19,7 @@ export type TMetaState = {
   componentPropsChildrenMap: Readonly<TAnyObject>,
   // packageJson group
   packageJson: TPackageJson | null,
+  readme: string | null,
 }
 
 export type TMetaDispatch = ThunkDispatch<TMetaState, undefined, AnyAction>

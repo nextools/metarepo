@@ -1,6 +1,7 @@
 import { AnimationValue } from '@revert/animation'
 import { PrimitiveBlock } from '@revert/block'
 import { LayoutContext } from '@revert/layout'
+import { TextThemeContext } from '@revert/text'
 import React from 'react'
 import type { ReactElement } from 'react'
 import { createPortal } from 'react-dom'
@@ -10,7 +11,7 @@ import { SYMBOL_TOOLTIP } from '../../symbols'
 import { PrimitiveBackground } from '../background'
 import { IconTooltipArrowDown } from '../icons'
 import { PortalContext } from '../portal-provider'
-import { TooltipThemeContext, TextThemeContext } from '../theme-context'
+import { TooltipThemeContext } from '../theme-context'
 
 const TOOLTIP_ANIMATION_TIME = 200
 const TOOLTIP_TIMEOUT = 300

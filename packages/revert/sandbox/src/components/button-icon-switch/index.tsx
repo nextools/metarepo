@@ -1,6 +1,7 @@
 import { Block, InlineBlock } from '@revert/block'
 import { Checkbox } from '@revert/checkbox'
 import { Layout, Layout_Item } from '@revert/layout'
+import { TextThemeContext } from '@revert/text'
 import { elegir } from 'elegir'
 import React from 'react'
 import type { ReactNode } from 'react'
@@ -15,13 +16,13 @@ import {
   mapPressed,
 } from 'refun'
 import type { TMapHovered, TMapKeyboardFocused } from 'refun'
-import { TRANSPARENT } from '../../colors'
+import { COLOR_TRANSPARENT } from '../../colors'
 import { mapChildren } from '../../map/children'
 import { mapContextOverride } from '../../map/map-context-override'
 import { SYMBOL_ICON, SYMBOL_TOOLTIP, SYMBOL_BUTTON_ICON } from '../../symbols'
 import { Background } from '../background'
 import { Border } from '../border'
-import { ButtonIconSwitchThemeContext, TextThemeContext } from '../theme-context'
+import { ButtonIconSwitchThemeContext } from '../theme-context'
 
 const BORDER_WIDTH = 2
 const BORDER_OVERFLOW = 4
@@ -95,7 +96,7 @@ export const ButtonIconSwitch = component(
       isKeyboardFocused,
       focusedBorderColor,
       true,
-      TRANSPARENT
+      COLOR_TRANSPARENT
     ),
     color: elegir(
       isPressed && isChecked,

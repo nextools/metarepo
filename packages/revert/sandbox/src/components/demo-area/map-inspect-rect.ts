@@ -19,7 +19,7 @@ export type TRect = TPosition & {
 }
 
 export type TMapInspectRect = {
-  Component: FC<any> | null,
+  Component: FC | null,
   componentConfig: TCommonComponentConfig | null,
   componentPropsChildrenMap: Readonly<TAnyObject> | null,
   shouldInspect: boolean,
@@ -32,14 +32,14 @@ export const mapInspectRect = <P extends TMapInspectRect>() => pipe(
   startWithType<P & TMapInspectRect>(),
   mapState('selectedInspectRect', 'setSelectedInspectRect', () => null as TRect | null, ['Component', 'shouldInspect']),
   mapState('blockNode', 'setBlockNode', () => null as HTMLElement | null, []),
-  onUpdate(({ blockNode, shouldInspect, selectedElementPath, setSelectedInspectRect, componentConfig }) => {
+  onUpdate(({ Component, blockNode, shouldInspect, selectedElementPath, setSelectedInspectRect, componentConfig }) => {
     if (!shouldInspect || blockNode === null) {
       return
     }
 
     const findDomNode = (fiberNode: any): HTMLElement => {
       if (isUndefined(fiberNode)) {
-        throw new Error('inst is undefined')
+        throw new Error('fiberNode is undefined')
       }
 
       if (fiberNode.stateNode !== null) {
@@ -83,52 +83,53 @@ export const mapInspectRect = <P extends TMapInspectRect>() => pipe(
     const visitFiberNode = (fiberNode: any) => {
       if (isFunction(fiberNode.elementType)) {
         if (childPath.length === 0) {
-          const node = findDomNode(fiberNode)
+          const nodeDisplayName = getComponentName(fiberNode.elementType)
+          const rootDisplayName = getComponentName(Component as FC)
 
-          setSelectedInspectRect(getRect(node))
+          if (nodeDisplayName === rootDisplayName) {
+            const node = findDomNode(fiberNode)
 
-          return
-        }
+            setSelectedInspectRect(getRect(node))
 
-        const displayName = getComponentName(fiberNode.elementType)
-        const { childDisplayName, childDisplayNameIndex } = getChildDisplayName(componentConfig!, childPath, pathSegmentIndex)
+            return
+          }
+        } else {
+          const nodeDisplayName = getComponentName(fiberNode.elementType)
+          const { childDisplayName, childDisplayNameIndex } = getChildDisplayName(componentConfig!, childPath, pathSegmentIndex)
 
-        if (displayName === childDisplayName) {
-          if (currentChildIndex === childDisplayNameIndex) {
-            currentChildIndex = 0
-            ++pathSegmentIndex
+          if (nodeDisplayName === childDisplayName) {
+            if (currentChildIndex === childDisplayNameIndex) {
+              currentChildIndex = 0
+              ++pathSegmentIndex
 
-            if (pathSegmentIndex >= childPath.length) {
-              const node = findDomNode(fiberNode)
+              if (pathSegmentIndex >= childPath.length) {
+                const node = findDomNode(fiberNode)
 
-              setSelectedInspectRect(getRect(node))
+                setSelectedInspectRect(getRect(node))
 
-              return
+                return
+              }
+            } else {
+              ++currentChildIndex
             }
-          } else {
-            ++currentChildIndex
           }
         }
       }
 
-      if (pathSegmentIndex < childPath.length && fiberNode.child !== null) {
+      if (fiberNode.child !== null) {
         visitFiberNode(fiberNode.child)
       }
 
       if (pathSegmentIndex < childPath.length && fiberNode.sibling !== null) {
         visitFiberNode(fiberNode.sibling)
       }
-
-      if (pathSegmentIndex < childPath.length && fiberNode.alternate !== null && fiberNode.alternate.sibling !== null) {
-        visitFiberNode(fiberNode.alternate.sibling)
-      }
     }
 
-    const node = blockNode.firstChild!
+    const node = blockNode
     const key = Object.keys(node).find((key) => key.startsWith('__reactInternalInstance$'))
 
     if (isDefined(key)) {
-      const instance = (node as any)[key].return
+      const instance = (node as any)[key]
 
       visitFiberNode(instance)
     }

@@ -3,6 +3,7 @@ import { PrimitiveBlock } from '@revert/block'
 import { PrimitiveButton } from '@revert/button'
 import { LayoutContext } from '@revert/layout'
 import { RootContext } from '@revert/root'
+import { TextThemeContext } from '@revert/text'
 import React, { Fragment } from 'react'
 import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
@@ -11,7 +12,7 @@ import { mapContextOverride } from '../../map/map-context-override'
 import { PrimitiveBackground } from '../background'
 import { IconTooltipArrowDown } from '../icons'
 import { PortalContext } from '../portal-provider'
-import { TextThemeContext, PopoverThemeContext } from '../theme-context'
+import { PopoverThemeContext } from '../theme-context'
 
 const POPOVER_ANIMATION_TIME = 200
 const POPOVER_H_PADDING = 20

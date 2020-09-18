@@ -1,16 +1,17 @@
 import { AnimationValue } from '@revert/animation'
 import { PrimitiveBlock } from '@revert/block'
 import { PrimitiveButton } from '@revert/button'
+import { TextThemeContext } from '@revert/text'
 import { PrimitiveTransform } from '@revert/transform'
 import { elegir } from 'elegir'
 import React from 'react'
 import { startWithType, mapKeyboardFocused, mapHovered, mapPressed, mapContext, pureComponent, mapWithProps } from 'refun'
 import type { TMapHovered, TMapPressed, TMapKeyboardFocused } from 'refun'
-import { TRANSPARENT } from '../../colors'
+import { COLOR_TRANSPARENT } from '../../colors'
 import { mapContextOverride } from '../../map/map-context-override'
 import { PrimitiveBorder } from '../border'
 import { IconSourceCollapseArrowDownSmall } from '../icons'
-import { ThemeContext, TextThemeContext } from '../theme-context'
+import { ThemeContext } from '../theme-context'
 
 const RADIUS = 10
 const BORDER_OVERFLOW = 4
@@ -37,7 +38,7 @@ export const CollapseIcon = pureComponent(
       isKeyboardFocused,
       theme.sourceCodeCollapseIconFocusedBorderColor,
       true,
-      TRANSPARENT
+      COLOR_TRANSPARENT
     ),
   })),
   mapContextOverride('IconThemeProvider', TextThemeContext, ({ isPressed, isHovered, theme }) => ({

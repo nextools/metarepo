@@ -1,12 +1,13 @@
 import { Block, InlineBlock } from '@revert/block'
 import { Checkbox } from '@revert/checkbox'
 import { Layout, Layout_Item } from '@revert/layout'
+import { TextThemeContext } from '@revert/text'
 import { elegir } from 'elegir'
 import React, { Fragment } from 'react'
 import type { ReactNode } from 'react'
 import { component, startWithType, mapState, mapHandlers, mapDefaultProps, mapHovered, mapPressed, mapKeyboardFocused, mapWithProps, mapContext } from 'refun'
 import type { TMapHovered, TMapKeyboardFocused } from 'refun'
-import { TRANSPARENT } from '../../colors'
+import { COLOR_TRANSPARENT } from '../../colors'
 import { mapChildren, SYMBOL_CHILDREN_REST } from '../../map/children'
 import { mapContextOverride } from '../../map/map-context-override'
 import { SYMBOL_SWITCH_POPOVER, SYMBOL_ICON, SYMBOL_TOOLTIP } from '../../symbols'
@@ -14,7 +15,7 @@ import { PrimitiveBackground } from '../background'
 import { PrimitiveBorder } from '../border'
 import { IconDropdownChevronSmall } from '../icons'
 import { Popover } from '../popover'
-import { TextThemeContext, ButtonIconSwitchThemeContext } from '../theme-context'
+import { ButtonIconSwitchThemeContext } from '../theme-context'
 
 const BORDER_WIDTH = 2
 const BORDER_OVERFLOW = 4
@@ -98,7 +99,7 @@ export const SwitchPopover = component(
       isKeyboardFocused,
       focusedBorderColor,
       true,
-      TRANSPARENT
+      COLOR_TRANSPARENT
     ),
     color: elegir(
       isOpened && isPressed,

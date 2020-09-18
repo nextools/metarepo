@@ -1,6 +1,6 @@
 import type { TColor } from '@revert/color'
 import { createContext } from 'react'
-import { BLACK, WHITE } from '../../colors'
+import { COLOR_BLACK, COLOR_WHITE } from '../../colors'
 
 export type TButtonIconThemeContext = {
   backgroundColor: TColor,
@@ -13,11 +13,11 @@ export type TButtonIconThemeContext = {
 }
 
 export const ButtonIconThemeContext = createContext<TButtonIconThemeContext>({
-  backgroundColor: WHITE,
-  hoveredBackgroundColor: WHITE,
-  pressedBackgroundColor: WHITE,
-  focusedBorderColor: WHITE,
-  iconColor: BLACK,
-  hoveredIconColor: BLACK,
-  pressedIconColor: BLACK,
+  backgroundColor: COLOR_WHITE,
+  hoveredBackgroundColor: COLOR_WHITE,
+  pressedBackgroundColor: COLOR_WHITE,
+  focusedBorderColor: COLOR_WHITE,
+  iconColor: COLOR_BLACK,
+  hoveredIconColor: COLOR_BLACK,
+  pressedIconColor: COLOR_BLACK,
 })

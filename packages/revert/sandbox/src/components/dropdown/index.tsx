@@ -2,6 +2,7 @@ import { InlineBlock } from '@revert/block'
 import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
 import { Select, Option } from '@revert/select'
 import type { TOption } from '@revert/select'
+import { TextThemeContext } from '@revert/text'
 import React, { Fragment } from 'react'
 import {
   pureComponent,
@@ -14,14 +15,14 @@ import {
 } from 'refun'
 import type { TMapHovered, TMapKeyboardFocused } from 'refun'
 import { isUndefined } from 'tsfn'
-import { TRANSPARENT } from '../../colors'
+import { COLOR_TRANSPARENT } from '../../colors'
 import { mapContextOverride } from '../../map/map-context-override'
 import { SYMBOL_DROPDOWN } from '../../symbols'
 import type { TId } from '../../types'
 import { Border } from '../border'
 import { IconDropdownChevronSmall } from '../icons'
 import { Text } from '../text'
-import { DropdownThemeContext, TextThemeContext } from '../theme-context'
+import { DropdownThemeContext } from '../theme-context'
 
 const BORDER_WIDTH = 2
 const BORDER_OVERFLOW = 4
@@ -42,7 +43,7 @@ export const Dropdown = pureComponent(
   mapHovered,
   mapKeyboardFocused,
   mapWithProps(({ isKeyboardFocused, focusedBorderColor }) => ({
-    borderColor: isKeyboardFocused ? focusedBorderColor : TRANSPARENT,
+    borderColor: isKeyboardFocused ? focusedBorderColor : COLOR_TRANSPARENT,
   })),
   mapContextOverride('TextThemeProvider', TextThemeContext, ({
     fontFamily,

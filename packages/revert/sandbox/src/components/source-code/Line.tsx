@@ -8,7 +8,7 @@ import { mapHovered, component, mapHandlers, startWithType, mapWithProps, mapCon
 import type { TMapHovered, TMapPressed, TMapKeyboardFocused } from 'refun'
 import type { TLine as TSyntxLine } from 'syntx'
 import { isDefined } from 'tsfn'
-import { TRANSPARENT } from '../../colors'
+import { COLOR_TRANSPARENT } from '../../colors'
 import { selectElement } from '../../store-meta'
 import type { TTheme } from '../../types'
 import { PrimitiveBackground } from '../background'
@@ -79,7 +79,7 @@ export const Line = component(
         isKeyboardFocused,
         theme.sourceCodeLineColor,
         true,
-        TRANSPARENT
+        COLOR_TRANSPARENT
       ),
     })
   }),

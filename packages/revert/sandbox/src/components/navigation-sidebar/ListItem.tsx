@@ -1,12 +1,11 @@
 import { Button } from '@revert/button'
 import { elegir } from 'elegir'
-import React from 'react'
+import React, { Fragment } from 'react'
 import { startWithType, mapHovered, mapPressed, mapKeyboardFocused, pureComponent, mapContext, mapWithProps, mapHandlers } from 'refun'
 import type { TMapKeyboardFocused, TMapHovered, TMapPressed } from 'refun'
-import { mapContextOverride } from '../../map/map-context-override'
 import { Background } from '../background'
 import { Text } from '../text'
-import { ThemeContext, TextThemeContext } from '../theme-context'
+import { ThemeContext } from '../theme-context'
 
 export type TListItem = {
   isActive: boolean,
@@ -52,13 +51,12 @@ export const ListItem = pureComponent(
       true,
       theme.navigationSidebarItemColor
     ),
-  })),
-  mapContextOverride('TextThemeProvider', TextThemeContext, ({ color }) => ({ color }))
+  }))
 )(({
+  color,
   backgroundColor,
-  TextThemeProvider,
-  children,
   isKeyboardFocused,
+  children,
   onFocus,
   onBlur,
   onPress,
@@ -67,7 +65,7 @@ export const ListItem = pureComponent(
   onPointerEnter,
   onPointerLeave,
 }) => (
-  <TextThemeProvider>
+  <Fragment>
     <Background color={backgroundColor}/>
     <Button
       onPointerEnter={onPointerEnter}
@@ -78,11 +76,11 @@ export const ListItem = pureComponent(
       onFocus={onFocus}
       onBlur={onBlur}
     >
-      <Text isUnderlined={isKeyboardFocused}>
+      <Text color={color} isUnderline={isKeyboardFocused}>
         {children}
       </Text>
     </Button>
-  </TextThemeProvider>
+  </Fragment>
 ))
 
 ListItem.displayName = 'ListItem'
