@@ -1,7 +1,7 @@
 import type { TColor } from '@revert/color'
 
 export type TBorder = {
-  color: TColor,
+  color?: TColor,
   radius?: number,
   borderWidth?: number,
   borderLeftWidth?: number,

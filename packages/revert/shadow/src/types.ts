@@ -1,7 +1,7 @@
 import type { TColor } from '@revert/color'
 
 export type TShadow = {
-  color: TColor,
+  color?: TColor,
   radius?: number,
   blurRadius?: number,
   spreadRadius?: number,
