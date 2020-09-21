@@ -1,8 +1,7 @@
 import type { TColor } from '@revert/color'
+import type { TFontWeight } from '@revert/text'
 
-export type TInput = {
-  id?: string,
-  accessibilityLabel?: string,
+export type TInputStyle = {
   isDisabled?: boolean,
   paddingBottom?: number,
   paddingLeft?: number,
@@ -10,10 +9,15 @@ export type TInput = {
   paddingTop?: number,
   color?: TColor,
   fontFamily?: string,
-  fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900,
+  fontWeight?: TFontWeight,
   fontSize?: number,
   lineHeight?: number,
   letterSpacing?: number,
+}
+
+export type TInput = TInputStyle & {
+  id?: string,
+  accessibilityLabel?: string,
   value: string,
   onChange: (newValue: string) => void,
   onSubmit?: () => void,
