@@ -1,12 +1,12 @@
-import { colorToString, isColor } from '@revert/color'
+import { colorToString } from '@revert/color'
 import React from 'react'
 import { TextInput } from 'react-native'
 import type { TextStyle } from 'react-native'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
-import type { TInput } from './types'
+import type { TPrimitiveInput } from './types'
 
 export const PrimitiveInput = component(
-  startWithType<TInput>(),
+  startWithType<TPrimitiveInput>(),
   mapHandlers({
     onChangeText: ({ onChange }) => (newValue: string) => onChange(newValue),
     onSubmitEditing: ({ onSubmit }) => () => {
@@ -14,7 +14,11 @@ export const PrimitiveInput = component(
     },
   }),
   mapWithProps(({
-    color,
+    color = 0xff,
+    left = 0,
+    top = 0,
+    width,
+    height,
     letterSpacing,
     lineHeight,
     fontFamily,
@@ -36,16 +40,11 @@ export const PrimitiveInput = component(
       paddingRight,
       paddingTop,
       position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      width: '100%',
-      height: '100%',
-    }
-
-    if (isColor(color)) {
-      style.color = colorToString(color)
+      top,
+      left,
+      width: width ?? '100%',
+      height: height ?? '100%',
+      color: colorToString(color),
     }
 
     return {

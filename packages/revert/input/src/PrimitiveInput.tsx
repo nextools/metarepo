@@ -1,4 +1,4 @@
-import { colorToString, isColor } from '@revert/color'
+import { colorToString } from '@revert/color'
 import React from 'react'
 import type { KeyboardEvent, CSSProperties } from 'react'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
@@ -16,7 +16,7 @@ export const PrimitiveInput = component(
     },
   }),
   mapWithProps(({
-    color,
+    color = 0xff,
     letterSpacing,
     lineHeight,
     fontFamily,
@@ -48,12 +48,9 @@ export const PrimitiveInput = component(
       position: 'absolute',
       left,
       top,
-      width: isNumber(width) ? width : '100%',
-      height: isNumber(height) ? height : '100%',
-    }
-
-    if (isColor(color)) {
-      style.color = colorToString(color)
+      width: width ?? '100%',
+      height: height ?? '100%',
+      color: colorToString(color),
     }
 
     if (isNumber(letterSpacing)) {
