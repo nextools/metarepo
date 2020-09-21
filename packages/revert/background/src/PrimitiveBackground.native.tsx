@@ -9,7 +9,7 @@ import type { TPrimitiveBackground } from './types'
 export const PrimitiveBackground = component(
   startWithType<TPrimitiveBackground>(),
   mapProps(({
-    color,
+    color = 0,
     radius,
     left = 0,
     top = 0,

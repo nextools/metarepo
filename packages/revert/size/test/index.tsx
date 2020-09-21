@@ -3,7 +3,7 @@ import { create, act } from 'react-test-renderer'
 import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { Size } from '../src/Root'
+import { Size } from '../src/Size'
 
 test('revert/size: standard flow', (t) => {
   const sizes = [{

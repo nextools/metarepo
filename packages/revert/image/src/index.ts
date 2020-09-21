@@ -1,3 +1,8 @@
 export * from './PrimitiveImage'
 export * from './Image'
-export * from './types'
+export * from './ImageContext'
+export type {
+  TImage,
+  TImageContext,
+  TPrimitiveImage,
+} from './types'

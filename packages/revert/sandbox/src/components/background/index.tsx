@@ -1,29 +1,25 @@
 import { AnimationColor } from '@revert/animation'
 import {
-  Background as RevertBackground,
+  CreateLayoutBackground,
   PrimitiveBackground as RevertPrimitiveBackground,
 } from '@revert/background'
-import type { TBackground, TPrimitiveBackground } from '@revert/background'
+import type { TPrimitiveBackground } from '@revert/background'
 import React from 'react'
-import type { TComponent } from 'refun'
+import { component, mapDefaultProps, startWithType } from 'refun'
 
-export const PrimitiveBackground: TComponent<TPrimitiveBackground> = (props) => (
+export const PrimitiveBackground = component(
+  startWithType<TPrimitiveBackground>(),
+  mapDefaultProps({
+    color: 0,
+  })
+)((props) => (
   <AnimationColor toColor={props.color}>
     {(color) => (
       <RevertPrimitiveBackground {...props} color={color}/>
     )}
   </AnimationColor>
-)
+))
 
 PrimitiveBackground.displayName = RevertPrimitiveBackground.displayName
 
-export const Background: TComponent<TBackground> = (props) => (
-  <AnimationColor toColor={props.color}>
-    {(color) => (
-      <RevertBackground {...props} color={color}/>
-    )}
-  </AnimationColor>
-)
-
-Background.displayName = RevertBackground.displayName
-Background.componentSymbol = RevertBackground.componentSymbol
+export const Background = CreateLayoutBackground(PrimitiveBackground)

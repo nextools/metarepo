@@ -1,6 +1,5 @@
-import type { TText } from '@revert/text'
-
-export type TLink = TText & {
+export type TLink = {
+  id?: string,
   href?: string,
   target?: string,
   tabIndex?: number,

@@ -9,4 +9,7 @@ export {
   LAYOUT_SIZE_4,
   LAYOUT_SIZE_FIT,
 } from './symbols'
-export * from './types'
+export type {
+  TLayoutDirection,
+  TLayoutSize,
+} from './types'

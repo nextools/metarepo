@@ -1,24 +1,15 @@
-import { PrimitiveText } from '@revert/text'
+import type { CSSProperties, FC } from 'react'
 import React from 'react'
-import { component, startWithType } from 'refun'
 import { UNDEFINED } from 'tsfn'
 import type { TLink } from './types'
 
-export const PrimitiveLink = component(
-  startWithType<TLink>()
-)(({
+const style: CSSProperties = {
+  display: 'inline-block',
+  textDecoration: 'none',
+}
+
+export const PrimitiveLink: FC<TLink> = ({
   id,
-  color,
-  fontFamily,
-  fontSize,
-  fontWeight,
-  isUnderlined,
-  letterSpacing,
-  lineHeight,
-  shouldHideOverflow,
-  shouldPreserveWhitespace,
-  shouldPreventSelection,
-  shouldPreventWrap,
   isDisabled,
   children,
   href,
@@ -33,10 +24,11 @@ export const PrimitiveLink = component(
   onPressOut,
 }) => (
   <a
+    id={id}
     href={href}
     target={target}
-    id={id}
     tabIndex={tabIndex}
+    style={style}
     onFocus={onFocus}
     onBlur={onBlur}
     onClick={isDisabled ? UNDEFINED : onPress}
@@ -45,22 +37,8 @@ export const PrimitiveLink = component(
     onMouseEnter={onPointerEnter}
     onMouseLeave={onPointerLeave}
   >
-    <PrimitiveText
-      color={color}
-      fontFamily={fontFamily}
-      fontSize={fontSize}
-      fontWeight={fontWeight}
-      isUnderlined={isUnderlined}
-      letterSpacing={letterSpacing}
-      lineHeight={lineHeight}
-      shouldHideOverflow={shouldHideOverflow}
-      shouldPreserveWhitespace={shouldPreserveWhitespace}
-      shouldPreventSelection={shouldPreventSelection}
-      shouldPreventWrap={shouldPreventWrap}
-    >
-      {children}
-    </PrimitiveText>
+    {children}
   </a>
-))
+)
 
 PrimitiveLink.displayName = 'PrimitiveLink'

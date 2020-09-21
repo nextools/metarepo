@@ -18,7 +18,7 @@ import type {
   TMapPressed,
   TMapKeyboardFocused,
 } from 'refun'
-import { TRANSPARENT } from '../../colors'
+import { COLOR_TRANSPARENT } from '../../colors'
 import { SYMBOL_SWITCH } from '../../symbols'
 import { PrimitiveBackground } from '../background'
 import { PrimitiveBorder } from '../border'
@@ -91,7 +91,7 @@ export const Switch = pureComponent(
       isKeyboardFocused,
       focusedOuterBorderColor,
       true,
-      TRANSPARENT
+      COLOR_TRANSPARENT
     ),
     knobColor: elegir(
       isChecked && isPressed,

@@ -510,15 +510,15 @@ test('mdown: list + listItem', (t) => {
     * [ ] item 5
   `)
   const html = toHtml(md, {
-    list: ({ isOrdered, children }) => {
+    list: ({ isOrdered, children, depth }) => {
       if (isOrdered) {
         return (
-          <ol>{ children }</ol>
+          <ol title={String(depth)}>{ children }</ol>
         )
       }
 
       return (
-        <ul>{ children }</ul>
+        <ul title={String(depth)}>{ children }</ul>
       )
     },
     listItem: ({ children, isTask, isChecked }) => (
@@ -532,6 +532,9 @@ test('mdown: list + listItem', (t) => {
     em: ({ children }) => (
       <em>{ children }</em>
     ),
+    strong: ({ children }) => (
+      <strong>{ children }</strong>
+    ),
     text: ({ children }) => (
       <span>{ children }</span>
     ),
@@ -540,13 +543,16 @@ test('mdown: list + listItem', (t) => {
   t.equal(
     html,
     minHtml(`
-      <ul>
+      <ul title="0">
         <li>
           <span>item 1</span>
         </li>
         <li>
-            <span>item **2**</span>
-            <ol>
+            <span>item </span>
+            <strong>
+              <span>2</span>
+            </strong>
+            <ol title="1">
                 <li>
                   <span>item 2.1</span>
                 </li>

@@ -43,6 +43,7 @@ export type TMetaFile = {
   readonly config: TCommonComponentConfig,
   readonly controls?: TCommonComponentControls,
   readonly packageJson?: TPackageJson,
+  readonly readme?: string,
 }
 
 export type TComponents = {
@@ -184,6 +185,8 @@ export type TTheme = Readonly<{
 
   sandboxBorderColor: TColor,
 
+  mdBlockquoteBorderColor: TColor,
+  mdTableBorderColor: TColor,
 }>
 
 export type TThemeIcons = Readonly<{

@@ -12,7 +12,7 @@ export const PrimitiveShadow = component(
     top = 0,
     width,
     height,
-    color,
+    color = 0,
     radius,
     overflow = 0,
     blurRadius = 0,

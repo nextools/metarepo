@@ -93,6 +93,10 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
             outputPath: 'videos',
           },
         },
+        {
+          test: /\.(md|txt)$/,
+          loader: require.resolve('raw-loader'),
+        },
       ],
     },
     optimization: {

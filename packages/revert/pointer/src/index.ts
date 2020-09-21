@@ -1,2 +1,5 @@
-export * from './Root'
-export * from './types'
+export * from './Pointer'
+export type {
+  TPointer,
+  TPointerEvent,
+} from './types'

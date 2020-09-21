@@ -1,10 +1,11 @@
 import { InlineBlock } from '@revert/block'
 import { Label } from '@revert/label'
 import { Layout, Layout_Item, Layout_Spacer, LayoutContext, LAYOUT_SIZE_FIT } from '@revert/layout'
+import { TextThemeContext } from '@revert/text'
 import React from 'react'
 import { startWithType, mapContext, component } from 'refun'
 import { isDefined } from 'tsfn'
-import { TRANSPARENT } from '../../colors'
+import { COLOR_TRANSPARENT } from '../../colors'
 import { mapContextOverride } from '../../map/map-context-override'
 import { mapStoreState, toggleCanvasDarkMode, toggleNavigationSidebar, toggleControlsSidebar, resetTransform, toggleStretch, toggleGrid, toggleInspect } from '../../store'
 import { SYMBOL_TOOLBAR } from '../../symbols'
@@ -16,7 +17,7 @@ import { PluginContext } from '../plugin-provider'
 import { Switch } from '../switch'
 import { SwitchPopover } from '../switch-popover'
 import { Text } from '../text'
-import { ThemeContext, ButtonIconThemeContext, ButtonIconSwitchThemeContext, TextThemeContext } from '../theme-context'
+import { ThemeContext, ButtonIconThemeContext, ButtonIconSwitchThemeContext } from '../theme-context'
 import { Tooltip } from '../tooltip'
 import { HeightField } from './HeightField'
 import { ResolutionDropdown } from './ResolutionDropdown'
@@ -38,21 +39,21 @@ export const Toolbar = component(
     color: theme.toolbarTextColor,
   })),
   mapContextOverride('ButtonIconThemeProvider', ButtonIconThemeContext, ({ theme }) => ({
-    backgroundColor: TRANSPARENT,
-    hoveredBackgroundColor: TRANSPARENT,
-    pressedBackgroundColor: TRANSPARENT,
+    backgroundColor: COLOR_TRANSPARENT,
+    hoveredBackgroundColor: COLOR_TRANSPARENT,
+    pressedBackgroundColor: COLOR_TRANSPARENT,
     focusedBorderColor: theme.toolbarIconFocusedBorderColor,
     iconColor: theme.toolbarIconColor,
     hoveredIconColor: theme.toolbarIconHoveredColor,
     pressedIconColor: theme.toolbarIconPressedColor,
   })),
   mapContextOverride('ButtonIconSwitchThemeProvider', ButtonIconSwitchThemeContext, ({ theme }) => ({
-    backgroundColor: TRANSPARENT,
-    hoveredBackgroundColor: TRANSPARENT,
-    pressedBackgroundColor: TRANSPARENT,
-    activeBackgroundColor: TRANSPARENT,
-    activeHoveredBackgroundColor: TRANSPARENT,
-    activePressedBackgroundColor: TRANSPARENT,
+    backgroundColor: COLOR_TRANSPARENT,
+    hoveredBackgroundColor: COLOR_TRANSPARENT,
+    pressedBackgroundColor: COLOR_TRANSPARENT,
+    activeBackgroundColor: COLOR_TRANSPARENT,
+    activeHoveredBackgroundColor: COLOR_TRANSPARENT,
+    activePressedBackgroundColor: COLOR_TRANSPARENT,
     focusedBorderColor: theme.toolbarIconFocusedBorderColor,
     activeFocusedBorderColor: theme.toolbarIconActiveFocusedBorderColor,
     iconColor: theme.toolbarIconColor,

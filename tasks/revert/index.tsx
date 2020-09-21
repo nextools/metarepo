@@ -209,7 +209,7 @@ export const App = component(
             <Background color={rgba(252, 224, 167, 1)}/>
             <Scroll shouldScrollVertically>
               <Layout direction="vertical">
-                <Layout_Item height={400} hAlign="center" vAlign="center">
+                <Layout_Item height={600} hAlign="center" vAlign="center">
                   <Btn
                     borderColor={rgba(255, 0, 0, 0.4)}
                     backgroundColor={rgba(0, 0, 255, 0.2)}

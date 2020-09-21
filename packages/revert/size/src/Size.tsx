@@ -1,7 +1,7 @@
 import React from 'react'
 import type { CSSProperties } from 'react'
 import { component, startWithType, mapWithPropsMemo, mapRef } from 'refun'
-import { isFunction, isNumber } from 'tsfn'
+import { isFunction, isNumber, isUndefined } from 'tsfn'
 import { onLayout } from './on-layout'
 import type { TSize } from './types'
 
@@ -14,6 +14,7 @@ export const Size = component(
     maxWidth = 0,
     maxHeight = 0,
     shouldPreventWrap = false,
+    onWidthChange,
   }) => {
     const parentStyle: CSSProperties = {
       display: 'flex',
@@ -24,6 +25,10 @@ export const Size = component(
     }
     const childStyle: CSSProperties = {
       flex: '0 0 auto',
+    }
+
+    if (isUndefined(onWidthChange)) {
+      childStyle.flex = '1'
     }
 
     if (maxWidth > 0) {
@@ -42,7 +47,7 @@ export const Size = component(
       parentStyle,
       childStyle,
     }
-  }, ['maxWidth', 'maxHeight', 'left', 'top']),
+  }, ['maxWidth', 'maxHeight', 'left', 'top', 'shouldPreventWrap', 'width', 'onWidthChange']),
   mapRef('ref', null as HTMLDivElement | null),
   onLayout(({ ref, width, height, onWidthChange, onHeightChange }) => {
     if (ref.current === null) {

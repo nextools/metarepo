@@ -13,7 +13,7 @@ import {
   mapContext,
   mapDefaultProps,
 } from 'refun'
-import { BLACK, WHITE } from '../../colors'
+import { COLOR_BLACK, COLOR_WHITE } from '../../colors'
 import { mapStoreState, setTransform } from '../../store'
 import { mapMetaStoreState } from '../../store-meta'
 import { SYMBOL_DEMO_AREA } from '../../symbols'
@@ -112,7 +112,7 @@ export const DemoArea = pureComponent(
         width={canvasWidth}
         height={canvasHeight}
       >
-        <PrimitiveBackground color={isCanvasDarkMode ? BLACK : WHITE}/>
+        <PrimitiveBackground color={isCanvasDarkMode ? COLOR_BLACK : COLOR_WHITE}/>
 
         {Component !== null && (
           <LayoutContext.Provider

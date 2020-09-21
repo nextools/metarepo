@@ -2,7 +2,7 @@ import { Border } from '@revert/border'
 import { Button } from '@revert/button'
 import { Layout, Layout_Item, Layout_Spacer } from '@revert/layout'
 import { Text } from '@revert/text'
-import type { TText } from '@revert/text'
+import type { TTextChildren } from '@revert/text'
 import React from 'react'
 import { startWithType, mapHandlers, mapWithProps, component } from 'refun'
 import { COLOR_WHITE } from '../constants'
@@ -13,7 +13,7 @@ const COLOR_BORDER = 0xccccccff
 export type TMonthButton = {
   selectedMonthsAgo: number,
   months: number,
-  children: TText['children'],
+  children: TTextChildren,
   onSelectMonths: (monthAgo: number) => void,
 }
 

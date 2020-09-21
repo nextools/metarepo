@@ -1,9 +1,9 @@
 import { Text } from '@revert/text'
-import type { TText } from '@revert/text'
+import type { TPrimitiveText } from '@revert/text'
 import type { TComponentConfig } from 'autoprops'
 import type { TButton } from '../src'
 
-export const TextConfig: TComponentConfig<TText> = {
+export const TextConfig: TComponentConfig<TPrimitiveText> = {
   props: {
     children: ['text'],
   },

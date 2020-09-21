@@ -1,17 +1,18 @@
 import { Block, InlineBlock } from '@revert/block'
 import { Button } from '@revert/button'
 import { Layout, Layout_Item } from '@revert/layout'
+import { TextThemeContext } from '@revert/text'
 import { elegir } from 'elegir'
 import React from 'react'
 import { component, startWithType, mapHovered, mapContext, mapKeyboardFocused, mapPressed, mapWithProps } from 'refun'
 import type { TMapHovered, TMapKeyboardFocused } from 'refun'
-import { TRANSPARENT } from '../../colors'
+import { COLOR_TRANSPARENT } from '../../colors'
 import { mapContextOverride } from '../../map/map-context-override'
 import { Background } from '../background'
 import { Border } from '../border'
 import { IconResetTransform } from '../icons'
 import { Text } from '../text'
-import { ButtonIconThemeContext, TextThemeContext } from '../theme-context'
+import { ButtonIconThemeContext } from '../theme-context'
 import { Tooltip } from '../tooltip'
 
 const WIDTH = 75
@@ -47,7 +48,7 @@ export const ZoomLevel = component(
   }) => ({
     borderColor: isKeyboardFocused
       ? focusedBorderColor
-      : TRANSPARENT,
+      : COLOR_TRANSPARENT,
     backgroundColor: elegir(
       isPressed,
       pressedBackgroundColor,

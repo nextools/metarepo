@@ -1,3 +1,6 @@
 export * from './PrimitiveInput'
 export * from './Input'
-export * from './types'
+export type {
+  TInput,
+  TPrimitiveInput,
+} from './types'

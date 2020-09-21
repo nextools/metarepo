@@ -3,4 +3,11 @@ export * from './AnimationValue'
 export * from './AnimationValues'
 export * from './AnimationColor'
 export * from './easing'
-export * from './types'
+export type {
+  TAnimation,
+  TAnimationColor,
+  TAnimationMapFn,
+  TAnimationValue,
+  TAnimationValues,
+  TEasingFn,
+} from './types'

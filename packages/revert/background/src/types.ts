@@ -1,7 +1,7 @@
 import type { TColor } from '@revert/color'
 
 export type TBackground = {
-  color: TColor,
+  color?: TColor,
   radius?: number,
   overflow?: number,
 }

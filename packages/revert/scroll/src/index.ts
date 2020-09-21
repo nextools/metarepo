@@ -1,2 +1,2 @@
-export * from './Root'
-export * from './types'
+export * from './Scroll'
+export type { TScroll } from './types'

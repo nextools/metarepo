@@ -1,14 +1,15 @@
 import { ParentBlock, InlineBlock } from '@revert/block'
 import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
+import { TextThemeContext } from '@revert/text'
 import React from 'react'
 import { component, startWithType, mapState, mapDebouncedHandlerTimeout, mapHandlers, mapContext, mapWithProps } from 'refun'
-import { TRANSPARENT } from '../../colors'
+import { COLOR_TRANSPARENT } from '../../colors'
 import { mapContextOverride } from '../../map/map-context-override'
 import { Background } from '../background'
 import { ButtonIcon } from '../button-icon'
 import { Field } from '../field'
 import { IconSearchSmall, IconCloseSmall } from '../icons'
-import { ThemeContext, FieldThemeContext, ButtonIconThemeContext, TextThemeContext } from '../theme-context'
+import { ThemeContext, FieldThemeContext, ButtonIconThemeContext } from '../theme-context'
 
 const HEIGHT = 40
 const INPUT_HEIGHT = 20
@@ -30,13 +31,13 @@ export const SearchField = component(
     placeholderColor: theme.searchFieldPlaceholderColor,
   })),
   mapContextOverride('ButtonIconThemeProvider', ButtonIconThemeContext, ({ theme }) => ({
-    backgroundColor: TRANSPARENT,
-    hoveredBackgroundColor: TRANSPARENT,
-    pressedBackgroundColor: TRANSPARENT,
+    backgroundColor: COLOR_TRANSPARENT,
+    hoveredBackgroundColor: COLOR_TRANSPARENT,
+    pressedBackgroundColor: COLOR_TRANSPARENT,
     iconColor: theme.searchFieldClearIconColor,
     hoveredIconColor: theme.searchFieldClearIconHoveredColor,
     pressedIconColor: theme.searchFieldClearIconPressedColor,
-    borderColor: TRANSPARENT,
+    borderColor: COLOR_TRANSPARENT,
     focusedBorderColor: theme.searchFieldClearIconFocusedBorderColor,
   })),
   mapContextOverride('IconThemeProvider', TextThemeContext, ({ theme, value }) => ({

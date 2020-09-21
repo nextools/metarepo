@@ -108,6 +108,10 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
             outputPath: 'videos',
           },
         },
+        {
+          test: /\.(md|txt)$/,
+          loader: require.resolve('raw-loader'),
+        },
       ],
     },
     performance: {

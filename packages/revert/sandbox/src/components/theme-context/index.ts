@@ -1,7 +1,6 @@
 export * from './SwitchThemeContext'
 export * from './TooltipThemeContext'
 export * from './PopoverThemeContext'
-export * from './TextThemeContext'
 export * from './FieldThemeContext'
 export * from './DropdownThemeContext'
 export * from './ButtonIconThemeContext'

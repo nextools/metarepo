@@ -14,8 +14,6 @@ export const SYMBOL_SWITCH = Symbol('SWITCH')
 export const SYMBOL_CHECKMARK = Symbol('CHECKMARK')
 export const SYMBOL_SCROLL = Symbol('SCROLL')
 export const SYMBOL_LINK = Symbol('LINK')
-export const SYMBOL_SIZE_TEXT = Symbol('SIZE_TEXT')
-export const SYMBOL_SIZE_CONTENT = Symbol('SIZE_CONTENT')
 
 export const SYMBOL_LAYOUT = Symbol('LAYOUT')
 export const SYMBOL_LAYOUT_ITEM = Symbol('LAYOUT_ITEM')

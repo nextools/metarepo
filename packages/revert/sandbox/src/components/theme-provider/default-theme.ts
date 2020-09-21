@@ -1,10 +1,10 @@
-import { WHITE, TRANSPARENT } from '../../colors'
+import { COLOR_WHITE, COLOR_TRANSPARENT } from '../../colors'
 import type { TTheme } from '../../types'
 
 export const defaultTheme: TTheme = {
   navigationSidebarBackgroundColor: 0x2e2d2cff,
   navigationSidebarActiveItemBackgroundColor: 0x45423fff,
-  navigationSidebarActiveItemColor: WHITE,
+  navigationSidebarActiveItemColor: COLOR_WHITE,
   navigationSidebarItemBackgroundColor: 0x252424ff,
   navigationSidebarItemColor: 0x969390ff,
   navigationSidebarPressedItemBackgroundColor: 0x2e2d2dff,
@@ -16,58 +16,58 @@ export const defaultTheme: TTheme = {
 
   searchFieldBackgroundColor: 0x45423fff,
   searchFieldPlaceholderColor: 0xb5b0aaff,
-  searchFieldColor: WHITE,
+  searchFieldColor: COLOR_WHITE,
   searchFieldClearIconColor: 0xabaaa9ff,
   searchFieldClearIconHoveredColor: 0xdfdad7ff,
   searchFieldClearIconPressedColor: 0xa19f9dff,
   searchFieldClearIconFocusedBorderColor: 0x979493ff,
   searchFieldSearchIconColor: 0x969391ff,
-  searchFieldSearchIconActiveColor: WHITE,
+  searchFieldSearchIconActiveColor: COLOR_WHITE,
 
-  controlsColor: WHITE,
+  controlsColor: COLOR_WHITE,
   controlsPlaceholderColor: 0x99938dff,
-  controlsIconColor: WHITE,
-  controlsActionColor: WHITE,
+  controlsIconColor: COLOR_WHITE,
+  controlsActionColor: COLOR_WHITE,
 
   popoverBackgroundColor: 0x2e2d2cff,
 
   tabsColor: 0x99938dff,
-  tabsActiveColor: WHITE,
-  tabsActiveBorderColor: WHITE,
+  tabsActiveColor: COLOR_WHITE,
+  tabsActiveBorderColor: COLOR_WHITE,
   tabsBorderColor: 0x615d59ff,
   tabsDisabledColor: 0x99938d99,
-  tabsCloseIconColor: WHITE,
+  tabsCloseIconColor: COLOR_WHITE,
 
-  fieldColor: WHITE,
+  fieldColor: COLOR_WHITE,
   fieldPlaceholderColor: 0x99938dff,
   fieldBorderColor: 0x857f7aff,
-  fieldFocusedBorderColor: WHITE,
+  fieldFocusedBorderColor: COLOR_WHITE,
 
-  dropdownColor: WHITE,
-  dropdownChevronColor: WHITE,
-  dropdownFocusedBorderColor: WHITE,
+  dropdownColor: COLOR_WHITE,
+  dropdownChevronColor: COLOR_WHITE,
+  dropdownFocusedBorderColor: COLOR_WHITE,
 
   demoAreaBackgroundColor: 0x212020ff,
 
   controlsSidebarBackgroundColor: 0x212020ff,
   controlsSidebarHoveredBackgroundColor: 0x383737ff,
   controlsSidebarPressedBackgroundColor: 0x2e2d2dff,
-  controlsSidebarColor: WHITE,
+  controlsSidebarColor: COLOR_WHITE,
   controlsSidebarIconBackgroundColor: 0x424140ff,
-  controlsSidebarIconColor: WHITE,
+  controlsSidebarIconColor: COLOR_WHITE,
 
   toolbarBackgroundColor: 0x212020ff,
-  toolbarIconColor: WHITE,
-  toolbarIconHoveredColor: WHITE,
-  toolbarIconPressedColor: WHITE,
+  toolbarIconColor: COLOR_WHITE,
+  toolbarIconHoveredColor: COLOR_WHITE,
+  toolbarIconPressedColor: COLOR_WHITE,
   toolbarIconActiveColor: 0xa3665fff,
   toolbarIconActiveHoveredColor: 0xa3665fff,
   toolbarIconActivePressedColor: 0xa3665fff,
-  toolbarIconFocusedBorderColor: WHITE,
+  toolbarIconFocusedBorderColor: COLOR_WHITE,
   toolbarIconActiveFocusedBorderColor: 0xa3665fff,
-  toolbarTextColor: WHITE,
+  toolbarTextColor: COLOR_WHITE,
 
-  tooltipBackgroundColor: WHITE,
+  tooltipBackgroundColor: COLOR_WHITE,
   tooltipColor: 0x121110ff,
 
   sourceCodeBaseWordColor: 0x99938dff,
@@ -83,7 +83,7 @@ export const defaultTheme: TTheme = {
   sourceCodeFunctionCallColor: 0xe7cea4ff,
 
   sourceCodeLineColor: 0x98928cff,
-  sourceCodeActiveLineColor: WHITE,
+  sourceCodeActiveLineColor: COLOR_WHITE,
   sourceCodeLineBackgroundColor: 0x212020ff,
   sourceCodeActiveLineBackgroundColor: 0x2e2d2cff,
   sourceCodeHoveredLineBackgroundColor: 0x2e2d2cff,
@@ -99,30 +99,33 @@ export const defaultTheme: TTheme = {
 
   switchBackgroundColor: 0x787573ff,
   switchActiveBackgroundColor: 0xa3665fff,
-  switchKnobBackgroundColor: WHITE,
+  switchKnobBackgroundColor: COLOR_WHITE,
   switchFocusedBorderColor: 0x787573ff,
   switchActiveFocusedBorderColor: 0xa3665fff,
 
-  checkmarkBackgroundColor: TRANSPARENT,
+  checkmarkBackgroundColor: COLOR_TRANSPARENT,
   checkmarkActiveBackgroundColor: 0xa3665fff,
-  checkmarkDisabledBackgroundColor: TRANSPARENT,
+  checkmarkDisabledBackgroundColor: COLOR_TRANSPARENT,
   checkmarkActiveDisabledBackgroundColor: 0x857f7aff,
   checkmarkBorderColor: 0x857f7aff,
   checkmarkActiveBorderColor: 0xa3665fff,
   checkmarkDisabledBorderColor: 0x857f7aff,
   checkmarkActiveDisabledBorderColor: 0x857f7aff,
-  checkmarkIconColor: WHITE,
+  checkmarkIconColor: COLOR_WHITE,
 
   notificationBackgroundColor: 0x615d59ff,
-  notificationColor: WHITE,
-  notificationCloseColor: WHITE,
+  notificationColor: COLOR_WHITE,
+  notificationCloseColor: COLOR_WHITE,
 
   alertBackgroundColor: 0x615d59ff,
-  alertColor: WHITE,
-  alertIconColor: WHITE,
-  alertCloseColor: WHITE,
+  alertColor: COLOR_WHITE,
+  alertIconColor: COLOR_WHITE,
+  alertCloseColor: COLOR_WHITE,
 
   inspectBackgroundColor: 0x9d73b699,
 
   sandboxBorderColor: 0x45423fff,
+
+  mdBlockquoteBorderColor: 0xff4444ff,
+  mdTableBorderColor: 0xffffffff,
 }

@@ -1,3 +1,4 @@
+import { MarkdownThemeContext } from '@revert/markdown'
 import React from 'react'
 import { component, startWithType, mapContext } from 'refun'
 import { mapContextOverride } from '../../map/map-context-override'
@@ -66,6 +67,10 @@ export const RootThemeProvider = component(
     color: theme.dropdownColor,
     hoveredColor: theme.dropdownColor,
     focusedBorderColor: theme.dropdownFocusedBorderColor,
+  })),
+  mapContextOverride('MarkdownThemeProvider', MarkdownThemeContext, ({ theme }) => ({
+    blockquoteBorderColor: theme.mdBlockquoteBorderColor,
+    tableBorderColor: theme.mdTableBorderColor,
   }))
 )(({
   CheckmarkThemeProvider,
@@ -73,6 +78,7 @@ export const RootThemeProvider = component(
   TooltipThemeProvider,
   PopoverThemeProvider,
   DropdownThemeProvider,
+  MarkdownThemeProvider,
   children,
 }) => (
   <TooltipThemeProvider>
@@ -80,7 +86,9 @@ export const RootThemeProvider = component(
       <CheckmarkThemeProvider>
         <SwitchThemeProvider>
           <DropdownThemeProvider>
-            {children}
+            <MarkdownThemeProvider>
+              {children}
+            </MarkdownThemeProvider>
           </DropdownThemeProvider>
         </SwitchThemeProvider>
       </CheckmarkThemeProvider>

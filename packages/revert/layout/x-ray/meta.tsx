@@ -1,10 +1,10 @@
 import { Text } from '@revert/text'
-import type { TText } from '@revert/text'
+import type { TPrimitiveText } from '@revert/text'
 import type { TComponentConfig } from 'autoprops'
 import type { TLayout, TLayout_Item } from '../src'
 import { Layout_Item } from '../src'
 
-const AlignItem_TextConfig: TComponentConfig<TText> = {
+const AlignItem_TextConfig: TComponentConfig<TPrimitiveText> = {
   props: {
     color: [0xeeaa88ff],
     fontSize: [16],

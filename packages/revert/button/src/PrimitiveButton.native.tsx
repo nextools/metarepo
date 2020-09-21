@@ -24,8 +24,8 @@ export const PrimitiveButton = component(
       position: 'absolute',
       left,
       top,
-      width: width || '100%',
-      height: height || '100%',
+      width: width ?? '100%',
+      height: height ?? '100%',
     }
 
     return { style }

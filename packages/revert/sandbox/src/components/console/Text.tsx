@@ -1,23 +1,19 @@
-import { PrimitiveText } from '@revert/text'
+import type { TTextChildren } from '@revert/text'
+import type { FC } from 'react'
 import React from 'react'
-import { component, startWithType, mapContext } from 'refun'
-import { TextThemeContext } from '../theme-context'
+import { PrimitiveText } from '../text'
 
 export type TText = {
-  children: string,
+  children: TTextChildren,
 }
 
-export const Text = component(
-  startWithType<TText>(),
-  mapContext(TextThemeContext)
-)(({ color, children }) => (
+export const Text: FC<TText> = ({ children }) => (
   <PrimitiveText
     fontFamily="monospace"
     fontSize={14}
     lineHeight={20}
-    color={color}
     shouldPreserveWhitespace
   >
     {children}
   </PrimitiveText>
-))
+)

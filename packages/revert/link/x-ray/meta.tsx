@@ -1,13 +1,24 @@
+import { Text } from '@revert/text'
+import type { TPrimitiveText } from '@revert/text'
 import type { TComponentConfig } from 'autoprops'
 import type { TLink } from '../src'
 
-export const config: TComponentConfig<TLink> = {
+const TextConfig: TComponentConfig<TPrimitiveText> = {
+  props: {
+    color: [0xeeeeeeff],
+    fontSize: [16],
+    isUnderline: [true],
+    children: ['link text'],
+  },
+  required: ['children', 'color', 'fontSize', 'isUnderline'],
+}
+
+export const config: TComponentConfig<TLink, 'text'> = {
   props: {
     href: ['http://localhost'],
     target: ['about:blank'],
     tabIndex: [0],
     isDisabled: [true],
-    children: ['link text'],
     onPress: [() => {}],
     onBlur: [() => {}],
     onFocus: [() => {}],
@@ -16,7 +27,13 @@ export const config: TComponentConfig<TLink> = {
     onPressIn: [() => {}],
     onPressOut: [() => {}],
   },
-  required: ['children'],
+  children: {
+    text: {
+      Component: Text,
+      config: TextConfig,
+    },
+  },
+  required: ['text'],
   deps: {
     onFocus: ['onBlur', 'onFocus', 'onPointerEnter', 'onPointerLeave', 'onPress', 'onPressIn', 'onPressOut'],
     onBlur: ['onBlur', 'onFocus', 'onPointerEnter', 'onPointerLeave', 'onPress', 'onPressIn', 'onPressOut'],

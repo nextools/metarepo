@@ -88,7 +88,7 @@ const loadComponentProps = (componentConfig: TCommonComponentConfig, propsIndex:
 
 const importMetaThunk = (components: TComponents, componentKey: string, propsIndex: string): TActionAsync =>
   async (dispatch) => {
-    const { Component, config, controls, packageJson } = await importMeta(components, componentKey)
+    const { Component, config, controls, packageJson, readme } = await importMeta(components, componentKey)
 
     // Validate index
     const validIndex = applyValidPerm(config, propsIndex)
@@ -100,6 +100,7 @@ const importMetaThunk = (components: TComponents, componentKey: string, propsInd
       componentConfig: config,
       componentControls: controls ?? null,
       packageJson: packageJson ?? null,
+      readme: readme ?? null,
       componentProps: props,
       componentPropsChildrenMap: propsChildrenMap,
       componentKey,

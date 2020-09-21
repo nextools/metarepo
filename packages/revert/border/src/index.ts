@@ -1,3 +1,7 @@
 export * from './PrimitiveBorder'
 export * from './Border'
-export * from './types'
+export * from './CreateLayoutBorder'
+export type {
+  TBorder,
+  TPrimitiveBorder,
+} from './types'

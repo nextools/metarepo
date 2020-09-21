@@ -9,7 +9,7 @@ import type { TPrimitiveBorder } from './types'
 export const PrimitiveBorder = component(
   startWithType<TPrimitiveBorder>(),
   mapProps(({
-    color,
+    color = 0,
     borderWidth = 0,
     borderLeftWidth,
     borderTopWidth,

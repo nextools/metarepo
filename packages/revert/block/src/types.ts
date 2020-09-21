@@ -35,7 +35,7 @@ export type TBlock = {
   onRef?: Ref<any>,
 }
 
-export type TInlineBlock = Pick<TSize, 'shouldPreventWrap' | 'children'>
+export type TInlineBlock = Pick<TSize, 'shouldPreventWrap'>
 
 export type TParentBlock = {
   shouldIgnorePointerEvents?: boolean,

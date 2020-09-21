@@ -9,7 +9,7 @@ test('mapContext', (t) => {
   const componentSpy = createSpy(() => null)
   const Context = createContext({ ctxA: 'foo', ctxB: 42 })
   const MyComp = component(
-    startWithType<{ foo: string }>(),
+    startWithType<{ ctxA?: string, foo: string }>(),
     mapContext(Context)
   )(componentSpy)
 
@@ -50,6 +50,26 @@ test('mapContext', (t) => {
       [{ ctxA: 'bar', ctxB: 1337, foo: 'bar' }], // Update Context
     ],
     'Update Context: should pass context as props'
+  )
+
+  /* Update Props */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  act(() => {
+    testRenderer.update(
+      <Context.Provider value={{ ctxA: 'bar', ctxB: 1337 }}>
+        <MyComp ctxA="foo" foo="bar"/>
+      </Context.Provider>
+    )
+  })
+
+  t.deepEquals(
+    getSpyCalls(componentSpy),
+    [
+      [{ ctxA: 'foo', ctxB: 42, foo: 'bar' }], // Mount
+      [{ ctxA: 'bar', ctxB: 1337, foo: 'bar' }], // Update Context
+      [{ ctxA: 'bar', ctxB: 1337, foo: 'bar' }], // Update Props
+    ],
+    'Update Props: should override prop values'
   )
 
   t.end()

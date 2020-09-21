@@ -87,6 +87,7 @@ type TTokenTable = {
 type TTokenText = {
   type: 'text',
   text: string,
+  tokens?: (TTokenStrong | TTokenEm | TTokenDel | TTokenCodespan | TTokenLink | TTokenImage)[],
 }
 
 export type TToken =
@@ -146,6 +147,7 @@ export type TComponentLink = {
 }
 
 export type TComponentList = {
+  depth: number,
   isOrdered: boolean,
   children: ReactNode,
 }

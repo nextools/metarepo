@@ -1,4 +1,5 @@
 import { Layout_Item, Layout, LAYOUT_SIZE_FIT } from '@revert/layout'
+import { TextThemeContext } from '@revert/text'
 import React, { Fragment } from 'react'
 import { startWithType, pureComponent, mapContext } from 'refun'
 import { isFunction } from 'tsfn'
@@ -11,10 +12,11 @@ import { ImportPackageNameContext } from '../import-package-name-provider'
 import { SourceCode } from '../source-code'
 import { SourceImports } from '../source-imports'
 import { Tabs, Tabs_Item } from '../tabs'
-import { ThemeContext, TextThemeContext, ButtonIconThemeContext } from '../theme-context'
+import { ThemeContext, ButtonIconThemeContext } from '../theme-context'
 import { ClearConsoleButton } from './ClearConsoleButton'
 import { CopyImportsButton } from './CopyImportsButton'
 import { CopySourceButton } from './CopySourceButton'
+import { Doc } from './Doc'
 import { Header } from './Header'
 import { Info } from './Info'
 
@@ -78,6 +80,11 @@ export const ControlsSidebar = pureComponent(
             <Tabs_Item title="About">
               {() => (
                 <Info/>
+              )}
+            </Tabs_Item>
+            <Tabs_Item title="Doc">
+              {() => (
+                <Doc/>
               )}
             </Tabs_Item>
           </Tabs>

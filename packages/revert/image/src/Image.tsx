@@ -1,16 +1,25 @@
 import { InlineBlock } from '@revert/block'
-import { LayoutContext } from '@revert/layout'
 import React from 'react'
-import { component, startWithType, mapContext } from 'refun'
+import { component, startWithType, mapStateRef, mapHandlers } from 'refun'
+import { isNumber } from 'tsfn'
 import { PrimitiveImage } from './PrimitiveImage'
 import type { TImage } from './types'
 
 export const Image = component(
   startWithType<TImage>(),
-  mapContext(LayoutContext)
+  mapStateRef('state', 'rerender', () => 0, []),
+  mapHandlers({
+    onLoad: ({ width, height, rerender, onLoad }) => () => {
+      if (!isNumber(width) || !isNumber(height)) {
+        rerender()
+      }
+
+      onLoad?.()
+    },
+  })
 )(({
-  _width,
-  _height,
+  width,
+  height,
   id,
   alt,
   source,
@@ -25,8 +34,8 @@ export const Image = component(
 }) => (
   <InlineBlock>
     <PrimitiveImage
-      width={_width}
-      height={_height}
+      width={width}
+      height={height}
       id={id}
       alt={alt}
       source={source}
