@@ -1,6 +1,6 @@
 import { colorToString } from '@revert/color'
 import React from 'react'
-import type { KeyboardEvent, CSSProperties } from 'react'
+import type { KeyboardEvent, ChangeEvent, CSSProperties } from 'react'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { isNumber } from 'tsfn'
 import type { TPrimitiveInput } from './types'
@@ -8,7 +8,7 @@ import type { TPrimitiveInput } from './types'
 export const PrimitiveInput = component(
   startWithType<TPrimitiveInput>(),
   mapHandlers({
-    onChange: ({ onChange }) => (e: any) => onChange(e.target.value),
+    onChange: ({ onChange }) => (e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value),
     onKeyPress: ({ onSubmit }) => (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
         onSubmit?.()
