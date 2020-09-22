@@ -1,3 +1,7 @@
+## v3.2.0
+
+* ♻️ update dependencies `@revert/size`, `@revert/text`, `@revert/button`, `@revert/border`, `@revert/background`, `refun`, `@revert/image`, `@revert/block`, `@revert/animation`, `@revert/checkbox`, `@revert/root`
+
 ## v3.1.0
 
 * 🌱 sort element by tab

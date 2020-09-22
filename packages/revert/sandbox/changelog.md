@@ -1,3 +1,11 @@
+## v0.2.0
+
+* 🌱 add readme tab
+
+* 🐞 fix resolution input fields
+
+* ♻️ update dependencies `@revert/size`, `@revert/text`, `@revert/input`, `@revert/button`, `@revert/border`, `@revert/background`, `@revert/markdown`, `refun`, `@revert/scroll`, `@revert/link`, `@revert/block`, `@revert/animation`, `@revert/checkbox`, `@revert/label`, `@revert/layout`, `@revert/pointer`, `@revert/root`, `@revert/select`, `@revert/transform`
+
 ## v0.1.3
 
 * 🐞 remove `PrimitiveBlockRef` component

@@ -1,3 +1,7 @@
+## v3.1.0
+
+* 🌱 add `mapDefaultContext`
+
 ## v3.0.1
 
 * 🐞 remove `Object.keys` in `mapDefaultProps`

@@ -1,3 +1,9 @@
+## v0.2.1
+
+* 🐞 fix type export syntax
+
+* ♻️ update dependencies `refun`, `@revert/layout`
+
 ## v0.2.0
 
 * 🌱 add `PrimitiveRoot`

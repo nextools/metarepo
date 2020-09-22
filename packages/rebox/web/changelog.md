@@ -1,3 +1,7 @@
+## v3.1.0
+
+* 🌱 add `raw-loader` for `txt` and `md`
+
 ## v3.0.0
 
 * 💥 drop Node.js v10

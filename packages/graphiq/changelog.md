@@ -1,3 +1,7 @@
+## v0.5.0
+
+* ♻️ update dependencies `@revert/text`, `@revert/button`, `@revert/border`, `@revert/background`, `@revert/linear-gradient`, `@revert/shadow`, `refun`, `@revert/scroll`, `@revert/block`, `@revert/animation`, `@revert/layout`, `@revert/root`
+
 ## v0.4.0
 
 * 💥 use `revert` primitives
