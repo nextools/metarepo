@@ -8,7 +8,8 @@ export const TextAlign = component(
   startWithType<TTextAlign>(),
   mapWithPropsMemo(({ align }) => {
     const style: TextStyle = {
-      flex: 1,
+      flexGrow: 1,
+      flexShrink: 1,
       textAlign: align,
     }
 
