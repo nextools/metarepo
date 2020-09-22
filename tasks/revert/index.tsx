@@ -54,8 +54,13 @@ const CHK_BG = rgba(255, 255, 255, 1)
 const CHK_ACTIVE_BOR = rgba(255, 0, 0, 0.4)
 const CHK_BOR = rgba(0, 0, 0, 0.5)
 
-const Chk = component(
-  startWithType<{ size: number, children: string } & TMapKeyboardFocused>(),
+type TLayoutCheckbox = {
+  size: number,
+  children: string,
+} & TMapKeyboardFocused
+
+const LayoutCheckbox = component(
+  startWithType<TLayoutCheckbox>(),
   mapState('isChecked', 'setChecked', () => false, []),
   mapKeyboardFocused,
   mapWithProps(({ isChecked, isKeyboardFocused }) => ({
@@ -110,13 +115,13 @@ const Chk = component(
 
 /* BUTTON */
 
-type TBtn = {
+type TLayoutButton = {
   backgroundColor: TColor,
   borderColor: TColor,
 }
 
-const Btn = component(
-  startWithType<TBtn>(),
+const LayoutButton = component(
+  startWithType<TLayoutButton>(),
   mapState('btnText', 'setBtnText', () => 'button', []),
   mapHandlers({
     onPress: ({ btnText, setBtnText }) => () => {
@@ -136,9 +141,11 @@ const Btn = component(
   </Layout>
 ))
 
+LayoutButton.displayName = 'LayoutButton'
+
 /* INPUT */
 
-const Inp = component(
+const LayoutInput = component(
   startWithType<TOmitKey<TInput, 'value' | 'onChange'>>(),
   mapState('value', 'setValue', () => 'Input text', [])
 )(({ value, setValue, ...props }) => (
@@ -156,34 +163,27 @@ const Inp = component(
   </Block>
 ))
 
-// export const App = component(
-//   startWithType<{}>()
-// )(() => (
+LayoutInput.displayName = 'LayoutInput'
+
+// export const App: FC<{}> = () => (
 //   <Root>
 //     <Layout direction="vertical">
-//       <Layout_Item height={200}>
+//       <Layout_Item height={400}>
 //         <Layout>
-//           <Layout_Item hAlign="center" vAlign="center">
+//           <Layout_Item width={200} hAlign="center" vAlign="center">
 //             <Background color={rgba(200, 100, 100, 0.5)}/>
-//             <Layout>
-//               <Layout_Item hPadding={10} vPadding={10}>
-//                 <Background color={rgba(0, 100, 0, 0.3)}/>
-//                 <Btn
-//                   borderColor={rgba(255, 0, 0, 0.4)}
-//                   backgroundColor={rgba(0, 0, 255, 0.2)}
-//                 />
-//               </Layout_Item>
-//             </Layout>
+//             <LayoutButton
+//               borderColor={rgba(255, 0, 0, 0.4)}
+//               backgroundColor={rgba(0, 0, 255, 0.2)}
+//             />
 //           </Layout_Item>
 //         </Layout>
 //       </Layout_Item>
 //     </Layout>
 //   </Root>
-// ))
+// )
 
-export const App = component(
-  startWithType<{}>()
-)(() => (
+export const App: FC<{}> = () => (
   <Root>
     <Layout direction="vertical" spaceBetween={20} hPadding={20} vPadding={20}>
       {/* Header */}
@@ -209,15 +209,15 @@ export const App = component(
             <Background color={rgba(252, 224, 167, 1)}/>
             <Scroll shouldScrollVertically>
               <Layout direction="vertical">
-                <Layout_Item height={600} hAlign="center" vAlign="center">
-                  <Btn
+                <Layout_Item height={200} hAlign="center" vAlign="center">
+                  <LayoutButton
                     borderColor={rgba(255, 0, 0, 0.4)}
                     backgroundColor={rgba(0, 0, 255, 0.2)}
                   />
                 </Layout_Item>
                 <Layout_Item height={200} hAlign="center" vAlign="center">
                   <Background color={rgba(255, 0, 0, 0.4)}/>
-                  <Inp/>
+                  <LayoutInput/>
                 </Layout_Item>
               </Layout>
             </Scroll>
@@ -236,19 +236,19 @@ export const App = component(
           <Layout_Item width={LAYOUT_SIZE_FIT} hPadding={20}>
             <Background color={rgba(0, 0, 255, 0.2)}/>
             <Label>
-              <Chk size={32}>
+              <LayoutCheckbox size={32}>
                 Checkmark
-              </Chk>
+              </LayoutCheckbox>
             </Label>
           </Layout_Item>
           <Layout_Item hAlign="center" hPadding={20}>
             <Background color={rgba(0, 0, 255, 0.2)}/>
-            <Chk size={64}>
+            <LayoutCheckbox size={64}>
               is enabled
-            </Chk>
+            </LayoutCheckbox>
           </Layout_Item>
         </Layout>
       </Layout_Item>
     </Layout>
   </Root>
-))
+)
