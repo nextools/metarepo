@@ -1,29 +1,26 @@
 import { LayoutContext } from '@revert/layout'
 import type { FC } from 'react'
-import { startWithType, component, mapContext } from 'refun'
+import { useContext } from 'react'
+import type { TComponent } from 'refun'
 import type { TBackground, TPrimitiveBackground } from './types'
 
 export const CreateLayoutBackground = (PrimitiveBackground: FC<TPrimitiveBackground>) => {
-  const Background = component(
-    startWithType<TBackground>(),
-    mapContext(LayoutContext)
-  )(({
-    _parentLeft,
-    _parentTop,
-    _parentWidth,
-    _parentHeight,
-    color,
-    overflow,
-    radius,
-  }) => PrimitiveBackground({
-    left: _parentLeft,
-    top: _parentTop,
-    width: _parentWidth,
-    height: _parentHeight,
-    overflow,
-    radius,
-    color,
-  }))
+  const Background: TComponent<TBackground> = (props) => {
+    const {
+      _parentLeft,
+      _parentTop,
+      _parentWidth,
+      _parentHeight,
+    } = useContext(LayoutContext)
+
+    return PrimitiveBackground({
+      ...props,
+      left: _parentLeft,
+      top: _parentTop,
+      width: _parentWidth,
+      height: _parentHeight,
+    })
+  }
 
   Background.displayName = 'Background'
   Background.componentSymbol = Symbol('REVERT_BACKGROUND')
