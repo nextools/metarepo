@@ -2,34 +2,51 @@ import React from 'react'
 import { View } from 'react-native'
 import type { LayoutChangeEvent, ViewStyle } from 'react-native'
 import { component, mapHandlers, startWithType, mapWithPropsMemo } from 'refun'
-import { isFunction, isNumber } from 'tsfn'
+import { isFunction, isNumber, isUndefined } from 'tsfn'
 import { round } from './round'
 import type { TSize } from './types'
 
 export const Size = component(
   startWithType<TSize>(),
-  mapWithPropsMemo(({ left = 0, top = 0, maxWidth = 0, maxHeight = 0 }) => {
-    const style: ViewStyle = {
+  mapWithPropsMemo(({
+    left = 0,
+    top = 0,
+    width,
+    maxWidth = 0,
+    maxHeight = 0,
+    onWidthChange,
+  }) => {
+    const parentStyle: ViewStyle = {
+      position: 'absolute',
       flexDirection: 'row',
-      flexGrow: 0,
-      flexShrink: 0,
       alignSelf: 'flex-start',
       left,
       top,
+      width,
+    }
+    const childStyle: ViewStyle = {
+      flexGrow: 0,
+      flexShrink: 0,
+      flexBasis: 'auto',
+    }
+
+    if (isUndefined(onWidthChange)) {
+      childStyle.flexGrow = 1
     }
 
     if (maxWidth > 0) {
-      style.maxWidth = maxWidth
+      childStyle.maxWidth = maxWidth
     }
 
     if (maxHeight > 0) {
-      style.maxHeight = maxHeight
+      childStyle.maxHeight = maxHeight
     }
 
     return {
-      style,
+      parentStyle,
+      childStyle,
     }
-  }, ['left', 'top', 'maxWidth', 'maxHeight']),
+  }, ['left', 'top', 'width', 'maxWidth', 'maxHeight', 'onWidthChange']),
   mapHandlers({
     onLayout: ({ width, height, onWidthChange, onHeightChange }) => ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
       const shouldMeasureWidth = isNumber(width) && isFunction(onWidthChange)
@@ -49,9 +66,11 @@ export const Size = component(
       }
     },
   })
-)(({ style, children, onLayout }) => (
-  <View style={style} onLayout={onLayout}>
-    {children}
+)(({ parentStyle, childStyle, children, onLayout }) => (
+  <View style={parentStyle}>
+    <View style={childStyle} onLayout={onLayout}>
+      {children}
+    </View>
   </View>
 ))
 
