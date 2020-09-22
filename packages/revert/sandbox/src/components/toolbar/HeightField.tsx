@@ -4,10 +4,8 @@ import { mapStoreState, setHeight } from '../../store'
 import { SYMBOL_FIELD } from '../../symbols'
 import { FieldLight } from '../field-light'
 
-export type THeightField = {}
-
 export const HeightField = pureComponent(
-  startWithType<THeightField>(),
+  startWithType<{}>(),
   mapStoreState(({ height }) => ({ canvasHeight: height }), ['height']),
   mapState('value', 'setValue', ({ canvasHeight }) => String(canvasHeight), ['canvasHeight']),
   mapHandlers({
@@ -15,6 +13,7 @@ export const HeightField = pureComponent(
   })
 )(({ value, setValue, submitValue }) => (
   <FieldLight
+    type="number"
     suffix="px"
     value={value}
     onChange={setValue}

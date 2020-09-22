@@ -4,10 +4,8 @@ import { mapStoreState, setWidth } from '../../store'
 import { SYMBOL_FIELD } from '../../symbols'
 import { FieldLight } from '../field-light'
 
-export type TWidthField = {}
-
 export const WidthField = pureComponent(
-  startWithType<TWidthField>(),
+  startWithType<{}>(),
   mapStoreState(({ width }) => ({ canvasWidth: width }), ['width']),
   mapState('value', 'setValue', ({ canvasWidth }) => String(canvasWidth), ['canvasWidth']),
   mapHandlers({
@@ -19,6 +17,7 @@ export const WidthField = pureComponent(
   submitValue,
 }) => (
   <FieldLight
+    type="number"
     suffix="px"
     value={value}
     onChange={setValue}

@@ -1,5 +1,6 @@
 import { AnimationColor } from '@revert/animation'
 import { PrimitiveBlock, Block } from '@revert/block'
+import type { TPrimitiveInput } from '@revert/input'
 import { PrimitiveInput } from '@revert/input'
 import { PrimitiveText } from '@revert/text'
 import React from 'react'
@@ -18,6 +19,7 @@ import { FieldThemeContext } from '../theme-context'
 const HEIGHT = 20
 
 export type TField = {
+  type?: TPrimitiveInput['type'],
   placeholder?: string,
   value: string,
   onChange: (value: string) => void,
@@ -41,6 +43,7 @@ export const Field = pureComponent(
     },
   })
 )(({
+  type,
   lineHeight,
   color,
   leftPadding,
@@ -78,6 +81,7 @@ export const Field = pureComponent(
       {(color) => (
         <PrimitiveInput
           id={id}
+          type={type}
           fontFamily={fontFamily}
           fontWeight={fontWeight}
           fontSize={fontSize}
