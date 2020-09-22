@@ -19,6 +19,7 @@ export type TInput = TInputStyle & {
   id?: string,
   accessibilityLabel?: string,
   value: string,
+  type?: 'text' | 'number' | 'password' | 'email' | 'tel',
   onChange: (newValue: string) => void,
   onSubmit?: () => void,
   onFocus?: () => void,

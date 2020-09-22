@@ -1,8 +1,10 @@
+/* eslint-disable react/no-danger */
 import { colorToString } from '@revert/color'
-import React from 'react'
+import React, { Fragment } from 'react'
 import type { KeyboardEvent, ChangeEvent, CSSProperties } from 'react'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { isNumber } from 'tsfn'
+import { mapUniqueId } from './map-unique-id'
 import type { TPrimitiveInput } from './types'
 
 export const PrimitiveInput = component(
@@ -28,8 +30,8 @@ export const PrimitiveInput = component(
     paddingTop,
     left = 0,
     top = 0,
-    width,
-    height,
+    width = '100%' as const,
+    height = '100%' as const,
   }) => {
     const style: CSSProperties = {
       backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -48,8 +50,8 @@ export const PrimitiveInput = component(
       position: 'absolute',
       left,
       top,
-      width: width ?? '100%',
-      height: height ?? '100%',
+      width,
+      height,
       color: colorToString(color),
     }
 
@@ -64,9 +66,12 @@ export const PrimitiveInput = component(
     return {
       style,
     }
-  })
+  }),
+  mapUniqueId()
 )(({
   id,
+  type,
+  uniqueId,
   accessibilityLabel,
   style,
   value,
@@ -80,21 +85,32 @@ export const PrimitiveInput = component(
   onPointerEnter,
   onPointerLeave,
 }) => (
-  <input
-    id={id}
-    aria-label={accessibilityLabel}
-    disabled={isDisabled}
-    style={style}
-    value={value}
-    onChange={onChange}
-    onKeyPress={onKeyPress}
-    onFocus={onFocus}
-    onBlur={onBlur}
-    onMouseDown={onPressIn}
-    onMouseUp={onPressOut}
-    onMouseEnter={onPointerEnter}
-    onMouseLeave={onPointerLeave}
-  />
+  <Fragment>
+    <input
+      data-unique-id={uniqueId}
+      id={id}
+      type={type}
+      aria-label={accessibilityLabel}
+      disabled={isDisabled}
+      style={style}
+      value={value}
+      onChange={onChange}
+      onKeyPress={onKeyPress}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      onMouseDown={onPressIn}
+      onMouseUp={onPressOut}
+      onMouseEnter={onPointerEnter}
+      onMouseLeave={onPointerLeave}
+    />
+    {type === 'number' && (
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `input[data-unique-id="${uniqueId}"]::-webkit-outer-spin-button, input[data-unique-id="${uniqueId}"]::-webkit-inner-spin-button { display: none }`,
+        }}
+      />
+    )}
+  </Fragment>
 ))
 
 PrimitiveInput.displayName = 'PrimitiveInput'
