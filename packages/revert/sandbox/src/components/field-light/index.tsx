@@ -8,6 +8,7 @@ import { isString } from 'tsfn'
 import { mapContextOverride } from '../../map/map-context-override'
 import { SYMBOL_FIELD } from '../../symbols'
 import { Border } from '../border'
+import type { TField } from '../field'
 import { Field } from '../field'
 import { PrimitiveText } from '../text'
 import { FieldThemeContext, ThemeContext } from '../theme-context'
@@ -16,6 +17,7 @@ const HEIGHT = 20
 const MIN_WIDTH = 60
 
 export type TFieldLight = {
+  type?: TField['type'],
   suffix?: string,
   value: string,
   onChange: (value: string) => void,
@@ -38,6 +40,7 @@ export const FieldLight = pureComponent(
       : theme.fieldBorderColor,
   }))
 )(({
+  type,
   theme,
   suffixWidth,
   setSuffixWidth,
@@ -62,6 +65,7 @@ export const FieldLight = pureComponent(
     )}
     <FieldThemeProvider>
       <Field
+        type={type}
         value={value}
         onChange={onChange}
         onSubmit={onSubmit}

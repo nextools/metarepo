@@ -1,5 +1,5 @@
 import type { Reducer } from 'redux'
-import { isUndefined } from 'tsfn'
+import { isNumber, isUndefined } from 'tsfn'
 import { resolutions, findResolutionKey } from '../resolutions'
 import {
   TYPE_SET_WIDTH,
@@ -31,6 +31,10 @@ export const reducer: Reducer<TState, TAllActions> = (state, action): TState => 
 
   switch (action.type) {
     case TYPE_SET_WIDTH: {
+      if (!isNumber(action.payload)) {
+        return state
+      }
+
       return {
         ...state,
         width: filterWidth(action.payload),
@@ -39,6 +43,10 @@ export const reducer: Reducer<TState, TAllActions> = (state, action): TState => 
     }
 
     case TYPE_SET_HEIGHT: {
+      if (!isNumber(action.payload)) {
+        return state
+      }
+
       return {
         ...state,
         height: filterHeight(action.payload),

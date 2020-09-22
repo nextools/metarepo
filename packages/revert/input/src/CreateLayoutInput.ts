@@ -2,10 +2,10 @@ import { LayoutContext } from '@revert/layout'
 import type { FC } from 'react'
 import { useContext } from 'react'
 import type { TComponent } from 'refun'
-import type { TBackground, TPrimitiveBackground } from './types'
+import type { TInput, TPrimitiveInput } from './types'
 
-export const CreateLayoutBackground = (PrimitiveBackground: FC<TPrimitiveBackground>) => {
-  const Background: TComponent<TBackground> = (props) => {
+export const CreateLayoutInput = (PrimitiveInput: FC<TPrimitiveInput>) => {
+  const Input: TComponent<TInput> = (props) => {
     const {
       _parentLeft,
       _parentTop,
@@ -13,7 +13,7 @@ export const CreateLayoutBackground = (PrimitiveBackground: FC<TPrimitiveBackgro
       _parentHeight,
     } = useContext(LayoutContext)
 
-    return PrimitiveBackground({
+    return PrimitiveInput({
       ...props,
       left: _parentLeft,
       top: _parentTop,
@@ -22,9 +22,8 @@ export const CreateLayoutBackground = (PrimitiveBackground: FC<TPrimitiveBackgro
     })
   }
 
-  Background.displayName = 'Background'
-  Background.componentSymbol = Symbol('REVERT_BACKGROUND')
+  Input.displayName = 'Input'
+  Input.componentSymbol = Symbol('REVERT_INPUT')
 
-  return Background
+  return Input
 }
-

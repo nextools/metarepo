@@ -1,12 +1,14 @@
-import { colorToString, isColor } from '@revert/color'
+import { colorToString } from '@revert/color'
+import { elegir } from 'elegir'
 import React from 'react'
 import { TextInput } from 'react-native'
-import type { TextStyle } from 'react-native'
+import type { TextStyle, KeyboardType } from 'react-native'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
-import type { TInput } from './types'
+import { isNumber } from 'tsfn'
+import type { TPrimitiveInput } from './types'
 
 export const PrimitiveInput = component(
-  startWithType<TInput>(),
+  startWithType<TPrimitiveInput>(),
   mapHandlers({
     onChangeText: ({ onChange }) => (newValue: string) => onChange(newValue),
     onSubmitEditing: ({ onSubmit }) => () => {
@@ -14,7 +16,12 @@ export const PrimitiveInput = component(
     },
   }),
   mapWithProps(({
-    color,
+    type = 'text',
+    color = 0xff,
+    left = 0,
+    top = 0,
+    width = '100%' as const,
+    height = '100%' as const,
     letterSpacing,
     lineHeight,
     fontFamily,
@@ -29,31 +36,44 @@ export const PrimitiveInput = component(
       letterSpacing,
       lineHeight,
       fontFamily,
-      fontWeight: String(fontWeight) as TextStyle['fontWeight'],
       fontSize,
       paddingBottom,
       paddingLeft,
       paddingRight,
       paddingTop,
       position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      width: '100%',
-      height: '100%',
+      top,
+      left,
+      width,
+      height,
+      color: colorToString(color),
     }
 
-    if (isColor(color)) {
-      style.color = colorToString(color)
+    if (isNumber(fontWeight)) {
+      style.fontWeight = String(fontWeight) as TextStyle['fontWeight']
     }
+
+    const keyboardType: KeyboardType = elegir(
+      type === 'number',
+      'numeric',
+      type === 'tel',
+      'phone-pad',
+      type === 'email',
+      'email-address',
+      true,
+      'default'
+    )
 
     return {
       style,
+      keyboardType,
+      secureTextEntry: type === 'password',
     }
   })
 )(({
   id,
+  keyboardType,
+  secureTextEntry,
   accessibilityLabel,
   isDisabled,
   style,
@@ -65,6 +85,8 @@ export const PrimitiveInput = component(
 }) => (
   <TextInput
     testID={id}
+    keyboardType={keyboardType}
+    secureTextEntry={secureTextEntry}
     accessibilityLabel={accessibilityLabel}
     underlineColorAndroid="rgba(0,0,0,0)"
     textAlignVertical="center"
