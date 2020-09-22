@@ -14,8 +14,8 @@
   "sideEffects": false,
   "dependencies": {
     "@revert/color": "^0.1.0",
-    "@revert/layout": "^0.1.0",
-    "refun": "^3.0.1",
+    "@revert/layout": "^0.1.1",
+    "refun": "^3.1.0",
     "tsfn": "^2.0.0"
   },
   "devDependencies": {

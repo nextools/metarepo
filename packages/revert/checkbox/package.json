@@ -13,9 +13,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@revert/block": "^0.2.0",
-    "@revert/layout": "^0.1.0",
-    "refun": "^3.0.1"
+    "@revert/block": "^0.2.1",
+    "@revert/layout": "^0.1.1",
+    "refun": "^3.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.6",

@@ -19,7 +19,7 @@
     "tape": "^5.0.0"
   },
   "dependencies": {
-    "@rebox/web": "^3.0.0",
+    "@rebox/web": "^3.1.0",
     "axe-core": "^4.0.1",
     "dleet": "^2.0.0",
     "puppeteer-core": "^5.2.1",

@@ -14,20 +14,20 @@
     "node": ">=12.13.0"
   },
   "dependencies": {
-    "@revert/animation": "^0.2.0",
-    "@revert/background": "^0.1.0",
-    "@revert/block": "^0.2.0",
-    "@revert/border": "^0.1.0",
-    "@revert/button": "^0.1.0",
+    "@revert/animation": "^0.2.1",
+    "@revert/background": "^0.2.0",
+    "@revert/block": "^0.2.1",
+    "@revert/border": "^0.2.0",
+    "@revert/button": "^0.1.1",
     "@revert/color": "^0.1.0",
-    "@revert/layout": "^0.1.0",
-    "@revert/linear-gradient": "^0.1.0",
-    "@revert/root": "^0.2.0",
-    "@revert/scroll": "^0.1.0",
-    "@revert/shadow": "^0.1.0",
-    "@revert/text": "^0.1.0",
+    "@revert/layout": "^0.1.1",
+    "@revert/linear-gradient": "^0.2.0",
+    "@revert/root": "^0.2.1",
+    "@revert/scroll": "^0.1.1",
+    "@revert/shadow": "^0.2.0",
+    "@revert/text": "^0.2.0",
     "elegir": "^1.0.0",
-    "refun": "^3.0.1"
+    "refun": "^3.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.6",

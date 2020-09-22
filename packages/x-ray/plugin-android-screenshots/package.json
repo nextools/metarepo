@@ -17,7 +17,7 @@
     "@babel/core": "^7.9.0",
     "@rebox/android": "^4.0.1",
     "@x-ray/core": "^0.2.0",
-    "@x-ray/ui": "^3.1.0",
+    "@x-ray/ui": "^3.2.0",
     "pifs": "^2.0.0",
     "pixelmatch": "^5.1.0",
     "pngjs": "^5.0.0",
