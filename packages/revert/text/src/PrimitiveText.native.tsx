@@ -29,6 +29,7 @@ export const PrimitiveText = component(
       fontSize,
       letterSpacing,
       color: colorToString(color),
+      flexShrink: 1, // required to make text wrap
     }
 
     if (isNumber(fontWeight)) {
@@ -56,7 +57,7 @@ export const PrimitiveText = component(
     }
 
     if (shouldPreventWrap) {
-      props.numberOfLines = 1
+      style.flexShrink = 0
     }
 
     if (shouldHideOverflow) {
@@ -78,4 +79,4 @@ export const PrimitiveText = component(
   </NativeText>
 ))
 
-PrimitiveText.displayName = 'Text'
+PrimitiveText.displayName = 'PrimitiveText'
