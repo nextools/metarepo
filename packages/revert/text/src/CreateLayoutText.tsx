@@ -2,9 +2,9 @@ import { InlineBlock } from '@revert/block'
 import type { FC } from 'react'
 import React from 'react'
 import type { TComponent } from 'refun'
-import type { TPrimitiveText } from './types'
+import type { TTextStyle } from './types'
 
-export const CreateLayoutText = <T extends TPrimitiveText>(PrimitiveText: FC<T>) => {
+export const CreateLayoutText = <T extends TTextStyle>(PrimitiveText: FC<T>) => {
   const Text: TComponent<T> = (props) => (
     <InlineBlock shouldPreventWrap={props.shouldPreventWrap}>
       <PrimitiveText {...props}/>
