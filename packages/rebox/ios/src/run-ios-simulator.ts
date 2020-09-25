@@ -1,4 +1,4 @@
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 import { getIosSimulatorDevice } from './get-ios-simulator-device'
 
 export type TRunIosSimulatorOptions = {
@@ -18,14 +18,23 @@ export const runIosSimulator = async (options: TRunIosSimulatorOptions): Promise
   }
 
   if (device.state !== 'Booted') {
-    await execa('xcrun', ['simctl', 'boot', device.udid])
+    await spawnChildProcess(`xcrun simctl boot ${device.udid}`, {
+      stdout: null,
+      stderr: process.stderr,
+    })
   }
 
   if (!options.isHeadless) {
-    await execa('open', ['-a', 'Simulator', '--args', '-CurrentDeviceUDID', device.udid])
+    await spawnChildProcess(`open -a Simulator --args -CurrentDeviceUDID ${device.udid}`, {
+      stdout: null,
+      stderr: process.stderr,
+    })
   }
 
   return async () => {
-    await execa('xcrun', ['simctl', 'shutdown', device.udid])
+    await spawnChildProcess(`xcrun simctl shutdown ${device.udid}`, {
+      stdout: null,
+      stderr: process.stderr,
+    })
   }
 }

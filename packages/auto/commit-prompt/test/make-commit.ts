@@ -4,7 +4,7 @@ import test from 'tape'
 import { prefixes } from './prefixes'
 
 test('git:makeCommit single package', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const promptsSpy = createSpy(({ index }) => {
     if (index === 0) {
       return Promise.resolve({ prefix: 'prefix' })
@@ -22,7 +22,9 @@ test('git:makeCommit single package', async (t) => {
   })
 
   const unmockRequire = mockRequire('../src/make-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: { default: promptsSpy },
     '@auto/core': {
       getPackages: () => Promise.resolve(
@@ -46,9 +48,9 @@ test('git:makeCommit single package', async (t) => {
   await makeCommit()
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['git', ['commit', '-m', 'prefix foo: message']],
+      ['git commit -m "prefix foo: message"', { stdout: null, stderr: process.stderr }],
     ],
     'should write proper message'
   )
@@ -57,7 +59,7 @@ test('git:makeCommit single package', async (t) => {
 })
 
 test('git:makeCommit multiple packages', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const promptsSpy = createSpy(({ index }) => {
     if (index === 0) {
       return Promise.resolve({ prefix: 'prefix' })
@@ -79,7 +81,9 @@ test('git:makeCommit multiple packages', async (t) => {
   })
 
   const unmockRequire = mockRequire('../src/make-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: { default: promptsSpy },
     '@auto/core': {
       getPackages: () => Promise.resolve(
@@ -103,9 +107,9 @@ test('git:makeCommit multiple packages', async (t) => {
   await makeCommit()
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['git', ['commit', '-m', 'prefix foo, bar*, *: message']],
+      ['git commit -m "prefix foo, bar*, *: message"', { stdout: null, stderr: process.stderr }],
     ],
     'should write proper message'
   )
@@ -114,7 +118,7 @@ test('git:makeCommit multiple packages', async (t) => {
 })
 
 test('git:makeCommit: no auto name prefix in prefixes', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const promptsSpy = createSpy(({ index }) => {
     if (index === 0) {
       return Promise.resolve({ prefix: 'prefix' })
@@ -132,7 +136,9 @@ test('git:makeCommit: no auto name prefix in prefixes', async (t) => {
   })
 
   const unmockRequire = mockRequire('../src/make-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: { default: promptsSpy },
     '@auto/core': {
       getPackages: () => Promise.resolve(
@@ -156,9 +162,9 @@ test('git:makeCommit: no auto name prefix in prefixes', async (t) => {
   await makeCommit()
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['git', ['commit', '-m', 'prefix foo: message']],
+      ['git commit -m "prefix foo: message"', { stdout: null, stderr: process.stderr }],
     ],
     'should write proper message'
   )
@@ -167,7 +173,7 @@ test('git:makeCommit: no auto name prefix in prefixes', async (t) => {
 })
 
 test('git:makeCommit: no package name', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const promptsSpy = createSpy(({ index }) => {
     if (index === 0) {
       return Promise.resolve({ prefix: 'prefix' })
@@ -181,7 +187,9 @@ test('git:makeCommit: no package name', async (t) => {
   })
 
   const unmockRequire = mockRequire('../src/make-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: { default: promptsSpy },
     '@auto/core': {
       getPackages: () => Promise.resolve(
@@ -205,9 +213,9 @@ test('git:makeCommit: no package name', async (t) => {
   await makeCommit()
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['git', ['commit', '-m', 'prefix message']],
+      ['git commit -m "prefix message"', { stdout: null, stderr: process.stderr }],
     ],
     'should write proper message'
   )
@@ -216,7 +224,7 @@ test('git:makeCommit: no package name', async (t) => {
 })
 
 test('git:makeCommit: all packages `*`', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const promptsSpy = createSpy(({ index }) => {
     if (index === 0) {
       return Promise.resolve({ prefix: 'prefix' })
@@ -230,7 +238,9 @@ test('git:makeCommit: all packages `*`', async (t) => {
   })
 
   const unmockRequire = mockRequire('../src/make-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: { default: promptsSpy },
     '@auto/core': {
       getPackages: () => Promise.resolve(
@@ -254,9 +264,9 @@ test('git:makeCommit: all packages `*`', async (t) => {
   await makeCommit()
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['git', ['commit', '-m', 'prefix *: message']],
+      ['git commit -m "prefix *: message"', { stdout: null, stderr: process.stderr }],
     ],
     'should write proper message'
   )
@@ -265,11 +275,13 @@ test('git:makeCommit: all packages `*`', async (t) => {
 })
 
 test('git:makeCommit: should throw on prefix undefined', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const promptsSpy = createSpy(() => Promise.resolve({}))
 
   const unmockRequire = mockRequire('../src/make-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: { default: promptsSpy },
     '@auto/core': {
       getPackages: () => Promise.resolve(
@@ -302,7 +314,7 @@ test('git:makeCommit: should throw on prefix undefined', async (t) => {
 })
 
 test('git:makeCommit: should throw on packageName undefined', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const promptsSpy = createSpy(({ index }) => {
     if (index === 0) {
       return Promise.resolve({ prefix: 'prefix' })
@@ -312,7 +324,9 @@ test('git:makeCommit: should throw on packageName undefined', async (t) => {
   })
 
   const unmockRequire = mockRequire('../src/make-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: { default: promptsSpy },
     '@auto/core': {
       getPackages: () => Promise.resolve(
@@ -345,7 +359,7 @@ test('git:makeCommit: should throw on packageName undefined', async (t) => {
 })
 
 test('git:makeCommit: should throw on message undefined', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const promptsSpy = createSpy(({ index }) => {
     if (index === 0) {
       return Promise.resolve({ prefix: 'prefix' })
@@ -363,7 +377,9 @@ test('git:makeCommit: should throw on message undefined', async (t) => {
   })
 
   const unmockRequire = mockRequire('../src/make-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: { default: promptsSpy },
     '@auto/core': {
       getPackages: () => Promise.resolve(
@@ -396,7 +412,7 @@ test('git:makeCommit: should throw on message undefined', async (t) => {
 })
 
 test('git:makeCommit lowercase first message letter', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const promptsSpy = createSpy(({ index }) => {
     if (index === 0) {
       return Promise.resolve({ prefix: 'prefix' })
@@ -414,7 +430,9 @@ test('git:makeCommit lowercase first message letter', async (t) => {
   })
 
   const unmockRequire = mockRequire('../src/make-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: { default: promptsSpy },
     '@auto/core': {
       getPackages: () => Promise.resolve(
@@ -438,9 +456,9 @@ test('git:makeCommit lowercase first message letter', async (t) => {
   await makeCommit()
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['git', ['commit', '-m', 'prefix foo: my Message']],
+      ['git commit -m "prefix foo: my Message"', { stdout: null, stderr: process.stderr }],
     ],
     'should write proper message'
   )

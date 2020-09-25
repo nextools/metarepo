@@ -1,5 +1,5 @@
 import type { THook } from '@auto/core'
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 
 export const writePublishTags: THook = async ({ packages }) => {
   for (const pkg of packages) {
@@ -7,18 +7,11 @@ export const writePublishTags: THook = async ({ packages }) => {
       continue
     }
 
-    await execa(
-      'git',
-      [
-        'tag',
-        '-a',
-        `${pkg.name}@${pkg.version}`,
-        '-m',
-        `${pkg.name}@${pkg.version}`,
-      ],
+    await spawnChildProcess(
+      `git tag -a ${pkg.name}@${pkg.version} -m "${pkg.name}@${pkg.version}"`,
       {
-        stdout: 'ignore',
-        stderr: 'inherit',
+        stdout: null,
+        stderr: process.stderr,
       }
     )
   }

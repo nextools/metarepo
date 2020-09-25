@@ -3,11 +3,11 @@ import path from 'path'
 import { promisify } from 'util'
 import copie from 'copie'
 import dleet from 'dleet'
-import execa from 'execa'
 import fastGlob from 'fast-glob'
 import makeDir from 'make-dir'
 // @ts-ignore
 import simplePlist from 'simple-plist'
+import { spawnChildProcess } from 'spown'
 import { getIosAppPath } from './get-ios-app-path'
 
 const pPlistRead = promisify(simplePlist.readFile)
@@ -24,35 +24,21 @@ export type TBuildIosAppDebugOptions = {
 export const buildIosAppDebug = async (options: TBuildIosAppDebugOptions): Promise<void> => {
   const derivedDataPath = path.join(os.tmpdir(), 'rebox')
 
-  await execa('pod', ['install', '--silent'], {
+  await spawnChildProcess('pod install', {
     cwd: options.projectPath,
+    stdout: process.stdout,
     stderr: process.stderr,
   })
 
   await dleet(derivedDataPath)
   await makeDir(derivedDataPath)
 
-  await execa(
-    'xcodebuild',
-    [
-      '-workspace',
-      path.join(options.projectPath, 'rebox.xcworkspace'),
-      '-scheme',
-      'rebox',
-      '-configuration',
-      'Debug',
-      'CODE_SIGN_IDENTITY=""',
-      'CODE_SIGNING_ALLOWED="NO"',
-      '-destination',
-      `generic/platform=${options.platformName},OS=${options.iOSVersion}`,
-      'clean',
-      'build',
-      `CONFIGURATION_BUILD_DIR=${derivedDataPath}`,
-    ],
+  await spawnChildProcess(
+    `xcodebuild -workspace ${path.join(options.projectPath, 'rebox.xcworkspace')} -scheme rebox -configuration Debug CODE_SIGN_IDENTITY= CODE_SIGNING_ALLOWED=NO -destination "generic/platform=${options.platformName},OS=${options.iOSVersion}" clean build CONFIGURATION_BUILD_DIR=${derivedDataPath}`,
     {
+      stdout: null,
       stderr: process.stderr,
       env: {
-        FORCE_COLOR: '1',
         RCT_METRO_PORT: '8082',
       },
     }

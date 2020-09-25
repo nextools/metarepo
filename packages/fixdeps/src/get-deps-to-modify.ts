@@ -1,3 +1,4 @@
+import Module from 'module'
 import fastGlob from 'fast-glob'
 import { readFile } from 'pifs'
 import { getDependenciesInContent } from './get-dependencies-in-content'
@@ -5,7 +6,6 @@ import { getDepsToAdd } from './get-deps-to-add'
 import { getDepsToRemove } from './get-deps-to-remove'
 import { getPackage } from './get-package-json'
 import { getPeerDevDepsToAdd } from './get-peer-dev-deps-to-add'
-import { globalIgnoreList } from './global-ignore-list'
 import type { TOptions, TGetDepsToModifyResult } from './types'
 import { uniqueArray } from './unique-array'
 
@@ -40,8 +40,8 @@ export const getDepsToModify = async ({
   )
   const allFiles = uniqueArray([...dependencyFiles, ...devDependencyFiles])
   const allIgnoredPackages = Array.isArray(ignoredPackages)
-    ? globalIgnoreList.concat(ignoredPackages)
-    : globalIgnoreList
+    ? Module.builtinModules.concat(ignoredPackages)
+    : Module.builtinModules
 
   const dependencyList: string[] = []
   const devDependencyList: string[] = []

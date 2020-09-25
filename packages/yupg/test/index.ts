@@ -16,12 +16,12 @@ const mockFsRead = (fs: IFs) => {
 
 test('yupg: default', async (t) => {
   const filePath = `${process.cwd()}/yarn.lock`
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const { fs, unmockFs } = mockFs('../src')
 
   const unmockRequire = mockRequire('../src', {
-    execa: {
-      default: execaSpy,
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
     },
   })
 
@@ -64,9 +64,9 @@ test('yupg: default', async (t) => {
     )
 
     t.deepEquals(
-      getSpyCalls(execaSpy),
+      getSpyCalls(spawnChildProcessSpy),
       [
-        ['yarn', ['install', '--non-interactive'], { stderr: 'inherit' }],
+        ['yarn install --non-interactive', { stderr: process.stderr }],
       ],
       'should call yarn install'
     )

@@ -6,33 +6,31 @@ export type Options = {
 
 export default (userOptions?: Options) =>
   plugin('typescriptCheck', () => async () => {
-    const { default: execa } = await import('execa')
+    const { spawnChildProcess } = await import('spown')
 
     const options: Options = {
       ...userOptions,
       project: '.',
       noEmit: true,
     }
-    const tscArgs = Object.keys(options).reduce((result, key) => {
-      const value = options[key]
+    let cmd = 'tsc'
 
+    for (const [key, value] of Object.entries(options)) {
       if (typeof value === 'boolean') {
-        return result.concat(`--${key}`)
+        cmd += ` --${key}`
+      } else if (typeof value === 'string') {
+        cmd += ` --${key} ${value}`
+      } else if (Array.isArray(value)) {
+        cmd += ` --${key} ${value.join(',')}`
       }
+    }
 
-      if (typeof value === 'string') {
-        return result.concat(`--${key}`, `${value}`)
-      }
-
-      if (Array.isArray(value)) {
-        return result.concat(`--${key}`, `${value.join(',')}`)
-      }
-
-      return result
-    }, [] as string[])
-
-    await execa('tsc', tscArgs, {
-      stdout: process.stdout,
-      stderr: process.stderr,
-    })
+    try {
+      await spawnChildProcess(cmd, {
+        stdout: process.stdout,
+        stderr: process.stderr,
+      })
+    } catch {
+      throw null
+    }
   })

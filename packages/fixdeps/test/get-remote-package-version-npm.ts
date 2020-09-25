@@ -8,7 +8,9 @@ test('fixdeps: getRemotePackageVersionNpm result', async (t) => {
   }))
 
   const unmockRequire = mockRequire('../src/get-remote-package-version-npm', {
-    execa: { default: spy },
+    spown: {
+      spawnChildProcess: spy,
+    },
   })
 
   const { getRemotePackageVersionNpm } = await import('../src/get-remote-package-version-npm')
@@ -23,7 +25,7 @@ test('fixdeps: getRemotePackageVersionNpm result', async (t) => {
 
   t.deepEquals(
     getSpyCalls(spy),
-    [['npm', ['info', 'pkg', 'version']]],
+    [['npm info pkg version']],
     'should call npm with arguments'
   )
 
@@ -36,7 +38,9 @@ test('fixdeps: getRemotePackageVersionNpm no result', async (t) => {
   }))
 
   const unmockRequire = mockRequire('../src/get-remote-package-version-npm', {
-    execa: { default: spy },
+    spown: {
+      spawnChildProcess: spy,
+    },
   })
 
   const { getRemotePackageVersionNpm } = await import('../src/get-remote-package-version-npm')

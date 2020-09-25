@@ -2,6 +2,7 @@ import { EventEmitter } from 'events'
 import path from 'path'
 import chalk from 'chalk'
 import StackUtils from 'stack-utils'
+import { isString } from 'tsfn'
 
 type StartError = Error | string[] | string | null
 
@@ -29,14 +30,17 @@ export default (taskName: string) => {
   emitter.on('error', (pluginName: string, error: StartError) => {
     // hard error
     if (error instanceof Error) {
-      const stackUtils = new StackUtils({
-        cwd: process.cwd(),
-        internals: StackUtils.nodeInternals(),
-      })
-      const stack = stackUtils.clean(error.stack!)
-
       console.error(`${chalk.red(`${taskName}.${pluginName}`)}: ${error.message}`)
-      console.error(`\n${chalk.red(stack)}`)
+
+      if (isString(error.stack)) {
+        const stackUtils = new StackUtils({
+          cwd: process.cwd(),
+          internals: StackUtils.nodeInternals(),
+        })
+        const stack = stackUtils.clean(error.stack)
+
+        console.error(`\n${chalk.red(stack)}`)
+      }
     // array of "soft" errors
     } else if (Array.isArray(error)) {
       error.forEach((message) => {

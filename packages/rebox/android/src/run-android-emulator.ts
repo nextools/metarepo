@@ -1,8 +1,8 @@
 import { homedir } from 'os'
 import path from 'path'
-import execa from 'execa'
 import makeDir from 'make-dir'
 import { access, writeFile } from 'pifs'
+import { spawnChildProcess, spawnChildProcessStream } from 'spown'
 import { isString } from 'tsfn'
 
 export type TRunAndroidEmulatorOptions = {
@@ -69,44 +69,31 @@ export const runAndroidEmulator = async (options: TRunAndroidEmulatorOptions): P
     await writeFile(configIniPath, configIniData)
   }
 
-  const emulatorProcess = execa(
-    `${process.env.ANDROID_HOME}/emulator/emulator`,
-    [
-      '-avd',
-      'rebox',
-      '-gpu',
-      'host',
-      // empty string doesn't work
-      ...(options.isHeadless ? ['-no-window'] : []),
-      '-no-audio',
-      '-memory',
-      '2048',
-      '-partition-size',
-      '1024',
-      '-netfast',
-      '-accel',
-      'on',
-      '-no-boot-anim',
-      '-no-snapshot',
-    ],
+  const emulatorProcess = spawnChildProcessStream(
+    `${process.env.ANDROID_HOME}/emulator/emulator -avd rebox -gpu host ${options.isHeadless ? '-no-window' : ''} -no-audio -memory 2048 -partition-size 1024 -netfast -accel on -no-boot-anim -no-snapshot`,
     {
+      stdout: null,
       stderr: process.stderr,
     }
   )
 
-  await execa(
-    `${process.env.ANDROID_HOME}/platform-tools/adb`,
-    [
-      'wait-for-device',
-      'shell',
-      'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;',
-    ]
+  await new Promise((resolve) => setTimeout(resolve, 20000))
+
+  await spawnChildProcess(
+    `${process.env.ANDROID_HOME}/platform-tools/adb wait-for-device shell "while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;"`,
+    {
+      stdout: null,
+      stderr: process.stderr,
+    }
   )
 
   for (const port of options.portsToForward) {
-    await execa(
-      `${process.env.ANDROID_HOME}/platform-tools/adb`,
-      ['reverse', `tcp:${port}`, `tcp:${port}`]
+    await spawnChildProcess(
+      `${process.env.ANDROID_HOME}/platform-tools/adb reverse tcp:${port} tcp:${port}`,
+      {
+        stdout: null,
+        stderr: process.stderr,
+      }
     )
   }
 

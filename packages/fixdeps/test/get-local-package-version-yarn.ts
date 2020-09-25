@@ -22,7 +22,9 @@ test('fixdeps: getLocalPackageVersionYarn result', async (t) => {
   }))
 
   const unmockRequire = mockRequire('../src/get-local-package-version-yarn', {
-    execa: { default: spy },
+    spown: {
+      spawnChildProcess: spy,
+    },
   })
 
   const { getLocalPackageVersionYarn } = await import('../src/get-local-package-version-yarn')
@@ -37,7 +39,7 @@ test('fixdeps: getLocalPackageVersionYarn result', async (t) => {
 
   t.deepEquals(
     getSpyCalls(spy),
-    [['yarn', ['list', '--json', '--depth=0', 'pkg'], { stderr: 'ignore' }]],
+    [['yarn list --json --depth=0 pkg', { stderr: null }]],
     'should call yarn with arguments'
   )
 
@@ -78,7 +80,9 @@ test('fixdeps: getLocalPackageVersionYarn no output', async (t) => {
   }))
 
   const unmockRequire = mockRequire('../src/get-local-package-version-yarn', {
-    execa: { default: spy },
+    spown: {
+      spawnChildProcess: spy,
+    },
   })
 
   const { getLocalPackageVersionYarn } = await import('../src/get-local-package-version-yarn')

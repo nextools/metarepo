@@ -1,20 +1,12 @@
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 
 export const getLocalPackageVersionYarn = async (packageName: string): Promise<string | null> => {
-  const { stdout } = await execa(
-    'yarn',
-    [
-      'list',
-      '--json',
-      '--depth=0',
-      packageName,
-    ],
-    {
-      stderr: 'ignore',
-    }
+  const { stdout } = await spawnChildProcess(
+    `yarn list --json --depth=0 ${packageName}`,
+    { stderr: null }
   )
 
-  const { data } = JSON.parse(stdout)
+  const { data } = JSON.parse(stdout.trim())
 
   if (data.trees.length === 0) {
     return null

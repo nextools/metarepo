@@ -37,6 +37,7 @@
     "packages/rsolve",
     "packages/rwrw",
     "packages/siza",
+    "packages/spown",
     "packages/spyfn",
     "packages/spyt",
     "packages/start/*",

@@ -1,7 +1,7 @@
 import dleet from 'dleet'
-import { command } from 'execa'
 import { readFile, writeFile } from 'pifs'
 import prompts from 'prompts'
+import { spawnChildProcess } from 'spown'
 import type { TReadonly } from 'tsfn'
 import type { TPackageBumpMap } from '../bump/types'
 import type { TPromptEditData, TPackageMap } from '../types'
@@ -47,7 +47,13 @@ export const makePrompt = async (packages: TReadonly<TPackageMap>, bumps: TReado
 
     const editor = await getEditor()
 
-    await command(`${editor} ${PROMPT_FILE_PATH}`)
+    await spawnChildProcess(
+      `${editor} ${PROMPT_FILE_PATH}`,
+      {
+        stdout: null,
+        stderr: process.stderr,
+      }
+    )
 
     const answerData = await readFile(PROMPT_FILE_PATH, 'utf8')
 

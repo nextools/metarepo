@@ -1,8 +1,8 @@
 import { waitTimePromise } from '@psxcode/wait'
-import execa from 'execa'
 // @ts-ignore
 import isPortReachable from 'is-port-reachable'
 import fetch from 'node-fetch'
+import { spawnChildProcessStream } from 'spown'
 import { isUndefined } from 'tsfn'
 import type { TPlatform } from './types'
 
@@ -26,24 +26,11 @@ export const serveNativeJsBundle = async (options: TServeNativeJsBundleOptions):
   const isDevString = isUndefined(options.isDev) ? 'true' : String(options.isDev)
   const shouldMinifyString = isUndefined(options.shouldMinify) ? 'false' : String(options.shouldMinify)
 
-  const proc = execa(
-    'haul',
-    [
-      'start',
-      '--port',
-      String(options.port),
-      '--dev',
-      isDevString,
-      '--minify',
-      shouldMinifyString,
-      '--interactive',
-      'false',
-      '--eager',
-      options.platform,
-      '--config',
-      require.resolve('./haul.config.js'),
-    ],
+  const proc = spawnChildProcessStream(
+    `haul start --port ${String(options.port)} --dev ${isDevString} --minify ${shouldMinifyString} --interactive false --eager ${options.platform} --config ${require.resolve('./haul.config.js')}`,
     {
+      stdout: null,
+      stderr: null,
       env: {
         REBOX_ENTRY_POINT: options.entryPointPath,
         REBOX_GLOBAL_ALIASES: JSON.stringify(options.globalAliases),

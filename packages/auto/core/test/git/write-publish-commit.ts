@@ -5,10 +5,12 @@ import type { TPackageRelease } from '../../src/types'
 import { prefixes } from '../prefixes'
 
 test('git:writePublishCommit: multiple packages', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
 
   const unmockRequire = mockRequire('../../src/git/write-publish-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
   })
 
   const packages: TPackageRelease[] = [
@@ -62,23 +64,15 @@ test('git:writePublishCommit: multiple packages', async (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
       [
-        'git',
-        [
-          'add',
-          'fakes/a/package.json',
-          'fakes/b/package.json',
-        ],
+        'git add fakes/a/package.json fakes/b/package.json',
+        { stdout: null, stderr: process.stderr },
       ],
       [
-        'git',
-        [
-          'commit',
-          '-m',
-          `${prefixes.publish} ns/a, b: release`,
-        ],
+        `git commit -m "${prefixes.publish} ns/a, b: release"`,
+        { stdout: null, stderr: process.stderr },
       ],
     ],
     'multiple packages'
@@ -88,10 +82,12 @@ test('git:writePublishCommit: multiple packages', async (t) => {
 })
 
 test('git:writePublishCommit: no packages to publish', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
 
   const unmockRequire = mockRequire('../../src/git/write-publish-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
   })
 
   const packages: TPackageRelease[] = [

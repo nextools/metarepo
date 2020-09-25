@@ -1,4 +1,4 @@
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 import { isUndefined } from 'tsfn'
 
 export type TUninstallIosAppOptions = {
@@ -7,13 +7,11 @@ export type TUninstallIosAppOptions = {
 }
 
 export const uninstallIosApp = async (options: TUninstallIosAppOptions): Promise<void> => {
-  await execa(
-    'xcrun',
-    [
-      'simctl',
-      'uninstall',
-      isUndefined(options.deviceId) ? 'booted' : options.deviceId,
-      options.appId,
-    ]
+  await spawnChildProcess(
+    `xcrun simctl uninstall ${isUndefined(options.deviceId) ? 'booted' : options.deviceId} ${options.appId}`,
+    {
+      stdout: null,
+      stderr: process.stderr,
+    }
   )
 }

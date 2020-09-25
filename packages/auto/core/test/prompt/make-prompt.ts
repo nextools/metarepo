@@ -9,8 +9,7 @@ import { makeTestPackages } from './make-test-packages'
 test('makePrompt: yes', async (t) => {
   const logSpy = createSpy(() => {})
   const deleteSpy = createSpy(() => Promise.resolve())
-  const execaSpy = createSpy(() => Promise.resolve())
-  const execaCommandSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const readFileSpy = createSpy(() => Promise.resolve('{}'))
   const writeFileSpy = createSpy(() => Promise.resolve())
 
@@ -25,9 +24,8 @@ test('makePrompt: yes', async (t) => {
     dleet: {
       default: deleteSpy,
     },
-    execa: {
-      default: execaSpy,
-      command: execaCommandSpy,
+    spown: {
+      spawnProcessChild: spawnChildProcessSpy,
     },
     '../../src/prompt/log': {
       log: logSpy,
@@ -62,15 +60,9 @@ test('makePrompt: yes', async (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(execaSpy),
+    getSpyCalls(spawnChildProcessSpy),
     [],
-    'should not call execa'
-  )
-
-  t.deepEquals(
-    getSpyCalls(execaCommandSpy),
-    [],
-    'should not call command'
+    'should not spawn child processes'
   )
 
   t.deepEquals(
@@ -91,8 +83,7 @@ test('makePrompt: yes', async (t) => {
 test('makePrompt: no', async (t) => {
   const logSpy = createSpy(() => {})
   const deleteSpy = createSpy(() => Promise.resolve())
-  const execaSpy = createSpy(() => Promise.resolve())
-  const execaCommandSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const readFileSpy = createSpy(() => Promise.resolve('{}'))
   const writeFileSpy = createSpy(() => Promise.resolve())
 
@@ -107,9 +98,8 @@ test('makePrompt: no', async (t) => {
     dleet: {
       default: deleteSpy,
     },
-    execa: {
-      default: execaSpy,
-      command: execaCommandSpy,
+    spown: {
+      spawnProcessChild: spawnChildProcessSpy,
     },
     '../../src/prompt/log': {
       log: logSpy,
@@ -144,15 +134,9 @@ test('makePrompt: no', async (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(execaSpy),
+    getSpyCalls(spawnChildProcessSpy),
     [],
-    'should not call execa'
-  )
-
-  t.deepEquals(
-    getSpyCalls(execaCommandSpy),
-    [],
-    'should not call command'
+    'should not spawn child processes'
   )
 
   t.deepEquals(
@@ -173,8 +157,7 @@ test('makePrompt: no', async (t) => {
 test('makePrompt: edit - no changes to make', async (t) => {
   const logSpy = createSpy(() => {})
   const deleteSpy = createSpy(() => Promise.resolve())
-  const execaEditorSpy = createSpy(() => Promise.resolve('editor'))
-  const execaCommandSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve('editor'))
   const readFileSpy = createSpy(() => Promise.resolve('{}'))
   const writeFileSpy = createSpy(() => Promise.resolve())
 
@@ -189,9 +172,8 @@ test('makePrompt: edit - no changes to make', async (t) => {
     dleet: {
       default: deleteSpy,
     },
-    execa: {
-      default: execaEditorSpy,
-      command: execaCommandSpy,
+    spown: {
+      spawnProcessChild: spawnChildProcessSpy,
     },
     '../../src/prompt/log': {
       log: logSpy,
@@ -275,15 +257,9 @@ test('makePrompt: edit - no changes to make', async (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(execaEditorSpy),
+    getSpyCalls(spawnChildProcessSpy),
     [],
     'should not call editor'
-  )
-
-  t.deepEquals(
-    getSpyCalls(execaCommandSpy),
-    [],
-    'should not call command'
   )
 
   t.deepEquals(
@@ -324,8 +300,7 @@ test('makePrompt: edit - no changes made', async (t) => {
 
   const logSpy = createSpy(() => {})
   const deleteSpy = createSpy(() => Promise.resolve())
-  const execaEditorSpy = createSpy(() => Promise.resolve({ stdout: 'editor' }))
-  const execaCommandSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve({ stdout: 'editor' }))
   const readFileSpy = createSpy(() => Promise.resolve(JSON.stringify(answer)))
   const writeFileSpy = createSpy(() => Promise.resolve())
 
@@ -340,9 +315,8 @@ test('makePrompt: edit - no changes made', async (t) => {
     dleet: {
       default: deleteSpy,
     },
-    execa: {
-      default: execaEditorSpy,
-      command: execaCommandSpy,
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
     },
     '../../src/prompt/log': {
       log: logSpy,
@@ -371,23 +345,18 @@ test('makePrompt: edit - no changes made', async (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(execaEditorSpy),
+    getSpyCalls(spawnChildProcessSpy),
     [
       [
-        'git', ['config', '--get', 'core.editor'],
+        'git config --get core.editor',
+        { stderr: process.stderr },
+      ],
+      [
+        'editor ./node_modules/@auto/.EDIT.json',
+        { stdout: null, stderr: process.stderr },
       ],
     ],
     'should call editor'
-  )
-
-  t.deepEquals(
-    getSpyCalls(execaCommandSpy),
-    [
-      [
-        'editor ./node_modules/@auto/.EDIT.json',
-      ],
-    ],
-    'should call command'
   )
 
   t.deepEquals(
@@ -445,8 +414,7 @@ test('makePrompt: edit - no changes made', async (t) => {
 test('makePrompt: edit - invalid answer json', async (t) => {
   const logSpy = createSpy(() => {})
   const deleteSpy = createSpy(() => Promise.resolve())
-  const execaEditorSpy = createSpy(() => Promise.resolve({ stdout: 'editor' }))
-  const execaCommandSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve({ stdout: 'editor' }))
   const readFileSpy = createSpy(() => Promise.resolve('invalid'))
   const writeFileSpy = createSpy(() => Promise.resolve())
 
@@ -461,9 +429,8 @@ test('makePrompt: edit - invalid answer json', async (t) => {
     dleet: {
       default: deleteSpy,
     },
-    execa: {
-      default: execaEditorSpy,
-      command: execaCommandSpy,
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
     },
     '../../src/prompt/log': {
       log: logSpy,
@@ -496,23 +463,18 @@ test('makePrompt: edit - invalid answer json', async (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(execaEditorSpy),
+    getSpyCalls(spawnChildProcessSpy),
     [
       [
-        'git', ['config', '--get', 'core.editor'],
+        'git config --get core.editor',
+        { stderr: process.stderr },
+      ],
+      [
+        'editor ./node_modules/@auto/.EDIT.json',
+        { stdout: null, stderr: process.stderr },
       ],
     ],
     'should call editor'
-  )
-
-  t.deepEquals(
-    getSpyCalls(execaCommandSpy),
-    [
-      [
-        'editor ./node_modules/@auto/.EDIT.json',
-      ],
-    ],
-    'should call command'
   )
 
   t.deepEquals(
@@ -586,8 +548,7 @@ test('makePrompt: edit - changes', async (t) => {
 
   const logSpy = createSpy(() => {})
   const deleteSpy = createSpy(() => Promise.resolve())
-  const execaEditorSpy = createSpy(() => Promise.resolve({ stdout: 'editor' }))
-  const execaCommandSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve({ stdout: 'editor' }))
   const readFileSpy = createSpy(() => Promise.resolve(JSON.stringify(answer)))
   const writeFileSpy = createSpy(() => Promise.resolve())
 
@@ -602,9 +563,8 @@ test('makePrompt: edit - changes', async (t) => {
     dleet: {
       default: deleteSpy,
     },
-    execa: {
-      default: execaEditorSpy,
-      command: execaCommandSpy,
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
     },
     '../../src/prompt/log': {
       log: logSpy,
@@ -644,23 +604,18 @@ test('makePrompt: edit - changes', async (t) => {
   )
 
   t.deepEquals(
-    getSpyCalls(execaEditorSpy),
+    getSpyCalls(spawnChildProcessSpy),
     [
       [
-        'git', ['config', '--get', 'core.editor'],
+        'git config --get core.editor',
+        { stderr: process.stderr },
+      ],
+      [
+        'editor ./node_modules/@auto/.EDIT.json',
+        { stdout: null, stderr: process.stderr },
       ],
     ],
     'should call editor'
-  )
-
-  t.deepEquals(
-    getSpyCalls(execaCommandSpy),
-    [
-      [
-        'editor ./node_modules/@auto/.EDIT.json',
-      ],
-    ],
-    'should call command'
   )
 
   t.deepEquals(

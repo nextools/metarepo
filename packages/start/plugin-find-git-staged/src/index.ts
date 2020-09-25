@@ -5,12 +5,11 @@ export default (glob: string | string[]) =>
   plugin('findGitStaged', ({ logPath }) => async () => {
     const path = await import('path')
     const { EOL } = await import('os')
-    const { default: execa } = await import('execa')
+    const { spawnChildProcess } = await import('spown')
     const { default: multimatch } = await import('multimatch')
 
-    const gitArgs = ['diff', '--cached', '--name-only', '--diff-filter=ACM']
-    const { stdout } = await execa('git', gitArgs)
-    const gitFiles = stdout.split(EOL)
+    const { stdout } = await spawnChildProcess('git diff --cached --name-only --diff-filter=ACM')
+    const gitFiles = stdout.trim().split(EOL)
     const matchedFiles = multimatch(gitFiles, glob)
 
     return {

@@ -1,25 +1,36 @@
+import type { Stream } from 'stream'
+
 export type TAnyObject = {
   [key: string]: any,
 }
 export type TKeyOf<T> = (keyof T) & string
-export type TIntersect <T1 extends {}, T2 extends {}> = { [K in Extract<keyof T1, keyof T2>]: T1[K] }
-export type TRequireKeys<T, K extends keyof T> = T & {
-  [P in Extract<keyof T, K>]: Exclude<T[P], undefined>;
+
+export type TIntersect <T1 extends {}, T2 extends {}> = {
+  [K in Extract<keyof T1, keyof T2>]: T1[K]
 }
+
+export type TRequireKeys<T, K extends keyof T> = T & {
+  [P in Extract<keyof T, K>]: Exclude<T[P], undefined>
+}
+
 export type TOptionalKeys<T extends {}> = Exclude<{
   [K in TKeyOf<T>]: T extends Record<K, T[K]>
     ? never
     : K
 }[TKeyOf<T>], undefined>
+
 export type TRequiredKeys<T extends {}> = Exclude<{
   [K in TKeyOf<T>]: T extends Record<K, T[K]>
     ? K
     : never
 }[TKeyOf<T>], undefined>
+
 export type TWritable<T> = { -readonly [K in keyof T]: T[K] }
+
 export type TOmitKey<T extends {}, K extends PropertyKey> = Pick<T, Exclude<keyof T, K>>
 
 export type TPrimitive = string | number | boolean | bigint | symbol | undefined | null
+
 export type TBuiltin = TPrimitive | Function | Date | Error | RegExp
 
 export type TReadonly<T> = T extends TBuiltin
@@ -64,6 +75,7 @@ export const isArray = (value: any): value is any[] => Array.isArray(value)
 export const isObject = (value: any): value is TAnyObject => Object.prototype.toString.call(value) === '[object Object]'
 export const isSymbol = (value: any): value is symbol => typeof value === 'symbol'
 export const isRegExp = (value: any): value is RegExp => Object.prototype.toString.call(value) === '[object RegExp]'
+export const isStream = (value: any): value is Stream => isObject(value) && isFunction(value.pipe)
 
 export const requestAnimationFrame = (global as any as Window).requestAnimationFrame || global.setImmediate
 export const cancelAnimationFrame = (global as any as Window).cancelAnimationFrame || global.clearImmediate

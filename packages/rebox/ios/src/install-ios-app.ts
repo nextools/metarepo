@@ -1,4 +1,4 @@
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 import { isUndefined } from 'tsfn'
 
 export type TInstallIosAppOptions = {
@@ -7,13 +7,11 @@ export type TInstallIosAppOptions = {
 }
 
 export const installIosApp = async (options: TInstallIosAppOptions): Promise<void> => {
-  await execa(
-    'xcrun',
-    [
-      'simctl',
-      'install',
-      isUndefined(options.deviceId) ? 'booted' : options.deviceId,
-      options.appPath,
-    ]
+  await spawnChildProcess(
+    `xcrun simctl install ${isUndefined(options.deviceId) ? 'booted' : options.deviceId} ${options.appPath}`,
+    {
+      stdout: null,
+      stderr: process.stderr,
+    }
   )
 }

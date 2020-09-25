@@ -1,7 +1,11 @@
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 
 export const getEditor = async (): Promise<string> => {
-  const { stdout: gitEditor } = await execa('git', ['config', '--get', 'core.editor'])
+  const { stdout } = await spawnChildProcess(
+    'git config --get core.editor',
+    { stderr: process.stderr }
+  )
+  const gitEditor = stdout.trim()
 
   return gitEditor
 }

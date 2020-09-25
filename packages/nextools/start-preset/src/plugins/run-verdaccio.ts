@@ -8,24 +8,14 @@ const sleep = (timeout: number) => new Promise((resolve) => setTimeout(resolve, 
 
 export default (configPath: string) =>
   plugin<{}, any>('run-verdaccio', ({ logMessage }) => async () => {
-    const { default: execa } = await import('execa')
+    const { spawnChildProcessStream } = await import('spown')
     const { default: fetch } = await import('node-fetch')
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    execa(
-      'docker',
-      [
-        'run',
-        '--rm',
-        '--name',
-        'npm',
-        '-p',
-        `${PORT}:${PORT}`,
-        '-v',
-        `${configPath}:/verdaccio/conf/config.yaml`,
-        'verdaccio/verdaccio',
-      ],
+    spawnChildProcessStream(
+      `docker run --rm --name npm -p ${PORT}:${PORT} -v ${configPath}:/verdaccio/conf/config.yaml verdaccio/verdaccio'`,
       {
+        stdout: null,
         stderr: process.stderr,
       }
     )

@@ -1,4 +1,4 @@
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 import { isUndefined } from 'tsfn'
 
 export type TLaunchAndroidAppOptions = {
@@ -7,17 +7,10 @@ export type TLaunchAndroidAppOptions = {
 }
 
 export const launchAndroidApp = async (options: TLaunchAndroidAppOptions): Promise<void> => {
-  await execa(
-    'adb',
-    [
-      ...(isUndefined(options.deviceId) ? [] : ['-s', options.deviceId]),
-      'shell',
-      'am',
-      'start',
-      '-n',
-      `${options.appId}/com.rebox.MainActivity`,
-    ],
+  await spawnChildProcess(
+    `adb ${isUndefined(options.deviceId) ? '' : `-s ${options.deviceId}`} shell am start -n ${options.appId}/com.rebox.MainActivity`,
     {
+      stdout: null,
       stderr: process.stderr,
     }
   )

@@ -6,9 +6,10 @@ export default plugin<TReadonly<THookProps>, any>('removeYarnCache', ({ logMessa
   const path = await import('path')
   const { readdir } = await import('pifs')
   const { default: dleet } = await import('dleet')
-  const { default: execa } = await import('execa')
+  const { spawnChildProcess } = await import('spown')
 
-  const { stdout: yarnCacheDir } = await execa('yarn', ['cache', 'dir'])
+  const { stdout } = await spawnChildProcess('yarn cache dir')
+  const yarnCacheDir = stdout.trim()
   const yarnCacheList = await readdir(yarnCacheDir)
   const bumpNames = packages
     .filter((pkg) => pkg.version !== null)
