@@ -1,27 +1,15 @@
 import plugin from '@start/plugin'
 
-export default (cli: string[], userOptions?: {}) =>
+export default (command: string) =>
   plugin('spawn', () => async () => {
-    const { default: execa } = await import('execa')
-
-    const [command, ...args] = cli
-    const options = {
-      stdout: process.stdout,
-      stderr: process.stderr,
-      stripEof: false,
-      env: {
-        FORCE_COLOR: '1',
-      },
-      ...userOptions,
-    }
+    const { spawnChildProcess } = await import('spown')
 
     try {
-      await execa(command, args, options)
-    } catch (error) {
-      if (options.stderr) {
-        throw null
-      }
-
-      throw error
+      await spawnChildProcess(command, {
+        stdout: process.stdout,
+        stderr: process.stderr,
+      })
+    } catch {
+      throw null
     }
   })
