@@ -19,7 +19,8 @@
   "dependencies": {
     "@babel/runtime": "^7.4.2",
     "chalk": "^4.0.0",
-    "stack-utils": "^2.0.1"
+    "stack-utils": "^2.0.1",
+    "tsfn": "^2.0.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",
