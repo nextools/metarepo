@@ -27,7 +27,7 @@
     "react-dev-utils": "^10.2.1",
     "react-dom": "16.13.1",
     "terser-webpack-plugin": "^4.0.0",
-    "tsfn": "^2.0.0",
+    "tsfn": "^2.1.0",
     "webpack": "^4.30.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-dev-server": "^3.3.1"

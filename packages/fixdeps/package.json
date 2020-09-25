@@ -17,8 +17,8 @@
     "fast-glob": "^3.0.3",
     "p-all": "^3.0.0",
     "pifs": "^2.0.0",
-    "spown": "^0.0.0",
-    "tsfn": "^2.0.0"
+    "spown": "^0.1.0",
+    "tsfn": "^2.1.0"
   },
   "devDependencies": {
     "@mock/require": "^0.2.2",

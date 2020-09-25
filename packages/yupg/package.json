@@ -18,7 +18,7 @@
   "sideEffects": false,
   "dependencies": {
     "rwrw": "^0.1.0",
-    "spown": "^0.0.0",
+    "spown": "^0.1.0",
     "stroki": "^0.2.0"
   },
   "devDependencies": {

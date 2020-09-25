@@ -15,7 +15,7 @@
   "dependencies": {
     "elegir": "^1.0.0",
     "refun": "^3.1.0",
-    "tsfn": "^2.0.0"
+    "tsfn": "^2.1.0"
   },
   "devDependencies": {
     "@revert/text": "^0.2.0",

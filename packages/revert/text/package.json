@@ -16,7 +16,7 @@
     "@revert/block": "^0.2.1",
     "@revert/color": "^0.1.0",
     "refun": "^3.1.0",
-    "tsfn": "^2.0.0"
+    "tsfn": "^2.1.0"
   },
   "devDependencies": {
     "@revert/sandbox": "0.2.0",

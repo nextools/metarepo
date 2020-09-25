@@ -16,10 +16,10 @@
     "node": ">=12.13.0"
   },
   "dependencies": {
-    "@auto/core": "^0.3.1",
+    "@auto/core": "^0.3.2",
     "pifs": "^2.0.0",
-    "spown": "^0.0.0",
-    "tsfn": "^2.0.0"
+    "spown": "^0.1.0",
+    "tsfn": "^2.1.0"
   },
   "devDependencies": {
     "@mock/require": "^0.2.2",

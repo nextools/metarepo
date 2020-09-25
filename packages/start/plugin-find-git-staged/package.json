@@ -20,7 +20,7 @@
     "@babel/runtime": "^7.4.2",
     "@start/plugin": "^2.0.0",
     "multimatch": "^4.0.0",
-    "spown": "^0.0.0"
+    "spown": "^0.1.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",

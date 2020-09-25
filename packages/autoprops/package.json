@@ -16,7 +16,7 @@
     "big-integer": "^1.6.44",
     "iterama": "^0.5.0",
     "jssha": "^3.0.0",
-    "tsfn": "^2.0.0"
+    "tsfn": "^2.1.0"
   },
   "devDependencies": {
     "@mock/require": "^0.2.2",

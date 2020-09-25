@@ -24,7 +24,7 @@
     "@revert/text-align": "^0.1.0",
     "mdown": "^0.1.1",
     "refun": "^3.1.0",
-    "tsfn": "^2.0.0"
+    "tsfn": "^2.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.6",
