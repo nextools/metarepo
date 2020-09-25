@@ -1,3 +1,11 @@
+## v2.0.3
+
+* 🐞 fix list of builtin modules to ignore
+
+* 🐞 🐞 refactor using new deps
+
+* ♻️ update dependencies `tsfn`
+
 ## v2.0.2
 
 * 🐞 fix getting local version of a package

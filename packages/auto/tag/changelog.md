@@ -1,3 +1,9 @@
+## v0.2.1
+
+* 🐞 🐞 refactor using new deps
+
+* ♻️ update dependencies `@auto/core`
+
 ## v0.2.0
 
 * 💥 drop Node.js v10

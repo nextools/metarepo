@@ -1,6 +1,6 @@
 {
   "name": "yupg",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Yarn upgrade package",
   "keywords": [
     "yarn",

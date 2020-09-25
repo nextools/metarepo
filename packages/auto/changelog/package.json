@@ -1,6 +1,6 @@
 {
   "name": "@auto/changelog",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Generate `changelog.md` files with Auto Tools",
   "keywords": [
     "monorepo",

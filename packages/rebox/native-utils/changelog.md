@@ -1,3 +1,9 @@
+## v4.0.1
+
+* 🐞 🐞 refactor using new deps
+
+* ♻️ update dependencies `tsfn`
+
 ## v4.0.0
 
 * 💥 drop Node.js v10

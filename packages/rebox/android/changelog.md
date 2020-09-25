@@ -1,3 +1,9 @@
+## v4.0.2
+
+* 🐞 🐞 refactor using new deps
+
+* ♻️ update dependencies `tsfn`, `@rebox/native-utils`
+
 ## v4.0.1
 
 * 🐞 fix native deps linking

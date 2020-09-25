@@ -1,3 +1,9 @@
+## v0.6.1
+
+* 🐞 🐞 refactor using new deps
+
+* ♻️ update dependencies `tsfn`, `@start/reporter-verbose`, `fixdeps`, `@auto/changelog`, `@auto/commit-prompt`, `@auto/core`, `@auto/tag`, `@rebox/ios`, `@rebox/android`, `@start/plugin-lib-typescript-check`
+
 ## v0.6.0
 
 * 🌱 add `dupdep` task and run it with `ci`

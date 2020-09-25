@@ -1,3 +1,9 @@
+## v0.3.2
+
+* 🐞 🐞 refactor using new deps
+
+* ♻️ update dependencies `tsfn`
+
 ## v0.3.1
 
 * 🐞 fix npm skip on publish conflict

@@ -1,3 +1,7 @@
+## v2.0.1
+
+* 🐞 🐞 refactor using new deps
+
 ## v2.0.0
 
 * 💥 drop Node.js v10

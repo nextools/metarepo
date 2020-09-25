@@ -1,3 +1,7 @@
+## v3.0.0
+
+* 💥 change API to `spawn(command: string)`
+
 ## v2.0.0
 
 * 💥 drop Node.js v10

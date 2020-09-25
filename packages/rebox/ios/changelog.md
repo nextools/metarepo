@@ -1,3 +1,9 @@
+## v6.0.2
+
+* 🐞 🐞 refactor using new deps
+
+* ♻️ update dependencies `tsfn`, `@rebox/native-utils`
+
 ## v6.0.1
 
 * 🐞 fix finding iOS Simulator device

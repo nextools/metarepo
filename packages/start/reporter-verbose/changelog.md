@@ -1,3 +1,9 @@
+## v2.0.1
+
+* 🐞 handle error objects without `stack`
+
+* ♻️ update dependencies `tsfn`
+
 ## v2.0.0
 
 * 💥 drop Node.js v10

@@ -1,3 +1,7 @@
+## v2.1.0
+
+* 🌱 add `isStream`
+
 ## v2.0.0
 
 * 💥 drop Node.js v10
