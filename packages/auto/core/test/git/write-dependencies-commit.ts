@@ -5,10 +5,12 @@ import type { TPackageRelease } from '../../src/types'
 import { prefixes } from '../prefixes'
 
 test('git:writeDependenciesCommit: no dependencies', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
 
   const unmockRequire = mockRequire('../../src/git/write-dependencies-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
   })
 
   const packages: TPackageRelease[] = [{
@@ -34,7 +36,7 @@ test('git:writeDependenciesCommit: no dependencies', async (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [],
     'should not make a commit'
   )
@@ -43,10 +45,12 @@ test('git:writeDependenciesCommit: no dependencies', async (t) => {
 })
 
 test('git:writeDependenciesCommit: single dependency', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
 
   const unmockRequire = mockRequire('../../src/git/write-dependencies-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
   })
 
   const packages: TPackageRelease[] = [{
@@ -74,22 +78,15 @@ test('git:writeDependenciesCommit: single dependency', async (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
       [
-        'git',
-        [
-          'add',
-          'fakes/a/package.json',
-        ],
+        'git add fakes/a/package.json',
+        { stdout: null, stderr: process.stderr },
       ],
       [
-        'git',
-        [
-          'commit',
-          '-m',
-          `${prefixes.dependencies} upgrade dependencies`,
-        ],
+        `git commit -m "${prefixes.dependencies} upgrade dependencies"`,
+        { stdout: null, stderr: process.stderr },
       ],
     ],
     'single commit'
@@ -99,10 +96,12 @@ test('git:writeDependenciesCommit: single dependency', async (t) => {
 })
 
 test('git:writeDependenciesCommit: single dev dependency', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
 
   const unmockRequire = mockRequire('../../src/git/write-dependencies-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
   })
 
   const packages: TPackageRelease[] = [{
@@ -130,22 +129,15 @@ test('git:writeDependenciesCommit: single dev dependency', async (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
       [
-        'git',
-        [
-          'add',
-          'fakes/a/package.json',
-        ],
+        'git add fakes/a/package.json',
+        { stdout: null, stderr: process.stderr },
       ],
       [
-        'git',
-        [
-          'commit',
-          '-m',
-          `${prefixes.dependencies} upgrade dependencies`,
-        ],
+        `git commit -m "${prefixes.dependencies} upgrade dependencies"`,
+        { stdout: null, stderr: process.stderr },
       ],
     ],
     'single commit'
@@ -155,10 +147,12 @@ test('git:writeDependenciesCommit: single dev dependency', async (t) => {
 })
 
 test('git:writeDependenciesCommit: multiple packages', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
 
   const unmockRequire = mockRequire('../../src/git/write-dependencies-commit', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
   })
 
   const packages: TPackageRelease[] = [{
@@ -212,23 +206,15 @@ test('git:writeDependenciesCommit: multiple packages', async (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
       [
-        'git',
-        [
-          'add',
-          'fakes/b/package.json',
-          'fakes/c/package.json',
-        ],
+        'git add fakes/b/package.json fakes/c/package.json',
+        { stdout: null, stderr: process.stderr },
       ],
       [
-        'git',
-        [
-          'commit',
-          '-m',
-          `${prefixes.dependencies} upgrade dependencies`,
-        ],
+        `git commit -m "${prefixes.dependencies} upgrade dependencies"`,
+        { stdout: null, stderr: process.stderr },
       ],
     ],
     'multiple packages'

@@ -1,4 +1,4 @@
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 import { isUndefined } from 'tsfn'
 
 export type TInstallAndroidAppOptions = {
@@ -7,14 +7,10 @@ export type TInstallAndroidAppOptions = {
 }
 
 export const installAndroidApp = async (options: TInstallAndroidAppOptions): Promise<void> => {
-  await execa(
-    'adb',
-    [
-      ...(isUndefined(options.deviceId) ? [] : ['-s', options.deviceId]),
-      'install',
-      options.appPath,
-    ],
+  await spawnChildProcess(
+    `adb ${isUndefined(options.deviceId) ? '' : `-s ${options.deviceId}`} install ${options.appPath}`,
     {
+      stdout: null,
       stderr: process.stderr,
     }
   )

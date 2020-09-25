@@ -4,10 +4,12 @@ import test from 'tape'
 import { prefixes } from '../prefixes'
 
 test('git:pushCommitsAndTags', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
 
   const unmockRequire = mockRequire('../../src/git/push-commits-and-tags', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
   })
 
   const { pushCommitsAndTags } = await import('../../src/git/push-commits-and-tags')
@@ -19,9 +21,9 @@ test('git:pushCommitsAndTags', async (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['git', ['push', '--quiet', '--follow-tags']],
+      ['git push --quiet --follow-tags', { stdout: null, stderr: process.stderr }],
     ],
     'should push'
   )

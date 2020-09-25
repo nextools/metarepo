@@ -1,5 +1,5 @@
 import path from 'path'
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 import type { TPlatform } from './types'
 
 export type TBuildJsBundleOptions = {
@@ -14,27 +14,12 @@ export const buildNativeJsBundle = async (options: TBuildJsBundleOptions) => {
     options.platform === 'ios' ? 'main.jsbundle' : 'index.android.bundle'
   )
 
-  await execa(
-    'haul',
-    [
-      'bundle',
-      '--config',
-      require.resolve('./haul.config.js'),
-      '--platform',
-      options.platform,
-      '--dev',
-      'false',
-      '--minify',
-      'false',
-      '--progress',
-      'none',
-      '--bundle-output',
-      bundlePath,
-    ],
+  await spawnChildProcess(
+    `haul bundle --config ${require.resolve('./haul.config.js')} --platform ${options.platform} --dev false --minify false --progress none --bundle-output ${bundlePath}`,
     {
+      stdout: null,
       stderr: process.stderr,
       env: {
-        FORCE_COLOR: '1',
         REBOX_ENTRY_POINT: options.entryPointPath,
       },
     }

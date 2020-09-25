@@ -1,16 +1,11 @@
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 import type { THook } from '../types'
 
 export const pushCommitsAndTags = (): THook => async () => {
-  await execa(
-    'git',
-    [
-      'push',
-      '--quiet',
-      '--follow-tags',
-    ],
+  await spawnChildProcess(
+    'git push --quiet --follow-tags',
     {
-      stdout: 'ignore',
+      stdout: null,
       stderr: process.stderr,
     }
   )

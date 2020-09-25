@@ -36,7 +36,7 @@ test('writeChangelogFiles', async (t) => {
   })
   const fs = createFsFromVolume(vol)
 
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessaSpy = createSpy(() => Promise.resolve())
 
   const unmockRequire = mockRequire('../src/write-changelog-files', {
     fs,
@@ -44,8 +44,8 @@ test('writeChangelogFiles', async (t) => {
       readFile: promisify(fs.readFile),
       writeFile: promisify(fs.writeFile),
     },
-    execa: {
-      default: execaSpy,
+    spown: {
+      spawnChildProcess: spawnChildProcessaSpy,
     },
   })
 
@@ -154,11 +154,11 @@ test('writeChangelogFiles', async (t) => {
   )
 
   t.deepEqual(
-    getSpyCalls(execaSpy),
+    getSpyCalls(spawnChildProcessaSpy),
     [
-      ['git', ['add', `${rootDir}/fakes/a/changelog.md`]],
-      ['git', ['add', `${rootDir}/fakes/b/changelog.md`]],
-      ['git', ['add', `${rootDir}/fakes/c/changelog.md`]],
+      [`git add ${rootDir}/fakes/a/changelog.md`, { stdout: null, stderr: process.stderr }],
+      [`git add ${rootDir}/fakes/b/changelog.md`, { stdout: null, stderr: process.stderr }],
+      [`git add ${rootDir}/fakes/c/changelog.md`, { stdout: null, stderr: process.stderr }],
     ],
     'should stage new changelog files to Git'
   )

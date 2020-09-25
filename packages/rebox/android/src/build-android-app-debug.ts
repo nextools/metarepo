@@ -1,7 +1,7 @@
 import path from 'path'
-import execa from 'execa'
 import moveFile from 'move-file'
 import { readFile, writeFile } from 'pifs'
+import { spawnChildProcess } from 'spown'
 import { getAndroidAppPath } from './get-android-app-path'
 
 export type TBuildAndroidAppDebugOptions = {
@@ -11,21 +11,12 @@ export type TBuildAndroidAppDebugOptions = {
 }
 
 export const buildAndroidAppDebug = async (options: TBuildAndroidAppDebugOptions): Promise<void> => {
-  await execa(
-    path.resolve(options.projectPath, 'gradlew'),
-    [
-      'clean',
-      '--console=plain',
-      '--quiet',
-      '--no-daemon',
-      '--warning-mode=none',
-    ],
+  await spawnChildProcess(
+    `${path.resolve(options.projectPath, 'gradlew')} clean --console=plain --quiet --no-daemon --warning-mode=none`,
     {
       cwd: options.projectPath,
+      stdout: null,
       stderr: process.stderr,
-      env: {
-        FORCE_COLOR: '1',
-      },
     }
   )
 
@@ -41,22 +32,12 @@ export const buildAndroidAppDebug = async (options: TBuildAndroidAppDebugOptions
 
   await writeFile(buildGradlePath, buildGradleData)
 
-  await execa(
-    path.resolve(options.projectPath, 'gradlew'),
-    [
-      'assembleDebug',
-      '--console=plain',
-      '--quiet',
-      '--no-daemon',
-      '--warning-mode=none',
-      '-PreactNativeDevServerPort=8082',
-    ],
+  await spawnChildProcess(
+    `${path.resolve(options.projectPath, 'gradlew')} assembleDebug --console=plain --quiet --no-daemon --warning-mode=none -PreactNativeDevServerPort=8082`,
     {
       cwd: options.projectPath,
+      stdout: null,
       stderr: process.stderr,
-      env: {
-        FORCE_COLOR: '1',
-      },
     }
   )
 

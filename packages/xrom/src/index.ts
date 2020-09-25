@@ -1,5 +1,5 @@
 import path from 'path'
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 import { isArray, isString, isNumber } from 'tsfn'
 import type { TRequireKeys } from 'tsfn'
 import { getDebuggerUrl } from './get-debugger-url'
@@ -29,58 +29,44 @@ export const runBrowser = async (options: TRunBrowserOptions): Promise<TRunBrows
   }
   const containerName = `xrom-${opts.browser}`
 
-  const stopProcess = await execa('docker', ['stop', containerName], {
-    stdout: 'ignore',
-    reject: false,
-  })
-
-  if (stopProcess.exitCode > 0 && !stopProcess.stderr.includes('No such container')) {
-    throw new Error(stopProcess.stderr)
+  try {
+    await spawnChildProcess(`docker stop ${containerName}`, {
+      stdout: null,
+    })
+  } catch (e) {
+    if (e.exitCode > 0 && !e.message.includes('No such container')) {
+      throw new Error(e)
+    }
   }
 
-  const args = [
-    'run',
-    '-d',
-    '--rm',
-    '--shm-size=1g',
-    '-p',
-    `${opts.port}:${opts.port}`,
-    '-e',
-    `RD_PORT=${opts.port}`,
-  ]
+  let cmd = `docker run -d --rm --shm-size=1g -p ${opts.port}:${opts.port} -e RD_PORT=${opts.port}`
 
   if (isArray(opts.mountVolumes)) {
     for (const volume of opts.mountVolumes) {
-      args.push('-v', `${path.resolve(volume.from)}:${volume.to}:delegated,ro`)
+      cmd += ` -v ${path.resolve(volume.from)}:${volume.to}:delegated,ro`
     }
   }
 
   if (isString(opts.fontsDir)) {
-    args.push('-v', `${path.resolve(opts.fontsDir)}:/home/chromium/.fonts:delegated,ro`)
+    cmd += ` -v ${path.resolve(opts.fontsDir)}:/home/chromium/.fonts:delegated,ro`
   }
 
   if (isNumber(options.cpus)) {
-    args.push(`--cpus=${options.cpus}`)
+    cmd += ` --cpus=${options.cpus}`
   }
 
   if (isArray(options.cpusetCpus)) {
-    args.push(`--cpuset-cpus=${options.cpusetCpus.join(',')}`)
+    cmd += ` --cpuset-cpus=${options.cpusetCpus.join(',')}`
   }
 
-  args.push(
-    '--name',
-    containerName,
-    `nextools/${opts.browser}:${opts.version}`
-  )
+  cmd += ` --name ${containerName} nextools/${opts.browser}:${opts.version}`
 
-  await execa('docker', args)
+  await spawnChildProcess(cmd, { stdout: null })
 
   const browserWSEndpoint = await getDebuggerUrl(opts.port)
 
   const closeBrowser = async () => {
-    await execa('docker', ['stop', containerName], {
-      stdout: 'ignore',
-    })
+    await spawnChildProcess(`docker stop ${containerName}`, { stdout: null })
   }
 
   return { browserWSEndpoint, closeBrowser }

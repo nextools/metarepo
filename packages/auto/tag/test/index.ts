@@ -5,10 +5,12 @@ import test from 'tape'
 import { prefixes } from './prefixes'
 
 test('writePublishTags: multiple tags', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
 
   const unmockRequire = mockRequire('../src', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
   })
 
   const packages: TPackageRelease[] = [
@@ -62,10 +64,16 @@ test('writePublishTags: multiple tags', async (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['git', ['tag', '-a', 'ns/a@0.1.1', '-m', 'ns/a@0.1.1']],
-      ['git', ['tag', '-a', 'b@0.2.0', '-m', 'b@0.2.0']],
+      [
+        'git tag -a ns/a@0.1.1 -m "ns/a@0.1.1"',
+        { stdout: null, stderr: process.stderr },
+      ],
+      [
+        'git tag -a b@0.2.0 -m "b@0.2.0"',
+        { stdout: null, stderr: process.stderr },
+      ],
     ],
     'multiple tags'
   )

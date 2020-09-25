@@ -1,37 +1,29 @@
 import path from 'path'
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 import type { THook } from '../types'
 
 export const writeDependenciesCommit = (): THook => async ({ prefixes, packages }) => {
   const packageJsonPaths = packages
     .filter((pkg) => pkg.deps !== null || pkg.devDeps !== null)
     .map((pkg) => path.join(pkg.dir, 'package.json'))
+    .join(' ')
 
   if (packageJsonPaths.length === 0) {
     return
   }
 
-  await execa(
-    'git',
-    [
-      'add',
-      ...packageJsonPaths,
-    ],
+  await spawnChildProcess(
+    `git add ${packageJsonPaths}`,
     {
-      stdout: 'ignore',
+      stdout: null,
       stderr: process.stderr,
     }
   )
 
-  await execa(
-    'git',
-    [
-      'commit',
-      '-m',
-      `${prefixes.dependencies} upgrade dependencies`,
-    ],
+  await spawnChildProcess(
+    `git commit -m "${prefixes.dependencies} upgrade dependencies"`,
     {
-      stdout: 'ignore',
+      stdout: null,
       stderr: process.stderr,
     }
   )

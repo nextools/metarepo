@@ -1,10 +1,11 @@
 import { mockRequire } from '@mock/require'
+import { SpawnError } from 'spown'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
 import { prefixes } from '../prefixes'
 
 test('npm:publishPackages: normal usecases', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const messageSpy = createSpy(() => {})
   const errorSpy = createSpy(() => {})
 
@@ -27,7 +28,9 @@ test('npm:publishPackages: normal usecases', async (t) => {
   }
 
   const unmockRequire = mockRequire('../../src/npm/publish-packages', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: {
       default: () => Promise.resolve({ value: 'YES' }),
     },
@@ -91,10 +94,16 @@ test('npm:publishPackages: normal usecases', async (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['npm', ['publish', '--registry', 'https://a_reg', '--access', 'restricted', 'packages/a/build']],
-      ['npm', ['publish', '--registry', 'http://global', '--access', 'public', 'packages/b/dist']],
+      [
+        'npm publish --registry https://a_reg --access restricted packages/a/build',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
+      [
+        'npm publish --registry http://global --access public packages/b/dist',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
     ],
     'should spawn NPM with necessary arguments'
   )
@@ -115,7 +124,7 @@ test('npm:publishPackages: normal usecases', async (t) => {
 })
 
 test('npm:publishPackages: registry override', async (t) => {
-  const execaSpy = createSpy(() => Promise.resolve())
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve())
   const messageSpy = createSpy(() => {})
   const errorSpy = createSpy(() => {})
 
@@ -141,8 +150,8 @@ test('npm:publishPackages: registry override', async (t) => {
   }
 
   const unmockRequire = mockRequire('../../src/npm/publish-packages', {
-    execa: {
-      default: execaSpy,
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
     },
     prompts: {
       default: () => Promise.resolve({ value: 'YES' }),
@@ -193,10 +202,16 @@ test('npm:publishPackages: registry override', async (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['npm', ['publish', '--registry', 'https://override', '--access', 'restricted', 'packages/a/build']],
-      ['npm', ['publish', '--registry', 'https://override', '--access', 'public', 'packages/b/dist']],
+      [
+        'npm publish --registry https://override --access restricted packages/a/build',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
+      [
+        'npm publish --registry https://override --access public packages/b/dist',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
     ],
     'should spawn NPM with necessary arguments'
   )
@@ -217,9 +232,9 @@ test('npm:publishPackages: registry override', async (t) => {
 })
 
 test('npm:publishPackages: npm errors', async (t) => {
-  const execaSpy = createSpy(({ index }) => (
+  const spawnChildProcessSpy = createSpy(({ index }) => (
     index % 2 === 0
-      ? Promise.reject({ stderr: '403 Forbidden: You cannot do this' })
+      ? Promise.reject(new SpawnError('403 Forbidden: You cannot do this', 42))
       : Promise.resolve()
   ))
   const promptsSpy = createSpy(() => Promise.reject())
@@ -232,7 +247,9 @@ test('npm:publishPackages: npm errors', async (t) => {
   }
 
   const unmockRequire = mockRequire('../../src/npm/publish-packages', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: { default: promptsSpy },
     '../../src/fs/read-package': {
       readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
@@ -279,10 +296,16 @@ test('npm:publishPackages: npm errors', async (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['npm', ['publish', '--registry', 'https://registry.npmjs.org/', '--access', 'restricted', 'packages/a']],
-      ['npm', ['publish', '--registry', 'https://registry.npmjs.org/', '--access', 'restricted', 'packages/b']],
+      [
+        'npm publish --registry https://registry.npmjs.org/ --access restricted packages/a',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
+      [
+        'npm publish --registry https://registry.npmjs.org/ --access restricted packages/b',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
     ],
     'should spawn NPM with necessary arguments'
   )
@@ -311,9 +334,9 @@ test('npm:publishPackages: npm errors', async (t) => {
 })
 
 test('npm:publishPackages: npm errors', async (t) => {
-  const execaSpy = createSpy(({ index }) => (
+  const spawnChildProcessSpy = createSpy(({ index }) => (
     index % 2 === 0
-      ? Promise.reject({ stderr: 'npm ERR!' })
+      ? Promise.reject(new SpawnError('npm ERR!', 42))
       : Promise.resolve()
   ))
   const promptsSpy = createSpy(() => Promise.resolve({ value: 'YES' }))
@@ -342,7 +365,9 @@ test('npm:publishPackages: npm errors', async (t) => {
   }
 
   const unmockRequire = mockRequire('../../src/npm/publish-packages', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: { default: promptsSpy },
     '../../src/fs/read-package': {
       readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
@@ -409,14 +434,32 @@ test('npm:publishPackages: npm errors', async (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
-      ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
-      ['npm', ['publish', '--registry', 'http://registry', '--access', 'invalid', 'packages/b']],
-      ['npm', ['publish', '--registry', 'http://registry', '--access', 'invalid', 'packages/b']],
-      ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
-      ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
+      [
+        'npm publish --registry invalid --access public packages/a',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
+      [
+        'npm publish --registry invalid --access public packages/a',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
+      [
+        'npm publish --registry http://registry --access invalid packages/b',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
+      [
+        'npm publish --registry http://registry --access invalid packages/b',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
+      [
+        'npm publish --registry invalid --access public packages/a',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
+      [
+        'npm publish --registry invalid --access public packages/a',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
     ],
     'should spawn NPM with necessary arguments'
   )
@@ -447,9 +490,9 @@ test('npm:publishPackages: npm errors', async (t) => {
 })
 
 test('npm:publishPackages: other errors', async (t) => {
-  const execaSpy = createSpy(({ index }) => (
+  const spawnChildProcessSpy = createSpy(({ index }) => (
     index % 2 === 0
-      ? Promise.reject({ stderr: 'other error' })
+      ? Promise.reject(new SpawnError('other error', 42))
       : Promise.resolve()
   ))
   const promptsSpy = createSpy(() => Promise.resolve({ value: 'YES' }))
@@ -478,7 +521,9 @@ test('npm:publishPackages: other errors', async (t) => {
   }
 
   const unmockRequire = mockRequire('../../src/npm/publish-packages', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
     prompts: { default: promptsSpy },
     '../../src/fs/read-package': {
       readPackage: (dir: string) => Promise.resolve(packageJsons[dir]),
@@ -525,12 +570,24 @@ test('npm:publishPackages: other errors', async (t) => {
   })
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
-      ['npm', ['publish', '--registry', 'invalid', '--access', 'public', 'packages/a']],
-      ['npm', ['publish', '--registry', 'http://registry', '--access', 'invalid', 'packages/b']],
-      ['npm', ['publish', '--registry', 'http://registry', '--access', 'invalid', 'packages/b']],
+      [
+        'npm publish --registry invalid --access public packages/a',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
+      [
+        'npm publish --registry invalid --access public packages/a',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
+      [
+        'npm publish --registry http://registry --access invalid packages/b',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
+      [
+        'npm publish --registry http://registry --access invalid packages/b',
+        { stdin: process.stdin, stdout: process.stdout },
+      ],
     ],
     'should spawn NPM with necessary arguments'
   )

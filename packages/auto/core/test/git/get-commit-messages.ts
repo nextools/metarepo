@@ -16,12 +16,14 @@ p2 l2
 ---🛠 fix
 `
 
-  const execaSpy = createSpy(() => Promise.resolve({
+  const spawnChildProcessSpy = createSpy(() => Promise.resolve({
     stdout: commitMessages,
   }))
 
   const unmockRequire = mockRequire('../../src/git/get-commit-messages', {
-    execa: { default: execaSpy },
+    spown: {
+      spawnChildProcess: spawnChildProcessSpy,
+    },
   })
 
   const { getCommitMessages } = await import('../../src/git/get-commit-messages')
@@ -37,9 +39,9 @@ p2 l2
   )
 
   t.deepEquals(
-    getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
+    getSpyCalls(spawnChildProcessSpy),
     [
-      ['git', ['log', '--no-merges', '--format=---%B']],
+      ['git log --no-merges --format=---%B', { stderr: process.stderr }],
     ],
     'should spawn git with arguments'
   )

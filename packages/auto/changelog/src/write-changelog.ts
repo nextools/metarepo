@@ -1,6 +1,6 @@
 import path from 'path'
-import execa from 'execa'
 import { readFile, writeFile } from 'pifs'
+import { spawnChildProcess } from 'spown'
 
 export const writeChangelog = async (log: string, dir: string) => {
   const logPath = path.join(dir, 'changelog.md')
@@ -12,6 +12,9 @@ export const writeChangelog = async (log: string, dir: string) => {
   } catch {
     await writeFile(logPath, log, 'utf8')
   } finally {
-    await execa('git', ['add', logPath])
+    await spawnChildProcess(`git add ${logPath}`, {
+      stdout: null,
+      stderr: process.stderr,
+    })
   }
 }

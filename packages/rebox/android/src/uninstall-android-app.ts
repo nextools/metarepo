@@ -1,4 +1,4 @@
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 import { isUndefined } from 'tsfn'
 
 export type TUninstallAndroidAppOptions = {
@@ -7,17 +7,13 @@ export type TUninstallAndroidAppOptions = {
 }
 
 export const uninstallAndroidApp = async (options: TUninstallAndroidAppOptions): Promise<void> => {
-  await execa(
-    'adb',
-    [
-      ...(isUndefined(options.deviceId) ? [] : ['-s', options.deviceId]),
-      'uninstall',
-      options.appId,
-    ],
-    {
-      stdout: 'ignore',
-      stderr: 'ignore',
-      reject: false,
-    }
-  )
+  try {
+    await spawnChildProcess(
+      `adb ${isUndefined(options.deviceId) ? '' : `-s ${options.deviceId}`} uninstall ${options.appId}`,
+      {
+        stdout: null,
+        stderr: null,
+      }
+    )
+  } catch {}
 }

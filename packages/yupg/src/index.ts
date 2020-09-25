@@ -1,6 +1,6 @@
 import path from 'path'
-import execa from 'execa'
 import { rewriteStream } from 'rwrw'
+import { spawnChildProcess } from 'spown'
 import { lineStream } from 'stroki'
 import { skipLinesStream } from './skip-lines-stream'
 
@@ -22,14 +22,5 @@ export const upgradeDependency = async (depName: string) => {
       .pipe(writableStream)
   })
 
-  await execa(
-    'yarn',
-    [
-      'install',
-      '--non-interactive',
-    ],
-    {
-      stderr: 'inherit',
-    }
-  )
+  await spawnChildProcess('yarn install --non-interactive', { stderr: process.stderr })
 }

@@ -1,6 +1,6 @@
 import { getPackages } from '@auto/core'
-import execa from 'execa'
 import prompts from 'prompts'
+import { spawnChildProcess } from 'spown'
 import { getPrefixes } from './get-refixes'
 import { removeAutoNamePrefix } from './remove-auto-name-prefix'
 import { suggestFilter } from './suggest-filter'
@@ -68,16 +68,11 @@ export const makeCommit = async () => {
     name = `${packageNames.join(', ')}: `
   }
 
-  await execa(
-    'git',
-    [
-      'commit',
-      '-m',
-      `${prefix} ${name}${toLowerCase(message.trim())}`,
-    ],
+  await spawnChildProcess(
+    `git commit -m "${prefix} ${name}${toLowerCase(message.trim())}"`,
     {
-      stdout: process.stdout,
-      stderr: 'ignore',
+      stdout: null,
+      stderr: process.stderr,
     }
   )
 }

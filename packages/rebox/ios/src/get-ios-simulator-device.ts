@@ -1,4 +1,4 @@
-import execa from 'execa'
+import { spawnChildProcess } from 'spown'
 
 type TDevice = {
   udid: string,
@@ -21,7 +21,7 @@ export type TGetIosSuimulatorDeviceOptions = {
 export const getIosSimulatorDevice = async (options: TGetIosSuimulatorDeviceOptions): Promise<TDevice | null> => {
   const iOSVersion = options.iOSVersion.replace('.', '-')
   const iPhoneModel = options.iPhoneModel.replace(' ', '-')
-  const { stdout: xcrunList } = await execa('xcrun', ['simctl', 'list', '--json'])
+  const { stdout: xcrunList } = await spawnChildProcess('xcrun simctl list --json', { stderr: process.stderr })
   const devicesList = JSON.parse(xcrunList) as TDeviceList
   const devices = Object.entries(devicesList.devices)
     .filter((entry) =>
