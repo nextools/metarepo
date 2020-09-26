@@ -16,7 +16,7 @@
   "devDependencies": {
     "@types/tape": "^4.2.34",
     "nanoid": "^3.1.12",
-    "ramdsk": "^0.1.0",
+    "ramdsk": "^0.1.1",
     "tape": "^5.0.0"
   },
   "dependencies": {

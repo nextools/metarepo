@@ -19,7 +19,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.2",
     "@start/plugin": "^2.0.0",
-    "dirdir": "^0.0.0",
+    "dirdir": "^0.1.0",
     "move-path": "^2.0.0",
     "pifs": "^2.0.0"
   },

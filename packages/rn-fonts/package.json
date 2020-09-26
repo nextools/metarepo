@@ -13,7 +13,7 @@
   "dependencies": {
     "@types/plist": "^3.0.2",
     "copie": "^2.0.0",
-    "dirdir": "^0.0.0",
+    "dirdir": "^0.1.0",
     "pifs": "^2.0.0",
     "plist": "^3.0.1",
     "xcode": "^3.0.0"
