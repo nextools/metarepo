@@ -1,6 +1,6 @@
 import path from 'path'
 import copie from 'copie'
-import makeDir from 'make-dir'
+import { makeDir } from 'dirdir'
 import { getFontPaths } from './utils'
 
 export const addFontsAndroid = async (projectPath: string, fontsPath: string): Promise<void> => {

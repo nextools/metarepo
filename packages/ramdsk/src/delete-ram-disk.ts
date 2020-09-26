@@ -14,7 +14,7 @@ export const deleteRamDisk = async (diskPath: string): Promise<void> => {
 
     case 'linux': {
       await spawnChildProcess(
-        `sudo unmount --force ${diskPath}`,
+        `sudo umount --force ${diskPath}`,
         { stdout: null }
       )
 

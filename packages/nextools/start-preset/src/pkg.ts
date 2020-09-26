@@ -36,7 +36,7 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
     const { default: prompts } = await import('prompts')
     const path = await import('path')
     const { default: globby } = await import('globby')
-    const { default: makeDir } = await import('make-dir')
+    const { makeDir } = await import('dirdir')
     const {
       createReadStream,
       createWriteStream,

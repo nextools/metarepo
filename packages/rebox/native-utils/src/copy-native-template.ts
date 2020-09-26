@@ -1,7 +1,7 @@
 import path from 'path'
 import copie from 'copie'
+import { makeDir } from 'dirdir'
 import fastGlob from 'fast-glob'
-import makeDir from 'make-dir'
 import type { TPlatform } from './types'
 
 export type TCopyNativeTemplateOptions = {

@@ -1,8 +1,8 @@
 import path from 'path'
+import { makeDir } from 'dirdir'
 // @ts-ignore
 import imageminPngout from 'imagemin-pngout'
 import { map } from 'iterama'
-import makeDir from 'make-dir'
 import pAll from 'p-all'
 import { TarMap } from 'tarmap'
 import { isDefined } from 'tsfn'

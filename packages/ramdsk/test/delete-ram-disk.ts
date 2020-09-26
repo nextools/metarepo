@@ -47,7 +47,7 @@ test('ramdsk: deleteRamDisk + linux', async (t) => {
   t.deepEqual(
     getSpyCalls(spawnChildProcessSpy),
     [
-      ['sudo unmount --force /test', { stdout: null }],
+      ['sudo umount --force /test', { stdout: null }],
     ],
     'should spawn necessary commands'
   )
