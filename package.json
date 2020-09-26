@@ -29,6 +29,7 @@
     "packages/pifs",
     "packages/pkgu",
     "packages/r11y",
+    "packages/ramdsk",
     "packages/rebox/*",
     "packages/refun",
     "packages/revert/*",

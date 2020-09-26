@@ -1,0 +1,28 @@
+{
+  "name": "ramdsk",
+  "version": "0.0.0",
+  "description": "Create/delete RAM disk, macOS/Linux only",
+  "keywords": [
+    "ram",
+    "ramdisk"
+  ],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@mock/require": "^0.2.2",
+    "@types/tape": "^4.2.34",
+    "spyfn": "^2.0.0",
+    "tape": "^5.0.0"
+  },
+  "dependencies": {
+    "spown": "^0.1.0"
+  }
+}
