@@ -1,3 +1,9 @@
+## v4.0.3
+
+* 🐞 refactor using new deps
+
+* ♻️ update dependencies `@rebox/native-utils`, `rn-fonts`
+
 ## v4.0.2
 
 * 🐞 🐞 refactor using new deps

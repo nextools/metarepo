@@ -1,3 +1,9 @@
+## v0.6.2
+
+* 🐞 refactor using new deps
+
+* ♻️ update dependencies `@rebox/android`, `@rebox/ios`, `@start/plugin-copy`, `@start/plugin-write`, `@x-ray/core`
+
 ## v0.6.1
 
 * 🐞 🐞 refactor using new deps

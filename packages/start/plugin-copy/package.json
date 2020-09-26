@@ -1,6 +1,6 @@
 {
   "name": "@start/plugin-copy",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "👯 Copy files to relative destination using streams and keeping folders structure",
   "keywords": "tasks, runner, start, start-plugin",
   "repository": "deepsweet/start",
