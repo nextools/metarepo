@@ -23,6 +23,6 @@
     "tape": "^5.0.0"
   },
   "dependencies": {
-    "spown": "^0.1.0"
+    "spown": "^0.1.1"
   }
 }

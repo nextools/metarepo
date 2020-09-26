@@ -18,7 +18,7 @@
   "dependencies": {
     "@auto/core": "^0.3.2",
     "pifs": "^2.0.0",
-    "spown": "^0.1.0",
+    "spown": "^0.1.1",
     "tsfn": "^2.1.0"
   },
   "devDependencies": {

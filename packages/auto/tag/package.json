@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@auto/core": "^0.3.2",
-    "spown": "^0.1.0"
+    "spown": "^0.1.1"
   },
   "devDependencies": {
     "@mock/require": "^0.2.2",
