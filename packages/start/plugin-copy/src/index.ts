@@ -5,7 +5,7 @@ export default (outDirRelative: string) =>
   plugin('copy', ({ logPath }) => async ({ files }: StartFilesProps) => {
     const path = await import('path')
     const { default: movePath } = await import('move-path')
-    const { default: makeDir } = await import('make-dir')
+    const { makeDir } = await import('dirdir')
     const { default: copie } = await import('copie')
 
     return {

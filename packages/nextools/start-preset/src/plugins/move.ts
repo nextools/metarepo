@@ -5,7 +5,7 @@ export default (renamer: (oldPath: string) => string) =>
   plugin<StartFilesProps, StartFilesProps>('move', ({ logPath }) => async ({ files }) => {
     const { dirname } = await import('path')
     const { rename } = await import('pifs')
-    const { default: makeDir } = await import('make-dir')
+    const { makeDir } = await import('dirdir')
 
     return {
       files: await Promise.all(

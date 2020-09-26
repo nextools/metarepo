@@ -15,7 +15,7 @@ export default (packageDir: string, assets: TAssets) =>
   plugin('copy', ({ logPath }) => async () => {
     const path = await import('path')
     const { default: movePath } = await import('move-path')
-    const { default: makeDir } = await import('make-dir')
+    const { makeDir } = await import('dirdir')
     const { default: globby } = await import('globby')
     const { default: copie } = await import('copie')
 

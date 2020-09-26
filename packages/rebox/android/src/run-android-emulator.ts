@@ -1,6 +1,6 @@
 import { homedir } from 'os'
 import path from 'path'
-import makeDir from 'make-dir'
+import { makeDir } from 'dirdir'
 import { access, writeFile } from 'pifs'
 import { spawnChildProcess, spawnChildProcessStream } from 'spown'
 import { isString } from 'tsfn'

@@ -6,7 +6,7 @@ export default (outDirRelative: string) =>
     const path = await import('path')
     const { writeFile } = await import('pifs')
     const { default: movePath } = await import('move-path')
-    const { default: makeDir } = await import('make-dir')
+    const { makeDir } = await import('dirdir')
 
     return {
       files: await Promise.all(
