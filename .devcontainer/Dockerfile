@@ -33,6 +33,7 @@ RUN apt-get update \
     #
     # && mkdir --mode 700 /root/.ssh /root/.gnupg \
     # && printf '%%Assuan%%\nsocket=/ssh-agent-forward/S.gpg-agent\n' > /root/.gnupg/S.gpg-agent \
+    && mkdir --mode 700 /root/.ssh \
     && ssh-keyscan github.com >> /root/.ssh/known_hosts 2> /dev/null \
     #
     && apt-get autoremove --yes \
