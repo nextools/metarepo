@@ -1,13 +1,12 @@
 {
   "name": "NexTools",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "nextools",
-  "shutdownAction": "stopCompose",
-  "workspaceFolder": "/workspace",
-  "extensions": [
-    "dbaeumer.vscode-eslint",
-    "editorconfig.editorconfig",
-    "sanaajani.taskrunnercode"
-  ],
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  // "extensions": [
+  //   "dbaeumer.vscode-eslint",
+  //   "editorconfig.editorconfig",
+  //   "sanaajani.taskrunnercode"
+  // ],
   "postCreateCommand": ""
 }
