@@ -6,7 +6,7 @@ export const getLocalPackageVersionYarn = async (packageName: string): Promise<s
     { stderr: null }
   )
 
-  const { data } = JSON.parse(stdout.trim())
+  const { data } = JSON.parse(stdout)
 
   if (data.trees.length === 0) {
     return null

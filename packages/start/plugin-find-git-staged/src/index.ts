@@ -9,7 +9,7 @@ export default (glob: string | string[]) =>
     const { default: multimatch } = await import('multimatch')
 
     const { stdout } = await spawnChildProcess('git diff --cached --name-only --diff-filter=ACM')
-    const gitFiles = stdout.trim().split(EOL)
+    const gitFiles = stdout.split(EOL)
     const matchedFiles = multimatch(gitFiles, glob)
 
     return {
