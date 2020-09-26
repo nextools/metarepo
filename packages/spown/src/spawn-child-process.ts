@@ -1,8 +1,8 @@
 import crossSpawn from 'cross-spawn'
-import { unchunkString } from 'unchunk'
 import { processPool, hookOnExit } from './processes'
 import { SpawnError } from './spawn-error'
 import { splitCommand } from './split-command'
+import { streamToString } from './stream-to-string'
 import type { TSpawnChildProcess, TSpawnChildProcessOptions } from './types'
 
 export const spawnChildProcess: TSpawnChildProcess = async (command: string, options?: TSpawnChildProcessOptions) => {
@@ -34,8 +34,8 @@ export const spawnChildProcess: TSpawnChildProcess = async (command: string, opt
   })
 
   const [stdout, stderr] = await Promise.all([
-    childProcess.stdout !== null ? unchunkString(childProcess.stdout) : null,
-    childProcess.stderr !== null ? unchunkString(childProcess.stderr) : null,
+    childProcess.stdout !== null ? streamToString(childProcess.stdout) : null,
+    childProcess.stderr !== null ? streamToString(childProcess.stderr) : null,
   ])
 
   if (childProcess.exitCode === null) {

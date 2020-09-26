@@ -8,8 +8,7 @@ export default plugin<TReadonly<THookProps>, any>('removeYarnCache', ({ logMessa
   const { default: dleet } = await import('dleet')
   const { spawnChildProcess } = await import('spown')
 
-  const { stdout } = await spawnChildProcess('yarn cache dir')
-  const yarnCacheDir = stdout.trim()
+  const { stdout: yarnCacheDir } = await spawnChildProcess('yarn cache dir')
   const yarnCacheList = await readdir(yarnCacheDir)
   const bumpNames = packages
     .filter((pkg) => pkg.version !== null)

@@ -5,8 +5,8 @@ import { createReadable, mockChildProcess } from './helpers'
 
 test('spown: spawnChildProcess + slow close + ok + stdout + stderr', async (t) => {
   const childProcess = mockChildProcess({
-    stdout: 'output',
-    stderr: 'oops',
+    stdout: 'output     \r\n',
+    stderr: 'oops\n\n\n',
     exitCode: null,
   })
   let isClosed = false
@@ -309,8 +309,8 @@ test('spown: spawnChildProcess + slow close + hard error', async (t) => {
 })
 
 test('spown: spawnChildProcess + fast close + ok + stdout + stderr', async (t) => {
-  const stdout = createReadable('output')
-  const stderr = createReadable('oops')
+  const stdout = createReadable('output     \r\n')
+  const stderr = createReadable('oops\n\n')
 
   const unmockRequire = mockRequire('../src', {
     'cross-spawn': {
