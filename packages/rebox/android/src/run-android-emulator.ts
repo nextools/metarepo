@@ -77,8 +77,6 @@ export const runAndroidEmulator = async (options: TRunAndroidEmulatorOptions): P
     }
   )
 
-  await new Promise((resolve) => setTimeout(resolve, 20000))
-
   await spawnChildProcess(
     `${process.env.ANDROID_HOME}/platform-tools/adb wait-for-device shell "while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;"`,
     {
