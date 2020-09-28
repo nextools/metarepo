@@ -28,6 +28,6 @@
   },
   "dependencies": {
     "pifs": "^2.0.0",
-    "sleap": "^0.0.0"
+    "sleap": "^0.1.0"
   }
 }

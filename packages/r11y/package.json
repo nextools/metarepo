@@ -21,9 +21,9 @@
   "dependencies": {
     "@rebox/web": "^3.1.0",
     "axe-core": "^4.0.1",
-    "dleet": "^2.0.0",
+    "dleet": "^2.0.1",
     "puppeteer-core": "^5.2.1",
     "tmpa": "^0.1.0",
-    "xrom": "^3.0.1"
+    "xrom": "^3.0.2"
   }
 }

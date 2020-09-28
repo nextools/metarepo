@@ -35,7 +35,7 @@
     "tsfn": "^2.1.0",
     "typeon": "^2.0.0",
     "workerama": "^0.4.0",
-    "xrom": "^3.0.1"
+    "xrom": "^3.0.2"
   },
   "devDependencies": {
     "@types/pngjs": "^3.4.1",

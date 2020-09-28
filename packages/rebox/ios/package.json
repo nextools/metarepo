@@ -21,7 +21,7 @@
     "@rebox/native-utils": "^4.0.2",
     "copie": "^2.0.0",
     "dirdir": "^0.1.0",
-    "dleet": "^2.0.0",
+    "dleet": "^2.0.1",
     "fast-glob": "^3.0.0",
     "pifs": "^2.0.0",
     "rn-fonts": "^2.0.1",
