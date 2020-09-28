@@ -18,6 +18,7 @@ Check the individual documentations for more details:
 * [ekst](packages/ekst): append, prepend, replace or remove file basename extensions
 * [fixdeps](packages/fixdeps): automatically add missing or remove unnecessary (dev)dependencies
 * [funcom](packages/funcom): functional composition helpers
+* [globl](packages/globl): exported globals it would be nice to mock
 * [graphiq](packages/graphiq): React component to render various SVG graphs at one plot
 * [ida](packages/ida): iterable data structures
 * [import-wasm](packages/import-wasm): async/sync helpers to import `.wasm` modules in Node.js
