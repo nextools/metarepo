@@ -1,3 +1,7 @@
+## v4.0.4
+
+* 🐞 remove unnecessary timeout before launching Emulator
+
 ## v4.0.3
 
 * 🐞 refactor using new deps
