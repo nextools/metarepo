@@ -26,6 +26,7 @@
     "packages/mock/*",
     "packages/move-path",
     "packages/nextools/*",
+    "packages/nocean",
     "packages/perfa/*",
     "packages/piall",
     "packages/pifs",

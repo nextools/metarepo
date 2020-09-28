@@ -1,0 +1,26 @@
+{
+  "name": "nocean",
+  "version": "0.0.0",
+  "description": "Notion API client",
+  "keywords": [
+    "notion"
+  ],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/unzipper": "^0.10.3"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1",
+    "sleap": "^0.1.0",
+    "unzipper": "^0.10.11"
+  }
+}
