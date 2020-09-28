@@ -1,6 +1,6 @@
 {
   "name": "sleap",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Sleep",
   "keywords": [],
   "main": "src/index.ts",

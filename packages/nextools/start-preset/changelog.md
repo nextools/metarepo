@@ -1,3 +1,9 @@
+## v0.6.3
+
+* 🐞 refactor using new deps
+
+* ♻️ update dependencies `dleet`
+
 ## v0.6.2
 
 * 🐞 refactor using new deps

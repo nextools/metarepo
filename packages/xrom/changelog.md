@@ -1,3 +1,7 @@
+## v3.0.2
+
+* 🐞 refactor using new deps
+
 ## v3.0.1
 
 * 🐞 🐞 refactor using new deps
