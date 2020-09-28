@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import { sleep } from './sleep'
+import { sleep } from 'sleap'
 
 const TIMEOUT = 200
 

@@ -94,11 +94,11 @@ test('dleet: error: EBUSY + win32 + 1 retry', async (t) => {
 
   fs.lstat = lstatSpy
 
-  const delaySpy = createSpy(() => Promise.resolve())
+  const sleepSpy = createSpy(() => Promise.resolve())
 
   const unmockRequire = mockRequire('../src/', {
-    '../src/delay': {
-      delay: delaySpy,
+    sleap: {
+      sleep: sleepSpy,
     },
   })
 
@@ -117,7 +117,7 @@ test('dleet: error: EBUSY + win32 + 1 retry', async (t) => {
   )
 
   t.deepEqual(
-    getSpyCalls(delaySpy),
+    getSpyCalls(sleepSpy),
     [[100]],
     'should wait 100ms'
   )
@@ -151,15 +151,15 @@ test('dleet: error: EBUSY + win32 + 2 retries', async (t) => {
 
     return fs.lstat(args[0], args[1])
   })
-  const delaySpy = createSpy(() => Promise.resolve())
+  const sleepSpy = createSpy(() => Promise.resolve())
 
   const unmockRequire = mockRequire('../src/', {
     fs: {
       ...fs,
       lstat: lstatSpy,
     },
-    '../src/delay': {
-      delay: delaySpy,
+    sleap: {
+      sleep: sleepSpy,
     },
   })
 
@@ -178,7 +178,7 @@ test('dleet: error: EBUSY + win32 + 2 retries', async (t) => {
   )
 
   t.deepEqual(
-    getSpyCalls(delaySpy),
+    getSpyCalls(sleepSpy),
     [[100], [100]],
     'should wait for 100ms 2 times'
   )

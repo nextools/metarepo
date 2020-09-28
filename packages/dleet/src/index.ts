@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { join } from 'path'
 import { chmod, lstat, readdir, rmdir, unlink } from 'pifs'
-import { delay } from './delay'
+import { sleep } from 'sleap'
 
 const EBUSY_MAX_TRIES = 3
 const EBUSY_RETRY_DELAY = 100
@@ -51,7 +51,7 @@ const dleet = async (targetPath: string): Promise<void> => {
 
         ebusyTries += 1
 
-        await delay(EBUSY_RETRY_DELAY)
+        await sleep(EBUSY_RETRY_DELAY)
         await tryToRm()
       // ignore "no such file or directory", it's a good result too
       } else if (error.code !== 'ENOENT') {
