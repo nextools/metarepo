@@ -4,11 +4,10 @@ const PORT = 4873
 const URL = `http://localhost:${PORT}`
 const RETRY_TIMEOUT = 500
 
-const sleep = (timeout: number) => new Promise((resolve) => setTimeout(resolve, timeout))
-
 export default (configPath: string) =>
   plugin<{}, any>('run-verdaccio', ({ logMessage }) => async () => {
     const { spawnChildProcessStream } = await import('spown')
+    const { sleep } = await import('sleap')
     const { default: fetch } = await import('node-fetch')
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises

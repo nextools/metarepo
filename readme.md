@@ -43,6 +43,7 @@ Check the individual documentations for more details:
 * [rsolve](packages/rsolve): resolve module path with custom entry point `package.json` field relative to caller file
 * [rwrw](packages/rwrw): rewrite file stream
 * [siza](packages/siza): get bundle size of a React application
+* [sleap](packages/sleap): sleep
 * [spown](packages/spown): spawn child process
 * [spyfn](packages/spyfn): spy function
 * [spyt](packages/spyt): `setTimeout`/`requestAnimationFrame` spies

@@ -1,15 +1,10 @@
 {
-  "name": "dleet",
-  "version": "2.0.0",
-  "description": "Delete directories and files",
-  "keywords": [
-    "remove",
-    "delete",
-    "rmrf"
-  ],
+  "name": "sleap",
+  "version": "0.0.0",
+  "description": "Sleep",
+  "keywords": [],
   "main": "src/index.ts",
   "repository": "nextools/metarepo",
-  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
   "engines": {
     "node": ">=12.13.0"
@@ -19,15 +14,12 @@
   },
   "sideEffects": false,
   "devDependencies": {
-    "@mock/fs": "^0.2.0",
     "@mock/require": "^0.2.2",
     "@types/tape": "^4.2.34",
-    "memfs": "^3.0.3",
     "spyfn": "^2.0.0",
     "tape": "^5.0.0"
   },
   "dependencies": {
-    "pifs": "^2.0.0",
-    "sleap": "^0.0.0"
+    "globl": "^0.1.0"
   }
 }
