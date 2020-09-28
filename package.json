@@ -14,6 +14,7 @@
     "packages/ekst",
     "packages/fixdeps",
     "packages/funcom",
+    "packages/globl",
     "packages/graphiq",
     "packages/ida",
     "packages/import-wasm",
