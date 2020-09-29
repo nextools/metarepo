@@ -21,6 +21,7 @@ Check the individual documentations for more details:
 * [globl](packages/globl): exported globals it would be nice to mock
 * [graphiq](packages/graphiq): React component to render various SVG graphs at one plot
 * [ida](packages/ida): iterable data structures
+* [ifps](packages/ifps): FPS measurement as async iterable
 * [import-wasm](packages/import-wasm): async/sync helpers to import `.wasm` modules in Node.js
 * [iterama](packages/iterama): composable functional (async) iterable helpers
 * [itobj](packages/itobj): iterate Object
