@@ -2,7 +2,9 @@
   "name": "ifps",
   "version": "0.0.0",
   "description": "FPS measurement as async iterable",
-  "keywords": ["fps"],
+  "keywords": [
+    "fps"
+  ],
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
@@ -23,6 +25,6 @@
     "tape": "^5.0.0"
   },
   "dependencies": {
-    "globl": "^0.1.0"
+    "globl": "^0.2.0"
   }
 }
