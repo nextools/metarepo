@@ -24,7 +24,7 @@ export type TDoc = {
 }
 
 export type TResult = {
-  type: string,
+  type: 'arrow-function' | 'type-alias',
   source: string,
   doc?: TDoc,
 }
