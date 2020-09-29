@@ -7,10 +7,15 @@ import { enqueueTask } from './enqueue-task'
 import { getTask } from './get-task'
 import { normalizeBlockId } from './normalize-block-id'
 import type { TDownloadMarkdownOptions, TTaskExportBlockResponse } from './types'
+import { validateBlockId } from './validate-block-id'
+import { validateToken } from './validate-token'
 
 const pPipeline = promisify(pipeline)
 
 export const downloadMarkdown = async (options: TDownloadMarkdownOptions): Promise<string> => {
+  validateToken(options.token)
+  validateBlockId(options.blockId)
+
   const blockId = normalizeBlockId(options.blockId)
   const taskId = await enqueueTask({
     token: options.token,
