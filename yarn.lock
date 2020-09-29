@@ -9800,7 +9800,7 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-puppeteer-core@^5.0.0, puppeteer-core@^5.2.1:
+puppeteer-core@^5.0.0, puppeteer-core@^5.2.1, puppeteer-core@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-5.3.1.tgz#1affb1738afac499416a7fd4ed2ed0c18577e88f"
   integrity sha512-YE6c6FvHAFKQUyNTqFs78SgGmpcqOPhhmVfEVNYB4abv7bV2V+B3r72T3e7vlJkEeTloy4x9bQLrGbHHoKSg1w==
