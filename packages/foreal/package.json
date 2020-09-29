@@ -1,8 +1,11 @@
 {
   "name": "foreal",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Test React app with Puppeteer",
-  "keywords": ["react", "puppeteer"],
+  "keywords": [
+    "react",
+    "puppeteer"
+  ],
   "main": "src/index.ts",
   "buildAssets": {
     "src/*.html": "node/"
