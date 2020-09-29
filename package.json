@@ -17,6 +17,7 @@
     "packages/globl",
     "packages/graphiq",
     "packages/ida",
+    "packages/ifps",
     "packages/import-wasm",
     "packages/iterama",
     "packages/itobj",
