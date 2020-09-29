@@ -3,9 +3,21 @@ import * as globl from '../src'
 
 test('globl: *', (t) => {
   t.equal(
-    globl.clearImmediate,
-    global.clearImmediate,
-    'clearImmediate'
+    globl.setTimeout,
+    global.setTimeout,
+    'setTimeout'
+  )
+
+  t.equal(
+    globl.clearTimeout,
+    global.clearTimeout,
+    'clearTimeout'
+  )
+
+  t.equal(
+    globl.setInterval,
+    global.setInterval,
+    'setInterval'
   )
 
   t.equal(
@@ -15,9 +27,27 @@ test('globl: *', (t) => {
   )
 
   t.equal(
-    globl.clearTimeout,
-    global.clearTimeout,
-    'clearTimeout'
+    globl.setImmediate,
+    global.setImmediate,
+    'setImmediate'
+  )
+
+  t.equal(
+    globl.clearImmediate,
+    global.clearImmediate,
+    'clearImmediate'
+  )
+
+  t.equal(
+    globl.requestAnimationFrame,
+    global.requestAnimationFrame,
+    'requestAnimationFrame'
+  )
+
+  t.equal(
+    globl.cancelAnimationFrame,
+    global.cancelAnimationFrame,
+    'cancelAnimationFrame'
   )
 
   t.equal(
@@ -33,21 +63,15 @@ test('globl: *', (t) => {
   )
 
   t.equal(
-    globl.setImmediate,
-    global.setImmediate,
-    'setImmediate'
+    globl.Date,
+    global.Date,
+    'Date'
   )
 
   t.equal(
-    globl.setInterval,
-    global.setInterval,
-    'setInterval'
-  )
-
-  t.equal(
-    globl.setTimeout,
-    global.setTimeout,
-    'setTimeout'
+    globl.performance,
+    global.performance,
+    'performance'
   )
 
   t.end()

@@ -2,6 +2,19 @@
 
 Exported globals it would be nice to mock.
 
+* `setTimeout`
+* `clearTimeout`
+* `setInterval`
+* `clearInterval`
+* `setImmediate`
+* `clearImmediate`
+* `requestAnimationFrame`
+* `cancelAnimationFrame`
+* `console`
+* `process`
+* `Date`
+* `performance`
+
 ## Install
 
 ```sh
