@@ -17,6 +17,7 @@ Check the individual documentations for more details:
 * [dupdep](packages/dupdep): check for duplicated dependencies across packages in Yarn Workspaces
 * [ekst](packages/ekst): append, prepend, replace or remove file basename extensions
 * [fixdeps](packages/fixdeps): automatically add missing or remove unnecessary (dev)dependencies
+* [foreal](packages/foreal): test React app with Puppeteer
 * [funcom](packages/funcom): functional composition helpers
 * [globl](packages/globl): exported globals it would be nice to mock
 * [graphiq](packages/graphiq): React component to render various SVG graphs at one plot
