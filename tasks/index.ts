@@ -40,6 +40,12 @@ export const graphiq = RunApp({
   htmlTemplatePath: 'packages/graphiq/templates/dev.html',
 })
 
+export const refps = RunApp({
+  name: 'ReFps',
+  entryPointPath: 'tasks/refps/index.tsx',
+  htmlTemplatePath: 'tasks/refps/index.html',
+})
+
 export const sandbox = (...args: string[]) => {
   const runSandbox = RunApp({
     name: 'Sandbox',
