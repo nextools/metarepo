@@ -1,3 +1,7 @@
+## v4.0.5
+
+* 🐞 remove unnecessary logs
+
 ## v4.0.4
 
 * 🐞 remove unnecessary timeout before launching Emulator

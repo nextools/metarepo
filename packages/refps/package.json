@@ -1,6 +1,6 @@
 {
   "name": "refps",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "React/React Native FPS counter with graph",
   "keywords": [
     "fps",

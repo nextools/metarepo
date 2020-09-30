@@ -1,3 +1,7 @@
+## v6.0.4
+
+* 🐞 remove unnecessary logs
+
 ## v6.0.3
 
 * 🐞 refactor using new deps
