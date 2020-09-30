@@ -14,6 +14,9 @@ test('ifps: iterableFps', async (t) => {
         now: () => 0,
       },
     },
+    '../src/max-fps': {
+      MAX_FPS: Infinity,
+    },
   })
 
   const { iterableFps } = await import('../src')

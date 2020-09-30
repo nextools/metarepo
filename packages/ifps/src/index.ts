@@ -1,5 +1,6 @@
 /* eslint-disable no-loop-func */
 import { requestAnimationFrame, performance } from 'globl'
+import { MAX_FPS } from './max-fps'
 
 export const iterableFps = ({
   async *[Symbol.asyncIterator]() {
@@ -18,7 +19,7 @@ export const iterableFps = ({
 
           last = now
 
-          resolve(fps)
+          resolve(Math.min(fps, MAX_FPS))
         }
 
         requestAnimationFrame(loop)
