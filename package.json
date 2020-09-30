@@ -36,6 +36,7 @@
     "packages/r11y",
     "packages/ramdsk",
     "packages/rebox/*",
+    "packages/refps",
     "packages/refun",
     "packages/revert/*",
     "packages/rn-fonts",

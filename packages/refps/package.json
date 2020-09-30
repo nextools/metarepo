@@ -1,0 +1,39 @@
+{
+  "name": "refps",
+  "version": "0.0.0",
+  "description": "React/React Native FPS counter with graph",
+  "keywords": [
+    "fps",
+    "react",
+    "react-native"
+  ],
+  "main": "src/index.tsx",
+  "browser": "src/index.tsx",
+  "react-native": "src/index.tsx",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "react-native": "0.63.2",
+    "react-native-svg": "^12.1.0"
+  },
+  "dependencies": {
+    "circularr": "^0.3.0",
+    "funcom": "^0.2.0",
+    "ifps": "^0.1.0",
+    "iterama": "^0.5.0",
+    "react": "^16.13.1",
+    "refun": "^3.1.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "react-native"
+    ]
+  }
+}

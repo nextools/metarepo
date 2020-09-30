@@ -26,7 +26,7 @@ export const buildIosAppDebug = async (options: TBuildIosAppDebugOptions): Promi
 
   await spawnChildProcess('pod install', {
     cwd: options.projectPath,
-    stdout: process.stdout,
+    stdout: null,
     stderr: process.stderr,
   })
 
