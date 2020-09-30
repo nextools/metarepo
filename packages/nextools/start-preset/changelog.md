@@ -1,3 +1,7 @@
+## v0.6.4
+
+* 🐞 test Node.js-target build artifacts
+
 ## v0.6.3
 
 * 🐞 refactor using new deps
