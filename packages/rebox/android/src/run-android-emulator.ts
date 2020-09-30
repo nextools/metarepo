@@ -90,7 +90,7 @@ export const runAndroidEmulator = async (options: TRunAndroidEmulatorOptions): P
       `${process.env.ANDROID_HOME}/platform-tools/adb reverse tcp:${port} tcp:${port}`,
       {
         stdout: null,
-        stderr: process.stderr,
+        stderr: null,
       }
     )
   }
