@@ -1,4 +1,5 @@
 import path from 'path'
+import plugin from '@start/plugin'
 import type { StartPlugin } from '@start/plugin'
 import copy from '@start/plugin-copy'
 import env from '@start/plugin-env'
@@ -91,7 +92,13 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
     read,
     babel(babelConfigNodeBuild),
     rename((file) => file.replace(/\.(ts|tsx)$/, '.js')),
-    write(`${dir}/build/node/`)
+    write(`${dir}/build/node/`),
+    plugin('test', () => async () => {
+      const path = await import('path')
+      const fullPath = path.resolve(`${dir}/build/node/index.js`)
+
+      await import(fullPath)
+    })
   )
 }
 
