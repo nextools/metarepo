@@ -1,16 +1,15 @@
 import { elegir } from 'elegir'
 import React from 'react'
 import type { ReactNode } from 'react'
-import { component, startWithType, mapDefaultProps, mapWithProps, mapHandlers, mapStateRef, mapContext } from 'refun'
-import { isFunction } from 'tsfn'
+import { component, startWithType, mapHandlers, mapStateRef, mapContext } from 'refun'
+import { UNDEFINED } from 'tsfn'
 import { LayoutContext } from './LayoutContext'
 import { LayoutItemContext } from './LayoutItemContext'
+import { onChange } from './on-change'
 import { SYMBOL_LAYOUT_ITEM } from './symbols'
-import type { TLayoutSize } from './types'
-import { SIZE_INITIAL } from './utils'
+import type { TLayoutSize, TOnContentSizeChange } from './types'
 
 export type TLayout_Item = {
-  id?: string,
   width?: TLayoutSize,
   height?: TLayoutSize,
   minWidth?: number,
@@ -26,100 +25,145 @@ export type TLayout_Item = {
 
 export const Layout_Item = component(
   startWithType<TLayout_Item>(),
-  mapDefaultProps({
-    hAlign: 'stretch',
-    vAlign: 'stretch',
-    hPadding: 0,
-    vPadding: 0,
-  }),
   mapContext(LayoutItemContext),
-  mapStateRef('contentWidthRef', 'flushWidthChange', () => SIZE_INITIAL, []),
-  mapStateRef('contentHeightRef', 'flushHeightChange', () => SIZE_INITIAL, []),
+  mapStateRef('layoutItemStateRef', 'flushLayoutItem', () => {
+    const value = {
+      contentLeft: 0,
+      contentTop: 0,
+      contentMeasureWidth: 0,
+      contentMeasureHeight: 0,
+      contentRenderWidth: 0,
+      contentRenderHeight: 0,
+      contentMaxWidth: 0,
+      onContentWidthChanged: UNDEFINED as TOnContentSizeChange | undefined,
+      onContentHeightChanged: UNDEFINED as TOnContentSizeChange | undefined,
+    }
+
+    return value
+  }, []),
   mapHandlers({
-    onWidthChange: ({ hPadding, contentWidthRef, flushWidthChange, _itemIndex, _onWidthChange }) => (measuredValue: number) => {
-      contentWidthRef.current = measuredValue
+    onWidthChange: ({
+      hPadding = 0,
+      layoutItemStateRef,
+      flushLayoutItem,
+      _itemIndex,
+      _onWidthChange,
+    }) => (measuredValue: number) => {
+      if (layoutItemStateRef.current.contentMeasureWidth === measuredValue) {
+        return
+      }
+
+      layoutItemStateRef.current.contentMeasureWidth = measuredValue
 
       // Measure mode
-      if (isFunction(_onWidthChange)) {
+      if (_onWidthChange !== UNDEFINED) {
         _onWidthChange(_itemIndex, measuredValue + hPadding * 2)
       } else {
-        flushWidthChange()
+        flushLayoutItem()
       }
     },
-    onHeightChange: ({ vPadding, contentHeightRef, flushHeightChange, _itemIndex, _onHeightChange }) => (measuredValue: number) => {
-      contentHeightRef.current = measuredValue
+    onHeightChange: ({
+      vPadding = 0,
+      layoutItemStateRef,
+      flushLayoutItem,
+      _itemIndex,
+      _onHeightChange,
+    }) => (measuredValue: number) => {
+      if (layoutItemStateRef.current.contentMeasureHeight === measuredValue) {
+        return
+      }
+
+      layoutItemStateRef.current.contentMeasureHeight = measuredValue
 
       // Measure mode
-      if (isFunction(_onHeightChange)) {
+      if (_onHeightChange !== UNDEFINED) {
         _onHeightChange(_itemIndex, measuredValue + vPadding * 2)
       } else {
-        flushHeightChange()
+        flushLayoutItem()
       }
     },
   }),
-  mapWithProps(({ maxWidth, _maxWidth, _width, contentWidthRef, hPadding, hAlign, onWidthChange, _onWidthChange }) => {
-    const isMeasureMode = isFunction(_onWidthChange)
+  onChange(({
+    hPadding = 0,
+    hAlign = 'stretch',
+    onWidthChange,
+    layoutItemStateRef,
+    _width,
+    _maxWidth,
+    _onWidthChange,
+  }) => {
+    const contentState = layoutItemStateRef.current
+    const isLayoutMeasureMode = _onWidthChange !== UNDEFINED
 
-    if (!isMeasureMode && hAlign === 'stretch') {
-      const width = Math.max(_width - hPadding * 2, 0)
+    // Check if Content is in Stretch mode
+    if (!isLayoutMeasureMode && hAlign === 'stretch') {
+      const contentWidth = Math.max(_width - hPadding * 2, 0)
 
-      return {
-        contentLeft: hPadding,
-        contentWidth: width,
-        contentMaxWidth: width,
-        onWidthChange: undefined,
-      }
+      contentState.contentLeft = hPadding
+      contentState.contentRenderWidth = contentWidth
+      contentState.contentMaxWidth = 0
+      contentState.onContentWidthChanged = UNDEFINED
+
+      return
     }
 
-    const extraWidth = _width - contentWidthRef.current
+    // Content is in Measure mode
+    const extraWidth = _width - contentState.contentMeasureWidth
+    const contentLeft = elegir(
+      hAlign === 'center',
+      extraWidth >> 1,
+      hAlign === 'right',
+      extraWidth - hPadding,
+      true,
+      hPadding
+    )
+    const contentMaxWidth = isLayoutMeasureMode
+      // Put the Layout provided limit for the Item or 0
+      ? Math.max((_maxWidth ?? 0) - hPadding * 2, 0)
+      // Put Item size as limit of measurement
+      : Math.max(_width - hPadding * 2, 0)
 
-    return {
-      contentLeft: elegir(
-        hAlign === 'center',
-        extraWidth / 2,
-        hAlign === 'right',
-        extraWidth - hPadding,
-        true,
-        hPadding
-      ),
-      contentWidth: contentWidthRef.current,
-      contentMaxWidth: isMeasureMode
-        ? Math.max((maxWidth ?? _maxWidth ?? 0) - hPadding * 2, 0)
-        : Math.max(_width - hPadding * 2, 0),
-      onWidthChange,
-    }
+    contentState.contentLeft = contentLeft
+    contentState.contentRenderWidth = contentState.contentMeasureWidth
+    contentState.contentMaxWidth = contentMaxWidth
+    contentState.onContentWidthChanged = onWidthChange
   }),
-  mapWithProps(({ maxHeight, _height, contentHeightRef, vPadding, vAlign, onHeightChange, _onHeightChange }) => {
-    const isMeasureMode = isFunction(_onHeightChange)
+  onChange(({
+    vPadding = 0,
+    vAlign = 'stretch',
+    onHeightChange,
+    layoutItemStateRef,
+    _height,
+    _onHeightChange,
+  }) => {
+    const contentState = layoutItemStateRef.current
+    const isLayoutMeasureMode = _onHeightChange !== UNDEFINED
 
-    if (!isMeasureMode && vAlign === 'stretch') {
-      const height = Math.max(_height - vPadding * 2, 0)
+    // Check if Content is in Stretch mode
+    if (!isLayoutMeasureMode && vAlign === 'stretch') {
+      const contentHeight = Math.max(_height - vPadding * 2, 0)
 
-      return {
-        contentTop: vPadding,
-        contentHeight: height,
-        contentMaxHeight: height,
-        onHeightChange: undefined,
-      }
+      contentState.contentTop = vPadding
+      contentState.contentRenderHeight = contentHeight
+      contentState.onContentHeightChanged = UNDEFINED
+
+      return
     }
 
-    const extraHeight = _height - contentHeightRef.current
+    // Content is in Measure mode
+    const extraHeight = _height - contentState.contentMeasureHeight
+    const contentTop = elegir(
+      vAlign === 'center',
+      extraHeight >> 1,
+      vAlign === 'bottom',
+      extraHeight - vPadding,
+      true,
+      vPadding
+    )
 
-    return ({
-      contentTop: elegir(
-        vAlign === 'center',
-        extraHeight / 2,
-        vAlign === 'bottom',
-        extraHeight - vPadding,
-        true,
-        vPadding
-      ),
-      contentHeight: contentHeightRef.current,
-      contentMaxHeight: isMeasureMode
-        ? Math.max((maxHeight ?? 0) - vPadding * 2, 0)
-        : Math.max(_height - vPadding * 2, 0),
-      onHeightChange,
-    })
+    contentState.contentTop = contentTop
+    contentState.contentRenderHeight = contentState.contentMeasureHeight
+    contentState.onContentHeightChanged = onHeightChange
   })
 )(({
   _width,
@@ -128,37 +172,41 @@ export const Layout_Item = component(
   _top,
   _x,
   _y,
-  contentLeft,
-  contentTop,
-  contentWidth,
-  contentHeight,
-  contentMaxWidth,
-  contentMaxHeight,
+  layoutItemStateRef,
   children,
-  onWidthChange,
-  onHeightChange,
-}) => (
-  <LayoutContext.Provider
-    value={{
-      _x: _x + contentLeft,
-      _y: _y + contentTop,
-      _parentLeft: _left,
-      _parentTop: _top,
-      _parentWidth: _width,
-      _parentHeight: _height,
-      _left: _left + contentLeft,
-      _top: _top + contentTop,
-      _width: contentWidth,
-      _height: contentHeight,
-      _maxWidth: contentMaxWidth,
-      _maxHeight: contentMaxHeight,
-      _onWidthChange: onWidthChange,
-      _onHeightChange: onHeightChange,
-    }}
-  >
-    {children}
-  </LayoutContext.Provider>
-))
+}) => {
+  const {
+    contentTop,
+    contentLeft,
+    contentRenderWidth,
+    contentRenderHeight,
+    contentMaxWidth,
+    onContentWidthChanged,
+    onContentHeightChanged,
+  } = layoutItemStateRef.current
+
+  return (
+    <LayoutContext.Provider
+      value={{
+        _x: _x + contentLeft,
+        _y: _y + contentTop,
+        _parentLeft: _left,
+        _parentTop: _top,
+        _parentWidth: _width,
+        _parentHeight: _height,
+        _left: _left + contentLeft,
+        _top: _top + contentTop,
+        _width: contentRenderWidth,
+        _height: contentRenderHeight,
+        _maxWidth: contentMaxWidth,
+        _onWidthChange: onContentWidthChanged,
+        _onHeightChange: onContentHeightChanged,
+      }}
+    >
+      {children}
+    </LayoutContext.Provider>
+  )
+})
 
 Layout_Item.displayName = 'Layout_Item'
 Layout_Item.componentSymbol = SYMBOL_LAYOUT_ITEM

@@ -1,4 +1,5 @@
 import { createContext } from 'react'
+import type { TOnContentSizeChange } from './types'
 
 export type TLayoutContext = {
   _x: number,
@@ -13,8 +14,8 @@ export type TLayoutContext = {
   _height: number,
   _maxWidth?: number,
   _maxHeight?: number,
-  _onWidthChange?: (width: number) => void,
-  _onHeightChange?: (height: number) => void,
+  _onWidthChange?: TOnContentSizeChange,
+  _onHeightChange?: TOnContentSizeChange,
 }
 
 export const LayoutContext = createContext<TLayoutContext>({

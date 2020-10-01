@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react'
 import type { ReactNode } from 'react'
-import { component, startWithType, mapDefaultProps, mapContext, mapStateRef, mapHandlers, onChange } from 'refun'
+import { component, startWithType, mapDefaultProps, mapContext, mapStateRef, mapHandlers } from 'refun'
 import { isFunction } from 'tsfn'
 import { LayoutContext } from './LayoutContext'
 import { LayoutItemContext } from './LayoutItemContext'
 import { mapChildren } from './map-children'
+import { onChange } from './on-change'
 import { onLayout } from './on-layout'
-import { SYMBOL_LAYOUT, SYMBOL_LAYOUT_ITEM, SYMBOL_CHILDREN_REST } from './symbols'
-import type { TLayoutDirection } from './types'
+import { SYMBOL_LAYOUT, SYMBOL_LAYOUT_ITEM, SYMBOL_CHILDREN_REST, SYMBOL_LAYOUT_MOVE_BEGIN } from './symbols'
+import type { TItemMoveState, TLayoutDirection, TLayoutRenderState } from './types'
 import {
   calcTotal,
   calcMax,
@@ -15,7 +16,7 @@ import {
   calcMeasureMainAxisLayout,
   calcMeasureCrossAxisLayout,
   calcExplicitCrossAxisLayout,
-  equalizeArrays,
+  prepareRenderState,
   getWidth,
   getMinWidth,
   getMaxWidth,
@@ -24,8 +25,8 @@ import {
   getMinHeight,
   getMaxHeight,
   getLayoutHeight,
+  adjustDragValue,
 } from './utils'
-import type { TOnItemSizeChange } from './utils'
 
 export type TLayout = {
   direction?: TLayoutDirection,
@@ -54,49 +55,83 @@ export const Layout = component(
       isMultiple: true,
     },
   }),
-  mapStateRef('layoutRef', 'flushLayout', ({ items }) => {
+  mapStateRef('layoutRenderStateRef', 'flushLayout', ({ items }): TLayoutRenderState => {
     const numItems = items.length
 
     return {
+      keys: Array(numItems),
       lefts: Array(numItems).fill(0),
       tops: Array(numItems).fill(0),
-      renderedWidths: Array(numItems).fill(0),
-      renderedHeights: Array(numItems).fill(0),
-      measuredWidths: Array(numItems).fill(0),
-      measuredHeights: Array(numItems).fill(0),
-      maxWidths: Array(numItems).fill(0),
-      maxHeights: Array(numItems).fill(0),
-      onItemWidthChangeFns: Array(numItems) as (TOnItemSizeChange | undefined)[],
-      onItemHeightChangeFns: Array(numItems) as (TOnItemSizeChange | undefined)[],
+      offsets: Array(numItems * 2).fill(0),
+      renderedWidths: Array(numItems * 2).fill(0),
+      renderedHeights: Array(numItems * 2).fill(0),
+      measuredWidths: Array(numItems * 2).fill(0),
+      measuredHeights: Array(numItems * 2).fill(0),
+      maxWidths: Array(numItems * 2).fill(0),
+      maxHeights: Array(numItems * 2).fill(0),
+      onItemWidthChangeFns: Array(numItems),
+      onItemHeightChangeFns: Array(numItems),
+      onItemMovedFns: Array(numItems),
       hasContainerWidthChanged: false,
       hasContainerHeightChanged: false,
+      lastMovePos: 0,
     }
   }, []),
   mapHandlers({
-    reportWidthChange: ({ layoutRef }) => () => {
-      layoutRef.current.hasContainerWidthChanged = true
+    reportWidthChange: ({ layoutRenderStateRef }) => () => {
+      layoutRenderStateRef.current.hasContainerWidthChanged = true
     },
-    reportHeightChange: ({ layoutRef }) => () => {
-      layoutRef.current.hasContainerHeightChanged = true
+    reportHeightChange: ({ layoutRenderStateRef }) => () => {
+      layoutRenderStateRef.current.hasContainerHeightChanged = true
+    },
+    onItemWidthChange: ({ layoutRenderStateRef, flushLayout }) => (index: number, value: number) => {
+      layoutRenderStateRef.current.measuredWidths[index] = value
+      flushLayout()
+    },
+    onItemHeightChange: ({ layoutRenderStateRef, flushLayout }) => (index: number, value: number) => {
+      layoutRenderStateRef.current.measuredHeights[index] = value
+      flushLayout()
+    },
+    onItemMoved: ({ items, direction, layoutRenderStateRef, flushLayout }) => (index: number, value: number, moveState: TItemMoveState) => {
+      if (moveState === SYMBOL_LAYOUT_MOVE_BEGIN) {
+        layoutRenderStateRef.current.lastMovePos = value
+
+        return
+      }
+
+      const {
+        offsets,
+        renderedWidths,
+        renderedHeights,
+        lastMovePos,
+      } = layoutRenderStateRef.current
+      const diff = value - lastMovePos
+      const clampedDiff = direction === 'horizontal'
+        ? adjustDragValue(index, diff, items, renderedWidths, getMinWidth, getMaxWidth)
+        : adjustDragValue(index, diff, items, renderedHeights, getMinHeight, getMaxHeight)
+
+      if (clampedDiff !== 0) {
+        offsets[index] += clampedDiff
+        layoutRenderStateRef.current.lastMovePos += clampedDiff
+
+        flushLayout()
+      }
     },
   }),
-  mapHandlers({
-    onItemWidthChange: ({ layoutRef, flushLayout }) => (index: number, value: number) => {
-      // console.log('ON_ITEM_WIDTH', index, value)
-      layoutRef.current.measuredWidths[index] = value
-      flushLayout()
-    },
-    onItemHeightChange: ({ layoutRef, flushLayout }) => (index: number, value: number) => {
-      // console.log('ON_ITEM_HEIGHT', index, value)
-      layoutRef.current.measuredHeights[index] = value
-      flushLayout()
-    },
+  onChange(({ items, layoutRenderStateRef, _onWidthChange, _onHeightChange }) => {
+    prepareRenderState(
+      items,
+      layoutRenderStateRef.current,
+      isFunction(_onWidthChange),
+      isFunction(_onHeightChange)
+    )
   }),
   onChange(({
     items,
     direction,
-    layoutRef,
+    layoutRenderStateRef,
     onItemWidthChange,
+    onItemMoved,
     _width,
     _onWidthChange,
     _maxWidth,
@@ -106,22 +141,55 @@ export const Layout = component(
   }) => {
     const {
       lefts,
+      offsets,
       renderedWidths,
       measuredWidths,
       maxWidths,
       onItemWidthChangeFns,
-    } = layoutRef.current
+      onItemMovedFns,
+    } = layoutRenderStateRef.current
     const shouldMeasureWidth = isFunction(_onWidthChange)
-
-    // check if num items has changed
-    equalizeArrays(items, lefts, renderedWidths, measuredWidths, onItemWidthChangeFns, reportWidthChange, shouldMeasureWidth)
 
     // Main Axis
     if (direction === 'horizontal') {
       if (shouldMeasureWidth) {
-        calcMeasureMainAxisLayout(items, lefts, renderedWidths, measuredWidths, maxWidths, onItemWidthChangeFns, onItemWidthChange, getLayoutWidth, getWidth, getMinWidth, getMaxWidth, reportWidthChange, _maxWidth, hPadding, spaceBetween)
+        calcMeasureMainAxisLayout(
+          items,
+          lefts,
+          renderedWidths,
+          measuredWidths,
+          maxWidths,
+          onItemWidthChangeFns,
+          onItemWidthChange,
+          onItemMovedFns,
+          onItemMoved,
+          getLayoutWidth,
+          getWidth,
+          getMinWidth,
+          getMaxWidth,
+          reportWidthChange,
+          _maxWidth,
+          hPadding,
+          spaceBetween
+        )
       } else {
-        calcExplicitMainAxisLayout(items, lefts, renderedWidths, measuredWidths, onItemWidthChangeFns, onItemWidthChange, getLayoutWidth, getMinWidth, getMaxWidth, _width, hPadding, spaceBetween)
+        calcExplicitMainAxisLayout(
+          items,
+          lefts,
+          offsets,
+          renderedWidths,
+          measuredWidths,
+          onItemWidthChangeFns,
+          onItemWidthChange,
+          onItemMovedFns,
+          onItemMoved,
+          getLayoutWidth,
+          getMinWidth,
+          getMaxWidth,
+          _width,
+          hPadding,
+          spaceBetween
+        )
       }
 
       return
@@ -129,16 +197,38 @@ export const Layout = component(
 
     // Cross Axis
     if (shouldMeasureWidth) {
-      calcMeasureCrossAxisLayout(items, lefts, renderedWidths, measuredWidths, maxWidths, onItemWidthChangeFns, onItemWidthChange, getWidth, getMinWidth, getMaxWidth, reportWidthChange, _maxWidth, hPadding)
+      calcMeasureCrossAxisLayout(
+        items,
+        lefts,
+        renderedWidths,
+        measuredWidths,
+        maxWidths,
+        onItemWidthChangeFns,
+        onItemWidthChange,
+        getWidth,
+        getMinWidth,
+        getMaxWidth,
+        reportWidthChange,
+        _maxWidth,
+        hPadding
+      )
     } else {
-      calcExplicitCrossAxisLayout(items, lefts, renderedWidths, onItemWidthChangeFns, _width, hPadding)
+      calcExplicitCrossAxisLayout(
+        items,
+        lefts,
+        renderedWidths,
+        onItemWidthChangeFns,
+        _width,
+        hPadding
+      )
     }
-  }, ['items']),
+  }),
   onChange(({
     items,
     direction,
-    layoutRef,
+    layoutRenderStateRef,
     onItemHeightChange,
+    onItemMoved,
     _height,
     _onHeightChange,
     _maxHeight,
@@ -148,65 +238,114 @@ export const Layout = component(
   }) => {
     const {
       tops,
+      offsets,
       renderedHeights,
       measuredHeights,
       maxHeights,
       onItemHeightChangeFns,
-    } = layoutRef.current
+      onItemMovedFns,
+    } = layoutRenderStateRef.current
     const shouldMeasureHeight = isFunction(_onHeightChange)
-
-    // check if num items has changed
-    equalizeArrays(items, tops, renderedHeights, measuredHeights, onItemHeightChangeFns, reportHeightChange, shouldMeasureHeight)
 
     // Cross Axis
     if (direction === 'horizontal') {
       if (shouldMeasureHeight) {
-        calcMeasureCrossAxisLayout(items, tops, renderedHeights, measuredHeights, maxHeights, onItemHeightChangeFns, onItemHeightChange, getHeight, getMinHeight, getMaxHeight, reportHeightChange, _maxHeight, vPadding)
+        calcMeasureCrossAxisLayout(
+          items,
+          tops,
+          renderedHeights,
+          measuredHeights,
+          maxHeights,
+          onItemHeightChangeFns,
+          onItemHeightChange,
+          getHeight,
+          getMinHeight,
+          getMaxHeight,
+          reportHeightChange,
+          _maxHeight,
+          vPadding
+        )
       } else {
-        calcExplicitCrossAxisLayout(items, tops, renderedHeights, onItemHeightChangeFns, _height, vPadding)
+        calcExplicitCrossAxisLayout(
+          items,
+          tops,
+          renderedHeights,
+          onItemHeightChangeFns,
+          _height,
+          vPadding
+        )
       }
 
       return
     }
 
+    // Main Axis
     if (shouldMeasureHeight) {
-      calcMeasureMainAxisLayout(items, tops, renderedHeights, measuredHeights, maxHeights, onItemHeightChangeFns, onItemHeightChange, getLayoutHeight, getHeight, getMinHeight, getMaxHeight, reportHeightChange, _maxHeight, vPadding, spaceBetween)
+      calcMeasureMainAxisLayout(
+        items,
+        tops,
+        renderedHeights,
+        measuredHeights,
+        maxHeights,
+        onItemHeightChangeFns,
+        onItemHeightChange,
+        onItemMovedFns,
+        onItemMoved,
+        getLayoutHeight,
+        getHeight,
+        getMinHeight,
+        getMaxHeight,
+        reportHeightChange,
+        _maxHeight,
+        vPadding,
+        spaceBetween
+      )
     } else {
-      calcExplicitMainAxisLayout(items, tops, renderedHeights, measuredHeights, onItemHeightChangeFns, onItemHeightChange, getLayoutHeight, getMinHeight, getMaxHeight, _height, vPadding, spaceBetween)
+      calcExplicitMainAxisLayout(
+        items,
+        tops,
+        offsets,
+        renderedHeights,
+        measuredHeights,
+        onItemHeightChangeFns,
+        onItemHeightChange,
+        onItemMovedFns,
+        onItemMoved,
+        getLayoutHeight,
+        getMinHeight,
+        getMaxHeight,
+        _height,
+        vPadding,
+        spaceBetween
+      )
     }
-  }, ['items']),
-  onLayout(({ layoutRef, _onWidthChange, _onHeightChange, direction, hPadding, vPadding, spaceBetween }) => {
+  }),
+  onLayout(({ items, layoutRenderStateRef, _onWidthChange, _onHeightChange, direction, hPadding, vPadding, spaceBetween }) => {
     const {
       hasContainerWidthChanged,
       renderedWidths,
       hasContainerHeightChanged,
       renderedHeights,
-    } = layoutRef.current
+    } = layoutRenderStateRef.current
 
     if (hasContainerWidthChanged) {
-      layoutRef.current.hasContainerWidthChanged = false
+      layoutRenderStateRef.current.hasContainerWidthChanged = false
 
-      if (isFunction(_onWidthChange)) {
-        // console.log('ON WIDTH', layoutRef.current.renderedWidths)
-        _onWidthChange(
-          direction === 'horizontal'
-            ? calcTotal(renderedWidths, hPadding, spaceBetween)
-            : calcMax(renderedWidths) + hPadding * 2
-        )
-      }
+      _onWidthChange?.(
+        direction === 'horizontal'
+          ? calcTotal(renderedWidths, spaceBetween, items.length) + hPadding * 2
+          : calcMax(renderedWidths, items.length) + hPadding * 2
+      )
     }
 
     if (hasContainerHeightChanged) {
-      layoutRef.current.hasContainerHeightChanged = false
+      layoutRenderStateRef.current.hasContainerHeightChanged = false
 
-      if (isFunction(_onHeightChange)) {
-        // console.log('ON HEIGHT', layoutRef.current.renderedHeights)
-        _onHeightChange(
-          direction === 'horizontal'
-            ? calcMax(renderedHeights) + vPadding * 2
-            : calcTotal(renderedHeights, vPadding, spaceBetween)
-        )
-      }
+      _onHeightChange?.(
+        direction === 'horizontal'
+          ? calcMax(renderedHeights, items.length) + vPadding * 2
+          : calcTotal(renderedHeights, spaceBetween, items.length) + vPadding * 2
+      )
     }
   })
 )(({
@@ -218,7 +357,8 @@ export const Layout = component(
   _height,
   _maxWidth,
   _maxHeight,
-  layoutRef,
+  direction,
+  layoutRenderStateRef,
   items,
   restChildren,
 }) => {
@@ -231,7 +371,8 @@ export const Layout = component(
     maxHeights,
     onItemWidthChangeFns,
     onItemHeightChangeFns,
-  } = layoutRef.current
+    onItemMovedFns,
+  } = layoutRenderStateRef.current
 
   return (
     <Fragment>
@@ -257,8 +398,9 @@ export const Layout = component(
       )}
       {items.map((child, i) => (
         <LayoutItemContext.Provider
-          key={child.props.id ?? i}
+          key={child.key ?? i}
           value={{
+            _direction: direction,
             _x: _x + lefts[i],
             _y: _y + tops[i],
             _left: _left + lefts[i],
@@ -268,6 +410,7 @@ export const Layout = component(
             _itemIndex: i,
             _onWidthChange: onItemWidthChangeFns[i],
             _onHeightChange: onItemHeightChangeFns[i],
+            _onItemMove: onItemMovedFns[i],
             _maxWidth: maxWidths[i],
             _maxHeight: maxHeights[i],
           }}
