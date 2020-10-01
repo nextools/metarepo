@@ -40,7 +40,7 @@ export const AlertProvider = component(
       <Layout_Item height={LAYOUT_SIZE_FIT}>
         <Layout direction="vertical" spaceBetween={10}>
           {alerts.map(({ id, message }) => (
-            <Layout_Item id={id} key={id}>
+            <Layout_Item key={id}>
               <AlertItem id={id} onClose={onItemClose}>
                 {message}
               </AlertItem>
@@ -51,3 +51,5 @@ export const AlertProvider = component(
     </Layout>
   </Fragment>
 ))
+
+AlertProvider.displayName = 'AlertProvider'

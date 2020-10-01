@@ -1,9 +1,10 @@
 import { Layout, Layout_Item } from '@revert/layout'
 import { Link } from '@revert/link'
+import { Scroll } from '@revert/scroll'
 import { elegir } from 'elegir'
 import React from 'react'
 import { startWithType, mapContext, pureComponent } from 'refun'
-import { isUndefined, isDefined } from 'tsfn'
+import { isUndefined } from 'tsfn'
 import { mapMetaStoreState } from '../../store-meta'
 import { Text } from '../text'
 import { ThemeContext } from '../theme-context'
@@ -51,47 +52,51 @@ export const Info = pureComponent(
     )
   }
 
+  console.log(theme.linkColor)
+
   return (
-    <Layout direction="vertical" hPadding={10} vPadding={10} spaceBetween={10}>
-      <Layout_Item>
-        <Text>Version {packageInfo.version}</Text>
-      </Layout_Item>
-      <Layout_Item>
-        <Text>Stability {packageInfo.stability}</Text>
-      </Layout_Item>
-      <Layout_Item>
-        <Text>Platform {packageInfo.platform}</Text>
-      </Layout_Item>
-      {(isDefined(packageInfo.designDocsUrl) || isDefined(packageInfo.sourceCodeUrl)) && (
+    <Scroll shouldScrollVertically>
+      <Layout direction="vertical" hPadding={10} vPadding={10} spaceBetween={10}>
         <Layout_Item>
-          <Layout>
-            <Layout_Item>
-              <Text>Learn More</Text>
-            </Layout_Item>
-            <Layout_Item>
-
-              <Layout spaceBetween={10} direction="vertical">
-                {isDefined(packageInfo.designDocsUrl) && (
-                  <Layout_Item>
-                    <Link target="_blank" href={packageInfo.designDocsUrl}>
-                      <Text isUnderline color={theme.linkColor}>Design docs</Text>
-                    </Link>
-                  </Layout_Item>
-                )}
-                {isDefined(packageInfo.sourceCodeUrl) && (
-                  <Layout_Item>
-                    <Link target="_blank" href={packageInfo.sourceCodeUrl}>
-                      <Text isUnderline color={theme.linkColor}>Codebase</Text>
-                    </Link>
-                  </Layout_Item>
-                )}
-              </Layout>
-
-            </Layout_Item>
-          </Layout>
+          <Text>Version {packageInfo.version}</Text>
         </Layout_Item>
-      )}
-    </Layout>
+        <Layout_Item>
+          <Text>Stability {packageInfo.stability}</Text>
+        </Layout_Item>
+        <Layout_Item>
+          <Text>Platform {packageInfo.platform}</Text>
+        </Layout_Item>
+        {(packageInfo.designDocsUrl || packageInfo.sourceCodeUrl) && (
+          <Layout_Item>
+            <Layout>
+              <Layout_Item>
+                <Text>Learn More</Text>
+              </Layout_Item>
+              <Layout_Item>
+
+                <Layout spaceBetween={10} direction="vertical">
+                  {packageInfo.designDocsUrl && (
+                    <Layout_Item>
+                      <Link target="_blank" href={packageInfo.designDocsUrl}>
+                        <Text isUnderline color={theme.linkColor}>Design docs</Text>
+                      </Link>
+                    </Layout_Item>
+                  )}
+                  {packageInfo.sourceCodeUrl && (
+                    <Layout_Item>
+                      <Link target="_blank" href={packageInfo.sourceCodeUrl}>
+                        <Text isUnderline color={theme.linkColor}>Codebase</Text>
+                      </Link>
+                    </Layout_Item>
+                  )}
+                </Layout>
+
+              </Layout_Item>
+            </Layout>
+          </Layout_Item>
+        )}
+      </Layout>
+    </Scroll>
   )
 })
 

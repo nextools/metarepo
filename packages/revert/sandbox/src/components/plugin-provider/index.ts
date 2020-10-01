@@ -1,3 +1,8 @@
 export * from './PluginProvider'
 export * from './PluginContext'
-export * from './types'
+export type {
+  TComponentPlugin,
+  TComponentWrapper,
+  TPluginContext,
+  TPopoverPlugin,
+} from './types'

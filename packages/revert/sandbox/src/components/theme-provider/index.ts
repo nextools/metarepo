@@ -1,2 +1,2 @@
 export * from './ThemeProvider'
-export * from './types'
+export type { TThemeProvider } from './types'

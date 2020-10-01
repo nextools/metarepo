@@ -1,4 +1,4 @@
-import { Layout, Layout_Item } from '@revert/layout'
+import { Layout, Layout_Item, Layout_Resize } from '@revert/layout'
 import { RootContext } from '@revert/root'
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithProps, mapContext } from 'refun'
@@ -7,6 +7,7 @@ import { Background } from '../background'
 import { ControlsSidebar } from '../controls-sidebar'
 import { DemoArea } from '../demo-area'
 import { NavigationSidebar } from '../navigation-sidebar'
+import { ResizeBorder } from '../resize-border'
 import { ThemeContext, RootThemeProvider } from '../theme-context'
 import { Toolbar, TOOLBAR_HEIGHT } from '../toolbar'
 
@@ -38,12 +39,21 @@ export const Sandbox = component(
   <RootThemeProvider>
     <Layout>
       {isNavigationSidebarVisible && (
-        <Layout_Item id="navigation" width={navigationSidebarWidth}>
-          <NavigationSidebar/>
-        </Layout_Item>
+        <Fragment>
+          <Layout_Item
+            key="navigation"
+            width={navigationSidebarWidth}
+            minWidth={NAVIGATION_SIDEBAR_MIN_WIDTH}
+          >
+            <NavigationSidebar/>
+          </Layout_Item>
+          <Layout_Resize width={BORDER_SIZE} overflow={10}>
+            <ResizeBorder/>
+          </Layout_Resize>
+        </Fragment>
       )}
 
-      <Layout_Item id="demo_area">
+      <Layout_Item key="demo_area">
         <Layout direction="vertical">
           <Layout_Item>
             <DemoArea/>
@@ -61,10 +71,14 @@ export const Sandbox = component(
 
       {isControlsSidebarVisible && (
         <Fragment>
-          <Layout_Item id="controls_border" width={BORDER_SIZE}>
-            <Background color={theme.sandboxBorderColor}/>
-          </Layout_Item>
-          <Layout_Item id="controls" width={controlsSidebarWidth}>
+          <Layout_Resize key="controls_border" width={BORDER_SIZE} overflow={10}>
+            <ResizeBorder/>
+          </Layout_Resize>
+          <Layout_Item
+            key="controls"
+            width={controlsSidebarWidth}
+            minWidth={CONTROLS_SIDEBAR_MIN_WIDTH}
+          >
             <ControlsSidebar/>
           </Layout_Item>
         </Fragment>

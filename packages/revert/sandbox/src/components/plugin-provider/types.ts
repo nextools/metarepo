@@ -12,9 +12,13 @@ export type TComponentWrapper = {
   props: any,
 }
 
-export type TComponentWrapperPlugin = FC<TComponentWrapper>
+export type TComponentPlugin = {
+  ComponentWrapper?: FC<TComponentWrapper>,
+  shouldMeasureComponent?: boolean,
+}
 
 export type TPluginContext = {
   popoverPlugin?: TPopoverPlugin,
-  ComponentWrapperPlugin?: TComponentWrapperPlugin,
+  ComponentWrapper?: FC<TComponentWrapper>,
+  shouldMeasureComponent?: boolean,
 }

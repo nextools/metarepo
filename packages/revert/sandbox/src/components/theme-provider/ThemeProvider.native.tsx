@@ -16,3 +16,5 @@ export const ThemeProvider = component(
     {children}
   </ThemeContext.Provider>
 ))
+
+ThemeProvider.displayName = 'ThemeProvider'

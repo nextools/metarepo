@@ -1,4 +1,4 @@
-import { Layout_Item, Layout, LAYOUT_SIZE_FIT } from '@revert/layout'
+import { Layout_Item, Layout, LAYOUT_SIZE_FIT, Layout_Resize } from '@revert/layout'
 import { TextThemeContext } from '@revert/text'
 import React, { Fragment } from 'react'
 import { startWithType, pureComponent, mapContext } from 'refun'
@@ -9,6 +9,7 @@ import { Background } from '../background'
 import { ComponentControls } from '../component-controls'
 import { Console } from '../console'
 import { ImportPackageNameContext } from '../import-package-name-provider'
+import { ResizeBorder } from '../resize-border'
 import { SourceCode } from '../source-code'
 import { SourceImports } from '../source-imports'
 import { Tabs, Tabs_Item } from '../tabs'
@@ -49,7 +50,7 @@ export const ControlsSidebar = pureComponent(
         <Layout_Item height={LAYOUT_SIZE_FIT}>
           <Header/>
         </Layout_Item>
-        <Layout_Item>
+        <Layout_Item minHeight={150}>
           <Tabs>
             <Tabs_Item title="Code">
               {() => (
@@ -90,11 +91,11 @@ export const ControlsSidebar = pureComponent(
           </Tabs>
         </Layout_Item>
 
-        <Layout_Item height={1}>
-          <Background color={theme.tabsBorderColor}/>
-        </Layout_Item>
+        <Layout_Resize height={1} overflow={10}>
+          <ResizeBorder/>
+        </Layout_Resize>
 
-        <Layout_Item>
+        <Layout_Item minHeight={150}>
           <ComponentControls/>
         </Layout_Item>
       </Layout>

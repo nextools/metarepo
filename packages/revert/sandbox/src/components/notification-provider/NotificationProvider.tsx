@@ -50,7 +50,7 @@ export const NotificationProvider = component(
           <Layout_Item height={LAYOUT_SIZE_FIT}>
             <Layout direction="vertical" spaceBetween={10}>
               {notifications.map(({ id, message }) => (
-                <Layout_Item id={id} key={id}>
+                <Layout_Item key={id}>
                   <NotificationItem id={id} onClose={onItemClose}>
                     {message}
                   </NotificationItem>
@@ -63,3 +63,5 @@ export const NotificationProvider = component(
     </Layout>
   </Fragment>
 ))
+
+NotificationProvider.displayName = 'NotificationProvider'

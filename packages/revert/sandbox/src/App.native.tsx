@@ -14,12 +14,14 @@ export const App = component(
   onChange(({ components }) => {
     setComponentsList(components)
   }, ['components'])
-)(({ theme, icons, popoverPlugin, ComponentWrapperPlugin }) => (
+)(({ theme, icons, popoverPlugin, componentPlugin }) => (
   <Root>
     <ThemeProvider theme={theme} icons={icons}>
-      <PluginProvider popoverPlugin={popoverPlugin} ComponentWrapperPlugin={ComponentWrapperPlugin}>
+      <PluginProvider popoverPlugin={popoverPlugin} componentPlugin={componentPlugin}>
         <Sandbox/>
       </PluginProvider>
     </ThemeProvider>
   </Root>
 ))
+
+App.displayName = 'App'
