@@ -1,3 +1,13 @@
+## v0.6.0
+
+* 💥 make `concatAsync` to work with single `iterables` argument
+
+* 💥 make `concat` to work with single `iterables` argument
+
+* 🌱 add `startWithAsync`
+
+* 🌱 add `startWith`
+
 ## v0.5.0
 
 * 💥 drop Node.js v10

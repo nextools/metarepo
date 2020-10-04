@@ -1,6 +1,6 @@
 {
   "name": "dupdep",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Check for duplicated dependencies across packages in Yarn Workspaces",
   "keywords": [
     "yarn",
