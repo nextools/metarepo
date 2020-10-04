@@ -115,7 +115,7 @@ for (const value of result)
 Concatenates multiple async iterables. 
 
 ```ts
-const concatAsync: <T>(...iterables: AsyncIterable<T>[]) => AsyncIterable<T>
+const concatAsync: <T>(iterables: Iterable<AsyncIterable<T>>) => AsyncIterable<T>
 ```
 
 ```ts
@@ -135,7 +135,7 @@ const iterable2 = {
     }
   }
 }
-const result = concatAsync(iterable1, iterable2)
+const result = concatAsync([iterable1, iterable2])
 
 for await (const value of result)
   console.log(value)
