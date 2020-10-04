@@ -12,7 +12,7 @@ export const getDuplicatedDependencies = async (): Promise<TDuplicatedDependenci
   for (const [pkgName, value] of packages) {
     const pkgDeps = iterateObjectEntries(value.json.dependencies ?? {})
     const pkgDevDeps = iterateObjectEntries(value.json.devDependencies ?? {})
-    const pkgAllDeps = concat(pkgDeps, pkgDevDeps)
+    const pkgAllDeps = concat([pkgDeps, pkgDevDeps])
 
     for (const [depName, depRange] of pkgAllDeps) {
       if (!depsMap.has(depName)) {
