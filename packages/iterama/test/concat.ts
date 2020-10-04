@@ -7,7 +7,13 @@ import { toArray } from '../src/to-array'
 test('iterama: concat', (t) => {
   const iterable1 = range(5)
   const iterable2 = slice(5)(range(10))
-  const result = toArray(concat(iterable1, iterable2))
+  const iterables = {
+    *[Symbol.iterator]() {
+      yield iterable1
+      yield iterable2
+    },
+  }
+  const result = toArray(concat(iterables))
 
   t.deepEquals(
     result,

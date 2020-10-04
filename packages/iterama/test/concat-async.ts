@@ -17,7 +17,13 @@ test('iterama: concatAsync', async (t) => {
       }
     },
   }
-  const result = await toArrayAsync(concatAsync(iterable1, iterable2))
+  const iterables = {
+    *[Symbol.iterator]() {
+      yield iterable1
+      yield iterable2
+    },
+  }
+  const result = await toArrayAsync(concatAsync(iterables))
 
   t.deepEquals(
     result,

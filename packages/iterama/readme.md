@@ -89,7 +89,7 @@ and `rangeAsync(5)` is:
 Concatenates multiple iterables. 
 
 ```ts
-const concat: <T>(...iterables: Iterable<T>[]) => Iterable<T>
+const concat: <T>(iterables: Iterable<Iterable<T>>) => Iterable<T>
 ```
 
 ```ts
@@ -97,7 +97,7 @@ import { concat } from 'iterama'
 
 const iterable1 = [1, 2, 3]
 const iterable2 = [4, 5, 6]
-const result = concat(iterable1, iterable2)
+const result = concat([iterable1, iterable2])
 
 for (const value of result)
   console.log(value)
@@ -115,7 +115,7 @@ for (const value of result)
 Concatenates multiple async iterables. 
 
 ```ts
-const concatAsync: <T>(...iterables: AsyncIterable<T>[]) => AsyncIterable<T>
+const concatAsync: <T>(iterables: Iterable<AsyncIterable<T>>) => AsyncIterable<T>
 ```
 
 ```ts
@@ -135,7 +135,7 @@ const iterable2 = {
     }
   }
 }
-const result = concatAsync(iterable1, iterable2)
+const result = concatAsync([iterable1, iterable2])
 
 for await (const value of result)
   console.log(value)
