@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "get-caller-file": "^2.0.5",
-    "iterama": "^0.5.0",
+    "iterama": "^0.6.0",
     "piall": "^0.2.0"
   }
 }

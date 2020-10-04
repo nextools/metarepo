@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "fast-glob": "^3.2.4",
-    "iterama": "^0.5.0",
+    "iterama": "^0.6.0",
     "p-all": "^3.0.0",
     "pifs": "^2.0.0",
     "tsfn": "^2.1.0"
