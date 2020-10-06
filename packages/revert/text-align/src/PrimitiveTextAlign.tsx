@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react'
 import { component, mapWithPropsMemo, startWithType } from 'refun'
 import type { TTextAlign } from './types'
 
-export const TextAlign = component(
+export const PrimitiveTextAlign = component(
   startWithType<TTextAlign>(),
   mapWithPropsMemo(({ align }) => {
     const style: CSSProperties = {
@@ -20,4 +20,4 @@ export const TextAlign = component(
   </div>
 ))
 
-TextAlign.displayName = 'TextAlign'
+PrimitiveTextAlign.displayName = 'PrimitiveTextAlign'
