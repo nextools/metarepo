@@ -1,5 +1,5 @@
 import { Layout, Layout_Item } from '@revert/layout'
-import { TextAlign } from '@revert/text-align'
+import { PrimitiveTextAlign } from '@revert/text-align'
 import type { TComponentTable, TComponentTableCell, TComponentTableHeaderCell, TComponentTableRow } from 'mdown'
 import React, { Children, Fragment } from 'react'
 import { component, mapContext, startWithType } from 'refun'
@@ -94,9 +94,9 @@ export const TableCell = component(
   startWithType<TComponentTableCell>()
 )(({ align, children }) => (
   <Paragraph>
-    <TextAlign align={align}>
+    <PrimitiveTextAlign align={align}>
       {children}
-    </TextAlign>
+    </PrimitiveTextAlign>
   </Paragraph>
 ))
 
@@ -107,9 +107,9 @@ export const TableHeaderCell = component(
   startWithType<TComponentTableHeaderCell>()
 )(({ align, children }) => (
   <Paragraph>
-    <TextAlign align={align}>
+    <PrimitiveTextAlign align={align}>
       {children}
-    </TextAlign>
+    </PrimitiveTextAlign>
   </Paragraph>
 ))
 
