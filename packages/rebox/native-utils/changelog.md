@@ -1,3 +1,7 @@
+## v4.0.3
+
+* 🐞 fix native files not been watched
+
 ## v4.0.2
 
 * 🐞 refactor using new deps
