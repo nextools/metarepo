@@ -1,6 +1,7 @@
 import path from 'path'
 import { AssetResolver, ASSET_LOADER_PATH } from '@haul-bundler/core'
 import { makeConfig, withPolyfills } from '@haul-bundler/preset-0.60'
+import { WatchPlugin } from './watch-plugin'
 
 const appPath = path.resolve(process.env.REBOX_ENTRY_POINT)
 
@@ -77,6 +78,8 @@ export default makeConfig({
           ...config.performance,
           hints: false,
         }
+
+        config.plugins.push(new WatchPlugin())
 
         if (process.env.NODE_ENV === 'production') {
           config.plugins = config.plugins.filter((plugin) => {
