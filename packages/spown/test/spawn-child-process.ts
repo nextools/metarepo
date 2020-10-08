@@ -182,8 +182,8 @@ test('spown: spawnChildProcess + slow close + error + empty stderr', async (t) =
   } catch (e) {
     t.equal(
       e.message,
-      'Child process exited with code 42',
-      'should throw with default error message'
+      '',
+      'should throw with empty error message'
     )
 
     t.equal(
