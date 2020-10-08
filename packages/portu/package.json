@@ -1,0 +1,29 @@
+{
+  "name": "portu",
+  "version": "0.0.0",
+  "description": "Port utils",
+  "keywords": [
+    "port",
+    "free-port",
+    "check-port"
+  ],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@mock/require": "^0.2.2",
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0"
+  },
+  "dependencies": {
+    "sleap": "^0.1.0",
+    "spown": "^0.1.1"
+  }
+}
