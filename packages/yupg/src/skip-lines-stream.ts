@@ -8,10 +8,10 @@ export const skipLinesStream = (depName: string): Transform => {
       const chunkString = chunk.toString('utf8')
 
       if (isSkipping) {
-        if (chunkString.startsWith('"')) {
+        if (!chunkString.startsWith(' ') && chunkString !== '\n') {
           isSkipping = false
         }
-      } else if (chunkString.startsWith(`"${depName}@`)) {
+      } else if (chunkString.startsWith(`${depName}@`) || chunkString.startsWith(`"${depName}@`)) {
         isSkipping = true
       }
 
