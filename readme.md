@@ -44,6 +44,7 @@ Check the individual documentations for more details:
 * [refps](packages/refps): React/React Native FPS counter with graph
 * [refun](packages/refun): strongly-typed React Hook-enabled functions that compose harmoniously with each other
 * [rn-fonts](packages/rn-fonts): custom fonts linker for React Native (iOS/Android)
+* [rndi](packages/rndi): random integer generator
 * [rplace](packages/rplace): transform stream by replacing strings on per-line basis, especially efficient with large multiline text file formats
 * [rsolve](packages/rsolve): resolve module path with custom entry point `package.json` field relative to caller file
 * [rwrw](packages/rwrw): rewrite file stream

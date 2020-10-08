@@ -41,6 +41,7 @@
     "packages/refun",
     "packages/revert/*",
     "packages/rn-fonts",
+    "packages/rndi",
     "packages/rplace",
     "packages/rsolve",
     "packages/rwrw",
