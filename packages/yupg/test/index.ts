@@ -31,15 +31,15 @@ test('yupg: default', async (t) => {
     fs.writeFileSync(
       filePath,
       `
-"before@^1.0.0":
+"scope/before@^1.0.0":
   dependencies:
     pifs "^1.0.0"
 
-"package@1.0.0":
+package@1.0.0:
   dependencies:
     escape-string-regexp "^2.0.0"
 
-"after@^1.0.0":
+after@^1.0.0:
   dependencies:
     pifs "^1.0.0"
 `
@@ -52,11 +52,11 @@ test('yupg: default', async (t) => {
     t.equals(
       fs.readFileSync(filePath, 'utf8'),
       `
-"before@^1.0.0":
+"scope/before@^1.0.0":
   dependencies:
     pifs "^1.0.0"
 
-"after@^1.0.0":
+after@^1.0.0:
   dependencies:
     pifs "^1.0.0"
 `,
