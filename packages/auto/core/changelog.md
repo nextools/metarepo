@@ -1,3 +1,7 @@
+## v0.3.3
+
+* 🐞 improve `TPackageJson` type
+
 ## v0.3.2
 
 * 🐞 🐞 refactor using new deps

@@ -1,3 +1,13 @@
+## v0.7.0
+
+* 🌱 upgrade `caniuse-lite` before publishing packages
+
+  ```
+  https://github.com/browserslist/browserslist#browsers-data-updating
+  ```
+
+* ♻️ update dependencies `@auto/core`
+
 ## v0.6.4
 
 * 🐞 test Node.js-target build artifacts
