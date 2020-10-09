@@ -2015,6 +2015,14 @@
   dependencies:
     "@types/node" "*"
 
+"@types/loader-utils@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@types/loader-utils/-/loader-utils-2.0.1.tgz#4073425aca25762099823f7b922e86599c2b85ec"
+  integrity sha512-X3jTNi/I2AEd2WrHdSqRppPkYzWkRMNGxJzeMwS0o3hVi8ZB6JCnf/XyQmqpUuCidld5lC/1VxVgTktEweRK+w==
+  dependencies:
+    "@types/node" "*"
+    "@types/webpack" "*"
+
 "@types/marked@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@types/marked/-/marked-1.1.0.tgz#53509b5f127e0c05c19176fcf1d743a41e00ff19"

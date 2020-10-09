@@ -22,6 +22,7 @@ type TBuildWebAppReleaseOptions = {
   globalAliases?: {
     [key: string]: string
   },
+  props?: TJsonValue,
   isQuiet?: boolean, // false by default
   shouldGenerateSourceMaps?: boolean, // false by default
   shouldGenerateBundleAnalyzerReport?: boolean // false by default
@@ -36,6 +37,7 @@ type TRunWebAppOptions = {
   htmlTemplatePath: string,
   browsersList?: string[], // ['last 1 Chrome version', 'last 1 Firefox version'] by default
   assetsPath?: string,
+  props?: TJsonValue,
   isQuiet?: boolean, // false by default
   shouldOpenBrowser?: boolean // false by default
 }
@@ -49,8 +51,12 @@ const runWebApp: (options: TRunWebAppOptions) => Promise<() => Promise<void>>
 // App.tsx
 import React, { FC } from 'react'
 
-export const App: FC<{}> = () => (
-  <h1>Test</h1>
+export type TApp = {
+  color: string
+}
+
+export const App: FC<TApp> = ({ color }) => (
+  <h1 style={{ color }}>Test</h1>
 )
 ```
 
@@ -79,6 +85,9 @@ await buildWebAppRelease({
   entryPointPath: './App.tsx',
   htmlTemplatePath: './template.html',
   outputPath: './build/',
+  props: {
+    color: '#ff0000'
+  }
 })
 ```
 
@@ -88,6 +97,9 @@ import { runWebApp } from '@rebox/web'
 
 await runWebApp({
   entryPointPath: './App.tsx',
-  htmlTemplatePath: './template.html'
+  htmlTemplatePath: './template.html',
+  props: {
+    color: '#ff0000'
+  }
 })
 ```

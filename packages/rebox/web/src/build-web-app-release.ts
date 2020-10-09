@@ -4,6 +4,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin'
 import TerserPlugin from 'terser-webpack-plugin'
 import { isObject } from 'tsfn'
+import type { TJsonValue } from 'typeon'
 import webpack from 'webpack'
 import type { Configuration as WebpackConfig, Stats } from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
@@ -22,6 +23,7 @@ export type TBuildWebAppReleaseOptions = {
   globalAliases?: {
     [key: string]: string,
   },
+  props?: TJsonValue,
   isQuiet?: boolean,
   shouldGenerateSourceMaps?: boolean,
   shouldGenerateBundleAnalyzerReport?: boolean,
@@ -80,6 +82,9 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
         {
           test: path.resolve(options.entryPointPath),
           loader: require.resolve('./loader.js'),
+          options: {
+            props: options.props ?? {},
+          },
         },
         {
           test: /\.(ts|js)x?$/,
