@@ -1,7 +1,7 @@
-import { InlineBlock } from '@revert/block'
 import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
 import { Select, Option } from '@revert/select'
 import type { TOption } from '@revert/select'
+import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
 import React, { Fragment } from 'react'
 import {
@@ -97,9 +97,9 @@ export const Dropdown = pureComponent(
           </Text>
         </Layout_Item>
         <Layout_Item width={LAYOUT_SIZE_FIT} height={HEIGHT} vAlign="center">
-          <InlineBlock>
+          <Size>
             <IconDropdownChevronSmall/>
-          </InlineBlock>
+          </Size>
         </Layout_Item>
       </Layout>
     </TextThemeProvider>

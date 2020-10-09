@@ -1,4 +1,4 @@
-import { InlineBlock } from '@revert/block'
+import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
 import type { TComponentHeading } from 'mdown'
 import React from 'react'
@@ -47,11 +47,11 @@ export const Heading = component(
     }
   })
 )(({ TextThemeProvider, children }) => (
-  <InlineBlock>
+  <Size>
     <TextThemeProvider>
       {children}
     </TextThemeProvider>
-  </InlineBlock>
+  </Size>
 ))
 
 Heading.displayName = 'MarkdownHeading'

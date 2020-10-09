@@ -1,4 +1,4 @@
-import { Size } from '@revert/size'
+import { PrimitiveSize } from '@revert/size'
 import { PrimitiveTransform } from '@revert/transform'
 import type { FC } from 'react'
 import React from 'react'
@@ -14,12 +14,12 @@ export const DemoComponentMeasure: FC<TDemoComponent> = ({
   children,
 }) => (
   <PrimitiveTransform x={left} y={top} hOrigin="left" vOrigin="top" shouldUse3d={shouldUse3d}>
-    <Size
+    <PrimitiveSize
       width={width}
       height={height}
       onHeightChange={onHeightChange}
     >
       {children}
-    </Size>
+    </PrimitiveSize>
   </PrimitiveTransform>
 )

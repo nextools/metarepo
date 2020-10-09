@@ -1,5 +1,5 @@
-import { InlineBlock } from '@revert/block'
 import { ImageContext } from '@revert/image'
+import { Size } from '@revert/size'
 import type { TComponentParagraph } from 'mdown'
 import React from 'react'
 import { component, mapThrottledHandlerAnimationFrame, startWithType } from 'refun'
@@ -11,11 +11,11 @@ export const Paragraph = component(
   mapRender('onImageLoad'),
   mapThrottledHandlerAnimationFrame('onImageLoad')
 )(({ onImageLoad, children }) => (
-  <InlineBlock>
+  <Size>
     <ImageContext.Provider value={{ onImageLoad }}>
       {children}
     </ImageContext.Provider>
-  </InlineBlock>
+  </Size>
 ))
 
 Paragraph.displayName = 'MarkdownParagraph'

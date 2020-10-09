@@ -1,6 +1,7 @@
-import { Block, InlineBlock } from '@revert/block'
+import { Block } from '@revert/block'
 import { PrimitiveButton } from '@revert/button'
 import { Layout, Layout_Item } from '@revert/layout'
+import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
 import { elegir } from 'elegir'
 import React from 'react'
@@ -141,11 +142,11 @@ export const ButtonIcon = component(
     >
       <Layout>
         <Layout_Item hAlign="center" vAlign="center">
-          <InlineBlock>
+          <Size>
             <IconThemeProvider>
               {icon}
             </IconThemeProvider>
-          </InlineBlock>
+          </Size>
         </Layout_Item>
       </Layout>
     </PrimitiveButton>

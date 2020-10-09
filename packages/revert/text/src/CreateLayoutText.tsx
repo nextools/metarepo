@@ -1,4 +1,4 @@
-import { InlineBlock } from '@revert/block'
+import { Size } from '@revert/size'
 import type { FC } from 'react'
 import React from 'react'
 import type { TComponent } from 'refun'
@@ -6,9 +6,9 @@ import type { TTextStyle } from './types'
 
 export const CreateLayoutText = <T extends TTextStyle>(PrimitiveText: FC<T>) => {
   const Text: TComponent<T> = (props) => (
-    <InlineBlock shouldPreventWrap={props.shouldPreventWrap}>
+    <Size shouldPreventWrap={props.shouldPreventWrap}>
       <PrimitiveText {...props}/>
-    </InlineBlock>
+    </Size>
   )
 
   Text.displayName = 'Text'

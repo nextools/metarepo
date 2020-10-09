@@ -1,4 +1,4 @@
-import { InlineBlock } from '@revert/block'
+import { Size } from '@revert/size'
 import React from 'react'
 import { component, startWithType, mapStateRef, mapHandlers } from 'refun'
 import { isNumber } from 'tsfn'
@@ -32,7 +32,7 @@ export const Image = component(
   onLoad,
   onError,
 }) => (
-  <InlineBlock>
+  <Size>
     <PrimitiveImage
       width={width}
       height={height}
@@ -48,7 +48,7 @@ export const Image = component(
       onLoad={onLoad}
       onError={onError}
     />
-  </InlineBlock>
+  </Size>
 ))
 
 Image.displayName = 'Text'

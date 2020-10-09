@@ -1,6 +1,6 @@
 import { PrimitiveBlock } from '@revert/block'
 import { LayoutContext } from '@revert/layout'
-import { Size } from '@revert/size'
+import { PrimitiveSize } from '@revert/size'
 import React from 'react'
 import { component, startWithType, mapContext, onLayout } from 'refun'
 import type { TLine as TSyntxLine } from 'syntx'
@@ -44,7 +44,7 @@ export const Line = component(
         {String(index + 1).padStart(2, '0')}
       </Text>
     </PrimitiveBlock>
-    <Size left={LINE_PADDING_LEFT} width={_width} onWidthChange={_onWidthChange}>
+    <PrimitiveSize left={LINE_PADDING_LEFT} width={_width} onWidthChange={_onWidthChange}>
       <PrimitiveBlock shouldFlow>
         {line.elements.map(({ type, value }, i) => (
           <LineElement
@@ -56,7 +56,7 @@ export const Line = component(
           </LineElement>
         ))}
       </PrimitiveBlock>
-    </Size>
+    </PrimitiveSize>
   </PrimitiveBlock>
 ))
 

@@ -1,5 +1,6 @@
-import { ParentBlock, InlineBlock } from '@revert/block'
+import { ParentBlock } from '@revert/block'
 import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
+import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
 import React from 'react'
 import { component, startWithType, mapState, mapDebouncedHandlerTimeout, mapHandlers, mapContext, mapWithProps } from 'refun'
@@ -76,11 +77,11 @@ export const SearchField = component(
     <ParentBlock>
       <Layout hPadding={20}>
         <Layout_Item vAlign="center">
-          <InlineBlock>
+          <Size>
             <IconThemeProvider>
               <IconSearchSmall/>
             </IconThemeProvider>
-          </InlineBlock>
+          </Size>
         </Layout_Item>
       </Layout>
     </ParentBlock>

@@ -1,7 +1,7 @@
 import { PrimitiveBlock } from '@revert/block'
 import { PrimitiveButton } from '@revert/button'
 import { LayoutContext } from '@revert/layout'
-import { Size } from '@revert/size'
+import { PrimitiveSize } from '@revert/size'
 import { elegir } from 'elegir'
 import React from 'react'
 import { mapHovered, component, mapHandlers, startWithType, mapWithProps, mapContext, mapPressed, mapKeyboardFocused, onLayout } from 'refun'
@@ -128,7 +128,7 @@ export const Line = component(
       onFocus={onFocus}
       onBlur={onBlur}
     >
-      <Size left={LINE_PADDING_LEFT} width={_width} onWidthChange={_onWidthChange}>
+      <PrimitiveSize left={LINE_PADDING_LEFT} width={_width} onWidthChange={_onWidthChange}>
         <PrimitiveBlock shouldFlow>
           {line.elements.map(({ type, value }, i) => (
             <LineElement
@@ -140,7 +140,7 @@ export const Line = component(
             </LineElement>
           ))}
         </PrimitiveBlock>
-      </Size>
+      </PrimitiveSize>
     </PrimitiveButton>
 
     <PrimitiveBlock left={20} shouldIgnorePointerEvents>

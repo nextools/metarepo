@@ -1,6 +1,7 @@
-import { Block, InlineBlock } from '@revert/block'
+import { Block } from '@revert/block'
 import { Checkbox } from '@revert/checkbox'
 import { Layout, Layout_Item } from '@revert/layout'
+import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
 import { elegir } from 'elegir'
 import React, { Fragment } from 'react'
@@ -168,14 +169,14 @@ export const SwitchPopover = component(
         <IconThemeProvider>
           <Layout hPadding={5} spaceBetween={10}>
             <Layout_Item vAlign="center">
-              <InlineBlock>
+              <Size>
                 {icon[0]}
-              </InlineBlock>
+              </Size>
             </Layout_Item>
             <Layout_Item vAlign="center">
-              <InlineBlock>
+              <Size>
                 <IconDropdownChevronSmall orientation={isOpened ? 'down' : 'up'}/>
-              </InlineBlock>
+              </Size>
             </Layout_Item>
           </Layout>
         </IconThemeProvider>

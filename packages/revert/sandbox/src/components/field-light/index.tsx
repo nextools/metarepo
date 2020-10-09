@@ -1,6 +1,6 @@
 import { Block } from '@revert/block'
 import { LayoutContext } from '@revert/layout'
-import { Size } from '@revert/size'
+import { PrimitiveSize } from '@revert/size'
 import React from 'react'
 import { pureComponent, startWithType, mapState, mapContext, mapWithProps, mapFocused } from 'refun'
 import type { TMapFocused } from 'refun'
@@ -57,11 +57,11 @@ export const FieldLight = pureComponent(
   <Block minWidth={MIN_WIDTH} height={HEIGHT}>
     <Border color={borderColor} borderBottomWidth={1}/>
     {isString(suffix) && (
-      <Size left={_width - suffixWidth} width={suffixWidth} onWidthChange={setSuffixWidth}>
+      <PrimitiveSize left={_width - suffixWidth} width={suffixWidth} onWidthChange={setSuffixWidth}>
         <PrimitiveText color={theme.fieldPlaceholderColor}>
           {suffix}
         </PrimitiveText>
-      </Size>
+      </PrimitiveSize>
     )}
     <FieldThemeProvider>
       <Field
