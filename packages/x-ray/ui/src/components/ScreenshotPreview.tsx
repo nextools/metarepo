@@ -1,5 +1,5 @@
 import { AnimationValue, easeInOutCubic } from '@revert/animation'
-import { Size } from '@revert/size'
+import { PrimitiveSize as Size } from '@revert/size'
 import { pipe } from 'funcom'
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithProps, mapState, mapSafeTimeout, mapHandlers, mapRef, onChange } from 'refun'
