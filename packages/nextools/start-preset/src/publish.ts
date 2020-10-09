@@ -24,6 +24,31 @@ const concurrentHooks = (...hooks: (THook | false)[]): THook => async (props) =>
   )
 }
 
+const preBuild: THook = async (props) => {
+  const { isString } = await import('tsfn')
+  let hasBrowserBuild = false
+
+  for (const pkg of props.packages) {
+    if (isString(pkg.json.browser)) {
+      hasBrowserBuild = true
+
+      break
+    }
+  }
+
+  if (hasBrowserBuild) {
+    const { upgradeDependency } = await import('yupg')
+    const { spawnChildProcess } = await import('spown')
+
+    await upgradeDependency('caniuse-lite')
+
+    await spawnChildProcess('git add yarn.lock', {
+      stdout: null,
+      stderr: process.stderr,
+    })
+  }
+}
+
 export const publish = () => plugin('publish', ({ reporter }) => async () => {
   const { auto } = await import('@auto/core')
   const { writePublishTags } = await import('@auto/tag')
@@ -64,6 +89,7 @@ export const publish = () => plugin('publish', ({ reporter }) => async () => {
   }
 
   await auto({
+    preBuild,
     build: async (props) => {
       const { forEachRelease } = await import('./plugins/for-each-package')
       const { buildPackage } = await import('./build')
@@ -108,6 +134,7 @@ export const testPublish = () => plugin('testPublish', ({ reporter }) => async (
   await auto({
     depsCommit: false,
     publishCommit: false,
+    preBuild,
     build: async (props) => {
       const taskRunner = await forEachRelease(buildPackage)
 

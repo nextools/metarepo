@@ -78,7 +78,8 @@
     "tap-diff": "^0.1.1",
     "tsfn": "^2.1.0",
     "typeon": "^2.0.0",
-    "weslint": "^0.4.0"
+    "weslint": "^0.4.0",
+    "yupg": "^0.1.2"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.1",
