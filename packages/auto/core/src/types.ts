@@ -1,3 +1,4 @@
+import type { TPackageJson as TPkgJson } from 'pkgu'
 import type { TReadonly } from 'tsfn'
 
 export type TResolvedReleaseType = 'major' | 'minor' | 'patch'
@@ -32,24 +33,7 @@ export type TAutoConfig = {
   npm?: TNpmConfig,
 }
 
-export type TPackageJson = {
-  name: string,
-  version: string,
-  dependencies?: {
-    [k: string]: string,
-  },
-  devDependencies?: {
-    [k: string]: string,
-  },
-  peerDependencies?: {
-    [k: string]: string,
-  },
-  workspaces?: string[] | {
-    packages: string[],
-  },
-  publishConfig?: {
-    registry?: string,
-  },
+export type TPackageJson = TPkgJson & {
   auto?: TAutoConfig,
 }
 
