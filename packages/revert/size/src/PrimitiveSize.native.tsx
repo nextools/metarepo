@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, View } from 'react-native'
 import type { LayoutChangeEvent, ViewStyle } from 'react-native'
 import { component, mapHandlers, startWithType, mapWithPropsMemo } from 'refun'
-import { isFunction, isNumber, isUndefined } from 'tsfn'
+import { UNDEFINED } from 'tsfn'
 import { round } from './round'
 import type { TPrimitiveSize } from './types'
 
@@ -26,7 +26,7 @@ export const PrimitiveSize = component(
       flexShrink: 1,
     }
 
-    if (isUndefined(onWidthChange)) {
+    if (onWidthChange === UNDEFINED) {
       parentStyle.width = width
       childStyle.flexGrow = 1
     }
@@ -42,20 +42,15 @@ export const PrimitiveSize = component(
   }, ['left', 'top', 'width', 'maxWidth', 'onWidthChange']),
   mapHandlers({
     onLayout: ({ width, height, onWidthChange, onHeightChange }) => ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
-      const shouldMeasureWidth = isNumber(width) && isFunction(onWidthChange)
-      const shouldMeasureHeight = isNumber(height) && isFunction(onHeightChange)
+      const measuredWidth = round(layout.width)
+      const measuredHeight = round(layout.height)
 
-      if (shouldMeasureWidth || shouldMeasureHeight) {
-        const measuredWidth = round(layout.width)
-        const measuredHeight = round(layout.height)
+      if (onWidthChange !== UNDEFINED && width !== UNDEFINED && width !== measuredWidth) {
+        onWidthChange(measuredWidth)
+      }
 
-        if (shouldMeasureWidth && width !== measuredWidth) {
-          onWidthChange!(measuredWidth)
-        }
-
-        if (shouldMeasureHeight && height !== measuredHeight) {
-          onHeightChange!(measuredHeight)
-        }
+      if (onHeightChange !== UNDEFINED && height !== UNDEFINED && height !== measuredHeight) {
+        onHeightChange(measuredHeight)
       }
     },
   })

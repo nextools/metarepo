@@ -1,13 +1,15 @@
+import { TransformContext } from '@revert/transform'
 import React from 'react'
 import type { CSSProperties } from 'react'
-import { component, startWithType, mapWithPropsMemo, mapRef } from 'refun'
-import { isFunction, isNumber, UNDEFINED } from 'tsfn'
+import { component, startWithType, mapWithPropsMemo, mapRef, mapContext } from 'refun'
+import { UNDEFINED } from 'tsfn'
 import { onLayout } from './on-layout'
 import { round } from './round'
 import type { TPrimitiveSize } from './types'
 
 export const PrimitiveSize = component(
   startWithType<TPrimitiveSize>(),
+  mapContext(TransformContext),
   mapWithPropsMemo(({
     left = 0,
     top = 0,
@@ -27,7 +29,9 @@ export const PrimitiveSize = component(
       parentStyle.display = 'flex'
     }
 
-    if (onWidthChange === UNDEFINED) {
+    // When NOT measuring - expand Container to provided width
+    // This allows TextAlign to slide the text inside
+    if (onWidthChange === UNDEFINED && width !== UNDEFINED) {
       parentStyle.width = width
     }
 
@@ -38,15 +42,13 @@ export const PrimitiveSize = component(
     return {
       parentStyle,
     }
-  }, ['maxWidth', 'left', 'top', 'shouldPreventWrap', 'width', 'onWidthChange']),
+  }, ['width', 'onWidthChange', 'left', 'top', 'maxWidth', 'shouldPreventWrap']),
   mapRef('ref', null as HTMLDivElement | null),
-  onLayout(({ ref, width, height, onWidthChange, onHeightChange }) => {
+  onLayout(({ ref, _scale, width, height, onWidthChange, onHeightChange }) => {
     if (ref.current === null) {
       return
     }
 
-    const shouldMeasureWidth = isNumber(width) && isFunction(onWidthChange)
-    const shouldMeasureHeight = isNumber(height) && isFunction(onHeightChange)
     const children = ref.current.children
     let {
       top,
@@ -65,17 +67,15 @@ export const PrimitiveSize = component(
       bottom = Math.max(bottom, rect.bottom)
     }
 
-    const measuredWidth = round(right - left)
-    const measuredHeight = round(bottom - top)
+    const measuredWidth = round((right - left) / _scale)
+    const measuredHeight = round((bottom - top) / _scale)
 
-    if (shouldMeasureWidth && width !== measuredWidth) {
-      console.log('SIZE_W', width, measuredWidth)
-      onWidthChange!(measuredWidth)
+    if (onWidthChange !== UNDEFINED && width !== UNDEFINED && width !== measuredWidth) {
+      onWidthChange(measuredWidth)
     }
 
-    if (shouldMeasureHeight && height !== measuredHeight) {
-      console.log('SIZE_H', height, measuredHeight)
-      onHeightChange!(measuredHeight)
+    if (onHeightChange !== UNDEFINED && height !== UNDEFINED && height !== measuredHeight) {
+      onHeightChange(measuredHeight)
     }
   })
 )(({ ref, parentStyle, children }) => (

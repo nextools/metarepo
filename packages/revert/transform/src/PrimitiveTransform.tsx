@@ -1,11 +1,13 @@
 import React from 'react'
 import type { CSSProperties } from 'react'
-import { component, startWithType, mapWithProps } from 'refun'
+import { component, startWithType, mapWithProps, mapContext } from 'refun'
 import { isNumber } from 'tsfn'
+import { TransformContext } from './TransformContext'
 import type { TTransform } from './types'
 
 export const PrimitiveTransform = component(
   startWithType<TTransform>(),
+  mapContext(TransformContext),
   mapWithProps(({
     x = 0,
     y = 0,
@@ -14,6 +16,7 @@ export const PrimitiveTransform = component(
     hOrigin = 'center',
     vOrigin = 'center',
     shouldUse3d = false,
+    _scale,
   }) => {
     const style: CSSProperties = {
       display: 'flex',
@@ -26,6 +29,8 @@ export const PrimitiveTransform = component(
       transformOrigin: `${hOrigin} ${vOrigin}`,
     }
 
+    let contextScale = _scale
+
     let transform = shouldUse3d
       ? `translate3d(${x}px, ${y}px, 0)`
       : `translate(${x}px, ${y}px)`
@@ -34,6 +39,7 @@ export const PrimitiveTransform = component(
       transform += shouldUse3d
         ? ` scale3d(${scale}, ${scale}, 1)`
         : ` scale(${scale}, ${scale})`
+      contextScale *= scale
     }
 
     if (isNumber(rotate)) {
@@ -45,11 +51,16 @@ export const PrimitiveTransform = component(
     style.transform = transform
 
     return {
+      contextScale,
       style,
     }
   })
-)(({ style, children }) => (
-  <div style={style}>{children}</div>
+)(({ contextScale, style, children }) => (
+  <div style={style}>
+    <TransformContext.Provider value={{ _scale: contextScale }}>
+      {children}
+    </TransformContext.Provider>
+  </div>
 ))
 
 PrimitiveTransform.displayName = 'PrimitiveTransform'
