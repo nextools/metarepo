@@ -36,10 +36,6 @@ export type TBlock = {
   onRef?: Ref<any>,
 }
 
-export type TInlineBlock = {
-  shouldPreventWrap?: boolean,
-}
-
 export type TParentBlock = {
   id?: string,
   shouldIgnorePointerEvents?: boolean,
