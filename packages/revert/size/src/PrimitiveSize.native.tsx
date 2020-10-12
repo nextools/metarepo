@@ -1,19 +1,18 @@
 import React from 'react'
-import { View } from 'react-native'
+import { Text, View } from 'react-native'
 import type { LayoutChangeEvent, ViewStyle } from 'react-native'
 import { component, mapHandlers, startWithType, mapWithPropsMemo } from 'refun'
 import { isFunction, isNumber, isUndefined } from 'tsfn'
 import { round } from './round'
-import type { TSize } from './types'
+import type { TPrimitiveSize } from './types'
 
-export const Size = component(
-  startWithType<TSize>(),
+export const PrimitiveSize = component(
+  startWithType<TPrimitiveSize>(),
   mapWithPropsMemo(({
     left = 0,
     top = 0,
     width,
     maxWidth = 0,
-    maxHeight = 0,
     onWidthChange,
   }) => {
     const parentStyle: ViewStyle = {
@@ -22,31 +21,25 @@ export const Size = component(
       alignSelf: 'flex-start',
       left,
       top,
-      width,
     }
     const childStyle: ViewStyle = {
-      flexGrow: 0,
-      flexShrink: 0,
-      flexBasis: 'auto',
+      flexShrink: 1,
     }
 
     if (isUndefined(onWidthChange)) {
+      parentStyle.width = width
       childStyle.flexGrow = 1
     }
 
     if (maxWidth > 0) {
-      childStyle.maxWidth = maxWidth
-    }
-
-    if (maxHeight > 0) {
-      childStyle.maxHeight = maxHeight
+      parentStyle.maxWidth = maxWidth
     }
 
     return {
       parentStyle,
       childStyle,
     }
-  }, ['left', 'top', 'width', 'maxWidth', 'maxHeight', 'onWidthChange']),
+  }, ['left', 'top', 'width', 'maxWidth', 'onWidthChange']),
   mapHandlers({
     onLayout: ({ width, height, onWidthChange, onHeightChange }) => ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
       const shouldMeasureWidth = isNumber(width) && isFunction(onWidthChange)
@@ -67,11 +60,11 @@ export const Size = component(
     },
   })
 )(({ parentStyle, childStyle, children, onLayout }) => (
-  <View style={parentStyle}>
-    <View style={childStyle} onLayout={onLayout}>
+  <View style={parentStyle} onLayout={onLayout}>
+    <Text style={childStyle}>
       {children}
-    </View>
+    </Text>
   </View>
 ))
 
-Size.displayName = 'Size'
+PrimitiveSize.displayName = 'PrimitiveSize'

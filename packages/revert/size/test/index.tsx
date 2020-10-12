@@ -3,9 +3,9 @@ import { create, act } from 'react-test-renderer'
 import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { Size } from '../src/Size'
+import { PrimitiveSize } from '../src/PrimitiveSize'
 
-test('revert/size: standard flow', (t) => {
+test('revert/PrimitiveSize: standard flow', (t) => {
   const sizes = [{
     width: 42.424,
     height: 34.343,
@@ -25,14 +25,14 @@ test('revert/size: standard flow', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer = create(
-      <Size
+      <PrimitiveSize
         width={0}
         height={0}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
       , {
         createNodeMock: () => {
           return {
@@ -70,14 +70,14 @@ test('revert/size: standard flow', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer.update(
-      <Size
+      <PrimitiveSize
         width={42.424}
         height={34.343}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
     )
   })
 
@@ -120,7 +120,7 @@ test('revert/size: standard flow', (t) => {
   t.end()
 })
 
-test('revert/size: mount with correct size', (t) => {
+test('revert/PrimitiveSize: mount with correct PrimitiveSize', (t) => {
   const sizes = [{
     width: 42.879,
     height: 34.677,
@@ -140,14 +140,14 @@ test('revert/size: mount with correct size', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer = create(
-      <Size
+      <PrimitiveSize
         width={42.879}
         height={34.677}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
       , {
         createNodeMock: () => {
           return {
@@ -181,14 +181,14 @@ test('revert/size: mount with correct size', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer.update(
-      <Size
+      <PrimitiveSize
         width={42.879}
         height={34.677}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
     )
   })
 
@@ -223,7 +223,7 @@ test('revert/size: mount with correct size', (t) => {
   t.end()
 })
 
-test('revert/size: call onChange again if sizes are different', (t) => {
+test('revert/PrimitiveSize: call onChange again if sizes are different', (t) => {
   const sizes = [{
     width: 42,
     height: 34,
@@ -243,14 +243,14 @@ test('revert/size: call onChange again if sizes are different', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer = create(
-      <Size
+      <PrimitiveSize
         width={0}
         height={0}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
       , {
         createNodeMock: () => {
           return {
@@ -288,14 +288,14 @@ test('revert/size: call onChange again if sizes are different', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer.update(
-      <Size
+      <PrimitiveSize
         width={42}
         height={34}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
     )
   })
 
@@ -342,7 +342,7 @@ test('revert/size: call onChange again if sizes are different', (t) => {
   t.end()
 })
 
-test('revert/size: missing part of size state loop', (t) => {
+test('revert/PrimitiveSize: missing part of PrimitiveSize state loop', (t) => {
   const sizes = [{
     width: 42,
     height: 34,
@@ -362,12 +362,12 @@ test('revert/size: missing part of size state loop', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer = create(
-      <Size
+      <PrimitiveSize
         width={0}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
       , {
         createNodeMock: () => {
           return {
@@ -401,12 +401,12 @@ test('revert/size: missing part of size state loop', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer.update(
-      <Size
+      <PrimitiveSize
         height={34}
         onWidthChange={onWidthChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
     )
   })
 
@@ -441,7 +441,7 @@ test('revert/size: missing part of size state loop', (t) => {
   t.end()
 })
 
-test('revert/size: maxWidth and maxHeight', (t) => {
+test('revert/PrimitiveSize: maxWidth and maxHeight', (t) => {
   const sizes = [{
     width: 42,
     height: 34,
@@ -461,16 +461,15 @@ test('revert/size: maxWidth and maxHeight', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer = create(
-      <Size
+      <PrimitiveSize
         width={0}
         height={0}
         maxWidth={30}
-        maxHeight={20}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
       , {
         createNodeMock: () => {
           return {
@@ -508,14 +507,14 @@ test('revert/size: maxWidth and maxHeight', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer.update(
-      <Size
+      <PrimitiveSize
         width={42}
         height={34}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
     )
   })
 
