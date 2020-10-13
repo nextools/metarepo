@@ -1,3 +1,9 @@
+## v0.6.1
+
+* 🐞 fix return type of `iterateAsync`
+
+* 🐞 fix return type of `iterate`
+
 ## v0.6.0
 
 * 💥 make `concatAsync` to work with single `iterables` argument

@@ -1,6 +1,6 @@
 {
   "name": "@iproto/server",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Async Iterable protocol server",
   "keywords": [],
   "main": "src/index.ts",

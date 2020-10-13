@@ -1,3 +1,7 @@
+## v3.2.0
+
+* 🌱 allow to pass `props` to React app from Node.js side
+
 ## v3.1.0
 
 * 🌱 add `raw-loader` for `txt` and `md`
