@@ -1,6 +1,7 @@
 import path from 'path'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
 import { isUndefined } from 'tsfn'
+import type { TJsonValue } from 'typeon'
 import Webpack from 'webpack'
 import type { Configuration as TWebpackConfig, Stats } from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
@@ -33,6 +34,7 @@ export type TRunWebAppOptions = {
   htmlTemplatePath: string,
   browsersList?: string[],
   assetsPath?: string,
+  props?: TJsonValue,
   isQuiet?: boolean,
   shouldOpenBrowser?: boolean,
 }
@@ -65,6 +67,9 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
         {
           test: path.resolve(options.entryPointPath),
           loader: require.resolve('./loader.js'),
+          options: {
+            props: options.props ?? {},
+          },
         },
         {
           test: /\.(ts|js)x?$/,

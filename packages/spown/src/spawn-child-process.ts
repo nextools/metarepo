@@ -49,7 +49,7 @@ export const spawnChildProcess: TSpawnChildProcess = async (command: string, opt
 
           if (exitCode === null || exitCode === 0) {
             resolve({ stdout, stderr })
-          } else if (stderr === null || stderr.length === 0) {
+          } else if (stderr === null) {
             reject(new SpawnError(`Child process exited with code ${exitCode}`, exitCode))
           } else {
             reject(new SpawnError(stderr, exitCode))

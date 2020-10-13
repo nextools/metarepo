@@ -4,7 +4,7 @@ import { rangeAsync } from '../src/range-async'
 
 test('iterama: iterateAsync', async (t) => {
   const iterable = rangeAsync(5)
-  const iterator: AsyncIterableIterator<number> = iterateAsync(iterable)
+  const iterator = iterateAsync(iterable)
 
   t.deepEquals(
     [

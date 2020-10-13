@@ -4,7 +4,7 @@ import { range } from '../src/range'
 
 test('iterama: iterate', (t) => {
   const iterable = range(5)
-  const iterator: IterableIterator<number> = iterate(iterable)
+  const iterator = iterate(iterable)
 
   t.deepEquals(
     [

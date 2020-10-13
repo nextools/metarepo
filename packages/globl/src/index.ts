@@ -13,5 +13,6 @@ export const cancelAnimationFrame = global.cancelAnimationFrame
 export const console = global.console
 export const process = global.process
 
+export const Math = global.Math
 export const Date = global.Date
 export const performance = global.performance
