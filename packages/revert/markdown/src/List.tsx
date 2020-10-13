@@ -5,7 +5,7 @@ import { component, mapContext, startWithType } from 'refun'
 import { MarkdownPrimitivesContext } from './MarkdownPrimitivesContext'
 import { SYMBOL_MARKDOWN_LIST } from './symbols'
 
-const itemPrefixes = ['✱', '■', '□']
+const itemPrefixes = ['•', '▪', '▫︎']
 
 export const List = component(
   startWithType<TComponentList>(),
