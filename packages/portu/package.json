@@ -24,6 +24,6 @@
   },
   "dependencies": {
     "sleap": "^0.1.0",
-    "spown": "^0.1.1"
+    "spown": "^0.1.2"
   }
 }
