@@ -3,6 +3,13 @@ import React from 'react'
 import type { ReactNode } from 'react'
 import type { TMarkdownToReactConfig, TToken } from './types'
 
+const htmlUnescape = (htmlString: string) => htmlString
+  .replace(/&gt;/g, '>')
+  .replace(/&lt;/g, '<')
+  .replace(/&#0?39;/g, '\'')
+  .replace(/&quot;/g, '"')
+  .replace(/&amp;/g, '&')
+
 export const markdownToReact = (makrdown: string, config: TMarkdownToReactConfig): ReactNode => {
   const tokens = marked.lexer(makrdown, {
     gfm: true,
@@ -33,7 +40,7 @@ export const markdownToReact = (makrdown: string, config: TMarkdownToReactConfig
 
             return (
               <config.code key={i} lang={token.lang}>
-                { token.text }
+                { htmlUnescape(token.text) }
               </config.code>
             )
           }
@@ -45,7 +52,7 @@ export const markdownToReact = (makrdown: string, config: TMarkdownToReactConfig
 
             return (
               <config.codespan key={i}>
-                { token.text }
+                { htmlUnescape(token.text) }
               </config.codespan>
             )
           }
@@ -104,7 +111,7 @@ export const markdownToReact = (makrdown: string, config: TMarkdownToReactConfig
             return (
               <config.image
                 key={i}
-                alt={token.text}
+                alt={htmlUnescape(token.text)}
                 src={token.href}
               />
             )
@@ -238,7 +245,7 @@ export const markdownToReact = (makrdown: string, config: TMarkdownToReactConfig
 
             return (
               <config.text key={i}>
-                { token.text }
+                { htmlUnescape(token.text) }
               </config.text>
             )
           }
