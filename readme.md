@@ -24,6 +24,7 @@ Check the individual documentations for more details:
 * [ida](packages/ida): iterable data structures
 * [ifps](packages/ifps): FPS measurement as async iterable
 * [import-wasm](packages/import-wasm): async/sync helpers to import `.wasm` modules in Node.js
+* [@iproto](packages/iproto): async iterable protocol over WebSocket
 * [iterama](packages/iterama): composable functional (async) iterable helpers
 * [itobj](packages/itobj): iterate Object
 * [iva](packages/iva): glob matching as async iterable

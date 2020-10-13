@@ -1,0 +1,24 @@
+{
+  "name": "@iproto/server",
+  "version": "0.0.0",
+  "description": "Async Iterable protocol server",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/ws": "^7.2.7"
+  },
+  "dependencies": {
+    "tsfn": "^2.1.0",
+    "typeon": "^2.0.0",
+    "ws": "^7.3.1"
+  }
+}

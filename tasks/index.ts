@@ -113,3 +113,47 @@ export const upgrade = (depName: string) =>
 
     await upgradeDependency(depName)
   })
+
+export const iproto = () =>
+  plugin('run', () => async () => {
+    const { getFreePort } = await import('../packages/portu/src')
+    const { serveIterable } = await import('@iproto/server')
+    const { runWebApp } = await import('@rebox/web')
+    const { sleep } = await import('sleap')
+    // eslint-disable-next-line prefer-const
+    let closeWebApp: () => Promise<void>
+
+    const iterable = {
+      async *[Symbol.asyncIterator]() {
+        try {
+          await sleep(1000)
+          console.log(yield 1)
+
+          await sleep(1000)
+          console.log(yield 2)
+
+          await sleep(1000)
+          console.log(yield 3)
+        } finally {
+          await closeWebApp()
+          console.log('DONE')
+        }
+      },
+    }
+
+    const host = 'localhost'
+    const port = await getFreePort(31337, 40000, host)
+
+    await serveIterable(iterable, { host, port })
+
+    console.log('server', `ws://${host}:${port}/`)
+
+    closeWebApp = await runWebApp({
+      entryPointPath: 'tasks/iproto/App.tsx',
+      htmlTemplatePath: 'tasks/iproto/index.html',
+      props: { port },
+      isQuiet: true,
+    })
+
+    console.log('client', `http://${host}:3000/`)
+  })

@@ -1,0 +1,32 @@
+{
+  "name": "@iproto/client",
+  "version": "0.0.0",
+  "description": "Async Iterable protocol client",
+  "keywords": [],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@mock/require": "^0.2.2",
+    "@types/tape": "^4.2.34",
+    "@types/ws": "^7.2.7",
+    "iterama": "^0.6.0",
+    "portu": "^0.0.0",
+    "tape": "^5.0.0"
+  },
+  "dependencies": {
+    "isomorphic-ws": "^4.0.1",
+    "rndi": "^0.0.0",
+    "typeon": "^2.0.0",
+    "ws": "^7.3.1"
+  }
+}
