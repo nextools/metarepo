@@ -1,4 +1,3 @@
-/* eslint-disable no-loop-func */
 import { requestAnimationFrame, performance } from 'globl'
 import { MAX_FPS } from './max-fps'
 
