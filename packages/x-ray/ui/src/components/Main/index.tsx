@@ -1,17 +1,15 @@
-import { PrimitiveImage as Image } from '@revert/image'
 import type { TListItems } from '@x-ray/core'
 import React, { Fragment } from 'react'
 import { component, startWithType, mapHandlers, onUpdate, mapState } from 'refun'
 import { actionLoadList, actionSave, actionTab } from '../../actions'
 import { COL_SPACE, COLOR_LIGHT_GREY, COLOR_DM_BLACK } from '../../config'
 import { ThemeContext } from '../../context/Theme'
-// @ts-ignore
-import noSignalImage from '../../images/no-signal.png'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import type { TSize, TType, TTypeVariants } from '../../types'
 import { Background } from '../Background'
 import { Block } from '../Block'
 import { Popup } from '../Popup'
+import { Text } from '../Text'
 import { Toolbar, TOOLBAR_WIDTH } from '../Toolbar'
 import { Controls, CONTROLS_HEIGHT } from './Controls'
 import { ScreenshotGrid } from './ScreenshotGrid'
@@ -102,8 +100,7 @@ export const Main = component(
   mapStoreDispatch('dispatch'),
   mapState('darkMode', 'setDarkMode', () => false, []),
   onUpdate(({ dispatch }) => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    dispatch(actionLoadList())
+    void dispatch(actionLoadList())
   }, []),
   mapHandlers({
     onSave: ({ type, items, discardedItems, dispatch }) => async () => {
@@ -139,12 +136,14 @@ export const Main = component(
 }) => {
   if (isSaved) {
     return (
-      <Image
-        source={noSignalImage}
+      <Block
+        left={0}
+        top={0}
         width={width}
         height={height}
-        resizeMode="contain"
-      />
+      >
+        <Text fontSize={26}>Saved</Text>
+      </Block>
     )
   }
 
