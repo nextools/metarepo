@@ -10,6 +10,7 @@ export default (config: TWebpackConfig, devServerConfig?: TWebpackDevServerConfi
   plugin('webpackDevServer', ({ logMessage }) => async () => {
     const { default: Webpack } = await import('webpack')
     const { default: WebpackDevServer } = await import('webpack-dev-server')
+    const { isError } = await import('tsfn')
 
     const compiler = Webpack(config)
     const { host, port, ...options }: TWebpackDevServerConfig = {
@@ -34,7 +35,7 @@ export default (config: TWebpackConfig, devServerConfig?: TWebpackDevServerConfi
 
       server
         .listen(port, host, (error) => {
-          if (error) {
+          if (isError(error)) {
             reject(error)
           }
         })

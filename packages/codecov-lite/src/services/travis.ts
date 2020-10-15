@@ -1,8 +1,9 @@
+import { isUndefined } from 'tsfn'
 import type { TServiceConfig } from '../types'
 
 // https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {
-  if (!env.TRAVIS) {
+  if (isUndefined(env.TRAVIS)) {
     return null
   }
 

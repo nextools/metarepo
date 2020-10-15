@@ -11,7 +11,7 @@ $ yarn add portu
 ## Usage
 
 ```ts
-const checkPort: (port: number, host: string) => Promise<boolean>
+const isPortFree: (port: number, host: string) => Promise<boolean>
 
 const getFreePort: (from: number, to: number, host: string) => Promise<number>
 
@@ -23,12 +23,12 @@ const waitForPort: (port: number, host: string) => Promise<void>
 ```
 
 ```ts
-import { checkPort, getFreePort, getPortProcess, killPortProcess, waitForPort } from 'portu'
+import { isPortFree, getFreePort, getPortProcess, killPortProcess, waitForPort } from 'portu'
 
 const host = 'localhost'
 const port = 31337
 
-const isFreePort = await checkPort(port, host)
+const isFree = await isPortFree(port, host)
 // true
 
 const port = await getFreePort(port, port + 10, host

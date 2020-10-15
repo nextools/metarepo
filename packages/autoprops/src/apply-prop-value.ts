@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import BigInt from 'big-integer'
 import type { BigInteger } from 'big-integer'
-import { isUndefined } from 'tsfn'
+import { isArray, isUndefined } from 'tsfn'
 import { applyDisableDeps } from './apply-disable-deps'
 import { applyDisableMutexes } from './apply-disable-mutexes'
 import { applyEnableChildren } from './apply-enable-children'
@@ -14,7 +14,7 @@ import type { TCommonRequiredConfig, TCommonComponentConfig } from './types'
 import { unpackPerm } from './unpack-perm'
 
 const applyChildPropValue = (int: BigInteger, childConfig: TCommonComponentConfig, propPath: readonly string[], propValue: any, childKey: string, required?: TCommonRequiredConfig): BigInteger => {
-  if (required?.includes(childKey)) {
+  if (isArray(required) && required.includes(childKey)) {
     return applyPropValueImpl(childConfig, int, propPath, propValue)
   }
 

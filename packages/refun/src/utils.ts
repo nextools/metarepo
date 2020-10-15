@@ -60,7 +60,7 @@ export const generatorIdFactory = () => {
 
 export const unwindGenerator = <T>(gen: Generator<Promise<T>, void, T>, shouldContinue: () => boolean): void => {
   const handle = async (ir: IteratorResult<Promise<T>>): Promise<void> => {
-    if (ir.done) {
+    if (ir.done === true) {
       return
     }
 
@@ -81,6 +81,5 @@ export const unwindGenerator = <T>(gen: Generator<Promise<T>, void, T>, shouldCo
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  handle(gen.next())
+  void handle(gen.next())
 }

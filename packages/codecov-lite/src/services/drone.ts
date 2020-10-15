@@ -1,8 +1,9 @@
+import { isUndefined } from 'tsfn'
 import type { TServiceConfig } from '../types'
 
 // http://docs.drone.io/env.html
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {
-  if (!env.DRONE) {
+  if (isUndefined(env.DRONE)) {
     return null
   }
 

@@ -4,6 +4,7 @@ import type { StartDataFile, StartDataFilesProps } from '@start/plugin'
 export default (callback: (file: string) => string) =>
   plugin('rename', ({ logPath }) => async ({ files }: StartDataFilesProps) => {
     const path = await import('path')
+    const { isDefined } = await import('tsfn')
 
     return {
       files: files.map((file): StartDataFile => {
@@ -15,7 +16,7 @@ export default (callback: (file: string) => string) =>
 
         logPath(newPath)
 
-        if (file.map) {
+        if (isDefined(file.map)) {
           return {
             path: newPath,
             data: file.data,

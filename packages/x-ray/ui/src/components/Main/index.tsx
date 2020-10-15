@@ -33,7 +33,7 @@ const getSortedData = (activeTab: TTypeVariants | null, items: TListItems): TSor
   return Object.keys(items).reduce((acc, key) => {
     let data = acc
 
-    if (!activeTab || activeTab && items[key].type === activeTab.toUpperCase()) {
+    if (activeTab === null || (activeTab !== null && items[key].type === activeTab.toUpperCase())) {
       data = {
         ...acc,
         items: {

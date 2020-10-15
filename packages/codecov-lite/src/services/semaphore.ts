@@ -1,8 +1,9 @@
+import { isUndefined } from 'tsfn'
 import type { TServiceConfig } from '../types'
 
 // https://semaphoreci.com/docs/available-environment-variables.html
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {
-  if (!env.SEMAPHORE) {
+  if (isUndefined(env.SEMAPHORE)) {
     return null
   }
 

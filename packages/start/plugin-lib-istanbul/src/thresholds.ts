@@ -15,15 +15,15 @@ export default (options: TOptions) =>
     const { createSourceMapStore } = await import('istanbul-lib-source-maps')
     // @ts-ignore
     const { default: SummarizerFactory } = await import('istanbul-lib-report/lib/summarizer-factory')
-    const { getObjectKeys } = await import('tsfn')
+    const { getObjectKeys, isUndefined } = await import('tsfn')
     const hooks = await import('./hooks')
     const { default: coverageVariable } = await import('./variable')
 
     hooks.clearAll()
 
-    const coverageMapData = (global as any)[coverageVariable] as CoverageMapData
+    const coverageMapData = (global as any)[coverageVariable] as CoverageMapData | undefined
 
-    if (!coverageMapData) {
+    if (isUndefined(coverageMapData)) {
       logMessage('no coverage information was collected')
 
       return

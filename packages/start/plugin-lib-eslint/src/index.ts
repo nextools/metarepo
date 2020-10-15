@@ -36,7 +36,7 @@ export default (userOptions?: ESLint.Options, formatterName = '') =>
 
       totalResults.push(...results)
 
-      if (options.fix) {
+      if (options.fix === true) {
         for (const result of results) {
           if (typeof result.output === 'string') {
             fixedFiles.push({
@@ -54,11 +54,11 @@ export default (userOptions?: ESLint.Options, formatterName = '') =>
       console.log(formatter.format(totalResults))
     }
 
-    if (!options.fix && hasErrors) {
+    if (options.fix !== true && hasErrors) {
       throw null
     }
 
-    if (options.fix) {
+    if (options.fix === true) {
       if (fixedFiles.length === 0) {
         logMessage('¯\\_(ツ)_/¯')
       }

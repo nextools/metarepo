@@ -6,7 +6,7 @@ const skipFirst = (n: number) => <T>(iterable: Iterable<T>): Iterable<T> => ({
     const iterator = iterate(iterable)
     let i = 0
 
-    while (i < n && !iterator.next().done) {
+    while (i < n && iterator.next().done !== true) {
       i++
     }
 
@@ -24,7 +24,7 @@ const skipLast = (n: number) => <T>(iterable: Iterable<T>): Iterable<T> => ({
     for (let i = 0; i < n; i++) {
       const result = iterator.next()
 
-      if (result.done) {
+      if (result.done === true) {
         break
       }
 

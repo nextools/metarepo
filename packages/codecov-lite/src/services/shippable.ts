@@ -1,8 +1,9 @@
+import { isUndefined } from 'tsfn'
 import type { TServiceConfig } from '../types'
 
 // http://docs.shippable.com/ci/advancedOptions/environmentVariables/
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {
-  if (!env.SHIPPABLE) {
+  if (isUndefined(env.SHIPPABLE)) {
     return null
   }
 

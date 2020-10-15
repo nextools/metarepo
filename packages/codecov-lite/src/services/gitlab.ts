@@ -1,12 +1,13 @@
+import { isUndefined } from 'tsfn'
 import type { TServiceConfig } from '../types'
 
 // https://docs.gitlab.com/ce/ci/variables/README.html
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {
-  if (!env.GITLAB_CI) {
+  if (isUndefined(env.GITLAB_CI)) {
     return null
   }
 
-  const remote = env.CI_BUILD_REPO || env.CI_REPOSITORY_URL || ''
+  const remote = env.CI_BUILD_REPO ?? env.CI_REPOSITORY_URL ?? ''
 
   return {
     service: 'gitlab',

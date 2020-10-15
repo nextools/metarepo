@@ -6,7 +6,7 @@ import { StoreContextFactory } from 'refun'
 import { reducer } from '../reducers'
 import type { TState } from '../types'
 
-const composeWithDevTools: typeof compose = (global as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const composeWithDevTools: typeof compose = (global as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?? compose
 
 export const store = createStore(
   reducer,

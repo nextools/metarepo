@@ -1,7 +1,7 @@
 import type { FC, ReactElement } from 'react'
 
 export const getComponentName = (component: FC<any>) => {
-  return component.displayName || component.name
+  return component.displayName ?? component.name
 }
 
 export const getElementName = (element: ReactElement<any>) => {
@@ -9,5 +9,5 @@ export const getElementName = (element: ReactElement<any>) => {
     return element.type
   }
 
-  return (element.type as FC<any>).displayName || element.type.name
+  return (element.type as FC<any>).displayName ?? element.type.name
 }

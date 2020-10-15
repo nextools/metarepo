@@ -8,14 +8,15 @@ export default (formats: ReportType[] = ['lcovonly', 'text-summary']) =>
     const { createSourceMapStore } = await import('istanbul-lib-source-maps')
     const { createContext } = await import('istanbul-lib-report')
     const { create: createReporter } = await import('istanbul-reports')
+    const { isUndefined } = await import('tsfn')
     const hooks = await import('./hooks')
     const { default: coverageVariable } = await import('./variable')
 
     hooks.clearAll()
 
-    const coverageMapData = (global as any)[coverageVariable] as CoverageMapData
+    const coverageMapData = (global as any)[coverageVariable] as CoverageMapData | undefined
 
-    if (!coverageMapData) {
+    if (isUndefined(coverageMapData)) {
       logMessage('no coverage information was collected')
 
       return

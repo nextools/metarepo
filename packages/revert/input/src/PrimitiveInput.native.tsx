@@ -75,7 +75,7 @@ export const PrimitiveInput = component(
   keyboardType,
   secureTextEntry,
   accessibilityLabel,
-  isDisabled,
+  isDisabled = false,
   style,
   value,
   onChangeText,

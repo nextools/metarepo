@@ -24,7 +24,7 @@ export const runIosSimulator = async (options: TRunIosSimulatorOptions): Promise
     })
   }
 
-  if (!options.isHeadless) {
+  if (options.isHeadless !== true) {
     await spawnChildProcess(`open -a Simulator --args -CurrentDeviceUDID ${device.udid}`, {
       stdout: null,
       stderr: process.stderr,

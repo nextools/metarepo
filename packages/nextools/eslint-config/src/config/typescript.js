@@ -11,6 +11,7 @@ module.exports = {
     '@typescript-eslint/indent': [2, 2, {
       ignoredNodes: ['JSXElement', 'JSXElement > *', 'JSXAttribute', 'JSXIdentifier', 'JSXNamespacedName', 'JSXMemberExpression', 'JSXSpreadAttribute', 'JSXExpressionContainer', 'JSXOpeningElement', 'JSXClosingElement', 'JSXText', 'JSXEmptyExpression', 'JSXSpreadChild', 'TSIntersectionType'],
       SwitchCase: 1,
+      flatTernaryExpressions: true,
     }],
     '@typescript-eslint/member-delimiter-style': [2, {
       multiline: {
@@ -45,5 +46,14 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 2,
     semi: 'off',
     '@typescript-eslint/semi': [2, 'never'],
+    '@typescript-eslint/strict-boolean-expressions': [2, {
+      allowString: false,
+      allowNumber: false,
+      allowNullableObject: false,
+      allowNullableBoolean: false,
+      allowNullableString: false,
+      allowNullableNumber: false,
+      allowAny: false,
+    }],
   },
 }

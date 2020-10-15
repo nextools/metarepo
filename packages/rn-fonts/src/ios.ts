@@ -2,6 +2,7 @@ import path from 'path'
 import { readFile, readdir, writeFile } from 'pifs'
 import plistParser from 'plist'
 import type { PlistValue } from 'plist'
+import { isUndefined } from 'tsfn'
 // @ts-ignore
 import xcode from 'xcode'
 import { getFontPaths } from './utils'
@@ -32,7 +33,7 @@ export const addFontsIos = async (projectPath: string, fontsPath: string): Promi
   const mainGroup = project.getPBXGroupByKey(firstProject.mainGroup)
   const group = mainGroup.children.find((group: any) => group.comment === 'Resources')
 
-  if (!group) {
+  if (isUndefined(group)) {
     const uuid = project.pbxCreateGroup('Resources', '""')
 
     mainGroup.children.push({
@@ -41,7 +42,7 @@ export const addFontsIos = async (projectPath: string, fontsPath: string): Promi
     })
   }
 
-  plist.UIAppFonts = plist.UIAppFonts || []
+  plist.UIAppFonts = plist.UIAppFonts ?? []
 
   for (const fontPath of fontPaths) {
     project.addResourceFile(

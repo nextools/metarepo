@@ -5,7 +5,7 @@ import { writeChangelog } from './write-changelog'
 
 export const writeChangelogFiles: THook = async ({ packages, prefixes }) => {
   const compileLog = (pkg: TReadonly<TPackageRelease>): string => {
-    let messages = (pkg.messages || []) as TMessage<TLogReleaseType>[]
+    let messages = (pkg.messages ?? []) as TMessage<TLogReleaseType>[]
 
     if (pkg.deps !== null && pkg.type !== 'initial') {
       const depNames = Object.keys(pkg.deps)

@@ -1,6 +1,6 @@
 import { createServer } from 'net'
 
-export const checkPort = (port: number, host: string): Promise<boolean> =>
+export const isPortFree = (port: number, host: string): Promise<boolean> =>
   new Promise((resolve, reject) => {
     const server = createServer()
 

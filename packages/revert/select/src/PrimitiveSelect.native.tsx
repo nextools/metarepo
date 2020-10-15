@@ -35,7 +35,7 @@ export const PrimitiveSelect = component(
   children,
   id,
   accessibilityLabel,
-  isDisabled,
+  isDisabled = false,
   style,
   value,
   onChange,

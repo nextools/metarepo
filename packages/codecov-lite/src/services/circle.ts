@@ -1,12 +1,13 @@
+import { isUndefined } from 'tsfn'
 import type { TServiceConfig } from '../types'
 
 // https://circleci.com/docs/environment-variables/
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {
-  if (!env.CIRCLECI) {
+  if (isUndefined(env.CIRCLECI)) {
     return null
   }
 
-  const url = env.CIRCLE_REPOSITORY_URL || ''
+  const url = env.CIRCLE_REPOSITORY_URL ?? ''
 
   return {
     service: 'circleci',

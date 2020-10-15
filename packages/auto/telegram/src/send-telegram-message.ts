@@ -10,7 +10,7 @@ export const sendTelegramMessage = (telegramConfig: TReadonly<TTelegramConfig>):
   }
 
   const compileMessages = (pkg: TReadonly<TPackageRelease>): string => {
-    let result = (pkg.messages || []) as TMessage<TLogReleaseType>[]
+    let result = (pkg.messages ?? []) as TMessage<TLogReleaseType>[]
 
     if (pkg.deps !== null && pkg.type !== 'initial') {
       const depNames = Object.keys(pkg.deps)

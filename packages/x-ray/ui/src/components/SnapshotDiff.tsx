@@ -68,14 +68,14 @@ export const SnapshotDiff = pureComponent(
       const linesDiff = diffArrays(linesOrig, linesNew).reduce((result, chunk) => {
         result.push(
           ...chunk.value.map((line) => {
-            if (chunk.added) {
+            if (chunk.added === true) {
               return {
                 value: line,
                 type: 'added' as const,
               }
             }
 
-            if (chunk.removed) {
+            if (chunk.removed === true) {
               return {
                 value: line,
                 type: 'removed' as const,

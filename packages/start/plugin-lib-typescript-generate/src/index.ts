@@ -1,5 +1,4 @@
 import plugin from '@start/plugin'
-import type { CompilerOptions } from 'typescript'
 
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
 export default (inDir: string, outDir: string) =>
@@ -19,12 +18,13 @@ export default (inDir: string, outDir: string) =>
 
     const configFile = ts.readConfigFile(configPath, ts.sys.readFile)
     const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, path.dirname(configPath))
-    const options: CompilerOptions = {
+    const options = {
       ...parsedConfig.options,
       noEmit: false,
       emitDeclarationOnly: true,
       declarationDir: outDirFull,
       declaration: true,
+      allowJs: false,
     }
 
     // ignore non-TS files if there is no `allowJs` option

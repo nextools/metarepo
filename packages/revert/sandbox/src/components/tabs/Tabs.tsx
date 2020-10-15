@@ -24,8 +24,8 @@ export const Tabs = component(
   }),
   mapState('activeItemIndex', 'setActiveItemIndex', () => 0, []),
   onChange(({ items, activeItemIndex, setActiveItemIndex }) => {
-    if (activeItemIndex >= 0 && items[activeItemIndex].props.isDisabled) {
-      setActiveItemIndex(items.findIndex((item) => !item.props.isDisabled))
+    if (activeItemIndex >= 0 && items[activeItemIndex].props.isDisabled === true) {
+      setActiveItemIndex(items.findIndex((item) => item.props.isDisabled !== true))
     }
   }, ['items'])
 )(({
@@ -38,7 +38,7 @@ export const Tabs = component(
     <Layout_Item height={50}>
       <Layout hPadding={20} spaceBetween={30}>
         <Border color={theme.tabsBorderColor} borderBottomWidth={1}/>
-        {items.map((item, i) => !item.props.isDisabled && (
+        {items.map((item, i) => item.props.isDisabled !== true && (
           <Layout_Item key={item.props.title} width={LAYOUT_SIZE_FIT} vAlign="center">
             <TabsTitle
               index={i}

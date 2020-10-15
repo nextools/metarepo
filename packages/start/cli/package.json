@@ -19,7 +19,8 @@
     "node": ">=12.13.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.2"
+    "@babel/runtime": "^7.4.2",
+    "tsfn": "^2.1.0"
   },
   "devDependencies": {
     "@mock/require": "^0.2.2",

@@ -22,7 +22,7 @@ export const ScreenshotDeleted = pureComponent(
       border: darkMode ? COLOR_DM_BLACK : COLOR_WHITE,
     },
   }), ['darkMode'])
-)(({ color, top, left, width, height, id, isDiscarded, hasNoBorder }) => (
+)(({ color, top, left, width, height, id, isDiscarded, hasNoBorder = false }) => (
   <Block
     top={top}
     left={left}

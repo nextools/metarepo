@@ -36,5 +36,5 @@ export const getIosSimulatorDevice = async (options: TGetIosSuimulatorDeviceOpti
 
   const device = devices[0].find((value) => value.deviceTypeIdentifier.startsWith(`com.apple.CoreSimulator.SimDeviceType.iPhone-${iPhoneModel}`))
 
-  return device || null
+  return device ?? null
 }

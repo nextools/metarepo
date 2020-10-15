@@ -1,5 +1,5 @@
 import BigInt from 'big-integer'
-import { isUndefined } from 'tsfn'
+import { isArray, isUndefined } from 'tsfn'
 import { applyDisableMutexes } from './apply-disable-mutexes'
 import type { TApplyRestrictionFn } from './types'
 import { getPropIndex } from './utils'
@@ -27,7 +27,7 @@ export const applyEnableDeps: TApplyRestrictionFn = (values, changedPropName, pe
         continue
       }
 
-      if (required?.includes(depName)) {
+      if (isArray(required) && required.includes(depName)) {
         run(depName)
 
         continue

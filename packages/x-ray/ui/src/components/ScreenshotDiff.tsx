@@ -42,7 +42,7 @@ export const ScreenshotDiff = pureComponent(
   newAlpha,
   id,
   isDiscarded,
-  hasNoBorder,
+  hasNoBorder = false,
 }) => (
   <Fragment>
     <Block

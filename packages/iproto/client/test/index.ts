@@ -334,7 +334,7 @@ test('@iproto/*: client ↔︎ server', async (t) => {
   const iterator = clientIterable[Symbol.asyncIterator]()
   let iteratorResult = await iterator.next()
 
-  while (!iteratorResult.done) {
+  while (iteratorResult.done !== true) {
     clientResult.push(iteratorResult.value)
 
     iteratorResult = await iterator.next(iteratorResult.value * 2)
@@ -394,7 +394,7 @@ test('@iproto/*: client ↔︎ server + break', async (t) => {
   let iteratorResult = await iterator.next()
   let i = 0
 
-  while (!iteratorResult.done) {
+  while (iteratorResult.done !== true) {
     i++
     clientResult.push(iteratorResult.value)
 

@@ -1,4 +1,5 @@
 import { resolve } from 'path'
+import { isUndefined } from 'tsfn'
 
 type TStartOptions = {
   file?: string,
@@ -8,12 +9,12 @@ type TStartOptions = {
 }
 
 export default async (argv: string[], options: TStartOptions) => {
-  if (!options.reporter) {
+  if (isUndefined(options.reporter)) {
     throw '`reporter` option is missing in your `package.json` → `start`'
   }
 
-  const tasksFile = options.file || './tasks'
-  const tasksToRequire = options.preset || resolve(tasksFile)
+  const tasksFile = options.file ?? './tasks'
+  const tasksToRequire = options.preset ?? resolve(tasksFile)
   const tasks = await import(tasksToRequire)
   const taskName = argv[2]
   const task = tasks[taskName]

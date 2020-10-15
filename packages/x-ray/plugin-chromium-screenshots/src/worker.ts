@@ -46,7 +46,7 @@ export const check = async (options: TCheckOptions) => {
       await tarMap.close()
     }
 
-    if (item.done) {
+    if (item.done === true) {
       return
     }
 

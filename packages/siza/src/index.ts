@@ -177,7 +177,7 @@ export const getBundleSize = (userOptions: TGetBuildReleaseStatsOptions): Promis
     compiler.outputFileSystem = fs
 
     compiler.run((err, stats) => {
-      if (err) {
+      if (err !== null) {
         return reject(err)
       }
 

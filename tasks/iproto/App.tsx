@@ -18,7 +18,7 @@ export const App: FC<TApp> = ({ port }) => {
         const iterator = iterable[Symbol.asyncIterator]()
         let result = await iterator.next()
 
-        while (!result.done) {
+        while (result.done !== true) {
           setState(result.value)
 
           result = await iterator.next(`from client: got ${result.value}`)

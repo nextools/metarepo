@@ -1,7 +1,7 @@
 import http from 'http'
 import url from 'url'
 import type { UrlWithParsedQuery } from 'url'
-import { isDefined } from 'tsfn'
+import { isDefined, isError } from 'tsfn'
 import { unchunkJson } from 'unchunk'
 import { UI_HOST, UI_PORT, SERVER_PORT, SERVER_HOST } from '../constants'
 import type { TGetResponseQuery, TTotalResults, TResultsType, TEncoding } from '../types'
@@ -98,7 +98,7 @@ export const runServer = (options: TRunServerOptions) => new Promise<() => Promi
 
               res.end()
               server.close((error) => {
-                if (error) {
+                if (isError(error)) {
                   saveReject(error)
                 } else {
                   saveResolve()

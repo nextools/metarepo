@@ -1,8 +1,9 @@
+import { isUndefined } from 'tsfn'
 import type { TServiceConfig } from '../types'
 
 // https://www.appveyor.com/docs/environment-variables/
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {
-  if (!env.APPVEYOR) {
+  if (isUndefined(env.APPVEYOR)) {
     return null
   }
 

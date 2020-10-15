@@ -12,7 +12,7 @@ export const Animation = <T, >({
   children,
   animationMapFn,
   valuesEqualFn,
-  shouldNotAnimate,
+  shouldNotAnimate = false,
   onAnimationEnd,
 }: TAnimation<T>) => {
   const rafId = useRef<any>()

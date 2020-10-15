@@ -63,7 +63,7 @@ export const Pointer = component(
   mapProps(
     ({
       ref,
-      isDisabled,
+      isDisabled = false,
       children,
       onEnter,
       onLeave,

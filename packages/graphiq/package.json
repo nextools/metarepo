@@ -27,7 +27,8 @@
     "@revert/shadow": "^0.3.0",
     "@revert/text": "^0.3.1",
     "elegir": "^1.0.0",
-    "refun": "^3.1.0"
+    "refun": "^3.1.0",
+    "tsfn": "^2.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.6",

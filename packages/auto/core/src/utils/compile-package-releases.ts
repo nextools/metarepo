@@ -9,7 +9,7 @@ export const compilePackageReleases = (packages: TReadonly<TPackageMap>, package
 
   for (const [name, { type, version, deps, devDeps }] of packageBumps) {
     const { dir, json } = packages.get(name)!
-    const messages = gitBumps.get(name) || null
+    const messages = gitBumps.get(name) ?? null
 
     result.push({
       name: removeAutoNamePrefix(name),

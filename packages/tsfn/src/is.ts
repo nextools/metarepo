@@ -14,3 +14,4 @@ export const isObject = (value: any): value is TAnyObject => Object.prototype.to
 export const isSymbol = (value: any): value is symbol => typeof value === 'symbol'
 export const isRegExp = (value: any): value is RegExp => Object.prototype.toString.call(value) === '[object RegExp]'
 export const isStream = (value: any): value is Stream => isObject(value) && isFunction(value.pipe)
+export const isError = <T = Error>(value: any): value is T => value instanceof Error
