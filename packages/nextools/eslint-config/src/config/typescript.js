@@ -11,6 +11,7 @@ module.exports = {
     '@typescript-eslint/indent': [2, 2, {
       ignoredNodes: ['JSXElement', 'JSXElement > *', 'JSXAttribute', 'JSXIdentifier', 'JSXNamespacedName', 'JSXMemberExpression', 'JSXSpreadAttribute', 'JSXExpressionContainer', 'JSXOpeningElement', 'JSXClosingElement', 'JSXText', 'JSXEmptyExpression', 'JSXSpreadChild', 'TSIntersectionType'],
       SwitchCase: 1,
+      flatTernaryExpressions: true,
     }],
     '@typescript-eslint/member-delimiter-style': [2, {
       multiline: {
