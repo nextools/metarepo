@@ -21,7 +21,7 @@
     "@babel/preset-typescript": "^7.9.0",
     "@babel/register": "^7.8.6",
     "@x-ray/core": "^0.2.1",
-    "@x-ray/ui": "^3.2.0",
+    "@x-ray/ui": "^3.2.1",
     "funcom": "^0.2.0",
     "iterama": "^0.6.1",
     "piall": "^0.2.0",

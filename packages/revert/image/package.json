@@ -13,7 +13,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@revert/size": "^0.1.1",
+    "@revert/size": "^0.2.0",
     "refun": "^3.1.0",
     "tsfn": "^2.1.0"
   },

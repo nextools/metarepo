@@ -14,12 +14,12 @@
   "sideEffects": false,
   "dependencies": {
     "@revert/color": "^0.1.0",
-    "@revert/size": "^0.1.1",
+    "@revert/size": "^0.2.0",
     "refun": "^3.1.0",
     "tsfn": "^2.1.0"
   },
   "devDependencies": {
-    "@revert/sandbox": "0.2.0",
+    "@revert/sandbox": "0.3.0",
     "@types/react": "^16.9.6",
     "@types/react-native": "^0.63.0",
     "autoprops": "^4.0.0",
