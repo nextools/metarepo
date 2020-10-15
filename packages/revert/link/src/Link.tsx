@@ -6,7 +6,7 @@ import type { TLink } from './types'
 
 export const Link: TComponent<TLink> = (props) => (
   <Size>
-    <PrimitiveLink {...props}/>
+    {PrimitiveLink(props)}
   </Size>
 )
 
