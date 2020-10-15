@@ -1,3 +1,9 @@
+## v0.3.0
+
+* 🐞 change `InlineBlock` to `Size`
+
+* ♻️ update dependencies `@revert/size`
+
 ## v0.2.0
 
 * 💥 remove `Text` as part of implementation

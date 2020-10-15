@@ -1,3 +1,7 @@
+## v0.3.0
+
+* ♻️ update dependencies `@revert/background`, `@revert/layout`
+
 ## v0.2.0
 
 * 🐞 fix type export syntax

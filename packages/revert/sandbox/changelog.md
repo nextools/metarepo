@@ -1,3 +1,11 @@
+## v0.3.0
+
+* 💥 add support for resizable panels
+
+* 🐞 change `InlineBlock` to `Size`
+
+* ♻️ update dependencies `@revert/markdown`, `@revert/transform`, `@revert/link`, `@revert/size`, `@revert/input`, `@revert/text`, `@revert/checkbox`, `@revert/label`, `@revert/block`, `@revert/select`, `@revert/background`, `@revert/border`, `@revert/button`, `@revert/root`, `@revert/layout`, `@revert/scroll`
+
 ## v0.2.0
 
 * 🌱 add readme tab

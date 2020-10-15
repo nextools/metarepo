@@ -1,3 +1,11 @@
+## v3.2.1
+
+* 🐞 remove save image
+
+* 🐞 rename `Size` to `PrimitiveSize`
+
+* ♻️ update dependencies `@revert/image`, `@revert/text`, `@revert/size`, `@revert/checkbox`, `@revert/block`, `@revert/background`, `@revert/border`, `@revert/button`, `@revert/root`
+
 ## v3.2.0
 
 * ♻️ update dependencies `@revert/size`, `@revert/text`, `@revert/button`, `@revert/border`, `@revert/background`, `refun`, `@revert/image`, `@revert/block`, `@revert/animation`, `@revert/checkbox`, `@revert/root`

@@ -1,3 +1,11 @@
+## v0.3.0
+
+* 💥 remove `InlineBlock`
+
+* 🐞 add `id` property
+
+* ♻️ update dependencies `@revert/layout`
+
 ## v0.2.1
 
 * 🐞 remove `Size` children type limitation

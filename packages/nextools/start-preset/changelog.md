@@ -1,3 +1,7 @@
+## v0.7.1
+
+* 🐞 fix test publish task
+
 ## v0.7.0
 
 * 🌱 upgrade `caniuse-lite` before publishing packages

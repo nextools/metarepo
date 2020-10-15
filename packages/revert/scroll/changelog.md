@@ -1,3 +1,7 @@
+## v0.2.0
+
+* ♻️ update dependencies `@revert/layout`
+
 ## v0.1.1
 
 * 🐞 fix native implementation

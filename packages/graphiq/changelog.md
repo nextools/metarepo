@@ -1,3 +1,9 @@
+## v0.5.1
+
+* 🐞 update deps
+
+* ♻️ update dependencies `@revert/text`, `@revert/block`, `@revert/layout`, `@revert/background`, `@revert/linear-gradient`, `@revert/border`, `@revert/button`, `@revert/root`, `@revert/scroll`, `@revert/shadow`
+
 ## v0.5.0
 
 * ♻️ update dependencies `@revert/text`, `@revert/button`, `@revert/border`, `@revert/background`, `@revert/linear-gradient`, `@revert/shadow`, `refun`, `@revert/scroll`, `@revert/block`, `@revert/animation`, `@revert/layout`, `@revert/root`
