@@ -26,7 +26,7 @@
     "@revert/scroll": "^0.2.0",
     "@revert/shadow": "^0.3.0",
     "@revert/text": "^0.3.1",
-    "elegir": "^1.0.0",
+    "elegir": "^2.0.0",
     "refun": "^3.1.0",
     "tsfn": "^2.2.0"
   },

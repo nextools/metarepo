@@ -4881,10 +4881,10 @@ electron-to-chromium@^1.3.378, electron-to-chromium@^1.3.571:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.573.tgz#6a21e13ee894eb441677333d5fe9fa3a449689a1"
   integrity sha512-oypaNmexr8w0m2GX67fGLQ0Xgsd7uXz7GcwaHZ9eW3ZdQ8uA2+V/wXmLdMTk3gcacbqQGAN7CXWG3fOkfKYftw==
 
-elegir@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/elegir/-/elegir-1.0.0.tgz#56852da06fa82b90ec7139a84c4a8e43da17b18d"
-  integrity sha512-YMwZzVQABwukSPWgriP4yPhKApgD69WMJaXslIzIaZm1s05mNDTZ+ot/98umvunAOHKIlFCXtCz4j1VWHu8Qzw==
+elegir@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/elegir/-/elegir-2.0.0.tgz#27ae754432d2bf44b2af1524b44e55c376b25489"
+  integrity sha512-E7Oli6T6wHJIHDj9zmY3tGxrsToxoLh0cLB+1/V7ZQiLq94YnGsFiYaanwbG9eKGFpydaI9oqlKV7cQHbvTKAA==
   dependencies:
     "@babel/runtime" "^7.4.3"
 
