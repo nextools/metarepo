@@ -30,11 +30,11 @@
     "fast-glob": "^3.0.0",
     "metro-react-native-babel-preset": "0.59.0",
     "node-fetch": "^2.6.0",
-    "portu": "^0.1.0",
+    "portu": "^0.2.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "spown": "^0.1.2",
-    "tsfn": "^2.1.0",
+    "tsfn": "^2.2.0",
     "webpack": "^4.30.0"
   },
   "fixdeps": {

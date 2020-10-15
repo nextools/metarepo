@@ -17,7 +17,7 @@
     "elegir": "^1.0.0",
     "react-dom": "16.13.1",
     "refun": "^3.1.0",
-    "tsfn": "^2.1.0"
+    "tsfn": "^2.2.0"
   },
   "devDependencies": {
     "@revert/background": "^0.3.0",

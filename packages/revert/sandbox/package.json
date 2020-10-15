@@ -47,7 +47,7 @@
     "redux-thunk": "^2.3.0",
     "refun": "^3.1.0",
     "syntx": "^2.0.0",
-    "tsfn": "^2.1.0",
+    "tsfn": "^2.2.0",
     "typeon": "^2.0.0"
   },
   "devDependencies": {

@@ -27,7 +27,7 @@
     "rn-fonts": "^2.0.1",
     "simple-plist": "^1.0.0",
     "spown": "^0.1.2",
-    "tsfn": "^2.1.0"
+    "tsfn": "^2.2.0"
   },
   "fixdeps": {
     "ignoredPackages": [

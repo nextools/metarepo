@@ -30,7 +30,7 @@
     "prompts": "^2.3.1",
     "semver": "^7.0.0",
     "spown": "^0.1.2",
-    "tsfn": "^2.1.0"
+    "tsfn": "^2.2.0"
   },
   "devDependencies": {
     "@mock/require": "^0.2.2",

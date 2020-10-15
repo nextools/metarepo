@@ -16,7 +16,7 @@
     "@revert/layout": "^0.2.0",
     "@revert/transform": "^0.2.0",
     "refun": "^3.1.0",
-    "tsfn": "^2.1.0"
+    "tsfn": "^2.2.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.6",

@@ -14,7 +14,7 @@
     "node-fetch": "^2.6.0",
     "sleap": "^0.1.0",
     "spown": "^0.1.2",
-    "tsfn": "^2.1.0"
+    "tsfn": "^2.2.0"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.5.4"

@@ -16,7 +16,7 @@
     "@revert/color": "^0.1.0",
     "@revert/size": "^0.2.0",
     "refun": "^3.1.0",
-    "tsfn": "^2.1.0"
+    "tsfn": "^2.2.0"
   },
   "devDependencies": {
     "@revert/sandbox": "0.3.1",

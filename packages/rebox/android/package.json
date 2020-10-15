@@ -24,7 +24,7 @@
     "pifs": "^2.0.0",
     "rn-fonts": "^2.0.1",
     "spown": "^0.1.2",
-    "tsfn": "^2.1.0"
+    "tsfn": "^2.2.0"
   },
   "fixdeps": {
     "ignoredPackages": [
