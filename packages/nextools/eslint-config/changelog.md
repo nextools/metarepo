@@ -1,3 +1,9 @@
+## v0.6.0
+
+* 💥 require booleans only in boolean expressions
+
+* 🐞 flatten ternaries and allow nested ones
+
 ## v0.5.1
 
 * 🐞 upgrade typescript-eslint deps

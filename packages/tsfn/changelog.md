@@ -1,3 +1,7 @@
+## v2.2.0
+
+* 🌱 add `isError`
+
 ## v2.1.0
 
 * 🌱 add `isStream`
