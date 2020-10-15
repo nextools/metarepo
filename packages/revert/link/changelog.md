@@ -1,3 +1,7 @@
+## v0.3.1
+
+* 🐞 call primitive as function
+
 ## v0.3.0
 
 * 🐞 change `InlineBlock` to `Size`

@@ -1,3 +1,7 @@
+## v0.7.2
+
+* 🐞 tweak build types
+
 ## v0.7.1
 
 * 🐞 fix test publish task

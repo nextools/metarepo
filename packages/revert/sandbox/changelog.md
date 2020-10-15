@@ -1,3 +1,11 @@
+## v0.3.1
+
+* 🐞 use `PrimitiveText` in Info panel
+
+* 🐞 remove required keys restriction in component controls type
+
+* ♻️ update dependencies `@revert/link`, `@revert/text`
+
 ## v0.3.0
 
 * 💥 add support for resizable panels
