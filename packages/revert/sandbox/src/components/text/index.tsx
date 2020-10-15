@@ -2,12 +2,12 @@ import { AnimationColor } from '@revert/animation'
 import { PrimitiveText as RevertPrimitiveText, CreateLayoutText, TextThemeContext } from '@revert/text'
 import type { TPrimitiveText } from '@revert/text'
 import React from 'react'
-import { component, startWithType, mapDefaultProps, mapContext } from 'refun'
+import { component, startWithType, mapDefaultProps, mapDefaultContext } from 'refun'
 import { COLOR_BLACK } from '../../colors'
 
 export const PrimitiveText = component(
   startWithType<TPrimitiveText>(),
-  mapContext(TextThemeContext),
+  mapDefaultContext(TextThemeContext),
   mapDefaultProps({
     color: COLOR_BLACK,
     fontFamily: 'Helvetica, Arial, sans-serif',

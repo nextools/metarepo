@@ -1,7 +1,7 @@
-import type { TSize } from '@revert/size'
 import type { Ref, ReactNode, CSSProperties } from 'react'
 
 export type TPrimitiveBlock = {
+  id?: string,
   width?: number,
   height?: number,
   maxWidth?: number,
@@ -26,6 +26,7 @@ export type TPrimitiveBlock = {
 }
 
 export type TBlock = {
+  id?: string,
   width?: number,
   height?: number,
   minWidth?: number,
@@ -35,9 +36,8 @@ export type TBlock = {
   onRef?: Ref<any>,
 }
 
-export type TInlineBlock = Pick<TSize, 'shouldPreventWrap'>
-
 export type TParentBlock = {
+  id?: string,
   shouldIgnorePointerEvents?: boolean,
   onRef?: Ref<any>,
 }

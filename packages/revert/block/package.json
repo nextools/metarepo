@@ -14,7 +14,6 @@
   "sideEffects": false,
   "dependencies": {
     "@revert/layout": "^0.1.1",
-    "@revert/size": "^0.1.1",
     "refun": "^3.1.0",
     "tsfn": "^2.1.0"
   },

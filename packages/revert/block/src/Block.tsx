@@ -28,12 +28,14 @@ export const Block = component(
   _top,
   width,
   height,
+  id,
   onRef,
   shouldIgnorePointerEvents,
   shouldHideOverflow,
   children,
 }) => (
   <PrimitiveBlock
+    id={id}
     left={_left}
     top={_top}
     width={width}

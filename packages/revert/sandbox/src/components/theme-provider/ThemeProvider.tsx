@@ -33,3 +33,5 @@ export const ThemeProvider = component(
     </ThemeContext.Provider>
   )
 })
+
+ThemeProvider.displayName = 'ThemeProvider'

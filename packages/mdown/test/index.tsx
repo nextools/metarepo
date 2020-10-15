@@ -68,7 +68,7 @@ test('mdown: blockquote error', (t) => {
 test('mdown: code', (t) => {
   const md = dedent(`
     \`\`\`js
-    code 1
+    code "1"
     code 2
     \`\`\`
   `)
@@ -84,7 +84,7 @@ test('mdown: code', (t) => {
     html,
     minHtml(`
       <pre title="js">
-        code 1\ncode 2
+        code &quot;1&quot;\ncode 2
       </pre>
     `),
     'should work'
@@ -112,7 +112,7 @@ test('mdown: code error', (t) => {
 })
 
 test('mdown: codespan', (t) => {
-  const md = '`code 1 code 2`'
+  const md = '`code "1" code &2`'
   const html = toHtml(md, {
     codespan: ({ children }) => (
       <code>{ children }</code>
@@ -126,7 +126,7 @@ test('mdown: codespan', (t) => {
     html,
     minHtml(`
       <p>
-        <code>code 1 code 2</code>
+        <code>code &quot;1&quot; code &amp;2</code>
       </p>
     `),
     'should work'
@@ -384,7 +384,7 @@ test('mdown: hr error', (t) => {
 })
 
 test('mdown: image', (t) => {
-  const md = '![alt](url)'
+  const md = '![alt"](url)'
   const html = toHtml(md, {
     image: ({ alt, src }) => (
       <img src={src} alt={alt}/>
@@ -398,7 +398,7 @@ test('mdown: image', (t) => {
     html,
     minHtml(`
       <p>
-        <img src="url" alt="alt"/>
+        <img src="url" alt="alt&quot;"/>
       </p>
     `),
     'should work'
@@ -975,6 +975,32 @@ test('mdown: unsupported error', (t) => {
       'should throw'
     )
   }
+
+  t.end()
+})
+
+test('mdown: escaped symbols', (t) => {
+  const md = '"&<>'
+
+  const html = toHtml(md, {
+    text: ({ children }) => (
+      <span>{ children }</span>
+    ),
+    paragraph: ({ children }) => (
+      <p>{ children }</p>
+    ),
+  })
+
+  t.equal(
+    html,
+    minHtml(`
+      <p>
+        <span>&quot;&amp;</span>
+        <span>&lt;&gt;</span>
+      </p>
+    `),
+    'should work'
+  )
 
   t.end()
 })

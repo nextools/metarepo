@@ -1,10 +1,21 @@
 import React from 'react'
 import type { FC } from 'react'
 import { PluginContext } from './PluginContext'
-import type { TPluginContext } from './types'
+import type { TComponentPlugin, TPopoverPlugin } from './types'
 
-export const PluginProvider: FC<TPluginContext> = ({ popoverPlugin, ComponentWrapperPlugin, children }) => (
-  <PluginContext.Provider value={{ popoverPlugin, ComponentWrapperPlugin }}>
+export type TPluginProvider = {
+  popoverPlugin?: TPopoverPlugin,
+  componentPlugin?: TComponentPlugin,
+}
+
+export const PluginProvider: FC<TPluginProvider> = ({ popoverPlugin, componentPlugin = {}, children }) => (
+  <PluginContext.Provider
+    value={{
+      popoverPlugin,
+      ComponentWrapper: componentPlugin.ComponentWrapper,
+      shouldMeasureComponent: componentPlugin.shouldMeasureComponent,
+    }}
+  >
     {children}
   </PluginContext.Provider>
 )

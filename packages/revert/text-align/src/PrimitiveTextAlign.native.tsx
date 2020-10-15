@@ -4,7 +4,7 @@ import type { TextStyle } from 'react-native'
 import { component, mapWithPropsMemo, startWithType } from 'refun'
 import type { TTextAlign } from './types'
 
-export const TextAlign = component(
+export const PrimitiveTextAlign = component(
   startWithType<TTextAlign>(),
   mapWithPropsMemo(({ align }) => {
     const style: TextStyle = {
@@ -23,4 +23,4 @@ export const TextAlign = component(
   </Text>
 ))
 
-TextAlign.displayName = 'TextAlign'
+PrimitiveTextAlign.displayName = 'PrimitiveTextAlign'

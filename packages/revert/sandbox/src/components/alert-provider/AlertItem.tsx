@@ -49,3 +49,5 @@ export const AlertItem = component(
     </Layout>
   </TextThemeProvider>
 ))
+
+AlertItem.displayName = 'AlertItem'

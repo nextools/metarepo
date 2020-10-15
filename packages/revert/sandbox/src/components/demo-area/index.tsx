@@ -12,7 +12,6 @@ import {
   mapWithPropsMemo,
   mapContext,
   component,
-  mapDefaultProps,
 } from 'refun'
 import { COLOR_BLACK, COLOR_WHITE } from '../../colors'
 import { mapStoreState, setTransform } from '../../store'
@@ -22,11 +21,13 @@ import type { TTransform } from '../../types'
 import { isSafari } from '../../utils/platform-id'
 import { PrimitiveBackground } from '../background'
 import { CanvasGrid } from '../canvas-grid/index'
-import { PluginContext } from '../plugin-provider/index'
+import { PluginContext } from '../plugin-provider'
 import { ThemeContext } from '../theme-context'
+import { DemoComponentMeasure } from './DemoComponentMeasure'
+import { DemoComponentRevert } from './DemoComponentRevert'
+import { PureComponent } from './PureComponent'
 import { mapInspectRect } from './map-inspect-rect'
 import { mapTransform } from './map-transform'
-import { PureComponent } from './pure-component'
 
 const COMPONENT_MIN_WIDTH = 200
 const round10 = (num: number) => Math.round(num / 10) * 10
@@ -38,9 +39,10 @@ export const DemoArea = component(
   mapContext(ThemeContext),
   mapContext(LayoutContext),
   mapContext(PluginContext),
-  mapDefaultProps({
-    ComponentWrapperPlugin: PureComponent,
-  }),
+  mapWithProps(({ ComponentWrapper, shouldMeasureComponent }) => ({
+    MeasureComponent: shouldMeasureComponent ? DemoComponentMeasure : DemoComponentRevert,
+    ComponentWrapper: ComponentWrapper ?? PureComponent,
+  })),
   mapStoreState(({ isCanvasDarkMode, width, height, hasGrid, shouldStretch, shouldInspect, transformX, transformY, transformZ }) => ({
     canvasWidth: width,
     canvasHeight: height,
@@ -90,6 +92,8 @@ export const DemoArea = component(
   mapInspectRect(),
   mapTransform
 )(({
+  MeasureComponent,
+  ComponentWrapper,
   canvasWidth,
   canvasHeight,
   canvasLeft,
@@ -105,7 +109,6 @@ export const DemoArea = component(
   setComponentHeight,
   selectedInspectRect,
   setBlockNode,
-  ComponentWrapperPlugin,
   theme,
   isCanvasDarkMode,
   isTransforming,
@@ -129,38 +132,33 @@ export const DemoArea = component(
           <PrimitiveBackground color={isCanvasDarkMode ? COLOR_BLACK : COLOR_WHITE}/>
 
           {Component !== null && (
-            <LayoutContext.Provider
-              value={{
-                _x: componentLeft,
-                _y: componentHeight,
-                _left: componentLeft,
-                _top: componentTop,
-                _width: componentWidth,
-                _height: componentHeight,
-                _maxWidth: componentWidth,
-                _parentLeft: componentLeft,
-                _parentTop: componentTop,
-                _parentWidth: componentWidth,
-                _parentHeight: componentHeight,
-                _onHeightChange: setComponentHeight,
-              }}
+            <MeasureComponent
+              left={componentLeft}
+              top={componentTop}
+              width={componentWidth}
+              height={componentHeight}
+              onHeightChange={setComponentHeight}
+              shouldUse3d={!isSafari}
             >
-              <PrimitiveBlock onRef={setBlockNode} shouldFlow>
-                <ComponentWrapperPlugin Component={Component} props={componentProps}/>
+              <PrimitiveBlock
+                onRef={setBlockNode}
+                width={componentWidth}
+                shouldFlow
+              >
+                <ComponentWrapper Component={Component} props={componentProps}/>
+                {selectedInspectRect !== null && (
+                  <PrimitiveBlock
+                    left={selectedInspectRect.left}
+                    top={selectedInspectRect.top}
+                    width={selectedInspectRect.width}
+                    height={selectedInspectRect.height}
+                    shouldIgnorePointerEvents
+                  >
+                    <PrimitiveBackground color={theme.inspectBackgroundColor}/>
+                  </PrimitiveBlock>
+                )}
               </PrimitiveBlock>
-            </LayoutContext.Provider>
-          )}
-
-          {selectedInspectRect !== null && (
-            <PrimitiveBlock
-              left={selectedInspectRect.left}
-              top={selectedInspectRect.top}
-              width={selectedInspectRect.width}
-              height={selectedInspectRect.height}
-              shouldIgnorePointerEvents
-            >
-              <PrimitiveBackground color={theme.inspectBackgroundColor}/>
-            </PrimitiveBlock>
+            </MeasureComponent>
           )}
 
           {hasGrid && (

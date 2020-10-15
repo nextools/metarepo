@@ -1,3 +1,4 @@
+import { LayoutPortalProvider } from '@revert/layout'
 import { Root } from '@revert/root'
 import React from 'react'
 import { component, startWithType, onChange } from 'refun'
@@ -5,7 +6,6 @@ import { AlertProvider } from './components/alert-provider'
 import { ImportPackageNameProvider } from './components/import-package-name-provider'
 import { NotificationProvider } from './components/notification-provider'
 import { PluginProvider } from './components/plugin-provider'
-import { PortalProvider } from './components/portal-provider'
 import { Sandbox } from './components/sandbox'
 import { ThemeProvider } from './components/theme-provider'
 import { setComponentsList } from './store-meta'
@@ -18,20 +18,22 @@ export const App = component(
   onChange(({ components }) => {
     setComponentsList(components)
   }, ['components'])
-)(({ theme, icons, getImportPackageName, popoverPlugin, ComponentWrapperPlugin }) => (
+)(({ theme, icons, getImportPackageName, popoverPlugin, componentPlugin }) => (
   <Root>
     <ThemeProvider theme={theme} icons={icons}>
-      <PluginProvider popoverPlugin={popoverPlugin} ComponentWrapperPlugin={ComponentWrapperPlugin}>
+      <PluginProvider popoverPlugin={popoverPlugin} componentPlugin={componentPlugin}>
         <ImportPackageNameProvider getImportPackageName={getImportPackageName}>
-          <AlertProvider>
-            <NotificationProvider>
-              <PortalProvider>
+          <LayoutPortalProvider>
+            <AlertProvider>
+              <NotificationProvider>
                 <Sandbox/>
-              </PortalProvider>
-            </NotificationProvider>
-          </AlertProvider>
+              </NotificationProvider>
+            </AlertProvider>
+          </LayoutPortalProvider>
         </ImportPackageNameProvider>
       </PluginProvider>
     </ThemeProvider>
   </Root>
 ))
+
+App.displayName = 'App'

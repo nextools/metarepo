@@ -1,6 +1,6 @@
 import { AnimationValue } from '@revert/animation'
 import { PrimitiveBlock } from '@revert/block'
-import { LayoutContext } from '@revert/layout'
+import { LayoutContext, LayoutPortalContext } from '@revert/layout'
 import { TextThemeContext } from '@revert/text'
 import React from 'react'
 import type { ReactElement } from 'react'
@@ -10,7 +10,6 @@ import { mapContextOverride } from '../../map/map-context-override'
 import { SYMBOL_TOOLTIP } from '../../symbols'
 import { PrimitiveBackground } from '../background'
 import { IconTooltipArrowDown } from '../icons'
-import { PortalContext } from '../portal-provider'
 import { TooltipThemeContext } from '../theme-context'
 
 const TOOLTIP_ANIMATION_TIME = 200
@@ -36,7 +35,7 @@ export const ContentTooltip = component(
   mapContext(TooltipThemeContext),
   mapContextOverride('TextThemeProvider', TextThemeContext, ({ color }) => ({ color })),
   mapContextOverride('ArrowIconThemeProvider', TextThemeContext, ({ backgroundColor }) => ({ color: backgroundColor })),
-  mapContext(PortalContext),
+  mapContext(LayoutPortalContext),
   mapContext(LayoutContext),
   mapState('isOpen', 'setIsOpen', () => false, []),
   mapSafeTimeout('setSafeTimeout'),

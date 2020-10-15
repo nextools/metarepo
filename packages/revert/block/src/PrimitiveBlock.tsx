@@ -1,19 +1,13 @@
 import React from 'react'
 import type { HTMLProps, CSSProperties } from 'react'
-import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
-import { isNumber, isDefined, isUndefined } from 'tsfn'
+import { component, startWithType, mapProps } from 'refun'
+import { isNumber, UNDEFINED } from 'tsfn'
 import type { TPrimitiveBlock } from './types'
 
 export const PrimitiveBlock = component(
   startWithType<TPrimitiveBlock>(),
-  mapDefaultProps({
-    shouldFlow: false,
-    shouldHideOverflow: false,
-    shouldIgnorePointerEvents: false,
-    shouldForceAcceleration: false,
-    shouldScroll: false,
-  }),
   mapProps(({
+    id,
     onRef,
     width,
     height,
@@ -30,11 +24,11 @@ export const PrimitiveBlock = component(
     tabIndex,
     children,
     blendMode,
-    shouldScroll,
-    shouldHideOverflow,
-    shouldFlow,
-    shouldIgnorePointerEvents,
-    shouldForceAcceleration,
+    shouldScroll = false,
+    shouldHideOverflow = false,
+    shouldFlow = false,
+    shouldIgnorePointerEvents = false,
+    shouldForceAcceleration = false,
   }) => {
     const style: CSSProperties = {
       display: 'flex',
@@ -54,11 +48,11 @@ export const PrimitiveBlock = component(
       mixBlendMode: blendMode,
     }
 
-    if (isUndefined(top) && isUndefined(bottom)) {
+    if (top === UNDEFINED && bottom === UNDEFINED) {
       style.top = 0
     }
 
-    if (isUndefined(left) && isUndefined(right)) {
+    if (left === UNDEFINED && right === UNDEFINED) {
       style.left = 0
     }
 
@@ -91,11 +85,12 @@ export const PrimitiveBlock = component(
     }
 
     const props: HTMLProps<HTMLDivElement> = {
+      id,
       style,
       children,
     }
 
-    if (isDefined(onRef)) {
+    if (onRef !== UNDEFINED) {
       props.ref = onRef
     }
 

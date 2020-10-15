@@ -1,7 +1,7 @@
 import { AnimationValue } from '@revert/animation'
 import { PrimitiveBlock } from '@revert/block'
 import { PrimitiveButton } from '@revert/button'
-import { LayoutContext } from '@revert/layout'
+import { LayoutContext, LayoutPortalContext } from '@revert/layout'
 import { RootContext } from '@revert/root'
 import { TextThemeContext } from '@revert/text'
 import React, { Fragment } from 'react'
@@ -11,7 +11,6 @@ import { component, startWithType, mapContext, mapState, mapWithProps, mapDefaul
 import { mapContextOverride } from '../../map/map-context-override'
 import { PrimitiveBackground } from '../background'
 import { IconTooltipArrowDown } from '../icons'
-import { PortalContext } from '../portal-provider'
 import { PopoverThemeContext } from '../theme-context'
 
 const POPOVER_ANIMATION_TIME = 200
@@ -32,7 +31,7 @@ export type TPopover = {
 
 export const Popover = component(
   startWithType<TPopover>(),
-  mapContext(PortalContext),
+  mapContext(LayoutPortalContext),
   mapContext(LayoutContext),
   mapContext(RootContext),
   mapContext(PopoverThemeContext),

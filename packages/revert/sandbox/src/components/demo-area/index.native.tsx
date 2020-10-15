@@ -11,7 +11,6 @@ import {
   mapHandlers,
   mapWithPropsMemo,
   mapContext,
-  mapDefaultProps,
 } from 'refun'
 import { COLOR_BLACK, COLOR_WHITE } from '../../colors'
 import { mapStoreState, setTransform } from '../../store'
@@ -22,7 +21,9 @@ import { PrimitiveBackground } from '../background'
 import { CanvasGrid } from '../canvas-grid'
 import { PluginContext } from '../plugin-provider'
 import { ThemeContext } from '../theme-context'
-import { PureComponent } from './pure-component'
+import { DemoComponentMeasure } from './DemoComponentMeasure'
+import { DemoComponentRevert } from './DemoComponentRevert'
+import { PureComponent } from './PureComponent'
 
 const COMPONENT_MIN_WIDTH = 200
 const round10 = (num: number) => Math.round(num / 10) * 10
@@ -34,9 +35,10 @@ export const DemoArea = pureComponent(
   mapContext(ThemeContext),
   mapContext(LayoutContext),
   mapContext(PluginContext),
-  mapDefaultProps({
-    ComponentWrapperPlugin: PureComponent,
-  }),
+  mapWithProps(({ ComponentWrapper, shouldMeasureComponent }) => ({
+    MeasureComponent: shouldMeasureComponent ? DemoComponentMeasure : DemoComponentRevert,
+    ComponentWrapper: ComponentWrapper ?? PureComponent,
+  })),
   mapStoreState(({ width, height, hasGrid, shouldStretch, isCanvasDarkMode, transformX, transformY, transformZ }) => ({
     canvasWidth: width,
     canvasHeight: height,
@@ -95,44 +97,36 @@ export const DemoArea = pureComponent(
   componentTop,
   componentHeight,
   setComponentHeight,
-  ComponentWrapperPlugin,
+  ComponentWrapper,
+  MeasureComponent,
   theme,
   isCanvasDarkMode,
 }) => (
   <Block shouldHideOverflow>
     <PrimitiveBackground color={theme.demoAreaBackgroundColor}/>
     <PrimitiveTransform
-      shouldUse3d
       x={canvasLeft + transform.x}
       y={canvasTop + transform.y}
       scale={transform.z}
+      shouldUse3d
     >
       <PrimitiveBlock
-        shouldFlow
         width={canvasWidth}
         height={canvasHeight}
+        shouldFlow
       >
         <PrimitiveBackground color={isCanvasDarkMode ? COLOR_BLACK : COLOR_WHITE}/>
 
         {Component !== null && (
-          <LayoutContext.Provider
-            value={{
-              _x: componentLeft,
-              _y: componentHeight,
-              _left: componentLeft,
-              _top: componentTop,
-              _width: componentWidth,
-              _height: componentHeight,
-              _maxWidth: componentWidth,
-              _parentLeft: componentLeft,
-              _parentTop: componentTop,
-              _parentWidth: componentWidth,
-              _parentHeight: componentHeight,
-              _onHeightChange: setComponentHeight,
-            }}
+          <MeasureComponent
+            left={componentLeft}
+            top={componentTop}
+            width={componentWidth}
+            height={componentHeight}
+            onHeightChange={setComponentHeight}
           >
-            <ComponentWrapperPlugin Component={Component} props={componentProps}/>
-          </LayoutContext.Provider>
+            <ComponentWrapper Component={Component} props={componentProps}/>
+          </MeasureComponent>
         )}
 
         {hasGrid && (

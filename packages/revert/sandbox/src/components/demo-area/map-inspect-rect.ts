@@ -7,16 +7,7 @@ import type { TAnyObject } from 'tsfn'
 import { getComponentName } from '../../utils'
 import { getElementPath } from '../../utils/get-element-path'
 import { getChildDisplayName } from './get-child-display-name'
-
-export type TPosition = {
-  readonly left: number,
-  readonly top: number,
-}
-
-export type TRect = TPosition & {
-  readonly width: number,
-  readonly height: number,
-}
+import type { TPosition, TRect } from './types'
 
 export type TMapInspectRect = {
   Component: FC | null,

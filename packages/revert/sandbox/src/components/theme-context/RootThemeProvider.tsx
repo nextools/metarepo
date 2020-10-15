@@ -95,3 +95,5 @@ export const RootThemeProvider = component(
     </PopoverThemeProvider>
   </TooltipThemeProvider>
 ))
+
+RootThemeProvider.displayName = 'RootThemeProvider'

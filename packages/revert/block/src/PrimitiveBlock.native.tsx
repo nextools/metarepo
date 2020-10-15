@@ -2,24 +2,14 @@ import React from 'react'
 import type { ReactNode } from 'react'
 import { View } from 'react-native'
 import type { ViewProps, ViewStyle } from 'react-native'
-import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
-import { isNumber, isDefined } from 'tsfn'
+import { component, startWithType, mapProps } from 'refun'
+import { UNDEFINED } from 'tsfn'
 import type { TPrimitiveBlock } from './types'
 
 export const PrimitiveBlock = component(
   startWithType<TPrimitiveBlock>(),
-  mapDefaultProps({
-    shouldFlow: false,
-    shouldHideOverflow: false,
-    shouldIgnorePointerEvents: false,
-    shouldForceAcceleration: false,
-    shouldScroll: false,
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  }),
   mapProps(({
+    id,
     onRef,
     width,
     height,
@@ -34,10 +24,10 @@ export const PrimitiveBlock = component(
     floatingIndex,
     opacity,
     children,
-    shouldScroll,
-    shouldHideOverflow,
-    shouldFlow,
-    shouldIgnorePointerEvents,
+    shouldScroll = false,
+    shouldHideOverflow = false,
+    shouldFlow = false,
+    shouldIgnorePointerEvents = false,
   }) => {
     const style: ViewStyle = {
       flexDirection: 'row',
@@ -46,38 +36,22 @@ export const PrimitiveBlock = component(
       top,
       right,
       bottom,
+      width,
+      height,
+      maxWidth,
+      maxHeight,
+      minWidth,
+      minHeight,
+      zIndex: floatingIndex,
+      opacity,
     }
 
-    const props: ViewProps & { children?: ReactNode } = {
-      children,
+    if (top === UNDEFINED && bottom === UNDEFINED) {
+      style.top = 0
     }
 
-    if (isNumber(width)) {
-      style.width = width
-    }
-
-    if (isNumber(height)) {
-      style.height = height
-    }
-
-    if (isNumber(maxWidth)) {
-      style.maxWidth = maxWidth
-    }
-
-    if (isNumber(maxHeight)) {
-      style.maxHeight = maxHeight
-    }
-
-    if (isNumber(minWidth)) {
-      style.minWidth = minWidth
-    }
-
-    if (isNumber(minHeight)) {
-      style.minHeight = minHeight
-    }
-
-    if (isNumber(floatingIndex)) {
-      style.zIndex = floatingIndex
+    if (left === UNDEFINED && right === UNDEFINED) {
+      style.left = 0
     }
 
     if (shouldHideOverflow) {
@@ -92,15 +66,16 @@ export const PrimitiveBlock = component(
       style.overflow = 'scroll'
     }
 
-    if (isNumber(opacity)) {
-      style.opacity = opacity
+    const props: ViewProps & { children?: ReactNode } = {
+      testID: id,
+      children,
     }
 
     if (shouldIgnorePointerEvents) {
       props.pointerEvents = 'none'
     }
 
-    if (isDefined(onRef)) {
+    if (onRef !== UNDEFINED) {
       (props as any).ref = onRef
     }
 

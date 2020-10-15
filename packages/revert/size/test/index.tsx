@@ -1,23 +1,21 @@
+import { TransformContext } from '@revert/transform'
 import React from 'react'
 import { create, act } from 'react-test-renderer'
 import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
-import { Size } from '../src/Size'
+import { PrimitiveSize } from '../src/PrimitiveSize'
 
-test('revert/size: standard flow', (t) => {
-  const sizes = [{
-    width: 42.424,
-    height: 34.343,
-  }, {
-    width: 42.424,
-    height: 34.343,
-  }]
+test('revert/PrimitiveSize: standard flow', (t) => {
+  const sizes = {
+    top: 0,
+    left: 0,
+    right: 42.424,
+    bottom: 34.343,
+  }
   const onWidthChangeSpy = createSpy(() => {})
   const onHeightChangeSpy = createSpy(() => {})
-  const getRectSpy = createSpy(({ index }) => sizes[index])
-  const getWidthSpy = createSpy(({ index }) => sizes[index].width)
-  const getHeightSpy = createSpy(({ index }) => sizes[index].height)
+  const getRectSpy = createSpy(() => sizes)
 
   let renderer: ReactTestRenderer
 
@@ -25,26 +23,20 @@ test('revert/size: standard flow', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer = create(
-      <Size
+      <PrimitiveSize
         width={0}
         height={0}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
       , {
         createNodeMock: () => {
           return {
-            firstElementChild: {
+            children: [{
               getBoundingClientRect: getRectSpy,
-            },
-            get offsetWidth() {
-              return getWidthSpy()
-            },
-            get offsetHeight() {
-              return getHeightSpy()
-            },
+            }],
           }
         },
       }
@@ -54,14 +46,14 @@ test('revert/size: standard flow', (t) => {
   t.deepEquals(
     getSpyCalls(onWidthChangeSpy),
     [
-      [42.424],
+      [42.4],
     ],
     'Mount: should call onWidthChange'
   )
   t.deepEquals(
     getSpyCalls(onHeightChangeSpy),
     [
-      [34.343],
+      [34.3],
     ],
     'Mount: should call onHeightChange'
   )
@@ -70,28 +62,28 @@ test('revert/size: standard flow', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer.update(
-      <Size
-        width={42.424}
-        height={34.343}
+      <PrimitiveSize
+        width={42.4}
+        height={34.3}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
     )
   })
 
   t.deepEquals(
     getSpyCalls(onWidthChangeSpy),
     [
-      [42.424],
+      [42.4],
     ],
     'Update: should not call onWidthChange'
   )
   t.deepEquals(
     getSpyCalls(onHeightChangeSpy),
     [
-      [34.343],
+      [34.3],
     ],
     'Update: should not call onHeightChange'
   )
@@ -105,14 +97,14 @@ test('revert/size: standard flow', (t) => {
   t.deepEquals(
     getSpyCalls(onWidthChangeSpy),
     [
-      [42.424],
+      [42.4],
     ],
     'Unmount: should not call onWidthChange'
   )
   t.deepEquals(
     getSpyCalls(onHeightChangeSpy),
     [
-      [34.343],
+      [34.3],
     ],
     'Unmount: should not call onHeightChange'
   )
@@ -120,19 +112,16 @@ test('revert/size: standard flow', (t) => {
   t.end()
 })
 
-test('revert/size: mount with correct size', (t) => {
-  const sizes = [{
-    width: 42.879,
-    height: 34.677,
-  }, {
-    width: 42.879,
-    height: 34.677,
-  }]
+test('revert/PrimitiveSize: mount with correct initial sizes', (t) => {
+  const sizes = {
+    left: 0,
+    top: 0,
+    right: 42.879,
+    bottom: 34.677,
+  }
   const onWidthChangeSpy = createSpy(() => {})
   const onHeightChangeSpy = createSpy(() => {})
-  const getRectSpy = createSpy(({ index }) => sizes[index])
-  const getWidthSpy = createSpy(({ index }) => sizes[index].width)
-  const getHeightSpy = createSpy(({ index }) => sizes[index].height)
+  const getRectSpy = createSpy(() => sizes)
 
   let renderer: ReactTestRenderer
 
@@ -140,26 +129,20 @@ test('revert/size: mount with correct size', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer = create(
-      <Size
-        width={42.879}
-        height={34.677}
+      <PrimitiveSize
+        width={42.9}
+        height={34.7}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
       , {
         createNodeMock: () => {
           return {
-            firstElementChild: {
+            children: [{
               getBoundingClientRect: getRectSpy,
-            },
-            get offsetWidth() {
-              return getWidthSpy()
-            },
-            get offsetHeight() {
-              return getHeightSpy()
-            },
+            }],
           }
         },
       }
@@ -181,14 +164,14 @@ test('revert/size: mount with correct size', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer.update(
-      <Size
-        width={42.879}
-        height={34.677}
+      <PrimitiveSize
+        width={42.9}
+        height={34.7}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
     )
   })
 
@@ -223,19 +206,21 @@ test('revert/size: mount with correct size', (t) => {
   t.end()
 })
 
-test('revert/size: call onChange again if sizes are different', (t) => {
+test('revert/PrimitiveSize: report if measured sizes has changed', (t) => {
   const sizes = [{
-    width: 42,
-    height: 34,
+    left: 0,
+    top: 0,
+    right: 42,
+    bottom: 34,
   }, {
-    width: 43,
-    height: 35,
+    left: 0,
+    top: 0,
+    right: 43,
+    bottom: 35,
   }]
   const onWidthChangeSpy = createSpy(() => {})
   const onHeightChangeSpy = createSpy(() => {})
   const getRectSpy = createSpy(({ index }) => sizes[index])
-  const getWidthSpy = createSpy(({ index }) => sizes[index].width)
-  const getHeightSpy = createSpy(({ index }) => sizes[index].height)
 
   let renderer: ReactTestRenderer
 
@@ -243,26 +228,20 @@ test('revert/size: call onChange again if sizes are different', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer = create(
-      <Size
+      <PrimitiveSize
         width={0}
         height={0}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
       , {
         createNodeMock: () => {
           return {
-            firstElementChild: {
+            children: [{
               getBoundingClientRect: getRectSpy,
-            },
-            get offsetWidth() {
-              return getWidthSpy()
-            },
-            get offsetHeight() {
-              return getHeightSpy()
-            },
+            }],
           }
         },
       }
@@ -288,14 +267,14 @@ test('revert/size: call onChange again if sizes are different', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer.update(
-      <Size
+      <PrimitiveSize
         width={42}
         height={34}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
     )
   })
 
@@ -342,19 +321,24 @@ test('revert/size: call onChange again if sizes are different', (t) => {
   t.end()
 })
 
-test('revert/size: missing part of size state loop', (t) => {
-  const sizes = [{
-    width: 42,
-    height: 34,
-  }, {
-    width: 43,
-    height: 35,
-  }]
+test('revert/PrimitiveSize: multiple children', (t) => {
+  const sizes = [
+    {
+      left: -5,
+      right: 15,
+      top: 5,
+      bottom: 15,
+    },
+    {
+      left: 10,
+      right: 20,
+      top: 10,
+      bottom: 20,
+    },
+  ]
+
   const onWidthChangeSpy = createSpy(() => {})
   const onHeightChangeSpy = createSpy(() => {})
-  const getRectSpy = createSpy(({ index }) => sizes[index])
-  const getWidthSpy = createSpy(({ index }) => sizes[index].width)
-  const getHeightSpy = createSpy(({ index }) => sizes[index].height)
 
   let renderer: ReactTestRenderer
 
@@ -362,127 +346,23 @@ test('revert/size: missing part of size state loop', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer = create(
-      <Size
-        width={0}
-        onHeightChange={onHeightChangeSpy}
-      >
-        <span/>
-      </Size>
-      , {
-        createNodeMock: () => {
-          return {
-            firstElementChild: {
-              getBoundingClientRect: getRectSpy,
-            },
-            get offsetWidth() {
-              return getWidthSpy()
-            },
-            get offsetHeight() {
-              return getHeightSpy()
-            },
-          }
-        },
-      }
-    )
-  })
-
-  t.deepEquals(
-    getSpyCalls(onWidthChangeSpy),
-    [],
-    'Mount: should not call onWidthChange'
-  )
-  t.deepEquals(
-    getSpyCalls(onHeightChangeSpy),
-    [],
-    'Mount: should not call onHeightChange'
-  )
-
-  /* Update */
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  act(() => {
-    renderer.update(
-      <Size
-        height={34}
-        onWidthChange={onWidthChangeSpy}
-      >
-        <span/>
-      </Size>
-    )
-  })
-
-  t.deepEquals(
-    getSpyCalls(onWidthChangeSpy),
-    [],
-    'Update: should not call onWidthChange'
-  )
-  t.deepEquals(
-    getSpyCalls(onHeightChangeSpy),
-    [],
-    'Update: should not call onHeightChange'
-  )
-
-  /* Unmount */
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  act(() => {
-    renderer.unmount()
-  })
-
-  t.deepEquals(
-    getSpyCalls(onWidthChangeSpy),
-    [],
-    'Unmount: should not call onWidthChange'
-  )
-  t.deepEquals(
-    getSpyCalls(onHeightChangeSpy),
-    [],
-    'Unmount: should not call onHeightChange'
-  )
-
-  t.end()
-})
-
-test('revert/size: maxWidth and maxHeight', (t) => {
-  const sizes = [{
-    width: 42,
-    height: 34,
-  }, {
-    width: 42,
-    height: 34,
-  }]
-  const onWidthChangeSpy = createSpy(() => {})
-  const onHeightChangeSpy = createSpy(() => {})
-  const getRectSpy = createSpy(({ index }) => sizes[index])
-  const getWidthSpy = createSpy(({ index }) => sizes[index].width)
-  const getHeightSpy = createSpy(({ index }) => sizes[index].height)
-
-  let renderer: ReactTestRenderer
-
-  /* Mount */
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  act(() => {
-    renderer = create(
-      <Size
+      <PrimitiveSize
         width={0}
         height={0}
-        maxWidth={30}
-        maxHeight={20}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+        <span/>
+      </PrimitiveSize>
       , {
         createNodeMock: () => {
           return {
-            firstElementChild: {
-              getBoundingClientRect: getRectSpy,
-            },
-            get offsetWidth() {
-              return getWidthSpy()
-            },
-            get offsetHeight() {
-              return getHeightSpy()
-            },
+            children: [{
+              getBoundingClientRect: () => sizes[0],
+            }, {
+              getBoundingClientRect: () => sizes[1],
+            }],
           }
         },
       }
@@ -492,14 +372,14 @@ test('revert/size: maxWidth and maxHeight', (t) => {
   t.deepEquals(
     getSpyCalls(onWidthChangeSpy),
     [
-      [42],
+      [25],
     ],
     'Mount: should call onWidthChange'
   )
   t.deepEquals(
     getSpyCalls(onHeightChangeSpy),
     [
-      [34],
+      [15],
     ],
     'Mount: should call onHeightChange'
   )
@@ -508,28 +388,28 @@ test('revert/size: maxWidth and maxHeight', (t) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   act(() => {
     renderer.update(
-      <Size
-        width={42}
-        height={34}
+      <PrimitiveSize
+        width={25}
+        height={15}
         onWidthChange={onWidthChangeSpy}
         onHeightChange={onHeightChangeSpy}
       >
         <span/>
-      </Size>
+      </PrimitiveSize>
     )
   })
 
   t.deepEquals(
     getSpyCalls(onWidthChangeSpy),
     [
-      [42],
+      [25],
     ],
     'Update: should not call onWidthChange'
   )
   t.deepEquals(
     getSpyCalls(onHeightChangeSpy),
     [
-      [34],
+      [15],
     ],
     'Update: should not call onHeightChange'
   )
@@ -543,16 +423,204 @@ test('revert/size: maxWidth and maxHeight', (t) => {
   t.deepEquals(
     getSpyCalls(onWidthChangeSpy),
     [
-      [42],
+      [25],
     ],
     'Unmount: should not call onWidthChange'
   )
   t.deepEquals(
     getSpyCalls(onHeightChangeSpy),
     [
-      [34],
+      [15],
     ],
     'Unmount: should not call onHeightChange'
+  )
+
+  t.end()
+})
+
+test('revert/PrimitiveSize: transform scale', (t) => {
+  const sizes = {
+    top: 0,
+    left: 0,
+    right: 40,
+    bottom: 25,
+  }
+  const onWidthChangeSpy = createSpy(() => {})
+  const onHeightChangeSpy = createSpy(() => {})
+
+  let renderer: ReactTestRenderer
+
+  /* Mount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  act(() => {
+    renderer = create(
+      <TransformContext.Provider value={{ _scale: 2 }}>
+        <PrimitiveSize
+          width={0}
+          height={0}
+          onWidthChange={onWidthChangeSpy}
+          onHeightChange={onHeightChangeSpy}
+        >
+          <span/>
+        </PrimitiveSize>
+      </TransformContext.Provider>
+      , {
+        createNodeMock: () => {
+          return {
+            children: [{
+              getBoundingClientRect: () => sizes,
+            }],
+          }
+        },
+      }
+    )
+  })
+
+  t.deepEquals(
+    getSpyCalls(onWidthChangeSpy),
+    [
+      [20],
+    ],
+    'Mount: should call onWidthChange'
+  )
+  t.deepEquals(
+    getSpyCalls(onHeightChangeSpy),
+    [
+      [12.5],
+    ],
+    'Mount: should call onHeightChange'
+  )
+
+  /* Update */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  act(() => {
+    renderer.update(
+      <TransformContext.Provider value={{ _scale: 2 }}>
+        <PrimitiveSize
+          width={20}
+          height={12.5}
+          onWidthChange={onWidthChangeSpy}
+          onHeightChange={onHeightChangeSpy}
+        >
+          <span/>
+        </PrimitiveSize>
+      </TransformContext.Provider>
+    )
+  })
+
+  t.deepEquals(
+    getSpyCalls(onWidthChangeSpy),
+    [
+      [20],
+    ],
+    'Update: should not call onWidthChange'
+  )
+  t.deepEquals(
+    getSpyCalls(onHeightChangeSpy),
+    [
+      [12.5],
+    ],
+    'Update: should not call onHeightChange'
+  )
+
+  /* Unmount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  act(() => {
+    renderer.unmount()
+  })
+
+  t.deepEquals(
+    getSpyCalls(onWidthChangeSpy),
+    [
+      [20],
+    ],
+    'Unmount: should not call onWidthChange'
+  )
+  t.deepEquals(
+    getSpyCalls(onHeightChangeSpy),
+    [
+      [12.5],
+    ],
+    'Unmount: should not call onHeightChange'
+  )
+
+  t.end()
+})
+
+test('revert/PrimitiveSize: maxWidth', (t) => {
+  const sizes = {
+    left: 0,
+    top: 0,
+    right: 42,
+    bottom: 34,
+  }
+  const getRectSpy = createSpy(() => sizes)
+
+  let renderer: ReactTestRenderer
+
+  /* Mount */
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  act(() => {
+    renderer = create(
+      <PrimitiveSize>
+        <span/>
+      </PrimitiveSize>
+      , {
+        createNodeMock: () => {
+          return {
+            children: [{
+              getBoundingClientRect: getRectSpy,
+            }],
+          }
+        },
+      }
+    )
+  })
+
+  t.deepEquals(
+    renderer!.toJSON(),
+    {
+      type: 'div',
+      props: {
+        style: {
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: 'max-content',
+        },
+      },
+      children: [{ type: 'span', props: {}, children: null }],
+    },
+    'should not have max-width set in styles'
+  )
+
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  act(() => {
+    renderer.update(
+      <PrimitiveSize
+        maxWidth={30}
+      >
+        <span/>
+      </PrimitiveSize>
+    )
+  })
+
+  t.deepEquals(
+    renderer!.toJSON(),
+    {
+      type: 'div',
+      props: {
+        style: {
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: 'max-content',
+          maxWidth: 30,
+        },
+      },
+      children: [{ type: 'span', props: {}, children: null }],
+    },
+    'should have max-width set in styles'
   )
 
   t.end()

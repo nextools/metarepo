@@ -22,11 +22,13 @@ export const ParentBlock = component(
   _onHeightChange,
   _maxWidth,
   _maxHeight,
+  id,
   onRef,
   shouldIgnorePointerEvents,
   children,
 }) => (
   <PrimitiveBlock
+    id={id}
     left={_parentLeft}
     top={_parentTop}
     width={_parentWidth}

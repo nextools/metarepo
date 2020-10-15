@@ -12,7 +12,7 @@ export default (configPath: string) =>
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     spawnChildProcessStream(
-      `docker run --rm --name npm -p ${PORT}:${PORT} -v ${configPath}:/verdaccio/conf/config.yaml verdaccio/verdaccio'`,
+      `docker run --rm --name npm -p ${PORT}:${PORT} -v ${configPath}:/verdaccio/conf/config.yaml verdaccio/verdaccio`,
       {
         stdout: null,
         stderr: process.stderr,

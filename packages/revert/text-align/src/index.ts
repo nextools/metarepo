@@ -1,2 +1,2 @@
-export * from './TextAlign'
+export * from './PrimitiveTextAlign'
 export type { TTextAlign } from './types'

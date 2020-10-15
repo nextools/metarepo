@@ -1,6 +1,7 @@
-import { Block, InlineBlock } from '@revert/block'
+import { Block } from '@revert/block'
 import { Button } from '@revert/button'
 import { Layout, Layout_Item } from '@revert/layout'
+import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
 import { elegir } from 'elegir'
 import React from 'react'
@@ -117,9 +118,9 @@ export const ZoomLevel = component(
               </Layout_Item>
 
               <Layout_Item vAlign="center">
-                <InlineBlock>
+                <Size>
                   <IconResetTransform/>
-                </InlineBlock>
+                </Size>
               </Layout_Item>
             </Layout>
           </TextThemeProvider>

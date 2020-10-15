@@ -1,6 +1,6 @@
 import { Button } from '@revert/button'
 import type { TColor } from '@revert/color'
-import { Size } from '@revert/size'
+import { PrimitiveSize as Size } from '@revert/size'
 import React from 'react'
 import { component, startWithType, mapState, mapContext } from 'refun'
 import {

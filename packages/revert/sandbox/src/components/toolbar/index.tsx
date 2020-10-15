@@ -1,6 +1,6 @@
-import { InlineBlock } from '@revert/block'
 import { Label } from '@revert/label'
 import { Layout, Layout_Item, Layout_Spacer, LayoutContext, LAYOUT_SIZE_FIT } from '@revert/layout'
+import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
 import React from 'react'
 import { startWithType, mapContext, component } from 'refun'
@@ -111,9 +111,9 @@ export const Toolbar = component(
                   <Label>
                     <Layout spaceBetween={15}>
                       <Layout_Item width={LAYOUT_SIZE_FIT} vAlign="center">
-                        <InlineBlock>
+                        <Size>
                           <IconCanvas/>
-                        </InlineBlock>
+                        </Size>
                       </Layout_Item>
                       <Layout_Item vAlign="center">
                         <Text>
@@ -163,9 +163,9 @@ export const Toolbar = component(
                   <Label>
                     <Layout spaceBetween={15}>
                       <Layout_Item width={LAYOUT_SIZE_FIT} vAlign="center">
-                        <InlineBlock>
+                        <Size>
                           <IconDarkMode/>
-                        </InlineBlock>
+                        </Size>
                       </Layout_Item>
                       <Layout_Item vAlign="center">
                         <Text>
