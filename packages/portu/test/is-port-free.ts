@@ -1,6 +1,6 @@
 import { createServer } from 'net'
 import test from 'tape'
-import { checkPort, getFreePort } from '../src'
+import { isPortFree, getFreePort } from '../src'
 
 test('portu: checkPort', async (t) => {
   const host = 'localhost'
@@ -15,7 +15,7 @@ test('portu: checkPort', async (t) => {
       .listen(port, host)
   })
 
-  let isFree = await checkPort(port, host)
+  let isFree = await isPortFree(port, host)
 
   t.false(
     isFree,
@@ -32,7 +32,7 @@ test('portu: checkPort', async (t) => {
     })
   })
 
-  isFree = await checkPort(port, host)
+  isFree = await isPortFree(port, host)
 
   t.true(
     isFree,

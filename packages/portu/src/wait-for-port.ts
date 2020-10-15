@@ -1,16 +1,16 @@
 import { sleep } from 'sleap'
-import { checkPort } from './check-port'
+import { isPortFree } from './is-port-free'
 
 const RETRY_TIMEOUT = 200
 
 export const waitForPort = async (port: number, host: string): Promise<void> => {
-  let isPortFree = true
+  let isFree = true
 
   do {
-    isPortFree = await checkPort(port, host)
+    isFree = await isPortFree(port, host)
 
-    if (isPortFree) {
+    if (isFree) {
       await sleep(RETRY_TIMEOUT)
     }
-  } while (isPortFree)
+  } while (isFree)
 }
