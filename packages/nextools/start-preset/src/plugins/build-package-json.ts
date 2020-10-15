@@ -43,6 +43,11 @@ export default (dir: string) =>
 
           break
         }
+        case 'types': {
+          result.types = 'types/index.d.ts'
+
+          break
+        }
         case 'bin': {
           result[key] = Object.entries(value as TJsonMap).reduce((bins, [binKey, binValue]) => {
             if (typeof binValue === 'string') {
