@@ -46,5 +46,14 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 2,
     semi: 'off',
     '@typescript-eslint/semi': [2, 'never'],
+    '@typescript-eslint/strict-boolean-expressions': [2, {
+      allowString: false,
+      allowNumber: false,
+      allowNullableObject: false,
+      allowNullableBoolean: false,
+      allowNullableString: false,
+      allowNullableNumber: false,
+      allowAny: false,
+    }],
   },
 }
