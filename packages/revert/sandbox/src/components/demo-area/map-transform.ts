@@ -62,8 +62,6 @@ export const mapTransform = <P extends TMapTransform>(props: P) => {
         const zoom = filterZoom(prevTransform.z + deltaY)
         const zoomDiff = zoom - prevTransform.z
 
-        // console.log(deltaY, zoom)
-
         transform = {
           x: prevTransform.x - cursorX.current * zoomDiff,
           y: prevTransform.y - cursorY.current * zoomDiff,

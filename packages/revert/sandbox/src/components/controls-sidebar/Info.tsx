@@ -6,7 +6,7 @@ import React from 'react'
 import { startWithType, mapContext, pureComponent } from 'refun'
 import { isUndefined } from 'tsfn'
 import { mapMetaStoreState } from '../../store-meta'
-import { Text } from '../text'
+import { PrimitiveText, Text } from '../text'
 import { ThemeContext } from '../theme-context'
 
 export const Info = pureComponent(
@@ -52,8 +52,6 @@ export const Info = pureComponent(
     )
   }
 
-  console.log(theme.linkColor)
-
   return (
     <Scroll shouldScrollVertically>
       <Layout direction="vertical" hPadding={10} vPadding={10} spaceBetween={10}>
@@ -78,14 +76,14 @@ export const Info = pureComponent(
                   {packageInfo.designDocsUrl && (
                     <Layout_Item>
                       <Link target="_blank" href={packageInfo.designDocsUrl}>
-                        <Text isUnderline color={theme.linkColor}>Design docs</Text>
+                        <PrimitiveText isUnderline color={theme.linkColor}>Design docs</PrimitiveText>
                       </Link>
                     </Layout_Item>
                   )}
                   {packageInfo.sourceCodeUrl && (
                     <Layout_Item>
                       <Link target="_blank" href={packageInfo.sourceCodeUrl}>
-                        <Text isUnderline color={theme.linkColor}>Codebase</Text>
+                        <PrimitiveText isUnderline color={theme.linkColor}>Codebase</PrimitiveText>
                       </Link>
                     </Layout_Item>
                   )}
