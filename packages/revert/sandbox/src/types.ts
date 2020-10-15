@@ -1,7 +1,6 @@
 import type { TColor } from '@revert/color'
 import type { TCommonComponentConfig } from 'autoprops'
 import type { FC } from 'react'
-import type { TRequiredKeys, TOptionalKeys } from 'tsfn'
 import type { TJsonMap } from 'typeon'
 import type { TPopoverPlugin, TComponentPlugin } from './components/plugin-provider/types'
 import type { SYMBOL_CONTROL_COLOR, SYMBOL_CONTROL_SWITCH, SYMBOL_CONTROL_DROPDOWN } from './symbols'
@@ -29,9 +28,7 @@ export type TComponentControlSymbols =
   typeof SYMBOL_CONTROL_DROPDOWN
 
 export type TComponentControls<TProps> = {
-  [K in Exclude<TRequiredKeys<TProps>, 'children'>]: TComponentControlSymbols;
-} & {
-  [K in TOptionalKeys<TProps> | Extract<keyof TProps, 'children'>]?: TComponentControlSymbols;
+  [K in keyof TProps]?: TComponentControlSymbols
 }
 
 export type TCommonComponentControls = {

@@ -7,7 +7,7 @@ import type { TTextStyle } from './types'
 export const CreateLayoutText = <T extends TTextStyle>(PrimitiveText: FC<T>) => {
   const Text: TComponent<T> = (props) => (
     <Size shouldPreventWrap={props.shouldPreventWrap}>
-      <PrimitiveText {...props}/>
+      {PrimitiveText(props)}
     </Size>
   )
 

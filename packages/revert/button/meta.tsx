@@ -37,6 +37,8 @@ export const config: TComponentConfig<TButton, 'text'> = {
   required: ['text'],
 }
 
+export { default as packageJson } from './package.json'
+
 export const controls: TComponentControls<TButton> = {
   isDisabled: SYMBOL_CONTROL_SWITCH,
 }
