@@ -1,10 +1,11 @@
 import test from 'tape'
+import { isString } from 'tsfn'
 import getConfig from '../src/getConfig'
 
 test('getConfig', (t) => {
   const origTravisEnv = process.env.TRAVIS
 
-  if (origTravisEnv) {
+  if (isString(origTravisEnv)) {
     Reflect.deleteProperty(process.env, 'TRAVIS')
   }
 
@@ -19,7 +20,7 @@ test('getConfig', (t) => {
     )
   }
 
-  process.env.TRAVIS = origTravisEnv || 'TRAVIS'
+  process.env.TRAVIS = origTravisEnv ?? 'TRAVIS'
 
   const config = getConfig()
 
@@ -29,9 +30,7 @@ test('getConfig', (t) => {
     'must be resolved with config if CI service was found'
   )
 
-  if (!origTravisEnv) {
-    Reflect.deleteProperty(process.env, 'TRAVIS')
-  }
+  Reflect.deleteProperty(process.env, 'TRAVIS')
 
   t.end()
 })

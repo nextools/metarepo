@@ -9,7 +9,7 @@ const skipFirstAsync = (n: number) => <T>(iterable: AsyncIterable<T>): AsyncIter
     while (i < n) {
       const result = await asyncGenerator.next()
 
-      if (result.done) {
+      if (result.done === true) {
         break
       }
 
@@ -30,7 +30,7 @@ const skipLastAsync = (n: number) => <T>(iterable: AsyncIterable<T>): AsyncItera
     for (let i = 0; i < n; i++) {
       const result = await asyncGenerator.next()
 
-      if (result.done) {
+      if (result.done === true) {
         break
       }
 

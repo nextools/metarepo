@@ -13,7 +13,7 @@ type TTasks = {
 ;(async () => {
   try {
     const options = await getStartOptions()
-    const tasksFile = options && options.file ? path.resolve(options.file) : require.resolve('..')
+    const tasksFile = typeof options.file === 'string' ? path.resolve(options.file) : require.resolve('..')
     const tasks = await import(tasksFile) as TTasks
     const filteredTasks = Object.entries(tasks).reduce((acc, [key, value]) => {
       if (TASK_NAME_REGEXP.test(key)) {

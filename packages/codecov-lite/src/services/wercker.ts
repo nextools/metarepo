@@ -1,8 +1,9 @@
+import { isUndefined } from 'tsfn'
 import type { TServiceConfig } from '../types'
 
 // http://devcenter.wercker.com/docs/environment-variables/available-env-vars.html
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {
-  if (!env.WERCKER_MAIN_PIPELINE_STARTED) {
+  if (isUndefined(env.WERCKER_MAIN_PIPELINE_STARTED)) {
     return null
   }
 

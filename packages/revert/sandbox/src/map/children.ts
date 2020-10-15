@@ -80,7 +80,7 @@ export const mapChildren = <K extends string> (childrenMap: TChildrenMap<K>) =>
 
           if (symbols.includes(childSymbol)) {
             if (process.env.NODE_ENV === 'development') {
-              if (childrenProps[key].length > 0 && !isMultiple) {
+              if (childrenProps[key].length > 0 && isMultiple !== true) {
                 console.error(`Element "${childSymbol.description}" is only allowed once as a child`)
               }
             }
@@ -96,7 +96,7 @@ export const mapChildren = <K extends string> (childrenMap: TChildrenMap<K>) =>
           const { isMultiple } = childrenMap[childrenMapRestKey]
 
           if (process.env.NODE_ENV === 'development') {
-            if (childrenProps[childrenMapRestKey].length > 0 && !isMultiple) {
+            if (childrenProps[childrenMapRestKey].length > 0 && isMultiple !== true) {
               console.error(`Element "${childrenMapRestKey}" is only allowed once as a child`)
             }
           }

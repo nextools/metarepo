@@ -29,7 +29,7 @@ export const serveIterable = <T extends TJsonValue>(iterable: AsyncIterable<T>, 
               const response = await pResponse
               const result = await iterator.next(response)
 
-              if (result.done) {
+              if (result.done === true) {
                 await sendMessage(ws, { type: 'DONE' })
                 await closeServer(wss)
               } else {

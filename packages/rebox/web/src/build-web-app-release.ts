@@ -48,7 +48,7 @@ const statsOptions: Stats.ToStringOptionsObject = {
 }
 
 export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
-  const options: TBuildWebAppReleaseOptions = {
+  const options = {
     isQuiet: false,
     shouldGenerateSourceMaps: true,
     shouldGenerateBundleAnalyzerReport: true,
@@ -196,7 +196,7 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
 
   return new Promise<void>((resolve, reject) => {
     webpack(config, (err, stats) => {
-      if (err) {
+      if (err !== null) {
         return reject(err)
       }
 

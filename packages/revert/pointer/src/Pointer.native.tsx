@@ -30,7 +30,7 @@ export const Pointer = component(
       }
     },
   }),
-  mapWithProps(({ isDisabled, onDown, onUp }) => {
+  mapWithProps(({ isDisabled = false, onDown, onUp }) => {
     const props: TouchableWithoutFeedbackProps = {}
 
     if (!isDisabled) {

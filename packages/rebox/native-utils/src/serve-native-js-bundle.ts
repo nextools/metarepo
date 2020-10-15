@@ -1,7 +1,6 @@
 import { waitTimePromise } from '@psxcode/wait'
-// @ts-ignore
-import isPortReachable from 'is-port-reachable'
 import fetch from 'node-fetch'
+import { isPortFree } from 'portu'
 import { spawnChildProcessStream } from 'spown'
 import { isUndefined } from 'tsfn'
 import type { TPlatform } from './types'
@@ -25,6 +24,7 @@ export type TServeNativeJsBundleOptions = {
 export const serveNativeJsBundle = async (options: TServeNativeJsBundleOptions): Promise<() => Promise<void>> => {
   const isDevString = isUndefined(options.isDev) ? 'true' : String(options.isDev)
   const shouldMinifyString = isUndefined(options.shouldMinify) ? 'false' : String(options.shouldMinify)
+  const host = 'localhost'
 
   const proc = spawnChildProcessStream(
     `haul start --port ${String(options.port)} --dev ${isDevString} --minify ${shouldMinifyString} --interactive false --eager ${options.platform} --config ${require.resolve('./haul.config.js')}`,
@@ -39,12 +39,12 @@ export const serveNativeJsBundle = async (options: TServeNativeJsBundleOptions):
     }
   )
 
-  while (!(await isPortReachable(options.port))) {
+  while (await isPortFree(options.port, host)) {
     await waitTimePromise(200)
   }
 
   await fetch(
-    `http://localhost:${options.port}/index.bundle?platform=${options.platform}&dev=${isDevString}&minify=${shouldMinifyString}`,
+    `http://${host}:${options.port}/index.bundle?platform=${options.platform}&dev=${isDevString}&minify=${shouldMinifyString}`,
     { timeout: REQUEST_TIMEOUT }
   )
 

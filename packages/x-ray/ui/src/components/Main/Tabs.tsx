@@ -61,7 +61,7 @@ const Tab = component(
     left={props.left}
     width={props.width + INFO_HORIZONTAL_PADDING * 2}
     height={props.height + INFO_VERTICAL_PADDING * 2}
-    opacity={props.count > 0 && !props.activeTab || props.activeTab === props.type ? 1 : 0.2}
+    opacity={props.count > 0 && (props.activeTab === null || props.activeTab === props.type) ? 1 : 0.2}
     isFlexbox
   >
     <Border

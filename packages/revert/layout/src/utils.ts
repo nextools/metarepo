@@ -143,11 +143,11 @@ const pushOffsets = (pushDistance: number, itemIndex: number, numItems: number, 
 
   leftPush = Math.min(dist - rightPush, allowedLeft)
 
-  if (allowedLeft) {
+  if (allowedLeft !== 0) {
     itemOffsets[itemIndex - 1] -= leftPush * inverter
   }
 
-  if (allowedRight) {
+  if (allowedRight !== 0) {
     itemOffsets[itemIndex + 1] += rightPush * inverter
   }
 
@@ -474,7 +474,7 @@ export const calcMeasureCrossAxisLayout = (
   }
 
   // Assign new values
-  const eachItemMaxSize = containerMaxSize || 0
+  const eachItemMaxSize = containerMaxSize ?? 0
 
   for (let i = 0; i < numItems; i++) {
     itemPositions[i] = padding

@@ -20,7 +20,7 @@ export const Tooltips: FC<TGraphTooltips> = ({
   <Fragment>
     {points.map((point, index) => {
       const nextValue = index + 1 < points.length ? points[index + 1].value : 0
-      const differenceWithPrePoint = Number(nextValue ? ((point.value - nextValue) / nextValue * 100.0).toFixed(2) : 0)
+      const differenceWithPrePoint = Number(nextValue !== 0 ? ((point.value - nextValue) / nextValue * 100.0).toFixed(2) : 0)
       const keyID = `${point.value}-tooltip-${index}`
 
       return (

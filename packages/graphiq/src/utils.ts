@@ -1,3 +1,4 @@
+import { isDefined } from 'tsfn'
 import type { TGraphEntry } from './types'
 
 export const globalObject = global as unknown as Window
@@ -6,7 +7,7 @@ export const getHash = (graphs: TGraphEntry[]): string | null => {
   const hash = globalObject.location.hash.substr(1)
   const selectedGraphID = graphs.find(({ graphName }) => graphName === hash)
 
-  return selectedGraphID ? hash : null
+  return isDefined(selectedGraphID) ? hash : null
 }
 
 export const updateHash = (hash: string | null): void => {

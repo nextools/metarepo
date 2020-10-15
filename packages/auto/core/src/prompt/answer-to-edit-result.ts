@@ -42,7 +42,7 @@ export const answerToEditResult = (question: TQuestionObj, answer: TQuestionObj)
 
   for (const name of Object.keys(rQ.dependencyBumps)) {
     const qDepNames = Object.keys(rQ.dependencyBumps[name])
-    const aDepNames = Object.keys(rA.dependencyBumps[name] || {})
+    const aDepNames = Object.keys(rA.dependencyBumps[name] ?? {})
     const filteredDepNames = qDepNames.filter((n) => !aDepNames.includes(n))
 
     if (filteredDepNames.length > 0) {

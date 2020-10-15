@@ -28,7 +28,7 @@ const getElementName = (element: ReactElement) => {
 const getValue = (valueIndex: number, values: readonly any[], key: string, required?: TReadonly<TCommonRequiredConfig>): string | undefined => {
   let index = -1
 
-  if (required?.includes(key)) {
+  if (isArray(required) && required.includes(key)) {
     index = valueIndex
   } else if (valueIndex > 0) {
     index = valueIndex - 1
@@ -70,7 +70,7 @@ const getValue = (valueIndex: number, values: readonly any[], key: string, requi
 }
 
 const getChildValue = (int: BigInteger, childConfig: TCommonComponentConfig, childKey: string, required?: TReadonly<TCommonRequiredConfig>): TAnyObject | undefined => {
-  if (required?.includes(childKey)) {
+  if (isArray(required) && required.includes(childKey)) {
     return getPropsImpl(childConfig, int)
   }
 

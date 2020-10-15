@@ -27,7 +27,7 @@ export type TReplacers = {
 
 export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
   plugin('template', ({ logPath, logMessage }) => async () => {
-    const { isString } = await import('tsfn')
+    const { isString, isDefined } = await import('tsfn')
 
     if (!isString(packagePath)) {
       throw '<package path> argument is required'
@@ -103,8 +103,8 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
 
     const userReplacers = {} as { [k: string]: string }
 
-    if (replacers?.[type]) {
-      for (const [key, value] of Object.entries(replacers[type])) {
+    if (isDefined(replacers?.[type])) {
+      for (const [key, value] of Object.entries(replacers![type])) {
         if (value === null) {
           const { result } = await prompts(
             {
@@ -201,7 +201,7 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
     const pkgJson = JSON.parse(await readFile(pkgJsonPath, 'utf8'))
     const pkgWorkspacePath = `packages/${packagePath}`
 
-    if (!nanomatch.some(pkgWorkspacePath, pkgJson.workspaces)) {
+    if (!(nanomatch.some(pkgWorkspacePath, pkgJson.workspaces) as boolean)) {
       pkgJson.workspaces.push(pkgWorkspacePath)
       pkgJson.workspaces.sort()
 

@@ -39,7 +39,7 @@ export const DemoArea = component(
   mapContext(ThemeContext),
   mapContext(LayoutContext),
   mapContext(PluginContext),
-  mapWithProps(({ ComponentWrapper, shouldMeasureComponent }) => ({
+  mapWithProps(({ ComponentWrapper, shouldMeasureComponent = false }) => ({
     MeasureComponent: shouldMeasureComponent ? DemoComponentMeasure : DemoComponentRevert,
     ComponentWrapper: ComponentWrapper ?? PureComponent,
   })),

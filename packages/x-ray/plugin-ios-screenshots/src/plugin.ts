@@ -14,6 +14,15 @@ import { SERVER_PORT, SERVER_HOST } from './constants'
 import { hasScreenshotDiff } from './has-screenshot-diff'
 import { prepareMeta } from './prepare-meta'
 
+type TRequest = {
+  path: string,
+  name: string,
+  id: string,
+  base64data: string,
+  meta: TJsonValue,
+  isDone: boolean,
+}
+
 export type TIosScreenshotsOptions = {
   fontsDir?: string,
   iPhoneVersion?: number,
@@ -67,7 +76,7 @@ export const iOsScreenshots = (options?: TIosScreenshotsOptions): TPlugin<Uint8A
         const server = http.createServer(async (req, res) => {
           try {
             if (req.url === '/upload') {
-              const { path, name, id, meta, isDone, base64data } = await unchunkJson(req)
+              const { path, name, id, meta, isDone, base64data } = await unchunkJson<TRequest>(req)
 
               if (currentPath !== path) {
                 try {

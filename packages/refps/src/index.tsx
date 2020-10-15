@@ -36,7 +36,7 @@ export const ReFps = component(
       while (true) {
         const result = await iterator.next()
 
-        if (!shouldCount || result.done) {
+        if (!shouldCount || result.done === true) {
           break
         }
 

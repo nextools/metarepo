@@ -10,7 +10,7 @@ export const PrimitiveCheckbox = component(
     left: 0,
     top: 0,
   }),
-  mapWithPropsMemo(({ isDisabled }) => {
+  mapWithPropsMemo(({ isDisabled = false }) => {
     const style: CSSProperties = {
       position: 'absolute',
       appearance: 'none',

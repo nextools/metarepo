@@ -1,6 +1,7 @@
 import BigInt from 'big-integer'
 import type { BigInteger } from 'big-integer'
 import type { TReadonly } from 'tsfn'
+import { isArray } from 'tsfn'
 import type { TCommonRequiredConfig } from './types'
 
 export const getIncrementedValueIndex = (values: readonly BigInteger[]): number => {
@@ -20,7 +21,7 @@ export const getPropNameByIndex = (changedValueIndex: number, propKeys: readonly
 }
 
 export const adjustLengthForOptionalProp = (length: BigInteger, key: string, required?: TReadonly<TCommonRequiredConfig>): BigInteger => {
-  if (required?.includes(key)) {
+  if (isArray(required) && required.includes(key)) {
     return length
   }
 

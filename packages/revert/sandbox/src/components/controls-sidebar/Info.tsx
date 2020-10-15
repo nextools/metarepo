@@ -4,7 +4,7 @@ import { Scroll } from '@revert/scroll'
 import { elegir } from 'elegir'
 import React from 'react'
 import { startWithType, mapContext, pureComponent } from 'refun'
-import { isUndefined } from 'tsfn'
+import { isString, isUndefined } from 'tsfn'
 import { mapMetaStoreState } from '../../store-meta'
 import { Text } from '../text'
 import { ThemeContext } from '../theme-context'
@@ -66,7 +66,7 @@ export const Info = pureComponent(
         <Layout_Item>
           <Text>Platform {packageInfo.platform}</Text>
         </Layout_Item>
-        {(packageInfo.designDocsUrl || packageInfo.sourceCodeUrl) && (
+        {(isString(packageInfo.designDocsUrl) || isString(packageInfo.sourceCodeUrl)) && (
           <Layout_Item>
             <Layout>
               <Layout_Item>
@@ -75,14 +75,14 @@ export const Info = pureComponent(
               <Layout_Item>
 
                 <Layout spaceBetween={10} direction="vertical">
-                  {packageInfo.designDocsUrl && (
+                  {isString(packageInfo.designDocsUrl) && (
                     <Layout_Item>
                       <Link target="_blank" href={packageInfo.designDocsUrl}>
                         <Text isUnderline color={theme.linkColor}>Design docs</Text>
                       </Link>
                     </Layout_Item>
                   )}
-                  {packageInfo.sourceCodeUrl && (
+                  {isString(packageInfo.sourceCodeUrl) && (
                     <Layout_Item>
                       <Link target="_blank" href={packageInfo.sourceCodeUrl}>
                         <Text isUnderline color={theme.linkColor}>Codebase</Text>

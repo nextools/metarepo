@@ -10,7 +10,7 @@ const style: CSSProperties = {
 
 export const PrimitiveLink: FC<TLink> = ({
   id,
-  isDisabled,
+  isDisabled = false,
   children,
   href,
   tabIndex,

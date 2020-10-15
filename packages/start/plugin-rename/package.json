@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.2",
-    "@start/plugin": "^2.0.0"
+    "@start/plugin": "^2.0.0",
+    "tsfn": "^2.1.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",

@@ -6,6 +6,7 @@ import path from 'path'
 import { mockRequire } from '@mock/require'
 import getCallerFile from 'get-caller-file'
 import { nanoid } from 'nanoid'
+import { isString, isNumber } from 'tsfn'
 
 export const mockRequest = (file: string, callback: RequestListener): () => void => {
   const tmpDir = realpathSync(tmpdir())
@@ -48,8 +49,8 @@ export const mockRequest = (file: string, callback: RequestListener): () => void
     } else {
       options = arg1 as RequestOptions
 
-      const host = options.hostname || options.host
-      const port = options.port ? `:${options.port}` : ''
+      const host = options.hostname ?? options.host
+      const port = (isString(options.port) || isNumber(options.port)) ? `:${options.port}` : ''
 
       reqUrl = `${options.protocol}//${host}${port}${options.path}`
     }

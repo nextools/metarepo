@@ -12,7 +12,7 @@ export let store: Store<TState>
 if (process.env.NODE_ENV === 'development') {
   store = createStore(
     reducer,
-    globalObject.__REDUX_DEVTOOLS_EXTENSION__ && globalObject.__REDUX_DEVTOOLS_EXTENSION__()
+    globalObject.__REDUX_DEVTOOLS_EXTENSION__?.()
   )
 } else {
   store = createStore(

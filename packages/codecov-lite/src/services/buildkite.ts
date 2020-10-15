@@ -1,8 +1,9 @@
+import { isUndefined } from 'tsfn'
 import type { TServiceConfig } from '../types'
 
 // https://buildkite.com/docs/guides/environment-variables
 export default (env: NodeJS.ProcessEnv): TServiceConfig => {
-  if (!env.BUILDKITE) {
+  if (isUndefined(env.BUILDKITE)) {
     return null
   }
 

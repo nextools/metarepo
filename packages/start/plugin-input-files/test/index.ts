@@ -45,7 +45,7 @@ test('plugin-input-files: simple', async (t) => {
   )
 
   t.ok(
-    result && result.foo,
+    result?.foo,
     'should return called plugin result'
   )
 })
@@ -80,7 +80,7 @@ test('plugin-input-files: async plugin', async (t) => {
   )
 
   t.ok(
-    result && result.foo,
+    result?.foo,
     'should return called plugin result'
   )
 })

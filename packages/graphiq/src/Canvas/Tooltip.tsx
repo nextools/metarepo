@@ -100,7 +100,7 @@ export const Tooltip = component(
           </tspan>
           <tspan x={tooltip.spanX} dy={tooltip.spanY}>
             {value}
-            {valueDifference ?
+            {valueDifference !== 0 ?
               (
                 <tspan fill={valueDifference > 0 ? 'red' : 'green'}>
                   ({valueDifference > 0 ? `+${valueDifference}` : valueDifference}%)

@@ -1,3 +1,5 @@
+import { isString } from 'tsfn'
+
 const relativePattern = /^[.|/]/
 const scopePattern = /^(?:(@[^/]+)[/]+)([^/]+)[/]?/
 const basePattern = /^([^/]+)[/]?/
@@ -11,7 +13,7 @@ export const getPackageName = (str: string): string | null => {
   // scoped package
   let match = scopePattern.exec(str)
 
-  if (match && match[1] && match[2]) {
+  if (match !== null && isString(match[1]) && isString(match[2])) {
     return `${match[1]}/${match[2]}`
   }
 

@@ -10,7 +10,7 @@ export default (taskNames: string[], options: Options = {}) => (...args: string[
     const { default: pAll } = await import('p-all')
 
     const pAllOptions = {
-      concurrency: options.maxProcesses || Infinity,
+      concurrency: options.maxProcesses ?? Infinity,
     }
 
     await pAll(

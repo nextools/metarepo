@@ -9,7 +9,7 @@ type TMocks = {
 const originalLoad = Module._load
 const mocksMap = new Map<string, Set<Map<string, any>>>()
 // https://nodejs.org/docs/latest-v12.x/api/modules.html#modulesModule_createrequire_filename
-const createRequire = Module.createRequire || Module.createRequireFromPath
+const createRequire = Module.createRequire ?? Module.createRequireFromPath
 
 const getMocks = (module: NodeModule): Set<Map<string, any>> | null => {
   if (mocksMap.has(module.id)) {

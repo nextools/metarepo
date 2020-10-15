@@ -7,7 +7,7 @@ import type { TLine, TLineElement, TMeta } from './types'
 export const hasKeys = (obj: any) => Object.keys(obj).length > 0
 
 export const getDisplayName = (component: ComponentClass<any> | FC<any>) => {
-  return component.displayName || component.name
+  return component.displayName ?? component.name
 }
 
 export const isUndefined = (value: any): value is undefined => typeof value === 'undefined'

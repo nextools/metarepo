@@ -34,7 +34,7 @@ export default (extensions?: string[]) =>
         const sourceMapRaw = getSourceMapFromSource(source)
         let sourceMapObject = null
 
-        if (sourceMapRaw) {
+        if (sourceMapRaw !== null) {
           sourceMapObject = sourceMapRaw.toObject()
         }
 

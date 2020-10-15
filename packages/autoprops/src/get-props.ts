@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import BigInt from 'big-integer'
 import type { BigInteger } from 'big-integer'
-import { isDefined } from 'tsfn'
+import { isArray, isDefined } from 'tsfn'
 import type { TAnyObject, TWritable, TReadonly } from 'tsfn'
 import { parseBigInt } from './parse-bigint'
 import type { TChildrenMap, TCommonRequiredConfig, TCommonComponentConfig } from './types'
 import { unpackPerm } from './unpack-perm'
 
 const getValue = (valueIndex: number, values: readonly any[], key: string, required?: TReadonly<TCommonRequiredConfig>): any => {
-  if (required?.includes(key)) {
+  if (isArray(required) && required.includes(key)) {
     return values[valueIndex]
   }
 
@@ -18,7 +18,7 @@ const getValue = (valueIndex: number, values: readonly any[], key: string, requi
 }
 
 const getChildValue = (childConfig: TCommonComponentConfig, int: BigInteger, childKey: string, required?: TReadonly<TCommonRequiredConfig>): any => {
-  if (required?.includes(childKey)) {
+  if (isArray(required) && required.includes(childKey)) {
     return getPropsImpl(childConfig, int)
   }
 

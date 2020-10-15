@@ -1,6 +1,7 @@
 import path from 'path'
+import type { SpawnError } from 'spown'
 import { spawnChildProcess } from 'spown'
-import { isArray, isString, isNumber } from 'tsfn'
+import { isArray, isString, isNumber, isError } from 'tsfn'
 import type { TRequireKeys } from 'tsfn'
 import { getDebuggerUrl } from './get-debugger-url'
 
@@ -34,8 +35,8 @@ export const runBrowser = async (options: TRunBrowserOptions): Promise<TRunBrows
       stdout: null,
     })
   } catch (e) {
-    if (e.exitCode > 0 && !e.message.includes('No such container')) {
-      throw new Error(e)
+    if (isError<SpawnError>(e) && e.exitCode > 0 && !e.message.includes('No such container')) {
+      throw e
     }
   }
 

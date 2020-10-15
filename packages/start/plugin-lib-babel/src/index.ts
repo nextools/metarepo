@@ -5,6 +5,7 @@ import type { StartDataFile, StartDataFilesProps } from '@start/plugin'
 export default (userOptions?: TransformOptions) =>
   plugin('babel', ({ logPath }) => async ({ files }: StartDataFilesProps) => {
     const { transform } = await import('@babel/core')
+    const { isObject, isString } = await import('tsfn')
 
     return {
       files: await Promise.all(
@@ -27,7 +28,7 @@ export default (userOptions?: TransformOptions) =>
               data: transformed.code,
             }
 
-            if (options.sourceMaps && transformed.map) {
+            if ((options.sourceMaps === true || isString(options.sourceMaps)) && isObject(transformed.map)) {
               dataFile.map = transformed.map
             }
 

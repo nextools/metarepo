@@ -70,7 +70,7 @@ export const runAndroidEmulator = async (options: TRunAndroidEmulatorOptions): P
   }
 
   const emulatorProcess = spawnChildProcessStream(
-    `${process.env.ANDROID_HOME}/emulator/emulator -avd rebox -gpu host ${options.isHeadless ? '-no-window' : ''} -no-audio -memory 2048 -partition-size 1024 -netfast -accel on -no-boot-anim -no-snapshot`,
+    `${process.env.ANDROID_HOME}/emulator/emulator -avd rebox -gpu host ${options.isHeadless === true ? '-no-window' : ''} -no-audio -memory 2048 -partition-size 1024 -netfast -accel on -no-boot-anim -no-snapshot`,
     {
       stdout: null,
       stderr: process.stderr,

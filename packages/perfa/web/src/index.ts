@@ -81,7 +81,7 @@ export const getPerfData = async (userOptions: TGetPerfDataOptions): Promise<TPe
         const entries = entryList.getEntries() as unknown as TPerfObserverEntry[]
         const lastEntry = entries[entries.length - 1]
 
-        resolve(lastEntry.renderTime || lastEntry.loadTime)
+        resolve(lastEntry.renderTime ?? lastEntry.loadTime)
       })
 
       observer.observe({ type: 'largest-contentful-paint', buffered: true })

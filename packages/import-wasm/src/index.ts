@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url'
 import getCallerFile from 'get-caller-file'
 
 const getCallerPath = () => {
-  const result = getCallerFile(3)
+  const result = getCallerFile(3) as string
 
   // in case of `--experimental-modules`
   // istanbul ignore next

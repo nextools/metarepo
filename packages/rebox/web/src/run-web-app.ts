@@ -1,6 +1,6 @@
 import path from 'path'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
-import { isUndefined } from 'tsfn'
+import { isError, isUndefined } from 'tsfn'
 import type { TJsonValue } from 'typeon'
 import Webpack from 'webpack'
 import type { Configuration as TWebpackConfig, Stats } from 'webpack'
@@ -149,7 +149,7 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
 
     server
       .listen(port, host, (error) => {
-        if (error) {
+        if (isError(error)) {
           reject(error)
         }
       })

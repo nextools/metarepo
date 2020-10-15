@@ -11,7 +11,7 @@ export let store: Store<TMetaState> & {
 }
 
 if (process.env.NODE_ENV === 'development') {
-  const composeWithDevTools: typeof compose = globalObject.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+  const composeWithDevTools: typeof compose = globalObject.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?? compose
 
   store = createStore(
     reducer,

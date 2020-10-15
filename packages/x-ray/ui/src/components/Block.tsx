@@ -44,6 +44,8 @@ export const Block = component(
     shouldIgnorePointerEvents: false,
     shouldPreventWrap: false,
     shouldForceAcceleration: false,
+    shouldScrollX: false,
+    shouldScrollY: false,
     isFlexbox: false,
   }),
   mapProps(

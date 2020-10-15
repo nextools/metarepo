@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react'
 import { isNumber } from 'tsfn'
 
 export const getContainerStyle = (userOptions?: TExampleOptions): CSSProperties => {
-  const options: TExampleOptions = {
+  const options = {
     hasOwnWidth: false,
     backgroundColor: '#fff',
     ...userOptions,
