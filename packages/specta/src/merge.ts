@@ -1,9 +1,9 @@
 import { isFunction } from 'tsfn'
 import type { TObservable, TUnsubscribe, TUnwrapObserverable } from './types'
 
-export const merge = <O extends TObservable<any>>(observables: Iterable<O>): TObservable<TUnwrapObserverable<O>> =>
+export const merge = <O extends TObservable<any>>(observables: O[]): TObservable<TUnwrapObserverable<O>> =>
   (next, done, error) => {
-    const unsubcribers = new Set<TUnsubscribe>()
+    const unsubcribes = new Set<TUnsubscribe>()
     let doneCount = 0
     let observableCount = 0
 
@@ -22,12 +22,14 @@ export const merge = <O extends TObservable<any>>(observables: Iterable<O>): TOb
         error
       )
 
-      unsubcribers.add(unsubscriber)
+      unsubcribes.add(unsubscriber)
     }
 
     return () => {
-      for (const unsubscriber of unsubcribers) {
-        unsubscriber()
+      for (const unsubscribe of unsubcribes) {
+        unsubscribe()
       }
+
+      unsubcribes.clear()
     }
   }

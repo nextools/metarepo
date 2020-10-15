@@ -81,7 +81,7 @@
     "react-native-device-info": "^6.0.1",
     "react-native-svg": "^12.1.0",
     "tsfn": "*",
-    "typescript": "^4.0.0",
+    "typescript": "^4.1.0-beta",
     "ws": "^7.3.1"
   },
   "scripts": {

@@ -1,22 +1,23 @@
-import type { TObservable, TUnsubscribe } from './types'
+import type { TObservable, TUnsubscribe, TUnwrapObserverable } from './types'
 
-export type TCombine = {
-  <A>(observables: [TObservable<A>]): TObservable<[A]>,
-  <A, B>(observables: [TObservable<A>, TObservable<B>]): TObservable<[A, B]>,
-  <A, B, C>(observables: [TObservable<A>, TObservable<B>, TObservable<C>]): TObservable<[A, B, C]>,
-  <A, B, C, D>(observables: [TObservable<A>, TObservable<B>, TObservable<C>, TObservable<D>]): TObservable<[A, B, C, D]>,
-}
+// export type TCombine = {
+//   <A>(observables: [TObservable<A>]): TObservable<[A]>,
+//   <A, B>(observables: [TObservable<A>, TObservable<B>]): TObservable<[A, B]>,
+//   <A, B, C>(observables: [TObservable<A>, TObservable<B>, TObservable<C>]): TObservable<[A, B, C]>,
+//   <A, B, C, D>(observables: [TObservable<A>, TObservable<B>, TObservable<C>, TObservable<D>]): TObservable<[A, B, C, D]>,
+// }
+//
+// export const combine: TCombine = (observables: TObservable<any>[]): TObservable<any> => {}
 
-type TUnwrap<T> = T extends [...infer U] ? U : never
+type TMapTuple<T> = T extends [infer F, ...infer R] ? [TUnwrapObserverable<F>, ...TMapTuple<R>] : []
 
-export const combine = <O extends TObservable<any>[]>(observables: [...O]): TUnwrap<O> =>
-// export const combine: TCombine = (observables: TObservable<any>[]): TObservable<any> =>
+export const combine = <O extends TObservable<any>[]>(observables: [...O]): TObservable<TMapTuple<O>> =>
   (next, done, error) => {
     if (observables.length > 31) {
       throw new Error('`combine` supports only up to 31 observables')
     }
 
-    const results: any[] = Array(observables.length)
+    const results: unknown[] = Array(observables.length)
     const unsubcribes = new Set<TUnsubscribe>()
     let i = 0
     let doneCount = 0
@@ -33,7 +34,8 @@ export const combine = <O extends TObservable<any>[]>(observables: [...O]): TUnw
           mask |= 1 << index
 
           if ((mask ^ checkMask) === 0) {
-            next(results)
+            // TODO: how to get rid of any?..
+            next(results as any)
           }
         },
         () => {
