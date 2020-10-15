@@ -17,7 +17,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@revert/background": "0.2.0",
+    "@revert/background": "0.3.0",
     "@revert/button": "^0.1.0",
     "@revert/root": "^0.2.0",
     "@revert/layout": "^0.1.0",
