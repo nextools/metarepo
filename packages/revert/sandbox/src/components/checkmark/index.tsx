@@ -1,7 +1,6 @@
 import { PrimitiveBlock, Block } from '@revert/block'
 import { Checkbox } from '@revert/checkbox'
 import { TextThemeContext } from '@revert/text'
-import { elegir } from 'elegir'
 import React from 'react'
 import {
   mapWithProps,
@@ -81,60 +80,36 @@ export const Checkmark = pureComponent(
     pressedIconColor,
     disabledIconColor,
   }) => ({
-    color: elegir(
-      !isChecked,
-      COLOR_TRANSPARENT,
-      isDisabled,
-      disabledIconColor,
-      isPressed,
-      pressedIconColor,
-      isHovered,
-      hoveredIconColor,
-      true,
+    color: (
+      !isChecked ? COLOR_TRANSPARENT :
+      isDisabled ? disabledIconColor :
+      isPressed ? pressedIconColor :
+      isHovered ? hoveredIconColor :
       iconColor
     ),
-    backgroundColor: elegir(
-      isChecked && isDisabled,
-      activeDisabledBackgroundColor,
-      isDisabled,
-      disabledBackgroundColor,
-      isChecked && isPressed,
-      activePressedBackgroundColor,
-      isPressed,
-      pressedBackgroundColor,
-      isChecked && isHovered,
-      activeHoveredBackgroundColor,
-      isHovered,
-      hoveredBackgroundColor,
-      isChecked,
-      activeBackgroundColor,
-      true,
+    backgroundColor: (
+      isChecked && isDisabled ? activeDisabledBackgroundColor :
+      isDisabled ? disabledBackgroundColor :
+      isChecked && isPressed ? activePressedBackgroundColor :
+      isPressed ? pressedBackgroundColor :
+      isChecked && isHovered ? activeHoveredBackgroundColor :
+      isHovered ? hoveredBackgroundColor :
+      isChecked ? activeBackgroundColor :
       backgroundColor
     ),
-    borderColor: elegir(
-      isChecked && isDisabled,
-      activeDisabledBorderColor,
-      isDisabled,
-      disabledBorderColor,
-      isChecked && isPressed,
-      activePressedBorderColor,
-      isPressed,
-      pressedBorderColor,
-      isChecked && isHovered,
-      activeHoveredBorderColor,
-      isHovered,
-      hoveredBorderColor,
-      isChecked,
-      activeBorderColor,
-      true,
+    borderColor: (
+      isChecked && isDisabled ? activeDisabledBorderColor :
+      isDisabled ? disabledBorderColor :
+      isChecked && isPressed ? activePressedBorderColor :
+      isPressed ? pressedBorderColor :
+      isChecked && isHovered ? activeHoveredBorderColor :
+      isHovered ? hoveredBorderColor :
+      isChecked ? activeBorderColor :
       borderColor
     ),
-    keyboardBorderColor: elegir(
-      isChecked && isKeyboardFocused,
-      activeFocusedOuterBorderColor,
-      isKeyboardFocused,
-      focusedOuterBorderColor,
-      true,
+    keyboardBorderColor: (
+      isChecked && isKeyboardFocused ? activeFocusedOuterBorderColor :
+      isKeyboardFocused ? focusedOuterBorderColor :
       COLOR_TRANSPARENT
     ),
   })),

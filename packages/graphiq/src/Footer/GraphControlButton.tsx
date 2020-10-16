@@ -5,7 +5,6 @@ import { Layout, Layout_Item, Layout_Spacer } from '@revert/layout'
 import { LinearGradient } from '@revert/linear-gradient'
 import { Shadow } from '@revert/shadow'
 import { Text } from '@revert/text'
-import { elegir } from 'elegir'
 import React from 'react'
 import { startWithType, mapHandlers, pureComponent, mapWithProps, mapRef, onUpdate } from 'refun'
 import type { TGraphColors } from '../types'
@@ -34,14 +33,10 @@ export const GraphControlButton = pureComponent(
     return ({
       shadowRadius: isSelected ? 12 : 1,
       backgroundColor: isActive ? 0xffffffff : 0xffffff80,
-      diffTextColor: elegir(
-        isPositive && isActive,
-        0x00aa00ff,
-        isPositive,
-        0x004400c0,
-        isActive,
-        0xff0000ff,
-        true,
+      diffTextColor: (
+        isPositive && isActive ? 0x00aa00ff :
+        isPositive ? 0x004400c0 :
+        isActive ? 0xff0000ff :
         0xaa0000c0
       ),
       borderColor: isActive ? colors[0] : changeColorAlpha(colors[0], 0.5),

@@ -3,7 +3,6 @@ import { Checkbox } from '@revert/checkbox'
 import { Layout, Layout_Item } from '@revert/layout'
 import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
-import { elegir } from 'elegir'
 import React, { Fragment } from 'react'
 import type { ReactNode } from 'react'
 import { component, startWithType, mapState, mapHandlers, mapDefaultProps, mapHovered, mapPressed, mapKeyboardFocused, mapWithProps, mapContext } from 'refun'
@@ -80,40 +79,25 @@ export const SwitchPopover = component(
     hoveredBackgroundColor,
     pressedBackgroundColor,
   }) => ({
-    backgroundColor: elegir(
-      isOpened && isPressed,
-      activePressedBackgroundColor,
-      isPressed,
-      pressedBackgroundColor,
-      isOpened && isHovered,
-      activeHoveredBackgroundColor,
-      isHovered,
-      hoveredBackgroundColor,
-      isOpened,
-      activeBackgroundColor,
-      true,
+    backgroundColor: (
+      isOpened && isPressed ? activePressedBackgroundColor :
+      isPressed ? pressedBackgroundColor :
+      isOpened && isHovered ? activeHoveredBackgroundColor :
+      isHovered ? hoveredBackgroundColor :
+      isOpened ? activeBackgroundColor :
       backgroundColor
     ),
-    borderColor: elegir(
-      isOpened && isKeyboardFocused,
-      activeFocusedBorderColor,
-      isKeyboardFocused,
-      focusedBorderColor,
-      true,
+    borderColor: (
+      isOpened && isKeyboardFocused ? activeFocusedBorderColor :
+      isKeyboardFocused ? focusedBorderColor :
       COLOR_TRANSPARENT
     ),
-    color: elegir(
-      isOpened && isPressed,
-      activePressedIconColor,
-      isPressed,
-      pressedIconColor,
-      isOpened && isHovered,
-      activeHoveredIconColor,
-      isHovered,
-      hoveredIconColor,
-      isOpened,
-      activeIconColor,
-      true,
+    color: (
+      isOpened && isPressed ? activePressedIconColor :
+      isPressed ? pressedIconColor :
+      isOpened && isHovered ? activeHoveredIconColor :
+      isHovered ? hoveredIconColor :
+      isOpened ? activeIconColor :
       iconColor
     ),
     radius: size / 2,

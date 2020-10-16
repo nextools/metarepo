@@ -1,5 +1,4 @@
 import { LayoutInteractiveContext } from '@revert/layout'
-import { elegir } from 'elegir'
 import React from 'react'
 import { component, mapContext, mapWithProps, startWithType } from 'refun'
 import { Background } from '../background'
@@ -14,12 +13,9 @@ export const ResizeBorder = component(
     _isHovered,
     _isPressed,
   }) => ({
-    color: elegir(
-      _isPressed,
-      theme.sandboxBorderPressedColor,
-      _isHovered,
-      theme.sandboxBorderHoveredColor,
-      true,
+    color: (
+      _isPressed ? theme.sandboxBorderPressedColor :
+      _isHovered ? theme.sandboxBorderHoveredColor :
       theme.sandboxBorderColor
     ),
   }))

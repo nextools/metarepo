@@ -1,4 +1,3 @@
-import { elegir } from 'elegir'
 import React from 'react'
 import type { ReactNode } from 'react'
 import { component, startWithType, mapHandlers, mapStateRef, mapContext } from 'refun'
@@ -109,12 +108,9 @@ export const Layout_Item = component(
 
     // Content is in Measure mode
     const extraWidth = _width - contentState.contentMeasureWidth
-    const contentLeft = elegir(
-      hAlign === 'center',
-      extraWidth >> 1,
-      hAlign === 'right',
-      extraWidth - hPadding,
-      true,
+    const contentLeft = (
+      hAlign === 'center' ? extraWidth >> 1 :
+      hAlign === 'right' ? extraWidth - hPadding :
       hPadding
     )
     const contentMaxWidth = isLayoutMeasureMode
@@ -152,12 +148,9 @@ export const Layout_Item = component(
 
     // Content is in Measure mode
     const extraHeight = _height - contentState.contentMeasureHeight
-    const contentTop = elegir(
-      vAlign === 'center',
-      extraHeight >> 1,
-      vAlign === 'bottom',
-      extraHeight - vPadding,
-      true,
+    const contentTop = (
+      vAlign === 'center' ? extraHeight >> 1 :
+      vAlign === 'bottom' ? extraHeight - vPadding :
       vPadding
     )
 

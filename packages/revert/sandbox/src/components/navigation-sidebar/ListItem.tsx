@@ -1,5 +1,4 @@
 import { Button } from '@revert/button'
-import { elegir } from 'elegir'
 import React, { Fragment } from 'react'
 import { startWithType, mapHovered, mapPressed, mapKeyboardFocused, pureComponent, mapContext, mapWithProps, mapHandlers } from 'refun'
 import type { TMapKeyboardFocused, TMapHovered, TMapPressed } from 'refun'
@@ -27,28 +26,18 @@ export const ListItem = pureComponent(
     },
   }),
   mapWithProps(({ theme, isActive, isKeyboardFocused, isHovered, isPressed }) => ({
-    backgroundColor: elegir(
-      isActive,
-      theme.navigationSidebarActiveItemBackgroundColor,
-      isPressed,
-      theme.navigationSidebarPressedItemBackgroundColor,
-      isHovered,
-      theme.navigationSidebarHoveredItemBackgroundColor,
-      isKeyboardFocused,
-      theme.navigationSidebarFocusedItemBackgroundColor,
-      true,
+    backgroundColor: (
+      isActive ? theme.navigationSidebarActiveItemBackgroundColor :
+      isPressed ? theme.navigationSidebarPressedItemBackgroundColor :
+      isHovered ? theme.navigationSidebarHoveredItemBackgroundColor :
+      isKeyboardFocused ? theme.navigationSidebarFocusedItemBackgroundColor :
       theme.navigationSidebarBackgroundColor
     ),
-    color: elegir(
-      isActive,
-      theme.navigationSidebarActiveItemColor,
-      isPressed,
-      theme.navigationSidebarPressedItemColor,
-      isHovered,
-      theme.navigationSidebarHoveredItemColor,
-      isKeyboardFocused,
-      theme.navigationSidebarFocusedItemColor,
-      true,
+    color: (
+      isActive ? theme.navigationSidebarActiveItemColor :
+      isPressed ? theme.navigationSidebarPressedItemColor :
+      isHovered ? theme.navigationSidebarHoveredItemColor :
+      isKeyboardFocused ? theme.navigationSidebarFocusedItemColor :
       theme.navigationSidebarItemColor
     ),
   }))

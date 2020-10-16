@@ -1,7 +1,6 @@
 import { Layout, Layout_Item } from '@revert/layout'
 import { Link } from '@revert/link'
 import { Scroll } from '@revert/scroll'
-import { elegir } from 'elegir'
 import React from 'react'
 import { startWithType, mapContext, pureComponent } from 'refun'
 import { isString, isUndefined } from 'tsfn'
@@ -23,14 +22,10 @@ export const Info = pureComponent(
         stability: packageJson.version.startsWith('0')
           ? 'unstable' as const
           : 'stable' as const,
-        platform: elegir(
-          Reflect.has(packageJson, 'browser') && Reflect.has(packageJson, 'react-native'),
-          'Web & Native',
-          Reflect.has(packageJson, 'browser'),
-          'Web',
-          Reflect.has(packageJson, 'react-native'),
-          'Native',
-          true,
+        platform: (
+          Reflect.has(packageJson, 'browser') && Reflect.has(packageJson, 'react-native') ? 'Web & Native' :
+          Reflect.has(packageJson, 'browser') ? 'Web' :
+          Reflect.has(packageJson, 'react-native') ? 'Native' :
           'Node'
         ),
         designDocsUrl: packageJson.designDocsUrl,

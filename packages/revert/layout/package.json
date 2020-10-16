@@ -14,7 +14,6 @@
   "sideEffects": false,
   "dependencies": {
     "@revert/root": "^0.3.0",
-    "elegir": "^1.0.0",
     "react-dom": "16.13.1",
     "refun": "^3.1.0",
     "tsfn": "^2.2.0"

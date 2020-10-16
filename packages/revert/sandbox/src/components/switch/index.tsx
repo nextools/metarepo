@@ -2,7 +2,6 @@ import { AnimationValue } from '@revert/animation'
 import { PrimitiveBlock, Block } from '@revert/block'
 import { Checkbox } from '@revert/checkbox'
 import { PrimitiveTransform } from '@revert/transform'
-import { elegir } from 'elegir'
 import React from 'react'
 import {
   mapWithProps,
@@ -71,40 +70,25 @@ export const Switch = pureComponent(
     activePressedIconColor,
   }) => ({
     leftOffset: isChecked ? KNOB_CHECKED_OFFSET : KNOB_UNCHECKED_OFFSET,
-    backgroundColor: elegir(
-      isChecked && isPressed,
-      activePressedBackgroundColor,
-      isPressed,
-      pressedBackgroundColor,
-      isChecked && isHovered,
-      activeHoveredBackgroundColor,
-      isHovered,
-      hoveredBackgroundColor,
-      isChecked,
-      activeBackgroundColor,
-      true,
+    backgroundColor: (
+      isChecked && isPressed ? activePressedBackgroundColor :
+      isPressed ? pressedBackgroundColor :
+      isChecked && isHovered ? activeHoveredBackgroundColor :
+      isHovered ? hoveredBackgroundColor :
+      isChecked ? activeBackgroundColor :
       backgroundColor
     ),
-    keyboardBorderColor: elegir(
-      isChecked && isKeyboardFocused,
-      activeFocusedOuterBorderColor,
-      isKeyboardFocused,
-      focusedOuterBorderColor,
-      true,
+    keyboardBorderColor: (
+      isChecked && isKeyboardFocused ? activeFocusedOuterBorderColor :
+      isKeyboardFocused ? focusedOuterBorderColor :
       COLOR_TRANSPARENT
     ),
-    knobColor: elegir(
-      isChecked && isPressed,
-      activePressedIconColor,
-      isPressed,
-      pressedIconColor,
-      isChecked && isHovered,
-      activeHoveredIconColor,
-      isHovered,
-      hoveredIconColor,
-      isChecked,
-      activeIconColor,
-      true,
+    knobColor: (
+      isChecked && isPressed ? activePressedIconColor :
+      isPressed ? pressedIconColor :
+      isChecked && isHovered ? activeHoveredIconColor :
+      isHovered ? hoveredIconColor :
+      isChecked ? activeIconColor :
       iconColor
     ),
   }))

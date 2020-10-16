@@ -1,5 +1,4 @@
 import { Button } from '@revert/button'
-import { elegir } from 'elegir'
 import React, { Fragment } from 'react'
 import { component, startWithType, mapHandlers, mapContext, mapWithProps, mapKeyboardFocused } from 'refun'
 import type { TMapKeyboardFocused } from 'refun'
@@ -21,20 +20,14 @@ export const TabsTitle = component(
   mapContext(ThemeContext),
   mapKeyboardFocused,
   mapWithProps(({ isActive, isDisabled, isKeyboardFocused, theme }) => ({
-    color: elegir(
-      isDisabled,
-      theme.tabsDisabledColor,
-      isActive,
-      theme.tabsActiveColor,
-      true,
+    color: (
+      isDisabled ? theme.tabsDisabledColor :
+      isActive ? theme.tabsActiveColor :
       theme.tabsColor
     ),
-    borderColor: elegir(
-      isActive,
-      theme.tabsActiveBorderColor,
-      isKeyboardFocused,
-      theme.tabsBorderColor,
-      true,
+    borderColor: (
+      isActive ? theme.tabsActiveBorderColor :
+      isKeyboardFocused ? theme.tabsBorderColor :
       COLOR_TRANSPARENT
     ),
   })),

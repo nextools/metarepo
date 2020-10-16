@@ -1,7 +1,6 @@
 import { Label } from '@revert/label'
 import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
 import { Pointer } from '@revert/pointer'
-import { elegir } from 'elegir'
 import React from 'react'
 import { startWithType, mapHovered, pureComponent, mapPressed, mapContext, mapWithProps } from 'refun'
 import type { TMapHovered, TMapPressed } from 'refun'
@@ -26,12 +25,9 @@ export const HandlerItem = pureComponent(
   mapHovered,
   mapPressed,
   mapWithProps(({ isHovered, isPressed, theme }) => ({
-    backgroundColor: elegir(
-      isPressed,
-      theme.controlsSidebarPressedBackgroundColor,
-      isHovered,
-      theme.controlsSidebarHoveredBackgroundColor,
-      true,
+    backgroundColor: (
+      isPressed ? theme.controlsSidebarPressedBackgroundColor :
+      isHovered ? theme.controlsSidebarHoveredBackgroundColor :
       theme.controlsSidebarBackgroundColor
     ),
   }))

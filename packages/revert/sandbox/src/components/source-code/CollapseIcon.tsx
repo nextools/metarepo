@@ -3,7 +3,6 @@ import { PrimitiveBlock } from '@revert/block'
 import { PrimitiveButton } from '@revert/button'
 import { TextThemeContext } from '@revert/text'
 import { PrimitiveTransform } from '@revert/transform'
-import { elegir } from 'elegir'
 import React from 'react'
 import { startWithType, mapKeyboardFocused, mapHovered, mapPressed, mapContext, pureComponent, mapWithProps } from 'refun'
 import type { TMapHovered, TMapPressed, TMapKeyboardFocused } from 'refun'
@@ -34,20 +33,15 @@ export const CollapseIcon = pureComponent(
   mapPressed,
   mapKeyboardFocused,
   mapWithProps(({ isKeyboardFocused, theme }) => ({
-    borderColor: elegir(
-      isKeyboardFocused,
-      theme.sourceCodeCollapseIconFocusedBorderColor,
-      true,
+    borderColor: (
+      isKeyboardFocused ? theme.sourceCodeCollapseIconFocusedBorderColor :
       COLOR_TRANSPARENT
     ),
   })),
   mapContextOverride('IconThemeProvider', TextThemeContext, ({ isPressed, isHovered, theme }) => ({
-    color: elegir(
-      isPressed,
-      theme.sourceCodeCollapseIconPressedColor,
-      isHovered,
-      theme.sourceCodeCollapseIconHoveredColor,
-      true,
+    color: (
+      isPressed ? theme.sourceCodeCollapseIconPressedColor :
+      isHovered ? theme.sourceCodeCollapseIconHoveredColor :
       theme.sourceCodeCollapseIconColor
     ),
   }))

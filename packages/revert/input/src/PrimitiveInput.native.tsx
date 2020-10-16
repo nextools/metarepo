@@ -1,5 +1,4 @@
 import { colorToString } from '@revert/color'
-import { elegir } from 'elegir'
 import React from 'react'
 import { TextInput } from 'react-native'
 import type { TextStyle, KeyboardType } from 'react-native'
@@ -53,14 +52,10 @@ export const PrimitiveInput = component(
       style.fontWeight = String(fontWeight) as TextStyle['fontWeight']
     }
 
-    const keyboardType: KeyboardType = elegir(
-      type === 'number',
-      'numeric',
-      type === 'tel',
-      'phone-pad',
-      type === 'email',
-      'email-address',
-      true,
+    const keyboardType: KeyboardType = (
+      type === 'number' ? 'numeric' :
+      type === 'tel' ? 'phone-pad' :
+      type === 'email' ? 'email-address' :
       'default'
     )
 

@@ -2,7 +2,6 @@ import { PrimitiveBlock } from '@revert/block'
 import { PrimitiveButton } from '@revert/button'
 import { LayoutContext } from '@revert/layout'
 import { PrimitiveSize } from '@revert/size'
-import { elegir } from 'elegir'
 import React from 'react'
 import { mapHovered, component, mapHandlers, startWithType, mapWithProps, mapContext, mapPressed, mapKeyboardFocused, onLayout } from 'refun'
 import type { TMapHovered, TMapPressed, TMapKeyboardFocused } from 'refun'
@@ -53,32 +52,21 @@ export const Line = component(
     const isActive = line.meta === selectedElementPath
 
     return ({
-      backgroundColor: elegir(
-        isActive && isPressed,
-        theme.sourceCodeActivePressedLineBackgroundColor,
-        isPressed,
-        theme.sourceCodePressedLineBackgroundColor,
-        isActive && isHovered,
-        theme.sourceCodeActiveHoveredLineBackgroundColor,
-        isHovered,
-        theme.sourceCodeHoveredLineBackgroundColor,
-        isActive,
-        theme.sourceCodeActiveLineBackgroundColor,
-        true,
+      backgroundColor: (
+        isActive && isPressed ? theme.sourceCodeActivePressedLineBackgroundColor :
+        isPressed ? theme.sourceCodePressedLineBackgroundColor :
+        isActive && isHovered ? theme.sourceCodeActiveHoveredLineBackgroundColor :
+        isHovered ? theme.sourceCodeHoveredLineBackgroundColor :
+        isActive ? theme.sourceCodeActiveLineBackgroundColor :
         theme.sourceCodeLineBackgroundColor
       ),
-      lineColor: elegir(
-        isActive,
-        theme.sourceCodeActiveLineColor,
-        true,
+      lineColor: (
+        isActive ? theme.sourceCodeActiveLineColor :
         theme.sourceCodeLineColor
       ),
-      lineFocusedBorderColor: elegir(
-        isKeyboardFocused && isActive,
-        theme.sourceCodeActiveLineColor,
-        isKeyboardFocused,
-        theme.sourceCodeLineColor,
-        true,
+      lineFocusedBorderColor: (
+        isKeyboardFocused && isActive ? theme.sourceCodeActiveLineColor :
+        isKeyboardFocused ? theme.sourceCodeLineColor :
         COLOR_TRANSPARENT
       ),
     })
