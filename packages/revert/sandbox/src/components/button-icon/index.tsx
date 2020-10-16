@@ -3,7 +3,6 @@ import { PrimitiveButton } from '@revert/button'
 import { Layout, Layout_Item } from '@revert/layout'
 import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
-import { elegir } from 'elegir'
 import React from 'react'
 import type { ReactNode } from 'react'
 import {
@@ -73,26 +72,18 @@ export const ButtonIcon = component(
     pressedIconColor,
     size,
   }) => ({
-    backgroundColor: elegir(
-      isPressed,
-      pressedBackgroundColor,
-      isHovered,
-      hoveredBackgroundColor,
-      true,
+    backgroundColor: (
+      isPressed ? pressedBackgroundColor :
+      isHovered ? hoveredBackgroundColor :
       backgroundColor
     ),
-    borderColor: elegir(
-      isKeyboardFocused,
-      focusedBorderColor,
-      true,
+    borderColor: (
+      isKeyboardFocused ? focusedBorderColor :
       COLOR_TRANSPARENT
     ),
-    color: elegir(
-      isPressed,
-      pressedIconColor,
-      isHovered,
-      hoveredIconColor,
-      true,
+    color: (
+      isPressed ? pressedIconColor :
+      isHovered ? hoveredIconColor :
       iconColor
     ),
     radius: size / 2,

@@ -1,6 +1,5 @@
 import { PrimitiveBlock } from '@revert/block'
 import { Surface, Group, Shape } from '@revert/svg'
-import { elegir } from 'elegir'
 import React from 'react'
 import { startWithType, mapWithProps, pureComponent, mapWithPropsMemo } from 'refun'
 import * as Colors from './colors'
@@ -19,24 +18,16 @@ export const CanvasGrid = pureComponent(
       .map((_, i) => i * CANVAS_GRID_SIZE),
   }), ['width', 'height']),
   mapWithProps(({ shouldDegrade, isCanvasDarkMode }) => ({
-    color: elegir(
-      shouldDegrade && isCanvasDarkMode,
-      Colors.GRID_COLOR_DEGRADE_DARK,
-      shouldDegrade,
-      Colors.GRID_COLOR_DEGRADE,
-      isCanvasDarkMode,
-      Colors.GRID_COLOR_DARK,
-      true,
+    color: (
+      shouldDegrade && isCanvasDarkMode ? Colors.GRID_COLOR_DEGRADE_DARK :
+      shouldDegrade ? Colors.GRID_COLOR_DEGRADE :
+      isCanvasDarkMode ? Colors.GRID_COLOR_DARK :
       Colors.GRID_COLOR
     ),
-    colorSoft: elegir(
-      shouldDegrade && isCanvasDarkMode,
-      Colors.GRID_COLOR_DEGRADE_SOFT_DARK,
-      shouldDegrade,
-      Colors.GRID_COLOR_DEGRADE_SOFT,
-      isCanvasDarkMode,
-      Colors.GRID_COLOR_SOFT_DARK,
-      true,
+    colorSoft: (
+      shouldDegrade && isCanvasDarkMode ? Colors.GRID_COLOR_DEGRADE_SOFT_DARK :
+      shouldDegrade ? Colors.GRID_COLOR_DEGRADE_SOFT :
+      isCanvasDarkMode ? Colors.GRID_COLOR_SOFT_DARK :
       Colors.GRID_COLOR_SOFT
     ),
   }))

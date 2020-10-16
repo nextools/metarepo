@@ -3,7 +3,6 @@ import { Checkbox } from '@revert/checkbox'
 import { Layout, Layout_Item } from '@revert/layout'
 import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
-import { elegir } from 'elegir'
 import React from 'react'
 import type { ReactNode } from 'react'
 import {
@@ -77,40 +76,25 @@ export const ButtonIconSwitch = component(
     hoveredBackgroundColor,
     pressedBackgroundColor,
   }) => ({
-    backgroundColor: elegir(
-      isChecked && isPressed,
-      activePressedBackgroundColor,
-      isPressed,
-      pressedBackgroundColor,
-      isChecked && isHovered,
-      activeHoveredBackgroundColor,
-      isHovered,
-      hoveredBackgroundColor,
-      isChecked,
-      activeBackgroundColor,
-      true,
+    backgroundColor: (
+      isChecked && isPressed ? activePressedBackgroundColor :
+      isPressed ? pressedBackgroundColor :
+      isChecked && isHovered ? activeHoveredBackgroundColor :
+      isHovered ? hoveredBackgroundColor :
+      isChecked ? activeBackgroundColor :
       backgroundColor
     ),
-    borderColor: elegir(
-      isChecked && isKeyboardFocused,
-      activeFocusedBorderColor,
-      isKeyboardFocused,
-      focusedBorderColor,
-      true,
+    borderColor: (
+      isChecked && isKeyboardFocused ? activeFocusedBorderColor :
+      isKeyboardFocused ? focusedBorderColor :
       COLOR_TRANSPARENT
     ),
-    color: elegir(
-      isPressed && isChecked,
-      activePressedIconColor,
-      isPressed,
-      pressedIconColor,
-      isHovered && isChecked,
-      activeHoveredIconColor,
-      isHovered,
-      hoveredIconColor,
-      isChecked,
-      activeIconColor,
-      true,
+    color: (
+      isPressed && isChecked ? activePressedIconColor :
+      isPressed ? pressedIconColor :
+      isHovered && isChecked ? activeHoveredIconColor :
+      isHovered ? hoveredIconColor :
+      isChecked ? activeIconColor :
       iconColor
     ),
     radius: size / 2,

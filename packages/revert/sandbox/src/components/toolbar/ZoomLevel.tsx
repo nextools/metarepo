@@ -3,7 +3,6 @@ import { Button } from '@revert/button'
 import { Layout, Layout_Item } from '@revert/layout'
 import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
-import { elegir } from 'elegir'
 import React from 'react'
 import { component, startWithType, mapHovered, mapContext, mapKeyboardFocused, mapPressed, mapWithProps } from 'refun'
 import type { TMapHovered, TMapKeyboardFocused } from 'refun'
@@ -47,23 +46,18 @@ export const ZoomLevel = component(
     pressedIconColor,
     focusedBorderColor,
   }) => ({
-    borderColor: isKeyboardFocused
-      ? focusedBorderColor
-      : COLOR_TRANSPARENT,
-    backgroundColor: elegir(
-      isPressed,
-      pressedBackgroundColor,
-      isHovered,
-      hoveredBackgroundColor,
-      true,
+    borderColor: (
+      isKeyboardFocused ? focusedBorderColor :
+      COLOR_TRANSPARENT
+    ),
+    backgroundColor: (
+      isPressed ? pressedBackgroundColor :
+      isHovered ? hoveredBackgroundColor :
       backgroundColor
     ),
-    color: elegir(
-      isPressed,
-      pressedIconColor,
-      isHovered,
-      hoveredIconColor,
-      true,
+    color: (
+      isPressed ? pressedIconColor :
+      isHovered ? hoveredIconColor :
       iconColor
     ),
   })),
