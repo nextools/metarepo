@@ -1,6 +1,6 @@
 import BigInt from 'big-integer'
 import { map } from 'iterama'
-import jssha from 'jssha'
+import jssha from 'jssha/dist/sha1'
 import { createChildren } from './create-children'
 import { getLength } from './get-length'
 import { getPropsImpl } from './get-props'
