@@ -24,25 +24,22 @@ export const watch = (dir: string, options?: TWatchOptions): AsyncIterable<TWatc
         disableGlobbing: true,
         ignoreInitial: true,
       })
-      let isRejected = false
 
-      while (!isRejected) {
-        yield new Promise<TWatchResult>((resolve, reject) => {
-          watcher.once('error', (err: string) => {
-            isRejected = true
+      try {
+        while (true) {
+          yield new Promise<TWatchResult>((resolve, reject) => {
+            watcher.once('error', reject)
 
-            watcher
-              .close()
-              .finally(() => reject(err))
+            for (const event of opts.events) {
+              watcher.once(event, (path) => {
+                watcher.removeAllListeners()
+                resolve({ event, path })
+              })
+            }
           })
-
-          for (const event of opts.events) {
-            watcher.once(event, (path) => {
-              watcher.removeAllListeners()
-              resolve({ event, path })
-            })
-          }
-        })
+        }
+      } finally {
+        await watcher.close()
       }
     },
   }
