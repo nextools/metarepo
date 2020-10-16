@@ -36,7 +36,7 @@
     "@revert/svg": "^0.1.0",
     "@revert/text": "^0.3.1",
     "@revert/transform": "^0.2.0",
-    "autoprops": "^4.0.0",
+    "autoprops": "^4.0.1",
     "funcom": "^0.2.0",
     "leven": "^3.1.0",
     "nanoid": "^3.1.11",
