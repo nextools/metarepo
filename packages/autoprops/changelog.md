@@ -1,3 +1,7 @@
+## v4.0.1
+
+* 🐞 fix jssha import
+
 ## v4.0.0
 
 * 💥 drop Node.js v10
