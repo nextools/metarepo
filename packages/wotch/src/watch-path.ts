@@ -60,11 +60,7 @@ export const main = async () => {
   const { matchGlobs } = await import('iva')
 
   const res = pipe(
-    mapAsync<string, AsyncIterable<TWatchPathResult>>((p) => {
-      // console.log(p)
-
-      return watchPath(p)
-    }),
+    mapAsync<string, AsyncIterable<TWatchPathResult>>((p) => watchPath(p)),
     mergeAsync
   )(matchGlobs(['packages/nocean/*.md']))
 

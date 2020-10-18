@@ -21,6 +21,9 @@
     "tape": "^5.0.0"
   },
   "dependencies": {
-    "chokidar": "^3.4.3"
+    "chokidar": "^3.4.3",
+    "funcom": "^0.2.0",
+    "iterama": "^0.6.1",
+    "iva": "^0.1.0"
   }
 }
