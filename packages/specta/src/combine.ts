@@ -1,4 +1,4 @@
-import type { TObservable, TUnsubscribe, TUnwrapObserverable } from './types'
+import type { TObservable, TUnsubscribe, TUnwrapObservableTuple } from './types'
 
 // export type TCombine = {
 //   <A>(observables: [TObservable<A>]): TObservable<[A]>,
@@ -9,9 +9,7 @@ import type { TObservable, TUnsubscribe, TUnwrapObserverable } from './types'
 //
 // export const combine: TCombine = (observables: TObservable<any>[]): TObservable<any> => {}
 
-type TMapTuple<T> = T extends [infer F, ...infer R] ? [TUnwrapObserverable<F>, ...TMapTuple<R>] : []
-
-export const combine = <O extends TObservable<any>[]>(observables: [...O]): TObservable<TMapTuple<O>> =>
+export const combine = <O extends TObservable<any>[]>(observables: [...O]): TObservable<TUnwrapObservableTuple<O>> =>
   (next, done, error) => {
     if (observables.length > 31) {
       throw new Error('`combine` supports only up to 31 observables')

@@ -4,3 +4,4 @@ export type TError = (err: Error) => void
 export type TUnsubscribe = () => void
 export type TObservable<T> = (next: TNext<T>, done?: TDone, error?: TError) => TUnsubscribe
 export type TUnwrapObserverable<T> = T extends TObservable<infer U> ? U : never
+export type TUnwrapObservableTuple<T> = T extends [infer F, ...infer R] ? [TUnwrapObserverable<F>, ...TUnwrapObservableTuple<R>] : []
