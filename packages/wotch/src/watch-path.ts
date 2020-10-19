@@ -1,7 +1,4 @@
 import chokidar from 'chokidar'
-import { pipe } from 'funcom'
-import { mapAsync } from 'iterama'
-import { mergeAsync } from './merge-async'
 import type { TWatchPathOptions, TWatchPathResult } from './types'
 
 export const watchPath = (path: string, options?: TWatchPathOptions): AsyncIterable<TWatchPathResult> => {
@@ -35,36 +32,73 @@ export const watchPath = (path: string, options?: TWatchPathOptions): AsyncItera
         ignorePermissionErrors: opts.shouldIgnorePermissionErrors,
         followSymlinks: opts.shouldFollowSymlinks,
       })
+      let hasError = false
+      let error: Error | null = null
+      let pool: TWatchPathResult[] = []
+      let resolver: ((results: TWatchPathResult[]) => void) | null = null
+      let rejecter: ((err: Error) => void) | null = null
+
+      watcher.on('error', (err) => {
+        // if there is a pull-Promise already then reject it
+        if (rejecter !== null) {
+          rejecter(err)
+          rejecter = null
+        // otherwise store error to be thrown later
+        } else {
+          hasError = true
+          error = err
+        }
+      })
+
+      for (const event of opts.events) {
+        watcher.on(event, (path) => {
+          // store results
+          pool.push({ event, path })
+
+          // if there is a pull-Promise already then resolve it
+          if (resolver !== null) {
+            resolver(pool)
+
+            pool = []
+            resolver = null
+          }
+        })
+      }
 
       try {
         while (true) {
-          yield new Promise<TWatchPathResult>((resolve, reject) => {
-            watcher.once('error', reject)
-
-            for (const event of opts.events) {
-              watcher.once(event, (path) => {
-                watcher.removeAllListeners()
-                resolve({ event, path })
-              })
+          const results = await new Promise<TWatchPathResult[]>((resolve, reject) => {
+            // if there was an error since the last pull then throw it
+            if (hasError) {
+              return reject(error)
             }
+
+            // if there were results since the last pull then resolve it
+            if (pool.length > 0) {
+              resolve(pool)
+
+              pool = []
+
+              return
+            }
+
+            // otherwise just wait
+            resolver = resolve
+            rejecter = reject
           })
+
+          for await (const result of results) {
+            // if error has happened during pulling
+            if (hasError) {
+              throw error
+            }
+
+            yield result
+          }
         }
       } finally {
         await watcher.close()
       }
     },
-  }
-}
-
-export const main = async () => {
-  const { matchGlobs } = await import('iva')
-
-  const res = pipe(
-    mapAsync<string, AsyncIterable<TWatchPathResult>>((p) => watchPath(p)),
-    mergeAsync
-  )(matchGlobs(['packages/nocean/*.md']))
-
-  for await (const r of res) {
-    console.log(r)
   }
 }
