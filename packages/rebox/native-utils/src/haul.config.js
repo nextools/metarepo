@@ -62,6 +62,10 @@ export default makeConfig({
             ],
           },
           {
+            test: /\.(md|txt)$/,
+            loader: require.resolve('raw-loader'),
+          },
+          {
             test: AssetResolver.test,
             use: {
               loader: ASSET_LOADER_PATH,
