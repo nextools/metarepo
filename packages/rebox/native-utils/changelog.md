@@ -1,3 +1,7 @@
+## v4.0.4
+
+* 🐞 add `raw-loader` to handle markdown files
+
 ## v4.0.3
 
 * 🐞 fix native files not been watched

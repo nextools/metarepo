@@ -1,3 +1,7 @@
+## v0.2.1
+
+* 🐞 round sizes to 0.5px instead of 0.1px
+
 ## v0.2.0
 
 * 💥 add `PrimitiveSize` and `Size`
