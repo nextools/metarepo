@@ -32,7 +32,7 @@
     "@revert/root": "^0.3.0",
     "@revert/scroll": "^0.2.0",
     "@revert/select": "^0.2.0",
-    "@revert/size": "^0.2.0",
+    "@revert/size": "^0.2.1",
     "@revert/svg": "^0.1.0",
     "@revert/text": "^0.3.1",
     "@revert/transform": "^0.2.0",

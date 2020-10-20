@@ -20,7 +20,7 @@
     "@revert/image": "^0.3.0",
     "@revert/layout": "^0.2.0",
     "@revert/link": "^0.3.1",
-    "@revert/size": "^0.2.0",
+    "@revert/size": "^0.2.1",
     "@revert/text": "^0.3.1",
     "@revert/text-align": "^0.2.0",
     "mdown": "^0.1.2",
