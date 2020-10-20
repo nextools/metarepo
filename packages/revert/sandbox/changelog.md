@@ -1,3 +1,7 @@
+## v0.3.2
+
+* 🐞 fix measure for flexbox components
+
 ## v0.3.1
 
 * 🐞 use `PrimitiveText` in Info panel
