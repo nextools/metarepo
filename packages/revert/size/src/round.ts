@@ -1,1 +1,1 @@
-export const round = (value: number) => ~~(value * 10 + 0.5) / 10
+export const round = (value: number) => Math.floor(value * 2 + 0.5) / 2
