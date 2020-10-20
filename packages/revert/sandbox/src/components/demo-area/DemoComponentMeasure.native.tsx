@@ -1,17 +1,16 @@
 import { PrimitiveTransform } from '@revert/transform'
-import type { CSSProperties } from 'react'
 import React from 'react'
-import { component, mapRef, mapWithPropsMemo, startWithType } from 'refun'
+import type { LayoutChangeEvent, ViewStyle } from 'react-native'
+import { View } from 'react-native'
+import { component, mapHandlers, mapWithPropsMemo, startWithType } from 'refun'
 import { UNDEFINED } from 'tsfn'
-import { onLayout } from '../on-layout'
 import { round } from './round'
 import type { TDemoComponent } from './types'
 
 export const DemoComponentMeasure = component(
   startWithType<TDemoComponent>(),
   mapWithPropsMemo(({ width }) => {
-    const style: CSSProperties = {
-      display: 'flex',
+    const style: ViewStyle = {
       flexDirection: 'row',
       width,
     }
@@ -20,30 +19,27 @@ export const DemoComponentMeasure = component(
       style,
     }
   }, ['width']),
-  mapRef('ref', null as null | HTMLDivElement),
-  onLayout(({ ref, height, onHeightChange }) => {
-    if (ref.current === null) {
-      return
-    }
+  mapHandlers({
+    onLayout: ({ height, onHeightChange }) => ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+      const measuredHeight = round(layout.height)
 
-    const measuredHeight = round(ref.current.offsetHeight)
-
-    if (height !== UNDEFINED && onHeightChange !== UNDEFINED && height !== measuredHeight) {
-      onHeightChange(measuredHeight)
-    }
+      if (onHeightChange !== UNDEFINED && height !== UNDEFINED && height !== measuredHeight) {
+        onHeightChange(measuredHeight)
+      }
+    },
   })
 )(({
   left,
   top,
-  ref,
   style,
+  onLayout,
   shouldUse3d,
   children,
 }) => (
   <PrimitiveTransform x={left} y={top} hOrigin="left" vOrigin="top" shouldUse3d={shouldUse3d}>
-    <div ref={ref} style={style}>
+    <View style={style} onLayout={onLayout}>
       {children}
-    </div>
+    </View>
   </PrimitiveTransform>
 ))
 
