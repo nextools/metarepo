@@ -18,15 +18,16 @@ type TChildrenProps<K extends string> = {
 }
 
 export const getElementSymbol = (element: ReactElement<any>): symbol | null => {
-  if (isSymbol((element.type as any).componentSymbol)) {
-    return (element.type as any).componentSymbol
-  }
+  const smb = (element.type as any).componentSymbol
 
-  return null
+  return isSymbol(smb) ? smb : null
 }
 
-const isReactFragment = (value: any): value is ReactElement => value.type === Symbol.for('react.fragment')
-const isReactContext = (value: any): value is ReactElement => value.type === Symbol.for('react.context')
+const SYMBOL_FRAGMENT = Symbol.for('react.fragment')
+const SYMBOL_CONTEXT = Symbol.for('react.context')
+
+const isReactFragment = (value: any): value is ReactElement => value.type === SYMBOL_FRAGMENT
+const isReactContext = (value: any): value is ReactElement => value.type === SYMBOL_CONTEXT
 
 const flattenChildren = (children: ReactNode) => {
   const result: ReactNode[] = []

@@ -11,7 +11,7 @@ export const Code = component(
   mapContext(MarkdownPrimitivesContext),
   mapContext(MarkdownThemeContext)
 )(({
-  Background,
+  LayoutBackground,
   LayoutText,
   codeBackgroundColor,
   codeColor,
@@ -22,7 +22,7 @@ export const Code = component(
   children,
 }) => (
   <Layout hPadding={5} vPadding={5}>
-    <Background color={codeBackgroundColor}/>
+    <LayoutBackground color={codeBackgroundColor}/>
     <Layout_Item>
       <LayoutText
         color={codeColor}

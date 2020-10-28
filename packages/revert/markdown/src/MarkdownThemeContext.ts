@@ -69,6 +69,9 @@ export const MarkdownThemeContext = createContext<TMarkdownThemeContext>({
   h3fontSize: 16,
   h3lineHeight: 20,
 
+  fontSize: 16,
+  lineHeight: 16,
+
   hrBackgroundColor: 0xff,
   hrWidth: 1,
 
@@ -76,4 +79,5 @@ export const MarkdownThemeContext = createContext<TMarkdownThemeContext>({
 
   tableBorderColor: 0xff,
   tableBorderWidth: 1,
+
 })

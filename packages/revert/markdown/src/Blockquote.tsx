@@ -10,9 +10,9 @@ export const Blockquote = component(
   startWithType<TComponentBlockquote>(),
   mapContext(MarkdownPrimitivesContext),
   mapContext(MarkdownThemeContext)
-)(({ Border, blockquoteBorderColor, blockquoteBorderWidth, children }) => (
+)(({ LayoutBorder, blockquoteBorderColor, blockquoteBorderWidth, children }) => (
   <Layout>
-    <Border color={blockquoteBorderColor} borderLeftWidth={blockquoteBorderWidth}/>
+    <LayoutBorder color={blockquoteBorderColor} borderLeftWidth={blockquoteBorderWidth}/>
     <Layout_Spacer width={20}/>
     <Layout_Item>
       <Layout direction="vertical" vPadding={5} spaceBetween={10}>

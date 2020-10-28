@@ -1,9 +1,9 @@
-import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
 import type { TComponentHeading } from 'mdown'
 import React from 'react'
 import { component, mapContext, startWithType } from 'refun'
 import { MarkdownThemeContext } from './MarkdownThemeContext'
+import { Paragraph } from './Paragraph'
 import { mapContextOverride } from './map-context-override'
 import { SYMBOL_MARKDOWN_HEADING } from './symbols'
 
@@ -47,11 +47,9 @@ export const Heading = component(
     }
   })
 )(({ TextThemeProvider, children }) => (
-  <Size>
-    <TextThemeProvider>
-      {children}
-    </TextThemeProvider>
-  </Size>
+  <TextThemeProvider>
+    {Paragraph({ children })}
+  </TextThemeProvider>
 ))
 
 Heading.displayName = 'MarkdownHeading'

@@ -19,20 +19,20 @@ export const Table = component(
   mapContext(MarkdownPrimitivesContext),
   mapContext(MarkdownThemeContext)
 )(({
-  Background,
+  LayoutBackground,
   tableBorderColor,
   tableBorderWidth,
   children,
 }) => (
   <Layout direction="vertical">
     <Layout_Item height={tableBorderWidth}>
-      <Background color={tableBorderColor}/>
+      <LayoutBackground color={tableBorderColor}/>
     </Layout_Item>
     {Children.map(children, (child, i) => (
       <Fragment>
         {i > 0 && (
           <Layout_Item height={tableBorderWidth}>
-            <Background color={tableBorderColor}/>
+            <LayoutBackground color={tableBorderColor}/>
           </Layout_Item>
         )}
         <Layout_Item>
@@ -41,7 +41,7 @@ export const Table = component(
       </Fragment>
     ))}
     <Layout_Item height={tableBorderWidth}>
-      <Background color={tableBorderColor}/>
+      <LayoutBackground color={tableBorderColor}/>
     </Layout_Item>
   </Layout>
 ))
@@ -60,20 +60,20 @@ export const TableRow = component(
   mapContext(MarkdownPrimitivesContext),
   mapContext(MarkdownThemeContext)
 )(({
-  Background,
+  LayoutBackground,
   tableBorderColor,
   tableBorderWidth,
   cells,
 }) => (
   <Layout>
     <Layout_Item width={tableBorderWidth}>
-      <Background color={tableBorderColor}/>
+      <LayoutBackground color={tableBorderColor}/>
     </Layout_Item>
     {cells.map((cell, i) => (
       <Fragment key={i}>
         {i > 0 && (
           <Layout_Item width={tableBorderWidth}>
-            <Background color={tableBorderColor}/>
+            <LayoutBackground color={tableBorderColor}/>
           </Layout_Item>
         )}
         <Layout_Item>
@@ -82,7 +82,7 @@ export const TableRow = component(
       </Fragment>
     ))}
     <Layout_Item width={tableBorderWidth}>
-      <Background color={tableBorderColor}/>
+      <LayoutBackground color={tableBorderColor}/>
     </Layout_Item>
   </Layout>
 ))
