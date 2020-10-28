@@ -11,11 +11,11 @@ export const Paragraph = component(
   mapRender('onImageLoad'),
   mapThrottledHandlerAnimationFrame('onImageLoad')
 )(({ onImageLoad, children }) => (
-  <Size>
-    <ImageContext.Provider value={{ onImageLoad }}>
+  <ImageContext.Provider value={{ onImageLoad }}>
+    <Size>
       {children}
-    </ImageContext.Provider>
-  </Size>
+    </Size>
+  </ImageContext.Provider>
 ))
 
 Paragraph.displayName = 'MarkdownParagraph'

@@ -1,7 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 // import { Background } from '@revert/background'
+// import { PrimitiveBackground } from '@revert/background'
 // import { Block } from '@revert/block'
-// import { Border } from '@revert/border'
+// import { Border, PrimitiveBorder } from '@revert/border'
 // import { Button } from '@revert/button'
 // import { Checkbox } from '@revert/checkbox'
 // import { rgba } from '@revert/color'
@@ -11,17 +12,19 @@
 // import type { TInput } from '@revert/input'
 // import { Label } from '@revert/label'
 // import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
+// import { CreateMarkdownComponent, MarkdownThemeContext } from '@revert/markdown'
 // import { Root } from '@revert/root'
 // import { Scroll } from '@revert/scroll'
 // import { Shadow } from '@revert/shadow'
 // import { Size } from '@revert/size'
 // import { Surface, Shape } from '@revert/svg'
-// import { PrimitiveText, PrimitiveTextGroup, Text } from '@revert/text'
+// import type { TPrimitiveText } from '@revert/text'
+// import { PrimitiveText, TextThemeContext } from '@revert/text'
 // import { PrimitiveTextAlign } from '@revert/text-align'
 // import { PrimitiveTransform } from '@revert/transform'
 // import React from 'react'
 // import type { FC } from 'react'
-// import { component, startWithType, mapState, mapHandlers, mapWithProps, mapKeyboardFocused } from 'refun'
+// import { component, startWithType, mapState, mapHandlers, mapWithProps, mapKeyboardFocused, mapDefaultContext, mapDefaultProps } from 'refun'
 // import type { TMapKeyboardFocused } from 'refun'
 // import type { TOmitKey } from 'tsfn'
 
@@ -267,18 +270,76 @@
 //   )
 // }
 
+// const src = `
+
+// # v0.2.0 *asdasd* asdasd
+// ## v0.2.0
+
+// * 🌱 new button with only icon and button with text and icon has alignment and button level quaternary
+
+// * 🐞 bumping packages touched by themeing
+
+//   \`\`\`
+//   Please enter the commit message for your changes. Lines starting
+//   \`\`\`
+//   asdasdsad asdasd
+
+//   * sadads
+//   *
+//     \`\`\`
+//     Please enter
+//     \`\`\`
+//   * _sdadsa_
+// `
+
+// const MdPrimitiveText = component(
+//   startWithType<TPrimitiveText>(),
+//   mapDefaultContext(TextThemeContext),
+//   mapDefaultProps({
+//     color: 0xff,
+//     fontFamily: 'Helvetica, Arial, sans-serif',
+//     fontWeight: 400,
+//     fontSize: 16,
+//     lineHeight: 20,
+//   })
+// )(PrimitiveText as any)
+
+// MdPrimitiveText.displayName = PrimitiveText.displayName
+
+// const MD = CreateMarkdownComponent({
+//   PrimitiveBackground,
+//   PrimitiveBorder,
+//   PrimitiveText: MdPrimitiveText,
+// })
+
 // export const App: FC<{}> = () => (
-//   <Block width={220} height={400}>
-//     <Layout>
-//       <Layout_Item hAlign="center" vAlign="center">
-//         <Background color={rgba(200, 100, 100, 0.5)}/>
-//         <LayoutButton
-//           borderColor={rgba(255, 0, 0, 0.4)}
-//           backgroundColor={rgba(0, 0, 255, 0.2)}
-//         />
-//       </Layout_Item>
-//     </Layout>
-//   </Block>
+//   <MarkdownThemeContext.Provider value={{
+//     h1fontSize: 28,
+//     h1lineHeight: 32,
+
+//     h2fontSize: 22,
+//     h2lineHeight: 26,
+
+//     h3fontSize: 16,
+//     h3lineHeight: 20,
+
+//     fontSize: 16,
+//     lineHeight: 20,
+
+//     codeBackgroundColor: 0xff000044,
+//   }}
+//   >
+//     <Block width={220} height={400}>
+//       <Background color={rgba(200, 100, 100, 0.5)}/>
+//       <Layout direction="vertical">
+//         <Layout_Item height={LAYOUT_SIZE_FIT}>
+//           <MD
+//             source={src}
+//           />
+//         </Layout_Item>
+//       </Layout>
+//     </Block>
+//   </MarkdownThemeContext.Provider>
 // )
 
 // const BG: FC = () => (

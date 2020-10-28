@@ -10,9 +10,9 @@ export const Hr = component(
   startWithType<TComponentHr>(),
   mapContext(MarkdownPrimitivesContext),
   mapContext(MarkdownThemeContext)
-)(({ Background, hrBackgroundColor, hrWidth }) => (
+)(({ LayoutBackground, hrBackgroundColor, hrWidth }) => (
   <Block height={hrWidth}>
-    <Background color={hrBackgroundColor}/>
+    <LayoutBackground color={hrBackgroundColor}/>
   </Block>
 ))
 

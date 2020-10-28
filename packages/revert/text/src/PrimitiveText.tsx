@@ -34,13 +34,17 @@ export const PrimitiveText = component(
     }
 
     if (shouldPreserveWhitespace) {
-      style.whiteSpace = 'pre'
+      style.whiteSpace = 'pre-wrap'
       style.flexShrink = 0
     }
 
     if (shouldPreventWrap) {
       style.whiteSpace = 'nowrap'
       style.flexShrink = 0
+    }
+
+    if (shouldPreventWrap && shouldPreserveWhitespace) {
+      style.whiteSpace = 'pre'
     }
 
     if (shouldPreventSelection) {
