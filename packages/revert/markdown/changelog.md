@@ -1,3 +1,9 @@
+## v0.2.1
+
+* 🐞 fix list item children
+
+* ♻️ update dependencies `@revert/text`
+
 ## v0.2.0
 
 * 🐞 change list item prefixes

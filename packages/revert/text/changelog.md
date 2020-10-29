@@ -1,3 +1,7 @@
+## v0.3.2
+
+* 🐞 properly handle preserve whitespace and wrap
+
 ## v0.3.1
 
 * 🐞 call primitive as function
