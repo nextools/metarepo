@@ -7,3 +7,5 @@ export type TTransformContext = {
 export const TransformContext = createContext<TTransformContext>({
   _scale: 1,
 })
+
+TransformContext.displayName = 'TransformContext'

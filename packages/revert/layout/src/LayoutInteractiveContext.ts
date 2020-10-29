@@ -9,3 +9,5 @@ export const LayoutInteractiveContext = createContext<TLayoutInteractiveContext>
   _isHovered: false,
   _isPressed: false,
 })
+
+LayoutInteractiveContext.displayName = 'LayoutInteractiveContext'

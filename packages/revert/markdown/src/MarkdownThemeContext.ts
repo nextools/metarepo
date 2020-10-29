@@ -81,3 +81,5 @@ export const MarkdownThemeContext = createContext<TMarkdownThemeContext>({
   tableBorderWidth: 1,
 
 })
+
+MarkdownThemeContext.displayName = 'MarkdownThemeContext'

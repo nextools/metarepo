@@ -27,3 +27,5 @@ export const LayoutItemContext = createContext<TLayoutItemContext>({
   _height: 0,
   _itemIndex: 0,
 })
+
+LayoutItemContext.displayName = 'LayoutItemContext'

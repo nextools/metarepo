@@ -7,3 +7,5 @@ export type TLayoutPortalContext = {
 export const LayoutPortalContext = createContext<TLayoutPortalContext>({
   portalElement: null,
 })
+
+LayoutPortalContext.displayName = 'LayoutPortalContext'

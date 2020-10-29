@@ -5,3 +5,5 @@ export type TImportPackageNameContext = {
 }
 
 export const ImportPackageNameContext = createContext<TImportPackageNameContext>({})
+
+ImportPackageNameContext.displayName = 'ImportPackageNameContext'
