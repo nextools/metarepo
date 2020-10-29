@@ -7,3 +7,5 @@ export type TThemeContext = {
 }
 
 export const ThemeContext = createContext<TThemeContext>({} as TThemeContext)
+
+ThemeContext.displayName = 'ThemeContext'

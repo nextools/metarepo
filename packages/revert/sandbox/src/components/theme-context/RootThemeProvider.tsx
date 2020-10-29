@@ -71,6 +71,10 @@ export const RootThemeProvider = component(
   mapContextOverride('MarkdownThemeProvider', MarkdownThemeContext, ({ theme }) => ({
     blockquoteBorderColor: theme.mdBlockquoteBorderColor,
     tableBorderColor: theme.mdTableBorderColor,
+    codeColor: theme.mdCodeColor,
+    codeBackgroundColor: theme.mdCodeBackgroundColor,
+    codespanColor: theme.mdCodespanColor,
+    hrBorderColor: theme.mdHrColor,
   }))
 )(({
   CheckmarkThemeProvider,

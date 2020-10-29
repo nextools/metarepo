@@ -22,7 +22,7 @@ export const MarkdownPrimitivesProvider = pureComponent(
     PrimitiveBackground,
     PrimitiveBorder,
   }),
-  mapWithPropsMemo(({ PrimitiveBackground, PrimitiveBorder }) => ({
+  mapWithPropsMemo(({ PrimitiveBackground, PrimitiveBorder, PrimitiveText }) => ({
     LayoutBackground: CreateLayoutBackground(PrimitiveBackground),
     LayoutBorder: CreateLayoutBorder(PrimitiveBorder),
     LayoutText: CreateLayoutText(PrimitiveText),

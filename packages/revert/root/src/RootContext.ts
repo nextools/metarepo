@@ -9,3 +9,5 @@ export const RootContext = createContext<TRootContext>({
   _rootWidth: 0,
   _rootHeight: 0,
 })
+
+RootContext.displayName = 'RootContext'

@@ -128,6 +128,10 @@ export const defaultTheme: TTheme = {
   sandboxBorderHoveredColor: 0x857f7aff,
   sandboxBorderPressedColor: 0x615d59ff,
 
-  mdBlockquoteBorderColor: 0xff4444ff,
-  mdTableBorderColor: 0xffffffff,
+  mdBlockquoteBorderColor: 0x615d59ff,
+  mdTableBorderColor: 0x615d59ff,
+  mdCodeBackgroundColor: 0x45423fff,
+  mdCodeColor: COLOR_WHITE,
+  mdCodespanColor: COLOR_WHITE,
+  mdHrColor: 0x615d59ff,
 }

@@ -184,6 +184,10 @@ export type TTheme = Readonly<{
   sandboxBorderHoveredColor: TColor,
   sandboxBorderPressedColor: TColor,
 
+  mdCodeColor: TColor,
+  mdCodeBackgroundColor: TColor,
+  mdCodespanColor: TColor,
+  mdHrColor: TColor,
   mdBlockquoteBorderColor: TColor,
   mdTableBorderColor: TColor,
 }>

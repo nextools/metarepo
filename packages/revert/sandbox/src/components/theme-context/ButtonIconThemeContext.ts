@@ -21,3 +21,5 @@ export const ButtonIconThemeContext = createContext<TButtonIconThemeContext>({
   hoveredIconColor: COLOR_BLACK,
   pressedIconColor: COLOR_BLACK,
 })
+
+ButtonIconThemeContext.displayName = 'ButtonIconThemeContext'

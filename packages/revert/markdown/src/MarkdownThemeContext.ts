@@ -43,7 +43,7 @@ export type TMarkdownThemeContext = {
   h3fontSize?: number,
   h3lineHeight?: number,
 
-  hrBackgroundColor?: TColor,
+  hrBorderColor?: TColor,
   hrWidth?: number,
 
   strongFontWeight?: TFontWeight,
@@ -70,14 +70,15 @@ export const MarkdownThemeContext = createContext<TMarkdownThemeContext>({
   h3lineHeight: 20,
 
   fontSize: 16,
-  lineHeight: 16,
+  lineHeight: 20,
 
-  hrBackgroundColor: 0xff,
+  hrBorderColor: 0xff,
   hrWidth: 1,
 
   strongFontWeight: 700,
 
   tableBorderColor: 0xff,
   tableBorderWidth: 1,
-
 })
+
+MarkdownThemeContext.displayName = 'MarkdownThemeContext'

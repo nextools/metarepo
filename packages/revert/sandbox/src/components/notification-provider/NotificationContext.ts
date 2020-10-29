@@ -7,3 +7,5 @@ export type TNotificationContext = {
 export const NotificationContext = createContext<TNotificationContext>({
   sendNotification: () => {},
 })
+
+NotificationContext.displayName = 'NotificationContext'

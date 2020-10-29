@@ -7,3 +7,5 @@ export type TAlertContext = {
 export const AlertContext = createContext<TAlertContext>({
   sendAlert: () => {},
 })
+
+AlertContext.displayName = 'AlertContext'

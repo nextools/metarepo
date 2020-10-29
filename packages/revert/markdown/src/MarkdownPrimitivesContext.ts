@@ -20,3 +20,5 @@ export const MarkdownPrimitivesContext = createContext<TMarkdownPrimitivesContex
   LayoutBorder: Border,
   LayoutText: Text,
 })
+
+MarkdownPrimitivesContext.displayName = 'MarkdownPrimitivesContext'

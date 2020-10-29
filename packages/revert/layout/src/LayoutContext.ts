@@ -30,3 +30,5 @@ export const LayoutContext = createContext<TLayoutContext>({
   _width: 0,
   _height: 0,
 })
+
+LayoutContext.displayName = 'LayoutContext'
