@@ -1,3 +1,7 @@
+## v0.3.1
+
+* 🐞 add `displayName` to contexts
+
 ## v0.3.0
 
 * 🐞 change `InlineBlock` to `Size`

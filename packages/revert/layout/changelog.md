@@ -1,3 +1,9 @@
+## v0.2.1
+
+* 🐞 add `displayName` to contexts
+
+* ♻️ update dependencies `@revert/root`
+
 ## v0.2.0
 
 * 🌱 add layout item resize support

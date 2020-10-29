@@ -1,3 +1,11 @@
+## v0.3.3
+
+* 🐞 extend markdown theme support
+
+* 🐞 add `displayName` to contexts
+
+* ♻️ update dependencies `@revert/markdown`, `@revert/layout`, `@revert/root`, `@revert/text`, `@revert/transform`
+
 ## v0.3.2
 
 * 🐞 fix measure for flexbox components

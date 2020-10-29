@@ -1,3 +1,13 @@
+## v0.2.2
+
+* 🐞 fix incorrect `PrimitiveText` provision
+
+* 🐞 rename Hr `backgroundColor` to `borderColor`
+
+* 🐞 add `displayName` to contexts
+
+* ♻️ update dependencies `@revert/image`, `@revert/layout`, `@revert/text`
+
 ## v0.2.1
 
 * 🐞 fix list item children

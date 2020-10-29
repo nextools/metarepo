@@ -1,3 +1,7 @@
+## v0.2.1
+
+* 🐞 add `displayName` to contexts
+
 ## v0.2.0
 
 * 🌱 add `TransformContext` to propagate scale to `Size`

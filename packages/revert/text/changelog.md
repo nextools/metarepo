@@ -1,3 +1,7 @@
+## v0.3.3
+
+* 🐞 add `displayName` to contexts
+
 ## v0.3.2
 
 * 🐞 properly handle preserve whitespace and wrap
