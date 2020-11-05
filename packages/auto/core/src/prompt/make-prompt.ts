@@ -50,7 +50,8 @@ export const makePrompt = async (packages: TReadonly<TPackageMap>, bumps: TReado
     await spawnChildProcess(
       `${editor} ${PROMPT_FILE_PATH}`,
       {
-        stdout: null,
+        stdin: process.stdin,
+        stdout: process.stdout,
         stderr: process.stderr,
       }
     )
