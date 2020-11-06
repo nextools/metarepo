@@ -353,7 +353,7 @@ test('makePrompt: edit - no changes made', async (t) => {
       ],
       [
         'editor ./node_modules/@auto/.EDIT.json',
-        { stdout: null, stderr: process.stderr },
+        { stdin: process.stdin, stdout: process.stdout, stderr: process.stderr },
       ],
     ],
     'should call editor'
@@ -471,7 +471,7 @@ test('makePrompt: edit - invalid answer json', async (t) => {
       ],
       [
         'editor ./node_modules/@auto/.EDIT.json',
-        { stdout: null, stderr: process.stderr },
+        { stdin: process.stdin, stdout: process.stdout, stderr: process.stderr },
       ],
     ],
     'should call editor'
@@ -612,7 +612,7 @@ test('makePrompt: edit - changes', async (t) => {
       ],
       [
         'editor ./node_modules/@auto/.EDIT.json',
-        { stdout: null, stderr: process.stderr },
+        { stdin: process.stdin, stdout: process.stdout, stderr: process.stderr },
       ],
     ],
     'should call editor'
