@@ -234,7 +234,12 @@ test('npm:publishPackages: registry override', async (t) => {
 test('npm:publishPackages: npm errors', async (t) => {
   const spawnChildProcessSpy = createSpy(({ index }) => (
     index % 2 === 0
-      ? Promise.reject(new SpawnError('403 Forbidden: You cannot do this', 42))
+      ? Promise.reject(new SpawnError(`
+npm ERR! code E403
+npm ERR! 403 403 Forbidden - PUT - You cannot publish over the previously published versions.
+npm ERR! 403 In most cases, you or one of your dependencies are requesting
+npm ERR! 403 a package version that is forbidden by your security policy.
+`, 42))
       : Promise.resolve()
   ))
   const promptsSpy = createSpy(() => Promise.reject())
