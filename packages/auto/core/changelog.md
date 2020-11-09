@@ -1,3 +1,9 @@
+## v0.3.4
+
+* 🐞 fix detecting publish same version error
+
+* 🐞 allow editor to start when choosing to edit bumps
+
 ## v0.3.3
 
 * 🐞 improve `TPackageJson` type
