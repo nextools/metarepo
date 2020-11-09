@@ -16,7 +16,7 @@
     "node": ">=12.13.0"
   },
   "dependencies": {
-    "@auto/core": "^0.3.3",
+    "@auto/core": "^0.3.4",
     "spown": "^0.1.2"
   },
   "devDependencies": {
