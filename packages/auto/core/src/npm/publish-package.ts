@@ -7,7 +7,7 @@ import type { TNpmConfig, TPackageRelease } from '../types'
 
 type TPublishPackage = Pick<TPackageRelease, 'name' | 'dir' | 'version'>
 
-const isNpmAlreadyExistsError = (err: unknown) => isString(err) && err.includes('403 Forbidden')
+const isNpmAlreadyExistsError = (err: unknown) => isString(err) && err.includes('previously published versions')
 
 export const publishPackage = async (packageRelease: TReadonly<TPublishPackage>, npmConfig: TReadonly<Required<TNpmConfig>>, logMessage: (message: string) => void, logError: (err: string) => void): Promise<void> => {
   const invokePublish = () =>
