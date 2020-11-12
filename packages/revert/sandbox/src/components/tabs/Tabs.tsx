@@ -1,5 +1,6 @@
-import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
 import type { ReactNode } from 'react'
+import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
+import { Scroll } from '@revert/scroll'
 import { component, startWithType, mapState, onChange, mapContext } from 'refun'
 import { mapChildren } from '../../map/children'
 import { SYMBOL_TABS, SYMBOL_TABS_ITEM } from '../../symbols'
@@ -23,8 +24,13 @@ export const Tabs = component(
   }),
   mapState('activeItemIndex', 'setActiveItemIndex', () => 0, []),
   onChange(({ items, activeItemIndex, setActiveItemIndex }) => {
-    if (activeItemIndex >= 0 && items[activeItemIndex].props.isDisabled === true) {
-      setActiveItemIndex(items.findIndex((item) => item.props.isDisabled !== true))
+    // children has changed
+    // if current index is "out of bounds"
+    // or if current index oints to disabled tab
+    if (activeItemIndex === -1 || (activeItemIndex >= 0 && items[activeItemIndex].props.isDisabled === true)) {
+      // find and set first active tab
+      // this could set "out of bounds" index, if there's no active tab
+      setActiveItemIndex(items.findIndex((item) => item.props.isDisabled === false))
     }
   }, ['items'])
 )(({
@@ -35,20 +41,22 @@ export const Tabs = component(
 }) => (
   <Layout direction="vertical">
     <Layout_Item height={50}>
-      <Layout hPadding={20} spaceBetween={30}>
-        <Border color={theme.tabsBorderColor} borderBottomWidth={1}/>
-        {items.map((item, i) => item.props.isDisabled !== true && (
-          <Layout_Item key={item.props.title} width={LAYOUT_SIZE_FIT} vAlign="center">
-            <TabsTitle
-              index={i}
-              title={item.props.title}
-              onPress={setActiveItemIndex}
-              isActive={i === activeItemIndex}
-              isDisabled={item.props.isDisabled}
-            />
-          </Layout_Item>
-        ))}
-      </Layout>
+      <Border color={theme.tabsBorderColor} borderBottomWidth={1}/>
+      <Scroll shouldScrollHorizontally>
+        <Layout hPadding={20} spaceBetween={30}>
+          {items.map((item, i) => item.props.isDisabled !== true && (
+            <Layout_Item key={item.props.title} width={LAYOUT_SIZE_FIT} vAlign="center">
+              <TabsTitle
+                index={i}
+                title={item.props.title}
+                onPress={setActiveItemIndex}
+                isActive={i === activeItemIndex}
+                isDisabled={item.props.isDisabled}
+              />
+            </Layout_Item>
+          ))}
+        </Layout>
+      </Scroll>
     </Layout_Item>
     {activeItemIndex >= 0 && (
       <Layout_Item>

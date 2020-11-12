@@ -1,6 +1,6 @@
-import { Children, isValidElement } from 'react'
+import { Children, isValidElement, useRef } from 'react'
 import type { ReactElement, ReactNode } from 'react'
-import { isSymbol, getObjectKeys, getObjectValues, isDefined } from 'tsfn'
+import { isSymbol, getObjectKeys, getObjectValues, isDefined, EMPTY_OBJECT } from 'tsfn'
 import type { TExtend, TOmitKey } from 'tsfn'
 
 export const SYMBOL_CHILDREN_REST = Symbol('CHILDREN_REST')
@@ -49,6 +49,16 @@ export const mapChildren = <K extends string> (childrenMap: TChildrenMap<K>) =>
     if (process.env.NODE_ENV === 'development') {
       for (const { symbols } of getObjectValues(childrenMap)) {
         allChildrenSymbols.push(...symbols)
+      }
+    }
+
+    const prevChildrenRef = useRef(EMPTY_OBJECT)
+    const prevChildrenPropsRef = useRef(EMPTY_OBJECT)
+
+    if (prevChildrenRef.current === props.children) {
+      return {
+        ...props,
+        ...prevChildrenPropsRef.current,
       }
     }
 
@@ -116,6 +126,9 @@ export const mapChildren = <K extends string> (childrenMap: TChildrenMap<K>) =>
         console.error(`Text elements ("${child}") are not allowed as a child`)
       }
     })
+
+    prevChildrenRef.current = props.children
+    prevChildrenPropsRef.current = childrenProps
 
     return {
       ...props,
