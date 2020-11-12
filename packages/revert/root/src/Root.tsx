@@ -5,6 +5,7 @@ import {
   startWithType,
   onUpdate,
 } from 'refun'
+import { Container } from './Container'
 import { RootContext } from './RootContext'
 import { getDimensions, subscribeDimensions } from './dimensions'
 import type { TRoot } from './types'
@@ -36,7 +37,9 @@ export const Root = component(
         _maxHeight: dimensions.height,
       }}
     >
-      {children}
+      <Container dimensions={dimensions}>
+        {children}
+      </Container>
     </LayoutContext.Provider>
   </RootContext.Provider>
 ))
