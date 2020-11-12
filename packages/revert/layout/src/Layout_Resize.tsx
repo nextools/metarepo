@@ -91,6 +91,7 @@ export const Layout_Resize = component(
   _height,
   _rootWidth,
   _rootHeight,
+  _direction,
   overflow,
   id,
   overlayId,
@@ -137,6 +138,7 @@ export const Layout_Resize = component(
             top={_y}
             width={_width}
             height={_height}
+            direction={_direction}
             overflow={overflow}
             onPointerDown={onPointerDown}
             onPointerEnter={onPointerEnter}

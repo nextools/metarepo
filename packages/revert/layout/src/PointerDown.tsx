@@ -1,11 +1,9 @@
 import type { MouseEvent, CSSProperties } from 'react'
-import { component, startWithType, mapHandlers, mapRef, mapWithProps, mapContext } from 'refun'
-import { LayoutItemContext } from './LayoutItemContext'
+import { component, startWithType, mapHandlers, mapRef, mapWithProps } from 'refun'
 import type { TPointerDown } from './types'
 
 export const PointerDown = component(
   startWithType<TPointerDown>(),
-  mapContext(LayoutItemContext),
   mapRef('ref', null as HTMLDivElement | null),
   mapHandlers({
     onPointerDown: ({ onPointerDown }) => (e: MouseEvent<HTMLDivElement>) => {
@@ -21,15 +19,17 @@ export const PointerDown = component(
     width,
     height,
     overflow = 0,
-    _direction,
+    direction,
   }) => {
+    const isHandleHorizontal = direction === 'vertical'
+
     const style: CSSProperties = {
       position: 'absolute',
-      left: left - overflow,
-      top: top - overflow,
-      width: width + overflow * 2,
-      height: height + overflow * 2,
-      cursor: _direction === 'horizontal' ? 'col-resize' : 'row-resize',
+      left: isHandleHorizontal ? left : left - overflow,
+      top: isHandleHorizontal ? top - overflow : top,
+      width: isHandleHorizontal ? width : width + overflow * 2,
+      height: isHandleHorizontal ? height + overflow * 2 : height,
+      cursor: isHandleHorizontal ? 'row-resize' : 'col-resize',
     }
 
     return {

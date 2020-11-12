@@ -14,6 +14,7 @@ export type TPointerDown = {
   top: number,
   width: number,
   height: number,
+  direction: TLayoutDirection,
   overflow?: number,
   onPointerDown: (e: TPointerEvent) => void,
   onPointerEnter: () => void,
