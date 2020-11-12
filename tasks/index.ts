@@ -63,7 +63,7 @@ export const sandbox = (...args: string[]) => {
   const runSandbox = RunApp({
     name: 'Sandbox',
     entryPointPath: 'tasks/sandbox/index.tsx',
-    htmlTemplatePath: 'packages/revert/sandbox/templates/dev.html',
+    htmlTemplatePath: 'tasks/sandbox/templates/dev.html',
   })
 
   return sequence(
