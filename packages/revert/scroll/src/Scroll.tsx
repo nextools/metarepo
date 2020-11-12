@@ -12,8 +12,8 @@ export const Scroll = component(
     shouldScrollToBottom: false,
   }),
   mapContext(LayoutContext),
-  mapStateRef('contentWidthRef', 'flushWidthChange', () => 0, []),
-  mapStateRef('contentHeightRef', 'flushHeightChange', () => 0, []),
+  mapStateRef('contentWidthRef', 'flushWidthChange', ({ _width }) => _width, []),
+  mapStateRef('contentHeightRef', 'flushHeightChange', ({ _height }) => _height, []),
   mapHandlers({
     onWidthChange: ({ contentWidthRef, flushWidthChange, _maxWidth, _onWidthChange }) => (value: number) => {
       contentWidthRef.current = value
@@ -48,7 +48,8 @@ export const Scroll = component(
     const childStyle: CSSProperties = {
       width: contentWidthRef.current,
       height: contentHeightRef.current,
-
+      flexShrink: 0,
+      flexBasis: 'auto',
     }
 
     if (shouldScrollHorizontally) {
