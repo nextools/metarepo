@@ -4,7 +4,7 @@ import { pipe } from 'funcom'
 import { startWithType, mapWithProps } from 'refun'
 import { isUndefined, isDefined } from 'tsfn'
 import type { TAnyObject } from 'tsfn'
-import { mapMetaStoreState } from '../../store-meta'
+import { mapStoreState } from '../../store'
 import type { TCommonComponentControls, TMetaFile } from '../../types'
 import { getComponentName, getElementPath } from '../../utils'
 
@@ -21,7 +21,7 @@ const getControlsFromMeta = (obj: any): TCommonComponentControls | null => (isMe
 
 export const mapChildConfigByPath = <P>() => pipe(
   startWithType<P>(),
-  mapMetaStoreState(({ componentConfig, componentControls, componentPropsChildrenMap, selectedElementPath }) => ({
+  mapStoreState(({ componentConfig, componentControls, componentPropsChildrenMap, selectedElementPath }) => ({
     componentConfig,
     componentControls,
     componentPropsChildrenMap,

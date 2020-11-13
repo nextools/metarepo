@@ -2,7 +2,7 @@ import { Block } from '@revert/block'
 import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
 import { startWithType, mapContext, mapHandlers, pureComponent } from 'refun'
 import { mapContextOverride } from '../../map/map-context-override'
-import { mapMetaStoreState } from '../../store-meta'
+import { mapStoreState } from '../../store'
 import { getComponentName, globalObject } from '../../utils'
 import { ButtonIcon } from '../button-icon'
 import { IconCopyUrl } from '../icons'
@@ -28,7 +28,7 @@ export const Header = pureComponent(
     pressedIconColor: theme.controlsSidebarIconColor,
     focusedBorderColor: theme.controlsSidebarIconBackgroundColor,
   })),
-  mapMetaStoreState(({ Component }) => ({
+  mapStoreState(({ Component }) => ({
     componentName: Component !== null ? getComponentName(Component) : '',
   }), ['Component']),
   mapHandlers({

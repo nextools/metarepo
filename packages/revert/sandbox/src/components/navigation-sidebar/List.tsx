@@ -1,6 +1,6 @@
 import { Layout, Layout_Item, LayoutContext } from '@revert/layout'
 import { startWithType, component, mapContext } from 'refun'
-import { mapMetaStoreState, setComponentKey } from '../../store-meta'
+import { mapStoreState, setComponentKey } from '../../store'
 import { ThemeContext } from '../theme-context'
 import { ListItem } from './ListItem'
 
@@ -14,7 +14,7 @@ export const List = component(
   startWithType<TList>(),
   mapContext(LayoutContext),
   mapContext(ThemeContext),
-  mapMetaStoreState(({ componentKey }) => ({
+  mapStoreState(({ componentKey }) => ({
     componentKey,
   }), ['componentKey'])
 )(({

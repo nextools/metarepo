@@ -14,7 +14,6 @@ import {
 } from 'refun'
 import { COLOR_BLACK, COLOR_WHITE } from '../../colors'
 import { mapStoreState, setTransform } from '../../store'
-import { mapMetaStoreState } from '../../store-meta/index'
 import { SYMBOL_DEMO_AREA } from '../../symbols'
 import type { TTransform } from '../../types'
 import { isSafari } from '../../utils/platform-id'
@@ -42,7 +41,22 @@ export const DemoArea = component(
     MeasureComponent: shouldMeasureComponent ? DemoComponentMeasure : DemoComponentRevert,
     ComponentWrapper: ComponentWrapper ?? PureComponent,
   })),
-  mapStoreState(({ isCanvasDarkMode, width, height, hasGrid, shouldStretch, shouldInspect, transformX, transformY, transformZ }) => ({
+  mapStoreState(({
+    isCanvasDarkMode,
+    width,
+    height,
+    hasGrid,
+    shouldStretch,
+    shouldInspect,
+    transformX,
+    transformY,
+    transformZ,
+    Component,
+    componentProps,
+    componentConfig,
+    componentPropsChildrenMap,
+    selectedElementPath,
+  }) => ({
     canvasWidth: width,
     canvasHeight: height,
     shouldStretch,
@@ -54,14 +68,12 @@ export const DemoArea = component(
       z: transformZ,
     },
     isCanvasDarkMode,
-  }), ['isCanvasDarkMode', 'width', 'height', 'hasGrid', 'shouldStretch', 'shouldInspect', 'transformX', 'transformY', 'transformZ']),
-  mapMetaStoreState(({ Component, componentProps, componentConfig, componentPropsChildrenMap, selectedElementPath }) => ({
     Component,
     componentProps,
     componentPropsChildrenMap,
     componentConfig,
     selectedElementPath,
-  }), ['Component', 'componentProps', 'componentPropsChildrenMap', 'componentConfig', 'selectedElementPath']),
+  }), ['isCanvasDarkMode', 'width', 'height', 'hasGrid', 'shouldStretch', 'shouldInspect', 'transformX', 'transformY', 'transformZ', 'Component', 'componentProps', 'componentPropsChildrenMap', 'componentConfig', 'selectedElementPath']),
   mapHandlers({
     dispatchTransform: () => (transform: TTransform) => setTransform(transform),
   }),

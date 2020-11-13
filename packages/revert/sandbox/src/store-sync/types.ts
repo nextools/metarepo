@@ -1,4 +1,3 @@
-import type { TMetaState } from '../store-meta/types'
 import type { TState } from '../store/types'
 
 export type TMetaSubState = Pick<TMetaState, 'componentKey' | 'propsIndex' | 'selectedElementPath'>

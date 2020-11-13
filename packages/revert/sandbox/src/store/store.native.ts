@@ -1,8 +1,10 @@
-import { createStore } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
 import type { Store } from 'redux'
+import thunk from 'redux-thunk'
 import { reducer } from './reducers'
-import type { TState } from './types'
+import type { TDispatch, TState } from './types'
 
 export const store: Store<TState> = createStore(
-  reducer
+  reducer,
+  applyMiddleware<TDispatch, TState>(thunk)
 )

@@ -3,14 +3,14 @@ import { Link } from '@revert/link'
 import { Scroll } from '@revert/scroll'
 import { startWithType, mapContext, pureComponent } from 'refun'
 import { isString, isUndefined } from 'tsfn'
-import { mapMetaStoreState } from '../../store-meta'
+import { mapStoreState } from '../../store'
 import { PrimitiveText, Text } from '../text'
 import { ThemeContext } from '../theme-context'
 
 export const Info = pureComponent(
   startWithType<{}>(),
   mapContext(ThemeContext),
-  mapMetaStoreState(({ packageJson }) => {
+  mapStoreState(({ packageJson }) => {
     if (packageJson === null) {
       return {}
     }

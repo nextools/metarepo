@@ -1,13 +1,13 @@
 import { Layout, Layout_Item } from '@revert/layout'
 import { Scroll } from '@revert/scroll'
 import { startWithType, pureComponent } from 'refun'
-import { mapMetaStoreState } from '../../store-meta'
+import { mapStoreState } from '../../store'
 import { Markdown } from '../markdown'
 import { Text } from '../text'
 
 export const Doc = pureComponent(
   startWithType<{}>(),
-  mapMetaStoreState(({ readme }) => ({
+  mapStoreState(({ readme }) => ({
     readme,
   }), ['readme'])
 )(({ readme }) => {

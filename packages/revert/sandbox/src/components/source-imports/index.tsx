@@ -1,6 +1,6 @@
 import { Scroll } from '@revert/scroll'
 import { startWithType, pureComponent, mapWithPropsMemo } from 'refun'
-import { mapMetaStoreState } from '../../store-meta'
+import { mapStoreState } from '../../store'
 import { SYMBOL_SOURCE_IMPORTS } from '../../symbols'
 import { LinesBlock } from './LinesBlock'
 import { serializeImportsLines } from './serialize-imports-lines'
@@ -11,7 +11,7 @@ export type TSourceImports = {
 
 export const SourceImports = pureComponent(
   startWithType<TSourceImports>(),
-  mapMetaStoreState(({ Component, componentProps }) => ({
+  mapStoreState(({ Component, componentProps }) => ({
     Component,
     componentProps,
   }), ['Component', 'componentProps']),

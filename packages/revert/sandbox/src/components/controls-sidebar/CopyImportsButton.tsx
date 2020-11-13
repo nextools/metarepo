@@ -1,6 +1,6 @@
 import { Layout, Layout_Item } from '@revert/layout'
 import { startWithType, pureComponent, mapHandlers, mapContext } from 'refun'
-import { mapMetaStoreState } from '../../store-meta'
+import { mapStoreState } from '../../store'
 import { ButtonIcon } from '../button-icon'
 import { IconCopySource } from '../icons'
 import { NotificationContext } from '../notification-provider'
@@ -16,7 +16,7 @@ export const CopyImportsButton = pureComponent(
   startWithType<TCopyImportsButton>(),
   mapContext(ThemeContext),
   mapContext(NotificationContext),
-  mapMetaStoreState(({ Component, componentProps }) => ({
+  mapStoreState(({ Component, componentProps }) => ({
     Component,
     componentProps,
   }), ['Component', 'componentProps']),

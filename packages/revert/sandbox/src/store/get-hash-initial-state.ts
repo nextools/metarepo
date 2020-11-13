@@ -1,18 +1,66 @@
-import { getHashState as getSyncHashState } from '../store-sync/get-hash-state'
-import { pickMainSubState } from '../store-sync/get-initial-sync-state'
-import { isValidSyncState } from '../store-sync/is-valid-sync-state'
+import { decodeUrl, EMPTY_HASH, getCurrentHash } from '../utils'
 import { initialState } from './initial-state'
 import type { TState } from './types'
 
 export const getHashInitialState = (): TState => {
-  const stateObj = getSyncHashState()
+  const hash = getCurrentHash()
 
-  if (isValidSyncState(stateObj)) {
-    return {
-      ...initialState,
-      ...pickMainSubState(stateObj),
-    }
+  if (hash === EMPTY_HASH) {
+    return initialState
   }
 
-  return initialState
+  const {
+    Component,
+    componentConfig,
+    componentControls,
+    componentKey,
+    componentProps,
+    componentPropsChildrenMap,
+    components,
+    hasGrid,
+    height,
+    isCanvasDarkMode,
+    isControlsSidebarVisible,
+    isNavigationSidebarVisible,
+    packageJson,
+    propsIndex,
+    readme,
+    resolutionKey,
+    selectedElementPath,
+    shouldInspect,
+    shouldStretch,
+    transformX,
+    transformY,
+    transformZ,
+    width,
+  } = {
+    ...initialState,
+    ...decodeUrl(hash),
+  }
+
+  return {
+    Component,
+    componentConfig,
+    componentControls,
+    componentKey,
+    componentProps,
+    componentPropsChildrenMap,
+    components,
+    hasGrid,
+    height,
+    isCanvasDarkMode,
+    isControlsSidebarVisible,
+    isNavigationSidebarVisible,
+    packageJson,
+    propsIndex,
+    readme,
+    resolutionKey,
+    selectedElementPath,
+    shouldInspect,
+    shouldStretch,
+    transformX,
+    transformY,
+    transformZ,
+    width,
+  }
 }

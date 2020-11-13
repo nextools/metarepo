@@ -1,7 +1,7 @@
 import { Layout, Layout_Item, LayoutContext, LAYOUT_SIZE_FIT } from '@revert/layout'
 import { pureComponent, startWithType, mapContext, mapWithProps, mapHandlers, mapState } from 'refun'
 import type { TLine } from 'syntx'
-import { mapMetaStoreState } from '../../store-meta'
+import { mapStoreState } from '../../store'
 import { ThemeContext } from '../theme-context'
 import { Line } from './Line'
 import { collapseLines } from './collapse-lines'
@@ -15,7 +15,7 @@ export const LinesBlock = pureComponent(
   startWithType<TLinesBlock>(),
   mapContext(ThemeContext),
   mapContext(LayoutContext),
-  mapMetaStoreState(({ selectedElementPath }) => ({
+  mapStoreState(({ selectedElementPath }) => ({
     selectedElementPath,
   }), ['selectedElementPath']),
   mapState('collapsedMetas', 'setCollapsedMetas', () => [] as string[], []),

@@ -1,4 +1,3 @@
-import { store as metaStore } from '../store-meta/store'
 import { store as mainStore } from '../store/store'
 import { SyncStoreFactory } from './store'
 import { syncState } from './sync-state'

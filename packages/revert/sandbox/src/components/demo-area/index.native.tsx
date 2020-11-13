@@ -13,7 +13,6 @@ import {
 } from 'refun'
 import { COLOR_BLACK, COLOR_WHITE } from '../../colors'
 import { mapStoreState, setTransform } from '../../store'
-import { mapMetaStoreState } from '../../store-meta'
 import { SYMBOL_DEMO_AREA } from '../../symbols'
 import type { TTransform } from '../../types'
 import { PrimitiveBackground } from '../background'
@@ -38,7 +37,20 @@ export const DemoArea = pureComponent(
     MeasureComponent: shouldMeasureComponent ? DemoComponentMeasure : DemoComponentRevert,
     ComponentWrapper: ComponentWrapper ?? PureComponent,
   })),
-  mapStoreState(({ width, height, hasGrid, shouldStretch, isCanvasDarkMode, transformX, transformY, transformZ }) => ({
+  mapStoreState(({
+    width,
+    height,
+    hasGrid,
+    shouldStretch,
+    isCanvasDarkMode,
+    transformX,
+    transformY,
+    transformZ,
+    Component,
+    componentProps,
+    componentConfig,
+    componentPropsChildrenMap,
+  }) => ({
     canvasWidth: width,
     canvasHeight: height,
     shouldStretch,
@@ -49,13 +61,11 @@ export const DemoArea = pureComponent(
       y: transformY,
       z: transformZ,
     },
-  }), ['width', 'height', 'hasGrid', 'shouldStretch', 'isCanvasDarkMode', 'transformX', 'transformY', 'transformZ']),
-  mapMetaStoreState(({ Component, componentProps, componentConfig, componentPropsChildrenMap }) => ({
     Component,
     componentProps,
     componentPropsChildrenMap,
     componentConfig,
-  }), ['Component', 'componentProps', 'componentPropsChildrenMap', 'componentConfig']),
+  }), ['width', 'height', 'hasGrid', 'shouldStretch', 'isCanvasDarkMode', 'transformX', 'transformY', 'transformZ', 'Component', 'componentProps', 'componentPropsChildrenMap', 'componentConfig']),
   mapHandlers({
     dispatchTransform: () => (transform: TTransform) => setTransform(transform),
   }),

@@ -16,7 +16,6 @@ export type {
   TAction,
   TActionCreator,
   TActionWithPayload,
-  TAnyAction,
 } from './store/types'
 export type { TPopoverPlugin, TComponentPlugin as TComponentWrapperPlugin, TComponentWrapper } from './components/plugin-provider'
 export type { TComponents, TTheme, TThemeIcons, TPackageJson, TComponentControls } from './types'

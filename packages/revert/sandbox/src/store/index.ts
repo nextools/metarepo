@@ -1,4 +1,5 @@
 import { StoreContextFactory } from 'refun'
+import type { TComponents } from '../types'
 import {
   navigateAction,
   resetTransformAction,
@@ -12,6 +13,11 @@ import {
   toggleNavigationSidebarAction,
   toggleInspectAction,
   toggleStretchAction,
+  setComponentListThunk,
+  updateComponentPropsThunk,
+  setComponentThunk,
+  applyPropPathValue,
+  selectElementAction,
 } from './actions'
 import type {
   TNavigateAction,
@@ -22,6 +28,7 @@ import type {
 } from './actions'
 import { reducer } from './reducers'
 import { store } from './store'
+import type { TState } from './types'
 import { injectReducerFactory } from './utils'
 
 const StoreContext = StoreContextFactory(store)
@@ -78,10 +85,34 @@ export const toggleStretch = () => {
   store.dispatch(toggleStretchAction())
 }
 
+// Meta Actions
+export const setComponentsList = (components: TComponents) => {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  store.dispatch(setComponentListThunk(components))
+}
+
+export const updateComponentProps = (componentKey: string | null, propsIndex: string): Promise<void> => {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  return store.dispatch(updateComponentPropsThunk(componentKey, propsIndex))
+}
+
+export const setComponentKey = (componentKey: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  store.dispatch(setComponentThunk(componentKey))
+}
+
+export const applyPropValue = (propPath: string[], propValue: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  store.dispatch(applyPropPathValue(propPath, propValue))
+}
+
+export const selectElement = (payload: TState['selectedElementPath']) => {
+  store.dispatch(selectElementAction({ selectedElementPath: payload }))
+}
+
 export type {
   TAction,
   TActionCreator,
   TActionWithPayload,
-  TAnyAction,
   TState,
 } from './types'

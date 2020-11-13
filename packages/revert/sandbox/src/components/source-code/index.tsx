@@ -1,7 +1,7 @@
 import { Scroll } from '@revert/scroll'
 import { startWithType, pureComponent } from 'refun'
 import { serializeComponent } from 'syntx'
-import { mapMetaStoreState } from '../../store-meta'
+import { mapStoreState } from '../../store'
 import { SYMBOL_SOURCE_CODE } from '../../symbols'
 import { LinesBlock } from './LinesBlock'
 import { createChildrenMeta } from './create-children-meta'
@@ -12,7 +12,7 @@ export type TSourceCode = {
 
 export const SourceCode = pureComponent(
   startWithType<TSourceCode>(),
-  mapMetaStoreState(({ Component, componentConfig, componentProps, componentPropsChildrenMap }) => {
+  mapStoreState(({ Component, componentConfig, componentProps, componentPropsChildrenMap }) => {
     if (Component === null || componentConfig === null) {
       return {
         lines: [],

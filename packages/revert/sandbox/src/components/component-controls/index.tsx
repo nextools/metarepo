@@ -1,7 +1,7 @@
 import { Scroll } from '@revert/scroll'
 import { getChildrenKeys } from 'autoprops'
 import { startWithType, pureComponent, mapHandlers, mapDebouncedHandlerTimeout, mapWithPropsMemo } from 'refun'
-import { applyPropValue } from '../../store-meta'
+import { applyPropValue } from '../../store'
 import { SYMBOL_COMPONENT_CONTROLS } from '../../symbols'
 import { isHandler } from '../../utils'
 import { Tabs, Tabs_Item } from '../tabs'

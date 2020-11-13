@@ -3,9 +3,8 @@ import { component, startWithType, onChange } from 'refun'
 import { PluginProvider } from './components/plugin-provider'
 import { Sandbox } from './components/sandbox'
 import { ThemeProvider } from './components/theme-provider'
-import { setComponentsList } from './store-meta'
+import { setComponentsList } from './store'
 import type { TApp } from './types'
-import './store'
 import './store-sync'
 
 export const App = component(

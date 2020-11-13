@@ -14,6 +14,12 @@ import {
   TYPE_RESET_TRANSFORM,
   TYPE_TOGGLE_NAVIGATION_SIDEBAR,
   TYPE_TOGGLE_CONTROLS_SIDEBAR,
+  SET_COMPONENTS_LIST_ACTION,
+  SET_COMPONENT_KEY_ACTION,
+  RESET_COMPONENT_KEY_ACTION,
+  SELECT_ELEMENT_ACTION,
+  SET_IMPORTED_META_ACTION,
+  SET_PROPS_ACTION,
 } from './actions'
 import type { TAllActions } from './actions'
 import { initialState } from './initial-state'
@@ -133,11 +139,177 @@ export const reducer: Reducer<TState, TAllActions> = (state, action): TState => 
     }
 
     case TYPE_NAVIGATE: {
+      const {
+        hasGrid,
+        isCanvasDarkMode,
+        resolutionKey,
+        shouldStretch,
+        transformX,
+        transformY,
+        transformZ,
+        width,
+        height,
+      } = action.payload
+
       return {
         ...state,
-        ...action.payload,
-        width: filterWidth(action.payload.width),
-        height: filterHeight(action.payload.height),
+        hasGrid,
+        isCanvasDarkMode,
+        resolutionKey,
+        shouldStretch,
+        transformX,
+        transformY,
+        transformZ,
+        width: filterWidth(width),
+        height: filterHeight(height),
+      }
+    }
+
+    case SET_COMPONENTS_LIST_ACTION: {
+      const { components } = action.payload
+      const {
+        componentKey,
+        propsIndex,
+        selectedElementPath,
+        componentConfig,
+        componentControls,
+        Component,
+        componentProps,
+        componentPropsChildrenMap,
+        packageJson,
+        readme,
+      } = initialState
+
+      return {
+        ...state,
+        componentKey,
+        propsIndex,
+        selectedElementPath,
+        componentConfig,
+        componentControls,
+        Component,
+        componentProps,
+        componentPropsChildrenMap,
+        packageJson,
+        readme,
+        components,
+      }
+    }
+
+    case SET_COMPONENT_KEY_ACTION: {
+      const { componentKey, propsIndex } = action.payload
+      const {
+        components,
+        selectedElementPath,
+        componentConfig,
+        componentControls,
+        Component,
+        componentProps,
+        componentPropsChildrenMap,
+        packageJson,
+        readme,
+      } = initialState
+
+      return {
+        ...state,
+        components,
+        selectedElementPath,
+        componentConfig,
+        componentControls,
+        Component,
+        componentProps,
+        componentPropsChildrenMap,
+        packageJson,
+        readme,
+        componentKey,
+        propsIndex,
+      }
+    }
+
+    case RESET_COMPONENT_KEY_ACTION: {
+      const {
+        componentKey,
+        propsIndex,
+        selectedElementPath,
+        componentConfig,
+        componentControls,
+        Component,
+        componentProps,
+        componentPropsChildrenMap,
+        packageJson,
+        readme,
+      } = initialState
+
+      return {
+        ...state,
+        componentKey,
+        propsIndex,
+        selectedElementPath,
+        componentConfig,
+        componentControls,
+        Component,
+        componentProps,
+        componentPropsChildrenMap,
+        packageJson,
+        readme,
+        components: state.components,
+      }
+    }
+
+    case SELECT_ELEMENT_ACTION: {
+      const { selectedElementPath } = action.payload
+
+      return {
+        ...state,
+        selectedElementPath,
+      }
+    }
+
+    case SET_IMPORTED_META_ACTION: {
+      const {
+        Component,
+        componentConfig,
+        componentControls,
+        componentKey,
+        componentProps,
+        componentPropsChildrenMap,
+        components,
+        packageJson,
+        readme,
+        propsIndex,
+        selectedElementPath,
+      } = action.payload
+
+      return {
+        ...state,
+        Component,
+        componentConfig,
+        componentControls,
+        componentKey,
+        componentProps,
+        componentPropsChildrenMap,
+        components,
+        packageJson,
+        readme,
+        propsIndex,
+        selectedElementPath,
+      }
+    }
+
+    case SET_PROPS_ACTION: {
+      const {
+        componentKey,
+        componentProps,
+        componentPropsChildrenMap,
+        propsIndex,
+      } = action.payload
+
+      return {
+        ...state,
+        componentKey,
+        componentProps,
+        componentPropsChildrenMap,
+        propsIndex,
       }
     }
 

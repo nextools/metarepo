@@ -1,3 +1,4 @@
+import { EMPTY_OBJECT } from 'tsfn'
 import { resolutions } from '../resolutions'
 import type { TState } from './types'
 
@@ -16,4 +17,16 @@ export const initialState: TState = {
   transformX: 0,
   transformY: 0,
   transformZ: 1,
+  propsIndex: '0',
+  selectedElementPath: '',
+  componentKey: null,
+  // Meta State
+  components: null,
+  componentConfig: null,
+  componentControls: null,
+  Component: null,
+  componentProps: EMPTY_OBJECT,
+  componentPropsChildrenMap: EMPTY_OBJECT,
+  packageJson: null,
+  readme: null,
 }

@@ -2,7 +2,7 @@ import { Layout, Layout_Item, LayoutContext, LAYOUT_SIZE_FIT } from '@revert/lay
 import { Scroll } from '@revert/scroll'
 import leven from 'leven'
 import { startWithType, mapState, mapHandlers, mapContext, pureComponent } from 'refun'
-import { mapMetaStoreState } from '../../store-meta'
+import { mapStoreState } from '../../store'
 import { SYMBOL_NAVIGATION_SIDEBAR } from '../../symbols'
 import { Background } from '../background'
 import { ThemeContext } from '../theme-context'
@@ -15,7 +15,7 @@ export const NavigationSidebar = pureComponent(
   startWithType<TNavigationSidebar>(),
   mapContext(ThemeContext),
   mapContext(LayoutContext),
-  mapMetaStoreState(({ components: components }) => ({
+  mapStoreState(({ components: components }) => ({
     components,
   }), ['components']),
   mapState(
