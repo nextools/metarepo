@@ -1,6 +1,6 @@
 # r11y ![npm](https://flat.badgen.net/npm/v/r11y)
 
-Get a11y data of React app.
+Get a11y data of React app and validate it using [Axe](https://github.com/dequelabs/axe-core) library.
 
 ## Install
 
