@@ -6,4 +6,4 @@ TarMap.
 
 ```sh
 $ yarn add tarmap
-``
+```
