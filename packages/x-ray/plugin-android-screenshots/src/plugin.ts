@@ -24,6 +24,7 @@ type TRequest = {
 }
 
 export type TAndroidScreenshotsOptions = {
+  dependencyNames?: string[],
   fontsDir?: string,
   shouldBailout?: boolean,
 }
@@ -47,8 +48,8 @@ export const androidScreenshots = (options?: TAndroidScreenshotsOptions): TPlugi
       appName: 'X-Ray',
       appId: 'org.nextools.xray',
       entryPointPath,
-      fontsDir: options?.fontsDir,
-      dependencyNames: [
+      fontsDir: opts?.fontsDir,
+      dependencyNames: opts?.dependencyNames ?? [
         'react-native-svg',
         'react-native-view-shot',
       ],
