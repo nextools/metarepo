@@ -4,8 +4,6 @@ Feed input data array items one by one to provided function that is automaticall
 
 When it fails then it fails hard, i.e. it terminates entire threads pool. It's up to a consumer's worker function to retry or even swallow errors to keep things going.
 
-:warning: Node.js v10 needs an `--experimental-worker` flag.
-
 ## Install
 
 ```sh
