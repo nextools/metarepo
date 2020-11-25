@@ -24,6 +24,7 @@ type TRequest = {
 }
 
 export type TIosScreenshotsOptions = {
+  dependencyNames?: string[],
   fontsDir?: string,
   iPhoneVersion?: number,
   iOSVersion?: string,
@@ -52,7 +53,7 @@ export const iOsScreenshots = (options?: TIosScreenshotsOptions): TPlugin<Uint8A
       iOSVersion: '13',
       entryPointPath,
       fontsDir: opts?.fontsDir,
-      dependencyNames: [
+      dependencyNames: opts?.dependencyNames ?? [
         'react-native-svg',
         'react-native-view-shot',
       ],
