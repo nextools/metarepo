@@ -36,8 +36,7 @@ export const androidScreenshots = (options?: TAndroidScreenshotsOptions): TPlugi
   getResults: async (files) => {
     const opts = {
       shouldBailout: false,
-      iPhoneVersion: 8,
-      iOSVersion: '13.2',
+      dependencyNames: [],
       ...options,
     }
     const entryPointPath = await rsolve('@x-ray/native-screenshots-app', 'react-native')
@@ -49,9 +48,10 @@ export const androidScreenshots = (options?: TAndroidScreenshotsOptions): TPlugi
       appId: 'org.nextools.xray',
       entryPointPath,
       fontsDir: opts?.fontsDir,
-      dependencyNames: opts?.dependencyNames ?? [
+      dependencyNames: [
         'react-native-svg',
         'react-native-view-shot',
+        ...opts.dependencyNames,
       ],
       portsToForward: [3002],
       isHeadless: true,
