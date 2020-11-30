@@ -24,8 +24,9 @@ type TRequest = {
 }
 
 export type TIosScreenshotsOptions = {
+  dependencyNames?: string[],
   fontsDir?: string,
-  iPhoneVersion?: number,
+  iPhoneVersion?: string,
   iOSVersion?: string,
   shouldBailout?: boolean,
 }
@@ -37,8 +38,9 @@ export const iOsScreenshots = (options?: TIosScreenshotsOptions): TPlugin<Uint8A
   getResults: async (files) => {
     const opts = {
       shouldBailout: false,
-      iPhoneVersion: 8,
-      iOSVersion: '13.2',
+      iPhoneVersion: '8',
+      iOSVersion: '13',
+      dependencyNames: [],
       ...options,
     }
     const entryPointPath = await rsolve('@x-ray/native-screenshots-app', 'react-native')
@@ -48,13 +50,14 @@ export const iOsScreenshots = (options?: TIosScreenshotsOptions): TPlugin<Uint8A
     const closeIosApp = await runIosApp({
       appName: 'X-Ray',
       appId: 'org.nextools.x-ray',
-      iPhoneModel: '8',
-      iOSVersion: '13',
+      iPhoneModel: opts.iPhoneVersion,
+      iOSVersion: opts.iOSVersion,
       entryPointPath,
       fontsDir: opts?.fontsDir,
       dependencyNames: [
         'react-native-svg',
         'react-native-view-shot',
+        ...opts.dependencyNames,
       ],
       isHeadless: true,
     })
