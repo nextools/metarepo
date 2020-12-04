@@ -1,3 +1,9 @@
+## v0.4.0
+
+* 🌱 add dependencyNames to iosScreenshots() options
+
+* 🐞 apply iPhoneMode and iOSVersion passed in options to iosScreenshots()
+
 ## v0.3.0
 
 * 💥 drop Node.js v10

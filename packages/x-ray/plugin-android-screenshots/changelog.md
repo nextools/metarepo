@@ -1,3 +1,7 @@
+## v0.4.0
+
+* 🌱 add dependencyNames to androidScreenshots() options
+
 ## v0.3.0
 
 * 💥 drop Node.js v10

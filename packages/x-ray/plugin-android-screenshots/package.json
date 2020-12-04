@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/plugin-android-screenshots",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Check Android screenshots with X-Ray",
   "keywords": [],
   "main": "src/index.ts",
