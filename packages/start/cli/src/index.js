@@ -1,6 +1,6 @@
+#!/usr/bin/env node
 /* eslint-disable no-global-assign */
-/* eslint-disable no-process-exit */
-/* eslint-disable import/no-dynamic-require */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 const { resolve } = require('path')
 const { start: options } = require(resolve('./package.json'))
 
