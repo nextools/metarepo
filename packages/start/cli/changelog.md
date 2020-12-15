@@ -1,3 +1,7 @@
+## v2.0.1
+
+* 🐞 fix Node.js shebang
+
 ## v2.0.0
 
 * 💥 drop Node.js v10
