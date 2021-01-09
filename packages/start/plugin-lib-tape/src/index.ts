@@ -9,7 +9,7 @@ export default (reporter?: () => NodeJS.ReadWriteStream) =>
     const { default: test } = await import('tape')
     const { default: through } = await import('through')
 
-    return new Promise<StartFilesProps>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       const stream = test.createStream()
       // @ts-ignore
       const results = test.getHarness()._results

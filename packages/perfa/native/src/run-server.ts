@@ -13,7 +13,7 @@ export const runServer = (): Promise<TPerfData> =>
         if (url.pathname === '/') {
           res.end()
 
-          await new Promise((serverResolve) => {
+          await new Promise<void>((serverResolve) => {
             server.close((err) => {
               if (isDefined(err)) {
                 reject(err)

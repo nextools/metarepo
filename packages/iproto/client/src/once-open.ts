@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import type WebSocket from 'ws'
 
-export const onceOpen = <T>(ws: WebSocket): Promise<T> =>
-  new Promise((resolve, reject) => {
+export const onceOpen = (ws: WebSocket): Promise<void> =>
+  new Promise<void>((resolve, reject) => {
     const onOpen = () => {
       ws.removeEventListener('open', onOpen)
       ws.removeEventListener('error', onError)

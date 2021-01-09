@@ -16,7 +16,7 @@ const detectExportDeclaration = (node: Node): string | null => {
     const source = node.source
 
     /* istanbul ignore else */
-    if (source !== null) {
+    if (typeof source?.value === 'string') {
       return source.value
     }
   }

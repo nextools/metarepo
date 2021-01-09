@@ -2,10 +2,11 @@
 import type WebSocket from 'ws'
 
 export const onceMessage = <T>(ws: WebSocket, onSubscribe: () => void, onData?: (data: any) => T): Promise<T> =>
-  new Promise((resolve, reject) => {
+  new Promise<any>((resolve, reject) => {
     const onMessage = (data: WebSocket.MessageEvent) => {
       ws.removeEventListener('message', onMessage)
       ws.removeEventListener('close', onClose)
+
       resolve(onData?.(data))
     }
     const onClose = (event: WebSocket.CloseEvent) => {
