@@ -52,7 +52,7 @@ test('portu: getFreePort', async (t) => {
     )
   }
 
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     server1.close((err) => {
       if (typeof err !== 'undefined') {
         reject(err)
@@ -62,7 +62,7 @@ test('portu: getFreePort', async (t) => {
     })
   })
 
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     server2.close((err) => {
       if (typeof err !== 'undefined') {
         reject(err)

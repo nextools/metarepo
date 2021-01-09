@@ -6,7 +6,7 @@ const PORT = 3001
 export default plugin<{}, void>('syncState', ({ logMessage }) => async () => {
   const { default: WebSocket } = await import('ws')
 
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     const wss = new WebSocket.Server({
       host: HOST,
       port: PORT,

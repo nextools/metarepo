@@ -33,7 +33,7 @@ test('portu: getPortProcess', async (t) => {
     'should return null if port is free'
   )
 
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     server.close((err) => {
       if (typeof err !== 'undefined') {
         reject(err)

@@ -14,7 +14,7 @@ export default (taskNames: string[], options: Options = {}) => (...args: string[
     }
 
     await pAll(
-      taskNames.map((taskName) => () => new Promise((resolve, reject) => {
+      taskNames.map((taskName) => () => new Promise<void>((resolve, reject) => {
         const worker = new Worker(require.resolve('./worker'), {
           workerData: {
             cliPath: process.argv[1],

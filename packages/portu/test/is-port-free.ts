@@ -22,7 +22,7 @@ test('portu: checkPort', async (t) => {
     'should return false when port is not available'
   )
 
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     server.close((err) => {
       if (typeof err !== 'undefined') {
         reject(err)

@@ -30,6 +30,7 @@ function makethen(fn: any) {
       }
 
       if (results.length === 0) {
+        // @ts-ignore
         return resolve()
       }
 
