@@ -28,12 +28,12 @@
     "autoprops": "^4.0.1",
     "foreal": "^0.1.0",
     "react": "16.13.1",
-    "react-native": "0.63.2",
+    "react-native": "0.63.4",
     "syntx": "^2.0.0",
     "tape": "^5.0.1"
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.63.2"
+    "react-native": "0.63.4"
   }
 }
