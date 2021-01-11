@@ -1,3 +1,7 @@
+## v3.2.1
+
+* 🐞 update `loader-utils` to v2
+
 ## v3.2.0
 
 * 🌱 allow to pass `props` to React app from Node.js side
