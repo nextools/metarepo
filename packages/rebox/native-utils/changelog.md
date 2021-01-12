@@ -1,3 +1,7 @@
+## v4.0.5
+
+* 🐞 update `react-native` to v0.63.4
+
 ## v4.0.4
 
 * 🐞 add `raw-loader` to handle markdown files
