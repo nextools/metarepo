@@ -4,6 +4,9 @@
   "description": "Get a11y data of React app",
   "keywords": [],
   "main": "src/index.ts",
+  "buildAssets": {
+    "src/*.json": "node/"
+  },
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
