@@ -1,3 +1,7 @@
+## v0.1.4
+
+* 🐞 fix missing `axe-rules.json` in `build/` folder
+
 ## v0.1.3
 
 * 🐞 refactor using new deps
