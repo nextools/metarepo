@@ -17,7 +17,7 @@
     "@babel/core": "^7.9.0",
     "@rebox/ios": "^6.0.4",
     "@x-ray/core": "^0.2.1",
-    "@x-ray/native-screenshots-app": "^4.0.0",
+    "@x-ray/native-screenshots-app": "^4.0.1",
     "@x-ray/ui": "^3.2.1",
     "pifs": "^2.0.0",
     "pixelmatch": "^5.1.0",
