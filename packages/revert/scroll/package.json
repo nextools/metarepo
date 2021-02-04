@@ -13,12 +13,12 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@revert/layout": "^0.2.1",
+    "@revert/layout": "^0.2.2",
     "refun": "^3.1.0",
     "tsfn": "^2.2.0"
   },
   "devDependencies": {
-    "@revert/text": "^0.3.3",
+    "@revert/text": "^0.3.4",
     "@types/react": "^16.9.6",
     "@types/react-native": "^0.63.0",
     "autoprops": "^4.0.1",
