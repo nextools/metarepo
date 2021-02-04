@@ -1,3 +1,9 @@
+## v0.3.1
+
+* 🐞 explicitly publish missing React Native bump
+
+* ♻️ update dependencies `@revert/layout`
+
 ## v0.3.0
 
 * 💥 remove `InlineBlock`

@@ -1,3 +1,9 @@
+## v0.2.3
+
+* 🐞 explicitly publish missing React Native bump
+
+* ♻️ update dependencies `@revert/background`, `@revert/border`, `@revert/block`, `@revert/color`, `@revert/image`, `@revert/layout`, `@revert/link`, `@revert/size`, `@revert/text`, `@revert/text-align`
+
 ## v0.2.2
 
 * 🐞 fix incorrect `PrimitiveText` provision

@@ -1,3 +1,9 @@
+## v0.3.2
+
+* 🐞 explicitly publish missing React Native bump
+
+* ♻️ update dependencies `@revert/layout`
+
 ## v0.3.1
 
 * 🐞 add `displayName` to contexts

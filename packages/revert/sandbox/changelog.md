@@ -1,3 +1,9 @@
+## v0.3.4
+
+* 🐞 explicitly publish missing React Native bump
+
+* ♻️ update dependencies `@revert/animation`, `@revert/background`, `@revert/border`, `@revert/button`, `@revert/block`, `@revert/checkbox`, `@revert/color`, `@revert/input`, `@revert/label`, `@revert/layout`, `@revert/link`, `@revert/markdown`, `@revert/pointer`, `@revert/root`, `@revert/scroll`, `@revert/select`, `@revert/size`, `@revert/svg`, `@revert/text`, `@revert/transform`
+
 ## v0.3.3
 
 * 🐞 extend markdown theme support

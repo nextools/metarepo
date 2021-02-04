@@ -1,3 +1,9 @@
+## v0.2.1
+
+* 🐞 explicitly publish missing React Native bump
+
+* ♻️ update dependencies `@revert/layout`
+
 ## v0.2.0
 
 * ♻️ update dependencies `@revert/layout`

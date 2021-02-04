@@ -1,3 +1,9 @@
+## v0.2.2
+
+* 🐞 explicitly publish missing React Native bump
+
+* ♻️ update dependencies `@revert/color`
+
 ## v0.2.1
 
 * 🐞 fix type export syntax

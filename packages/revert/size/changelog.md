@@ -1,3 +1,9 @@
+## v0.2.2
+
+* 🐞 explicitly publish missing React Native bump
+
+* ♻️ update dependencies `@revert/layout`, `@revert/transform`
+
 ## v0.2.1
 
 * 🐞 round sizes to 0.5px instead of 0.1px

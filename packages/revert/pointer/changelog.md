@@ -1,3 +1,7 @@
+## v0.1.2
+
+* 🐞 explicitly publish missing React Native bump
+
 ## v0.1.1
 
 * 🐞 fix type export syntax
