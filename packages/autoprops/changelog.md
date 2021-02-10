@@ -1,3 +1,7 @@
+## v4.0.2
+
+* 🐞 fix incorrect SHA-1 library import
+
 ## v4.0.1
 
 * 🐞 fix jssha import
