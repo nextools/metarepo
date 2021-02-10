@@ -15,12 +15,13 @@
     "@babel/runtime": "^7.4.3",
     "big-integer": "^1.6.44",
     "iterama": "^0.6.1",
-    "jssha": "^3.0.0",
+    "sha.js": "^2.4.11",
     "tsfn": "^2.2.0"
   },
   "devDependencies": {
     "@mock/require": "^0.2.2",
     "@types/react": "^16.9.6",
+    "@types/sha.js": "^2.4.0",
     "@types/tape": "^4.2.34",
     "react": "16.13.1",
     "tape": "^5.0.0"

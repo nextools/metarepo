@@ -1,6 +1,6 @@
 import BigInt from 'big-integer'
 import { map } from 'iterama'
-import jssha from 'jssha/dist/sha1'
+import shajs from 'sha.js'
 import { createChildren } from './create-children'
 import { getLength } from './get-length'
 import { getPropsImpl } from './get-props'
@@ -22,12 +22,10 @@ export const getPropsIterable = <T extends {}>(componentConfig: TComponentConfig
           props.children = createChildren(componentConfig, props.children)
         }
 
-        const sha = new jssha('SHA-1', 'TEXT')
-
-        sha.update(serializeProps(componentConfig, int))
+        const shaHex = shajs('sha1').update(serializeProps(componentConfig, int)).digest('hex')
 
         yield {
-          id: sha.getHash('HEX'),
+          id: shaHex,
           props: props as T,
           progress: int.plus(BigInt.one).multiply(10000).divide(length).toJSNumber() / 100, // eslint-disable-line
         }
