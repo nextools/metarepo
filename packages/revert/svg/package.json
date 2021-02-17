@@ -16,7 +16,7 @@
     "react-native-svg": "^12.1.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.6",
+    "@types/react": "^17.0.0",
     "react": "16.13.1"
   }
 }

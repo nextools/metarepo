@@ -18,7 +18,7 @@
     "refun": "^3.1.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.6",
+    "@types/react": "^17.0.0",
     "@types/react-native": "^0.63.0",
     "autoprops": "^4.0.2",
     "react": "16.13.1",
