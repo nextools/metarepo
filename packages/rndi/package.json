@@ -1,6 +1,6 @@
 {
   "name": "rndi",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Random integer generator",
   "keywords": [
     "random"

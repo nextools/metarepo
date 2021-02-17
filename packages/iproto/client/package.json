@@ -1,6 +1,6 @@
 {
   "name": "@iproto/client",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Async Iterable protocol client",
   "keywords": [],
   "main": "src/index.ts",
