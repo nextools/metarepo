@@ -29,9 +29,13 @@ test('rndi: getRandomInt + positive min/max', async (t) => {
 
   const result4 = getRandomInt(50, 100)
 
+  random = 0.99
+
+  const result5 = getRandomInt(50, 100)
+
   t.deepEqual(
-    [result1, result2, result3, result4],
-    [50, 65, 75, 85],
+    [result1, result2, result3, result4, result5],
+    [50, 65, 75, 85, 100],
     'should work'
   )
 
