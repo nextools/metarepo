@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@types/react": "^16.9.6",
-    "@types/react-test-renderer": "^16.0.0",
+    "@types/react-test-renderer": "^17.0.0",
     "@types/tape": "^4.2.34",
     "tape": "^5.0.0"
   }
