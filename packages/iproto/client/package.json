@@ -21,7 +21,7 @@
     "@types/ws": "^7.2.7",
     "iterama": "^0.6.1",
     "portu": "^0.2.0",
-    "rndi": "^0.1.0",
+    "rndi": "^0.2.0",
     "tape": "^5.0.0"
   },
   "dependencies": {
