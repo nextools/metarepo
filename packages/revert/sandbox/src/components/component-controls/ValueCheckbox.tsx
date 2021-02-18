@@ -1,4 +1,3 @@
-import React from 'react'
 import { startWithType, mapHandlers, pureComponent, mapState, mapDebouncedHandlerTimeout } from 'refun'
 import { SYMBOL_SWITCH } from '../../symbols'
 import { Switch } from '../switch'

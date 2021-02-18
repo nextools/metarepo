@@ -99,7 +99,7 @@ const runIosApp: (options: TRunIosOptions) => Promise<() => void>
 
 ```ts
 // App.tsx
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Svg, Circle } from 'react-native-svg'
 
 export const App: FC<{}> = () => (

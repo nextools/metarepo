@@ -26,7 +26,6 @@ type TReFps = {
 ```
 
 ```tsx
-import React from 'react'
 import { ReFps } from 'refps'
 
 export const App = () => (

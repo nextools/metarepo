@@ -1,6 +1,5 @@
 import { LayoutContext } from '@revert/layout'
 import type { FC } from 'react'
-import React from 'react'
 import type { TDemoComponent } from './types'
 
 export const DemoComponentRevert: FC<TDemoComponent> = ({

@@ -1,5 +1,5 @@
 import { colorToString } from '@revert/color'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { startWithType, pureComponent, mapContext, mapWithPropsMemo } from 'refun'
 import type { TOmitKey } from 'tsfn'
 import type { TApiLoadScreenshotOpts } from '../api'

@@ -1,5 +1,4 @@
 import { Layout, Layout_Item } from '@revert/layout'
-import React from 'react'
 import { startWithType, pureComponent, mapHandlers, mapContext } from 'refun'
 import { mapMetaStoreState } from '../../store-meta'
 import { ButtonIcon } from '../button-icon'

@@ -34,8 +34,6 @@ const getA11yData: (options: TGetA11yDataOptions) => Promise<TA11Data>
 
 ```jsx
 // App.jsx
-import React from 'react'
-
 const Field = () => (
   <input style={{ opacity: 0.1 }} value="input"/>
 )

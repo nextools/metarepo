@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react'
+import { useContext, useRef } from 'react'
 import type { Context, FC, ExoticComponent, ReactNode } from 'react'
 import { EMPTY_OBJECT, UNDEFINED } from 'tsfn'
 import type { TExtend } from 'tsfn'

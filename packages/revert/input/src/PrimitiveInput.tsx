@@ -1,6 +1,6 @@
 /* eslint-disable react/no-danger */
 import { colorToString } from '@revert/color'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import type { KeyboardEvent, ChangeEvent, CSSProperties } from 'react'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { isNumber } from 'tsfn'

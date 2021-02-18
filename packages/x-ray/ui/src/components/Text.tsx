@@ -1,6 +1,5 @@
 import { colorToString } from '@revert/color'
 import type { TColor } from '@revert/color'
-import React from 'react'
 import type { CSSProperties } from 'react'
 import { component, mapDefaultProps, mapWithProps, startWithType } from 'refun'
 import { isNumber } from 'tsfn'

@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import { createContext } from 'react'
 import TestRenderer, { act } from 'react-test-renderer'
 import type { ReactTestRenderer } from 'react-test-renderer'
 import type { Store } from 'redux'

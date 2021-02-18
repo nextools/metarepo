@@ -1,7 +1,6 @@
 import { AnimationColor } from '@revert/animation'
 import { PrimitiveBackground } from '@revert/background'
 import type { TPrimitiveBackground } from '@revert/background'
-import React from 'react'
 import type { FC } from 'react'
 
 export type TBackground = TPrimitiveBackground & {

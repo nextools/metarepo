@@ -1,5 +1,4 @@
 import { PrimitiveTransform } from '@revert/transform'
-import React from 'react'
 import type { LayoutChangeEvent, ViewStyle } from 'react-native'
 import { View } from 'react-native'
 import { component, mapHandlers, mapWithPropsMemo, startWithType } from 'refun'

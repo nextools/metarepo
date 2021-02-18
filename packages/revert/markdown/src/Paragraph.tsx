@@ -1,7 +1,6 @@
 import { ImageContext } from '@revert/image'
 import { Size } from '@revert/size'
 import type { TComponentParagraph } from 'mdown'
-import React from 'react'
 import { component, mapThrottledHandlerAnimationFrame, startWithType } from 'refun'
 import { mapRender } from './map-render'
 import { SYMBOL_MARKDOWN_PARAGRAPH } from './symbols'

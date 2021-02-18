@@ -1,7 +1,6 @@
 import { PrimitiveBlock } from '@revert/block'
 import { LayoutContext } from '@revert/layout'
 import { PrimitiveSize } from '@revert/size'
-import React from 'react'
 import { component, startWithType, mapContext, onLayout } from 'refun'
 import type { TLine as TSyntxLine } from 'syntx'
 import { isFunction } from 'tsfn'

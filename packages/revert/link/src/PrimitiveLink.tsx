@@ -1,5 +1,4 @@
 import type { CSSProperties, FC } from 'react'
-import React from 'react'
 import { UNDEFINED } from 'tsfn'
 import type { TLink } from './types'
 

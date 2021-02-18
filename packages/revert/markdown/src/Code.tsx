@@ -1,6 +1,5 @@
 import { Layout, Layout_Item } from '@revert/layout'
 import type { TComponentCode } from 'mdown'
-import React from 'react'
 import { component, mapContext, startWithType } from 'refun'
 import { MarkdownPrimitivesContext } from './MarkdownPrimitivesContext'
 import { MarkdownThemeContext } from './MarkdownThemeContext'

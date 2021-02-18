@@ -1,4 +1,3 @@
-import React from 'react'
 import { Image as NativeImage } from 'react-native'
 import type { ImageStyle } from 'react-native'
 import { component, startWithType, mapWithProps, mapContext, mapHandlers } from 'refun'

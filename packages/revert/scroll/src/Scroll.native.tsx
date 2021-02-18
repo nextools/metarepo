@@ -1,5 +1,4 @@
 import { LayoutContext } from '@revert/layout'
-import React from 'react'
 import { View, ScrollView } from 'react-native'
 import type { ViewStyle } from 'react-native'
 import { component, startWithType, mapContext, mapDefaultProps, mapHandlers, mapWithProps, mapStateRef } from 'refun'

@@ -25,5 +25,10 @@
     "axe-core": "^4.0.1",
     "foreal": "^0.1.1",
     "puppeteer-core": "^5.2.1"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "react"
+    ]
   }
 }

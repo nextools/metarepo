@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { component, startWithType, mapWithProps, mapWithPropsMemo, mapState, mapHandlers } from 'refun'
 import { GRAPH_OFFSET } from '../constants'
 import type { TEntry, TGraphColors } from '../types'

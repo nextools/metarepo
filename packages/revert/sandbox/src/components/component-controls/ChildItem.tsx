@@ -1,7 +1,6 @@
 import { Label } from '@revert/label'
 import { Layout, Layout_Item } from '@revert/layout'
 import { Pointer } from '@revert/pointer'
-import React from 'react'
 import { startWithType, mapHovered, pureComponent, mapPressed, mapContext, mapWithProps } from 'refun'
 import type { TMapHovered, TMapPressed } from 'refun'
 import { Background } from '../background'

@@ -1,6 +1,5 @@
 import { AnimationValue } from '@revert/animation'
 import type { TAnimationValue } from '@revert/animation'
-import React from 'react'
 import { component, startWithType, mapState, mapHandlers, onUpdate, onChange, mapDefaultProps } from 'refun'
 
 const STATE_CLOSED = 0

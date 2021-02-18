@@ -42,6 +42,7 @@
       "@babel/core",
       "@babel/runtime",
       "core-js",
+      "react",
       "react-dom"
     ]
   }

@@ -3,7 +3,6 @@ import { Button } from '@revert/button'
 import { Layout, Layout_Item, Layout_Spacer } from '@revert/layout'
 import { Text } from '@revert/text'
 import type { TTextChildren } from '@revert/text'
-import React from 'react'
 import { startWithType, mapHandlers, mapWithProps, component } from 'refun'
 import { COLOR_WHITE } from '../constants'
 

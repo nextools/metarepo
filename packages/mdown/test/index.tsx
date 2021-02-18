@@ -1,5 +1,5 @@
 import dedent from 'dedent'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import test from 'tape'
 import { markdownToReact } from '../src/markdown-to-react'

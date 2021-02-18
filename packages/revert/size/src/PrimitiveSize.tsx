@@ -1,5 +1,4 @@
 import { TransformContext } from '@revert/transform'
-import React from 'react'
 import type { CSSProperties } from 'react'
 import { component, startWithType, mapWithPropsMemo, mapRef, mapContext } from 'refun'
 import { UNDEFINED } from 'tsfn'

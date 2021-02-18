@@ -1,4 +1,3 @@
-import React from 'react'
 import { component, startWithType, mapWithProps, mapRef, onLayout, mapState } from 'refun'
 import { Animate } from '../Animate'
 import { TOOLTIP_FONT_SIZE, TOOLTIP_X_OFFSET, TOOLTIP_Y_OFFSET, TOOLTIP_PADDING } from '../constants'

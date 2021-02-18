@@ -1,4 +1,3 @@
-import React from 'react'
 import type { CSSProperties } from 'react'
 import { component, mapWithPropsMemo, startWithType } from 'refun'
 import type { TTextAlign } from './types'

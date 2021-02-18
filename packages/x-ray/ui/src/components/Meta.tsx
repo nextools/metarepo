@@ -1,4 +1,3 @@
-import React from 'react'
 import { component, startWithType, mapState, onUpdateAsync, mapContext } from 'refun'
 import type { TJsonValue } from 'typeon'
 import { actionError } from '../actions'

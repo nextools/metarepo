@@ -1,7 +1,6 @@
 import { Button } from '@revert/button'
 import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
 import { TextThemeContext } from '@revert/text'
-import React from 'react'
 import { component, startWithType, mapHandlers, mapContext } from 'refun'
 import { mapContextOverride } from '../../map/map-context-override'
 import { Background } from '../background'

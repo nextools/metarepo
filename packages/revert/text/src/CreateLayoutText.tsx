@@ -1,6 +1,5 @@
 import { Size } from '@revert/size'
 import type { FC } from 'react'
-import React from 'react'
 import type { TComponent } from 'refun'
 import type { TTextStyle } from './types'
 

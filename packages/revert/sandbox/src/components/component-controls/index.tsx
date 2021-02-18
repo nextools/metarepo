@@ -1,6 +1,5 @@
 import { Scroll } from '@revert/scroll'
 import { getChildrenKeys } from 'autoprops'
-import React from 'react'
 import { startWithType, pureComponent, mapHandlers, mapDebouncedHandlerTimeout, mapWithPropsMemo } from 'refun'
 import { applyPropValue } from '../../store-meta'
 import { SYMBOL_COMPONENT_CONTROLS } from '../../symbols'

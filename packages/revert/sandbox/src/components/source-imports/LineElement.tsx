@@ -1,4 +1,3 @@
-import React from 'react'
 import type { FC, ReactText } from 'react'
 import {
   TYPE_ARRAY_BRACKET,

@@ -1,4 +1,3 @@
-import React from 'react'
 import type { ReactNode } from 'react'
 import { component, startWithType, mapHandlers, mapStateRef, mapContext } from 'refun'
 import { UNDEFINED } from 'tsfn'

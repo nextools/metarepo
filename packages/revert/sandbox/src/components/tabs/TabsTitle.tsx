@@ -1,5 +1,5 @@
 import { Button } from '@revert/button'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { component, startWithType, mapHandlers, mapContext, mapWithProps, mapKeyboardFocused } from 'refun'
 import type { TMapKeyboardFocused } from 'refun'
 import { COLOR_TRANSPARENT } from '../../colors'

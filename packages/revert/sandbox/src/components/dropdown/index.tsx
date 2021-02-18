@@ -3,7 +3,7 @@ import { Select, Option } from '@revert/select'
 import type { TOption } from '@revert/select'
 import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import {
   pureComponent,
   startWithType,

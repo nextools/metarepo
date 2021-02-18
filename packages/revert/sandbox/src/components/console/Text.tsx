@@ -1,6 +1,5 @@
 import type { TTextChildren } from '@revert/text'
 import type { FC } from 'react'
-import React from 'react'
 import { PrimitiveText } from '../text'
 
 export type TText = {

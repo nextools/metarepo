@@ -1,5 +1,4 @@
 import { ParentBlock } from '@revert/block'
-import React from 'react'
 import { startWithType, component } from 'refun'
 
 export type TLabel = {}

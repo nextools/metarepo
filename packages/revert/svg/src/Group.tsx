@@ -1,4 +1,3 @@
-import React from 'react'
 import type { FC, SVGProps } from 'react'
 
 export type TGroup = {

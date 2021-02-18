@@ -1,4 +1,3 @@
-import React from 'react'
 import type { MouseEvent, CSSProperties } from 'react'
 import { component, startWithType, mapHandlers, mapRef, mapWithProps, mapContext } from 'refun'
 import { LayoutItemContext } from './LayoutItemContext'

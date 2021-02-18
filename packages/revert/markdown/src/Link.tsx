@@ -1,7 +1,6 @@
 import { PrimitiveLink } from '@revert/link'
 import { TextThemeContext } from '@revert/text'
 import type { TComponentLink } from 'mdown'
-import React from 'react'
 import { component, startWithType } from 'refun'
 import { mapContextOverride } from './map-context-override'
 import { SYMBOL_MARKDOWN_LINK } from './symbols'

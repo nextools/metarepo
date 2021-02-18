@@ -1,6 +1,6 @@
 import { colorToString } from '@revert/color'
 import type { TColor } from '@revert/color'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import type { FC } from 'react'
 import { Animate } from '../Animate'
 import { POINT_BORDER, POINT_RADIUS } from '../constants'

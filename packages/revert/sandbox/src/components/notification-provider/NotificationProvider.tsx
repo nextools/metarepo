@@ -1,6 +1,6 @@
 import { Layout, Layout_Item, Layout_Spacer, LAYOUT_SIZE_FIT } from '@revert/layout'
 import { nanoid } from 'nanoid/non-secure'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { component, startWithType, mapHandlers, mapState } from 'refun'
 import { NotificationContext } from './NotificationContext'
 import { NotificationItem } from './NotificationItem'

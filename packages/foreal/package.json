@@ -31,5 +31,10 @@
     "puppeteer-core": "^5.3.1",
     "tmpa": "^0.1.0",
     "xrom": "^3.0.2"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "react"
+    ]
   }
 }

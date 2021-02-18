@@ -1,5 +1,4 @@
 import { PrimitiveBackground } from '@revert/background'
-import React from 'react'
 import { component, startWithType } from 'refun'
 import type { TPrimitiveLinearGradient } from './types'
 

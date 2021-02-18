@@ -1,5 +1,4 @@
 import { Layout, Layout_Item } from '@revert/layout'
-import React from 'react'
 import { startWithType, pureComponent } from 'refun'
 import { MonthButton } from './MonthButton'
 

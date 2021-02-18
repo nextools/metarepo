@@ -1,5 +1,4 @@
 import { Size } from '@revert/size'
-import React from 'react'
 import type { TComponent } from 'refun'
 import { PrimitiveLink } from './PrimitiveLink'
 import type { TLink } from './types'

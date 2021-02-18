@@ -1,6 +1,5 @@
 import { Block } from '@revert/block'
 import type { TComponentHr } from 'mdown'
-import React from 'react'
 import { component, mapContext, startWithType } from 'refun'
 import { MarkdownPrimitivesContext } from './MarkdownPrimitivesContext'
 import { MarkdownThemeContext } from './MarkdownThemeContext'

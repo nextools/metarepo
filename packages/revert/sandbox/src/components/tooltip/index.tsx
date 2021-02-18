@@ -1,5 +1,4 @@
 import type { TTextChildren } from '@revert/text'
-import React from 'react'
 import type { TComponent } from 'refun'
 import { SYMBOL_TOOLTIP } from '../../symbols'
 import { ContentTooltip } from '../content-tooltip'

@@ -23,7 +23,8 @@
   },
   "fixdeps": {
     "ignoredPackages": [
-      "__PERFA_TARGET_APP_PATH__"
+      "__PERFA_TARGET_APP_PATH__",
+      "react"
     ]
   }
 }

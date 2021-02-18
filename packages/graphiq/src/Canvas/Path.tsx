@@ -1,5 +1,5 @@
 import { colorToString } from '@revert/color'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { pureComponent, startWithType, mapHandlers } from 'refun'
 import { Animate } from '../Animate'
 import { PATH_WIDTH } from '../constants'

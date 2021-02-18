@@ -1,5 +1,4 @@
 import { PrimitiveCheckbox as Checkbox } from '@revert/checkbox'
-import React from 'react'
 import { startWithType, component, mapState, mapHandlers, mapHovered, mapContext, mapWithPropsMemo } from 'refun'
 import type { TMapHovered } from 'refun'
 import type { TOmitKey } from 'tsfn'

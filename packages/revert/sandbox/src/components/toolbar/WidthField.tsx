@@ -1,4 +1,3 @@
-import React from 'react'
 import { mapState, mapHandlers, pureComponent, startWithType } from 'refun'
 import { mapStoreState, setWidth } from '../../store'
 import { SYMBOL_FIELD } from '../../symbols'

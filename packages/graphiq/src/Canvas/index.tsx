@@ -1,7 +1,7 @@
 import { AnimationValue, easeInOutCubic } from '@revert/animation'
 import { colorToString } from '@revert/color'
 import { LayoutContext } from '@revert/layout'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { component, startWithType, mapContext, mapState, mapHandlers, onUpdate, mapWithProps } from 'refun'
 import { CANVAS_PADDING, CONTROLS_HEIGHT_TOP, PAGE_BACKGROUND_COLOR } from '../constants'
 import type { TGraphEntry } from '../types'
