@@ -28,7 +28,7 @@
     "@revert/svg": "^0.1.1",
     "@revert/text": "^0.3.4",
     "@types/diff": "^4.0.2",
-    "@x-ray/core": "^0.2.1",
+    "@x-ray/core": "^0.2.2",
     "bsc": "^2.0.0",
     "diff": "^4.0.2",
     "funcom": "^0.2.0",

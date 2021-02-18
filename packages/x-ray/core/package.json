@@ -14,7 +14,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@rebox/web": "^3.2.1",
+    "@rebox/web": "^4.0.0",
     "dirdir": "^0.1.0",
     "funcom": "^0.2.0",
     "imagemin-pngout": "^5.0.0",
