@@ -157,6 +157,7 @@ export const getBundleSize = (userOptions: TGetBuildReleaseStatsOptions): Promis
       new CompressionPlugin({
         filename: '[name][ext].gz',
         cache: false,
+        minRatio: Infinity,
       }),
     ],
   }
