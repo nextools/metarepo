@@ -14,7 +14,7 @@
   "sideEffects": false,
   "dependencies": {
     "@revert/root": "^0.3.2",
-    "react-dom": "16.13.1",
+    "react-dom": "17.0.1",
     "refun": "^3.1.0",
     "tsfn": "^2.2.0"
   },
@@ -23,17 +23,17 @@
     "@revert/block": "^0.3.1",
     "@revert/color": "^0.1.1",
     "@revert/text": "^0.3.4",
-    "@types/react": "^16.9.6",
+    "@types/react": "^17.0.2",
     "@types/react-native": "^0.63.0",
     "autoprops": "^4.0.2",
     "foreal": "^0.1.1",
-    "react": "16.13.1",
+    "react": "17.0.1",
     "react-native": "0.63.4",
     "syntx": "^2.0.0",
     "tape": "^5.0.1"
   },
   "peerDependencies": {
-    "react": "16.13.1",
+    "react": "17.0.1",
     "react-native": "0.63.4"
   }
 }

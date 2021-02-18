@@ -21,7 +21,7 @@
     "pifs": "^2.0.0",
     "pixelmatch": "^5.1.0",
     "pngjs": "^5.0.0",
-    "react": "16.13.1",
+    "react": "17.0.1",
     "rsolve": "^0.2.1",
     "tarmap": "^0.2.0",
     "typeon": "^2.0.0",
@@ -30,7 +30,7 @@
   "devDependencies": {
     "@types/pixelmatch": "^5.1.0",
     "@types/pngjs": "^3.4.1",
-    "@types/react": "^16.9.6"
+    "@types/react": "^17.0.2"
   },
   "fixdeps": {
     "ignoredPackages": [
