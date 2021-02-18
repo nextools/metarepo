@@ -74,12 +74,14 @@ export const BuildApp = (options: TBuildAppOptions) => () =>
     find(options.outputPath),
     remove,
     plugin('web', () => async () => {
+      const { browsersList } = await import('@nextools/browsers-list')
       const { buildWebAppRelease } = await import('@rebox/web')
 
       await buildWebAppRelease({
         entryPointPath: options.entryPointPath,
         htmlTemplatePath: options.htmlTemplatePath,
         outputPath: options.outputPath,
+        browsersList,
       })
     })
   )
