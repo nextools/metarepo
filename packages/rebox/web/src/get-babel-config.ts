@@ -57,7 +57,10 @@ export const getBabelConfigBuildRelease = (browsersList: string[] = ['defaults']
     {
       test: /\.(ts|js)x$/,
       presets: [
-        require.resolve('@babel/preset-react'),
+        [
+          require.resolve('@babel/preset-react'),
+          { runtime: 'automatic' },
+        ],
       ],
     },
   ],
@@ -106,7 +109,10 @@ export const getBabelConfigRun = (browsersList?: string[]): TransformOptions => 
     {
       test: /\.(ts|js)x$/,
       presets: [
-        require.resolve('@babel/preset-react'),
+        [
+          require.resolve('@babel/preset-react'),
+          { runtime: 'automatic' },
+        ],
       ],
     },
   ],
