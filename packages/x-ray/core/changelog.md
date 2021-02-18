@@ -1,3 +1,9 @@
+## v0.2.2
+
+* 🐞 bump `@rebox/web`
+
+* ♻️ update dependencies `@rebox/web`
+
 ## v0.2.1
 
 * 🐞 refactor using new deps

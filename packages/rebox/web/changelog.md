@@ -1,3 +1,21 @@
+## v4.0.0
+
+* 💥 use built-in `core-js` version in `buildWebAppRelease`
+
+  ```
+  Breaking change because `core-js` and its version is out of control from user land perspective from now on. Which is good for `rebox` purposes, no need to install `core-js` anymore on project level.
+  ```
+
+* 💥 switch to `babel-plugin-polyfill-corejs3` with browsers list in `buildWebAppRelease`
+
+  ```
+  Theoretically a breaking change.
+  
+  * https://babeljs.io/blog/2020/05/25/7.10.0#new-experimental-polyfills-architecture-10008httpsgithubcombabelbabelissues10008-babel-polyfillshttpsgithubcombabelbabel-polyfills
+  * https://github.com/babel/babel-polyfills
+  * https://github.com/babel/babel-polyfills/blob/main/docs/migration.md
+  ```
+
 ## v3.2.1
 
 * 🐞 update `loader-utils` to v2

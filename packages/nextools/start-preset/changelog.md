@@ -1,3 +1,11 @@
+## v0.7.3
+
+* 🐞 bump `@rebox/web`
+
+* 🐞 use our browsers list in `BuildApp` task factory instead of defaults
+
+* ♻️ update dependencies `@x-ray/core`, `@rebox/web`
+
 ## v0.7.2
 
 * 🐞 tweak build types
