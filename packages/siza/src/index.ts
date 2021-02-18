@@ -76,6 +76,9 @@ export const getBundleSize = (userOptions: TGetBuildReleaseStatsOptions): Promis
         '.tsx',
         '.json',
       ],
+      alias: {
+        'core-js': path.dirname(require.resolve('core-js')),
+      },
     },
     devtool: false,
     module: {
