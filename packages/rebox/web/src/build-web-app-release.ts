@@ -75,6 +75,9 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
         '.tsx',
         '.json',
       ],
+      alias: {
+        'core-js': path.dirname(require.resolve('core-js')),
+      },
     },
     devtool: options.shouldGenerateSourceMaps ? 'source-map' : false,
     module: {

@@ -7,6 +7,7 @@ import {
   CheckReactNativeSnapshots,
   Pkg,
   RunApp,
+  BuildApp,
 } from '@nextools/start-preset'
 import plugin from '@start/plugin'
 import sequence from '@start/plugin-sequence'
@@ -40,10 +41,22 @@ export const graphiq = RunApp({
   htmlTemplatePath: 'packages/graphiq/templates/dev.html',
 })
 
+export const buildGraphiq = BuildApp({
+  entryPointPath: 'tasks/graphiq/index.tsx',
+  htmlTemplatePath: 'packages/graphiq/templates/build.html',
+  outputPath: 'build/graphiq/',
+})
+
 export const refps = RunApp({
   name: 'ReFps',
   entryPointPath: 'tasks/refps/index.tsx',
   htmlTemplatePath: 'tasks/refps/index.html',
+})
+
+export const buildRefps = BuildApp({
+  entryPointPath: 'tasks/refps/index.tsx',
+  htmlTemplatePath: 'tasks/refps/index.html',
+  outputPath: 'build/refps/',
 })
 
 export const sandbox = (...args: string[]) => {

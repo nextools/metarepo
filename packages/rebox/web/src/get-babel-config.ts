@@ -6,7 +6,7 @@ import type { TransformOptions } from '@babel/core'
 // https://github.com/acornjs/acorn/pull/890
 // https://github.com/acornjs/acorn/pull/891
 
-export const getBabelConfigBuildRelease = (browsersList?: string[]): TransformOptions => ({
+export const getBabelConfigBuildRelease = (browsersList: string[] = ['defaults']): TransformOptions => ({
   babelrc: false,
   inputSourceMap: null,
   sourceMaps: true,
@@ -16,12 +16,10 @@ export const getBabelConfigBuildRelease = (browsersList?: string[]): TransformOp
       require.resolve('@babel/preset-env'),
       {
         targets: {
-          browsers: browsersList ?? ['defaults'],
+          browsers: browsersList,
         },
         ignoreBrowserslistConfig: true,
         modules: false,
-        useBuiltIns: 'usage',
-        corejs: 3,
         include: [
           '@babel/plugin-proposal-nullish-coalescing-operator',
           '@babel/plugin-proposal-optional-chaining',
@@ -37,6 +35,15 @@ export const getBabelConfigBuildRelease = (browsersList?: string[]): TransformOp
     [
       require.resolve('@babel/plugin-transform-runtime'),
       { regenerator: false },
+    ],
+    [
+      require.resolve('babel-plugin-polyfill-corejs3'),
+      {
+        method: 'usage-global',
+        targets: {
+          browsers: browsersList,
+        },
+      },
     ],
     require.resolve('@babel/plugin-syntax-bigint'),
   ],
