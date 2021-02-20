@@ -8,8 +8,7 @@ module.exports = {
   },
   settings: {
     react: {
-      pragma: 'React',
-      version: '16',
+      version: '17',
     },
   },
   rules: {
