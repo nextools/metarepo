@@ -1,6 +1,18 @@
 import chokidar from 'chokidar'
 import type { TWatchPathOptions, TWatchPathResult } from './types'
 
+/**
+ * Watch a path, with options.
+ *
+ * ```ts
+ * const watcher = watchPath(diskPath)
+ *
+ * for await (const watchResult of watcher) {
+ *   console.log(watchResult)
+ * }
+ * ```
+ *
+ */
 export const watchPath = (path: string, options?: TWatchPathOptions): AsyncIterable<TWatchPathResult> => {
   const opts = {
     events: ['change', 'add', 'addDir', 'unlink', 'unlinkDir'],
