@@ -1,4 +1,5 @@
 import chokidar from 'chokidar'
+import { isArray } from 'tsfn'
 import type { TWatchPathOptions, TWatchPathResult } from './types'
 
 /**
@@ -14,7 +15,7 @@ import type { TWatchPathOptions, TWatchPathResult } from './types'
  *
  */
 export const watchPath = (path: string, options?: TWatchPathOptions): AsyncIterable<TWatchPathResult> => {
-  const opts = {
+  const opts: TWatchPathOptions = {
     events: ['change', 'add', 'addDir', 'unlink', 'unlinkDir'],
     atomicPollInverval: 100,
     writeStabilityThreshold: 300,
@@ -62,19 +63,21 @@ export const watchPath = (path: string, options?: TWatchPathOptions): AsyncItera
         }
       })
 
-      for (const event of opts.events) {
-        watcher.on(event, (path) => {
+      if (isArray(opts.events)) {
+        for (const event of opts.events) {
+          watcher.on(event, (path) => {
           // store results
-          pool.push({ event, path })
+            pool.push({ event, path })
 
-          // if there is a pull-Promise already then resolve it
-          if (resolver !== null) {
-            resolver(pool)
+            // if there is a pull-Promise already then resolve it
+            if (resolver !== null) {
+              resolver(pool)
 
-            pool = []
-            resolver = null
-          }
-        })
+              pool = []
+              resolver = null
+            }
+          })
+        }
       }
 
       try {
