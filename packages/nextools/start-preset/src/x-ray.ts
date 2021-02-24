@@ -1,7 +1,6 @@
 import plugin from '@start/plugin'
 import find from '@start/plugin-find'
 import sequence from '@start/plugin-sequence'
-import { xRay } from '@x-ray/core'
 import type { TAndroidScreenshotsOptions } from '@x-ray/plugin-android-screenshots'
 import type { TChromiumScreenshotsOptions } from '@x-ray/plugin-chromium-screenshots'
 import type { TIosScreenshotsOptions } from '@x-ray/plugin-ios-screenshots'
@@ -10,6 +9,7 @@ import type { TReactSnapshotsOptions } from '@x-ray/plugin-react-snapshots'
 
 export const CheckChromiumScreenshots = (options?: TChromiumScreenshotsOptions) => async (component = '**') => {
   const { chromiumScreenshots } = await import('@x-ray/plugin-chromium-screenshots')
+  const { xRay } = await import('@x-ray/core')
   const xRayChromiumScreenshots = xRay(chromiumScreenshots(options))
 
   return sequence(
@@ -22,6 +22,7 @@ export const CheckChromiumScreenshots = (options?: TChromiumScreenshotsOptions) 
 
 export const CheckIosScreenshots = (options?: TIosScreenshotsOptions) => async (component = '**') => {
   const { iOsScreenshots } = await import('@x-ray/plugin-ios-screenshots')
+  const { xRay } = await import('@x-ray/core')
   const xRayIosScreenshots = xRay(iOsScreenshots(options))
 
   return sequence(
@@ -34,6 +35,7 @@ export const CheckIosScreenshots = (options?: TIosScreenshotsOptions) => async (
 
 export const CheckAndroidScreenshots = (options?: TAndroidScreenshotsOptions) => async (component = '**') => {
   const { androidScreenshots } = await import('@x-ray/plugin-android-screenshots')
+  const { xRay } = await import('@x-ray/core')
   const xRayAndroidScreenshots = xRay(androidScreenshots(options))
 
   return sequence(
@@ -46,6 +48,7 @@ export const CheckAndroidScreenshots = (options?: TAndroidScreenshotsOptions) =>
 
 export const CheckReactSnapshots = (options?: TReactSnapshotsOptions) => async (component = '**') => {
   const { reactSnapshots } = await import('@x-ray/plugin-react-snapshots')
+  const { xRay } = await import('@x-ray/core')
   const xRayReactSnapshots = xRay(reactSnapshots(options))
 
   return sequence(
@@ -58,6 +61,7 @@ export const CheckReactSnapshots = (options?: TReactSnapshotsOptions) => async (
 
 export const CheckReactNativeSnapshots = (options?: TReactNativeSnapshotsOptions) => async (component = '**') => {
   const { reactNativeSnapshots } = await import('@x-ray/plugin-react-native-snapshots')
+  const { xRay } = await import('@x-ray/core')
   const xRayReactNativeSnapshots = xRay(reactNativeSnapshots(options))
 
   return sequence(
