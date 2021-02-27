@@ -3,15 +3,31 @@ module.exports = {
   plugins: [
     'import',
     'node',
-    'react',
-    '@typescript-eslint',
   ],
   extends: [
     require.resolve('./config/core'),
     require.resolve('./config/import'),
     require.resolve('./config/node'),
-    require.resolve('./config/react'),
-    require.resolve('./config/typescript'),
+  ],
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      plugins: [
+        '@typescript-eslint',
+      ],
+      extends: [
+        require.resolve('./config/typescript'),
+      ],
+    },
+    {
+      files: ['*.tsx', '*.jsx'],
+      plugins: [
+        'react',
+      ],
+      extends: [
+        require.resolve('./config/react'),
+      ],
+    },
   ],
   globals: {
     BigInt: 'readonly',
