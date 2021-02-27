@@ -1,0 +1,44 @@
+{
+  "name": "@nextools/typescript-esm-loader",
+  "version": "0.0.0",
+  "description": "TypeScript ESM Loader",
+  "keywords": [],
+  "main": "src/index.js",
+  "type": "module",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.17.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@babel/core": "^7.13.8",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.12.13",
+    "@babel/plugin-proposal-private-methods": "^7.13.0",
+    "@babel/plugin-syntax-bigint": "^7.8.3",
+    "@babel/preset-env": "^7.13.8",
+    "@babel/preset-react": "^7.12.13",
+    "@babel/preset-typescript": "^7.13.0"
+  },
+  "devDependencies": {
+    "@types/tape": "^4.2.34",
+    "spown": "^0.1.2",
+    "tape": "^5.0.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "@babel/core",
+      "@babel/preset-env",
+      "@babel/preset-typescript",
+      "@babel/preset-react",
+      "@babel/plugin-syntax-bigint",
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-private-methods",
+      "@babel/plugin-proposal-export-namespace-from"
+    ]
+  }
+}
