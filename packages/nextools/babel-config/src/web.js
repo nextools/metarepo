@@ -1,6 +1,7 @@
 const { browsersList } = require('@nextools/browsers-list')
 
 exports.babelConfigWebBuild = {
+  ast: false,
   babelrc: false,
   inputSourceMap: false,
   sourceMaps: true,
