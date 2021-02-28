@@ -143,37 +143,53 @@ export const Popup = component(
   }),
   mapWithProps(({ top, left, width, height, state, item }) => {
     const shouldNotAnimate = state === STATE_OPEN || state === STATE_CLOSE
+    const hasSourceCode = true
 
     if (state === STATE_OPENING || state === STATE_OPEN) {
+      const popupLeft = left + POPUP_OFFSET
+      const popupTop = top + POPUP_OFFSET
+      const popupWidth = width - POPUP_OFFSET * 2
+      const popupHeight = height - POPUP_OFFSET * 2
+      const popupAlpha = 1
+      const backdropAlpha = 0.5
+      const halfWidth = popupWidth / 2
+
       return {
-        popupLeft: left + POPUP_OFFSET,
-        popupTop: top + POPUP_OFFSET,
-        popupWidth: width - POPUP_OFFSET * 2,
-        popupHeight: height - POPUP_OFFSET * 2,
-        popupAlpha: 1,
-        backdropAlpha: 0.5,
+        popupLeft,
+        popupTop,
+        popupWidth,
+        popupHeight,
+        popupAlpha,
+        backdropAlpha,
         shouldNotAnimate,
+        sourceCodeWidth: halfWidth,
+        sourceCodeHeight: popupHeight - CONTROLS_HEIGHT,
+        sourceCodeLeft: popupLeft,
+        sourceCodeTop: popupTop + CONTROLS_HEIGHT,
+        previewWidth: hasSourceCode ? halfWidth : popupWidth,
+        previewHeight: popupHeight - CONTROLS_HEIGHT,
+        previewLeft: hasSourceCode ? popupLeft + halfWidth : popupLeft,
+        previewTop: popupTop + CONTROLS_HEIGHT,
+        hasSourceCode,
       }
     }
 
-    return {
-      popupLeft: item.left,
-      popupTop: item.top,
-      popupWidth: item.gridWidth,
-      popupHeight: item.gridHeight,
-      popupAlpha: 0,
-      backdropAlpha: 0,
-      shouldNotAnimate,
-    }
-  }),
-  onUpdate(({ setState }) => {
-    setState(STATE_OPENING)
-  }, []),
-  mapWithProps(({ popupLeft, popupTop, popupWidth, popupHeight }) => {
+    const popupLeft = item.left
+    const popupTop = item.top
+    const popupWidth = item.gridWidth
+    const popupHeight = item.gridHeight
+    const popupAlpha = 0
+    const backdropAlpha = 0
     const halfWidth = popupWidth / 2
-    const hasSourceCode = true
 
-    return ({
+    return {
+      popupLeft,
+      popupTop,
+      popupWidth,
+      popupHeight,
+      popupAlpha,
+      backdropAlpha,
+      shouldNotAnimate,
       sourceCodeWidth: halfWidth,
       sourceCodeHeight: popupHeight - CONTROLS_HEIGHT,
       sourceCodeLeft: popupLeft,
@@ -183,8 +199,11 @@ export const Popup = component(
       previewLeft: hasSourceCode ? popupLeft + halfWidth : popupLeft,
       previewTop: popupTop + CONTROLS_HEIGHT,
       hasSourceCode,
-    })
+    }
   }),
+  onUpdate(({ setState }) => {
+    setState(STATE_OPENING)
+  }, []),
   mapState('discardTextWidth', 'setDiscardTextWidth', () => 0, []),
   mapState('discardTextHeight', 'setDiscardTextHeight', () => 0, []),
   mapState('closeTextWidth', 'setCloseTextWidth', () => 0, []),

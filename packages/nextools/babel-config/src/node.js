@@ -3,6 +3,7 @@ const TARGET_NODE_VERSION = '12.13.0'
 exports.TARGET_NODE_VERSION = TARGET_NODE_VERSION
 
 exports.babelConfigNodeBuild = {
+  ast: false,
   babelrc: false,
   compact: false,
   inputSourceMap: false,
@@ -54,6 +55,7 @@ exports.babelConfigNodeBuild = {
 }
 
 exports.babelConfigNodeRegister = {
+  ast: false,
   babelrc: false,
   compact: false,
   inputSourceMap: false,

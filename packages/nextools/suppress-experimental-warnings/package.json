@@ -1,0 +1,16 @@
+{
+  "name": "@nextools/suppress-experimental-warnings",
+  "version": "0.0.0",
+  "description": "Suppress experimental warnings in Node.js",
+  "keywords": [],
+  "main": "src/index.js",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false
+}

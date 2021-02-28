@@ -137,7 +137,7 @@ export const iproto = () =>
     let closeWebApp: () => Promise<void>
 
     const iterable = {
-      async *[Symbol.asyncIterator]() {
+      async *[Symbol.asyncIterator](): AsyncGenerator<number> {
         try {
           await sleep(1000)
           console.log(yield 1)
