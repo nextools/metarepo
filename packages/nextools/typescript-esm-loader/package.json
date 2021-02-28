@@ -1,6 +1,6 @@
 {
   "name": "@nextools/typescript-esm-loader",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "TypeScript ESM Loader",
   "keywords": [],
   "main": "src/index.js",

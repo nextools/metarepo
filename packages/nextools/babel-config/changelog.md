@@ -1,3 +1,7 @@
+## v0.2.2
+
+* 🐞 disable AST by default
+
 ## v0.2.1
 
 * 🐞 add `plugin-proposal-object-rest-spread` and `plugin-transform-destructuring`

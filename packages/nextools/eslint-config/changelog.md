@@ -1,3 +1,9 @@
+## v0.6.1
+
+* 🐞 separate entire plugins + rules by file globs
+
+* 🐞 tweak `core` config
+
 ## v0.6.0
 
 * 💥 require booleans only in boolean expressions
