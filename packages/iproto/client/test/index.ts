@@ -25,7 +25,7 @@ test('@iproto/*: client ← server', async (t) => {
   let isDone = false
   const serverResult: any[] = []
   const serverIterable = {
-    async *[Symbol.asyncIterator]() {
+    async *[Symbol.asyncIterator](): AsyncGenerator<number> {
       try {
         for (let i = 1; i <= 3; i++) {
           serverResult.push(yield i)
@@ -76,7 +76,7 @@ test('@iproto/*: client ← server + break', async (t) => {
   let isDone = false
   const serverResult: any[] = []
   const serverIterable = {
-    async *[Symbol.asyncIterator]() {
+    async *[Symbol.asyncIterator](): AsyncGenerator<number> {
       try {
         for (let i = 1; i <= 3; i++) {
           serverResult.push(yield i)
@@ -148,7 +148,7 @@ test('@iproto/*: client ← server + error on open', async (t) => {
   let isDone = false
   const serverResult: any[] = []
   const serverIterable = {
-    async *[Symbol.asyncIterator]() {
+    async *[Symbol.asyncIterator](): AsyncGenerator<number> {
       try {
         for (let i = 1; i <= 3; i++) {
           serverResult.push(yield i)
@@ -204,7 +204,7 @@ test('@iproto/*: client ← server + close server error', async (t) => {
 
   const serverResult: any[] = []
   const serverIterable = {
-    async *[Symbol.asyncIterator]() {
+    async *[Symbol.asyncIterator](): AsyncGenerator<number> {
       for (let i = 1; i <= 3; i++) {
         serverResult.push(yield i)
       }
@@ -242,7 +242,7 @@ test('@iproto/*: client ← server + close on message', async (t) => {
   let isDone = false
   const serverResult: any[] = []
   const serverIterable = {
-    async *[Symbol.asyncIterator]() {
+    async *[Symbol.asyncIterator](): AsyncGenerator<number> {
       try {
         for (let i = 1; i <= 3; i++) {
           serverResult.push(yield i)
@@ -313,7 +313,7 @@ test('@iproto/*: client ↔︎ server', async (t) => {
   let isDone = false
   const serverResult: any[] = []
   const serverIterable = {
-    async *[Symbol.asyncIterator]() {
+    async *[Symbol.asyncIterator](): AsyncGenerator<number> {
       try {
         for (let i = 1; i <= 3; i++) {
           serverResult.push(yield i)
@@ -372,7 +372,7 @@ test('@iproto/*: client ↔︎ server + break', async (t) => {
   let isDone = false
   const serverResult: any[] = []
   const serverIterable = {
-    async *[Symbol.asyncIterator]() {
+    async *[Symbol.asyncIterator](): AsyncGenerator<number> {
       try {
         for (let i = 1; i <= 3; i++) {
           serverResult.push(yield i)
