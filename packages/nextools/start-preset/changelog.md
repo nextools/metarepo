@@ -1,3 +1,15 @@
+## v0.8.0
+
+* 🌱 build `module` type packages using new `buildNodeESM` task
+
+* 🐞 avoid adding `types` field to `package.json` for non-TS packages
+
+* 🐞 skip `buildTypes` task for non-TS packages
+
+* 🐞 skip more unnecessary `package.json` fields when publishing
+
+* ♻️ update dependencies `pkgu`, `@nextools/babel-config`
+
 ## v0.7.3
 
 * 🐞 bump `@rebox/web`

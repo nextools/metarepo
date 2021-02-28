@@ -1,3 +1,9 @@
+## v0.3.0
+
+* 🌱 add `babelConfigNodeESMBuild`
+
+* 🐞 fix `types` field in `package.json`
+
 ## v0.2.2
 
 * 🐞 disable AST by default
