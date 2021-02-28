@@ -1,5 +1,5 @@
 import path from 'path'
-import plugin from '@start/plugin'
+// import plugin from '@start/plugin'
 import type { StartPlugin } from '@start/plugin'
 import copy from '@start/plugin-copy'
 import env from '@start/plugin-env'
@@ -92,22 +92,22 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
     read,
     babel(babelConfigNodeBuild),
     rename((file) => file.replace(/\.(ts|tsx)$/, '.js')),
-    write(`${dir}/build/node/`),
-    plugin('test', () => async () => {
-      const path = await import('path')
-      const { access } = await import('pifs')
-      const fullPath = path.resolve(`${dir}/build/node/index.js`)
-      let hasFile = false
+    write(`${dir}/build/node/`)
+    // plugin('test', () => async () => {
+    //   const path = await import('path')
+    //   const { access } = await import('pifs')
+    //   const fullPath = path.resolve(`${dir}/build/node/index.js`)
+    //   let hasFile = false
 
-      try {
-        await access(fullPath)
-        hasFile = true
-      } catch {}
+    //   try {
+    //     await access(fullPath)
+    //     hasFile = true
+    //   } catch {}
 
-      if (hasFile) {
-        await import(fullPath)
-      }
-    })
+    //   if (hasFile) {
+    //     await import(fullPath)
+    //   }
+    // })
   )
 }
 
