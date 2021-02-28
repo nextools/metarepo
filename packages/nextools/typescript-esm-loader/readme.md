@@ -11,5 +11,5 @@ $ yarn add @nextools/typescript-esm-loader
 ## Usage
 
 ```sh
-node --experimental-import-meta-resolve --experimental-loader @nextools/typescript-esm-loader ./module.ts
+node --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @nextools/typescript-esm-loader ./module.ts
 ```
