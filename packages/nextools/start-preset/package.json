@@ -26,7 +26,7 @@
     "@auto/telegram": "^0.2.0",
     "@babel/core": "^7.8.0",
     "@babel/register": "^7.8.0",
-    "@nextools/babel-config": "^0.2.1",
+    "@nextools/babel-config": "^0.2.2",
     "@nextools/browsers-list": "^0.2.0",
     "@rebox/android": "^4.0.5",
     "@rebox/ios": "^6.0.4",
