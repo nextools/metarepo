@@ -58,3 +58,5 @@ export const getStartOptions = async () => {
 
   return start as TStartOptions
 }
+
+export const isFilePathTS = (filePath: string): boolean => filePath.endsWith('.ts') || filePath.endsWith('.tsx')
