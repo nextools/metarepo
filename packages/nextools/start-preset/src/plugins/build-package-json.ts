@@ -13,7 +13,8 @@ export default (dir: string) =>
       switch (key) {
         case 'devDependencies':
         case 'files':
-        case 'buildAssets': {
+        case 'buildAssets':
+        case 'fixdeps': {
           break
         }
         case 'main': {
