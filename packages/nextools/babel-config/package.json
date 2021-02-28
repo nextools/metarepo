@@ -4,6 +4,7 @@
   "description": "",
   "keywords": [],
   "main": "src/index.js",
+  "types": "src/index.d.ts",
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
