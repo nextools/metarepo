@@ -19,9 +19,11 @@ export type TPackageJson = {
   author?: TPerson,
   contributors?: TPerson[],
   files?: string[],
+  type?: 'commonjs' | 'module',
   main?: string,
   browser?: string,
   'react-native'?: string,
+  types?: string,
   man?: string,
   bin?: string | TStringObject,
   bugs?: string | {
