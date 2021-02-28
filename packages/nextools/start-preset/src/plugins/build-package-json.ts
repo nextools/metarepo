@@ -1,15 +1,24 @@
 import plugin from '@start/plugin'
-import type { TJsonMap } from 'typeon'
+import type { TPackageJson } from 'pkgu'
+import type { TAnyObject, TRequireKeys } from 'tsfn'
+import { isString } from 'tsfn'
+import type { TAssets } from './copy-assets'
 
-export default (dir: string) =>
+type TPackageJsonNextools = TPackageJson & {
+  buildAssets: TAssets,
+  fixdeps: TAnyObject,
+}
+type TPackageJsonBin = TRequireKeys<TPackageJson, 'bin'>['bin']
+
+export const buildPackageJson = (dir: string) =>
   plugin('buildPackageJson', ({ logPath }) => async () => {
-    const { resolve } = await import('path')
-    const { readFile, writeFile } = await import('pifs')
-    const packageJsonPath = resolve(dir, 'package.json')
+    const path = await import('path')
+    const { writePackageJson, readPackageJson } = await import('pkgu')
+    const { getObjectEntries, objectHas } = await import('tsfn')
+    const { isFilePathTS } = await import('../utils')
 
-    const packageJson: TJsonMap = JSON.parse(await readFile(packageJsonPath, 'utf8'))
-    const newPackageJsonPath = resolve(dir, 'build/package.json')
-    const newPackageJson = Object.entries(packageJson).reduce((result, [key, value]) => {
+    const packageJson = await readPackageJson(dir) as TPackageJsonNextools
+    const newPackageJson = getObjectEntries(packageJson).reduce((result, [key, value]) => {
       switch (key) {
         case 'devDependencies':
         case 'files':
@@ -18,7 +27,7 @@ export default (dir: string) =>
           break
         }
         case 'main': {
-          if (!Reflect.has(packageJson, 'types')) {
+          if (!objectHas(packageJson, 'types') && isFilePathTS(packageJson.main!)) {
             result.types = 'types/index.d.ts'
           }
 
@@ -27,7 +36,7 @@ export default (dir: string) =>
           break
         }
         case 'browser': {
-          if (!Reflect.has(packageJson, 'types')) {
+          if (!objectHas(packageJson, 'types') && isFilePathTS(packageJson.browser!)) {
             result.types = 'types/index.d.ts'
           }
 
@@ -36,7 +45,7 @@ export default (dir: string) =>
           break
         }
         case 'react-native': {
-          if (!Reflect.has(packageJson, 'types')) {
+          if (!objectHas(packageJson, 'types') && isFilePathTS(packageJson['react-native']!)) {
             result.types = 'types/index.d.ts'
           }
 
@@ -50,25 +59,30 @@ export default (dir: string) =>
           break
         }
         case 'bin': {
-          result[key] = Object.entries(value as TJsonMap).reduce((bins, [binKey, binValue]) => {
-            if (typeof binValue === 'string') {
+          if (isString(value)) {
+            result[key] = value.replace('src/', 'node/').replace('.ts', '.js')
+          } else {
+            result[key] = Object.entries(value as TPackageJsonBin).reduce((bins, [binKey, binValue]) => {
               bins[binKey] = binValue.replace('src/', 'node/').replace('.ts', '.js')
-            }
 
-            return bins
-          }, {} as TJsonMap)
+              return bins
+            }, {} as TAnyObject)
+          }
 
           break
         }
         default: {
+          // @ts-ignore
           result[key] = value
         }
       }
 
       return result
-    }, {} as TJsonMap)
+    }, {} as TPackageJson)
 
-    await writeFile(newPackageJsonPath, JSON.stringify(newPackageJson, null, 2))
+    const publishDir = path.join(dir, 'build/')
 
-    logPath(newPackageJsonPath)
+    await writePackageJson(publishDir, newPackageJson)
+
+    logPath(dir)
   })
