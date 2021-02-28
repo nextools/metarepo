@@ -1,5 +1,5 @@
 import path from 'path'
-// import plugin from '@start/plugin'
+import plugin from '@start/plugin'
 import type { StartPlugin } from '@start/plugin'
 import copy from '@start/plugin-copy'
 import env from '@start/plugin-env'
@@ -13,11 +13,15 @@ import remove from '@start/plugin-remove'
 import rename from '@start/plugin-rename'
 import sequence from '@start/plugin-sequence'
 import write from '@start/plugin-write'
+import { readPackageJson } from 'pkgu'
+import type { TPackageJson } from 'pkgu'
+import { objectHas } from 'tsfn'
+import type { TAssets } from './plugins/copy-assets'
 import copyAssets from './plugins/copy-assets'
+import { isFilePathTS } from './utils'
 
 export const buildAssets = async (dir: string) => {
-  const packageJsonPath = path.resolve(dir, 'package.json')
-  const { default: packageJson } = await import(packageJsonPath)
+  const packageJson = await readPackageJson(dir) as TPackageJson & { buildAssets: TAssets }
 
   return copyAssets(dir, packageJson.buildAssets)
 }
@@ -92,22 +96,39 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
     read,
     babel(babelConfigNodeBuild),
     rename((file) => file.replace(/\.(ts|tsx)$/, '.js')),
+    write(`${dir}/build/node/`),
+    plugin('test', () => async () => {
+      const path = await import('path')
+      const { access } = await import('pifs')
+      const fullPath = path.resolve(`${dir}/build/node/index.js`)
+      let hasFile = false
+
+      try {
+        await access(fullPath)
+        hasFile = true
+      } catch {}
+
+      if (hasFile) {
+        await import(fullPath)
+      }
+    })
+  )
+}
+
+export const buildNodeESM = async (dir: string): Promise<StartPlugin<{}, {}>> => {
+  const { babelConfigNodeESMBuild } = await import('@nextools/babel-config')
+
+  return sequence(
+    env({ BABEL_ENV: 'production' }),
+    find([
+      `${dir}/src/**/*.{js,ts,tsx}`,
+      `!${dir}/src/**/*.{native,ios,android}.{js,ts,tsx}`,
+      `!${dir}/src/**/*.d.ts`,
+    ]),
+    read,
+    babel(babelConfigNodeESMBuild),
+    rename((file) => file.replace(/\.(ts|tsx)$/, '.js')),
     write(`${dir}/build/node/`)
-    // plugin('test', () => async () => {
-    //   const path = await import('path')
-    //   const { access } = await import('pifs')
-    //   const fullPath = path.resolve(`${dir}/build/node/index.js`)
-    //   let hasFile = false
-
-    //   try {
-    //     await access(fullPath)
-    //     hasFile = true
-    //   } catch {}
-
-    //   if (hasFile) {
-    //     await import(fullPath)
-    //   }
-    // })
   )
 }
 
@@ -120,32 +141,43 @@ export const buildTypes = (dir: string): StartPlugin<{}, {}> =>
 
 export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, {}>> => {
   const dir = path.join('packages', packageDir)
-  const packageJsonPath = path.resolve(dir, 'package.json')
-  const { default: packageJson } = await import(packageJsonPath)
+  const packageJson = await readPackageJson(dir) as TPackageJson & {
+    buildTasks: string[],
+    buildAssets: TAssets,
+  }
 
   const tasks = []
 
-  if (Reflect.has(packageJson, 'main') || Reflect.has(packageJson, 'bin')) {
-    tasks.push('buildNode')
+  if (objectHas(packageJson, 'main') || objectHas(packageJson, 'bin')) {
+    if (packageJson.type === 'module') {
+      tasks.push('buildNodeESM')
+    } else {
+      tasks.push('buildNode')
+    }
   }
 
-  if (Reflect.has(packageJson, 'browser')) {
+  if (objectHas(packageJson, 'browser')) {
     tasks.push('buildWeb')
   }
 
-  if (Reflect.has(packageJson, 'react-native')) {
+  if (objectHas(packageJson, 'react-native')) {
     tasks.push('buildReactNative')
   }
 
-  if (Reflect.has(packageJson, 'buildAssets')) {
+  if (objectHas(packageJson, 'buildAssets')) {
     tasks.push('buildAssets')
   }
 
-  if (Reflect.has(packageJson, 'buildTasks')) {
+  if (objectHas(packageJson, 'buildTasks')) {
     tasks.push(...packageJson.buildTasks)
   }
 
-  if (Reflect.has(packageJson, 'main') || Reflect.has(packageJson, 'browser') || Reflect.has(packageJson, 'react-native') || Reflect.has(packageJson, 'types')) {
+  if (
+    (objectHas(packageJson, 'main') && isFilePathTS(packageJson.main)) ||
+    (objectHas(packageJson, 'browser') && isFilePathTS(packageJson.browser)) ||
+    (objectHas(packageJson, 'react-native') && isFilePathTS(packageJson['react-native'])) ||
+    objectHas(packageJson, 'types')
+  ) {
     tasks.push('buildTypes')
   }
 
