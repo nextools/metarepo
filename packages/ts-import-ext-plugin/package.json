@@ -1,0 +1,21 @@
+{
+  "name": "ts-import-ext-plugin",
+  "version": "0.0.0",
+  "description": "TypeScript plugin to allow explicit extension in imports",
+  "keywords": [],
+  "main": "src/index.js",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "typescript": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.0"
+  }
+}

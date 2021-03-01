@@ -57,6 +57,7 @@
     "packages/syntx",
     "packages/tarmap",
     "packages/tmpa",
+    "packages/ts-import-ext-plugin",
     "packages/tsfn",
     "packages/typeon",
     "packages/unchunk",
