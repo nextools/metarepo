@@ -12,5 +12,8 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "plugins": [
+      { "name": "ts-import-ext-plugin" }
+    ]
   }
 }
