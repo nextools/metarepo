@@ -1,4 +1,3 @@
-// @ts-ignore
 // eslint-disable-next-line import/extensions
 import { add } from './dep.ts'
 
