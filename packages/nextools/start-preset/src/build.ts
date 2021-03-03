@@ -15,7 +15,6 @@ import sequence from '@start/plugin-sequence'
 import write from '@start/plugin-write'
 import { readPackageJson } from 'pkgu'
 import type { TPackageJson } from 'pkgu'
-import { objectHas } from 'tsfn'
 import type { TAssets } from './plugins/copy-assets'
 import copyAssets from './plugins/copy-assets'
 import { isFilePathTS } from './utils'
@@ -140,6 +139,7 @@ export const buildTypes = (dir: string): StartPlugin<{}, {}> =>
   )
 
 export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, {}>> => {
+  const { objectHas } = await import('tsfn')
   const dir = path.join('packages', packageDir)
   const packageJson = await readPackageJson(dir) as TPackageJson & {
     buildTasks: string[],
