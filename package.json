@@ -58,6 +58,7 @@
     "packages/tarmap",
     "packages/tmpa",
     "packages/tsfn",
+    "packages/tymeout",
     "packages/typeon",
     "packages/unchunk",
     "packages/weslint",
