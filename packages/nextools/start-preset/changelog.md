@@ -1,3 +1,7 @@
+## v0.8.1
+
+* 🐞 more lazy imports
+
 ## v0.8.0
 
 * 🌱 build `module` type packages using new `buildNodeESM` task
