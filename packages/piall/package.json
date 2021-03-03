@@ -22,7 +22,8 @@
   "sideEffects": false,
   "devDependencies": {
     "@types/tape": "^4.2.34",
-    "tape": "^5.0.0",
-    "spyfn": "^2.0.0"
+    "iterama": "^0.6.1",
+    "spyfn": "^2.0.0",
+    "tape": "^5.0.0"
   }
 }
