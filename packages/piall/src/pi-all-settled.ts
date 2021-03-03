@@ -35,11 +35,6 @@ export const piAllSettled = <T>(iterable: Iterable<() => TMaybePromise<T>>, conc
           results.push({ status: 'rejected', reason: error })
         } finally {
           pool.delete(maybePromise!)
-
-          if (!isDone) {
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
-            next()
-          }
         }
       }
 
@@ -60,6 +55,10 @@ export const piAllSettled = <T>(iterable: Iterable<() => TMaybePromise<T>>, conc
         } finally {
           for (const result of results) {
             yield result
+
+            if (!isDone) {
+              void next()
+            }
           }
 
           results = []

@@ -1,10 +1,10 @@
+import { toArrayAsync } from 'iterama'
 import { createSpy, getSpyCalls } from 'spyfn'
 import test from 'tape'
 import { piAll } from '../src/pi-all'
 import { waitFor } from './wait-for'
 
 test('piAll: 3 with concurrency 1', async (t) => {
-  const resultSpy = createSpy(() => {})
   const promiseSpy = createSpy(async ({ args, index }) => {
     await waitFor([3, 1, 2], index)
 
@@ -16,21 +16,61 @@ test('piAll: 3 with concurrency 1', async (t) => {
     () => promiseSpy(3),
   ], 1)
 
-  for await (const result of asyncIterable) {
-    resultSpy(result)
-  }
+  const iterator = asyncIterable[Symbol.asyncIterator]()
+
+  let result = await iterator.next()
 
   t.deepEqual(
-    getSpyCalls(resultSpy),
+    getSpyCalls(promiseSpy),
+    [[1]],
+    'should iterate once'
+  )
+
+  t.deepEqual(
+    result.value,
+    1,
+    'should receive first result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2]],
+    'should iterate once again'
+  )
+
+  t.equal(
+    result.value,
+    2,
+    'should receive second result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
     [[1], [2], [3]],
-    'should resolve in order'
+    'should iterate once again'
+  )
+
+  t.equal(
+    result.value,
+    3,
+    'should receive third result'
+  )
+
+  result = await iterator.next()
+
+  t.true(
+    result.done,
+    'should be done'
   )
 })
 
-test('piAll: 3 with concurrency 2', async (t) => {
-  const resultSpy = createSpy(() => {})
+test('piAll: 5 with concurrency 2', async (t) => {
   const promiseSpy = createSpy(async ({ args, index }) => {
-    await waitFor([3, 1, 2], index)
+    await waitFor([3, 1, 2, 3, 1], index)
 
     return Promise.resolve(args[0])
   })
@@ -38,16 +78,87 @@ test('piAll: 3 with concurrency 2', async (t) => {
     () => promiseSpy(1),
     () => promiseSpy(2),
     () => promiseSpy(3),
+    () => promiseSpy(4),
+    () => promiseSpy(5),
   ], 2)
 
-  for await (const result of asyncIterable) {
-    resultSpy(result)
-  }
+  const iterator = asyncIterable[Symbol.asyncIterator]()
+
+  let result = await iterator.next()
 
   t.deepEqual(
-    getSpyCalls(resultSpy),
-    [[2], [1], [3]],
-    'should resolve in order'
+    getSpyCalls(promiseSpy),
+    [[1], [2]],
+    'should iterate twice'
+  )
+
+  t.deepEqual(
+    result.value,
+    2,
+    'should receive first result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should iterate once again'
+  )
+
+  t.deepEqual(
+    result.value,
+    1,
+    'should receive second result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3], [4]],
+    'should iterate once again'
+  )
+
+  t.deepEqual(
+    result.value,
+    3,
+    'should receive third result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3], [4], [5]],
+    'should iterate once again'
+  )
+
+  t.deepEqual(
+    result.value,
+    4,
+    'should receive fourth result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3], [4], [5]],
+    'should not iterate once again'
+  )
+
+  t.deepEqual(
+    result.value,
+    5,
+    'should receive fifth result'
+  )
+
+  result = await iterator.next()
+
+  t.true(
+    result.done,
+    'should be done'
   )
 })
 
@@ -57,21 +168,61 @@ test('piAll: 3 with concurrency 3', async (t) => {
 
     return Promise.resolve(args[0])
   })
-  const resultSpy = createSpy(() => {})
   const asyncIterable = piAll([
     () => promiseSpy(1),
     () => promiseSpy(2),
     () => promiseSpy(3),
   ], 3)
 
-  for await (const result of asyncIterable) {
-    resultSpy(result)
-  }
+  const iterator = asyncIterable[Symbol.asyncIterator]()
+
+  let result = await iterator.next()
 
   t.deepEqual(
-    getSpyCalls(resultSpy),
-    [[3], [2], [1]],
-    'should resolve in order'
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should iterate trice'
+  )
+
+  t.deepEqual(
+    result.value,
+    3,
+    'should receive first result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should not iterate again'
+  )
+
+  t.deepEqual(
+    result.value,
+    2,
+    'should receive second result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should not iterate again'
+  )
+
+  t.deepEqual(
+    result.value,
+    1,
+    'should receive third result'
+  )
+
+  result = await iterator.next()
+
+  t.true(
+    result.done,
+    'should be done'
   )
 })
 
@@ -81,21 +232,61 @@ test('piAll: 3 with concurrency 4', async (t) => {
 
     return Promise.resolve(args[0])
   })
-  const resultSpy = createSpy(() => {})
   const asyncIterable = piAll([
     () => promiseSpy(1),
     () => promiseSpy(2),
     () => promiseSpy(3),
   ], 4)
 
-  for await (const result of asyncIterable) {
-    resultSpy(result)
-  }
+  const iterator = asyncIterable[Symbol.asyncIterator]()
+
+  let result = await iterator.next()
 
   t.deepEqual(
-    getSpyCalls(resultSpy),
-    [[3], [2], [1]],
-    'should resolve in order'
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should iterate trice'
+  )
+
+  t.deepEqual(
+    result.value,
+    3,
+    'should receive first result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should not iterate again'
+  )
+
+  t.deepEqual(
+    result.value,
+    2,
+    'should receive second result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should not iterate again'
+  )
+
+  t.deepEqual(
+    result.value,
+    1,
+    'should receive third result'
+  )
+
+  result = await iterator.next()
+
+  t.true(
+    result.done,
+    'should be done'
   )
 })
 
@@ -105,21 +296,61 @@ test('piAll: 3 with infinite concurrency', async (t) => {
 
     return Promise.resolve(args[0])
   })
-  const resultSpy = createSpy(() => {})
   const asyncIterable = piAll([
     () => promiseSpy(1),
     () => promiseSpy(2),
     () => promiseSpy(3),
   ], Infinity)
 
-  for await (const result of asyncIterable) {
-    resultSpy(result)
-  }
+  const iterator = asyncIterable[Symbol.asyncIterator]()
+
+  let result = await iterator.next()
 
   t.deepEqual(
-    getSpyCalls(resultSpy),
-    [[3], [2], [1]],
-    'should resolve in order'
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should iterate trice'
+  )
+
+  t.deepEqual(
+    result.value,
+    3,
+    'should receive first result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should not iterate again'
+  )
+
+  t.deepEqual(
+    result.value,
+    2,
+    'should receive second result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should not iterate again'
+  )
+
+  t.deepEqual(
+    result.value,
+    1,
+    'should receive third result'
+  )
+
+  result = await iterator.next()
+
+  t.true(
+    result.done,
+    'should be done'
   )
 })
 
@@ -129,26 +360,65 @@ test('piAll: 3 with default concurrency', async (t) => {
 
     return Promise.resolve(args[0])
   })
-  const resultSpy = createSpy(() => {})
   const asyncIterable = piAll([
     () => promiseSpy(1),
     () => promiseSpy(2),
     () => promiseSpy(3),
   ])
 
-  for await (const result of asyncIterable) {
-    resultSpy(result)
-  }
+  const iterator = asyncIterable[Symbol.asyncIterator]()
+
+  let result = await iterator.next()
 
   t.deepEqual(
-    getSpyCalls(resultSpy),
-    [[3], [2], [1]],
-    'should resolve in order'
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should iterate trice'
+  )
+
+  t.deepEqual(
+    result.value,
+    3,
+    'should receive first result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should not iterate again'
+  )
+
+  t.deepEqual(
+    result.value,
+    2,
+    'should receive second result'
+  )
+
+  result = await iterator.next()
+
+  t.deepEqual(
+    getSpyCalls(promiseSpy),
+    [[1], [2], [3]],
+    'should not iterate again'
+  )
+
+  t.deepEqual(
+    result.value,
+    1,
+    'should receive third result'
+  )
+
+  result = await iterator.next()
+
+  t.true(
+    result.done,
+    'should be done'
   )
 })
 
 test('piAll: iterable', async (t) => {
-  const resultSpy = createSpy(() => {})
   const promiseSpy = createSpy(async ({ args, index }) => {
     await waitFor([3, 1, 2], index)
 
@@ -163,13 +433,11 @@ test('piAll: iterable', async (t) => {
   }
   const asyncIterable = piAll(iterable, 2)
 
-  for await (const result of asyncIterable) {
-    resultSpy(result)
-  }
+  const result = await toArrayAsync(asyncIterable)
 
   t.deepEqual(
-    getSpyCalls(resultSpy),
-    [[2], [1], [3]],
+    result,
+    [2, 1, 3],
     'should resolve in order'
   )
 })
@@ -180,7 +448,6 @@ test('piAll: sync reject', async (t) => {
 
     return Promise.resolve(args[0])
   })
-  const resultSpy = createSpy(() => {})
   const asyncIterable = piAll([
     () => promiseSpy(1),
     () => promiseSpy(2),
@@ -190,14 +457,44 @@ test('piAll: sync reject', async (t) => {
   ], 2)
 
   try {
-    for await (const result of asyncIterable) {
-      resultSpy(result)
-    }
-  } catch (error) {
+    const iterator = asyncIterable[Symbol.asyncIterator]()
+
+    let result = await iterator.next()
+
     t.deepEqual(
-      getSpyCalls(resultSpy),
-      [[1], [2], [4]],
-      'should resolve with the rest of the sync queue'
+      getSpyCalls(promiseSpy),
+      [[1], [2]],
+      'should iterate twice'
+    )
+
+    t.deepEqual(
+      result.value,
+      1,
+      'should receive first result'
+    )
+
+    result = await iterator.next()
+
+    t.deepEqual(
+      getSpyCalls(promiseSpy),
+      [[1], [2]],
+      'should not iterate again'
+    )
+
+    t.deepEqual(
+      result.value,
+      2,
+      'should receive second result'
+    )
+
+    await iterator.next()
+
+    t.fail('should not get here')
+  } catch (error) {
+    t.equal(
+      error,
+      'oops',
+      'should throw error'
     )
   }
 })
@@ -212,7 +509,6 @@ test('piAll: async reject', async (t) => {
 
     return Promise.resolve(args[0])
   })
-  const resultSpy = createSpy(() => {})
   const asyncIterable = piAll([
     () => promiseSpy(1),
     () => promiseSpy(2),
@@ -221,18 +517,40 @@ test('piAll: async reject', async (t) => {
   ], 2)
 
   try {
-    for await (const result of asyncIterable) {
-      resultSpy(result)
-    }
+    const iterator = asyncIterable[Symbol.asyncIterator]()
+
+    let result = await iterator.next()
+
+    t.deepEqual(
+      getSpyCalls(promiseSpy),
+      [[1], [2]],
+      'should iterate twice'
+    )
+
+    t.deepEqual(
+      result.value,
+      1,
+      'should receive first result'
+    )
+
+    result = await iterator.next()
+
+    t.deepEqual(
+      getSpyCalls(promiseSpy),
+      [[1], [2], [3]],
+      'should iterate once again'
+    )
+
+    t.deepEqual(
+      result.value,
+      2,
+      'should receive second result'
+    )
+
+    await iterator.next()
 
     t.fail('should not get here')
   } catch (error) {
-    t.deepEqual(
-      getSpyCalls(resultSpy),
-      [[1], [2]],
-      'should resolve in order'
-    )
-
     t.equal(
       error,
       'oops',
@@ -242,20 +560,17 @@ test('piAll: async reject', async (t) => {
 })
 
 test('piAll: sync', async (t) => {
-  const resultSpy = createSpy(() => {})
   const asyncIterable = piAll<string | number>([
     () => 1,
-    () => 1,
+    () => 2,
     () => 3,
   ], 2)
 
-  for await (const result of asyncIterable) {
-    resultSpy(result)
-  }
+  const result = await toArrayAsync(asyncIterable)
 
   t.deepEqual(
-    getSpyCalls(resultSpy),
-    [[1], [1], [3]],
+    result,
+    [1, 2, 3],
     'should resolve in order'
   )
 })
@@ -266,7 +581,6 @@ test('piAll: sync error', async (t) => {
 
     return Promise.resolve(args[0])
   })
-  const resultSpy = createSpy(() => {})
   const asyncIterable = piAll([
     () => 1,
     () => promiseSpy(2),
@@ -278,18 +592,12 @@ test('piAll: sync error', async (t) => {
   ])
 
   try {
-    for await (const result of asyncIterable) {
-      resultSpy(result)
-    }
+    const iterator = asyncIterable[Symbol.asyncIterator]()
+
+    await iterator.next()
 
     t.fail('should not get here')
   } catch (error) {
-    t.deepEqual(
-      getSpyCalls(resultSpy),
-      [],
-      'should resolve without the rest of the sync queue'
-    )
-
     t.equal(
       error.message,
       'oops',
