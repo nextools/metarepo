@@ -20,6 +20,7 @@ export default (inDir: string, outDir: string) =>
     const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, path.dirname(configPath))
     const options = {
       ...parsedConfig.options,
+      noEmitOnError: true,
       noEmit: false,
       emitDeclarationOnly: true,
       declarationDir: outDirFull,
@@ -39,16 +40,25 @@ export default (inDir: string, outDir: string) =>
 
     const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
 
-    for (const diagnostic of allDiagnostics) {
-      if (typeof diagnostic.file === 'undefined') {
-        console.log(`${ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')}`)
+    const message = ts.formatDiagnosticsWithColorAndContext(allDiagnostics, {
+      getCurrentDirectory: ts.sys.getCurrentDirectory,
+      getCanonicalFileName: (fileName) => fileName,
+      getNewLine: () => ts.sys.newLine,
+    })
 
-        continue
-      }
+    console.log(message)
+    // for (const diagnostic of allDiagnostics) {
+    //   if (typeof diagnostic.file === 'undefined') {
+    //     const a = ts.formatDiagnosticsWithColorAndContext(diagnostic)
 
-      const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!)
-      const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
+    //     console.log(`${ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')}`)
 
-      console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`)
-    }
+    //     continue
+    //   }
+
+    //   const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!)
+    //   const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
+
+    //   console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`)
+    // }
   })

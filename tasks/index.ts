@@ -1,172 +1,51 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import {
-  CheckChromiumScreenshots,
-  CheckIosScreenshots,
-  CheckAndroidScreenshots,
-  CheckReactSnapshots,
-  CheckReactNativeSnapshots,
-  Pkg,
-  RunApp,
-  BuildApp,
-} from '@nextools/start-preset'
-import plugin from '@start/plugin'
-import sequence from '@start/plugin-sequence'
-import syncState from './sandbox/plugins/sync-state'
+import { pipeAsync } from 'funcom'
+import { mapAsync } from 'iterama'
 
-const shouldBailout = Boolean(process.env.CI)
-
-export * from '@nextools/start-preset'
-
-export const checkChromiumScreenshots = CheckChromiumScreenshots({ shouldBailout, chromiumVersion: '83' })
-export const checkIosScreenshots = CheckIosScreenshots({ shouldBailout })
-export const checkAndroidScreenshots = CheckAndroidScreenshots({ shouldBailout })
-export const checkReactSnapshots = CheckReactSnapshots({ shouldBailout })
-export const checkReactNativeSnapshots = CheckReactNativeSnapshots({ shouldBailout })
-
-// custom tasks:
-export const pkg = Pkg({
-  lib: {
-    $description$: null,
-    $exportedName$: null,
-    $year$: String(new Date().getFullYear()),
-  },
-  app: {
-    $year$: String(new Date().getFullYear()),
-  },
-})
-
-export const graphiq = RunApp({
-  name: 'Graphiq',
-  entryPointPath: 'tasks/graphiq/index.tsx',
-  htmlTemplatePath: 'packages/graphiq/templates/dev.html',
-})
-
-export const buildGraphiq = BuildApp({
-  entryPointPath: 'tasks/graphiq/index.tsx',
-  htmlTemplatePath: 'packages/graphiq/templates/build.html',
-  outputPath: 'build/graphiq/',
-})
-
-export const refps = RunApp({
-  name: 'ReFps',
-  entryPointPath: 'tasks/refps/index.tsx',
-  htmlTemplatePath: 'tasks/refps/index.html',
-})
-
-export const buildRefps = BuildApp({
-  entryPointPath: 'tasks/refps/index.tsx',
-  htmlTemplatePath: 'tasks/refps/index.html',
-  outputPath: 'build/refps/',
-})
-
-export const sandbox = (...args: string[]) => {
-  const runSandbox = RunApp({
-    name: 'Sandbox',
-    entryPointPath: 'tasks/sandbox/index.tsx',
-    htmlTemplatePath: 'packages/revert/sandbox/templates/dev.html',
-  })
-
-  return sequence(
-    syncState,
-    runSandbox(...args)
-  )
+type TFileWithData = {
+  path: string,
+  data: string,
 }
 
-export const rebox = (platform: 'ios'| 'android') =>
-  plugin(platform, () => async () => {
-    const path = await import('path')
+const find = async (globs: string[]): Promise<AsyncIterable<string>> => {
+  const { matchGlobs } = await import('iva')
 
-    const entryPointPath = path.resolve('./tasks/rebox/App.tsx')
-    const fontsDir = path.resolve('./tasks/rebox/fonts/')
+  return matchGlobs(globs)
+}
 
-    if (platform === 'ios') {
-      const { runIosApp } = await import('@rebox/ios')
+const read = async (filePath: string): Promise<TFileWithData> => {
+  const { readFile } = await import('fs/promises')
+  const { sleep } = await import('sleap')
 
-      await runIosApp({
-        appName: 'ReboxTest',
-        appId: 'org.rebox.test',
-        iPhoneModel: '8',
-        iOSVersion: '13',
-        entryPointPath,
-        fontsDir,
-        dependencyNames: ['react-native-svg'],
-      })
-    }
+  await sleep(500)
 
-    if (platform === 'android') {
-      const { runAndroidApp } = await import('@rebox/android')
+  return {
+    path: filePath,
+    data: await readFile(filePath, 'utf8'),
+  }
+}
 
-      await runAndroidApp({
-        appName: 'ReboxTest',
-        appId: 'org.rebox.test',
-        entryPointPath,
-        fontsDir,
-        dependencyNames: ['react-native-svg'],
-      })
-    }
-  })
+const write = async (fileWithData: TFileWithData): Promise<TFileWithData> => {
+  const { sleep } = await import('sleap')
 
-export const run = (file: string) =>
-  plugin('main', () => async () => {
-    const { resolve } = await import('path')
-    const { main } = await import(resolve(file))
+  await sleep(500)
 
-    await main()
-  })
+  return fileWithData
+}
 
-export const revert = RunApp({
-  name: 'Revert',
-  entryPointPath: 'tasks/revert/index.tsx',
-  htmlTemplatePath: 'tasks/revert/templates/dev.html',
-})
+export const build = async () => {
+  const pathIterable = await find(['packages/re*/*.md'])
+  const { piAllAsync } = await import('piall')
+  const mapper = (filePath: string) => (): Promise<TFileWithData> => {
+    return pipeAsync(
+      read,
+      write
+    )(filePath)
+  }
+  const meta = mapAsync(mapper)(pathIterable)
+  const pit = piAllAsync(meta, 2)
 
-export const upgrade = (depName: string) =>
-  plugin('dependency', () => async () => {
-    const { upgradeDependency } = await import('yupg')
-
-    await upgradeDependency(depName)
-  })
-
-export const iproto = () =>
-  plugin('run', () => async () => {
-    const { getFreePort } = await import('../packages/portu/src')
-    const { serveIterable } = await import('@iproto/server')
-    const { runWebApp } = await import('@rebox/web')
-    const { sleep } = await import('sleap')
-    // eslint-disable-next-line prefer-const
-    let closeWebApp: () => Promise<void>
-
-    const iterable = {
-      async *[Symbol.asyncIterator](): AsyncGenerator<number> {
-        try {
-          await sleep(1000)
-          console.log(yield 1)
-
-          await sleep(1000)
-          console.log(yield 2)
-
-          await sleep(1000)
-          console.log(yield 3)
-        } finally {
-          await closeWebApp()
-          console.log('DONE')
-        }
-      },
-    }
-
-    const host = 'localhost'
-    const port = await getFreePort(31337, 40000, host)
-
-    await serveIterable(iterable, { host, port })
-
-    console.log('server', `ws://${host}:${port}/`)
-
-    closeWebApp = await runWebApp({
-      entryPointPath: 'tasks/iproto/App.tsx',
-      htmlTemplatePath: 'tasks/iproto/index.html',
-      props: { port },
-      isQuiet: true,
-    })
-
-    console.log('client', `http://${host}:3000/`)
-  })
+  for await (const m of pit) {
+    // console.log(m.path)
+    console.log('tick')
+  }
+}

@@ -33,11 +33,6 @@ export const piAll = <T>(iterable: Iterable<() => TMaybePromise<T>>, concurrency
           const result = await maybePromise
 
           results.push(result)
-
-          if (!isDone && !hasError) {
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
-            next()
-          }
         } catch (err) {
           hasError = true
           error = err
@@ -47,8 +42,7 @@ export const piAll = <T>(iterable: Iterable<() => TMaybePromise<T>>, concurrency
       }
 
       for (let i = 0; i < concurrency; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        next()
+        void next()
 
         if (isDone || hasError) {
           break
@@ -65,6 +59,10 @@ export const piAll = <T>(iterable: Iterable<() => TMaybePromise<T>>, concurrency
 
         for (const result of results) {
           yield result
+
+          if (!isDone && !hasError) {
+            void next()
+          }
         }
 
         results = []

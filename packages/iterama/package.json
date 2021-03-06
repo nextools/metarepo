@@ -12,6 +12,7 @@
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
+  "type": "module",
   "license": "MIT",
   "repository": "nextools/metarepo",
   "engines": {

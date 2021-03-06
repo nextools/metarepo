@@ -86,10 +86,10 @@
     "ws": "^7.3.1"
   },
   "scripts": {
-    "start": "packages/nextools/start-preset/src/cli/index.js"
+    "start": "node --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @nextools/typescript-esm-loader packages/start/cli/src/index.ts"
   },
   "start": {
-    "file": "tasks/",
+    "tasks": "tasks/index.ts",
     "auto": {
       "shouldMakeGitTags": true,
       "shouldSendTelegramMessage": false,

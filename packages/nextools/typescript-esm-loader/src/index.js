@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'url'
-import { transform } from '@babel/core'
+import { transformAsync } from '@babel/core'
 
 const TS_EXTENSION = '.ts'
 
@@ -19,7 +19,7 @@ export const getFormat = (url, context, defaultGetFormat) => {
 
 export const transformSource = async (source, context, defaultTransformSource) => {
   if (context.url.endsWith(TS_EXTENSION)) {
-    const transformed = transform(source, {
+    const transformed = await transformAsync(source, {
       ast: false,
       babelrc: false,
       compact: false,
@@ -36,6 +36,7 @@ export const transformSource = async (source, context, defaultTransformSource) =
         ],
       ],
       plugins: [
+        await resolve('./babel-plugin.js'),
         await resolve('@babel/plugin-syntax-bigint'),
         await resolve('@babel/plugin-proposal-class-properties'),
         await resolve('@babel/plugin-proposal-private-methods'),

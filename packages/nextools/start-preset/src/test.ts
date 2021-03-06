@@ -65,25 +65,25 @@ export const lint = async () => {
   ), [] as string[])
 
   return sequence(
-    find([
-      ...globs,
-      'tasks/**/*.{ts,tsx}',
-    ]),
-    plugin('weslint', ({ logMessage }) => async ({ files }) => {
-      const result = await weslint({
-        files: files.map((file) => file.path),
-      })
+    // find([
+    //   ...globs,
+    //   'tasks/**/*.{ts,tsx}',
+    // ]),
+    // plugin('weslint', ({ logMessage }) => async ({ files }) => {
+    //   const result = await weslint({
+    //     files: files.map((file) => file.path),
+    //   })
 
-      if (result.hasErrors || result.hasWarnings) {
-        console.log(result.formattedReport)
-      } else {
-        logMessage('¯\\_(ツ)_/¯')
-      }
+    //   if (result.hasErrors || result.hasWarnings) {
+    //     console.log(result.formattedReport)
+    //   } else {
+    //     logMessage('¯\\_(ツ)_/¯')
+    //   }
 
-      if (result.hasErrors) {
-        throw null
-      }
-    }),
+    //   if (result.hasErrors) {
+    //     throw null
+    //   }
+    // }),
     typescriptCheck()
   )
 }

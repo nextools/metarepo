@@ -9,8 +9,9 @@
   "files": [
     "build/"
   ],
+  "main": "src/index.ts",
   "bin": {
-    "start": "src/index.js"
+    "start": "src/index.ts"
   },
   "publishConfig": {
     "access": "public"
