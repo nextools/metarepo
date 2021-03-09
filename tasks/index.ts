@@ -1,51 +1,41 @@
-import { pipeAsync } from 'funcom'
-import { mapAsync } from 'iterama'
+import type { Worker } from 'worker_threads'
+import { find } from './find'
+import { read } from './read'
+import { write } from './write'
 
-type TFileWithData = {
-  path: string,
-  data: string,
+export const buildFile = async (filePath: string) => {
+  const { pipeAsync } = await import('funcom')
+
+  return pipeAsync(
+    read,
+    write
+  )(filePath)
 }
 
-const find = async (globs: string[]): Promise<AsyncIterable<string>> => {
-  const { matchGlobs } = await import('iva')
-
-  return matchGlobs(globs)
-}
-
-const read = async (filePath: string): Promise<TFileWithData> => {
-  const { readFile } = await import('fs/promises')
-  const { sleep } = await import('sleap')
-
-  await sleep(500)
-
-  return {
-    path: filePath,
-    data: await readFile(filePath, 'utf8'),
-  }
-}
-
-const write = async (fileWithData: TFileWithData): Promise<TFileWithData> => {
-  const { sleep } = await import('sleap')
-
-  await sleep(500)
-
-  return fileWithData
-}
-
-export const build = async () => {
-  const pathIterable = await find(['packages/re*/*.md'])
+export const build = async (workers: Worker[]) => {
+  const { mapAsync } = await import('iterama')
+  const { once } = await import('wans')
   const { piAllAsync } = await import('piall')
-  const mapper = (filePath: string) => (): Promise<TFileWithData> => {
-    return pipeAsync(
-      read,
-      write
-    )(filePath)
-  }
-  const meta = mapAsync(mapper)(pathIterable)
-  const pit = piAllAsync(meta, 2)
 
-  for await (const m of pit) {
-    // console.log(m.path)
-    console.log('tick')
+  const pathIterable = await find(['packages/re*/*.md'])
+  let i = -1
+
+  const mapper = (filePath: string) => async (): Promise<string> => {
+    i++
+
+    workers[i].postMessage({
+      taskName: 'buildFile',
+      value: filePath,
+    })
+
+    await once(workers[i], 'message')
+
+    return filePath
+  }
+  const mapped = mapAsync(mapper)(pathIterable)
+  const pit = piAllAsync(mapped, workers.length)
+
+  for await (const p of pit) {
+    // console.log('tick')
   }
 }

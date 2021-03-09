@@ -1,10 +1,10 @@
-import { accessSync } from 'fs'
-import { join, dirname } from 'path'
+const { accessSync } = require('fs')
+const { join, dirname } = require('path')
 
 const EXTENSION = '.ts'
 const cache = new Map()
 
-export default ({ types }) => {
+module.exports = ({ types }) => {
   const replaceSpecifier = (path, state) => {
     if (path.node.source !== null) {
       const specifier = path.node.source.value

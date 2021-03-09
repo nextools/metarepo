@@ -4,6 +4,7 @@
   "description": "Sleep",
   "keywords": [],
   "main": "src/index.ts",
+  "type": "module",
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {

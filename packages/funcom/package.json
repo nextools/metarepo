@@ -11,6 +11,7 @@
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",
+  "type": "module",
   "license": "MIT",
   "author": "psxcode <psxcode@gmail.com> (https://github.com/psxcode)",
   "repository": "nextools/metarepo",

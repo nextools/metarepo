@@ -1,0 +1,17 @@
+{
+  "name": "wans",
+  "version": "0.0.0",
+  "description": "EventEmitter `once` as Promise",
+  "keywords": [],
+  "main": "src/index.ts",
+  "type": "module",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false
+}

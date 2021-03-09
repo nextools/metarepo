@@ -60,6 +60,7 @@
     "packages/tsfn",
     "packages/typeon",
     "packages/unchunk",
+    "packages/wans",
     "packages/weslint",
     "packages/workerama",
     "packages/x-ray/*",

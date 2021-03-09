@@ -13,9 +13,10 @@ export const piAllAsync = <T>(iterable: AsyncIterable<() => TMaybePromise<T>>, c
       let resolveYieldPromise = null as ((value: T) => void) | null
       let rejectYieldPromise = null as ((reason: any) => void) | null
       let hasError = false
-      let error
       let isNextDone = false
       let isNextStuck = false
+      let error: any
+      let nextPromise: Promise<void>
 
       const run = async (maybePromise: TMaybePromise<T>): Promise<void> => {
         try {
@@ -74,7 +75,7 @@ export const piAllAsync = <T>(iterable: AsyncIterable<() => TMaybePromise<T>>, c
 
           // should next() call itself one again or not
           if (pool.size < concurrency) {
-            void next()
+            nextPromise = next()
           } else {
             isNextStuck = true
           }
@@ -91,10 +92,18 @@ export const piAllAsync = <T>(iterable: AsyncIterable<() => TMaybePromise<T>>, c
       }
 
       // first next() to start iterating
-      void next()
+      nextPromise = next()
 
-      // eslint-disable-next-line no-unmodified-loop-condition
-      while (!isNextDone || pool.size > 0 || results.length > 0) {
+      while (true) {
+        if (pool.size === 0 && results.length === 0) {
+          // wait for possible `done` or error
+          await nextPromise
+
+          if (isNextDone) {
+            break
+          }
+        }
+
         // sync error
         if (hasError) {
           throw error
@@ -110,6 +119,7 @@ export const piAllAsync = <T>(iterable: AsyncIterable<() => TMaybePromise<T>>, c
             return
           }
 
+          // console.log('RESOLVER')
           // no result at the moment – store resolver and rejecter
           resolveYieldPromise = resolve
           rejectYieldPromise = reject
