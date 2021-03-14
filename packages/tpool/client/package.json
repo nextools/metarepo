@@ -15,7 +15,7 @@
   "sideEffects": false,
   "dependencies": {
     "iterama": "^0.6.1",
-    "piall": "^0.2.1",
+    "piall": "^0.2.0",
     "typeon": "^2.0.0",
     "wans": "^0.0.0",
     "ws": "^7.3.1"

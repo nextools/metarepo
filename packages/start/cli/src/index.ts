@@ -74,10 +74,10 @@ while (true) {
     continue
   }
 
-  const it = await tasksExported[input]()
-  const pit = await it()
+  const taskRunner = await tasksExported[input]()
+  const taskIterable = await taskRunner()
 
-  for await (const i of pit) {
+  for await (const i of taskIterable) {
     console.log(i)
   }
 }

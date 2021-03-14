@@ -56,7 +56,9 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
 
       busyWorkers.delete(worker.threadId)
 
-      ws.send(JSON.stringify({ id, type, value }))
+      ws.send(
+        JSON.stringify({ id, type, value })
+      )
     })
   })
 

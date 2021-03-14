@@ -1,4 +1,4 @@
-export const buildFile = async (filePath: string) => {
+const buildFile = async (filePath: string) => {
   const { pipeAsync } = await import('funcom')
   const { read } = await import('./read')
   const { write } = await import('./write')
@@ -16,15 +16,6 @@ export const build = async () => {
 
   return pipeAsync(
     find(['packages/re*/*.md']),
-    mapThreadPool(async (filePath: string) => {
-      const { pipeAsync } = await import('funcom')
-      const { read } = await import('./read')
-      const { write } = await import('./write')
-
-      return pipeAsync(
-        read,
-        write
-      )(filePath)
-    }, { socketPath: '/tmp/start.sock' })
+    mapThreadPool(buildFile, { socketPath: '/tmp/start.sock' })
   )
 }
