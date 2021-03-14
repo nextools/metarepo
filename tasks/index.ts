@@ -12,16 +12,25 @@ export const buildFile = async (filePath: string) => {
 }
 
 export const build = async () => {
-  const { find } = await import('./find')
   const { mapAsync } = await import('iterama')
+  const { piAllAsync } = await import('piall')
+  const { connectToThreadPool } = await import('@tpool/client')
+  const { find } = await import('./find')
 
-  const worker = <T>(fn: (arg: T) => Promise<any>) => (it: AsyncIterable<T>): AsyncIterable<{ arg: T, fn: string }> => {
+  const sendToThreadPool = await connectToThreadPool({
+    socketPath: '/tmp/start.sock',
+  })
+
+  const worker = <T extends string>(fn: (arg: T) => Promise<any>) => (it: AsyncIterable<T>): AsyncIterable<T> => {
     const fnString = fn.toString()
 
-    return mapAsync((arg: T) => ({
-      arg,
-      fn: fnString,
-    }))(it)
+    const mapped = mapAsync((arg: T) => async () => {
+      await sendToThreadPool(arg)
+
+      return arg
+    })(it)
+
+    return piAllAsync(mapped, 8)
   }
 
   const pathIterable = find(['packages/re*/*.md'])

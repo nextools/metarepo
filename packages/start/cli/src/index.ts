@@ -1,18 +1,23 @@
 import { readFile } from 'fs/promises'
+import { cpus } from 'os'
 import { join as pathJoin, resolve as pathResolve } from 'path'
 import readline from 'readline'
-import { map } from 'iterama'
-import { piAllAsync } from 'piall'
+// import { map } from 'iterama'
+// import { piAllAsync } from 'piall'
+import { connectToThreadPool } from '@tpool/client'
+import { startThreadPool } from '@tpool/server'
 import type { TPackageJson } from 'pkgu'
 import { startTimeMs } from 'takes'
 import { once } from 'wans'
-import { getWorkers, workerify } from './workers'
+// import { getWorkers, workerify } from './workers'
 
 type TStartOptions = {
   tasks: string,
   reporter?: string,
   require?: (string | [string, { [k: string]: any }])[],
 }
+
+const SOCKET_PATH = '/tmp/start.sock'
 
 const endTimeMs = startTimeMs()
 
@@ -23,9 +28,13 @@ const tasksFilePath = pathResolve(packageJson.start.tasks)
 const tasksExported = await import(tasksFilePath)
 const taskNames = Object.keys(tasksExported)
 
-const workers = await getWorkers(tasksFilePath)
+const stopThreadPool = await startThreadPool({
+  threadCount: cpus().length,
+  socketPath: SOCKET_PATH,
+})
+// const workers = await getWorkers(tasksFilePath)
 
-console.log('workers: ', workers.length)
+// console.log('workers: ', workers.length)
 
 const tookMs = endTimeMs()
 
@@ -45,7 +54,7 @@ const rl = readline.createInterface({
   ],
 })
 
-const workerized = workerify(workers)
+// const workerized = workerify(workers)
 
 while (true) {
   rl.prompt()
@@ -61,9 +70,7 @@ while (true) {
   if (input === '/quit') {
     rl.close()
 
-    await Promise.all(
-      workers.map((worker) => worker.terminate())
-    )
+    await stopThreadPool()
 
     console.log('bye')
 
@@ -77,10 +84,8 @@ while (true) {
   }
 
   const it = await tasksExported[input]()
-  // const pit = piAllAsync(it, 2)
 
   for await (const i of it) {
-    console.log(i)
+    // console.log(i)
   }
 }
-

@@ -58,6 +58,7 @@
     "packages/takes",
     "packages/tarmap",
     "packages/tmpa",
+    "packages/tpool/*",
     "packages/tsfn",
     "packages/typeon",
     "packages/unchunk",

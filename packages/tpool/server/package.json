@@ -1,0 +1,27 @@
+{
+  "name": "@tpool/server",
+  "version": "0.0.0",
+  "description": "Thread pool server",
+  "keywords": [],
+  "main": "src/index.ts",
+  "type": "module",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.17.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/ws": "^5.1.0"
+  },
+  "dependencies": {
+    "dleet": "^2.0.1",
+    "tsfn": "^2.2.0",
+    "typeon": "^2.0.0",
+    "ws": "^7.4.4",
+    "wans": "^0.0.0"
+  }
+}
