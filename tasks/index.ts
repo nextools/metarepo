@@ -1,10 +1,9 @@
-import type { Worker } from 'worker_threads'
-import { find } from './find'
-import { read } from './read'
-import { write } from './write'
+// import type { TFileWithData } from './types'
 
 export const buildFile = async (filePath: string) => {
   const { pipeAsync } = await import('funcom')
+  const { read } = await import('./read')
+  const { write } = await import('./write')
 
   return pipeAsync(
     read,
@@ -12,30 +11,41 @@ export const buildFile = async (filePath: string) => {
   )(filePath)
 }
 
-export const build = async (workers: Worker[]) => {
+export const build = async () => {
+  const { find } = await import('./find')
   const { mapAsync } = await import('iterama')
-  const { once } = await import('wans')
-  const { piAllAsync } = await import('piall')
 
-  const pathIterable = await find(['packages/re*/*.md'])
-  let i = -1
+  const worker = <T>(fn: (arg: T) => Promise<any>) => (it: AsyncIterable<T>): AsyncIterable<{ arg: T, fn: string }> => {
+    const fnString = fn.toString()
 
-  const mapper = (filePath: string) => async (): Promise<string> => {
-    i++
-
-    workers[i].postMessage({
-      taskName: 'buildFile',
-      value: filePath,
-    })
-
-    await once(workers[i], 'message')
-
-    return filePath
+    return mapAsync((arg: T) => ({
+      arg,
+      fn: fnString,
+    }))(it)
   }
-  const mapped = mapAsync(mapper)(pathIterable)
-  const pit = piAllAsync(mapped, workers.length)
 
-  for await (const p of pit) {
-    // console.log('tick')
-  }
+  const pathIterable = find(['packages/re*/*.md'])
+
+  return worker(async (filePath: string) => {
+    const { pipeAsync } = await import('funcom')
+    const { read } = await import('./read')
+    const { write } = await import('./write')
+
+    return pipeAsync(
+      read,
+      write
+    )(filePath)
+  })(pathIterable)
 }
+
+// export const build = async (workerify: (taskName: string) => (it: AsyncIterable<string>) => AsyncIterable<string>) => {
+//   const { find } = await import('./find')
+//   const { pipe } = await import('funcom')
+
+//   const a = pipe(
+//     find(['packages/re*/*.md']),
+//     workerify('buildFile')
+//   )
+
+//   return a
+// }

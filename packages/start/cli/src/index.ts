@@ -1,11 +1,12 @@
 import { readFile } from 'fs/promises'
-import { cpus } from 'os'
 import { join as pathJoin, resolve as pathResolve } from 'path'
 import readline from 'readline'
-import { Worker } from 'worker_threads'
+import { map } from 'iterama'
+import { piAllAsync } from 'piall'
 import type { TPackageJson } from 'pkgu'
+import { startTimeMs } from 'takes'
 import { once } from 'wans'
-import { resolve } from './resolve'
+import { getWorkers, workerify } from './workers'
 
 type TStartOptions = {
   tasks: string,
@@ -13,7 +14,7 @@ type TStartOptions = {
   require?: (string | [string, { [k: string]: any }])[],
 }
 
-const start = process.hrtime.bigint()
+const endTimeMs = startTimeMs()
 
 const packageJsonPath = pathJoin(process.cwd(), 'package.json')
 const packageJsonData = await readFile(packageJsonPath, 'utf8')
@@ -22,32 +23,16 @@ const tasksFilePath = pathResolve(packageJson.start.tasks)
 const tasksExported = await import(tasksFilePath)
 const taskNames = Object.keys(tasksExported)
 
-const workerPath = await resolve('./worker.mjs')
-const workerCount = cpus().length
-
-const workers = await Promise.all(
-  Array.from({ length: workerCount }, async () => {
-    const worker = new Worker(workerPath, {
-      workerData: {
-        tasksFilePath,
-      },
-    })
-
-    await once(worker, 'online')
-
-    return worker
-  })
-)
+const workers = await getWorkers(tasksFilePath)
 
 console.log('workers: ', workers.length)
 
-const end = process.hrtime.bigint()
-const diff = (end - start) / BigInt(1e6)
+const tookMs = endTimeMs()
 
 console.log('tasks:', taskNames)
-console.log('time:', String(diff))
+console.log('time:', `${tookMs}ms`)
 
-// await tasksExported.build()
+const autocomplete = taskNames.concat('/tasks', '/quit')
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -55,17 +40,25 @@ const rl = readline.createInterface({
   tabSize: 4,
   prompt: '> ',
   completer: (input: string) => [
-    taskNames.filter((taskName) => taskName.startsWith(input)),
+    autocomplete.filter((item) => item.startsWith(input)),
     input,
   ],
 })
+
+const workerized = workerify(workers)
 
 while (true) {
   rl.prompt()
 
   const input = await once<string>(rl, 'line')
 
-  if (input === 'q') {
+  if (input === '/tasks') {
+    console.log('tasks:', taskNames)
+
+    continue
+  }
+
+  if (input === '/quit') {
     rl.close()
 
     await Promise.all(
@@ -77,12 +70,17 @@ while (true) {
     break
   }
 
-  if (!taskNames.includes(input)) {
+  if (!autocomplete.includes(input)) {
     console.error(`unknown: ${input}`)
 
     continue
   }
 
-  await tasksExported[input](workers)
+  const it = await tasksExported[input]()
+  // const pit = piAllAsync(it, 2)
+
+  for await (const i of it) {
+    console.log(i)
+  }
 }
 

@@ -15,7 +15,3 @@ export const once = <T>(emitter: EventEmitter, eventName: string): Promise<T> =>
     emitter.once('error', onError)
     emitter.once(eventName, onEvent)
   })
-
-export const sleep = (timeout: number): Promise<void> =>
-  new Promise((resolve) => setTimeout(resolve, timeout))
-

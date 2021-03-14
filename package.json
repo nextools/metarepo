@@ -55,6 +55,7 @@
     "packages/start/*",
     "packages/stroki",
     "packages/syntx",
+    "packages/takes",
     "packages/tarmap",
     "packages/tmpa",
     "packages/tsfn",
