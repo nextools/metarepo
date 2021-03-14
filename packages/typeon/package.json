@@ -9,6 +9,7 @@
     "stringify"
   ],
   "main": "src/index.ts",
+  "type": "module",
   "repository": "nextools/metarepo",
   "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",

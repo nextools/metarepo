@@ -1,5 +1,7 @@
 // import type { TFileWithData } from './types'
 
+import type { TJsonValue } from 'typeon'
+
 export const buildFile = async (filePath: string) => {
   const { pipeAsync } = await import('funcom')
   const { read } = await import('./read')
@@ -21,13 +23,13 @@ export const build = async () => {
     socketPath: '/tmp/start.sock',
   })
 
-  const worker = <T extends string>(fn: (arg: T) => Promise<any>) => (it: AsyncIterable<T>): AsyncIterable<T> => {
+  const worker = <T extends TJsonValue, R>(fn: (arg: T) => Promise<R>) => (it: AsyncIterable<T>): AsyncIterable<R> => {
     const fnString = fn.toString()
 
     const mapped = mapAsync((arg: T) => async () => {
-      await sendToThreadPool(arg)
+      const result = await sendToThreadPool<R>(arg)
 
-      return arg
+      return result
     })(it)
 
     return piAllAsync(mapped, 8)

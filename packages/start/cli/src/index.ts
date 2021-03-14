@@ -2,14 +2,10 @@ import { readFile } from 'fs/promises'
 import { cpus } from 'os'
 import { join as pathJoin, resolve as pathResolve } from 'path'
 import readline from 'readline'
-// import { map } from 'iterama'
-// import { piAllAsync } from 'piall'
-import { connectToThreadPool } from '@tpool/client'
 import { startThreadPool } from '@tpool/server'
 import type { TPackageJson } from 'pkgu'
 import { startTimeMs } from 'takes'
 import { once } from 'wans'
-// import { getWorkers, workerify } from './workers'
 
 type TStartOptions = {
   tasks: string,
@@ -32,9 +28,6 @@ const stopThreadPool = await startThreadPool({
   threadCount: cpus().length,
   socketPath: SOCKET_PATH,
 })
-// const workers = await getWorkers(tasksFilePath)
-
-// console.log('workers: ', workers.length)
 
 const tookMs = endTimeMs()
 
@@ -53,8 +46,6 @@ const rl = readline.createInterface({
     input,
   ],
 })
-
-// const workerized = workerify(workers)
 
 while (true) {
   rl.prompt()
@@ -86,6 +77,6 @@ while (true) {
   const it = await tasksExported[input]()
 
   for await (const i of it) {
-    // console.log(i)
+    console.log(i)
   }
 }

@@ -6,9 +6,17 @@ import { once } from 'wans'
 while (true) {
   const message = await once(parentPort, 'message')
 
-  await sleep(getRandomInt(100, 1000))
+  try {
+    await sleep(getRandomInt(100, 1000))
 
-  console.log(threadId, message)
-
-  parentPort.postMessage('done')
+    parentPort.postMessage({
+      type: 'DONE',
+      value: `${threadId}: ${message}`,
+    })
+  } catch (err) {
+    parentPort.postMessage({
+      type: 'ERROR',
+      value: err instanceof Error ? err.message : err,
+    })
+  }
 }
