@@ -1,5 +1,5 @@
-import { matchGlobs } from 'iva'
+export const find = (globs: string[]) => async (): Promise<AsyncIterable<string>> => {
+  const { matchGlobs } = await import('iva')
 
-export const find = (globs: string[]): AsyncIterable<string> => {
   return matchGlobs(globs)
 }

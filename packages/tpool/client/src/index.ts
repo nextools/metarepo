@@ -1,13 +1,13 @@
 import { randomBytes } from 'crypto'
+import { mapAsync } from 'iterama'
+import { piAllAsync } from 'piall'
 import type { TJsonValue } from 'typeon'
-// import type { TJsonValue } from 'typeon'
 import { once } from 'wans'
 import WS from 'ws'
 
 export type TMessageDone<T> = {
   type: 'DONE',
   id: string,
-  // TODO: TJsonValue
   value: T,
 }
 
@@ -23,12 +23,12 @@ export type TConnectToThreadPoolOptions = {
   socketPath: string,
 }
 
-export const connectToThreadPool = async (options: TConnectToThreadPoolOptions) => {
+export const mapThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn: (arg: T) => Promise<R>, options: TConnectToThreadPoolOptions) => async (it: AsyncIterable<T>): Promise<AsyncIterable<R>> => {
   const client = new WS(`ws+unix://${options.socketPath}`)
 
   await once(client, 'open')
 
-  return <T>(message: TJsonValue): Promise<T> => {
+  const sendToThreadPool = (message: T): Promise<R> => {
     const id = randomBytes(16).toString('hex')
 
     client.send(JSON.stringify({
@@ -38,7 +38,7 @@ export const connectToThreadPool = async (options: TConnectToThreadPoolOptions) 
 
     return new Promise((resolve, reject) => {
       const onMessage = (data: string) => {
-        const message = JSON.parse(data) as TMessage<T>
+        const message = JSON.parse(data) as TMessage<R>
 
         if (message.id === id) {
           if (message.type === 'DONE') {
@@ -54,4 +54,14 @@ export const connectToThreadPool = async (options: TConnectToThreadPoolOptions) 
       client.on('message', onMessage)
     })
   }
+
+  const fnString = mapFn.toString()
+
+  const mapped = mapAsync((arg: T) => async () => {
+    const result = await sendToThreadPool(arg)
+
+    return result
+  })(it)
+
+  return piAllAsync(mapped, 8)
 }

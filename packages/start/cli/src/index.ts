@@ -75,8 +75,9 @@ while (true) {
   }
 
   const it = await tasksExported[input]()
+  const pit = await it()
 
-  for await (const i of it) {
+  for await (const i of pit) {
     console.log(i)
   }
 }
