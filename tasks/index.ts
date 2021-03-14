@@ -15,7 +15,7 @@ export const build = async () => {
   const { find } = await import('./find')
 
   return pipeAsync(
-    find(['packages/re*/*.md']),
+    find(['packages/iterama/src/*.ts']),
     mapThreadPool(buildFile, { socketPath: '/tmp/start.sock' })
   )
 }
