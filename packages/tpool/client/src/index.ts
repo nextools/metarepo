@@ -28,7 +28,7 @@ export const mapThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn:
       const onMessage = (data: string) => {
         const message = jsonParse<TMessage<R>>(data)
 
-        if (message.id === id) {
+        if (message.id === id || message.id === null) {
           if (message.type === 'DONE') {
             resolve(message.value)
           } else if (message.type === 'ERROR') {

@@ -41,25 +41,35 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
 
   wsServer.on('connection', (ws) => {
     ws.on('message', async (data: string) => {
-      const worker = workers.find(({ threadId }) => !busyWorkers.has(threadId))!
+      let id: null | string = null
 
-      busyWorkers.add(worker.threadId)
+      try {
+        const wsMessage = jsonParse<TWsMessage>(data)
 
-      const wsMessage = jsonParse<TWsMessage>(data)
+        id = wsMessage.id
 
-      worker.postMessage(wsMessage.value)
+        const worker = workers.find(({ threadId }) => !busyWorkers.has(threadId))!
 
-      const { type, value } = await once<TWorkerMessage>(worker, 'message')
+        busyWorkers.add(worker.threadId)
 
-      busyWorkers.delete(worker.threadId)
+        worker.postMessage(wsMessage.value)
 
-      ws.send(
-        jsonStringify({
-          id: wsMessage.id,
-          type,
-          value,
-        })
-      )
+        const { type, value } = await once<TWorkerMessage>(worker, 'message')
+
+        busyWorkers.delete(worker.threadId)
+
+        ws.send(
+          jsonStringify({ id, type, value })
+        )
+      } catch (err) {
+        ws.send(
+          jsonStringify({
+            id,
+            type: 'ERROR',
+            value: err.stack ?? err,
+          })
+        )
+      }
     })
   })
 

@@ -13,71 +13,80 @@ type TStartOptions = {
   require?: (string | [string, { [k: string]: any }])[],
 }
 
-const SOCKET_PATH = '/tmp/start.sock'
+try {
+  const SOCKET_PATH = '/tmp/start.sock'
 
-const endTimeMs = startTimeMs()
+  const endTimeMs = startTimeMs()
 
-const packageJsonPath = pathJoin(process.cwd(), 'package.json')
-const packageJsonData = await readFile(packageJsonPath, 'utf8')
-const packageJson = JSON.parse(packageJsonData) as TPackageJson & { start: TStartOptions }
-const tasksFilePath = pathResolve(packageJson.start.tasks)
-const tasksExported = await import(tasksFilePath)
-const taskNames = Object.keys(tasksExported)
+  const packageJsonPath = pathJoin(process.cwd(), 'package.json')
+  const packageJsonData = await readFile(packageJsonPath, 'utf8')
+  const packageJson = JSON.parse(packageJsonData) as TPackageJson & { start: TStartOptions }
+  const tasksFilePath = pathResolve(packageJson.start.tasks)
+  const tasksExported = await import(tasksFilePath)
+  const taskNames = Object.keys(tasksExported)
 
-const stopThreadPool = await startThreadPool({
-  threadCount: cpus().length,
-  socketPath: SOCKET_PATH,
-})
+  const stopThreadPool = await startThreadPool({
+    threadCount: cpus().length,
+    socketPath: SOCKET_PATH,
+  })
 
-const tookMs = endTimeMs()
+  const tookMs = endTimeMs()
 
-console.log('tasks:', taskNames)
-console.log('time:', `${tookMs}ms`)
+  console.log('tasks:', taskNames)
+  console.log('time:', `${tookMs}ms`)
 
-const autocomplete = taskNames.concat('/tasks', '/quit')
+  const autocomplete = taskNames.concat('/tasks', '/quit')
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  tabSize: 4,
-  prompt: '> ',
-  completer: (input: string) => [
-    autocomplete.filter((item) => item.startsWith(input)),
-    input,
-  ],
-})
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    tabSize: 4,
+    prompt: '> ',
+    completer: (input: string) => [
+      autocomplete.filter((item) => item.startsWith(input)),
+      input,
+    ],
+  })
 
-while (true) {
-  rl.prompt()
+  while (true) {
+    rl.prompt()
 
-  const input = await once<string>(rl, 'line')
+    const input = await once<string>(rl, 'line')
 
-  if (input === '/tasks') {
-    console.log('tasks:', taskNames)
+    if (input === '/tasks') {
+      console.log('tasks:', taskNames)
 
-    continue
+      continue
+    }
+
+    if (input === '/quit') {
+      rl.close()
+
+      await stopThreadPool()
+
+      console.log('bye')
+
+      break
+    }
+
+    if (!autocomplete.includes(input)) {
+      console.error(`unknown: ${input}`)
+
+      continue
+    }
+
+    const taskRunner = await tasksExported[input]()
+    const taskIterable = await taskRunner()
+
+    try {
+      for await (const i of taskIterable) {
+        console.log(i)
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
-
-  if (input === '/quit') {
-    rl.close()
-
-    await stopThreadPool()
-
-    console.log('bye')
-
-    break
-  }
-
-  if (!autocomplete.includes(input)) {
-    console.error(`unknown: ${input}`)
-
-    continue
-  }
-
-  const taskRunner = await tasksExported[input]()
-  const taskIterable = await taskRunner()
-
-  for await (const i of taskIterable) {
-    console.log(i)
-  }
+} catch (err) {
+  console.error(err)
+  process.exit(1)
 }

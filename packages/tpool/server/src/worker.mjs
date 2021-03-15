@@ -18,7 +18,7 @@ while (true) {
   } catch (err) {
     parentPort.postMessage({
       type: 'ERROR',
-      value: err instanceof Error ? err.message : err,
+      value: err.stack ?? err,
     })
   }
 }
