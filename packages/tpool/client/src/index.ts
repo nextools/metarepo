@@ -1,4 +1,8 @@
 import { randomBytes } from 'crypto'
+import { cpus } from 'os'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import getCallerFile from 'get-caller-file'
 import { mapAsync } from 'iterama'
 import { piAllAsync } from 'piall'
 import type { TJsonValue } from 'typeon'
@@ -7,41 +11,45 @@ import { once } from 'wans'
 import WS from 'ws'
 import type { TConnectToThreadPoolOptions, TMessage } from './types'
 
-export const mapThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn: (arg: T) => Promise<R>, options: TConnectToThreadPoolOptions) => async (it: AsyncIterable<T>): Promise<AsyncIterable<R>> => {
-  const client = new WS(`ws+unix://${options.socketPath}`)
+export const mapThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn: (arg: T) => Promise<R>, options: TConnectToThreadPoolOptions) => {
+  const callerDir = fileURLToPath(path.dirname(getCallerFile()))
 
-  await once(client, 'open')
+  return async (it: AsyncIterable<T>): Promise<AsyncIterable<R>> => {
+    const client = new WS(`ws+unix://${options.socketPath}`)
 
-  const fnString = mapFn.toString()
+    await once(client, 'open')
 
-  const mapped = mapAsync((arg: T) => (): Promise<R> => {
-    const id = randomBytes(16).toString('hex')
+    const fnString = mapFn.toString()
 
-    client.send(
-      jsonStringify({
-        id,
-        value: { arg, fnString },
-      })
-    )
+    const mapped = mapAsync((arg: T) => (): Promise<R> => {
+      const id = randomBytes(16).toString('hex')
 
-    return new Promise((resolve, reject) => {
-      const onMessage = (data: string) => {
-        const message = jsonParse<TMessage<R>>(data)
+      client.send(
+        jsonStringify({
+          id,
+          value: { arg, fnString, callerDir },
+        })
+      )
 
-        if (message.id === id || message.id === null) {
-          if (message.type === 'DONE') {
-            resolve(message.value)
-          } else if (message.type === 'ERROR') {
-            reject(message.value)
+      return new Promise((resolve, reject) => {
+        const onMessage = (data: string) => {
+          const message = jsonParse<TMessage<R>>(data)
+
+          if (message.id === id || message.id === null) {
+            if (message.type === 'DONE') {
+              resolve(message.value)
+            } else if (message.type === 'ERROR') {
+              reject(message.value)
+            }
+
+            client.removeListener('message', onMessage)
           }
-
-          client.removeListener('message', onMessage)
         }
-      }
 
-      client.on('message', onMessage)
-    })
-  })(it)
+        client.on('message', onMessage)
+      })
+    })(it)
 
-  return piAllAsync(mapped, 8)
+    return piAllAsync(mapped, cpus().length)
+  }
 }

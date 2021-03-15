@@ -25,6 +25,8 @@ try {
   const tasksExported = await import(tasksFilePath)
   const taskNames = Object.keys(tasksExported)
 
+  console.log('tasks:', taskNames)
+
   const stopThreadPool = await startThreadPool({
     threadCount: cpus().length,
     socketPath: SOCKET_PATH,
@@ -32,7 +34,6 @@ try {
 
   const tookMs = endTimeMs()
 
-  console.log('tasks:', taskNames)
   console.log('time:', `${tookMs}ms`)
 
   const autocomplete = taskNames.concat('/tasks', '/quit')
@@ -79,9 +80,18 @@ try {
     const taskIterable = await taskRunner()
 
     try {
-      for await (const i of taskIterable) {
-        console.log(i)
+      const endTimeMs = startTimeMs()
+      let i = 0
+
+      for await (const _ of taskIterable) {
+        i++
+        // console.log(i.path)
       }
+
+      const tookMs = endTimeMs()
+
+      console.log(`items: ${i}`)
+      console.log(`took: ${tookMs}ms`)
     } catch (err) {
       console.error(err)
     }
