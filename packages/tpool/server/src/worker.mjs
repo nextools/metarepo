@@ -5,22 +5,22 @@ import { transformAsync } from '@babel/core'
 import resolveFrom from 'resolve-from'
 import { once } from 'wans'
 
-const resolve = (specifier) => {
-  const dir = path.dirname(fileURLToPath(import.meta.url))
-
-  return resolveFrom(dir, specifier)
-}
-
 const cache = new Map()
+
+const resolve = (specifier) => {
+  const currentDir = path.dirname(fileURLToPath(import.meta.url))
+
+  return resolveFrom(currentDir, specifier)
+}
 
 while (true) {
   try {
     const { arg, fnString, callerDir } = await once(parentPort, 'message')
-    const key = `${callerDir}@${fnString}}`
+    const cacheKey = `${callerDir}@${fnString}}`
     let fn
 
-    if (cache.has(key)) {
-      fn = cache.get(key)
+    if (cache.has(cacheKey)) {
+      fn = cache.get(cacheKey)
     } else {
       const transformed = await transformAsync(fnString, {
         ast: false,
@@ -48,7 +48,7 @@ while (true) {
       // eslint-disable-next-line no-new-func
       fn = new Function(`return ${transformed.code}`)()
 
-      cache.set(key, fn)
+      cache.set(cacheKey, fn)
     }
 
     const result = await fn(arg)

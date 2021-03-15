@@ -16,11 +16,7 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
   const busyWorkers = new Set<number>()
   const workers = await Promise.all(
     Array.from({ length: options.threadCount }, async () => {
-      const worker = new Worker(workerPath, {
-        workerData: {
-          foo: true,
-        },
-      })
+      const worker = new Worker(workerPath)
 
       await once(worker, 'online')
 

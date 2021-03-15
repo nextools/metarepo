@@ -84,14 +84,17 @@ try {
       let i = 0
 
       for await (const _ of taskIterable) {
-        i++
+        process.stdout.clearLine(0)
+        process.stdout.cursorTo(0)
+        process.stdout.write(`items: ${++i}`)
         // console.log(i.path)
       }
 
+      process.stdout.write('\n')
+
       const tookMs = endTimeMs()
 
-      console.log(`items: ${i}`)
-      console.log(`took: ${tookMs}ms`)
+      console.log(`time: ${tookMs}ms`)
     } catch (err) {
       console.error(err)
     }
