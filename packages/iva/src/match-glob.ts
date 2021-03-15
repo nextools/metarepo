@@ -33,20 +33,22 @@ export const matchGlob = (glob: string, negatedGlobs: Iterable<string>, workingD
           return
         }
 
-        // the end result, no more tokens
-        if (tokenIndex === tokens.length - 1) {
-          try {
-            await access(nextDirPath)
+        try {
+          await access(nextDirPath)
 
-            return yield nextDirPath
-          } catch (e) {
-            // skip non-existing paths
-            if (e.code === 'ENOENT') {
-              return
-            }
+          // the end result, no more tokens
+          if (tokenIndex === tokens.length - 1) {
+            yield nextDirPath
 
-            throw e
+            return
           }
+        } catch (e) {
+          // skip non-existing paths
+          if (e.code === 'ENOENT') {
+            return
+          }
+
+          throw e
         }
 
         // otherwise go deeper

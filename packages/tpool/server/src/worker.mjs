@@ -4,11 +4,11 @@ import { sleep } from 'sleap'
 import { once } from 'wans'
 
 while (true) {
-  const { arg, fnString } = await once(parentPort, 'message')
-  // eslint-disable-next-line no-new-func
-  const fn = new Function(`return ${fnString}`)()
-
   try {
+    const { arg, fnString } = await once(parentPort, 'message')
+    // eslint-disable-next-line no-new-func
+    const fn = new Function(`return ${fnString}`)()
+
     await sleep(getRandomInt(100, 1000))
 
     parentPort.postMessage({

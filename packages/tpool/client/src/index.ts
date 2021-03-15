@@ -2,6 +2,7 @@ import { randomBytes } from 'crypto'
 import { mapAsync } from 'iterama'
 import { piAllAsync } from 'piall'
 import type { TJsonValue } from 'typeon'
+import { jsonParse, jsonStringify } from 'typeon'
 import { once } from 'wans'
 import WS from 'ws'
 import type { TConnectToThreadPoolOptions, TMessage } from './types'
@@ -17,15 +18,15 @@ export const mapThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn:
     const id = randomBytes(16).toString('hex')
 
     client.send(
-      JSON.stringify({
+      jsonStringify({
         id,
-        message: { arg, fnString },
+        value: { arg, fnString },
       })
     )
 
     return new Promise((resolve, reject) => {
       const onMessage = (data: string) => {
-        const message = JSON.parse(data) as TMessage<R>
+        const message = jsonParse<TMessage<R>>(data)
 
         if (message.id === id) {
           if (message.type === 'DONE') {

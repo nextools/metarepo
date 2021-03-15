@@ -1,15 +1,12 @@
 import http from 'http'
+import { promisify } from 'util'
 import { Worker } from 'worker_threads'
 import dleet from 'dleet'
-import { isDefined } from 'tsfn'
+import { jsonParse, jsonStringify } from 'typeon'
 import { once } from 'wans'
 import WS from 'ws'
 import { resolve } from './resolve'
-
-export type TStartThreadPoolOptions = {
-  threadCount: number,
-  socketPath: string,
-}
+import type { TStartThreadPoolOptions, TWorkerMessage, TWsMessage } from './types'
 
 export const startThreadPool = async (options: TStartThreadPoolOptions) => {
   const workerPath = await resolve('./worker.mjs')
@@ -48,40 +45,27 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
 
       busyWorkers.add(worker.threadId)
 
-      const { message, id } = JSON.parse(data)
+      const wsMessage = jsonParse<TWsMessage>(data)
 
-      worker.postMessage(message)
+      worker.postMessage(wsMessage.value)
 
-      const { type, value } = await once(worker, 'message')
+      const { type, value } = await once<TWorkerMessage>(worker, 'message')
 
       busyWorkers.delete(worker.threadId)
 
       ws.send(
-        JSON.stringify({ id, type, value })
+        jsonStringify({
+          id: wsMessage.id,
+          type,
+          value,
+        })
       )
     })
   })
 
   return async () => {
-    await new Promise<void>((resolve, reject) => {
-      wsServer.close((err) => {
-        if (isDefined(err)) {
-          reject(err)
-        } else {
-          resolve()
-        }
-      })
-    })
-
-    await new Promise<void>((resolve, reject) => {
-      httpServer.close((err) => {
-        if (isDefined(err)) {
-          reject(err)
-        } else {
-          resolve()
-        }
-      })
-    })
+    await promisify(wsServer.close).bind(wsServer)()
+    await promisify(httpServer.close).bind(httpServer)()
 
     await Promise.all(
       workers.map((worker) => worker.terminate())
