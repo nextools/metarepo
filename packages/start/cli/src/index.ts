@@ -14,8 +14,6 @@ type TStartOptions = {
 }
 
 try {
-  const SOCKET_PATH = '/tmp/start.sock'
-
   const endTimeMs = startTimeMs()
 
   const packageJsonPath = pathJoin(process.cwd(), 'package.json')
@@ -27,9 +25,13 @@ try {
 
   console.log('tasks:', taskNames)
 
-  const stopThreadPool = await startThreadPool({
-    threadCount: cpus().length,
-    socketPath: SOCKET_PATH,
+  const stopThreadPool1 = await startThreadPool({
+    threadCount: 4,
+    socketPath: '/tmp/start1.sock',
+  })
+  const stopThreadPool2 = await startThreadPool({
+    threadCount: 4,
+    socketPath: '/tmp/start2.sock',
   })
 
   const tookMs = endTimeMs()
@@ -63,7 +65,8 @@ try {
     if (input === '/quit') {
       rl.close()
 
-      await stopThreadPool()
+      await stopThreadPool1()
+      await stopThreadPool2()
 
       console.log('bye')
 

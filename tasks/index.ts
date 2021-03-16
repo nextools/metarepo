@@ -16,6 +16,11 @@ export const build = async () => {
 
   return pipeAsync(
     find(['packages/iterama/src/*.ts']),
-    pipeThreadPool(buildIt, { socketPath: '/tmp/start.sock' })
+    pipeThreadPool(buildIt, {
+      pools: [
+        'ws+unix:///tmp/start1.sock',
+        'ws+unix:///tmp/start2.sock',
+      ],
+    })
   )
 }

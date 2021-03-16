@@ -6,7 +6,7 @@ export type TStartThreadPoolOptions = {
 }
 
 export type TWsMessage = {
-  id: string,
+  uid: string,
   threadId: number,
   value: {
     arg: string,

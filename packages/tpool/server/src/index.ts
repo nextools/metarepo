@@ -54,8 +54,7 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
 
         ws.send(
           jsonStringify({
-            id: wsMessage.id,
-            threadId: worker.threadId,
+            uid: wsMessage.uid,
             type,
             value,
           })

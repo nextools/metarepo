@@ -14,21 +14,39 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
   const callerDir = fileURLToPath(path.dirname(getCallerFile()))
 
   return async (it: AsyncIterable<T>): Promise<AsyncIterable<R>> => {
-    const client = new WS(`ws+unix://${options.socketPath}`)
-    const { threadIds } = jsonParse<TMessageHandshake>(await once(client, 'message'))
+    const uids: string[] = []
+    const busyUids = new Set<string>()
+    const uidToClient = new Map<string, WS>()
+    const uidToThreadId = new Map<string, number>()
+
+    await Promise.all(
+      options.pools.map(async (poolAddress) => {
+        const client = new WS(poolAddress)
+        const message = await once<string>(client, 'message')
+        const handshake = jsonParse<TMessageHandshake>(message)
+
+        for (const threadId of handshake.threadIds) {
+          const uid = `${threadId}@${poolAddress}`
+
+          uids.push(uid)
+          uidToClient.set(uid, client)
+          uidToThreadId.set(uid, threadId)
+        }
+      })
+    )
+
     const fnString = mapFn.toString()
 
-    const busyWorkers = new Set<number>()
-
     const mapped = mapAsync((arg: T) => (): Promise<R> => {
-      const id = randomBytes(16).toString('hex')
-      const threadId = threadIds.find((id) => !busyWorkers.has(id))!
+      const uid = uids.find((uid) => !busyUids.has(uid))!
+      const client = uidToClient.get(uid)!
+      const threadId = uidToThreadId.get(uid)!
 
-      busyWorkers.add(threadId)
+      busyUids.add(uid)
 
       client.send(
         jsonStringify({
-          id,
+          uid,
           threadId,
           value: {
             arg,
@@ -42,7 +60,7 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
         const onMessage = (data: string) => {
           const message = jsonParse<TMessage<R>>(data)
 
-          if (message.id === id) {
+          if (message.uid === uid) {
             if (message.type === 'DONE') {
               resolve(message.value)
             } else if (message.type === 'ERROR') {
@@ -51,8 +69,8 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
 
             client.removeListener('message', onMessage)
 
-            busyWorkers.delete(message.threadId)
-          } else if (message.id === null) {
+            busyUids.delete(uid)
+          } else if (uid === null) {
             reject(message.value)
           }
         }
@@ -61,6 +79,6 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
       })
     })(it)
 
-    return piAllAsync(mapped, threadIds.length)
+    return piAllAsync(mapped, uids.length)
   }
 }
