@@ -51,11 +51,17 @@ while (true) {
       cache.set(cacheKey, fn)
     }
 
-    const result = await fn(arg)
+    const it = await fn({
+      async *[Symbol.asyncIterator]() {
+        yield arg
+      },
+    })
+    const iterator = it[Symbol.asyncIterator]()
+    const result = await iterator.next()
 
     parentPort.postMessage({
       type: 'DONE',
-      value: result,
+      value: result.value,
     })
   } catch (err) {
     parentPort.postMessage({

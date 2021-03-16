@@ -1,4 +1,4 @@
-const buildFile = async (filePath: string) => {
+const buildIt = async (it: AsyncIterable<string>) => {
   const { pipeAsync } = await import('funcom')
   const { read } = await import('./read')
   const { write } = await import('./write')
@@ -6,16 +6,16 @@ const buildFile = async (filePath: string) => {
   return pipeAsync(
     read,
     write
-  )(filePath)
+  )(it)
 }
 
 export const build = async () => {
   const { pipeAsync } = await import('funcom')
-  const { mapThreadPool } = await import('@tpool/client')
+  const { pipeThreadPool } = await import('@tpool/client')
   const { find } = await import('./find')
 
   return pipeAsync(
     find(['packages/iterama/src/*.ts']),
-    mapThreadPool(buildFile, { socketPath: '/tmp/start.sock' })
+    pipeThreadPool(buildIt, { socketPath: '/tmp/start.sock' })
   )
 }

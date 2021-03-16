@@ -44,7 +44,10 @@ module.exports = {
     'no-redeclare': 0,
     '@typescript-eslint/no-redeclare': 2,
     'no-unused-vars': 0,
-    '@typescript-eslint/no-unused-vars': 2,
+    '@typescript-eslint/no-unused-vars': [2, {
+      argsIgnorePattern: '^_',
+      varsIgnorePattern: '^_',
+    }],
     'no-use-before-define': 0,
     '@typescript-eslint/no-use-before-define': 2,
     semi: 'off',

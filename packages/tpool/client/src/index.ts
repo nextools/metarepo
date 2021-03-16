@@ -11,7 +11,7 @@ import { once } from 'wans'
 import WS from 'ws'
 import type { TConnectToThreadPoolOptions, TMessage } from './types'
 
-export const mapThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn: (arg: T) => Promise<R>, options: TConnectToThreadPoolOptions) => {
+export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn: (arg: AsyncIterable<T>) => Promise<AsyncIterable<R>>, options: TConnectToThreadPoolOptions) => {
   const callerDir = fileURLToPath(path.dirname(getCallerFile()))
 
   return async (it: AsyncIterable<T>): Promise<AsyncIterable<R>> => {

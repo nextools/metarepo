@@ -74,7 +74,10 @@ module.exports = {
     'no-self-compare': 2,
     'no-sequences': 2,
     'no-unmodified-loop-condition': 2,
-    'no-unused-vars': 2,
+    'no-unused-vars': [2, {
+      argsIgnorePattern: '^_',
+      varsIgnorePattern: '^_',
+    }],
     'no-useless-call': 2,
     'no-useless-catch': 2,
     'no-useless-concat': 2,
