@@ -7,9 +7,11 @@ export type TStartThreadPoolOptions = {
 
 export type TWsMessage = {
   id: string,
+  threadId: number,
   value: {
     arg: string,
     fnString: string,
+    callerDir: string,
   },
 }
 
