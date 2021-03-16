@@ -43,8 +43,12 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
     )
 
     ws.on('message', async (data: string) => {
+      let uid: string
+
       try {
         const wsMessage = jsonParse<TWsMessage>(data)
+
+        uid = wsMessage.uid
 
         const worker = workers.find((worker) => worker.threadId === wsMessage.threadId)!
 
@@ -53,16 +57,13 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
         const { type, value } = await once<TWorkerMessage>(worker, 'message')
 
         ws.send(
-          jsonStringify({
-            uid: wsMessage.uid,
-            type,
-            value,
-          })
+          jsonStringify({ uid, type, value })
         )
       } catch (err) {
         ws.send(
           jsonStringify({
-            id: null,
+            // TODO: handle error properly
+            uid: uid!,
             type: 'ERROR',
             value: err.stack ?? err,
           })

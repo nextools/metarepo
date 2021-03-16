@@ -1,4 +1,3 @@
-import { randomBytes } from 'crypto'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import getCallerFile from 'get-caller-file'
@@ -70,8 +69,6 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
             client.removeListener('message', onMessage)
 
             busyUids.delete(uid)
-          } else if (uid === null) {
-            reject(message.value)
           }
         }
 
