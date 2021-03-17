@@ -23,18 +23,26 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
 
   console.log('threads:', options.threadCount)
 
-  if (typeof options.address === 'string' && options.address.startsWith('/')) {
-    await dleet(options.address)
-  }
-
+  const url = new URL(options.url)
   const httpServer = http.createServer()
   const wsServer = new WS.Server({ server: httpServer })
 
-  httpServer.listen(options.address)
+  if (url.protocol === 'ws+unix:') {
+    await dleet(url.pathname)
+
+    httpServer.listen(url.pathname)
+  } else if (url.protocol === 'ws:') {
+    httpServer.listen({
+      hostname: url.hostname,
+      port: Number(url.port),
+    })
+  } else {
+    throw new Error('Only "ws:" and "ws+unix:" protocols are supported')
+  }
 
   await once(wsServer, 'listening')
 
-  console.log('server:', options.address)
+  console.log('server:', options.url)
 
   wsServer.on('connection', (client) => {
     client.send(
