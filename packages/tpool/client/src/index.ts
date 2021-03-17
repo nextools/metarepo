@@ -7,22 +7,27 @@ import type { TJsonValue } from 'typeon'
 import { jsonParse, jsonStringify } from 'typeon'
 import { once } from 'wans'
 import WS from 'ws'
-import type { TPipeThreadPoolOptions, TMessage, TMessageHandshake } from './types'
+import { finallyAsync } from './finally-async'
+import type { TPipeThreadPoolOptions, TMessage, TMessageHandshake, TPromiseExecutor } from './types'
 
 export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn: (arg: AsyncIterable<T>) => Promise<AsyncIterable<R>>, options: TPipeThreadPoolOptions) => {
   const callerDir = fileURLToPath(path.dirname(getCallerFile()))
 
   return async (it: AsyncIterable<T>): Promise<AsyncIterable<R>> => {
+    const clients = new Set<WS>()
     const uids: string[] = []
     const busyUids = new Set<string>()
     const uidToClient = new Map<string, WS>()
     const uidToThreadId = new Map<string, number>()
+    const uidToPromiseExecutor = new Map<string, TPromiseExecutor<R>>()
 
     await Promise.all(
       options.pools.map(async (poolAddress) => {
         const client = new WS(poolAddress)
         const message = await once<string>(client, 'message')
         const handshake = jsonParse<TMessageHandshake>(message)
+
+        clients.add(client)
 
         for (const threadId of handshake.threadIds) {
           const uid = `${threadId}@${poolAddress}`
@@ -33,6 +38,22 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
         }
       })
     )
+
+    for (const client of clients) {
+      client.on('message', (data: string) => {
+        const message = jsonParse<TMessage<R>>(data)
+        const promiseExecutor = uidToPromiseExecutor.get(message.uid)!
+
+        if (message.type === 'DONE') {
+          promiseExecutor.resolve(message.value)
+        } else if (message.type === 'ERROR') {
+          promiseExecutor.reject(message.value)
+        }
+
+        uidToPromiseExecutor.delete(message.uid)
+        busyUids.delete(message.uid)
+      })
+    }
 
     const fnString = mapFn.toString()
 
@@ -56,26 +77,17 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
       )
 
       return new Promise((resolve, reject) => {
-        const onMessage = (data: string) => {
-          const message = jsonParse<TMessage<R>>(data)
-
-          if (message.uid === uid) {
-            if (message.type === 'DONE') {
-              resolve(message.value)
-            } else if (message.type === 'ERROR') {
-              reject(message.value)
-            }
-
-            client.removeListener('message', onMessage)
-
-            busyUids.delete(uid)
-          }
-        }
-
-        client.on('message', onMessage)
+        uidToPromiseExecutor.set(uid, { resolve, reject })
       })
     })(it)
 
-    return piAllAsync(mapped, uids.length)
+    return finallyAsync(
+      piAllAsync(mapped, uids.length),
+      () => {
+        for (const client of clients) {
+          client.close()
+        }
+      }
+    )
   }
 }

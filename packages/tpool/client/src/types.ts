@@ -19,3 +19,8 @@ export type TMessage<T> = TMessageDone<T> | TMessageError
 export type TPipeThreadPoolOptions = {
   pools: string[],
 }
+
+export type TPromiseExecutor<T> = {
+  resolve: (arg: T) => void,
+  reject: (reason?: any) => void,
+}

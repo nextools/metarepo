@@ -53,7 +53,7 @@ export const transformSource = async (source, context, defaultTransformSource) =
     const transformed = transform(source, {
       ast: false,
       babelrc: false,
-      compact: true,
+      compact: false,
       inputSourceMap: false,
       // sourceMaps: 'inline',
       presets: [
