@@ -1,17 +1,10 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
 import { parentPort } from 'worker_threads'
 import { transformAsync } from '@babel/core'
-import resolveFrom from 'resolve-from'
+import babelPresetEnv from '@babel/preset-env'
 import { once } from 'wans'
+import babelPluginImports from './babel-plugin.mjs'
 
 const cache = new Map()
-
-const resolve = (specifier) => {
-  const currentDir = path.dirname(fileURLToPath(import.meta.url))
-
-  return resolveFrom(currentDir, specifier)
-}
 
 while (true) {
   try {
@@ -29,7 +22,7 @@ while (true) {
         inputSourceMap: false,
         presets: [
           [
-            resolve('@babel/preset-env'),
+            babelPresetEnv,
             {
               targets: { node: 'current' },
               ignoreBrowserslistConfig: true,
@@ -39,7 +32,7 @@ while (true) {
         ],
         plugins: [
           [
-            resolve('./babel-plugin.mjs'),
+            babelPluginImports,
             { callerDir },
           ],
         ],

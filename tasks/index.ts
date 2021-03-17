@@ -19,7 +19,7 @@ export const build = async () => {
     pipeThreadPool(buildIt, {
       pools: [
         'ws+unix:///tmp/start1.sock',
-        'ws+unix:///tmp/start2.sock',
+        'ws://localhost:8000',
       ],
     })
   )

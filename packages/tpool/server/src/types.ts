@@ -2,7 +2,10 @@ import type { TJsonValue } from 'typeon'
 
 export type TStartThreadPoolOptions = {
   threadCount: number,
-  socketPath: string,
+  address: string | {
+    port: number,
+    hostname: string,
+  },
 }
 
 export type TWsMessage = {

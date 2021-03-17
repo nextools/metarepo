@@ -11,9 +11,6 @@ import type { TStartThreadPoolOptions, TWorkerMessage, TWsMessage } from './type
 export const startThreadPool = async (options: TStartThreadPoolOptions) => {
   const workerPath = await resolve('./worker.mjs')
 
-  await dleet(options.socketPath)
-
-  // const busyWorkers = new Set<number>()
   const workers = await Promise.all(
     Array.from({ length: options.threadCount }, async () => {
       const worker = new Worker(workerPath)
@@ -26,23 +23,27 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
 
   console.log('threads:', options.threadCount)
 
+  if (typeof options.address === 'string' && options.address.startsWith('/')) {
+    await dleet(options.address)
+  }
+
   const httpServer = http.createServer()
   const wsServer = new WS.Server({ server: httpServer })
 
-  httpServer.listen(options.socketPath)
+  httpServer.listen(options.address)
 
   await once(wsServer, 'listening')
 
-  console.log('server:', options.socketPath)
+  console.log('server:', options.address)
 
-  wsServer.on('connection', (ws) => {
-    ws.send(
+  wsServer.on('connection', (client) => {
+    client.send(
       jsonStringify({
         threadIds: workers.map((worker) => worker.threadId),
       })
     )
 
-    ws.on('message', async (data: string) => {
+    client.on('message', async (data: string) => {
       let uid: string
 
       try {
@@ -56,11 +57,11 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
 
         const { type, value } = await once<TWorkerMessage>(worker, 'message')
 
-        ws.send(
+        client.send(
           jsonStringify({ uid, type, value })
         )
       } catch (err) {
-        ws.send(
+        client.send(
           jsonStringify({
             // TODO: handle error properly
             uid: uid!,

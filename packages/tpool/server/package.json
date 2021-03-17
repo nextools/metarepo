@@ -15,7 +15,6 @@
   },
   "sideEffects": false,
   "devDependencies": {
-    "@types/resolve-from": "^5.0.1",
     "@types/ws": "^5.1.0"
   },
   "dependencies": {

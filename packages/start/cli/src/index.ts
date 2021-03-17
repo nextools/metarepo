@@ -27,11 +27,14 @@ try {
 
   const stopThreadPool1 = await startThreadPool({
     threadCount: 4,
-    socketPath: '/tmp/start1.sock',
+    address: '/tmp/start1.sock',
   })
   const stopThreadPool2 = await startThreadPool({
     threadCount: 4,
-    socketPath: '/tmp/start2.sock',
+    address: {
+      hostname: 'localhost',
+      port: 8000,
+    },
   })
 
   const tookMs = endTimeMs()
