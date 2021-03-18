@@ -28,17 +28,17 @@ try {
   console.log('tasks:', taskNames)
 
   const stopThreadPool1 = await startThreadPool({
-    threadCount: 4,
+    threadCount: 8,
     url: 'ws+unix:///tmp/start1.sock',
   })
-  const stopThreadPool2 = await startThreadPool({
-    threadCount: 4,
-    url: 'ws://localhost:8000',
-    // tls: {
-    //   cert: await readFile(process.env.START_WSS_POOL_CERT!),
-    //   key: await readFile(process.env.START_WSS_POOL_KEY!),
-    // },
-  })
+  // const stopThreadPool2 = await startThreadPool({
+  //   threadCount: 4,
+  //   url: 'ws://localhost:8000',
+  //   // tls: {
+  //   //   cert: await readFile(process.env.START_WSS_POOL_CERT!),
+  //   //   key: await readFile(process.env.START_WSS_POOL_KEY!),
+  //   // },
+  // })
 
   const tookMs = endTimeMs()
 
@@ -72,7 +72,7 @@ try {
       rl.close()
 
       await stopThreadPool1()
-      await stopThreadPool2()
+      // await stopThreadPool2()
 
       console.log('bye')
 
