@@ -1,8 +1,8 @@
 import { readFile } from 'fs/promises'
-import { cpus } from 'os'
 import { join as pathJoin, resolve as pathResolve } from 'path'
 import readline from 'readline'
 import { startThreadPool } from '@tpool/server'
+import dotenv from 'dotenv'
 import type { TPackageJson } from 'pkgu'
 import { startTimeMs } from 'takes'
 import { once } from 'wans'
@@ -15,6 +15,8 @@ type TStartOptions = {
 
 try {
   const endTimeMs = startTimeMs()
+
+  dotenv.config()
 
   const packageJsonPath = pathJoin(process.cwd(), 'package.json')
   const packageJsonData = await readFile(packageJsonPath, 'utf8')
@@ -32,6 +34,10 @@ try {
   const stopThreadPool2 = await startThreadPool({
     threadCount: 4,
     url: 'ws://localhost:8000',
+    // tls: {
+    //   cert: await readFile(process.env.START_WSS_POOL_CERT!),
+    //   key: await readFile(process.env.START_WSS_POOL_KEY!),
+    // },
   })
 
   const tookMs = endTimeMs()

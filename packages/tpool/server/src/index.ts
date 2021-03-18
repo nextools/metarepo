@@ -1,4 +1,5 @@
 import http from 'http'
+import https from 'https'
 import { promisify } from 'util'
 import { Worker } from 'worker_threads'
 import dleet from 'dleet'
@@ -24,20 +25,31 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
   console.log('threads:', options.threadCount)
 
   const url = new URL(options.url)
-  const httpServer = http.createServer()
+  const httpServer = url.protocol === 'wss:' ?
+    https.createServer(options.tls ?? {}) :
+    http.createServer()
   const wsServer = new WS.Server({ server: httpServer })
 
-  if (url.protocol === 'ws+unix:') {
-    await dleet(url.pathname)
+  switch (url.protocol) {
+    case 'ws+unix:': {
+      await dleet(url.pathname)
 
-    httpServer.listen(url.pathname)
-  } else if (url.protocol === 'ws:') {
-    httpServer.listen({
-      hostname: url.hostname,
-      port: Number(url.port),
-    })
-  } else {
-    throw new Error('Only "ws:" and "ws+unix:" protocols are supported')
+      httpServer.listen(url.pathname)
+
+      break
+    }
+    case 'ws:':
+    case 'wss:': {
+      httpServer.listen({
+        hostname: url.hostname,
+        port: Number(url.port),
+      })
+
+      break
+    }
+    default: {
+      throw new Error('Supported protocols: ws+unix:, ws:, wss:')
+    }
   }
 
   await once(wsServer, 'listening')

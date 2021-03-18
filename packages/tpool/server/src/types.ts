@@ -1,8 +1,10 @@
+import type { TlsOptions } from 'tls'
 import type { TJsonValue } from 'typeon'
 
 export type TStartThreadPoolOptions = {
   threadCount: number,
   url: string,
+  tls?: TlsOptions,
 }
 
 export type TWsMessage = {
