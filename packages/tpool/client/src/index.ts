@@ -5,22 +5,24 @@ import { pipe } from 'funcom'
 import getCallerFile from 'get-caller-file'
 import { mapAsync } from 'iterama'
 import { piAllAsync } from 'piall'
-import type { TJsonValue } from 'typeon'
 import { jsonParse, jsonStringify } from 'typeon'
+import type { TJsonValue } from 'typeon'
 import { once } from 'wans'
 import WS from 'ws'
 import { finallyAsync } from './finally-async'
 import { groupByAsync } from './group-by-async'
+import { startWithTypeAsync } from './start-with-type-async'
 import type { TPipeThreadPoolOptions, TPromiseExecutor } from './types'
 import { ungroupAsync } from './ungroup-async'
 
-const startWithType = <T>() => (it: AsyncIterable<T>): AsyncIterable<T> => it
+const DEFAULT_GROUP_BY = 1
+const DEFAULT_GROUP_TYPE = 'serial'
 
 export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn: (arg: AsyncIterable<T>) => Promise<AsyncIterable<R>>, options: TPipeThreadPoolOptions) => {
   const callerDir = fileURLToPath(path.dirname(getCallerFile()))
   const fnString = mapFn.toString()
-  const groupBy = options.groupBy ?? 1
-  const groupType = options.groupType ?? 'serial'
+  const groupBy = options.groupBy ?? DEFAULT_GROUP_BY
+  const groupType = options.groupType ?? DEFAULT_GROUP_TYPE
 
   return async (it: AsyncIterable<T>): Promise<AsyncIterable<R>> => {
     const clients = new Set<WS>()
@@ -97,8 +99,8 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
     }
 
     return pipe(
-      startWithType<T>(),
-      groupByAsync(options.groupBy ?? 1),
+      startWithTypeAsync<T>(),
+      groupByAsync(groupBy),
       mapAsync(mapper),
       piAllAsync(uids.length),
       ungroupAsync,

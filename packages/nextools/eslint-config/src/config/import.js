@@ -15,10 +15,11 @@ module.exports = {
       '.jsx',
     ],
     'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+      },
       node: {
         extensions: [
-          '.ts',
-          '.tsx',
           '.js',
           '.jsx',
         ],
@@ -26,14 +27,14 @@ module.exports = {
     },
   },
   rules: {
-    'import/no-unresolved': [2, { ignore: ['\\/types$'] }],
+    'import/no-unresolved': 2,
     'import/no-absolute-path': 2,
     'import/no-useless-path-segments': 2,
     'import/export': 2,
     'import/no-extraneous-dependencies': 2,
     'import/first': 2,
     'import/no-duplicates': 2,
-    'import/extensions': [2, 'never', { json: 'always' }],
+    // 'import/extensions': [2, 'never', { json: 'always' }],
     'import/order': [2, {
       alphabetize: {
         order: 'asc',

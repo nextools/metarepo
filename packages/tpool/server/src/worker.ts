@@ -1,17 +1,20 @@
 import { parentPort } from 'worker_threads'
 import { transformAsync } from '@babel/core'
+// @ts-ignore
 import babelPresetEnv from '@babel/preset-env'
 import { toArrayAsync } from 'iterama'
+import type { TJsonValue } from 'typeon'
 import { once } from 'wans'
+// @ts-ignore
 import babelPluginImports from './babel-plugin.mjs'
 
 const cache = new Map()
 
 while (true) {
   try {
-    const { arg, fnString, callerDir, groupBy, groupType } = await once(parentPort, 'message')
+    const { arg, fnString, callerDir, groupBy, groupType } = await once(parentPort!, 'message')
     const cacheKey = `${callerDir}@${fnString}}`
-    let fn
+    let fn: <T>(arg: AsyncIterable<T>) => Promise<AsyncIterable<T>>
 
     if (cache.has(cacheKey)) {
       fn = cache.get(cacheKey)
@@ -20,6 +23,8 @@ while (true) {
         ast: false,
         babelrc: false,
         compact: true,
+        // Error: .inputSourceMap must be a boolean, object, or undefined
+        // @ts-ignore
         inputSourceMap: false,
         presets: [
           [
@@ -39,6 +44,10 @@ while (true) {
         ],
       })
 
+      if (transformed === null) {
+        throw new Error('Transpiled code is empty')
+      }
+
       // eslint-disable-next-line no-new-func
       fn = new Function(`return ${transformed.code}`)()
 
@@ -47,7 +56,7 @@ while (true) {
 
     let value
 
-    const getValue = async (i) => {
+    const getValue = async (i: TJsonValue) => {
       const it = await fn({
         async *[Symbol.asyncIterator]() {
           yield i
@@ -71,15 +80,15 @@ while (true) {
         ),
       ]
     } else {
-      throw new Error(`Invalid pool options: ${poolOptions}`)
+      throw new Error('Invalid pool options')
     }
 
-    parentPort.postMessage({
+    parentPort!.postMessage({
       type: 'DONE',
       value,
     })
   } catch (err) {
-    parentPort.postMessage({
+    parentPort!.postMessage({
       type: 'ERROR',
       value: err.stack ?? err,
     })

@@ -2,8 +2,9 @@ import http from 'http'
 import https from 'https'
 import { promisify } from 'util'
 import { Worker } from 'worker_threads'
-import type { TClientHandshake, TClientMessage, TServerHandshake, TServerMessage, TServerMessageError } from '@tpool/types'
+import type { TServerMessage, TClientHandshake, TClientMessage, TServerHandshake, TServerMessageError } from '@tpool/types'
 import dleet from 'dleet'
+import type { TJsonValue } from 'typeon'
 import { jsonParse, jsonStringify } from 'typeon'
 import { once } from 'wans'
 import WS from 'ws'
@@ -11,7 +12,7 @@ import { resolve } from './resolve'
 import type { TStartThreadPoolOptions, TWorkerMessage } from './types'
 
 export const startThreadPool = async (options: TStartThreadPoolOptions) => {
-  const workerPath = await resolve('./worker.mjs')
+  const workerPath = await resolve('./worker-wrapper.mjs')
 
   const workers = await Promise.all(
     Array.from({ length: options.threadCount }, async () => {
@@ -29,7 +30,10 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
   const httpServer = url.protocol === 'wss:' ?
     https.createServer(options.tls ?? {}) :
     http.createServer()
-  const wsServer = new WS.Server({ server: httpServer })
+  const wsServer = new WS.Server({
+    server: httpServer,
+    // perMessageDeflate: true,
+  })
 
   switch (url.protocol) {
     case 'ws+unix:': {
@@ -88,7 +92,7 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
         const { type, value } = await once<TWorkerMessage>(worker, 'message')
 
         client.send(
-          jsonStringify<TServerMessage>({
+          jsonStringify<TServerMessage<TJsonValue>>({
             uid,
             type,
             value,

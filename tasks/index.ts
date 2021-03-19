@@ -24,13 +24,13 @@ export const build = async () => {
     find(['packages/iterama/build']),
     remove,
     find(['packages/iterama/src/*.ts']),
-    // buildIt
+    // buildIt,
     pipeThreadPool(buildIt, {
       groupBy: 8,
-      groupType: 'concurrent',
+      groupType: 'serial',
       pools: [
         'ws+unix:///tmp/start1.sock',
-        // 'ws://localhost:8000',
+        'ws://localhost:8000',
       ],
     })
   )

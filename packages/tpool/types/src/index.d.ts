@@ -17,10 +17,10 @@ export declare type TClientMessage = {
   arg: TJsonValue[],
 }
 
-export type TServerMessageDone = {
+export type TServerMessageDone<T> = {
   type: 'DONE',
   uid: string,
-  value: TJsonValue,
+  value: T,
 }
 
 export type TServerMessageError = {
@@ -29,4 +29,4 @@ export type TServerMessageError = {
   value: TJsonValue,
 }
 
-export type TServerMessage = TServerMessageDone | TServerMessageError
+export type TServerMessage<T> = TServerMessageDone<T> | TServerMessageError
