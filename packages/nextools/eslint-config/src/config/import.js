@@ -26,7 +26,7 @@ module.exports = {
     },
   },
   rules: {
-    'import/no-unresolved': 2,
+    'import/no-unresolved': [2, { ignore: ['\\/types$'] }],
     'import/no-absolute-path': 2,
     'import/no-useless-path-segments': 2,
     'import/export': 2,

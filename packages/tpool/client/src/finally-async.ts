@@ -1,4 +1,4 @@
-export const finallyAsync = <T>(iterable: AsyncIterable<T>, onFinally: () => void): AsyncIterable<T> =>
+export const finallyAsync = (onFinally: () => void) => <T>(iterable: AsyncIterable<T>): AsyncIterable<T> =>
   ({
     async *[Symbol.asyncIterator]() {
       try {

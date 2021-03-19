@@ -14,34 +14,6 @@ const buildIt = async (iterable: AsyncIterable<string>) => {
   )(iterable)
 }
 
-const groupByAsync = (num: number) => <T>(it: AsyncIterable<T>): AsyncIterable<T[]> => ({
-  async *[Symbol.asyncIterator]() {
-    const iterator = it[Symbol.asyncIterator]()
-    let isDone = false
-    let buf: T[] = []
-
-    while (!isDone) {
-      for (let i = 0; i < num; i++) {
-        const result = await iterator.next()
-
-        isDone = result.done === true
-
-        if (isDone) {
-          break
-        }
-
-        buf.push(result.value)
-      }
-
-      if (buf.length > 0) {
-        yield buf
-
-        buf = []
-      }
-    }
-  },
-})
-
 export const build = async () => {
   const { pipeAsync } = await import('funcom')
   const { pipeThreadPool } = await import('@tpool/client')
@@ -54,6 +26,8 @@ export const build = async () => {
     find(['packages/iterama/src/*.ts']),
     // buildIt
     pipeThreadPool(buildIt, {
+      groupBy: 8,
+      groupType: 'concurrent',
       pools: [
         'ws+unix:///tmp/start1.sock',
         // 'ws://localhost:8000',

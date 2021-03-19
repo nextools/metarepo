@@ -7,16 +7,6 @@ export type TStartThreadPoolOptions = {
   tls?: TlsOptions,
 }
 
-export type TWsMessage = {
-  uid: string,
-  threadId: number,
-  value: {
-    arg: string,
-    fnString: string,
-    callerDir: string,
-  },
-}
-
 export type TWorkerMessageDone = {
   type: 'DONE',
   value: TJsonValue,

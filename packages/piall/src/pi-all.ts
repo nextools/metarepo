@@ -1,6 +1,6 @@
 import type { TMaybePromise } from './types'
 
-export const piAll = <T>(iterable: Iterable<() => TMaybePromise<T>>, concurrency: number = Infinity): AsyncIterable<T> => {
+export const piAll = (concurrency: number = Infinity) => <T>(iterable: Iterable<() => TMaybePromise<T>>): AsyncIterable<T> => {
   if ((!Number.isSafeInteger(concurrency) && concurrency !== Infinity) || concurrency < 1) {
     throw new TypeError('`concurrency` argument must be a number >= 1')
   }

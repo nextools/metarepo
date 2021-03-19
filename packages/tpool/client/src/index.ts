@@ -1,5 +1,7 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
+import type { TClientHandshake, TClientMessage, TServerHandshake, TServerMessage } from '@tpool/types'
+import { pipe } from 'funcom'
 import getCallerFile from 'get-caller-file'
 import { mapAsync } from 'iterama'
 import { piAllAsync } from 'piall'
@@ -8,10 +10,17 @@ import { jsonParse, jsonStringify } from 'typeon'
 import { once } from 'wans'
 import WS from 'ws'
 import { finallyAsync } from './finally-async'
-import type { TPipeThreadPoolOptions, TMessage, TMessageHandshake, TPromiseExecutor } from './types'
+import { groupByAsync } from './group-by-async'
+import type { TPipeThreadPoolOptions, TPromiseExecutor } from './types'
+import { ungroupAsync } from './ungroup-async'
+
+const startWithType = <T>() => (it: AsyncIterable<T>): AsyncIterable<T> => it
 
 export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn: (arg: AsyncIterable<T>) => Promise<AsyncIterable<R>>, options: TPipeThreadPoolOptions) => {
   const callerDir = fileURLToPath(path.dirname(getCallerFile()))
+  const fnString = mapFn.toString()
+  const groupBy = options.groupBy ?? 1
+  const groupType = options.groupType ?? 'serial'
 
   return async (it: AsyncIterable<T>): Promise<AsyncIterable<R>> => {
     const clients = new Set<WS>()
@@ -19,15 +28,27 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
     const busyUids = new Set<string>()
     const uidToClient = new Map<string, WS>()
     const uidToThreadId = new Map<string, number>()
-    const uidToPromiseExecutor = new Map<string, TPromiseExecutor<R>>()
+    const uidToPromiseExecutor = new Map<string, TPromiseExecutor<R[]>>()
 
     await Promise.all(
       options.pools.map(async (poolAddress) => {
         const client = new WS(poolAddress)
-        const message = await once<string>(client, 'message')
-        const handshake = jsonParse<TMessageHandshake>(message)
 
         clients.add(client)
+
+        await once(client, 'open')
+
+        client.send(
+          jsonStringify<TClientHandshake>({
+            fnString,
+            callerDir,
+            groupBy,
+            groupType,
+          })
+        )
+
+        const message = await once<string>(client, 'message')
+        const handshake = jsonParse<TServerHandshake>(message)
 
         for (const threadId of handshake.threadIds) {
           const uid = `${threadId}@${poolAddress}`
@@ -41,7 +62,7 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
 
     for (const client of clients) {
       client.on('message', (data: string) => {
-        const message = jsonParse<TMessage<R>>(data)
+        const message = jsonParse<TServerMessage<R[]>>(data)
         const promiseExecutor = uidToPromiseExecutor.get(message.uid)!
 
         if (message.type === 'DONE') {
@@ -55,9 +76,7 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
       })
     }
 
-    const fnString = mapFn.toString()
-
-    const mapped = mapAsync((arg: T) => (): Promise<R> => {
+    const mapper = (arg: T[]) => (): Promise<R[]> => {
       const uid = uids.find((uid) => !busyUids.has(uid))!
       const client = uidToClient.get(uid)!
       const threadId = uidToThreadId.get(uid)!
@@ -65,29 +84,29 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
       busyUids.add(uid)
 
       client.send(
-        jsonStringify({
+        jsonStringify<TClientMessage>({
           uid,
           threadId,
-          value: {
-            arg,
-            fnString,
-            callerDir,
-          },
+          arg,
         })
       )
 
       return new Promise((resolve, reject) => {
         uidToPromiseExecutor.set(uid, { resolve, reject })
       })
-    })(it)
+    }
 
-    return finallyAsync(
-      piAllAsync(mapped, uids.length),
-      () => {
+    return pipe(
+      startWithType<T>(),
+      groupByAsync(options.groupBy ?? 1),
+      mapAsync(mapper),
+      piAllAsync(uids.length),
+      ungroupAsync,
+      finallyAsync(() => {
         for (const client of clients) {
           client.close()
         }
-      }
-    )
+      })
+    )(it)
   }
 }

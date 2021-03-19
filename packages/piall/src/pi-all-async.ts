@@ -1,6 +1,6 @@
 import type { TMaybePromise } from './types'
 
-export const piAllAsync = <T>(iterable: AsyncIterable<() => TMaybePromise<T>>, concurrency: number = Infinity): AsyncIterable<T> => {
+export const piAllAsync = (concurrency: number = Infinity) => <T>(iterable: AsyncIterable<() => TMaybePromise<T>>): AsyncIterable<T> => {
   if ((!Number.isSafeInteger(concurrency) && concurrency !== Infinity) || concurrency < 1) {
     throw new TypeError('`concurrency` argument must be a number >= 1')
   }
@@ -114,12 +114,11 @@ export const piAllAsync = <T>(iterable: AsyncIterable<() => TMaybePromise<T>>, c
           // if there is a result already – return it directly
           if (results.length > 0) {
             // give the result
-            resolve(results.shift() as T)
+            resolve(results.shift()!)
 
             return
           }
 
-          // console.log('RESOLVER')
           // no result at the moment – store resolver and rejecter
           resolveYieldPromise = resolve
           rejectYieldPromise = reject
@@ -127,7 +126,7 @@ export const piAllAsync = <T>(iterable: AsyncIterable<() => TMaybePromise<T>>, c
 
         // call next() once again because it has stuck to concurrency limit since the last yield
         if (isNextStuck) {
-          void next()
+          nextPromise = next()
         }
 
         // reject
@@ -136,34 +135,5 @@ export const piAllAsync = <T>(iterable: AsyncIterable<() => TMaybePromise<T>>, c
         }
       }
     },
-  }
-}
-
-export const main = async () => {
-  const sec = (i: number) => () => new Promise<string>((resolve) => {
-    setTimeout(() => resolve(`tick ${i}`), i === 3 ? 1000 : 1000)
-  })
-
-  const it = {
-    async *[Symbol.asyncIterator]() {
-      await Promise.resolve()
-      yield sec(1)
-      await Promise.resolve()
-      yield sec(2)
-      await Promise.resolve()
-      yield sec(3)
-      await Promise.resolve()
-      yield sec(4)
-      await Promise.resolve()
-      yield sec(5)
-      await Promise.resolve()
-      yield sec(6)
-    },
-  }
-
-  const pit = piAllAsync(it, 2)
-
-  for await (const i of pit) {
-    console.log(i)
   }
 }

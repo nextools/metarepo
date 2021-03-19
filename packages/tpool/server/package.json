@@ -21,6 +21,7 @@
     "@babel/core": "^7.13.8",
     "@babel/preset-env": "^7.13.8",
     "dleet": "^2.0.1",
+    "iterama": "^0.6.1",
     "resolve-from": "^5.0.0",
     "tsfn": "^2.2.0",
     "typeon": "^2.0.0",

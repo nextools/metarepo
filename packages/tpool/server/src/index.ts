@@ -2,12 +2,13 @@ import http from 'http'
 import https from 'https'
 import { promisify } from 'util'
 import { Worker } from 'worker_threads'
+import type { TClientHandshake, TClientMessage, TServerHandshake, TServerMessage, TServerMessageError } from '@tpool/types'
 import dleet from 'dleet'
 import { jsonParse, jsonStringify } from 'typeon'
 import { once } from 'wans'
 import WS from 'ws'
 import { resolve } from './resolve'
-import type { TStartThreadPoolOptions, TWorkerMessage, TWsMessage } from './types'
+import type { TStartThreadPoolOptions, TWorkerMessage } from './types'
 
 export const startThreadPool = async (options: TStartThreadPoolOptions) => {
   const workerPath = await resolve('./worker.mjs')
@@ -56,9 +57,12 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
 
   console.log('server:', options.url)
 
-  wsServer.on('connection', (client) => {
+  wsServer.on('connection', async (client) => {
+    const optionsData = await once<string>(client, 'message')
+    const { fnString, callerDir, groupBy, groupType } = jsonParse<TClientHandshake>(optionsData)
+
     client.send(
-      jsonStringify({
+      jsonStringify<TServerHandshake>({
         threadIds: workers.map((worker) => worker.threadId),
       })
     )
@@ -67,22 +71,32 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
       let uid: string
 
       try {
-        const wsMessage = jsonParse<TWsMessage>(data)
+        const wsMessage = jsonParse<TClientMessage>(data)
 
         uid = wsMessage.uid
 
         const worker = workers.find((worker) => worker.threadId === wsMessage.threadId)!
 
-        worker.postMessage(wsMessage.value)
+        worker.postMessage({
+          arg: wsMessage.arg,
+          fnString,
+          callerDir,
+          groupBy,
+          groupType,
+        })
 
         const { type, value } = await once<TWorkerMessage>(worker, 'message')
 
         client.send(
-          jsonStringify({ uid, type, value })
+          jsonStringify<TServerMessage>({
+            uid,
+            type,
+            value,
+          })
         )
       } catch (err) {
         client.send(
-          jsonStringify({
+          jsonStringify<TServerMessageError>({
             // TODO: handle error properly
             uid: uid!,
             type: 'ERROR',
