@@ -33,7 +33,7 @@
     "portu": "^0.2.0",
     "raw-loader": "^4.0.1",
     "react": "16.13.1",
-    "react-native": "0.63.4",
+    "react-native": "0.64.0",
     "spown": "^0.1.2",
     "tsfn": "^2.2.0",
     "webpack": "^4.30.0"
