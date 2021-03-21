@@ -1,20 +1,21 @@
 import type { TJsonValue } from 'typeon'
 
-export declare type TClientHandshake = {
-  fnString: string,
+export declare type THandshakeFromClient = {
+  taskString: string,
+  arg: TJsonValue,
   callerDir: string,
   groupBy: number,
   groupType: 'serial' | 'concurrent',
 }
 
-export declare type TServerHandshake = {
+export declare type THandshakeFromServer = {
   threadIds: number[],
 }
 
-export declare type TClientMessage = {
+export declare type TMessageFromClient = {
   uid: string,
   threadId: number,
-  arg: TJsonValue[],
+  group: TJsonValue[],
 }
 
 export type TServerMessageDone<T> = {
@@ -29,4 +30,4 @@ export type TServerMessageError = {
   value: TJsonValue,
 }
 
-export type TServerMessage<T> = TServerMessageDone<T> | TServerMessageError
+export type TMessageFromServer<T> = TServerMessageDone<T> | TServerMessageError

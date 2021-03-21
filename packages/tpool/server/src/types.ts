@@ -1,4 +1,5 @@
 import type { TlsOptions } from 'tls'
+import type { THandshakeFromClient } from '@tpool/types'
 import type { TJsonValue } from 'typeon'
 
 export type TStartThreadPoolOptions = {
@@ -7,14 +8,16 @@ export type TStartThreadPoolOptions = {
   tls?: TlsOptions,
 }
 
-export type TWorkerMessageDone = {
+export type TMessageFromWokerDone = {
   type: 'DONE',
   value: TJsonValue,
 }
 
-export type TWorkerMessageError = {
+export type TMessageFromWorkerError = {
   type: 'ERROR',
   value: string,
 }
 
-export type TWorkerMessage = TWorkerMessageDone | TWorkerMessageError
+export type TMessageFromWorker = TMessageFromWokerDone | TMessageFromWorkerError
+
+export type TMessageToWorker = THandshakeFromClient & { group: TJsonValue[] }

@@ -2,24 +2,26 @@ import { parentPort } from 'worker_threads'
 import { transformAsync } from '@babel/core'
 // @ts-ignore
 import babelPresetEnv from '@babel/preset-env'
+import { pipeAsync } from 'funcom'
 import { toArrayAsync } from 'iterama'
 import type { TJsonValue } from 'typeon'
 import { once } from 'wans'
 // @ts-ignore
 import babelPluginImports from './babel-plugin.mjs'
+import type { TMessageToWorker } from './types'
 
 const cache = new Map()
 
 while (true) {
   try {
-    const { arg, fnString, callerDir, groupBy, groupType } = await once(parentPort!, 'message')
-    const cacheKey = `${callerDir}@${fnString}}`
-    let fn: <T>(arg: AsyncIterable<T>) => Promise<AsyncIterable<T>>
+    const { group, arg, taskString, callerDir, groupBy, groupType } = await once<TMessageToWorker>(parentPort!, 'message')
+    const cacheKey = `${callerDir}@${String}}`
+    let fn: (it: AsyncIterable<any>) => Promise<AsyncIterable<any[]>>
 
     if (cache.has(cacheKey)) {
       fn = cache.get(cacheKey)
     } else {
-      const transformed = await transformAsync(fnString, {
+      const transformed = await transformAsync(taskString, {
         ast: false,
         babelrc: false,
         compact: true,
@@ -49,7 +51,7 @@ while (true) {
       }
 
       // eslint-disable-next-line no-new-func
-      fn = new Function(`return ${transformed.code}`)()
+      fn = new Function(`return ${transformed.code}`)()(arg)
 
       cache.set(cacheKey, fn)
     }
@@ -62,23 +64,29 @@ while (true) {
           yield i
         },
       })
+
       const iterator = it[Symbol.asyncIterator]()
       const result = await iterator.next()
 
       return result.value
     }
 
+    const getValues = pipeAsync(
+      (i: TJsonValue[]) => ({
+        async *[Symbol.asyncIterator]() {
+          yield* i
+        },
+      }),
+      fn,
+      toArrayAsync
+    )
+
     if (groupBy === 1) {
-      value = [await getValue(arg[0])]
+      value = await getValues(group)
     } else if (groupBy > 1 && groupType === 'serial') {
-      value = await toArrayAsync(await fn(arg))
+      value = await getValues(group)
     } else if (groupBy > 1 && groupType === 'concurrent') {
-      value = [
-        await getValue(arg[0]),
-        ...await Promise.all(
-          arg.slice(1).map(getValue)
-        ),
-      ]
+      value = await Promise.all(group.map(getValue))
     } else {
       throw new Error('Invalid pool options')
     }

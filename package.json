@@ -88,9 +88,6 @@
     "typescript": "^4.0.0",
     "ws": "^7.3.1"
   },
-  "scripts": {
-    "start": "node --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @nextools/typescript-esm-loader packages/start/cli/src/index.ts"
-  },
   "start": {
     "tasks": "tasks/index.ts",
     "auto": {

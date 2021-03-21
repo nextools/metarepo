@@ -1,3 +1,7 @@
+#!/bin/sh
+//bin/sh -c :; exec /usr/bin/env node --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @nextools/typescript-esm-loader "$0" "$@"
+// https://unix.stackexchange.com/questions/65235/universal-node-js-shebang#comment755057_65295
+
 import { readFile } from 'fs/promises'
 import { join as pathJoin, resolve as pathResolve } from 'path'
 import readline from 'readline'
@@ -85,14 +89,13 @@ try {
       continue
     }
 
-    const taskRunner = await tasksExported[input]()
-    const taskIterable = await taskRunner()
+    const it = await tasksExported[input]()
 
     try {
       const endTimeMs = startTimeMs()
       let i = 0
 
-      for await (const _ of taskIterable) {
+      for await (const _ of it) {
         process.stdout.clearLine(0)
         process.stdout.cursorTo(0)
         process.stdout.write(`items: ${++i}`)

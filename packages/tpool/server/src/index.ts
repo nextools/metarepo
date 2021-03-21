@@ -2,21 +2,23 @@ import http from 'http'
 import https from 'https'
 import { promisify } from 'util'
 import { Worker } from 'worker_threads'
-import type { TServerMessage, TClientHandshake, TClientMessage, TServerHandshake, TServerMessageError } from '@tpool/types'
+import type { TMessageFromServer, THandshakeFromClient, TMessageFromClient, THandshakeFromServer, TServerMessageError } from '@tpool/types'
 import dleet from 'dleet'
 import type { TJsonValue } from 'typeon'
 import { jsonParse, jsonStringify } from 'typeon'
 import { once } from 'wans'
 import WS from 'ws'
 import { resolve } from './resolve'
-import type { TStartThreadPoolOptions, TWorkerMessage } from './types'
+import type { TStartThreadPoolOptions, TMessageFromWorker } from './types'
 
 export const startThreadPool = async (options: TStartThreadPoolOptions) => {
   const workerPath = await resolve('./worker-wrapper.mjs')
 
   const workers = await Promise.all(
     Array.from({ length: options.threadCount }, async () => {
-      const worker = new Worker(workerPath)
+      const worker = new Worker(workerPath, {
+        trackUnmanagedFds: true,
+      })
 
       await once(worker, 'online')
 
@@ -63,10 +65,10 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
 
   wsServer.on('connection', async (client) => {
     const optionsData = await once<string>(client, 'message')
-    const { fnString, callerDir, groupBy, groupType } = jsonParse<TClientHandshake>(optionsData)
+    const { taskString, callerDir, arg, groupBy, groupType } = jsonParse<THandshakeFromClient>(optionsData)
 
     client.send(
-      jsonStringify<TServerHandshake>({
+      jsonStringify<THandshakeFromServer>({
         threadIds: workers.map((worker) => worker.threadId),
       })
     )
@@ -75,24 +77,25 @@ export const startThreadPool = async (options: TStartThreadPoolOptions) => {
       let uid: string
 
       try {
-        const wsMessage = jsonParse<TClientMessage>(data)
+        const wsMessage = jsonParse<TMessageFromClient>(data)
 
         uid = wsMessage.uid
 
         const worker = workers.find((worker) => worker.threadId === wsMessage.threadId)!
 
         worker.postMessage({
-          arg: wsMessage.arg,
-          fnString,
+          group: wsMessage.group,
+          arg,
+          taskString,
           callerDir,
           groupBy,
           groupType,
         })
 
-        const { type, value } = await once<TWorkerMessage>(worker, 'message')
+        const { type, value } = await once<TMessageFromWorker>(worker, 'message')
 
         client.send(
-          jsonStringify<TServerMessage<TJsonValue>>({
+          jsonStringify<TMessageFromServer<TJsonValue>>({
             uid,
             type,
             value,

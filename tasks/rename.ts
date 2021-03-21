@@ -1,8 +1,8 @@
-import type { TFile } from './types'
+import type { TFile, TTask } from './types'
 
-export const rename = (renameFn: (filePath: string) => string) => async (iterable: AsyncIterable<TFile>): Promise<AsyncIterable<TFile>> => {
+export const rename = (renameFn: (filePath: string) => string): TTask<TFile, TFile> => async (iterable) => {
   const path = await import('path')
-  const { mapAsync } = await import('iterama')
+  const { mapAsync } = await import('iterama/mapAsync')
   const { isObject } = await import('tsfn')
 
   return mapAsync((file: TFile) => {

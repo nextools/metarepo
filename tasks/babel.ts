@@ -1,10 +1,10 @@
 import type { TransformOptions } from '@babel/core'
-import type { TFile } from './types'
+import type { TFile, TTask } from './types'
 
-export const babel = (userOptions?: TransformOptions) => async (iterable: AsyncIterable<TFile>): Promise<AsyncIterable<TFile>> => {
+export const babel = (userOptions?: TransformOptions): TTask<TFile, TFile> => async (iterable) => {
   const { transformAsync } = await import('@babel/core')
   const { isObject, isString, isNull } = await import('tsfn')
-  const { mapAsync } = await import('iterama')
+  const { mapAsync } = await import('iterama/mapAsync')
 
   return mapAsync(async (file: TFile) => {
     const options: TransformOptions = {

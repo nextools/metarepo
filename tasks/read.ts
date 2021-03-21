@@ -1,8 +1,8 @@
-import type { TFile } from './types'
+import type { TFile, TTask } from './types'
 
-export const read = async (iterable: AsyncIterable<string>): Promise<AsyncIterable<TFile>> => {
+export const read: TTask<string, TFile> = async (iterable) => {
   const { readFile } = await import('fs/promises')
-  const { mapAsync } = await import('iterama')
+  const { mapAsync } = await import('iterama/mapAsync')
 
   return mapAsync(async (filePath: string) => {
     const data = await readFile(filePath, 'utf8')

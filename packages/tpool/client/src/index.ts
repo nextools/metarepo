@@ -1,6 +1,6 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
-import type { TClientHandshake, TClientMessage, TServerHandshake, TServerMessage } from '@tpool/types'
+import type { THandshakeFromClient, TMessageFromClient, THandshakeFromServer, TMessageFromServer } from '@tpool/types'
 import { pipe } from 'funcom'
 import getCallerFile from 'get-caller-file'
 import { mapAsync } from 'iterama'
@@ -18,9 +18,9 @@ import { ungroupAsync } from './ungroup-async'
 const DEFAULT_GROUP_BY = 1
 const DEFAULT_GROUP_TYPE = 'serial'
 
-export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn: (arg: AsyncIterable<T>) => Promise<AsyncIterable<R>>, options: TPipeThreadPoolOptions) => {
+export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(taskFn: (arg: any) => (it: AsyncIterable<T>) => Promise<AsyncIterable<R>>, arg: TJsonValue, options: TPipeThreadPoolOptions) => {
   const callerDir = fileURLToPath(path.dirname(getCallerFile()))
-  const fnString = mapFn.toString()
+  const taskString = taskFn.toString()
   const groupBy = options.groupBy ?? DEFAULT_GROUP_BY
   const groupType = options.groupType ?? DEFAULT_GROUP_TYPE
 
@@ -41,8 +41,9 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
         await once(client, 'open')
 
         client.send(
-          jsonStringify<TClientHandshake>({
-            fnString,
+          jsonStringify<THandshakeFromClient>({
+            taskString,
+            arg,
             callerDir,
             groupBy,
             groupType,
@@ -50,7 +51,7 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
         )
 
         const message = await once<string>(client, 'message')
-        const handshake = jsonParse<TServerHandshake>(message)
+        const handshake = jsonParse<THandshakeFromServer>(message)
 
         for (const threadId of handshake.threadIds) {
           const uid = `${threadId}@${poolAddress}`
@@ -64,7 +65,7 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
 
     for (const client of clients) {
       client.on('message', (data: string) => {
-        const message = jsonParse<TServerMessage<R[]>>(data)
+        const message = jsonParse<TMessageFromServer<R[]>>(data)
         const promiseExecutor = uidToPromiseExecutor.get(message.uid)!
 
         if (message.type === 'DONE') {
@@ -78,7 +79,7 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
       })
     }
 
-    const mapper = (arg: T[]) => (): Promise<R[]> => {
+    const mapper = (group: T[]) => (): Promise<R[]> => {
       const uid = uids.find((uid) => !busyUids.has(uid))!
       const client = uidToClient.get(uid)!
       const threadId = uidToThreadId.get(uid)!
@@ -86,10 +87,10 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(mapFn
       busyUids.add(uid)
 
       client.send(
-        jsonStringify<TClientMessage>({
+        jsonStringify<TMessageFromClient>({
           uid,
           threadId,
-          arg,
+          group,
         })
       )
 
