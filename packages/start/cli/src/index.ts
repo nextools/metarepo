@@ -5,7 +5,7 @@
 import { readFile } from 'fs/promises'
 import { join as pathJoin, resolve as pathResolve } from 'path'
 import readline from 'readline'
-import { startThreadPool } from '@tpool/server'
+import { startThreadPool } from '@start/thread-pool'
 import dotenv from 'dotenv'
 import type { TPackageJson } from 'pkgu'
 import { startTimeMs } from 'takes'
@@ -31,17 +31,8 @@ try {
 
   console.log('tasks:', taskNames)
 
-  const stopThreadPool1 = await startThreadPool({
-    threadCount: 4,
-    url: 'ws+unix:///tmp/start1.sock',
-  })
-  const stopThreadPool2 = await startThreadPool({
-    threadCount: 4,
-    url: 'ws://localhost:8000',
-    // tls: {
-    //   cert: await readFile(process.env.START_WSS_POOL_CERT!),
-    //   key: await readFile(process.env.START_WSS_POOL_KEY!),
-    // },
+  const stopPool = await startThreadPool({
+    threadCount: 8,
   })
 
   const tookMs = endTimeMs()
@@ -75,8 +66,7 @@ try {
     if (input === '/quit') {
       rl.close()
 
-      await stopThreadPool1()
-      await stopThreadPool2()
+      await stopPool()
 
       console.log('bye')
 

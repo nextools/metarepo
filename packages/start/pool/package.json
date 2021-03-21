@@ -1,0 +1,29 @@
+{
+  "name": "@start/thread-pool",
+  "version": "0.0.0",
+  "description": "Thread pool",
+  "keywords": "",
+  "repository": "",
+  "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
+  "license": "MIT",
+  "files": [
+    "build/"
+  ],
+  "main": "src/index.ts",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=12.17.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.13.8",
+    "@babel/preset-env": "7.13.8",
+    "funcom": "^0.2.0",
+    "get-caller-file": "^2.0.5",
+    "iterama": "^0.6.1",
+    "piall": "^0.2.0",
+    "wans": "^0.0.0"
+  }
+}

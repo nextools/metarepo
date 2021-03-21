@@ -10,6 +10,7 @@
     "build/"
   ],
   "main": "src/index.ts",
+  "type": "module",
   "bin": {
     "start": "src/index.ts"
   },
@@ -21,7 +22,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.2",
-    "@tpool/server": "^0.0.0",
+    "@start/thread-pool": "^0.0.0",
     "dotenv": "^8.2.0",
     "takes": "^0.0.0",
     "tsfn": "^2.2.0",

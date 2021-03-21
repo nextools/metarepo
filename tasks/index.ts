@@ -18,7 +18,7 @@ const buildIt = (dir: string): TTask<string, TFile> => async (it) => {
 
 export const build: TNoInputTask<TFile> = async () => {
   const { pipeAsync } = await import('funcom')
-  const { pipeThreadPool } = await import('@tpool/client')
+  const { pipeThreadPool } = await import('@start/thread-pool')
   const { find } = await import('./find')
   const { remove } = await import('./remove')
 
@@ -28,18 +28,7 @@ export const build: TNoInputTask<TFile> = async () => {
     find([outDir]),
     remove,
     find(['packages/iterama/src/*.ts']),
-    // buildIt(outDir),
-    pipeThreadPool(
-      buildIt,
-      outDir,
-      {
-        groupBy: 8,
-        groupType: 'serial',
-        pools: [
-          'ws+unix:///tmp/start1.sock',
-          'ws://localhost:8000',
-        ],
-      }
-    )
+    // buildIt(outDir)
+    pipeThreadPool(buildIt, outDir)
   )()
 }
