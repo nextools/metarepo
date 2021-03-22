@@ -65,6 +65,7 @@
     "packages/wans",
     "packages/weslint",
     "packages/workerama",
+    "packages/worku",
     "packages/x-ray/*",
     "packages/xrom",
     "packages/yupg"

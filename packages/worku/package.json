@@ -1,0 +1,17 @@
+{
+  "name": "worku",
+  "version": "0.0.0",
+  "description": "Worker utils",
+  "keywords": [],
+  "main": "src/index.ts",
+  "type": "module",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.17.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false
+}

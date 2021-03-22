@@ -6,7 +6,7 @@ import getCallerFile from 'get-caller-file'
 import { mapAsync } from 'iterama'
 import { piAllAsync } from 'piall'
 import type { TJsonValue } from 'typeon'
-import { once } from 'wans'
+import { sendAndReceiveOnWorker, waitForWorker } from 'worku'
 import { groupByAsync } from './group-by-async'
 import { resolve } from './resolve'
 import { startWithTypeAsync } from './start-with-type-async'
@@ -28,7 +28,7 @@ export const startThreadPool = async (options: TStartPoolOptions): Promise<() =>
         trackUnmanagedFds: true,
       })
 
-      await once(worker, 'online')
+      await waitForWorker(worker)
 
       return worker
     })
@@ -57,18 +57,14 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(taskF
 
       busyWorkers.add(worker.threadId)
 
-      const messageToWorker: TMessageToWorker = {
+      const messageFromWorker = await sendAndReceiveOnWorker<TMessageToWorker, TMessageFromWorker<R[]>>(worker, {
         taskString,
         arg,
         callerDir,
         group,
         groupBy,
         groupType,
-      }
-
-      worker.postMessage(messageToWorker)
-
-      const messageFromWorker = await once<TMessageFromWorker<R[]>>(worker, 'message')
+      })
 
       busyWorkers.delete(worker.threadId)
 

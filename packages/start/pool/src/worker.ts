@@ -5,7 +5,7 @@ import babelPresetEnv from '@babel/preset-env'
 import { pipeAsync } from 'funcom'
 import { toArrayAsync } from 'iterama'
 import type { TJsonValue } from 'typeon'
-import { once } from 'wans'
+import { receiveOnPort } from 'worku'
 // @ts-ignore
 import babelPluginImports from './babel-plugin.mjs'
 import type { TMessageToWorker } from './types'
@@ -14,7 +14,7 @@ const cache = new Map()
 
 while (true) {
   try {
-    const { group, arg, taskString, callerDir, groupBy, groupType } = await once<TMessageToWorker>(parentPort!, 'message')
+    const { group, arg, taskString, callerDir, groupBy, groupType } = await receiveOnPort<TMessageToWorker>(parentPort!)
     const cacheKey = `${callerDir}@${String}}`
     let fn: (it: AsyncIterable<any>) => Promise<AsyncIterable<any[]>>
 
