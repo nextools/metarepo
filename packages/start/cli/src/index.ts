@@ -6,10 +6,14 @@ import { readFile } from 'fs/promises'
 import { join as pathJoin, resolve as pathResolve } from 'path'
 import readline from 'readline'
 import { startThreadPool } from '@start/thread-pool'
-import dotenv from 'dotenv'
+// import dotenv from 'dotenv'
 import type { TPackageJson } from 'pkgu'
 import { startTimeMs } from 'takes'
 import { once } from 'wans'
+
+type TTasks = {
+  [key: string]: (...args: string[]) => () => Promise<AsyncIterable<any>>,
+}
 
 type TStartOptions = {
   tasks: string,
@@ -20,18 +24,18 @@ type TStartOptions = {
 try {
   const endTimeMs = startTimeMs()
 
-  dotenv.config()
+  // dotenv.config()
 
   const packageJsonPath = pathJoin(process.cwd(), 'package.json')
   const packageJsonData = await readFile(packageJsonPath, 'utf8')
   const packageJson = JSON.parse(packageJsonData) as TPackageJson & { start: TStartOptions }
   const tasksFilePath = pathResolve(packageJson.start.tasks)
-  const tasksExported = await import(tasksFilePath)
+  const tasksExported = await import(tasksFilePath) as TTasks
   const taskNames = Object.keys(tasksExported)
 
   console.log('tasks:', taskNames)
 
-  const stopPool = await startThreadPool({
+  const stopThreadPool = await startThreadPool({
     threadCount: 8,
   })
 
@@ -52,10 +56,18 @@ try {
     ],
   })
 
+  rl.once('SIGINT', () => {
+    process.exit()
+  })
+
   while (true) {
     rl.prompt()
 
     const input = await once<string>(rl, 'line')
+
+    if (input.length === 0) {
+      continue
+    }
 
     if (input === '/tasks') {
       console.log('tasks:', taskNames)
@@ -66,20 +78,24 @@ try {
     if (input === '/quit') {
       rl.close()
 
-      await stopPool()
+      await stopThreadPool()
 
       console.log('bye')
 
       break
     }
 
-    if (!autocomplete.includes(input)) {
-      console.error(`unknown: ${input}`)
+    const [taskName, ...args] = input.split(' ')
+
+    if (!autocomplete.includes(taskName)) {
+      console.error(`unknown: ${taskName}`)
 
       continue
     }
 
-    const it = await tasksExported[input]()
+    const taskRunner = tasksExported[taskName]
+    const task = taskRunner(...args)
+    const it = await task()
 
     try {
       const endTimeMs = startTimeMs()
@@ -89,7 +105,6 @@ try {
         process.stdout.clearLine(0)
         process.stdout.cursorTo(0)
         process.stdout.write(`items: ${++i}`)
-        // console.log(i.path)
       }
 
       process.stdout.write('\n')

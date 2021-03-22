@@ -14,7 +14,13 @@ const cache = new Map()
 
 while (true) {
   try {
-    const { group, arg, taskString, callerDir, groupBy, groupType } = await receiveOnPort<TMessageToWorker>(parentPort!)
+    const message = await receiveOnPort<TMessageToWorker>(parentPort!)
+
+    if (message.type === 'EXIT') {
+      break
+    }
+
+    const { group, arg, taskString, callerDir, groupBy, groupType } = message.value
     const cacheKey = `${callerDir}@${String}}`
     let fn: (it: AsyncIterable<any>) => Promise<AsyncIterable<any[]>>
 

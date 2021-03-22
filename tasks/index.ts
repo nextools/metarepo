@@ -16,18 +16,18 @@ const buildIt = (dir: string): TTask<string, TFile> => async (it) => {
   )(it)
 }
 
-export const build: TNoInputTask<TFile> = async () => {
+export const build = (pkg: string): TNoInputTask<TFile> => async () => {
   const { pipeAsync } = await import('funcom')
   const { pipeThreadPool } = await import('@start/thread-pool')
   const { find } = await import('./find')
   const { remove } = await import('./remove')
 
-  const outDir = 'packages/iterama/build/'
+  const outDir = `packages/${pkg}/build/`
 
   return pipeAsync(
     find([outDir]),
     remove,
-    find(['packages/iterama/src/*.ts']),
+    find([`packages/${pkg}/src/*.ts`]),
     // buildIt(outDir)
     pipeThreadPool(buildIt, outDir)
   )()

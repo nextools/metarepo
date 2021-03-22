@@ -6,6 +6,7 @@ import getCallerFile from 'get-caller-file'
 import { mapAsync } from 'iterama'
 import { piAllAsync } from 'piall'
 import type { TJsonValue } from 'typeon'
+import { once } from 'wans'
 import { sendAndReceiveOnWorker, waitForWorker } from 'worku'
 import { groupByAsync } from './group-by-async'
 import { resolve } from './resolve'
@@ -19,7 +20,7 @@ const DEFAULT_GROUP_TYPE = 'serial'
 let workers: Worker[] = []
 const busyWorkers = new Set<number>()
 
-export const startThreadPool = async (options: TStartPoolOptions): Promise<() => Promise<number[]>> => {
+export const startThreadPool = async (options: TStartPoolOptions): Promise<() => Promise<void>> => {
   const workerPath = await resolve('./worker-wrapper.mjs')
 
   workers = await Promise.all(
@@ -36,9 +37,15 @@ export const startThreadPool = async (options: TStartPoolOptions): Promise<() =>
 
   console.log('threads:', options.threadCount)
 
-  return () => Promise.all(
-    workers.map((worker) => worker.terminate())
-  )
+  return async () => {
+    await Promise.all(
+      workers.map((worker) => {
+        worker.postMessage({ type: 'EXIT' })
+
+        return once<void>(worker, 'exit')
+      })
+    )
+  }
 }
 
 export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(taskFn: (arg: any) => (it: AsyncIterable<T>) => Promise<AsyncIterable<R>>, arg: TJsonValue, options?: TPipePoolOptions) => {
@@ -58,12 +65,16 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(taskF
       busyWorkers.add(worker.threadId)
 
       const messageFromWorker = await sendAndReceiveOnWorker<TMessageToWorker, TMessageFromWorker<R[]>>(worker, {
-        taskString,
-        arg,
-        callerDir,
-        group,
-        groupBy,
-        groupType,
+        type: 'TASK',
+        value: {
+          taskString,
+          arg,
+          callerDir,
+          group,
+          groupBy,
+          groupType,
+
+        },
       })
 
       busyWorkers.delete(worker.threadId)
