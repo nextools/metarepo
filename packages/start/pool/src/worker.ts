@@ -22,7 +22,7 @@ while (true) {
 
     const { group, arg, taskString, callerDir, groupBy, groupType } = message.value
     const cacheKey = `${callerDir}@${String}}`
-    let fn: (it: AsyncIterable<any>) => Promise<AsyncIterable<any[]>>
+    let fn: (it: AsyncIterable<TJsonValue>) => Promise<AsyncIterable<TJsonValue>>
 
     if (cache.has(cacheKey)) {
       fn = cache.get(cacheKey)
@@ -64,7 +64,7 @@ while (true) {
 
     let value: TJsonValue[]
 
-    const getValue = async (i: TJsonValue) => {
+    const getValue = async (i: TJsonValue): Promise<TJsonValue> => {
       const it = await fn({
         async *[Symbol.asyncIterator]() {
           yield i
