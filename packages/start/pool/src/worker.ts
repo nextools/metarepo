@@ -5,10 +5,10 @@ import babelPresetEnv from '@babel/preset-env'
 import { pipeAsync } from 'funcom'
 import { toArrayAsync } from 'iterama'
 import type { TJsonValue } from 'typeon'
-import { receiveOnPort } from 'worku'
+import { receiveOnPort, sendToPort } from 'worku'
 // @ts-ignore
 import babelPluginImports from './babel-plugin.mjs'
-import type { TMessageToWorker } from './types'
+import type { TMessageFromWorkerDone, TMessageFromWorkerError, TMessageToWorker } from './types'
 
 const cache = new Map()
 
@@ -62,7 +62,7 @@ while (true) {
       cache.set(cacheKey, fn)
     }
 
-    let value
+    let value: TJsonValue[]
 
     const getValue = async (i: TJsonValue) => {
       const it = await fn({
@@ -97,12 +97,12 @@ while (true) {
       throw new Error('Invalid pool options')
     }
 
-    parentPort!.postMessage({
+    sendToPort<TMessageFromWorkerDone<TJsonValue[]>>(parentPort!, {
       type: 'DONE',
       value,
     })
   } catch (err) {
-    parentPort!.postMessage({
+    sendToPort<TMessageFromWorkerError>(parentPort!, {
       type: 'ERROR',
       value: err.stack ?? err,
     })

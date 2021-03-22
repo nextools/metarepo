@@ -7,11 +7,11 @@ import { mapAsync } from 'iterama'
 import { piAllAsync } from 'piall'
 import type { TJsonValue } from 'typeon'
 import { once } from 'wans'
-import { sendAndReceiveOnWorker, waitForWorker } from 'worku'
+import { sendAndReceiveOnWorker, sendToWorker, waitForWorker } from 'worku'
 import { groupByAsync } from './group-by-async'
 import { resolve } from './resolve'
 import { startWithTypeAsync } from './start-with-type-async'
-import type { TPipePoolOptions, TStartPoolOptions, TMessageToWorker, TMessageFromWorker } from './types'
+import type { TPipePoolOptions, TStartPoolOptions, TMessageFromWorker, TMessageToWorkerTask, TMessageToWorkerExit } from './types'
 import { ungroupAsync } from './ungroup-async'
 
 const DEFAULT_GROUP_BY = 8
@@ -40,7 +40,7 @@ export const startThreadPool = async (options: TStartPoolOptions): Promise<() =>
   return async () => {
     await Promise.all(
       workers.map((worker) => {
-        worker.postMessage({ type: 'EXIT' })
+        sendToWorker<TMessageToWorkerExit>(worker, { type: 'EXIT' })
 
         return once<void>(worker, 'exit')
       })
@@ -64,7 +64,7 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(taskF
 
       busyWorkers.add(worker.threadId)
 
-      const messageFromWorker = await sendAndReceiveOnWorker<TMessageToWorker, TMessageFromWorker<R[]>>(worker, {
+      const messageFromWorker = await sendAndReceiveOnWorker<TMessageToWorkerTask, TMessageFromWorker<R[]>>(worker, {
         type: 'TASK',
         value: {
           taskString,

@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import type { MessagePort } from 'worker_threads'
+import type { MessagePort, TransferListItem } from 'worker_threads'
+
+export const sendToPort = <T>(port: MessagePort, value: T, transferList?: readonly TransferListItem[]): void => {
+  port.postMessage(value, transferList)
+}
 
 export const receiveOnPort = <T>(port: MessagePort): Promise<T> => {
   return new Promise((resolve, reject) => {

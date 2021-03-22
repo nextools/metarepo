@@ -25,6 +25,10 @@ export const waitForWorker = (worker: Worker): Promise<Worker> => {
   })
 }
 
+export const sendToWorker = <T>(worker: Worker, value: T, transferList?: readonly TransferListItem[]): void => {
+  worker.postMessage(value, transferList)
+}
+
 export const sendAndReceiveOnWorker = <T, R>(worker: Worker, value: T, transferList?: readonly TransferListItem[]): Promise<R> => {
   return new Promise((resolve, reject) => {
     const onExit = (code: number) => {
