@@ -2,7 +2,7 @@ import { parentPort } from 'worker_threads'
 import { transformAsync } from '@babel/core'
 // @ts-ignore
 import babelPresetEnv from '@babel/preset-env'
-import { pipeAsync } from 'funcom'
+import { pipe } from 'funcom'
 import { toArrayAsync } from 'iterama'
 import type { TJsonValue } from 'typeon'
 import { receiveOnPort, sendToPort } from 'worku'
@@ -22,10 +22,10 @@ while (true) {
 
     const { group, arg, taskString, callerDir, groupBy, groupType } = message.value
     const cacheKey = `${callerDir}@${String}}`
-    let fn: (it: AsyncIterable<TJsonValue>) => Promise<AsyncIterable<TJsonValue>>
+    let task: (it: AsyncIterable<TJsonValue>) => AsyncIterableIterator<TJsonValue>
 
     if (cache.has(cacheKey)) {
-      fn = cache.get(cacheKey)
+      task = cache.get(cacheKey)
     } else {
       const transformed = await transformAsync(taskString, {
         ast: false,
@@ -57,33 +57,30 @@ while (true) {
       }
 
       // eslint-disable-next-line no-new-func
-      fn = new Function(`return ${transformed.code}`)()(arg)
+      task = new Function(`return ${transformed.code}`)()(arg)
 
-      cache.set(cacheKey, fn)
+      cache.set(cacheKey, task)
     }
 
     let value: TJsonValue[]
 
-    const getValue = async (i: TJsonValue): Promise<TJsonValue> => {
-      const it = await fn({
+    const getValue = pipe(
+      (i: TJsonValue) => ({
         async *[Symbol.asyncIterator]() {
           yield i
         },
-      })
+      }),
+      task,
+      toArrayAsync
+    )
 
-      const iterator = it[Symbol.asyncIterator]()
-      const result = await iterator.next()
-
-      return result.value
-    }
-
-    const getValues = pipeAsync(
+    const getValues = pipe(
       (i: TJsonValue[]) => ({
         async *[Symbol.asyncIterator]() {
           yield* i
         },
       }),
-      fn,
+      task,
       toArrayAsync
     )
 
@@ -93,6 +90,7 @@ while (true) {
       value = await getValues(group)
     } else if (groupBy > 1 && groupType === 'concurrent') {
       value = await Promise.all(group.map(getValue))
+      value = value.flat()
     } else {
       throw new Error('Invalid pool options')
     }

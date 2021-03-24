@@ -21,6 +21,8 @@ export const build = (pkg: string): TNoInputTask<TFile> => async function *() {
     remove,
     find([`packages/${pkg}/src/*.ts`]),
     // buildNodeAndWeb(outDir)
-    pipeThreadPool(buildNodeAndWeb, outDir)
+    pipeThreadPool(buildNodeAndWeb, outDir, {
+      groupType: 'concurrent',
+    })
   )()
 }
