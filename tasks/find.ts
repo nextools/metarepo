@@ -1,21 +1,13 @@
 import type { TMaybeInputTask } from './types'
 
-const drainAsync = async (iterable: AsyncIterable<any>): Promise<void> => {
-  const iterator = iterable[Symbol.asyncIterator]()
-  let result = await iterator.next()
-
-  while (result.done !== true) {
-    result = await iterator.next()
-  }
-}
-
-export const find = (globs: string[]): TMaybeInputTask<any, string> => async (iterable) => {
+export const find = (globs: string[]): TMaybeInputTask<any, string> => async function *(it) {
   const { matchGlobs } = await import('iva')
   const { isAsyncIterable } = await import('tsfn')
+  const { drainAsync } = await import('iterama')
 
-  if (isAsyncIterable(iterable)) {
-    await drainAsync(iterable)
+  if (isAsyncIterable(it)) {
+    await drainAsync(it)
   }
 
-  return matchGlobs(globs)
+  yield* matchGlobs(globs)
 }

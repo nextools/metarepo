@@ -1,11 +1,11 @@
 import type { TFile, TTask } from './types'
 
-export const rename = (renameFn: (filePath: string) => string): TTask<TFile, TFile> => async (iterable) => {
+export const rename = (renameFn: (filePath: string) => string): TTask<TFile, TFile> => async function *(it) {
   const path = await import('path')
-  const { mapAsync } = await import('iterama/mapAsync')
+  const { mapAsync } = await import('iterama')
   const { isObject } = await import('tsfn')
 
-  return mapAsync((file: TFile) => {
+  yield* mapAsync((file: TFile) => {
     const newFilePath = renameFn(file.path)
 
     if (isObject(file.map)) {
@@ -23,5 +23,5 @@ export const rename = (renameFn: (filePath: string) => string): TTask<TFile, TFi
       path: newFilePath,
       data: file.data,
     }
-  })(iterable)
+  })(it)
 }

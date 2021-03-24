@@ -1,14 +1,14 @@
 import type { TFile, TTask } from './types'
 
-export const write = (dir: string): TTask<TFile, TFile> => async (iterable) => {
+export const write = (dir: string): TTask<TFile, TFile> => async function *(iterable) {
   const path = await import('path')
   const { writeFile } = await import('fs/promises')
-  const { mapAsync } = await import('iterama/mapAsync')
+  const { mapAsync } = await import('iterama')
   const { default: movePath } = await import('move-path')
   const { makeDir } = await import('dirdir')
   const { isObject } = await import('tsfn')
 
-  return mapAsync(async (file: TFile) => {
+  yield* mapAsync(async (file: TFile) => {
     const outFile = movePath(file.path, dir)
     const outDir = path.dirname(outFile)
 

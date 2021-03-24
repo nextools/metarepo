@@ -1,34 +1,26 @@
-import type { TFile, TTask, TNoInputTask } from './types'
+import type { TFile, TNoInputTask, TTask } from './types'
 
-const buildIt = (dir: string): TTask<string, TFile> => async (it) => {
-  const { pipeAsync } = await import('funcom')
-  const { read } = await import('./read')
-  const { rename } = await import('./rename')
-  const { babel } = await import('./babel')
-  const { babelConfigBuildNode } = await import('./babel-config')
-  const { write } = await import('./write')
+const buildNodeAndWeb = (dir: string): TTask<string, TFile> => async function *(it) {
+  const { mergeTasks } = await import('./merge-tasks')
+  const { buildNode } = await import('./build-node')
+  const { buildWeb } = await import('./build-web')
 
-  return pipeAsync(
-    read,
-    babel(babelConfigBuildNode),
-    rename((path) => path.replace(/\.tsx?$/, '.js')),
-    write(dir)
-  )(it)
+  yield* mergeTasks(buildNode(dir), buildWeb(dir))(it)
 }
 
-export const build = (pkg: string): TNoInputTask<TFile> => async () => {
-  const { pipeAsync } = await import('funcom')
+export const build = (pkg: string): TNoInputTask<TFile> => async function *() {
+  const { pipe } = await import('funcom')
   const { pipeThreadPool } = await import('@start/thread-pool')
   const { find } = await import('./find')
   const { remove } = await import('./remove')
 
   const outDir = `packages/${pkg}/build/`
 
-  return pipeAsync(
+  yield* pipe(
     find([outDir]),
     remove,
     find([`packages/${pkg}/src/*.ts`]),
-    // buildIt(outDir)
-    pipeThreadPool(buildIt, outDir)
+    // buildNodeAndWeb(outDir)
+    pipeThreadPool(buildNodeAndWeb, outDir)
   )()
 }

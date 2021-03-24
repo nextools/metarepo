@@ -7,6 +7,8 @@ import { join as pathJoin, resolve as pathResolve } from 'path'
 import readline from 'readline'
 import { startThreadPool } from '@start/thread-pool'
 // import dotenv from 'dotenv'
+import { pipeAsync } from 'funcom'
+import { drainAsync, forEachAsync } from 'iterama'
 import type { TPackageJson } from 'pkgu'
 import { startTimeMs } from 'takes'
 import { once } from 'wans'
@@ -101,11 +103,14 @@ try {
       const endTimeMs = startTimeMs()
       let i = 0
 
-      for await (const _ of it) {
-        process.stdout.clearLine(0)
-        process.stdout.cursorTo(0)
-        process.stdout.write(`items: ${++i}`)
-      }
+      await pipeAsync(
+        forEachAsync(() => {
+          process.stdout.clearLine(0)
+          process.stdout.cursorTo(0)
+          process.stdout.write(`items: ${++i}`)
+        }),
+        drainAsync
+      )(it)
 
       process.stdout.write('\n')
 

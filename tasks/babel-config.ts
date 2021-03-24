@@ -43,3 +43,42 @@ export const babelConfigBuildNode: TransformOptions = {
   ],
   shouldPrintComment: (val: string) => val.startsWith('#'),
 }
+
+export const babelConfigBuildWeb: TransformOptions = {
+  babelrc: false,
+  compact: false,
+  retainLines: true,
+  sourceMaps: true,
+  presets: [
+    [
+      babelPresetEnv,
+      {
+        targets: {
+          browsers: 'last 2 Chrome versions',
+        },
+        ignoreBrowserslistConfig: true,
+        modules: false,
+      },
+    ],
+  ],
+  plugins: [
+    babelPluginSyntaxTopLevelAwait,
+    // '@babel/plugin-proposal-class-properties',
+    // '@babel/plugin-proposal-private-methods',
+    // '@babel/plugin-proposal-export-namespace-from',
+  ],
+  overrides: [
+    {
+      test: /\.(ts|tsx)$/,
+      presets: [
+        babelPresetTypeScript,
+      ],
+    },
+    {
+      test: /\.(ts|js)x$/,
+      presets: [
+        babelPresetReact,
+      ],
+    },
+  ],
+}

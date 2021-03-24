@@ -48,7 +48,7 @@ export const startThreadPool = async (options: TStartPoolOptions): Promise<() =>
   }
 }
 
-export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(taskFn: (arg: any) => (it: AsyncIterable<T>) => Promise<AsyncIterable<R>>, arg: TJsonValue, options?: TPipePoolOptions) => {
+export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(taskFn: (arg: any) => (it: AsyncIterable<T>) => AsyncIterable<R>, arg: TJsonValue, options?: TPipePoolOptions) => {
   if (workers.length === 0) {
     throw new Error('Start thread pool first')
   }
@@ -59,7 +59,7 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(taskF
   const groupType = options?.groupType ?? DEFAULT_GROUP_TYPE
 
   return (it: AsyncIterable<T>): AsyncIterable<R> => {
-    const mapper = (group: T[]) => async (): Promise<R[]> => {
+    const workerize = (group: T[]) => async (): Promise<R[]> => {
       const worker = workers.find((worker) => !busyWorkers.has(worker.threadId))!
 
       busyWorkers.add(worker.threadId)
@@ -89,7 +89,7 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(taskF
     return pipe(
       startWithTypeAsync<T>(),
       groupByAsync(groupBy),
-      mapAsync(mapper),
+      mapAsync(workerize),
       piAllAsync(workers.length),
       ungroupAsync
     )(it)
