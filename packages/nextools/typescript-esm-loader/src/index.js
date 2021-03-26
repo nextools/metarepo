@@ -7,9 +7,12 @@ import babelPresetTypeScript from '@babel/preset-typescript'
 import babelPluginExt from './babel-plugin.cjs'
 
 const TS_EXTENSION = '.ts'
+const TSX_EXTENSION = '.tsx'
+
+const isTypeScriptUrl = (url) => url.endsWith(TS_EXTENSION) || url.endsWith(TSX_EXTENSION)
 
 export const getFormat = (url, context, defaultGetFormat) => {
-  if (url.endsWith(TS_EXTENSION)) {
+  if (isTypeScriptUrl(url)) {
     return { format: 'module' }
   }
 
@@ -17,7 +20,7 @@ export const getFormat = (url, context, defaultGetFormat) => {
 }
 
 export const transformSource = (source, context, defaultTransformSource) => {
-  if (context.url.endsWith(TS_EXTENSION)) {
+  if (isTypeScriptUrl(context.url)) {
     const transformed = transform(source, {
       ast: false,
       babelrc: false,
