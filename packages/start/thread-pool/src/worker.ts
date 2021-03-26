@@ -3,7 +3,7 @@ import { transformAsync } from '@babel/core'
 // @ts-ignore
 import babelPresetEnv from '@babel/preset-env'
 import { pipe } from 'funcom'
-import { toArrayAsync } from 'iterama'
+import { map, toArrayAsync } from 'iterama'
 import type { TJsonValue } from 'typeon'
 import { receiveOnPort, sendToPort } from 'worku'
 // @ts-ignore
@@ -90,7 +90,7 @@ while (true) {
     } else if (groupBy > 1 && groupType === 'serial') {
       value = await getValues(group)
     } else if (groupBy > 1 && groupType === 'concurrent') {
-      value = await Promise.all(group.map(getValue))
+      value = await Promise.all(map(getValue)(group))
       value = value.flat()
     } else {
       throw new Error('Invalid pool options')

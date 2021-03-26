@@ -9,10 +9,10 @@ export type TMergeTasks = {
 }
 
 export const mergeTasks: TMergeTasks = (...tasks: any[]) => async function* (arg: any) {
-  const { mergeAsync } = await import('iterama')
+  const { mergeAsync, map } = await import('iterama')
 
   yield* mergeAsync(
     // @ts-ignore we took care of it in overloads above
-    ...tasks.map((task) => task(arg))
+    ...map((task) => task(arg))(tasks)
   )
 }

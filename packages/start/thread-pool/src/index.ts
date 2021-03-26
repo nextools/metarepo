@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url'
 import { Worker } from 'worker_threads'
 import { pipe } from 'funcom'
 import getCallerFile from 'get-caller-file'
-import { groupByAsync, mapAsync, ungroupAsync } from 'iterama'
+import { groupByAsync, map, mapAsync, range, ungroupAsync } from 'iterama'
 import { piAllAsync } from 'piall'
 import type { TJsonValue } from 'typeon'
 import { once } from 'wans'
@@ -23,7 +23,7 @@ export const startThreadPool = async (options: TStartPoolOptions): Promise<() =>
   const workerPath = await resolve('./worker-wrapper.mjs')
 
   workers = await Promise.all(
-    Array.from({ length: options.threadCount }, async () => {
+    map(async () => {
       const worker = new Worker(workerPath, {
         trackUnmanagedFds: true,
       })
@@ -31,18 +31,18 @@ export const startThreadPool = async (options: TStartPoolOptions): Promise<() =>
       await waitForWorker(worker)
 
       return worker
-    })
+    })(range(options.threadCount))
   )
 
   console.log('threads:', options.threadCount)
 
   return async () => {
     await Promise.all(
-      workers.map((worker) => {
+      map((worker: Worker) => {
         sendToWorker<TMessageToWorkerExit>(worker, { type: 'EXIT' })
 
         return once<void>(worker, 'exit')
-      })
+      })(workers)
     )
   }
 }

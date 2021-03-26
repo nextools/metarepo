@@ -1,3 +1,4 @@
+import { map } from './map'
 // type UnwrapAsyncIterable<T> = T extends AsyncIterable<infer U>[] ? UnwrapAsyncIterable<U> : T
 
 export type TMergeAsync = {
@@ -10,16 +11,16 @@ export type TMergeAsync = {
 
 export const mergeAsync: TMergeAsync = (...its: AsyncIterable<any>[]) => ({
   async *[Symbol.asyncIterator]() {
-    const iterators = its.map((it) => it[Symbol.asyncIterator]())
+    const iterators = map((it: AsyncIterable<any>) => it[Symbol.asyncIterator]())(its)
     const queueNext = async (iterator: AsyncIterator<any>) => ({
       iterator,
       result: await iterator.next(),
     })
     const sources = new Map(
-      iterators.map((iterator) => [
+      map((iterator: AsyncIterator<any>) => [
         iterator,
         queueNext(iterator),
-      ])
+      ] as const)(iterators)
     )
 
     try {
@@ -38,7 +39,7 @@ export const mergeAsync: TMergeAsync = (...its: AsyncIterable<any>[]) => ({
       }
     } finally {
       await Promise.all(
-        iterators.map((iterator) => iterator.return?.())
+        map((iterator: AsyncIterator<any>) => iterator.return?.())(iterators)
       )
     }
   },
