@@ -1,14 +1,15 @@
-const buildIt = (outDir: string) => async function* (it: AsyncIterable<string>) {
+import type { TPlugin, TTask } from './types'
+
+const buildIt = (outDir: string): TPlugin<string, string> => async function* (it: AsyncIterable<string>) {
   const path = await import('path')
   const { default: ts } = await import('typescript')
   const { mapAsync } = await import('iterama')
 
   yield* mapAsync((filePath: string) => {
     const inDir = path.dirname(filePath)
-    const inDirFull = path.resolve(inDir)
     const outDirFull = path.resolve(outDir)
 
-    const configPath = ts.findConfigFile(inDirFull, ts.sys.fileExists)
+    const configPath = ts.findConfigFile(inDir, ts.sys.fileExists)
 
     if (typeof configPath === 'undefined') {
       throw new Error(`Unable to find \`tsconfig.json\` for ${inDir}`)
@@ -50,7 +51,7 @@ const buildIt = (outDir: string) => async function* (it: AsyncIterable<string>) 
   })(it)
 }
 
-export const buildTypes = async function* (pkg: string) {
+export const buildTypes: TTask<string, string> = async function* (pkg) {
   const { pipe } = await import('funcom')
   const { find } = await import('./find')
   const { remove } = await import('./remove')

@@ -1,11 +1,18 @@
-import type { TPlugin } from './types'
+import type { TTask } from './types'
 
-export const mergeTasks = <T, R1, R2>(task1: TPlugin<T, R1>, task2: TPlugin<T, R2>): TPlugin<T, R1 | R2> => async function* (it) {
-  const { broadcastAsync, mergeAsync } = await import('iterama')
+export type TMergeTasks = {
+  <T, R1>(task1: TTask<T, R1>): TTask<T, R1>,
+  <T, R1, R2>(task1: TTask<T, R1>, task2: TTask<T, R2>): TTask<T, R1 | R2>,
+  <T, R1, R2, R3>(task1: TTask<T, R1>, task2: TTask<T, R2>, task3: TTask<T, R3>): TTask<T, R1 | R2 | R3>,
+  <T, R1, R2, R3, R4>(task1: TTask<T, R1>, task2: TTask<T, R2>, task3: TTask<T, R3>, task4: TTask<T, R4>): TTask<T, R1 | R2 | R3 | R4>,
+  <T, R1, R2, R3, R4, R5>(task1: TTask<T, R1>, task2: TTask<T, R2>, task3: TTask<T, R3>, task4: TTask<T, R4>, task5: TTask<T, R5>): TTask<T, R1 | R2 | R3 | R4 | R5>,
+}
 
-  const broadcasted = broadcastAsync(it)
-  const it1 = task1(broadcasted)
-  const it2 = task2(broadcasted)
+export const mergeTasks: TMergeTasks = (...tasks: any[]) => async function* (arg: any) {
+  const { mergeAsync } = await import('iterama')
 
-  yield* mergeAsync(it1, it2)
+  yield* mergeAsync(
+    // @ts-ignore we took care of it in overloads above
+    ...tasks.map((task) => task(arg))
+  )
 }
