@@ -14,7 +14,7 @@ import { startTimeMs } from 'takes'
 import { once } from 'wans'
 
 type TTasks = {
-  [key: string]: (...args: string[]) => () => Promise<AsyncIterable<any>>,
+  [key: string]: (...args: string[]) => AsyncIterableIterator<any>,
 }
 
 type TStartOptions = {
@@ -95,9 +95,8 @@ try {
       continue
     }
 
-    const taskRunner = tasksExported[taskName]
-    const task = taskRunner(...args)
-    const it = await task()
+    const task = tasksExported[taskName]
+    const it = task(...args)
 
     try {
       const endTimeMs = startTimeMs()

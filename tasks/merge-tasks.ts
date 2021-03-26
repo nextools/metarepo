@@ -1,6 +1,6 @@
-import type { TTask } from './types'
+import type { TPlugin } from './types'
 
-export const mergeTasks = <T, R1, R2>(task1: TTask<T, R1>, task2: TTask<T, R2>): TTask<T, R1 | R2> => async function *(it) {
+export const mergeTasks = <T, R1, R2>(task1: TPlugin<T, R1>, task2: TPlugin<T, R2>): TPlugin<T, R1 | R2> => async function* (it) {
   const { broadcastAsync, mergeAsync } = await import('iterama')
 
   const broadcasted = broadcastAsync(it)

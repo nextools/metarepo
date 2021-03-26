@@ -1,6 +1,6 @@
-import type { TFile, TTask } from './types'
+import type { TFile, TPlugin } from './types'
 
-export const write = (dir: string): TTask<TFile, TFile> => async function *(iterable) {
+export const write = (dir: string): TPlugin<TFile, TFile> => async function* (iterable) {
   const path = await import('path')
   const { writeFile } = await import('fs/promises')
   const { mapAsync } = await import('iterama')

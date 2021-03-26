@@ -1,6 +1,6 @@
-import type { TFile, TTask } from './types'
+import type { TFile, TPlugin } from './types'
 
-export const rename = (renameFn: (filePath: string) => string): TTask<TFile, TFile> => async function *(it) {
+export const rename = (renameFn: (filePath: string) => string): TPlugin<TFile, TFile> => async function* (it) {
   const path = await import('path')
   const { mapAsync } = await import('iterama')
   const { isObject } = await import('tsfn')

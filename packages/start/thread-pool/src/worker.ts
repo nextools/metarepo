@@ -21,7 +21,8 @@ while (true) {
     }
 
     const { group, arg, taskString, callerDir, groupBy, groupType } = message.value
-    const cacheKey = `${callerDir}@${String}}`
+    const cacheKey = `${callerDir}@${taskString}}`
+
     let task: (it: AsyncIterable<TJsonValue>) => AsyncIterableIterator<TJsonValue>
 
     if (cache.has(cacheKey)) {

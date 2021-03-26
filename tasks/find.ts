@@ -1,6 +1,6 @@
-import type { TMaybeInputTask } from './types'
+import type { TMaybeInputPlugin } from './types'
 
-export const find = (globs: string[]): TMaybeInputTask<any, string> => async function *(it) {
+export const find = (globs: string[]): TMaybeInputPlugin<any, string> => async function* (it) {
   const { matchGlobs } = await import('iva')
   const { isAsyncIterable } = await import('tsfn')
   const { drainAsync } = await import('iterama')

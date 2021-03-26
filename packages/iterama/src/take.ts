@@ -2,7 +2,7 @@ import FixedArray from 'circularr'
 import { iterate } from './iterate'
 
 const takeFirst = (n: number) => <T>(iterable: Iterable<T>): Iterable<T> => ({
-  *[Symbol.iterator]() {
+  * [Symbol.iterator]() {
     if (n <= 0) {
       return
     }
@@ -20,7 +20,7 @@ const takeFirst = (n: number) => <T>(iterable: Iterable<T>): Iterable<T> => ({
 })
 
 const takeLast = (n: number) => <T>(iterable: Iterable<T>): Iterable<T> => ({
-  *[Symbol.iterator]() {
+  * [Symbol.iterator]() {
     const last = new FixedArray<T>(n)
     let numValues = 0
 

@@ -10,7 +10,7 @@ export const babelConfigBuildNode: TransformOptions = {
   babelrc: false,
   compact: false,
   retainLines: true,
-  sourceMaps: true,
+  sourceMaps: false,
   presets: [
     [
       babelPresetEnv,
@@ -48,7 +48,7 @@ export const babelConfigBuildWeb: TransformOptions = {
   babelrc: false,
   compact: false,
   retainLines: true,
-  sourceMaps: true,
+  sourceMaps: false,
   presets: [
     [
       babelPresetEnv,

@@ -1,6 +1,6 @@
-import type { TFile, TTask } from './types'
+import type { TFile, TPlugin, TTask } from './types'
 
-export const buildNode = (dir: string): TTask<string, TFile> => async function *(it) {
+const buildIt = (outDir: string): TPlugin<string, TFile> => async function* (it) {
   const { pipe } = await import('funcom')
   const { read } = await import('./read')
   const { rename } = await import('./rename')
@@ -12,6 +12,22 @@ export const buildNode = (dir: string): TTask<string, TFile> => async function *
     read,
     babel(babelConfigBuildNode),
     rename((path) => path.replace(/\.tsx?$/, '.js')),
-    write(`${dir}/node/`)
+    write(outDir)
   )(it)
+}
+
+export const buildNode: TTask<string, TFile> = async function* (pkg) {
+  const { pipe } = await import('funcom')
+  const { find } = await import('./find')
+  const { remove } = await import('./remove')
+  const { mapThreadPool } = await import('@start/thread-pool')
+
+  const outDir = `packages/${pkg}/build/node/`
+
+  yield* pipe(
+    find([outDir]),
+    remove,
+    find([`packages/${pkg}/src/*.ts`]),
+    mapThreadPool(buildIt, outDir)
+  )()
 }

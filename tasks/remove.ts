@@ -1,6 +1,6 @@
-import type { TTask } from './types'
+import type { TPlugin } from './types'
 
-export const remove: TTask<string, string> = async function *(it) {
+export const remove: TPlugin<string, string> = async function* (it) {
   const { mapAsync } = await import('iterama')
   const { default: dleet } = await import('dleet')
 

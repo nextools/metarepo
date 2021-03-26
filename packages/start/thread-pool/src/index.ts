@@ -3,22 +3,21 @@ import { fileURLToPath } from 'url'
 import { Worker } from 'worker_threads'
 import { pipe } from 'funcom'
 import getCallerFile from 'get-caller-file'
-import { mapAsync } from 'iterama'
+import { groupByAsync, mapAsync, ungroupAsync } from 'iterama'
 import { piAllAsync } from 'piall'
 import type { TJsonValue } from 'typeon'
 import { once } from 'wans'
 import { sendAndReceiveOnWorker, sendToWorker, waitForWorker } from 'worku'
-import { groupByAsync } from './group-by-async'
 import { resolve } from './resolve'
 import { startWithTypeAsync } from './start-with-type-async'
 import type { TPipePoolOptions, TStartPoolOptions, TMessageFromWorker, TMessageToWorkerTask, TMessageToWorkerExit } from './types'
-import { ungroupAsync } from './ungroup-async'
 
-const DEFAULT_GROUP_BY = 8
+const DEFAULT_GROUP_BY = 1
 const DEFAULT_GROUP_TYPE = 'serial'
 
 let workers: Worker[] = []
 const busyWorkers = new Set<number>()
+const queueResolvers: (() => void)[] = []
 
 export const startThreadPool = async (options: TStartPoolOptions): Promise<() => Promise<void>> => {
   const workerPath = await resolve('./worker-wrapper.mjs')
@@ -48,18 +47,24 @@ export const startThreadPool = async (options: TStartPoolOptions): Promise<() =>
   }
 }
 
-export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(taskFn: (arg: any) => (it: AsyncIterable<T>) => AsyncIterable<R>, arg: TJsonValue, options?: TPipePoolOptions) => {
+export const mapThreadPool = <T extends TJsonValue, R extends TJsonValue>(taskFn: (arg: any) => (it: AsyncIterable<T>) => AsyncIterable<R>, arg: TJsonValue, options?: TPipePoolOptions) => {
   if (workers.length === 0) {
     throw new Error('Start thread pool first')
   }
 
-  const callerDir = fileURLToPath(path.dirname(getCallerFile()))
   const taskString = taskFn.toString()
+  const callerDir = fileURLToPath(path.dirname(getCallerFile()))
   const groupBy = options?.groupBy ?? DEFAULT_GROUP_BY
   const groupType = options?.groupType ?? DEFAULT_GROUP_TYPE
 
   return (it: AsyncIterable<T>): AsyncIterable<R> => {
     const workerize = (group: T[]) => async (): Promise<R[]> => {
+      if (busyWorkers.size === workers.length) {
+        await new Promise<void>((resolve) => {
+          queueResolvers.push(resolve)
+        })
+      }
+
       const worker = workers.find((worker) => !busyWorkers.has(worker.threadId))!
 
       busyWorkers.add(worker.threadId)
@@ -73,11 +78,16 @@ export const pipeThreadPool = <T extends TJsonValue, R extends TJsonValue>(taskF
           group,
           groupBy,
           groupType,
-
         },
       })
 
       busyWorkers.delete(worker.threadId)
+
+      if (queueResolvers.length > 0) {
+        const queueResolver = queueResolvers.shift()!
+
+        queueResolver()
+      }
 
       if (messageFromWorker.type === 'ERROR') {
         throw messageFromWorker.value

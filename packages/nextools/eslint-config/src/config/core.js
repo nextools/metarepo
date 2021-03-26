@@ -299,8 +299,9 @@ module.exports = {
       after: true,
     }],
     'generator-star-spacing': [2, {
-      before: true,
-      after: false,
+      before: false,
+      after: true,
+      method: { before: true, after: false },
     }],
     'no-confusing-arrow': [2, { allowParens: true }],
     'no-const-assign': 2,
