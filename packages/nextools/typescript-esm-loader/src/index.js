@@ -11,6 +11,16 @@ const TSX_EXTENSION = '.tsx'
 
 const isTypeScriptUrl = (url) => url.endsWith(TS_EXTENSION) || url.endsWith(TSX_EXTENSION)
 
+export const resolve = (specifier, context, defaultResolve) => {
+  if (isTypeScriptUrl(specifier)) {
+    return {
+      url: new URL(specifier, context.parentURL).href,
+    }
+  }
+
+  return defaultResolve(specifier, context, defaultResolve)
+}
+
 export const getFormat = (url, context, defaultGetFormat) => {
   if (isTypeScriptUrl(url)) {
     return { format: 'module' }
@@ -26,7 +36,7 @@ export const transformSource = (source, context, defaultTransformSource) => {
       babelrc: false,
       compact: false,
       inputSourceMap: false,
-      // sourceMaps: 'inline',
+      sourceMaps: 'inline',
       presets: [
         [
           babelPresetEnv,

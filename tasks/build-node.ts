@@ -11,7 +11,7 @@ const buildIt = (outDir: string): TPlugin<string, TFile> => async function* (it)
   yield* pipe(
     read,
     babel(babelConfigBuildNode),
-    rename((path) => path.replace(/\.tsx?$/, '.js')),
+    rename(/\.tsx?$/, '.js'),
     write(outDir)
   )(it)
 }
