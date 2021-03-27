@@ -25,9 +25,9 @@ export const buildNode: TTask<string, TFile> = async function* (pkg) {
   const outDir = `packages/${pkg}/build/node/`
 
   yield* pipe(
-    find([outDir]),
+    find(outDir),
     remove,
-    find([`packages/${pkg}/src/*.ts`]),
+    find(`packages/${pkg}/src/*.ts`),
     mapThreadPool(buildIt, outDir, { groupBy: 8 })
   )()
 }

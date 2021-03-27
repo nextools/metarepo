@@ -2,9 +2,14 @@ import { cwd } from 'process'
 import { pipe } from 'funcom'
 import { concatAsync, filter, map, uniqueAsync } from 'iterama'
 import toAbsoluteGlob from 'to-absolute-glob'
+import { isArray } from 'tsfn'
 import { matchGlob } from './match-glob'
 
-export const matchGlobs = (globs: Iterable<string>): AsyncIterable<string> => {
+export const matchGlobs = (globs: string[]): AsyncIterable<string> => {
+  if (!isArray(globs)) {
+    throw new Error('Array of globs is required')
+  }
+
   const workingDirPath = cwd()
 
   const negatedGlobs = pipe(

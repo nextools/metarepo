@@ -60,9 +60,9 @@ export const buildTypes: TTask<string, string> = async function* (pkg) {
   const outDir = `packages/${pkg}/build/types/`
 
   yield* pipe(
-    find([outDir]),
+    find(outDir),
     remove,
-    find([`packages/${pkg}/src/index.ts`]),
+    find(`packages/${pkg}/src/index.ts`),
     mapThreadPool(buildIt, outDir)
   )()
 }

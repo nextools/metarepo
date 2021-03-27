@@ -32,6 +32,7 @@
     "iterama": "^0.6.1",
     "picomatch": "^2.2.2",
     "pifs": "^2.0.0",
-    "to-absolute-glob": "^2.0.2"
+    "to-absolute-glob": "^2.0.2",
+    "tsfn": "^2.2.0"
   }
 }
