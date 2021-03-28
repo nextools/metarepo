@@ -9,23 +9,23 @@ export type TPipePoolOptions = {
   groupType?: 'serial' | 'concurrent',
 }
 
-export type TMessageToWorkerTask = {
+export type TMessageToWorkerTask<T> = {
   type: 'TASK',
   value: {
     taskString: string,
     arg: TJsonValue,
     callerDir: string,
-    group: TJsonValue[],
+    group: T,
     groupBy: number,
     groupType: 'serial' | 'concurrent',
-  }
+  },
 }
 
 export type TMessageToWorkerExit = {
-  type: 'EXIT'
+  type: 'EXIT',
 }
 
-export type TMessageToWorker = TMessageToWorkerTask | TMessageToWorkerExit
+export type TMessageToWorker<T> = TMessageToWorkerTask<T> | TMessageToWorkerExit
 
 export type TMessageFromWorkerDone<T> = {
   type: 'DONE',

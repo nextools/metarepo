@@ -1,5 +1,8 @@
 // https://github.com/mysticatea/eslint-plugin-node
 module.exports = {
+  plugins: [
+    'node',
+  ],
   rules: {
     'node/handle-callback-err': 2,
     'node/no-deprecated-api': [2, {

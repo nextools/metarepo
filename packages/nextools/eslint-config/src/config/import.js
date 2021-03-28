@@ -1,6 +1,9 @@
 // https://github.com/benmosher/eslint-plugin-import
 // https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/FAQ.md#eslint-plugin-import
 module.exports = {
+  plugins: [
+    'import',
+  ],
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': [

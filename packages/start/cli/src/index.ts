@@ -98,8 +98,9 @@ try {
     const task = tasksExported[taskName]
     const it = task(...args)
 
+    const endTimeMs = startTimeMs()
+
     try {
-      const endTimeMs = startTimeMs()
       let i = 0
 
       await pipeAsync(
@@ -112,12 +113,12 @@ try {
       )(it)
 
       process.stdout.write('\n')
-
+    } catch (err) {
+      console.error(err)
+    } finally {
       const tookMs = endTimeMs()
 
       console.log(`time: ${tookMs}ms`)
-    } catch (err) {
-      console.error(err)
     }
   }
 } catch (err) {

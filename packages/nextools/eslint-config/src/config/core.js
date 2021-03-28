@@ -1,14 +1,13 @@
 // https://eslint.org/docs/rules/
 module.exports = {
   parserOptions: {
-    ecmaVersion: 9,
+    ecmaVersion: 12,
     sourceType: 'module',
   },
   env: {
-    es6: true,
+    es2021: true,
     browser: true,
     node: true,
-    jest: true,
   },
   rules: {
     'getter-return': 2,

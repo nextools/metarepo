@@ -2,9 +2,13 @@
 
 // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin
 module.exports = {
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
   },
+  plugins: [
+    '@typescript-eslint',
+  ],
   rules: {
     '@typescript-eslint/adjacent-overload-signatures': 2,
     '@typescript-eslint/array-type': [2, {

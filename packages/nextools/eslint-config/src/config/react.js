@@ -12,6 +12,9 @@ module.exports = {
       version: '16',
     },
   },
+  plugins: [
+    'react',
+  ],
   rules: {
     'jsx-quotes': [2, 'prefer-double'],
     'react/boolean-prop-naming': [2, {

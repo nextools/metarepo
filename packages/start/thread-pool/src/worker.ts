@@ -14,7 +14,7 @@ const cache = new Map()
 
 while (true) {
   try {
-    const message = await receiveOnPort<TMessageToWorker>(parentPort!)
+    const message = await receiveOnPort<TMessageToWorker<TJsonValue[]>>(parentPort!)
 
     if (message.type === 'EXIT') {
       break
