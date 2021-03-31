@@ -1,3 +1,4 @@
+import Module from 'module'
 import resolver from 'enhanced-resolve'
 
 const resolve = resolver.create.sync({
@@ -10,9 +11,12 @@ export default ({ types }) => ({
     CallExpression(path, state) {
       if (path.node.callee.type === 'Import' && path.node.arguments[0].type === 'StringLiteral') {
         const specifier = path.node.arguments[0].value
-        const resolvedSpecifier = resolve(state.opts.callerDir, specifier)
 
-        path.node.arguments[0] = types.stringLiteral(resolvedSpecifier)
+        if (!Module.builtinModules.includes(specifier)) {
+          const resolvedSpecifier = resolve(state.opts.callerDir, specifier)
+
+          path.node.arguments[0] = types.stringLiteral(resolvedSpecifier)
+        }
       }
     },
   },

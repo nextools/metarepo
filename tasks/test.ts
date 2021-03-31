@@ -9,13 +9,18 @@ const testIt = (): TPlugin<string, string> => async function* (it) {
   const { default: { createCoverageMap } } = await import('istanbul-lib-coverage')
   const { default: { createContext } } = await import('istanbul-lib-report')
   const reports = await import('istanbul-reports')
-  const { sourceMapsKey } = await import('@start/ts-esm-loader')
+  const { fromSource: getSourceMapFromSource } = await import('convert-source-map')
+  const { sourcesKey } = await import('@start/ts-esm-loader')
 
   const instrumenter = new CoverageInstrumenter()
   const coverageMap = createCoverageMap()
   const piAlled = piAll(8)
 
   await instrumenter.startInstrumenting()
+
+  const globl = global as any
+
+  globl[sourcesKey] = {}
 
   yield* mapAsync(async (filePath: string) => {
     const { tests } = await import(`${filePath}?nocache`)
@@ -34,10 +39,12 @@ const testIt = (): TPlugin<string, string> => async function* (it) {
 
   for (const coverage of coverages) {
     if (coverage.url.includes('iterama/src/concat.ts')) {
-      const sourcemap = (global as any)[sourceMapsKey][coverage.url] as TSourceMap
-      const converter = v8toIstanbul(fileURLToPath(coverage.url), 0, {
-        source: '',
-        originalSource: '',
+      const filePath = fileURLToPath(coverage.url)
+      const source = globl[sourcesKey][filePath]
+      const sourcemap = getSourceMapFromSource(source)!.toObject() as TSourceMap
+
+      const converter = v8toIstanbul(filePath, 0, {
+        source,
         sourceMap: { sourcemap },
       })
 
@@ -47,6 +54,9 @@ const testIt = (): TPlugin<string, string> => async function* (it) {
       coverageMap.merge(converter.toIstanbul())
     }
   }
+
+  // never happened
+  delete globl[sourcesKey]
 
   const context = createContext({
     dir: 'coverage/',
@@ -66,7 +76,7 @@ export const test: TTask<string, any> = async function* (pkg = 'iterama') {
   // const { mapThreadPool } = await import('@start/thread-pool')
 
   yield* pipe(
-    find('cov/'),
+    find('coverage/'),
     remove,
     find(`packages/${pkg}/test_/*.{ts,tsx}`),
     testIt()

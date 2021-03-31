@@ -1,1 +1,1 @@
-export * from './source-maps-key'
+export { sourcesKey } from './sources-key'
