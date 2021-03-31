@@ -31,8 +31,8 @@ export const resolve = async (specifier, context, defaultResolve) => {
     const result = await resolveExt(dir, specifier)
     let url = pathToFileURL(result).href
 
-    if (context.parentURL.endsWith('?nocache')) {
-      url += `?u=${Date.now()}`
+    if (context.parentURL.includes('?nocache')) {
+      url += `?nocache&u=${Date.now()}`
     }
 
     return { url }
