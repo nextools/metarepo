@@ -22,7 +22,8 @@
     "@babel/plugin-syntax-top-level-await": "^7.12.13",
     "@babel/preset-env": "^7.13.8",
     "@babel/preset-react": "^7.12.13",
-    "@babel/preset-typescript": "^7.13.0"
+    "@babel/preset-typescript": "^7.13.0",
+    "enhanced-resolve": "^5.7.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",

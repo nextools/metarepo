@@ -1,28 +1,48 @@
-import { fileURLToPath } from 'url'
+import path from 'path'
+import { fileURLToPath, pathToFileURL } from 'url'
+import { promisify } from 'util'
 import { transform } from '@babel/core'
 import babelPluginSyntaxTopLevelAwait from '@babel/plugin-syntax-top-level-await'
 import babelPresetEnv from '@babel/preset-env'
 import babelPresetReact from '@babel/preset-react'
 import babelPresetTypeScript from '@babel/preset-typescript'
-import babelPluginExt from './babel-plugin.cjs'
+import resolver from 'enhanced-resolve'
 
-const TS_EXTENSION = '.ts'
-const TSX_EXTENSION = '.tsx'
+const EXTENSIONS = ['.ts', '.tsx']
+const START_SOURCE_MAPS = '@@start-source-maps'
 
-const isTypeScriptUrl = (url) => url.endsWith(TS_EXTENSION) || url.endsWith(TSX_EXTENSION)
+const isTsSpecifier = (specifier) => {
+  const url = new URL(specifier, 'fake://')
+  const ext = path.extname(url.pathname)
 
-export const resolve = (specifier, context, defaultResolve) => {
-  if (isTypeScriptUrl(specifier)) {
-    return {
-      url: new URL(specifier, context.parentURL).href,
+  return EXTENSIONS.includes(ext)
+}
+
+const resolveExt = promisify(
+  resolver.create({
+    extensions: EXTENSIONS,
+    unsafeCache: true,
+  })
+)
+
+export const resolve = async (specifier, context, defaultResolve) => {
+  if (specifier.startsWith('.') && !isTsSpecifier(specifier)) {
+    const dir = path.dirname(fileURLToPath(context.parentURL))
+    const result = await resolveExt(dir, specifier)
+    let url = pathToFileURL(result).href
+
+    if (context.parentURL.endsWith('?nocache')) {
+      url += `?u=${Date.now()}`
     }
+
+    return { url }
   }
 
   return defaultResolve(specifier, context, defaultResolve)
 }
 
 export const getFormat = (url, context, defaultGetFormat) => {
-  if (isTypeScriptUrl(url)) {
+  if (isTsSpecifier(url)) {
     return { format: 'module' }
   }
 
@@ -30,13 +50,13 @@ export const getFormat = (url, context, defaultGetFormat) => {
 }
 
 export const transformSource = (source, context, defaultTransformSource) => {
-  if (isTypeScriptUrl(context.url)) {
+  if (isTsSpecifier(context.url)) {
     const transformed = transform(source, {
       ast: false,
       babelrc: false,
       compact: false,
       inputSourceMap: false,
-      sourceMaps: 'inline',
+      sourceMaps: true,
       presets: [
         [
           babelPresetEnv,
@@ -48,7 +68,6 @@ export const transformSource = (source, context, defaultTransformSource) => {
         ],
       ],
       plugins: [
-        babelPluginExt,
         babelPluginSyntaxTopLevelAwait,
         // '@babel/plugin-proposal-class-properties',
         // '@babel/plugin-proposal-private-methods',
@@ -71,6 +90,9 @@ export const transformSource = (source, context, defaultTransformSource) => {
       shouldPrintComment: (val) => val.startsWith('#'),
       filename: fileURLToPath(context.url),
     })
+
+    global[START_SOURCE_MAPS] = global[START_SOURCE_MAPS] ?? {}
+    global[START_SOURCE_MAPS][context.url] = transformed.map
 
     return { source: transformed.code }
   }

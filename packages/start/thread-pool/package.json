@@ -20,6 +20,7 @@
   "dependencies": {
     "@babel/core": "^7.13.8",
     "@babel/preset-env": "7.13.8",
+    "enhanced-resolve": "^5.7.0",
     "funcom": "^0.2.0",
     "get-caller-file": "^2.0.5",
     "iterama": "^0.6.1",

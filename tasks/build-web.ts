@@ -3,9 +3,9 @@ import type { TFile, TPlugin, TTask } from './types'
 const buildIt = (outDir: string): TPlugin<string, TFile> => async function* (it) {
   const { pipe } = await import('funcom')
   const { read } = await import('./read')
-  const { rename } = await import('./rename')
   const { babel } = await import('./babel')
   const { babelConfigBuildWeb } = await import('./babel-config')
+  const { rename } = await import('./rename')
   const { write } = await import('./write')
 
   yield* pipe(
