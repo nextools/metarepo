@@ -1,5 +1,5 @@
 #!/bin/sh
-//bin/sh -c :; exec /usr/bin/env node --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @nextools/typescript-esm-loader "$0" "$@"
+//bin/sh -c :; exec /usr/bin/env node --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @start/ts-esm-loader "$0" "$@"
 // https://unix.stackexchange.com/questions/65235/universal-node-js-shebang#comment755057_65295
 
 import { readFile } from 'fs/promises'

@@ -19,9 +19,3 @@ export type TFile = {
   data: string,
   map?: TSourceMap,
 }
-
-export type TGlobal = NodeJS.Global & {
-  '@@start-source-maps': {
-    [k: string]: TSourceMap,
-  },
-}

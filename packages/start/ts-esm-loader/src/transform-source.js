@@ -1,53 +1,11 @@
-import path from 'path'
-import { fileURLToPath, pathToFileURL } from 'url'
-import { promisify } from 'util'
+import { fileURLToPath } from 'url'
 import { transform } from '@babel/core'
 import babelPluginSyntaxTopLevelAwait from '@babel/plugin-syntax-top-level-await'
 import babelPresetEnv from '@babel/preset-env'
 import babelPresetReact from '@babel/preset-react'
 import babelPresetTypeScript from '@babel/preset-typescript'
-import resolver from 'enhanced-resolve'
-
-const EXTENSIONS = ['.ts', '.tsx']
-const START_SOURCE_MAPS = '@@start-source-maps'
-
-const isTsSpecifier = (specifier) => {
-  const url = new URL(specifier, 'fake://')
-  const ext = path.extname(url.pathname)
-
-  return EXTENSIONS.includes(ext)
-}
-
-const resolveExt = promisify(
-  resolver.create({
-    extensions: EXTENSIONS,
-    unsafeCache: true,
-  })
-)
-
-export const resolve = async (specifier, context, defaultResolve) => {
-  if (specifier.startsWith('.') && !isTsSpecifier(specifier)) {
-    const dir = path.dirname(fileURLToPath(context.parentURL))
-    const result = await resolveExt(dir, specifier)
-    let url = pathToFileURL(result).href
-
-    if (context.parentURL.includes('?nocache')) {
-      url += `?nocache&u=${Date.now()}`
-    }
-
-    return { url }
-  }
-
-  return defaultResolve(specifier, context, defaultResolve)
-}
-
-export const getFormat = (url, context, defaultGetFormat) => {
-  if (isTsSpecifier(url)) {
-    return { format: 'module' }
-  }
-
-  return defaultGetFormat(url, context, defaultGetFormat)
-}
+import { isTsSpecifier } from './is-ts-specifier.js'
+import { sourceMapsKey } from './source-maps-key.js'
 
 export const transformSource = (source, context, defaultTransformSource) => {
   if (isTsSpecifier(context.url)) {
@@ -91,8 +49,8 @@ export const transformSource = (source, context, defaultTransformSource) => {
       filename: fileURLToPath(context.url),
     })
 
-    global[START_SOURCE_MAPS] = global[START_SOURCE_MAPS] ?? {}
-    global[START_SOURCE_MAPS][context.url] = transformed.map
+    global[sourceMapsKey] = global[sourceMapsKey] ?? {}
+    global[sourceMapsKey][context.url] = transformed.map
 
     return { source: transformed.code }
   }

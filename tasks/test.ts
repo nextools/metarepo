@@ -1,4 +1,4 @@
-import type { TGlobal, TPlugin, TTask } from './types'
+import type { TPlugin, TSourceMap, TTask } from './types'
 
 const testIt = (): TPlugin<string, string> => async function* (it) {
   const { fileURLToPath } = await import('url')
@@ -9,6 +9,7 @@ const testIt = (): TPlugin<string, string> => async function* (it) {
   const { default: { createCoverageMap } } = await import('istanbul-lib-coverage')
   const { default: { createContext } } = await import('istanbul-lib-report')
   const reports = await import('istanbul-reports')
+  const { sourceMapsKey } = await import('@start/ts-esm-loader')
 
   const instrumenter = new CoverageInstrumenter()
   const coverageMap = createCoverageMap()
@@ -30,11 +31,10 @@ const testIt = (): TPlugin<string, string> => async function* (it) {
   })(it)
 
   const coverages = await instrumenter.stopInstrumenting()
-  const globl = global as any as TGlobal
 
   for (const coverage of coverages) {
     if (coverage.url.includes('iterama/src/concat.ts')) {
-      const sourcemap = globl['@@start-source-maps'][coverage.url]
+      const sourcemap = (global as any)[sourceMapsKey][coverage.url] as TSourceMap
       const converter = v8toIstanbul(fileURLToPath(coverage.url), 0, {
         source: '',
         originalSource: '',
