@@ -158,7 +158,6 @@
     "node": ">=12.13.0"
   },
   "dependencies": {
-    "collect-v8-coverage": "^1.0.1",
     "v8-to-istanbul": "^7.1.1"
   }
 }
