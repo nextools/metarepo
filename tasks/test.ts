@@ -40,13 +40,9 @@ const testIt = (): TPlugin<string, string> => async function* (it) {
   for (const coverage of coverages) {
     if (coverage.url.includes('iterama/src/concat.ts')) {
       const filePath = fileURLToPath(coverage.url)
-      const source = globl[sourcesKey][filePath]
+      const source = globl[sourcesKey][filePath] as string
       const sourcemap = getSourceMapFromSource(source)!.toObject() as TSourceMap
-
-      const converter = v8toIstanbul(filePath, 0, {
-        source,
-        sourceMap: { sourcemap },
-      })
+      const converter = v8toIstanbul(filePath, 0, { source, sourceMap: { sourcemap } })
 
       await converter.load()
 
@@ -58,11 +54,7 @@ const testIt = (): TPlugin<string, string> => async function* (it) {
   // never happened
   delete globl[sourcesKey]
 
-  const context = createContext({
-    dir: 'coverage/',
-    coverageMap,
-  })
-
+  const context = createContext({ dir: 'coverage/', coverageMap })
   const report = reports.create('html')
 
   // @ts-ignore
