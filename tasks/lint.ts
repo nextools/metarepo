@@ -1,7 +1,7 @@
 import type { ESLint } from 'eslint'
 import type { TPlugin, TTask } from './types'
 
-const lintIt = (): TPlugin<string, ESLint.LintResult[]> => async function* (it) {
+const lintIt = (): TPlugin<string, ESLint.LintResult> => async function* (it) {
   const { read } = await import('./read')
   const { eslintCheck } = await import('./eslint')
   const { pipe } = await import('funcom')
@@ -12,7 +12,7 @@ const lintIt = (): TPlugin<string, ESLint.LintResult[]> => async function* (it) 
   )(it)
 }
 
-export const lint: TTask<string, ESLint.LintResult[]> = async function* (pkg = '*') {
+export const lint: TTask<string, ESLint.LintResult> = async function* (pkg = '*') {
   const { pipe } = await import('funcom')
   const { find } = await import('./find')
   const { eslintPrint } = await import('./eslint')

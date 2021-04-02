@@ -104,7 +104,7 @@ const reportCoverage = (coverageDir: string, reporterNames: TReporterName[] = ['
   )(it)
 }
 
-export const test: TTask<string, any> = async function* (pkg = 'iterama') {
+export const test: TTask<string, CoverageMapData> = async function* (pkg = 'iterama') {
   const { pipe } = await import('funcom')
   const { find } = await import('./find')
   const { remove } = await import('./remove')

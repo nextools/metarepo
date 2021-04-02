@@ -1,9 +1,10 @@
 import type { ESLint } from 'eslint'
 import type { TFile, TPlugin } from './types'
 
-export const eslintCheck = (options?: ESLint.Options): TPlugin<TFile, ESLint.LintResult[]> => async function* (it) {
+export const eslintCheck = (options?: ESLint.Options): TPlugin<TFile, ESLint.LintResult> => async function* (it) {
   const { ESLint } = await import('eslint')
-  const { mapAsync } = await import('iterama')
+  const { pipe } = await import('funcom')
+  const { mapAsync, ungroupAsync } = await import('iterama')
 
   const eslint = new ESLint({
     cache: true,
@@ -11,16 +12,18 @@ export const eslintCheck = (options?: ESLint.Options): TPlugin<TFile, ESLint.Lin
     ...options,
   })
 
-  yield* mapAsync(async (file: TFile) => {
-    const results = await eslint.lintText(file.data, { filePath: file.path })
-
-    return results
-  })(it)
+  yield* pipe(
+    mapAsync((file: TFile) => {
+      return eslint.lintText(file.data, { filePath: file.path })
+    }),
+    ungroupAsync
+  )(it)
 }
 
-export const eslintPrint = (options?: ESLint.Options): TPlugin<ESLint.LintResult[], ESLint.LintResult[]> => async function* (it) {
+export const eslintPrint = (options?: ESLint.Options): TPlugin<ESLint.LintResult, ESLint.LintResult> => async function* (it) {
   const { ESLint } = await import('eslint')
-  const { forEachAsync } = await import('iterama')
+  const { pipe } = await import('funcom')
+  const { forEachAsync, finallyAsync } = await import('iterama')
 
   const eslint = new ESLint({
     cache: true,
@@ -29,26 +32,27 @@ export const eslintPrint = (options?: ESLint.Options): TPlugin<ESLint.LintResult
   })
   let hasErrors = false
   let hasWarnings = false
-  const totalResults: ESLint.LintResult[] = []
+  const results: ESLint.LintResult[] = []
 
-  try {
-    yield* forEachAsync((results: ESLint.LintResult[]) => {
-      hasErrors = hasErrors || results.some((result) => result.errorCount > 0)
-      hasWarnings = hasWarnings || results.some((result) => result.warningCount > 0)
+  yield* pipe(
+    forEachAsync((result: ESLint.LintResult) => {
+      hasErrors = hasErrors || result.errorCount > 0
+      hasWarnings = hasWarnings || result.warningCount > 0
 
-      totalResults.push(...results)
-    })(it)
-  } finally {
-    const formatter = await eslint.loadFormatter()
-    const formattedReport = formatter.format(totalResults)
+      results.push(result)
+    }),
+    finallyAsync(async () => {
+      const formatter = await eslint.loadFormatter()
+      const formattedReport = formatter.format(results)
 
-    if (hasErrors || hasWarnings) {
-      console.log(formattedReport)
-    }
-  }
+      if (hasErrors || hasWarnings) {
+        console.log(formattedReport)
+      }
+    })
+  )(it)
 }
 
-export const eslint = (options?: ESLint.Options): TPlugin<TFile, ESLint.LintResult[]> => async function* (it) {
+export const eslint = (options?: ESLint.Options): TPlugin<TFile, ESLint.LintResult> => async function* (it) {
   const { pipe } = await import('funcom')
 
   yield* pipe(
