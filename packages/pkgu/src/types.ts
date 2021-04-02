@@ -1,11 +1,9 @@
+import type { TStringObject } from 'tsfn'
+
 export type TPerson = string | {
   name: string,
   email: string,
   url?: string,
-}
-
-export type TStringObject = {
-  [k: string]: string,
 }
 
 // https://docs.npmjs.com/files/package.json
@@ -20,6 +18,7 @@ export type TPackageJson = {
   contributors?: TPerson[],
   files?: string[],
   type?: 'commonjs' | 'module',
+  exports?: TStringObject,
   main?: string,
   browser?: string,
   'react-native'?: string,

@@ -1,7 +1,11 @@
 import type { TransformOptions } from '@babel/core'
+// @ts-expect-error
 import babelPluginSyntaxTopLevelAwait from '@babel/plugin-syntax-top-level-await'
+// @ts-expect-error
 import babelPresetEnv from '@babel/preset-env'
+// @ts-expect-error
 import babelPresetReact from '@babel/preset-react'
+// @ts-expect-error
 import babelPresetTypeScript from '@babel/preset-typescript'
 import { babelPluginExt } from './babel-plugin-ext'
 

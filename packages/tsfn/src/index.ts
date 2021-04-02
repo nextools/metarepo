@@ -13,7 +13,8 @@ export type {
   TOptionalKeys,
   TPrimitive,
   TReadonly,
-  TRequireKeys,
   TRequiredKeys,
+  TRequireKeys,
+  TStringObject,
   TWritable,
 } from './types'

@@ -1,6 +1,9 @@
 export type TAnyObject = {
   [key: string]: any,
 }
+export type TStringObject = {
+  [key: string]: string,
+}
 export type TKeyOf<T> = (keyof T) & string
 
 export type TIntersect <T1 extends {}, T2 extends {}> = {
