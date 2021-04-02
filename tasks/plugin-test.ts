@@ -1,16 +1,21 @@
 import type { CoverageMapData } from 'istanbul-lib-coverage'
 import type { ReportOptions } from 'istanbul-reports'
-import type { TPlugin, TSourceMap, TTask } from './types'
+import type { TPlugin, TSourceMap } from './types'
 
-type TReporterName = keyof ReportOptions
+export type TReporterName = keyof ReportOptions
 
-const testIt = (sourcesDir: string): TPlugin<string, CoverageMapData> => async function* (it) {
+export type TTestFile = {
+  tests: Iterable<() => void | Promise<void>>,
+  target: string,
+}
+
+export const test = (): TPlugin<string, CoverageMapData> => async function* (it) {
   const path = await import('path')
   const { fileURLToPath } = await import('url')
   const { pipe } = await import('funcom')
   const { drainAsync, mapAsync, ungroupAsync } = await import('iterama')
+  const { default: picomatch } = await import('picomatch')
   const { piAll } = await import('piall')
-  const { default: movePath } = await import('move-path')
   const { startCollectingCoverage } = await import('./coverage')
   const { default: v8toIstanbul } = await import('v8-to-istanbul')
   const { fromSource: getSourceMapFromSource } = await import('convert-source-map')
@@ -25,14 +30,11 @@ const testIt = (sourcesDir: string): TPlugin<string, CoverageMapData> => async f
       globl[sourcesKey] = {}
 
       const stopCollectingCoverage = await startCollectingCoverage()
-      const { tests } = await import(`${testFilePath}?nocache`)
+      const { tests, target } = await import(`${testFilePath}?nocache=${Date.now()}`) as TTestFile
+      // `a/b/c/test/foo.ts` + `../src/f*.ts` -> /a/b/c/src/f*.ts
+      const isMatch = picomatch(path.join(path.dirname(testFilePath), target))
 
-      try {
-        await drainAsync(piAlled(tests))
-      } catch (err) {
-        console.error(testFilePath)
-        console.error(err.message)
-      }
+      await drainAsync(piAlled(tests))
 
       const v8Coverages = await stopCollectingCoverage()
       const istanbulCoverages: CoverageMapData[] = []
@@ -45,18 +47,8 @@ const testIt = (sourcesDir: string): TPlugin<string, CoverageMapData> => async f
 
         const sourceFilePath = fileURLToPath(v8Coverage.url)
 
-        // test/index.ts -> src/*.ts
-        if (path.basename(testFilePath) === 'index.ts') {
-          if (!sourceFilePath.startsWith(sourcesDir)) {
-            continue
-          }
-        // test/foo.ts -> src/foo.ts
-        } else {
-          const expectedSourceFilePath = movePath(testFilePath, sourcesDir)
-
-          if (sourceFilePath !== expectedSourceFilePath) {
-            continue
-          }
+        if (!isMatch(sourceFilePath)) {
+          continue
         }
 
         // get transpiled by @start/ts-esm-loader code
@@ -80,7 +72,7 @@ const testIt = (sourcesDir: string): TPlugin<string, CoverageMapData> => async f
   )(it)
 }
 
-const reportCoverage = (coverageDir: string, reporterNames: TReporterName[] = ['html']): TPlugin<CoverageMapData, CoverageMapData> => async function* (it) {
+export const reportCoverage = (coverageDir: string, reporterNames: TReporterName[] = ['html']): TPlugin<CoverageMapData, CoverageMapData> => async function* (it) {
   const { pipe } = await import('funcom')
   const { forEachAsync, finallyAsync } = await import('iterama')
   const { default: { createCoverageMap } } = await import('istanbul-lib-coverage')
@@ -102,20 +94,4 @@ const reportCoverage = (coverageDir: string, reporterNames: TReporterName[] = ['
       }
     })
   )(it)
-}
-
-export const test: TTask<string, CoverageMapData> = async function* (pkg = 'iterama') {
-  const { pipe } = await import('funcom')
-  const { find } = await import('./find')
-  const { remove } = await import('./remove')
-  const { mapThreadPool } = await import('@start/thread-pool')
-
-  yield* pipe(
-    find('coverage/'),
-    remove,
-    find(`packages/${pkg}/test_/*.{ts,tsx}`),
-    // testIt(`packages/${pkg}/src/`),
-    mapThreadPool(testIt, `packages/${pkg}/src/`),
-    reportCoverage('coverage/')
-  )()
 }

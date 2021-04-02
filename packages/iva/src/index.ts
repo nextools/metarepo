@@ -22,8 +22,6 @@ export const matchGlobs = (globs: string[]): AsyncIterable<string> => {
     map((glob) => matchGlob(glob, negatedGlobs, workingDirPath))
   )(globs)
 
-  return pipe(
-    concatAsync,
-    uniqueAsync
-  )(matchingGlobs)
+  // @ts-expect-error
+  return uniqueAsync(concatAsync(...matchingGlobs))
 }

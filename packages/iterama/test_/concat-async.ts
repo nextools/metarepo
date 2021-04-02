@@ -18,13 +18,7 @@ export const tests = [
         }
       },
     }
-    const iterables = {
-      *[Symbol.iterator]() {
-        yield iterable1
-        yield iterable2
-      },
-    }
-    const result = await toArrayAsync(concatAsync(iterables))
+    const result = await toArrayAsync(concatAsync(iterable1, iterable2))
 
     deepStrictEqual(
       result,
@@ -32,3 +26,5 @@ export const tests = [
     )
   },
 ]
+
+export const target = '../src/concat-async.ts'

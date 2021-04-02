@@ -1,6 +1,6 @@
 import type { TPlugin } from './types'
 
-export const typescriptGenerate = (outDir: string): TPlugin<string, string> => async function* (it: AsyncIterable<string>) {
+export const typescriptGenerate = (outDir: string): TPlugin<string, string> => async function* (it) {
   const path = await import('path')
   const { default: ts } = await import('typescript')
   const { mapAsync } = await import('iterama')

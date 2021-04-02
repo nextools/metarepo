@@ -1,21 +1,10 @@
 import type { ESLint } from 'eslint'
-import type { TPlugin, TTask } from './types'
-
-const lintIt = (): TPlugin<string, ESLint.LintResult> => async function* (it) {
-  const { read } = await import('./read')
-  const { eslintCheck } = await import('./eslint')
-  const { pipe } = await import('funcom')
-
-  yield* pipe(
-    read,
-    eslintCheck()
-  )(it)
-}
+import type { TTask } from './types'
 
 export const lint: TTask<string, ESLint.LintResult> = async function* (pkg = '*') {
   const { pipe } = await import('funcom')
-  const { find } = await import('./find')
-  const { eslintPrint } = await import('./eslint')
+  const { find } = await import('./plugin-find')
+  const { eslintCheck, eslintPrint } = await import('./plugin-lib-eslint')
   const { mapThreadPool } = await import('@start/thread-pool')
 
   const files = '*.{ts,tsx,js,jsx,mjs}'
@@ -27,8 +16,8 @@ export const lint: TTask<string, ESLint.LintResult> = async function* (pkg = '*'
       `!packages/${pkg}/**/node_modules/`,
       `tasks/**/${files}`,
     ]),
-    // lintIt(),
-    mapThreadPool(lintIt, null, { groupBy: 50 }),
+    // eslint()
+    mapThreadPool(eslintCheck, null, { groupBy: 50 }),
     eslintPrint()
   )()
 }

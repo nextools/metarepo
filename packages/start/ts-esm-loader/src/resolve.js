@@ -20,8 +20,8 @@ export const resolve = async (specifier, context, defaultResolve) => {
     const { query: parentQuery } = parseSpecifier(context.parentURL)
     let url = pathToFileURL(resolvedSpecifier).href
 
-    if (parentQuery.includes('?nocache')) {
-      url += `?nocache&u=${Date.now()}`
+    if (parentQuery.startsWith('?nocache=')) {
+      url += `?nocache=${Date.now()}`
     }
 
     return { url }

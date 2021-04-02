@@ -8,11 +8,12 @@
     "extension"
   ],
   "main": "src/index.ts",
+  "type": "module",
   "repository": "nextools/metarepo",
   "author": "Kir Belevich <kir@belevi.ch> (https://github.com/deepsweet)",
   "license": "MIT",
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=12.22.0"
   },
   "publishConfig": {
     "access": "public"

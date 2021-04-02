@@ -8,13 +8,7 @@ export const tests = [
 
     const iterable1 = range(5)
     const iterable2 = slice(5)(range(10))
-    const iterables = {
-      *[Symbol.iterator]() {
-        yield iterable1
-        yield iterable2
-      },
-    }
-    const result = toArray(concat(iterables))
+    const result = toArray(concat(iterable1, iterable2))
 
     deepStrictEqual(
       result,
@@ -22,3 +16,5 @@ export const tests = [
     )
   },
 ]
+
+export const target = '../src/concat.ts'

@@ -1,10 +1,11 @@
 import type { ESLint } from 'eslint'
 import type { TFile, TPlugin } from './types'
 
-export const eslintCheck = (options?: ESLint.Options): TPlugin<TFile, ESLint.LintResult> => async function* (it) {
+export const eslintCheck = (options?: ESLint.Options): TPlugin<string, ESLint.LintResult> => async function* (it) {
   const { ESLint } = await import('eslint')
   const { pipe } = await import('funcom')
   const { mapAsync, ungroupAsync } = await import('iterama')
+  const { read } = await import('./plugin-read')
 
   const eslint = new ESLint({
     cache: true,
@@ -13,6 +14,7 @@ export const eslintCheck = (options?: ESLint.Options): TPlugin<TFile, ESLint.Lin
   })
 
   yield* pipe(
+    read,
     mapAsync((file: TFile) => {
       return eslint.lintText(file.data, { filePath: file.path })
     }),
@@ -47,12 +49,14 @@ export const eslintPrint = (options?: ESLint.Options): TPlugin<ESLint.LintResult
 
       if (hasErrors || hasWarnings) {
         console.log(formattedReport)
+
+        throw 'Lint errors'
       }
     })
   )(it)
 }
 
-export const eslint = (options?: ESLint.Options): TPlugin<TFile, ESLint.LintResult> => async function* (it) {
+export const eslint = (options?: ESLint.Options): TPlugin<string, ESLint.LintResult> => async function* (it) {
   const { pipe } = await import('funcom')
 
   yield* pipe(

@@ -23,6 +23,7 @@
     "./forEachAsync": "./src/for-each-async.ts",
     "./forEach": "./src/for-each.ts",
     "./fromArrayAsync": "./src/from-array-async.ts",
+    "./fromValueAsync": "./src/from-value-async.ts",
     "./groupByAsync": "./src/group-by-async.ts",
     "./iterateAsync": "./src/iterate-async.ts",
     "./iterate": "./src/iterate.ts",
