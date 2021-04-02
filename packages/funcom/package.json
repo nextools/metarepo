@@ -8,6 +8,15 @@
     "pipe",
     "all"
   ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./allAsync": "./src/all-async.ts",
+    "./all": "./src/all.ts",
+    "./composeAsync": "./src/compose-async.ts",
+    "./compose": "./src/compose.ts",
+    "./pipeAsync": "./src/pipe-async.ts",
+    "./pipe": "./src/pipe.ts"
+  },
   "main": "src/index.ts",
   "browser": "src/index.ts",
   "react-native": "src/index.ts",

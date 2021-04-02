@@ -17,7 +17,7 @@ export const babel = (userOptions?: TransformOptions): TPlugin<TFile, TFile> => 
 
     const transformed = await transformAsync(file.data, options)
 
-    if (!isNull(transformed) && isString(transformed.code) && transformed.code !== '') {
+    if (!isNull(transformed) && isString(transformed.code) && transformed.code.length > 0) {
       if ((options.sourceMaps === true || isString(options.sourceMaps)) && isObject(transformed.map)) {
         return {
           path: file.path,

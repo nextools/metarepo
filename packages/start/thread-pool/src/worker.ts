@@ -29,12 +29,8 @@ while (true) {
       task = cache.get(cacheKey)
     } else {
       const transformed = await transformAsync(taskString, {
-        ast: false,
         babelrc: false,
         compact: true,
-        // Error: .inputSourceMap must be a boolean, object, or undefined
-        // @ts-ignore
-        inputSourceMap: false,
         presets: [
           [
             babelPresetEnv,

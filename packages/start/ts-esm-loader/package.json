@@ -23,6 +23,7 @@
     "@babel/preset-env": "^7.13.8",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.13.0",
+    "@nextools/babel-plugin-shake": "^0.0.0",
     "enhanced-resolve": "^5.7.0"
   },
   "devDependencies": {

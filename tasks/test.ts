@@ -14,8 +14,8 @@ const testIt = (sourcesDir: string): TPlugin<string, CoverageMapData> => async f
   const { startCollectingCoverage } = await import('./coverage')
   const { default: v8toIstanbul } = await import('v8-to-istanbul')
   const { fromSource: getSourceMapFromSource } = await import('convert-source-map')
-  const { sourcesKey } = await import('@start/ts-esm-loader')
 
+  const sourcesKey = '@@start-sources'
   const piAlled = piAll(8)
   const globl = global as any
 
@@ -80,7 +80,7 @@ const testIt = (sourcesDir: string): TPlugin<string, CoverageMapData> => async f
   )(it)
 }
 
-const reportIt = (reporterNames: TReporterName[]): TPlugin<CoverageMapData, CoverageMapData> => async function* (it) {
+const reportCoverage = (coverageDir: string, reporterNames: TReporterName[] = ['html']): TPlugin<CoverageMapData, CoverageMapData> => async function* (it) {
   const { pipe } = await import('funcom')
   const { forEachAsync, finallyAsync } = await import('iterama')
   const { default: { createCoverageMap } } = await import('istanbul-lib-coverage')
@@ -94,7 +94,7 @@ const reportIt = (reporterNames: TReporterName[]): TPlugin<CoverageMapData, Cove
       coverageMap.merge(coverageMapData)
     }),
     finallyAsync(() => {
-      const context = createReportContext({ dir: 'coverage/', coverageMap })
+      const context = createReportContext({ dir: coverageDir, coverageMap })
 
       for (const reporterName of reporterNames) {
         // @ts-expect-error
@@ -108,14 +108,14 @@ export const test: TTask<string, any> = async function* (pkg = 'iterama') {
   const { pipe } = await import('funcom')
   const { find } = await import('./find')
   const { remove } = await import('./remove')
-  // const { mapThreadPool } = await import('@start/thread-pool')
+  const { mapThreadPool } = await import('@start/thread-pool')
 
   yield* pipe(
     find('coverage/'),
     remove,
     find(`packages/${pkg}/test_/*.{ts,tsx}`),
-    testIt(`packages/${pkg}/src/`),
-    // mapThreadPool(testIt, `packages/${pkg}/src/`),
-    reportIt(['html'])
+    // testIt(`packages/${pkg}/src/`),
+    mapThreadPool(testIt, `packages/${pkg}/src/`),
+    reportCoverage('coverage/')
   )()
 }

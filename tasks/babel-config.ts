@@ -3,13 +3,13 @@ import babelPluginSyntaxTopLevelAwait from '@babel/plugin-syntax-top-level-await
 import babelPresetEnv from '@babel/preset-env'
 import babelPresetReact from '@babel/preset-react'
 import babelPresetTypeScript from '@babel/preset-typescript'
+import { babelPluginExt } from './babel-plugin-ext'
 
-const NODE_VERSION = '12.17.0'
+const NODE_VERSION = '12.22.0'
 
 export const babelConfigBuildNode: TransformOptions = {
   babelrc: false,
   compact: false,
-  retainLines: true,
   sourceMaps: false,
   presets: [
     [
@@ -22,6 +22,7 @@ export const babelConfigBuildNode: TransformOptions = {
     ],
   ],
   plugins: [
+    babelPluginExt,
     babelPluginSyntaxTopLevelAwait,
     // '@babel/plugin-proposal-class-properties',
     // '@babel/plugin-proposal-private-methods',
@@ -47,7 +48,6 @@ export const babelConfigBuildNode: TransformOptions = {
 export const babelConfigBuildWeb: TransformOptions = {
   babelrc: false,
   compact: false,
-  retainLines: true,
   sourceMaps: false,
   presets: [
     [
@@ -62,10 +62,11 @@ export const babelConfigBuildWeb: TransformOptions = {
     ],
   ],
   plugins: [
-    babelPluginSyntaxTopLevelAwait,
-    // '@babel/plugin-proposal-class-properties',
-    // '@babel/plugin-proposal-private-methods',
-    // '@babel/plugin-proposal-export-namespace-from',
+    babelPluginExt,
+  //   babelPluginSyntaxTopLevelAwait,
+  //   // '@babel/plugin-proposal-class-properties',
+  //   // '@babel/plugin-proposal-private-methods',
+  //   // '@babel/plugin-proposal-export-namespace-from',
   ],
   overrides: [
     {
