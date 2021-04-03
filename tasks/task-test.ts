@@ -12,10 +12,10 @@ export const test: TTask<string, CoverageMapData> = async function* (pkg = '*') 
   yield* pipe(
     find('coverage/'),
     remove,
-    find(`packages/${pkg}/test_/*.{ts,tsx}`),
+    find(`packages/${pkg}/test_/**/*.{ts,tsx}`),
     // testIt(),
     mapThreadPool(test, null),
     reportCoverage('coverage/'),
-    log('test')
+    log('tested')
   )()
 }

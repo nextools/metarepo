@@ -568,7 +568,7 @@ const scan: <T, R>(scanFn: TScanFn<T, R>, initial: R) => (iterable: Iterable<T>)
 import { scan } from 'iterama'
 
 const iterable = range(5)
-const scanner = (acc: number, value: number) => Promise.resolve(acc + value)
+const scanner = (acc: number, value: number) => acc + value
 const result = scan(scanner, 0)(iterable)
 
 for (const value of result) {

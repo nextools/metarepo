@@ -3,50 +3,51 @@ import type { TPlugin } from './types'
 export const typescriptGenerate = (outDir: string): TPlugin<string, string> => async function* (it) {
   const path = await import('path')
   const { default: ts } = await import('typescript')
-  const { mapAsync } = await import('iterama')
+  const { pipe } = await import('funcom')
+  const { mapAsync, ungroupAsync } = await import('iterama')
 
-  yield* mapAsync((filePath: string) => {
-    const inDir = path.dirname(filePath)
-    const outDirFull = path.resolve(outDir)
+  yield* pipe(
+    mapAsync((filePath: string) => {
+      const inDir = path.dirname(filePath)
+      const outDirFull = path.resolve(outDir)
+      const configPath = ts.findConfigFile(inDir, ts.sys.fileExists)
 
-    const configPath = ts.findConfigFile(inDir, ts.sys.fileExists)
+      if (typeof configPath === 'undefined') {
+        throw new Error(`Unable to find \`tsconfig.json\` for ${inDir}`)
+      }
 
-    if (typeof configPath === 'undefined') {
-      throw new Error(`Unable to find \`tsconfig.json\` for ${inDir}`)
-    }
+      const configFile = ts.readConfigFile(configPath, ts.sys.readFile)
+      const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, path.dirname(configPath))
+      const options = {
+        ...parsedConfig.options,
+        noEmitOnError: true,
+        noEmit: false,
+        emitDeclarationOnly: true,
+        declarationDir: outDirFull,
+        declaration: true,
+        allowJs: false,
+      }
 
-    const configFile = ts.readConfigFile(configPath, ts.sys.readFile)
-    const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, path.dirname(configPath))
-    const options = {
-      ...parsedConfig.options,
-      noEmitOnError: true,
-      noEmit: false,
-      emitDeclarationOnly: true,
-      declarationDir: outDirFull,
-      declaration: true,
-      allowJs: false,
-    }
+      const program = ts.createProgram([filePath], options)
+      const emittedFiles = new Set<string>()
+      const emitResult = program.emit(undefined, (fileName, data, writeByteOrderMark) => {
+        emittedFiles.add(fileName)
 
-    // ignore non-TS files if there is no `allowJs` option
-    if (!(filePath.endsWith('.ts') || filePath.endsWith('.tsx')) && !options.allowJs) {
-      return filePath
-    }
+        return ts.sys.writeFile(fileName, data, writeByteOrderMark)
+      })
+      const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
+      const message = ts.formatDiagnosticsWithColorAndContext(allDiagnostics, {
+        getCurrentDirectory: ts.sys.getCurrentDirectory,
+        getCanonicalFileName: (fileName) => fileName,
+        getNewLine: () => ts.sys.newLine,
+      })
 
-    const program = ts.createProgram([filePath], options)
-    const emitResult = program.emit()
+      if (message.length > 0) {
+        console.log(message)
+      }
 
-    const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
-
-    const message = ts.formatDiagnosticsWithColorAndContext(allDiagnostics, {
-      getCurrentDirectory: ts.sys.getCurrentDirectory,
-      getCanonicalFileName: (fileName) => fileName,
-      getNewLine: () => ts.sys.newLine,
-    })
-
-    if (message.length > 0) {
-      console.log(message)
-    }
-
-    return filePath
-  })(it)
+      return emittedFiles
+    }),
+    ungroupAsync
+  )(it)
 }

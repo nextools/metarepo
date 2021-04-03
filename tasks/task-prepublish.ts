@@ -1,4 +1,3 @@
-import { iterateObjectEntries } from 'itobj'
 import type { TPackageJson } from 'pkgu'
 import type { TStringObject } from 'tsfn'
 import type { TPlugin, TTask } from './types'
@@ -15,6 +14,7 @@ const preparePackageJson = (pkg: string): TPlugin<any, string> => async function
   const { mapAsync } = await import('iterama')
   const { readFile, writeFile } = await import('fs/promises')
   const { jsonParse, jsonStringify } = await import('typeon')
+  const { iterateObjectEntries } = await import('itobj')
   const { isString } = await import('tsfn')
   const { find } = await import('./plugin-find')
   const { copy } = await import('./plugin-copy')
@@ -119,10 +119,13 @@ export const prepublish: TTask<string, string> = async function* (pkg) {
   const { pipe } = await import('funcom')
   const { find } = await import('./plugin-find')
   const { copy } = await import('./plugin-copy')
+  const { log } = await import('./plugin-log')
 
   yield* pipe(
     find(`packages/${pkg}/{readme,license}.md`),
     copy(`packages/${pkg}/build/`),
-    preparePackageJson(pkg)
+    log('markdown files'),
+    preparePackageJson(pkg),
+    log('package.json')
   )()
 }

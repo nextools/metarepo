@@ -20,6 +20,6 @@ export const lint: TTask<string, ESLint.LintResult> = async function* (pkg = '*'
     // eslint()
     mapThreadPool(eslintCheck, null, { groupBy: 50 }),
     eslintPrint(),
-    log('lint')
+    log('linted')
   )()
 }
