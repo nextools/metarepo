@@ -15,14 +15,15 @@ $ yarn add @rebox/android
 ```sh
 brew update
 brew tap homebrew/cask-versions
-brew cask install adoptopenjdk8
-brew cask install android-sdk
-brew cask install intel-haxm
+brew install --cask adoptopenjdk8
+brew install --cask android-sdk
+brew install --cask intel-haxm
 ```
 
 ```sh
 export ANDROID_HOME=$(brew --prefix)/share/android-sdk
 export PATH=$ANDROID_HOME/tools:$PATH
+export PATH=$ANDROID_HOME/emulator:$PATH
 export PATH=$ANDROID_HOME/platform-tools:$PATH
 ```
 
@@ -34,7 +35,7 @@ exec $SHELL -l
 mkdir $HOME/.android/
 touch $HOME/.android/repositories.cfg
 yes | sdkmanager --licenses
-sdkmanager "platform-tools" "platforms;android-29" "build-tools;29.0.2" "emulator" "extras;android;m2repository" "system-images;android-29;google_apis;x86"
+sdkmanager "platform-tools" "platforms;android-29" "build-tools;29.0.3" "emulator" "extras;android;m2repository" "system-images;android-29;google_apis;x86"
 ```
 
 ## API
