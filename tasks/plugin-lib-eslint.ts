@@ -50,7 +50,7 @@ export const eslintPrint = (options?: ESLint.Options): TPlugin<ESLint.LintResult
       if (hasErrors || hasWarnings) {
         console.log(formattedReport)
 
-        throw 'Lint errors'
+        throw null
       }
     })
   )(it)

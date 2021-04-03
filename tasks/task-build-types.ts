@@ -5,6 +5,7 @@ export const buildTypes: TTask<string, string> = async function* (pkg) {
   const { find } = await import('./plugin-find')
   const { remove } = await import('./plugin-remove')
   const { typescriptGenerate } = await import('./plugin-lib-typescript-generate')
+  const { log } = await import('./plugin-log')
   const { mapThreadPool } = await import('@start/thread-pool')
 
   const outDir = `packages/${pkg}/build/types/`
@@ -14,6 +15,7 @@ export const buildTypes: TTask<string, string> = async function* (pkg) {
     remove,
     find(`packages/${pkg}/src/index.ts`),
     // buildIt(outDir),
-    mapThreadPool(typescriptGenerate, outDir)
+    mapThreadPool(typescriptGenerate, outDir),
+    log('buildTypes')
   )()
 }

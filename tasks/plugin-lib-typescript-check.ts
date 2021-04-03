@@ -40,7 +40,7 @@ export const typescriptCheck: TNoInputPlugin<void> = async function* () {
     if (message.length > 0) {
       console.log(message)
 
-      throw 'TypeScript errors'
+      throw null
     }
   })
 }

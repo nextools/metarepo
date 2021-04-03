@@ -5,6 +5,7 @@ export const lint: TTask<string, ESLint.LintResult> = async function* (pkg = '*'
   const { pipe } = await import('funcom')
   const { find } = await import('./plugin-find')
   const { eslintCheck, eslintPrint } = await import('./plugin-lib-eslint')
+  const { log } = await import('./plugin-log')
   const { mapThreadPool } = await import('@start/thread-pool')
 
   const files = '*.{ts,tsx,js,jsx,mjs}'
@@ -18,6 +19,7 @@ export const lint: TTask<string, ESLint.LintResult> = async function* (pkg = '*'
     ]),
     // eslint()
     mapThreadPool(eslintCheck, null, { groupBy: 50 }),
-    eslintPrint()
+    eslintPrint(),
+    log('lint')
   )()
 }

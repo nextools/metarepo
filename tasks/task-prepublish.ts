@@ -8,7 +8,7 @@ type TPackageJsonNextools = TPackageJson & {
   fixdeps: TStringObject,
 }
 
-const isFilePathTS = (filePath: string): boolean => filePath.endsWith('.ts') || filePath.endsWith('.tsx')
+const isFilePathTs = (filePath: string): boolean => filePath.endsWith('.ts') || filePath.endsWith('.tsx')
 
 const preparePackageJson = (pkg: string): TPlugin<any, string> => async function* (it) {
   const { pipe } = await import('funcom')
@@ -36,7 +36,7 @@ const preparePackageJson = (pkg: string): TPlugin<any, string> => async function
             break
           }
           case 'main': {
-            if (isFilePathTS(packageJson.main!)) {
+            if (isFilePathTs(packageJson.main!)) {
               newPackageJson.types = 'types/index.d.ts'
             }
 
@@ -45,7 +45,7 @@ const preparePackageJson = (pkg: string): TPlugin<any, string> => async function
             break
           }
           case 'browser': {
-            if (isFilePathTS(packageJson.browser!)) {
+            if (isFilePathTs(packageJson.browser!)) {
               newPackageJson.types = 'types/index.d.ts'
             }
 
@@ -54,7 +54,7 @@ const preparePackageJson = (pkg: string): TPlugin<any, string> => async function
             break
           }
           case 'react-native': {
-            if (isFilePathTS(packageJson['react-native']!)) {
+            if (isFilePathTs(packageJson['react-native']!)) {
               newPackageJson.types = 'types/index.d.ts'
             }
 

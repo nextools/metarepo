@@ -11,6 +11,9 @@
   ],
   "main": "src/index.ts",
   "type": "module",
+  "exports": {
+    "./get-startup-time": "./src/get-startup-time.cjs"
+  },
   "bin": {
     "start": "src/index.ts"
   },
@@ -26,9 +29,11 @@
     "dotenv": "^8.2.0",
     "funcom": "^0.2.0",
     "iterama": "^0.6.1",
+    "kolorist": "^1.4.0",
     "takes": "^0.0.0",
     "tsfn": "^2.2.0",
     "typeon": "^2.0.0",
+    "stack-utils": "^2.0.3",
     "wans": "^0.0.0"
   }
 }

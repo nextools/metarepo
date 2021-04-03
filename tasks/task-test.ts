@@ -6,6 +6,7 @@ export const test: TTask<string, CoverageMapData> = async function* (pkg = '*') 
   const { find } = await import('./plugin-find')
   const { remove } = await import('./plugin-remove')
   const { mapThreadPool } = await import('@start/thread-pool')
+  const { log } = await import('./plugin-log')
   const { test, reportCoverage } = await import('./plugin-test')
 
   yield* pipe(
@@ -14,6 +15,7 @@ export const test: TTask<string, CoverageMapData> = async function* (pkg = '*') 
     find(`packages/${pkg}/test_/*.{ts,tsx}`),
     // testIt(),
     mapThreadPool(test, null),
-    reportCoverage('coverage/')
+    reportCoverage('coverage/'),
+    log('test')
   )()
 }

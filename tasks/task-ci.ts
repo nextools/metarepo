@@ -1,6 +1,6 @@
 import type { TTask } from './types'
 
-export const ci: TTask<string, any> = async function* () {
+export const ci: TTask<any, any> = async function* () {
   const { concatAsync } = await import('iterama')
   const { lint } = await import('./task-lint')
   const { tsc } = await import('./task-tsc')

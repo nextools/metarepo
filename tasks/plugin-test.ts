@@ -37,7 +37,7 @@ export const test = (): TPlugin<string, CoverageMapData> => async function* (it)
       await drainAsync(piAlled(tests))
 
       const v8Coverages = await stopCollectingCoverage()
-      const istanbulCoverages: CoverageMapData[] = []
+      const istanbulCoverages = new Map<string, CoverageMapData>()
 
       for (const v8Coverage of v8Coverages) {
         // skip internal modules
@@ -60,13 +60,14 @@ export const test = (): TPlugin<string, CoverageMapData> => async function* (it)
         await converter.load()
 
         converter.applyCoverage(v8Coverage.functions)
-        istanbulCoverages.push(converter.toIstanbul())
+        // TODO: should we merge same paths insead of replacing it?
+        istanbulCoverages.set(testFilePath, converter.toIstanbul())
       }
 
       // never happened
       delete globl[sourcesKey]
 
-      return istanbulCoverages
+      return istanbulCoverages.values()
     }),
     ungroupAsync
   )(it)

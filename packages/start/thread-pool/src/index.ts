@@ -34,8 +34,6 @@ export const startThreadPool = async (options: TStartPoolOptions): Promise<() =>
     })(range(options.threadCount))
   )
 
-  console.log('threads:', options.threadCount)
-
   return async () => {
     await Promise.all(
       map((worker: Worker) => {

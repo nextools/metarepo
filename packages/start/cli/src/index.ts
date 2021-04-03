@@ -1,17 +1,23 @@
 #!/bin/sh
-//bin/sh -c :; exec /usr/bin/env node --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @start/ts-esm-loader "$0" "$@"
+//bin/sh -c :; exec /usr/bin/env node --require @start/cli/get-startup-time --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @start/ts-esm-loader "$0" "$@"
 // https://unix.stackexchange.com/questions/65235/universal-node-js-shebang#comment755057_65295
 
 import { readFile } from 'fs/promises'
+import { cpus } from 'os'
 import { join as pathJoin, resolve as pathResolve } from 'path'
 import readline from 'readline'
 import { startThreadPool } from '@start/thread-pool'
 // import dotenv from 'dotenv'
-import { pipeAsync } from 'funcom'
-import { drainAsync, forEachAsync } from 'iterama'
+// import { pipeAsync } from 'funcom'
+import { drainAsync } from 'iterama'
+import { red } from 'kolorist'
 import type { TPackageJson } from 'pkgu'
+import StackUtils from 'stack-utils'
 import { startTimeMs } from 'takes'
+import { isString } from 'tsfn'
 import { once } from 'wans'
+// @ts-ignore
+import { getStartupTime } from './get-startup-time.cjs'
 
 type TTasks = {
   [key: string]: (...args: string[]) => AsyncIterableIterator<any>,
@@ -24,8 +30,6 @@ type TStartOptions = {
 }
 
 try {
-  const endTimeMs = startTimeMs()
-
   // dotenv.config()
 
   const packageJsonPath = pathJoin(process.cwd(), 'package.json')
@@ -34,16 +38,14 @@ try {
   const tasksFilePath = pathResolve(packageJson.start.tasks)
   const tasksExported = await import(tasksFilePath) as TTasks
   const taskNames = Object.keys(tasksExported)
+  const threadCount = cpus().length
 
-  console.log('tasks:', taskNames)
+  console.log(`📋 ${taskNames.join(', ')}`)
 
-  const stopThreadPool = await startThreadPool({
-    threadCount: 8,
-  })
+  const stopThreadPool = await startThreadPool({ threadCount })
 
-  const tookMs = endTimeMs()
-
-  console.log('time:', `${tookMs}ms`)
+  console.log(`🧵 ${threadCount} threads`)
+  console.log(`⏱  ${getStartupTime()}ms`)
 
   const autocomplete = taskNames.concat('/tasks', '/quit')
 
@@ -51,7 +53,7 @@ try {
     input: process.stdin,
     output: process.stdout,
     tabSize: 4,
-    prompt: '> ',
+    prompt: '\n👉 ',
     completer: (input: string) => [
       autocomplete.filter((item) => item.startsWith(input)),
       input,
@@ -72,7 +74,7 @@ try {
     }
 
     if (input === '/tasks') {
-      console.log('tasks:', taskNames)
+      console.log(`📋 ${taskNames.join(', ')}`)
 
       continue
     }
@@ -82,7 +84,7 @@ try {
 
       await stopThreadPool()
 
-      console.log('bye')
+      console.log('👋 bye')
 
       break
     }
@@ -101,24 +103,41 @@ try {
     const endTimeMs = startTimeMs()
 
     try {
-      let i = 0
+      await drainAsync(it)
 
-      await pipeAsync(
-        forEachAsync(() => {
-          process.stdout.clearLine(0)
-          process.stdout.cursorTo(0)
-          process.stdout.write(`items: ${++i}`)
-        }),
-        drainAsync
-      )(it)
+      // let i = 0
 
-      process.stdout.write('\n')
+      // await pipeAsync(
+      //   forEachAsync(() => {
+      //     process.stdout.clearLine(0)
+      //     process.stdout.cursorTo(0)
+      //     process.stdout.write(`items: ${++i}`)
+      //   }),
+      //   drainAsync
+      // )(it)
+
+      // process.stdout.write('\n')
     } catch (err) {
-      console.error(err)
+      if (err instanceof Error) {
+        console.error(red(`\nerror: ${err.message}`))
+
+        if (isString(err.stack)) {
+          const stackUtils = new StackUtils({
+            cwd: process.cwd(),
+            internals: StackUtils.nodeInternals(),
+          })
+          const stack = stackUtils.clean(err.stack)
+
+          console.error(red(`\n${stack.trim()}\n`))
+        }
+        // array of "soft" errors
+      } else if (isString(err)) {
+        console.error(red(`\n${err}\n`))
+      }
     } finally {
       const tookMs = endTimeMs()
 
-      console.log(`time: ${tookMs}ms`)
+      console.log(`⏱  ${tookMs}ms`)
     }
   }
 } catch (err) {

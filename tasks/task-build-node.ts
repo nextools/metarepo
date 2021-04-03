@@ -21,6 +21,7 @@ export const buildNode: TTask<string, TFile> = async function* (pkg) {
   const { pipe } = await import('funcom')
   const { find } = await import('./plugin-find')
   const { remove } = await import('./plugin-remove')
+  const { log } = await import('./plugin-log')
   const { mapThreadPool } = await import('@start/thread-pool')
 
   const outDir = `packages/${pkg}/build/node/`
@@ -29,7 +30,8 @@ export const buildNode: TTask<string, TFile> = async function* (pkg) {
     find(outDir),
     remove,
     find(`packages/${pkg}/src/*.ts`),
-    // buildIt(outDir)
-    mapThreadPool(buildIt, outDir, { groupBy: 8 })
+    // buildIt(outDir),
+    mapThreadPool(buildIt, outDir, { groupBy: 8 }),
+    log('buildNode')
   )()
 }
