@@ -42,8 +42,8 @@ export const RunApp = (options: TRunAppOptions) => (...args: string[]) => {
           entryPointPath: options.entryPointPath,
           appId: `org.nextools.${sanitizePackageName(options.name)}`,
           appName: options.name,
-          iPhoneModel: '11',
-          iOSVersion: '13',
+          iPhoneModel: '12',
+          iOSVersion: '14',
           fontsDir: options.fontsDir,
           dependencyNames: ['react-native-svg'],
         })

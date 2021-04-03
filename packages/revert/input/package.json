@@ -25,11 +25,11 @@
     "@types/react-native": "^0.63.0",
     "autoprops": "^4.0.2",
     "react": "17.0.1",
-    "react-native": "0.63.4",
+    "react-native": "0.64.0",
     "syntx": "^2.0.0"
   },
   "peerDependencies": {
     "react": "17.0.1",
-    "react-native": "0.63.4"
+    "react-native": "0.64.0"
   }
 }
