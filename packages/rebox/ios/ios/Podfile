@@ -4,35 +4,35 @@ platform :ios, '10.0'
 target 'rebox' do
   # Pods for rebox
   pod 'FBLazyVector', :path => "../../../react-native/Libraries/FBLazyVector"
-  pod 'FBReactNativeSpec', :path => "../../../react-native/Libraries/FBReactNativeSpec"
+  pod 'FBReactNativeSpec', :path => "../../../react-native/React/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../../../react-native/Libraries/RCTRequired"
   pod 'RCTTypeSafety', :path => "../../../react-native/Libraries/TypeSafety"
-  pod 'React', :path => '../../../react-native/'
-  pod 'React-Core', :path => '../../../react-native/'
-  pod 'React-CoreModules', :path => '../../../react-native/React/CoreModules'
-  pod 'React-Core/DevSupport', :path => '../../../react-native/'
-  pod 'React-RCTActionSheet', :path => '../../../react-native/Libraries/ActionSheetIOS'
-  pod 'React-RCTAnimation', :path => '../../../react-native/Libraries/NativeAnimation'
-  pod 'React-RCTBlob', :path => '../../../react-native/Libraries/Blob'
-  pod 'React-RCTImage', :path => '../../../react-native/Libraries/Image'
-  pod 'React-RCTLinking', :path => '../../../react-native/Libraries/LinkingIOS'
-  pod 'React-RCTNetwork', :path => '../../../react-native/Libraries/Network'
-  pod 'React-RCTSettings', :path => '../../../react-native/Libraries/Settings'
-  pod 'React-RCTText', :path => '../../../react-native/Libraries/Text'
-  pod 'React-RCTVibration', :path => '../../../react-native/Libraries/Vibration'
-  pod 'React-Core/RCTWebSocket', :path => '../../../react-native/'
-
-  pod 'React-cxxreact', :path => '../../../react-native/ReactCommon/cxxreact'
-  pod 'React-jsi', :path => '../../../react-native/ReactCommon/jsi'
-  pod 'React-jsiexecutor', :path => '../../../react-native/ReactCommon/jsiexecutor'
-  pod 'React-jsinspector', :path => '../../../react-native/ReactCommon/jsinspector'
+  pod 'React', :path => "../../../react-native/"
+  pod 'React-Core', :path => "../../../react-native/"
+  pod 'React-CoreModules', :path => "../../../react-native/React/CoreModules"
+  pod 'React-RCTActionSheet', :path => "../../../react-native/Libraries/ActionSheetIOS"
+  pod 'React-RCTAnimation', :path => "../../../react-native/Libraries/NativeAnimation"
+  pod 'React-RCTBlob', :path => "../../../react-native/Libraries/Blob"
+  pod 'React-RCTImage', :path => "../../../react-native/Libraries/Image"
+  pod 'React-RCTLinking', :path => "../../../react-native/Libraries/LinkingIOS"
+  pod 'React-RCTNetwork', :path => "../../../react-native/Libraries/Network"
+  pod 'React-RCTSettings', :path => "../../../react-native/Libraries/Settings"
+  pod 'React-RCTText', :path => "../../../react-native/Libraries/Text"
+  pod 'React-RCTVibration', :path => "../../../react-native/Libraries/Vibration"
+  pod 'React-Core/RCTWebSocket', :path => "../../../react-native/"
+  pod 'React-Core/DevSupport', :path => "../../../react-native/"
+  pod 'React-cxxreact', :path => "../../../react-native/ReactCommon/cxxreact"
+  pod 'React-jsi', :path => "../../../react-native/ReactCommon/jsi"
+  pod 'React-jsiexecutor', :path => "../../../react-native/ReactCommon/jsiexecutor"
+  pod 'React-jsinspector', :path => "../../../react-native/ReactCommon/jsinspector"
   pod 'React-callinvoker', :path => "../../../react-native/ReactCommon/callinvoker"
+  pod 'React-runtimeexecutor', :path => "../../../react-native/ReactCommon/runtimeexecutor"
+  pod 'React-perflogger', :path => "../../../react-native/ReactCommon/reactperflogger"
   pod 'ReactCommon/turbomodule/core', :path => "../../../react-native/ReactCommon"
-  pod 'Yoga', :path => '../../../react-native/ReactCommon/yoga', :modular_headers => true
-
-  pod 'DoubleConversion', :podspec => '../../../react-native/third-party-podspecs/DoubleConversion.podspec'
-  pod 'glog', :podspec => '../../../react-native/third-party-podspecs/glog.podspec'
-  pod 'Folly', :podspec => '../../../react-native/third-party-podspecs/Folly.podspec'
+  pod 'Yoga', :path => "../../../react-native/ReactCommon/yoga", :modular_headers => true
+  pod 'DoubleConversion', :podspec => "../../../react-native/third-party-podspecs/DoubleConversion.podspec"
+  pod 'glog', :podspec => "../../../react-native/third-party-podspecs/glog.podspec"
+  pod 'RCT-Folly', :podspec => "../../../react-native/third-party-podspecs/RCT-Folly.podspec"
   # REBOX
 
   target 'reboxTests' do
@@ -41,12 +41,21 @@ target 'rebox' do
   end
 end
 
-target 'rebox-tvOS' do
-  # Pods for rebox-tvOS
+# https://github.com/software-mansion/react-native-screens/issues/842
+post_install do |installer|
+  react_native_post_install(installer)
 
-  target 'rebox-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+    end
+
+    if (target.name&.eql?('FBReactNativeSpec'))
+      target.build_phases.each do |build_phase|
+        if (build_phase.respond_to?(:name) && build_phase.name.eql?('[CP-User] Generate Specs'))
+          target.build_phases.move(build_phase, 0)
+        end
+      end
+    end
   end
-
 end
