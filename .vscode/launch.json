@@ -10,10 +10,17 @@
     },
     {
       "type": "node-terminal",
-      "name": "Create JavaScript Debug Terminal",
+      "name": "Node.js Debug Terminal",
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "cwd": "${workspaceFolder}",
+    },
+    {
+      "type": "node",
+      "name": "Node.js Attach",
+      "request": "attach",
+      "skipFiles": ["<node_internals>/**"],
+      "cwd": "${workspaceFolder}"
     }
   ]
 }

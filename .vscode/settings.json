@@ -2,7 +2,6 @@
   "editor.formatOnSave": false,
   "editor.formatOnType": false,
   "editor.formatOnPaste": false,
-  "workbench.statusBar.feedback.visible": false,
   "typescript.format.enable": false,
   "typescript.disableAutomaticTypeAcquisition": true,
   "typescript.check.npmIsInstalled": false,
@@ -10,7 +9,6 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.tsc.autoDetect": "off",
   "javascript.format.enable": false,
-  "eslint.enable": true,
   "eslint.validate": [
     "javascript",
     "javascriptreact",

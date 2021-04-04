@@ -1,8 +1,9 @@
 #!/bin/sh
-//bin/sh -c :; exec /usr/bin/env node --require @start/cli/get-startup-time --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @start/ts-esm-loader "$0" "$@"
+//bin/sh -c :; exec /usr/bin/env node --inspect-publish-uid=http --require @start/cli/get-startup-time --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @start/ts-esm-loader "$0" "$@"
 // https://unix.stackexchange.com/questions/65235/universal-node-js-shebang#comment755057_65295
 
 import { readFile } from 'fs/promises'
+import inspector from 'inspector'
 import { cpus } from 'os'
 import path from 'path'
 import readline from 'readline'
@@ -41,7 +42,8 @@ try {
   const tasksExported = await import(tasksFilePath) as TTasks
   const taskNames = Object.keys(tasksExported)
   const threadCount = cpus().length
-  const commands = ['/memory', '/quit']
+  const commands = ['/memory', '/debug', '/quit']
+  let isInDebugMode = false
 
   console.log(`📋 tasks: ${taskNames.join(', ')}`)
   console.log(`🤖 commands: ${commands.join(', ')}`)
@@ -94,6 +96,23 @@ try {
     if (input === '/memory') {
       for (const [key, value] of iterateObjectEntries(process.memoryUsage())) {
         console.log(`🔘 ${key}: ${roundBytes(value)}MB`)
+      }
+
+      continue
+    }
+
+    if (input === '/debug') {
+      if (!isInDebugMode) {
+        // https://github.com/nodejs/node/issues/34799
+        inspector.open()
+        console.log('🕵️  attach to the debugger via VSCode or chrome://inspect/')
+        inspector.waitForDebugger()
+        console.log('ℹ️  run /debug again to exit')
+
+        isInDebugMode = true
+      } else {
+        inspector.close()
+        isInDebugMode = false
       }
 
       continue
