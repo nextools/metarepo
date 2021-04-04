@@ -4,12 +4,13 @@
 
 import { readFile } from 'fs/promises'
 import { cpus } from 'os'
-import { join as pathJoin, resolve as pathResolve } from 'path'
+import path from 'path'
 import readline from 'readline'
 import { startThreadPool } from '@start/thread-pool'
 // import dotenv from 'dotenv'
 // import { pipeAsync } from 'funcom'
 import { drainAsync } from 'iterama'
+import { iterateObjectEntries } from 'itobj'
 import { red } from 'kolorist'
 import type { TPackageJson } from 'pkgu'
 import StackUtils from 'stack-utils'
@@ -18,6 +19,7 @@ import { isString } from 'tsfn'
 import { once } from 'wans'
 // @ts-ignore
 import { getStartupTime } from './get-startup-time.cjs'
+import { roundBytes } from './round-bytes'
 
 type TTasks = {
   [key: string]: (...args: string[]) => AsyncIterableIterator<any>,
@@ -32,58 +34,74 @@ type TStartOptions = {
 try {
   // dotenv.config()
 
-  const packageJsonPath = pathJoin(process.cwd(), 'package.json')
+  const packageJsonPath = path.join(process.cwd(), 'package.json')
   const packageJsonData = await readFile(packageJsonPath, 'utf8')
   const packageJson = JSON.parse(packageJsonData) as TPackageJson & { start: TStartOptions }
-  const tasksFilePath = pathResolve(packageJson.start.tasks)
+  const tasksFilePath = path.resolve(packageJson.start.tasks)
   const tasksExported = await import(tasksFilePath) as TTasks
   const taskNames = Object.keys(tasksExported)
   const threadCount = cpus().length
+  const commands = ['/memory', '/quit']
 
-  console.log(`📋 ${taskNames.join(', ')}`)
+  console.log(`📋 tasks: ${taskNames.join(', ')}`)
+  console.log(`🤖 commands: ${commands.join(', ')}`)
 
   const stopThreadPool = await startThreadPool({ threadCount })
 
-  console.log(`🧵 ${threadCount} threads`)
-  console.log(`⏱  ${getStartupTime()}ms`)
+  console.log(`🧵 treads: ${threadCount}`)
+  console.log(`⏱  startup: ${getStartupTime()}ms`)
 
-  const autocomplete = taskNames.concat('/tasks', '/quit')
+  const autocomplete = taskNames.concat(commands)
 
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
-    tabSize: 4,
     prompt: '\n👉 ',
     completer: (input: string) => [
-      autocomplete.filter((item) => item.startsWith(input)),
+      autocomplete.reduce((result, item) => {
+        if (item.startsWith(input)) {
+          if (commands.includes(item)) {
+            result.push(item)
+          } else {
+            result.push(`${item} `)
+          }
+        }
+
+        return result
+      }, [] as string[]),
       input,
     ],
   })
 
-  rl.once('SIGINT', () => {
+  rl.once('SIGINT', async () => {
+    console.log('/quit')
+    await stopThreadPool()
+    console.log('👋 bye')
     process.exit()
   })
 
   while (true) {
     rl.prompt()
 
-    const input = await once<string>(rl, 'line')
+    let input = await once<string>(rl, 'line')
+
+    input = input.trim()
 
     if (input.length === 0) {
       continue
     }
 
-    if (input === '/tasks') {
-      console.log(`📋 ${taskNames.join(', ')}`)
+    if (input === '/memory') {
+      for (const [key, value] of iterateObjectEntries(process.memoryUsage())) {
+        console.log(`🔘 ${key}: ${roundBytes(value)}MB`)
+      }
 
       continue
     }
 
     if (input === '/quit') {
       rl.close()
-
       await stopThreadPool()
-
       console.log('👋 bye')
 
       break
@@ -92,7 +110,7 @@ try {
     const [taskName, ...args] = input.split(' ')
 
     if (!autocomplete.includes(taskName)) {
-      console.error(`unknown: ${taskName}`)
+      console.error(`❓ unknown: ${taskName}`)
 
       continue
     }
@@ -137,7 +155,7 @@ try {
     } finally {
       const tookMs = endTimeMs()
 
-      console.log(`⏱  ${tookMs}ms`)
+      console.log(`⏱  time: ${tookMs}ms`)
     }
   }
 } catch (err) {
