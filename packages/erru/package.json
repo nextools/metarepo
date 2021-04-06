@@ -1,0 +1,20 @@
+{
+  "name": "erru",
+  "version": "0.0.0",
+  "description": "Error utils",
+  "keywords": [],
+  "main": "src/index.ts",
+  "type": "module",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.22.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "funcom": "^0.2.0",
+    "tsfn": "^2.2.0"
+  }
+}

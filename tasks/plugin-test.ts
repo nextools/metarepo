@@ -1,6 +1,6 @@
 import type { CoverageMapData } from 'istanbul-lib-coverage'
 import type { ReportOptions } from 'istanbul-reports'
-import type { TPlugin, TSourceMap } from './types'
+import type { TPlugin } from './types'
 
 export type TReporterName = keyof ReportOptions
 
@@ -18,16 +18,15 @@ export const test = (): TPlugin<string, CoverageMapData> => async function* (it)
   const { piAll } = await import('piall')
   const { startCollectingCoverage } = await import('./coverage')
   const { default: v8toIstanbul } = await import('v8-to-istanbul')
-  const { fromSource: getSourceMapFromSource } = await import('convert-source-map')
 
-  const sourcesKey = '@@start-sources'
+  const transpiledSourcesKey = '@@start-transpiled-sources'
   const piAlled = piAll(8)
   const globl = global as any
 
   yield* pipe(
     mapAsync(async (testFilePath: string) => {
       // trigger @start/ts-esm-loader to collect transpiled code with inlined source maps
-      globl[sourcesKey] = {}
+      globl[transpiledSourcesKey] = {}
 
       const stopCollectingCoverage = await startCollectingCoverage()
       const { tests, target } = await import(`${testFilePath}?nocache=${Date.now()}`) as TTestFile
@@ -52,10 +51,8 @@ export const test = (): TPlugin<string, CoverageMapData> => async function* (it)
         }
 
         // get transpiled by @start/ts-esm-loader code
-        const source = globl[sourcesKey][sourceFilePath] as string
-        // and extract source map from it
-        const sourcemap = getSourceMapFromSource(source)!.toObject() as TSourceMap
-        const converter = v8toIstanbul(sourceFilePath, 0, { source, sourceMap: { sourcemap } })
+        const transpiledSource = globl[transpiledSourcesKey][sourceFilePath] as string
+        const converter = v8toIstanbul(sourceFilePath, 0, { source: transpiledSource })
 
         await converter.load()
 
@@ -65,7 +62,7 @@ export const test = (): TPlugin<string, CoverageMapData> => async function* (it)
       }
 
       // never happened
-      delete globl[sourcesKey]
+      delete globl[transpiledSourcesKey]
 
       return istanbulCoverages.values()
     }),

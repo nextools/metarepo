@@ -97,9 +97,21 @@ while (true) {
       value,
     })
   } catch (err) {
-    sendToPort<TMessageFromWorkerError>(parentPort!, {
-      type: 'ERROR',
-      value: err.stack ?? err,
-    })
+    // direct V8 serialization of Error instances looses colors
+    // for example in Babel syntax errors
+    if (err instanceof Error) {
+      sendToPort<TMessageFromWorkerError>(parentPort!, {
+        type: 'ERROR',
+        value: {
+          message: err.message,
+          stack: err.stack,
+        },
+      })
+    } else {
+      sendToPort<TMessageFromWorkerError>(parentPort!, {
+        type: 'ERROR',
+        value: err,
+      })
+    }
   }
 }

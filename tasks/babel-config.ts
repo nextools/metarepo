@@ -20,6 +20,7 @@ export const babelConfigBuildNode: TransformOptions = {
       babelPresetEnv,
       {
         targets: { node: NODE_VERSION },
+        shippedProposals: true,
         ignoreBrowserslistConfig: true,
         modules: false,
       },
@@ -28,9 +29,6 @@ export const babelConfigBuildNode: TransformOptions = {
   plugins: [
     babelPluginExt,
     babelPluginSyntaxTopLevelAwait,
-    // '@babel/plugin-proposal-class-properties',
-    // '@babel/plugin-proposal-private-methods',
-    // '@babel/plugin-proposal-export-namespace-from',
   ],
   overrides: [
     {
@@ -60,6 +58,7 @@ export const babelConfigBuildWeb: TransformOptions = {
         targets: {
           browsers: 'last 2 Chrome versions',
         },
+        shippedProposals: true,
         ignoreBrowserslistConfig: true,
         modules: false,
       },
@@ -67,10 +66,6 @@ export const babelConfigBuildWeb: TransformOptions = {
   ],
   plugins: [
     babelPluginExt,
-  //   babelPluginSyntaxTopLevelAwait,
-  //   // '@babel/plugin-proposal-class-properties',
-  //   // '@babel/plugin-proposal-private-methods',
-  //   // '@babel/plugin-proposal-export-namespace-from',
   ],
   overrides: [
     {

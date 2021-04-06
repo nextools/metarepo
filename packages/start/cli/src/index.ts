@@ -1,5 +1,5 @@
 #!/bin/sh
-//bin/sh -c :; exec /usr/bin/env node --inspect-publish-uid=http --require @start/cli/get-startup-time --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @start/ts-esm-loader "$0" "$@"
+//bin/sh -c :; exec /usr/bin/env node --inspect-publish-uid=http --enable-source-maps --require @start/cli/get-startup-time --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @start/ts-esm-loader "$0" "$@"
 // https://unix.stackexchange.com/questions/65235/universal-node-js-shebang#comment755057_65295
 
 import { readFile } from 'fs/promises'
@@ -9,12 +9,11 @@ import path from 'path'
 import readline from 'readline'
 import { startThreadPool } from '@start/thread-pool'
 // import dotenv from 'dotenv'
-// import { pipeAsync } from 'funcom'
+import { cleanupStack } from 'erru'
 import { drainAsync } from 'iterama'
 import { iterateObjectEntries } from 'itobj'
 import { red } from 'kolorist'
 import type { TPackageJson } from 'pkgu'
-import StackUtils from 'stack-utils'
 import { startTimeMs } from 'takes'
 import { isString } from 'tsfn'
 import { once } from 'wans'
@@ -141,35 +140,15 @@ try {
 
     try {
       await drainAsync(it)
-
-      // let i = 0
-
-      // await pipeAsync(
-      //   forEachAsync(() => {
-      //     process.stdout.clearLine(0)
-      //     process.stdout.cursorTo(0)
-      //     process.stdout.write(`items: ${++i}`)
-      //   }),
-      //   drainAsync
-      // )(it)
-
-      // process.stdout.write('\n')
     } catch (err) {
-      if (err instanceof Error) {
-        console.error(red(`\nerror: ${err.message}`))
+      if (isString(err?.message)) {
+        console.error(`${red('\nerror:')} ${err.message}`)
 
         if (isString(err.stack)) {
-          const stackUtils = new StackUtils({
-            cwd: process.cwd(),
-            internals: StackUtils.nodeInternals(),
-          })
-          const stack = stackUtils.clean(err.stack)
-
-          console.error(red(`\n${stack.trim()}\n`))
+          console.error(`\n${red(cleanupStack(err.stack))}`)
         }
-        // array of "soft" errors
-      } else if (isString(err)) {
-        console.error(red(`\n${err}\n`))
+      } else {
+        console.error(err)
       }
     } finally {
       const tookMs = endTimeMs()

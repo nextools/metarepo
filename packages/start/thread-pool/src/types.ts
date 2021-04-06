@@ -34,7 +34,10 @@ export type TMessageFromWorkerDone<T> = {
 
 export type TMessageFromWorkerError = {
   type: 'ERROR',
-  value: string,
+  value: string | {
+    message: string,
+    stack?: string,
+  },
 }
 
 export type TMessageFromWorker<T> = TMessageFromWorkerDone<T> |TMessageFromWorkerError

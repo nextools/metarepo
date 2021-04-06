@@ -7,7 +7,7 @@ import babelPresetTypeScript from '@babel/preset-typescript'
 import { babelPluginShake } from '@nextools/babel-plugin-shake'
 import { isTsSpecifier } from './is-ts-specifier.js'
 
-const SOURCES_KEY = '@@start-sources'
+const SOURCES_KEY = '@@start-transpiled-sources'
 
 export const transformSource = (source, context, defaultTransformSource) => {
   if (isTsSpecifier(context.url)) {
@@ -22,6 +22,7 @@ export const transformSource = (source, context, defaultTransformSource) => {
           babelPresetEnv,
           {
             targets: { node: 'current' },
+            shippedProposals: true,
             ignoreBrowserslistConfig: true,
             modules: false,
           },
@@ -30,9 +31,6 @@ export const transformSource = (source, context, defaultTransformSource) => {
       plugins: [
         babelPluginShake,
         babelPluginSyntaxTopLevelAwait,
-        // '@babel/plugin-proposal-class-properties',
-        // '@babel/plugin-proposal-private-methods',
-        // '@babel/plugin-proposal-export-namespace-from',
       ],
       overrides: [
         {
