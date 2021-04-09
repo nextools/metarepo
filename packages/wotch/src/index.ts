@@ -1,13 +1,15 @@
 import { watch } from 'fs'
-import type { Stats } from 'fs'
-import { readdir, stat } from 'fs/promises'
+import { readdir, lstat } from 'fs/promises'
 import { resolve } from 'path'
 import { createCancelToken } from './create-cancel-token'
 import type { TCancelFn, TCancelToken, TWatchEvent } from './types'
 
+const excludes = ['.DS_Store']
+
 const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<TWatchEvent> => ({
   async *[Symbol.asyncIterator]() {
-    const dirStats = new Map<string, Stats>()
+    const dirMap = new Map<string, boolean>()
+    const dirList = await readdir(dir, { withFileTypes: true })
     let results: TWatchEvent[] = []
     let hasError = false
     let error: any
@@ -20,37 +22,39 @@ const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<TWatchEv
       }
     }
 
-    const dirList = await readdir(dir)
+    for (const dirent of dirList) {
+      const path = resolve(dir, dirent.name)
+      const isDir = dirent.isDirectory()
 
-    for (const dirItem of dirList) {
-      const itemPath = resolve(dir, dirItem)
-      const stats = await stat(itemPath)
-
-      dirStats.set(itemPath, stats)
+      results.push({ type: isDir ? 'ADD_DIR' : 'ADD_FILE', path })
+      dirMap.set(dirent.name, isDir)
     }
 
     const watcher = watch(dir)
 
     watcher.on('change', async (_, fileName: string) => {
+      if (excludes.includes(fileName)) {
+        return
+      }
+
       const path = resolve(dir, fileName)
 
       try {
-        const stats = await stat(path)
+        const stats = await lstat(path)
         const isDir = stats.isDirectory()
 
-        if (!dirStats.has(path)) {
-          results.push({ type: isDir ? 'ADD_DIR' : 'ADD_FILE', path })
-        } else if (!isDir && dirStats.get(path)!.mtimeMs < stats.mtimeMs) {
+        if (dirMap.has(fileName)) {
           results.push({ type: 'CHANGE_FILE', path })
+        } else {
+          results.push({ type: isDir ? 'ADD_DIR' : 'ADD_FILE', path })
+          dirMap.set(fileName, isDir)
         }
-
-        dirStats.set(path, stats)
       } catch (err) {
         if (err.code === 'ENOENT') {
-          const isDir = dirStats.get(path)!.isDirectory()
+          const isDir = dirMap.get(fileName)!
 
           results.push({ type: isDir ? 'REMOVE_DIR' : 'REMOVE_FILE', path })
-          dirStats.delete(path)
+          dirMap.delete(fileName)
         } else {
           throw err
         }
@@ -70,7 +74,7 @@ const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<TWatchEv
         rejecter(err)
 
         rejecter = null
-      // otherwise store error to be thrown later
+        // otherwise store error to be thrown later
       } else {
         hasError = true
         error = err
@@ -110,15 +114,10 @@ const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<TWatchEv
       throw err
     } finally {
       watcher.close()
-      dirStats.clear()
+      dirMap.clear()
     }
   },
 })
-
-// const scanDir = async (dir: root) => {
-//   const list = await readdir(dir)
-
-// }
 
 const watchDir = (rootDir: string): AsyncIterable<TWatchEvent> => ({
   async *[Symbol.asyncIterator]() {
