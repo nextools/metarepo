@@ -1,24 +1,22 @@
-export function zip <A, B>(it0: Iterable<A>, it1: Iterable<B>): Iterable<[A, B]>
-export function zip <A, B, C>(it0: Iterable<A>, it1: Iterable<B>, it2: Iterable<C>): Iterable<[A, B, C]>
-export function zip <A, B, C, D>(it0: Iterable<A>, it1: Iterable<B>, it2: Iterable<C>, it3: Iterable<D>): Iterable<[A, B, C, D]>
+type TUnwrap<T> = T extends Iterable<infer U>[] ? [U] : never
 
-export function zip(...iterables: Iterable<any>[]) {
+export const zip = <T extends Iterable<any>[]>(...its: T): Iterable<TUnwrap<T>> => {
   return {
     *[Symbol.iterator]() {
-      const iterators = iterables.map((i) => i[Symbol.iterator]())
+      const iterators = its.map((it) => it[Symbol.iterator]())
 
       try {
         while (true) {
-          const values = iterators.map((i) => i.next())
+          const values = iterators.map((it) => it.next())
 
-          if (values.some((v) => v.done)) {
+          if (values.some((r) => r.done)) {
             break
           }
 
-          yield values.map((v) => v.value) as any
+          yield values.map((r) => r.value) as any
         }
       } finally {
-        iterators.forEach((i) => i.return?.())
+        iterators.forEach((it) => it.return?.())
       }
     },
   }

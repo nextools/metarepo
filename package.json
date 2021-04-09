@@ -64,6 +64,7 @@
     "packages/typeon",
     "packages/unchunk",
     "packages/wans",
+    "packages/wotch",
     "packages/weslint",
     "packages/workerama",
     "packages/worku",

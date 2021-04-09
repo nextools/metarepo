@@ -1,24 +1,22 @@
-export function zipAsync <A, B>(it0: AsyncIterable<A>, it1: AsyncIterable<B>): AsyncIterable<[A, B]>
-export function zipAsync <A, B, C>(it0: AsyncIterable<A>, it1: AsyncIterable<B>, it2: AsyncIterable<C>): AsyncIterable<[A, B, C]>
-export function zipAsync <A, B, C, D>(it0: AsyncIterable<A>, it1: AsyncIterable<B>, it2: AsyncIterable<C>, it3: AsyncIterable<D>): AsyncIterable<[A, B, C, D]>
+type TUnwrap<T> = T extends AsyncIterable<infer U>[] ? [U] : never
 
-export function zipAsync(...iterables: AsyncIterable<any>[]) {
+export const zipAsync = <T extends AsyncIterable<any>[]>(...its: T): AsyncIterable<TUnwrap<T>> => {
   return {
     async *[Symbol.asyncIterator]() {
-      const iterators = iterables.map((i) => i[Symbol.asyncIterator]())
+      const iterators = its.map((it) => it[Symbol.asyncIterator]())
 
       try {
         while (true) {
-          const values = await Promise.all(iterators.map((i) => i.next()))
+          const values = await Promise.all(iterators.map((it) => it.next()))
 
-          if (values.some((v) => v.done)) {
+          if (values.some((r) => r.done)) {
             break
           }
 
-          yield values.map((v) => v.value) as any
+          yield values.map((r) => r.value) as any
         }
       } finally {
-        await Promise.all(iterators.map((i) => i.return?.()))
+        await Promise.all(iterators.map((it) => it.return?.()))
       }
     },
   }

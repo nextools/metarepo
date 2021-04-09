@@ -56,7 +56,7 @@ export const mapThreadPool = <T, R>(taskFn: (arg: any) => (it: AsyncIterable<T>)
   const groupType = options?.groupType ?? DEFAULT_GROUP_TYPE
 
   return (it: AsyncIterable<T>): AsyncIterable<R> => {
-    const workerize = (group: T[]) => async (): Promise<R[]> => {
+    const workerize = async (group: T[]): Promise<R[]> => {
       if (busyWorkers.size === workers.length) {
         await new Promise<void>((resolve) => {
           queueResolvers.push(resolve)

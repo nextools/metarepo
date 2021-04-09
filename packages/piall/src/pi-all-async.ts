@@ -1,6 +1,6 @@
 import type { TMaybePromise } from './types'
 
-export const piAllAsync = (concurrency: number = Infinity) => <T>(iterable: AsyncIterable<() => TMaybePromise<T>>): AsyncIterable<T> => {
+export const piAllAsync = (concurrency: number = Infinity) => <T>(iterable: AsyncIterable<TMaybePromise<T>>): AsyncIterable<T> => {
   if ((!Number.isSafeInteger(concurrency) && concurrency !== Infinity) || concurrency < 1) {
     throw new TypeError('`concurrency` argument must be a number >= 1')
   }
@@ -18,13 +18,13 @@ export const piAllAsync = (concurrency: number = Infinity) => <T>(iterable: Asyn
       let error: any
       let nextPromise: Promise<void>
 
-      const run = async (maybePromise: TMaybePromise<T>): Promise<void> => {
+      const run = async (value: TMaybePromise<T>): Promise<void> => {
         try {
-          pool.add(maybePromise)
+          pool.add(value)
 
-          const result = await maybePromise
+          const result = await value
 
-          pool.delete(maybePromise)
+          pool.delete(value)
 
           // yield doesn't wait for promise to be resolved
           if (resolveYieldPromise === null) {
@@ -43,7 +43,7 @@ export const piAllAsync = (concurrency: number = Infinity) => <T>(iterable: Asyn
           // resolve yield promise
           _resolve(result)
         } catch (err) {
-          pool.delete(maybePromise)
+          pool.delete(value)
 
           if (rejectYieldPromise === null) {
             hasError = true
@@ -71,7 +71,7 @@ export const piAllAsync = (concurrency: number = Infinity) => <T>(iterable: Asyn
           }
 
           // resolve value promise and push result(s)
-          void run(iteration.value())
+          void run(iteration.value)
 
           // should next() call itself one again or not
           if (pool.size < concurrency) {

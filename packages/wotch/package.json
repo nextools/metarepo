@@ -1,0 +1,16 @@
+{
+  "name": "wotch",
+  "version": "0.0.0",
+  "description": "Watch dir as async iterable",
+  "keywords": [],
+  "main": "src/index.ts",
+  "type": "module",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.22.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
