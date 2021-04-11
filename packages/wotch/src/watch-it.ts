@@ -9,7 +9,8 @@ const EVENT_DELAY = 100
 
 export const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<TWatchEvent> => ({
   async *[Symbol.asyncIterator]() {
-    const dirMap = new Map<string, boolean>()
+    // <fileName, isDir>
+    const dirents = new Map<string, boolean>()
     let results: TWatchEvent[] = []
     let hasError = false
     let error: any
@@ -34,7 +35,7 @@ export const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<T
       const isDir = dirent.isDirectory()
 
       results.push({ type: isDir ? 'ADD_DIR' : 'ADD_FILE', path })
-      dirMap.set(dirent.name, isDir)
+      dirents.set(dirent.name, isDir)
     }
 
     const watcher = watch(dir)
@@ -76,21 +77,21 @@ export const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<T
         const stats = await lstat(path)
         const isDir = stats.isDirectory()
 
-        if (dirMap.has(fileName)) {
+        if (dirents.has(fileName)) {
           results.push({ type: 'CHANGE_FILE', path })
         } else {
           results.push({ type: isDir ? 'ADD_DIR' : 'ADD_FILE', path })
-          dirMap.set(fileName, isDir)
+          dirents.set(fileName, isDir)
         }
       } catch (err) {
         if (err.code === 'ENOENT') {
-          const isDir = dirMap.get(fileName)!
+          const isDir = dirents.get(fileName)!
 
           if (isDir) {
             results.push({ type: 'REMOVE_DIR', path })
           }
 
-          dirMap.delete(fileName)
+          dirents.delete(fileName)
         } else {
           throw err
         }
@@ -101,6 +102,7 @@ export const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<T
 
         results = []
         resolver = null
+        rejecter = null
       }
     })
 
@@ -109,8 +111,9 @@ export const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<T
       if (rejecter !== null) {
         rejecter(err)
 
+        resolver = null
         rejecter = null
-        // otherwise store error to be thrown later
+      // otherwise store error to be thrown later
       } else {
         hasError = true
         error = err
@@ -150,7 +153,7 @@ export const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<T
       throw err
     } finally {
       watcher.close()
-      dirMap.clear()
+      dirents.clear()
     }
   },
 })
