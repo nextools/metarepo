@@ -16,8 +16,28 @@ export const test: TTask<string, CoverageMapData> = async function* (pkg = '*') 
       `packages/${pkg}/test_/**/*.{ts,tsx}`,
       `!packages/${pkg}/test)_/fixtures/`,
     ]),
-    // testIt(),
+    // test(),
     mapThreadPool(test, null),
+    reportCoverage('coverage/'),
+    log('tested')
+  )()
+}
+
+export const wtest: TTask<string, CoverageMapData> = async function* (pkg = '*') {
+  const { pipe } = await import('funcom')
+  const { find } = await import('./plugin-find')
+  const { watch } = await import('./plugin-watch')
+  const { remove } = await import('./plugin-remove')
+  // const { mapThreadPool } = await import('@start/thread-pool')
+  const { log } = await import('./plugin-log')
+  const { test, reportCoverage } = await import('./plugin-test')
+
+  yield* pipe(
+    find('coverage/'),
+    remove,
+    watch(`packages/${pkg}/test_/`),
+    test(),
+    // mapThreadPool(test, null),
     reportCoverage('coverage/'),
     log('tested')
   )()
