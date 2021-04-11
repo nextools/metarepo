@@ -6,6 +6,6 @@ export type TCancelToken = {
 }
 
 export type TWatchEvent = {
-  type: 'ADD_FILE' | 'ADD_DIR' | 'CHANGE_FILE' | 'REMOVE_FILE' | 'REMOVE_DIR',
+  type: 'ADD_DIR' | 'REMOVE_DIR' | 'ADD_FILE' | 'CHANGE_FILE',
   path: string,
 }
