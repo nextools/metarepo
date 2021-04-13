@@ -1,7 +1,7 @@
 import type { TNoInputPlugin } from './types'
 
 export const typescriptCheck: TNoInputPlugin<string> = async function* () {
-  const path = await import('path')
+  const { dirname } = await import('path')
   const { isUndefined } = await import('tsfn')
   const { default: ts } = await import('typescript')
 
@@ -12,7 +12,7 @@ export const typescriptCheck: TNoInputPlugin<string> = async function* () {
   }
 
   const configFile = ts.readConfigFile(configPath, ts.sys.readFile)
-  const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, path.dirname(configPath))
+  const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, dirname(configPath))
   const options = {
     ...parsedConfig.options,
     project: '.',

@@ -1,7 +1,7 @@
 import type { TFile, TPlugin } from './types'
 
 export const rename = (replaceFn: (filePath: string) => string): TPlugin<TFile, TFile> => async function* (it) {
-  const path = await import('path')
+  const { basename } = await import('path')
   const { mapAsync } = await import('iterama')
   const { isObject } = await import('tsfn')
 
@@ -14,7 +14,7 @@ export const rename = (replaceFn: (filePath: string) => string): TPlugin<TFile, 
         data: file.data,
         map: {
           ...file.map,
-          file: path.basename(newFilePath),
+          file: basename(newFilePath),
         },
       }
     }

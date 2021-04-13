@@ -10,7 +10,7 @@ export type TTestFile = {
 }
 
 export const test = (): TPlugin<string, CoverageMapData> => async function* (it) {
-  const path = await import('path')
+  const { resolve, join, dirname } = await import('path')
   const { fileURLToPath } = await import('url')
   const { pipe } = await import('funcom')
   const { drainAsync, mapAsync, ungroupAsync } = await import('iterama')
@@ -28,10 +28,11 @@ export const test = (): TPlugin<string, CoverageMapData> => async function* (it)
       // trigger @start/ts-esm-loader to collect transpiled code with inlined source maps
       globl[transpiledSourcesKey] = {}
 
+      const testFileFullPath = resolve(testFilePath)
       const stopCollectingCoverage = await startCollectingCoverage()
-      const { tests, target } = await import(`${testFilePath}?nocache=${Date.now()}`) as TTestFile
+      const { tests, target } = await import(`${testFileFullPath}?nocache=${Date.now()}`) as TTestFile
       // `a/b/c/test/foo.ts` + `../src/f*.ts` -> /a/b/c/src/f*.ts
-      const isMatch = picomatch(path.join(path.dirname(testFilePath), target))
+      const isMatch = picomatch(join(dirname(testFileFullPath), target))
 
       await drainAsync(piAlled(tests))
 

@@ -1,6 +1,8 @@
 import type { ESLint } from 'eslint'
 import type { TFile, TPlugin } from './types'
 
+const CACHE_LOCATION = 'node_modules/.cache/eslint'
+
 export const eslintCheck = (options?: ESLint.Options): TPlugin<string, ESLint.LintResult> => async function* (it) {
   const { ESLint } = await import('eslint')
   const { pipe } = await import('funcom')
@@ -9,7 +11,7 @@ export const eslintCheck = (options?: ESLint.Options): TPlugin<string, ESLint.Li
 
   const eslint = new ESLint({
     cache: true,
-    cacheLocation: 'node_modules/.cache/eslint',
+    cacheLocation: CACHE_LOCATION,
     ...options,
   })
 
@@ -29,7 +31,7 @@ export const eslintPrint = (options?: ESLint.Options): TPlugin<ESLint.LintResult
 
   const eslint = new ESLint({
     cache: true,
-    cacheLocation: 'node_modules/.cache/eslint',
+    cacheLocation: CACHE_LOCATION,
     ...options,
   })
   let hasErrors = false

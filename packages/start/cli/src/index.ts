@@ -147,7 +147,7 @@ try {
         if (isString(err.stack)) {
           console.error(`\n${red(cleanupStack(err.stack))}`)
         }
-      } else {
+      } else if (err !== null) {
         console.error(err)
       }
     } finally {

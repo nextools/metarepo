@@ -1,15 +1,14 @@
 import type { TPlugin } from './types'
 
 export const typescriptGenerate = (outDir: string): TPlugin<string, string> => async function* (it) {
-  const path = await import('path')
+  const { dirname } = await import('path')
   const { default: ts } = await import('typescript')
   const { pipe } = await import('funcom')
   const { mapAsync, ungroupAsync } = await import('iterama')
 
   yield* pipe(
     mapAsync((filePath: string) => {
-      const inDir = path.dirname(filePath)
-      const outDirFull = path.resolve(outDir)
+      const inDir = dirname(filePath)
       const configPath = ts.findConfigFile(inDir, ts.sys.fileExists)
 
       if (typeof configPath === 'undefined') {
@@ -17,13 +16,13 @@ export const typescriptGenerate = (outDir: string): TPlugin<string, string> => a
       }
 
       const configFile = ts.readConfigFile(configPath, ts.sys.readFile)
-      const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, path.dirname(configPath))
+      const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, dirname(configPath))
       const options = {
         ...parsedConfig.options,
         noEmitOnError: true,
         noEmit: false,
         emitDeclarationOnly: true,
-        declarationDir: outDirFull,
+        declarationDir: outDir,
         declaration: true,
         allowJs: false,
       }

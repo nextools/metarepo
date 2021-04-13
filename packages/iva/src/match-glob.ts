@@ -1,4 +1,4 @@
-import { join, resolve } from 'path'
+import { join } from 'path'
 import picomatch from 'picomatch'
 import { access, readdir } from 'pifs'
 import { isPathIgnored } from './is-path-ignored'
@@ -37,7 +37,7 @@ export const matchGlob = (negatedGlobs: Iterable<string>) => (glob: string): Asy
 
           // the end result, no more tokens
           if (tokenIndex === tokens.length - 1) {
-            yield resolve(nextDirPath)
+            yield nextDirPath
 
             return
           }
@@ -76,13 +76,13 @@ export const matchGlob = (negatedGlobs: Iterable<string>) => (glob: string): Asy
 
         // always try to "full match" when in infinite depth mode, end result could be anywhere
         if (hasInfiniteDepthGlob && isFullMatch(direntPath)) {
-          yield resolve(direntPath)
+          yield direntPath
           continue
         }
 
         // dirent must be the end result at this point already when it's the last token
         if (tokenIndex === tokens.length - 1) {
-          yield resolve(direntPath)
+          yield direntPath
           continue
         }
 

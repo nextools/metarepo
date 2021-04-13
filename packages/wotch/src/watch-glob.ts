@@ -1,4 +1,3 @@
-import { resolve } from 'path'
 import globParent from 'glob-parent'
 import { createCancelToken } from './create-cancel-token'
 import { dirMatcher, fileMatcher } from './matcher'
@@ -68,7 +67,7 @@ export const watchGlob = (negatedGlobs: Iterable<string>) => (glob: string): Asy
           } else if (value.type === 'REMOVE_DIR') {
             await removeDirFromWatch(value.path)
           } else {
-            yield resolve(value.path)
+            yield value.path
           }
 
           sources.set(winner.iterator, queueNext(winner.iterator))
