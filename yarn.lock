@@ -1376,12 +1376,12 @@
   resolved "https://registry.yarnpkg.com/@haul-bundler/basic-bundle-webpack-plugin/-/basic-bundle-webpack-plugin-0.19.0.tgz#4860780e479c69fd6f800805eda2a491287b4ea0"
   integrity sha512-0t7vJ+OI5YyPUU5LGW2fFyMa5Si+WDfliUnRhBgvqY4+O3tY+nUTsa71qZhAK7oVHyaGow2Era343MHsTKDpIA==
 
-"@haul-bundler/cli@^0.22.1":
-  version "0.22.1"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/cli/-/cli-0.22.1.tgz#cff0a588b8e7b923a3869e8807f3f8e9a695b5d3"
-  integrity sha512-CrDNAlzXlOt3tVMT/hlV9D5OFMxu0XTOlE8VfjaueEgyXZHfKapJh0zrtwBX+xImVbYkyaAAM4KlkiB3juLhUQ==
+"@haul-bundler/cli@^0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@haul-bundler/cli/-/cli-0.23.0.tgz#2a0b9288f94f48ca98d9a33e7a4e0f864bfba7e6"
+  integrity sha512-/SxL2IiGeqJQSLSXrD/Lebl8kp5dEtICCv6DJTdR+/GWcPndlkYYq8Y7q6iBDEyduGr4EOZWtIePt2ORW2MCvw==
   dependencies:
-    "@haul-bundler/core" "^0.22.1"
+    "@haul-bundler/core" "^0.23.0"
     "@haul-bundler/core-legacy" "^0.18.0"
     ansi-fragments "^0.2.1"
     cpx "^1.5.0"
@@ -1412,6 +1412,54 @@
   version "0.22.1"
   resolved "https://registry.yarnpkg.com/@haul-bundler/core/-/core-0.22.1.tgz#5e6e2de4be7b202afe1040b88404e53805d572a2"
   integrity sha512-xcZZO1WZyrBwicnSG0767WsqQGESGv3WRwJfwitiHzKC7u9qv7CXzK/qIhg8vcBvrjt11YXmqNDEK6EOAhNEfw==
+  dependencies:
+    "@babel/core" "7.4.0"
+    "@babel/plugin-proposal-class-properties" "^7.7.0"
+    "@babel/plugin-transform-flow-strip-types" "^7.7.4"
+    "@babel/preset-env" "^7.7.7"
+    "@babel/preset-typescript" "^7.7.7"
+    "@hapi/boom" "^8.0.1"
+    "@hapi/hapi" "^18.4.0"
+    "@hapi/inert" "^5.2.2"
+    "@hapi/joi" "^15.1.1"
+    "@haul-bundler/basic-bundle-webpack-plugin" "^0.19.0"
+    "@haul-bundler/core-legacy" "^0.18.0"
+    ansi-fragments "^0.2.1"
+    dedent "^0.7.0"
+    enhanced-resolve "^4.1.1"
+    escape-string-regexp "^2.0.0"
+    find-cache-dir "^3.2.0"
+    hasha "^5.1.0"
+    image-size "^0.8.3"
+    is-ci "^2.0.0"
+    jest-worker "^25.1.0"
+    loader-utils "^1.2.3"
+    lodash.get "^4.4.2"
+    lodash.merge "^4.6.2"
+    lodash.throttle "^4.1.1"
+    mkdirp "^0.5.1"
+    node-fetch "^2.6.0"
+    open "^7.0.0"
+    open-in-editor "^2.2.0"
+    pify "^4.0.1"
+    platform-select "^1.1.2"
+    resolve "^1.14.2"
+    semver "^7.1.1"
+    signal-exit "^3.0.2"
+    source-map "^0.7.3"
+    strip-ansi "6.0.0"
+    terminal-kit "^1.32.3"
+    terser "^4.6.2"
+    utility-types "^3.10.0"
+    webpack "^4.41.5"
+    webpack-sources "^1.4.3"
+    wrap-ansi "^6.2.0"
+    ws "^7.2.1"
+
+"@haul-bundler/core@^0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@haul-bundler/core/-/core-0.23.0.tgz#b25535fe8b671b8e097cbbf346b6343bda162c9a"
+  integrity sha512-zaXM9SxOWIy3PI48JKpYgYk/7ECTgwI0nbZ3w0NEzUU2Tw3Ee2U625a8SfX9kIdBy9pFpTWRZ9xHkxbsWGvb+Q==
   dependencies:
     "@babel/core" "7.4.0"
     "@babel/plugin-proposal-class-properties" "^7.7.0"
