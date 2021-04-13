@@ -1,13 +1,19 @@
 
 import { watch } from 'fs'
 import { readdir, lstat } from 'fs/promises'
-import { resolve } from 'path'
+import { join } from 'path'
 import type { TCancelToken, TWatchEvent } from './types'
 
-const excludes = ['.DS_Store']
 const EVENT_DELAY = 100
 
-export const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<TWatchEvent> => ({
+type TWatchItOptions = {
+  dir: string,
+  cancelToken: TCancelToken,
+  isFileMatching: (path: string) => boolean,
+  isDirMatching: (path: string) => boolean,
+}
+
+export const watchIt = (options: TWatchItOptions): AsyncIterable<TWatchEvent> => ({
   async *[Symbol.asyncIterator]() {
     // <fileName, isDir>
     const dirents = new Map<string, boolean>()
@@ -17,36 +23,36 @@ export const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<T
     let resolver: null | ((results: TWatchEvent[]) => void) = null
     let rejecter: null | ((error: any) => void) = null
 
-    cancelToken.onCancel = () => {
+    options.cancelToken.onCancel = () => {
       if (rejecter !== null) {
-        rejecter(cancelToken.symbol)
+        rejecter(options.cancelToken.symbol)
       }
     }
 
-    const dirList = await readdir(dir, { withFileTypes: true })
+    const dirList = await readdir(options.dir, { withFileTypes: true })
 
     // read dir to emit and store files first
     for (const dirent of dirList) {
-      if (excludes.includes(dirent.name)) {
+      const path = join(options.dir, dirent.name)
+      const isDir = dirent.isDirectory()
+
+      if (isDir && !options.isDirMatching(path)) {
         continue
       }
 
-      const path = resolve(dir, dirent.name)
-      const isDir = dirent.isDirectory()
+      if (!isDir && !options.isFileMatching(path)) {
+        continue
+      }
 
       results.push({ type: isDir ? 'ADD_DIR' : 'ADD_FILE', path })
       dirents.set(dirent.name, isDir)
     }
 
-    const watcher = watch(dir)
+    const watcher = watch(options.dir)
     let lastFileName: string
     let clearTimer: null | (() => void) = null
 
     watcher.on('change', async (_, fileName: string) => {
-      if (excludes.includes(fileName)) {
-        return
-      }
-
       if (clearTimer !== null) {
         // skip duplicated within EVENT_DELAY window events, happens at least on macOS
         if (fileName === lastFileName) {
@@ -69,13 +75,21 @@ export const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<T
         }
       })
 
-      clearTimer = null
+      const path = join(options.dir, fileName)
 
-      const path = resolve(dir, fileName)
+      clearTimer = null
 
       try {
         const stats = await lstat(path)
         const isDir = stats.isDirectory()
+
+        if (isDir && !options.isDirMatching(path)) {
+          return
+        }
+
+        if (!isDir && !options.isFileMatching(path)) {
+          return
+        }
 
         if (dirents.has(fileName)) {
           results.push({ type: 'CHANGE_FILE', path })
@@ -146,7 +160,7 @@ export const watchIt = (dir: string, cancelToken: TCancelToken): AsyncIterable<T
         })
       }
     } catch (err) {
-      if (err === cancelToken.symbol) {
+      if (err === options.cancelToken.symbol) {
         return
       }
 

@@ -12,5 +12,16 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "funcom": "^0.2.0",
+    "glob-parent": "^5.1.2",
+    "iterama": "^0.6.1",
+    "picomatch": "^2.2.3",
+    "tsfn": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/glob-parent": "^5.1.0",
+    "@types/picomatch": "^2.2.1"
   }
 }

@@ -1,9 +1,15 @@
+import { resolve } from 'path'
+import globParent from 'glob-parent'
 import { createCancelToken } from './create-cancel-token'
+import { dirMatcher, fileMatcher } from './matcher'
 import type { TCancelFn, TQueueNext, TWatchEvent } from './types'
 import { watchIt } from './watch-it'
 
-export const watchDir = (rootDir: string): AsyncIterable<string> => ({
+export const watchGlob = (negatedGlobs: Iterable<string>) => (glob: string): AsyncIterable<string> => ({
   async *[Symbol.asyncIterator]() {
+    const rootDir = globParent(glob)
+    const isFileMatching = fileMatcher(glob, negatedGlobs)
+    const isDirMatching = dirMatcher(glob, negatedGlobs)
     const queueNext = async (iterator: AsyncIterator<TWatchEvent>): TQueueNext => ({
       iterator,
       result: await iterator.next(),
@@ -13,8 +19,13 @@ export const watchDir = (rootDir: string): AsyncIterable<string> => ({
     const cancels = new Map<string, TCancelFn>()
 
     const addDirToWatch = (dir: string) => {
-      const { cancel, token } = createCancelToken()
-      const it = watchIt(dir, token)
+      const { cancel, cancelToken } = createCancelToken()
+      const it = watchIt({
+        dir,
+        isFileMatching,
+        isDirMatching,
+        cancelToken,
+      })
       const iterator = it[Symbol.asyncIterator]()
 
       sources.set(iterator, queueNext(iterator))
@@ -57,7 +68,7 @@ export const watchDir = (rootDir: string): AsyncIterable<string> => ({
           } else if (value.type === 'REMOVE_DIR') {
             await removeDirFromWatch(value.path)
           } else {
-            yield value.path
+            yield resolve(value.path)
           }
 
           sources.set(winner.iterator, queueNext(winner.iterator))

@@ -5,7 +5,7 @@ export const createCancelToken = () => {
   const symbol = Symbol('CANCEL')
 
   return {
-    token: {
+    cancelToken: {
       set onCancel(fn: () => void) {
         cancelFn = fn
       },

@@ -1,7 +1,7 @@
 import type { TMaybeInputPlugin } from './types'
 
-export const watch = (dir: string): TMaybeInputPlugin<any, string> => async function* (it) {
-  const { watchDir } = await import('wotch')
+export const watch = (globs: string | string[]): TMaybeInputPlugin<any, string> => async function* (it) {
+  const { watch } = await import('wotch')
   const { isAsyncIterable } = await import('tsfn')
   const { drainAsync } = await import('iterama')
 
@@ -9,5 +9,5 @@ export const watch = (dir: string): TMaybeInputPlugin<any, string> => async func
     await drainAsync(it)
   }
 
-  yield* watchDir(dir)
+  yield* watch(globs)
 }

@@ -19,20 +19,18 @@
     "access": "public"
   },
   "sideEffects": false,
-  "devDependencies": {
-    "@mock/require": "^0.2.2",
-    "@types/picomatch": "^2.2.1",
-    "@types/tape": "^4.2.34",
-    "@types/to-absolute-glob": "^2.0.0",
-    "spyfn": "^2.0.0",
-    "tape": "^5.0.1"
-  },
   "dependencies": {
     "funcom": "^0.2.0",
     "iterama": "^0.6.1",
     "picomatch": "^2.2.2",
     "pifs": "^2.0.0",
-    "to-absolute-glob": "^2.0.2",
     "tsfn": "^2.2.0"
+  },
+  "devDependencies": {
+    "@mock/require": "^0.2.2",
+    "@types/picomatch": "^2.2.1",
+    "@types/tape": "^4.2.34",
+    "spyfn": "^2.0.0",
+    "tape": "^5.0.1"
   }
 }

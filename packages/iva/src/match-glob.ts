@@ -1,7 +1,6 @@
-import path from 'path'
+import { join, resolve } from 'path'
 import picomatch from 'picomatch'
 import { access, readdir } from 'pifs'
-import toAbsoluteGlob from 'to-absolute-glob'
 import { isPathIgnored } from './is-path-ignored'
 
 type TToken = {
@@ -15,9 +14,9 @@ const readDirOptions = {
   encoding: 'utf8' as const,
 }
 
-export const matchGlob = (glob: string, negatedGlobs: Iterable<string>, workingDirPath: string): AsyncIterable<string> => {
+export const matchGlob = (negatedGlobs: Iterable<string>) => (glob: string): AsyncIterable<string> => {
   const { tokens } = picomatch.scan(glob, { tokens: true, parts: true }) as { tokens: TToken[] }
-  const isFullMatch = picomatch(toAbsoluteGlob(glob, { cwd: workingDirPath }))
+  const isFullMatch = picomatch(glob)
   let hasInfiniteDepthGlob = false
 
   const processDir = (dirPath: string, tokenIndex: number): AsyncIterable<string> => ({
@@ -26,7 +25,7 @@ export const matchGlob = (glob: string, negatedGlobs: Iterable<string>, workingD
 
       // no need to read dir if token is not a glob, it's possible to go there directly
       if (!token.isGlob) {
-        const nextDirPath = path.join(dirPath, token.value)
+        const nextDirPath = join(dirPath, token.value)
 
         // skip ignored paths
         if (isPathIgnored(nextDirPath, negatedGlobs)) {
@@ -38,7 +37,7 @@ export const matchGlob = (glob: string, negatedGlobs: Iterable<string>, workingD
 
           // the end result, no more tokens
           if (tokenIndex === tokens.length - 1) {
-            yield nextDirPath
+            yield resolve(nextDirPath)
 
             return
           }
@@ -63,7 +62,7 @@ export const matchGlob = (glob: string, negatedGlobs: Iterable<string>, workingD
           continue
         }
 
-        const direntPath = path.join(dirPath, dirent.name)
+        const direntPath = join(dirPath, dirent.name)
 
         // skip ignored paths
         if (isPathIgnored(direntPath, negatedGlobs)) {
@@ -77,13 +76,13 @@ export const matchGlob = (glob: string, negatedGlobs: Iterable<string>, workingD
 
         // always try to "full match" when in infinite depth mode, end result could be anywhere
         if (hasInfiniteDepthGlob && isFullMatch(direntPath)) {
-          yield direntPath
+          yield resolve(direntPath)
           continue
         }
 
         // dirent must be the end result at this point already when it's the last token
         if (tokenIndex === tokens.length - 1) {
-          yield direntPath
+          yield resolve(direntPath)
           continue
         }
 
@@ -96,5 +95,5 @@ export const matchGlob = (glob: string, negatedGlobs: Iterable<string>, workingD
     },
   })
 
-  return processDir(workingDirPath, 0)
+  return processDir('.', 0)
 }
