@@ -2,7 +2,6 @@
 
 // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin
 module.exports = {
-  parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
   },

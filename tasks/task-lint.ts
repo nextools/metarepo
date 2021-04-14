@@ -18,7 +18,7 @@ export const lint: TTask<string, ESLint.LintResult> = async function* (pkg = '*'
       `tasks/**/${files}`,
     ]),
     // eslint()
-    mapThreadPool(eslintCheck, null, { groupBy: 50 }),
+    mapThreadPool(eslintCheck, { fix: true }, { groupBy: 50 }),
     eslintPrint(),
     log('linted')
   )()

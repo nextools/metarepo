@@ -5,7 +5,7 @@ import { onceMessage } from './once-message'
 import { onceOpen } from './once-open'
 import type { TGetIterableOptions, TResponse } from './types'
 
-export async function *getIterable <T extends TJsonValue>(options: TGetIterableOptions): AsyncGenerator<T, any, any> {
+export async function* getIterable <T extends TJsonValue>(options: TGetIterableOptions): AsyncGenerator<T, any, any> {
   const ws = new WebSocket(`ws://${options.host}:${options.port}/`)
   let isDone = false
 

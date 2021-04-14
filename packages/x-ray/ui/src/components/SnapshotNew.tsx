@@ -41,7 +41,7 @@ export const SnapshotNew = pureComponent(
     },
   }), ['darkMode']),
   mapState('state', 'setState', () => null as string[] | null, []),
-  onUpdateAsync((props) => function *() {
+  onUpdateAsync((props) => function* () {
     try {
       const data = yield apiLoadSnapshot({ id: props.current.id, type: 'NEW' })
       const lines = data.split('\n')

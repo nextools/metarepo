@@ -1,24 +1,33 @@
 import type { ESLint } from 'eslint'
 import type { TFile, TPlugin } from './types'
 
-const CACHE_LOCATION = 'node_modules/.cache/eslint'
-
 export const eslintCheck = (options?: ESLint.Options): TPlugin<string, ESLint.LintResult> => async function* (it) {
   const { ESLint } = await import('eslint')
   const { pipe } = await import('funcom')
-  const { mapAsync, ungroupAsync } = await import('iterama')
+  const { filterAsync, mapAsync, ungroupAsync } = await import('iterama')
   const { read } = await import('./plugin-read')
 
   const eslint = new ESLint({
     cache: true,
-    cacheLocation: CACHE_LOCATION,
+    cacheLocation: 'node_modules/.cache/eslint',
     ...options,
   })
 
   yield* pipe(
+    filterAsync(async (path: string) => {
+      const isPathIgnored = await eslint.isPathIgnored(path)
+
+      return !isPathIgnored
+    }),
     read,
-    mapAsync((file: TFile) => {
-      return eslint.lintText(file.data, { filePath: file.path })
+    mapAsync(async (file: TFile) => {
+      const results = await eslint.lintText(file.data, { filePath: file.path })
+
+      if (options?.fix === true) {
+        await ESLint.outputFixes(results)
+      }
+
+      return results
     }),
     ungroupAsync
   )(it)
@@ -31,7 +40,7 @@ export const eslintPrint = (options?: ESLint.Options): TPlugin<ESLint.LintResult
 
   const eslint = new ESLint({
     cache: true,
-    cacheLocation: CACHE_LOCATION,
+    cacheLocation: 'node_modules/.cache/eslint',
     ...options,
   })
   let hasErrors = false

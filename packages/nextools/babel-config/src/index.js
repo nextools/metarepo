@@ -1,6 +1,6 @@
+const { babelConfigReactNativeBuild } = require('./native')
 const { babelConfigNodeBuild, babelConfigNodeRegister } = require('./node')
 const { babelConfigWebBuild } = require('./web')
-const { babelConfigReactNativeBuild } = require('./native')
 
 exports.babelConfigNodeBuild = babelConfigNodeBuild
 exports.babelConfigNodeRegister = babelConfigNodeRegister

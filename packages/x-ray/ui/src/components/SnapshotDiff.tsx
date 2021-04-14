@@ -57,7 +57,7 @@ export const SnapshotDiff = pureComponent(
     },
   }), ['darkMode']),
   mapState('state', 'setState', () => null as TDiffLine[] | null, []),
-  onUpdateAsync((props) => function *() {
+  onUpdateAsync((props) => function* () {
     try {
       const [dataOrig, dataNew] = yield Promise.all([
         apiLoadSnapshot({ id: props.current.id, type: 'ORIG' }),

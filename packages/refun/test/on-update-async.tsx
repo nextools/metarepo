@@ -9,7 +9,7 @@ const wait = () => new Promise((res) => setImmediate(res))
 
 test('onUpdateAsync: empty watch keys', (t) => {
   const functionsReveived: any[] = []
-  const gen = function *(...args: any[]) {
+  const gen = function* (...args: any[]) {
     functionsReveived.push(args[0].cancelOthers)
     yield Promise.resolve(42)
   }
@@ -124,7 +124,7 @@ test('onUpdateAsync: switch coroutine, watch keys', async (t) => {
   const functionsReceived: any[] = []
   const resolves: any[] = []
   const intermediateSpy = createSpy(() => {})
-  const gen = function *(...args: any[]) {
+  const gen = function* (...args: any[]) {
     const { cancelOthers, index } = args[0]
 
     functionsReceived.push(cancelOthers)
@@ -284,7 +284,7 @@ test('onUpdateAsync: coroutine unmount, watch keys', async (t) => {
   const functionsReceived: any[] = []
   const resolves: any[] = []
   const intermediateSpy = createSpy(() => {})
-  const gen = function *(...args: any[]) {
+  const gen = function* (...args: any[]) {
     const { cancelOthers, index } = args[0]
 
     functionsReceived.push(cancelOthers)
@@ -379,7 +379,7 @@ test('onUpdateAsync: coroutine reject, watch keys', async (t) => {
   const functionsReceived: any[] = []
   const rejects: any[] = []
   const intermediateSpy = createSpy(() => {})
-  const gen = function *(...args: any[]) {
+  const gen = function* (...args: any[]) {
     const { cancelOthers, index } = args[0]
 
     functionsReceived.push(cancelOthers)
@@ -478,7 +478,7 @@ test('onUpdateAsync: coroutine reject unmount, watch keys', async (t) => {
   const functionsReceived: any[] = []
   const rejects: any[] = []
   const intermediateSpy = createSpy(() => {})
-  const gen = function *(...args: any[]) {
+  const gen = function* (...args: any[]) {
     const { cancelOthers, index } = args[0]
 
     functionsReceived.push(cancelOthers)

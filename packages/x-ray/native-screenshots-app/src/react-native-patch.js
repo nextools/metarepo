@@ -1,6 +1,6 @@
+const { nanoid } = require('nanoid/non-secure')
 const { createElement, useRef, useContext, useEffect, forwardRef } = require('react')
 const ReactNative = require('react-native')
-const { nanoid } = require('nanoid/non-secure')
 const { ImageContext } = require('./image-context')
 const { ViewContext } = require('./view-context')
 

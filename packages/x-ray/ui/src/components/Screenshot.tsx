@@ -12,7 +12,7 @@ export const Screenshot = component(
   startWithType<TScreenshot>(),
   mapStoreDispatch('dispatch'),
   mapState('src', 'setSrc', () => null as string | null, []),
-  onUpdateAsync((props) => function *() {
+  onUpdateAsync((props) => function* () {
     const { id, type, setSrc, dispatch } = props.current
 
     try {

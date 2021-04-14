@@ -21,7 +21,7 @@ export const Meta = component(
   mapStoreDispatch('dispatch'),
   mapState('state', 'setState', () => null as TJsonValue | null, []),
   mapContext(RenderMetaContext),
-  onUpdateAsync((props) => function *() {
+  onUpdateAsync((props) => function* () {
     try {
       const meta = yield apiLoadMeta({
         id: props.current.id,

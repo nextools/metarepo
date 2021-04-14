@@ -7,7 +7,7 @@ import type { TThemeProvider } from './types'
 export const ThemeProvider = component(
   startWithType<TThemeProvider>(),
   mapState('theme', 'setTheme', ({ theme }) => theme, ['theme']),
-  onUpdateAsync((props) => function *() {
+  onUpdateAsync((props) => function* () {
     if (isUndefined(props.current.theme)) {
       const { defaultTheme } = yield import('./default-theme' /* webpackChunkName: "defaultTheme" */)
 
@@ -15,7 +15,7 @@ export const ThemeProvider = component(
     }
   }, []),
   mapState('icons', 'setIcons', ({ icons }) => icons, ['icons']),
-  onUpdateAsync((props) => function *() {
+  onUpdateAsync((props) => function* () {
     if (isUndefined(props.current.icons)) {
       const { defaultIcons } = yield import('./default-icons' /* webpackChunkName: "defaultIcons" */)
 

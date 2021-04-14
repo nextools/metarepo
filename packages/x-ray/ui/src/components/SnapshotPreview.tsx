@@ -23,7 +23,7 @@ export const SnapshotPreview = component(
   startWithType<TSnapshotPreview>(),
   mapStoreDispatch('dispatch'),
   mapState('state', 'setState', () => null as TDiffLine[] | null, []),
-  onUpdateAsync((props) => function *() {
+  onUpdateAsync((props) => function* () {
     try {
       const [dataOrig, dataNew] = yield Promise.all([
         apiLoadSnapshot({ id: props.current.item.id, type: 'ORIG' }),

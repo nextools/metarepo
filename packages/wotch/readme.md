@@ -1,6 +1,6 @@
 # wotch ![npm](https://flat.badgen.net/npm/v/wotch)
 
-Watch dir as async iterable.
+Watch glob(s) as async iterable.
 
 ## Install
 

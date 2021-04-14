@@ -1,7 +1,7 @@
 {
   "name": "wotch",
   "version": "0.0.0",
-  "description": "Watch dir as async iterable",
+  "description": "Watch glob(s) as async iterable",
   "keywords": [],
   "main": "src/index.ts",
   "type": "module",
