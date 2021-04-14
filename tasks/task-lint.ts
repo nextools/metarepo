@@ -14,11 +14,11 @@ export const lint: TTask<string, ESLint.LintResult> = async function* (pkg = '*'
     find([
       `packages/${pkg}/**/{src,test}/**/${files}`,
       `packages/${pkg}/${files}`,
-      `!packages/${pkg}/**/node_modules/`,
       `tasks/**/${files}`,
+      `!**/node_modules/**`,
     ]),
-    // eslint()
-    mapThreadPool(eslintCheck, { fix: true }, { groupBy: 50 }),
+    // eslintCheck()
+    mapThreadPool(eslintCheck, {}, { groupBy: 50 }),
     eslintPrint(),
     log('linted')
   )()
