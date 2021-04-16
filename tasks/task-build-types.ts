@@ -15,7 +15,7 @@ export const buildTypes: TTask<string, string> = async function* (pkg) {
     remove,
     find(`packages/${pkg}/src/index.ts`),
     // buildIt(outDir),
-    mapThreadPool(typescriptGenerate, outDir),
+    mapThreadPool(typescriptGenerate, [outDir]),
     log('type')
   )()
 }

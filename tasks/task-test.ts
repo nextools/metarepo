@@ -17,8 +17,8 @@ export const test: TTask<string, CoverageMapData> = async function* (pkg = '*') 
       `!packages/${pkg}/test)_/fixtures/`,
     ]),
     // test(),
-    mapThreadPool(test, null),
-    reportCoverage('coverage/'),
+    mapThreadPool(test, []),
+    reportCoverage('coverage/', ['html', 'lcov']),
     log('tested')
   )()
 }

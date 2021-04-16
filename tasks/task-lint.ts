@@ -18,7 +18,7 @@ export const lint: TTask<string, ESLint.LintResult> = async function* (pkg = '*'
       `!**/node_modules/**`,
     ]),
     // eslintCheck()
-    mapThreadPool(eslintCheck, {}, { groupBy: 50 }),
+    mapThreadPool(eslintCheck, [], { groupBy: 50 }),
     eslintPrint(),
     log('linted')
   )()

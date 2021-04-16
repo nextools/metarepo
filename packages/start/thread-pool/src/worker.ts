@@ -20,7 +20,7 @@ while (true) {
       break
     }
 
-    const { group, arg, taskString, callerDir, groupBy, groupType } = message.value
+    const { group, args, taskString, callerDir, groupBy, groupType } = message.value
     const cacheKey = `${callerDir}@${taskString}}`
 
     let task: (it: AsyncIterable<TJsonValue>) => AsyncIterableIterator<TJsonValue>
@@ -54,7 +54,7 @@ while (true) {
       }
 
       // eslint-disable-next-line no-new-func
-      task = new Function(`return ${transformed.code}`)()(arg)
+      task = new Function(`return ${transformed.code}`)()(...args)
 
       cache.set(cacheKey, task)
     }

@@ -31,7 +31,7 @@ export const buildWeb: TTask<string, TFile> = async function* (pkg) {
     remove,
     find(`packages/${pkg}/src/**/*.ts`),
     // buildIt(outDir)
-    mapThreadPool(buildIt, outDir, { groupBy: 8 }),
+    mapThreadPool(buildIt, [outDir], { groupBy: 8 }),
     log('web')
   )()
 }

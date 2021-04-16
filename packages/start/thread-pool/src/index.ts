@@ -36,16 +36,16 @@ export const startThreadPool = async (options: TStartPoolOptions): Promise<() =>
 
   return async () => {
     await Promise.all(
-      map((worker: Worker) => {
+      map(async (worker: Worker) => {
         sendToWorker<TMessageToWorkerExit>(worker, { type: 'EXIT' })
 
-        return once<void>(worker, 'exit')
+        await once<void>(worker, 'exit')
       })(workers)
     )
   }
 }
 
-export const mapThreadPool = <T, R>(taskFn: (arg: any) => (it: AsyncIterable<T>) => AsyncIterable<R>, arg: TJsonValue, options?: TPipePoolOptions) => {
+export const mapThreadPool = <T, R>(taskFn: (arg: any) => (it: AsyncIterable<T>) => AsyncIterable<R>, args: TJsonValue[], options?: TPipePoolOptions) => {
   if (workers.length === 0) {
     throw new Error('Start thread pool first')
   }
@@ -71,7 +71,7 @@ export const mapThreadPool = <T, R>(taskFn: (arg: any) => (it: AsyncIterable<T>)
         type: 'TASK',
         value: {
           taskString,
-          arg,
+          args,
           callerDir,
           group,
           groupBy,

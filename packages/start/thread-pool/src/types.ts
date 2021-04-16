@@ -13,7 +13,7 @@ export type TMessageToWorkerTask<T> = {
   type: 'TASK',
   value: {
     taskString: string,
-    arg: TJsonValue,
+    args: TJsonValue[],
     callerDir: string,
     group: T,
     groupBy: number,

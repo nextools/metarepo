@@ -11,9 +11,6 @@
   ],
   "main": "src/index.ts",
   "type": "module",
-  "exports": {
-    "./get-startup-time": "./src/get-startup-time.cjs"
-  },
   "bin": {
     "start": "src/index.ts"
   },

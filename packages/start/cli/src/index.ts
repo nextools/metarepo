@@ -1,5 +1,5 @@
 #!/bin/sh
-//bin/sh -c :; exec /usr/bin/env node --inspect-publish-uid=http --enable-source-maps --require @start/cli/get-startup-time --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @start/ts-esm-loader "$0" "$@"
+//bin/sh -c :; exec /usr/bin/env node --inspect-publish-uid=http --enable-source-maps --require @nextools/suppress-experimental-warnings --experimental-import-meta-resolve --experimental-loader @start/ts-esm-loader "$0" "$@"
 // https://unix.stackexchange.com/questions/65235/universal-node-js-shebang#comment755057_65295
 
 import { readFile } from 'fs/promises'
@@ -17,8 +17,6 @@ import type { TPackageJson } from 'pkgu'
 import { startTimeMs } from 'takes'
 import { isString } from 'tsfn'
 import { once } from 'wans'
-// @ts-ignore
-import { getStartupTime } from './get-startup-time.cjs'
 import { roundBytes } from './round-bytes'
 
 type TTasks = {
@@ -50,7 +48,6 @@ try {
   const stopThreadPool = await startThreadPool({ threadCount })
 
   console.log(`🧵 treads: ${threadCount}`)
-  console.log(`⏱  startup: ${getStartupTime()}ms`)
 
   const autocomplete = taskNames.concat(commands)
 

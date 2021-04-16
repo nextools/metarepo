@@ -17,7 +17,3 @@ export const findGitStaged = (): TMaybeInputPlugin<any, string> => async functio
     return line.toString('utf8').trim()
   })(lines)
 }
-
-for await (const line of findGitStaged()()) {
-  console.log(line.trim())
-}

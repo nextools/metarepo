@@ -4,7 +4,7 @@ import { isArray, isString } from 'tsfn'
 import { isMatchingGlob, isNegatedGlob } from './glob-utils'
 import { watchGlob } from './watch-glob'
 
-const watch = (globs: string | string[]): AsyncIterable<string> => {
+export const watch = (globs: string | string[]): AsyncIterable<string> => {
   if (isString(globs)) {
     return watchGlob([])(globs)
   }
@@ -21,13 +21,4 @@ const watch = (globs: string | string[]): AsyncIterable<string> => {
   }
 
   throw new Error('Globs argument should be either string or array of strings')
-}
-
-const globs = [
-  'tmp/watch/**/*.txt',
-  '!tmp/watch/not/**',
-]
-
-for await (const path of watch(globs)) {
-  console.log(path)
 }
