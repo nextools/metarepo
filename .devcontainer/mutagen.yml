@@ -1,0 +1,11 @@
+sync:
+  defaults:
+    flushOnCreate: true
+  NexTools:
+    alpha: "../"
+    beta: "docker://vscode-nextools/workspace"
+    mode: "two-way-resolved"
+    ignore:
+      paths:
+        - ".DS_Store"
+        - "node_modules"

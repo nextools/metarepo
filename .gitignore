@@ -5,6 +5,7 @@ tmp/
 .rebox/
 .npmrc
 .DS_Store
+mutagen.yml.lock
 *.log
 .idea/
 .env

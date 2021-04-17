@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:focal
 
 # fix `debconf: unable to initialize frontend: Dialog`
 ENV DEBIAN_FRONTEND=noninteractive
@@ -12,6 +12,7 @@ RUN apt-get update \
       apt-transport-https \
       curl \
       git \
+      git-lfs \
       procps \
       ca-certificates \
       gnupg2 \
@@ -21,8 +22,8 @@ RUN apt-get update \
     && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
     && curl -fsSL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     #
-    && echo "deb https://download.docker.com/linux/ubuntu bionic stable" | tee /etc/apt/sources.list.d/docker.list \
-    && echo "deb https://deb.nodesource.com/node_12.x bionic main" | tee /etc/apt/sources.list.d/nodejs.list \
+    && echo "deb https://download.docker.com/linux/ubuntu focal stable" | tee /etc/apt/sources.list.d/docker.list \
+    && echo "deb https://deb.nodesource.com/node_14.x focal main" | tee /etc/apt/sources.list.d/nodejs.list \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     #
     && apt-get update \
@@ -31,8 +32,9 @@ RUN apt-get update \
       nodejs \
       yarn \
     #
+    && npm install --global npm \
+    #
     && mkdir --mode 700 /root/.ssh /root/.gnupg \
-    && printf '%%Assuan%%\nsocket=/ssh-agent-forward/S.gpg-agent\n' > /root/.gnupg/S.gpg-agent \
     && ssh-keyscan github.com >> /root/.ssh/known_hosts 2> /dev/null \
     #
     && apt-get autoremove --yes \
