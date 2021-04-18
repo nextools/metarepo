@@ -59,7 +59,6 @@
     "packages/takes",
     "packages/tarmap",
     "packages/tmpa",
-    "packages/tpool/*",
     "packages/tsfn",
     "packages/typeon",
     "packages/unchunk",
@@ -92,7 +91,7 @@
     "ws": "^7.3.1"
   },
   "start": {
-    "tasks": "tasks/index.ts",
+    "tasks": "./tasks/index.ts",
     "auto": {
       "shouldMakeGitTags": true,
       "shouldSendTelegramMessage": false,

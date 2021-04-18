@@ -9,148 +9,141 @@ import path from 'path'
 import readline from 'readline'
 import { startThreadPool } from '@start/thread-pool'
 // import dotenv from 'dotenv'
-import { cleanupStack } from 'erru'
-import { drainAsync } from 'iterama'
 import { iterateObjectEntries } from 'itobj'
-import { red } from 'kolorist'
-import type { TPackageJson } from 'pkgu'
-import { startTimeMs } from 'takes'
-import { isString } from 'tsfn'
+import { jsonParse } from 'typeon'
 import { once } from 'wans'
+import type { TTask } from '../../../../tasks/types'
 import { roundBytes } from './round-bytes'
+import { runTask } from './run-task'
 
 type TTasks = {
-  [key: string]: (...args: string[]) => AsyncIterableIterator<any>,
+  [key: string]: TTask<any, any>,
 }
 
-type TStartOptions = {
-  tasks: string,
-  reporter?: string,
-  require?: (string | [string, { [k: string]: any }])[],
+type TStartPackageJson = {
+  start: {
+    tasks: string,
+    require?: (string | [string, { [k: string]: any }])[],
+  },
 }
 
 try {
   // dotenv.config()
 
-  const packageJsonPath = path.join(process.cwd(), 'package.json')
+  const packageJsonPath = path.resolve('package.json')
   const packageJsonData = await readFile(packageJsonPath, 'utf8')
-  const packageJson = JSON.parse(packageJsonData) as TPackageJson & { start: TStartOptions }
-  const tasksFilePath = path.resolve(packageJson.start.tasks)
+  const packageJson = jsonParse<TStartPackageJson>(packageJsonData)
+  // @ts-ignore
+  const tasksFilePath = await import.meta.resolve(packageJson.start.tasks, `file://${process.cwd()}/`)
   const tasksExported = await import(tasksFilePath) as TTasks
   const taskNames = Object.keys(tasksExported)
   const threadCount = cpus().length
-  const commands = ['/memory', '/debug', '/quit']
-  let isInDebugMode = false
-
-  console.log(`📋 tasks: ${taskNames.join(', ')}`)
-  console.log(`🤖 commands: ${commands.join(', ')}`)
-
   const stopThreadPool = await startThreadPool({ threadCount })
 
   console.log(`🧵 treads: ${threadCount}`)
 
-  const autocomplete = taskNames.concat(commands)
+  // CLI
+  if (process.argv.length > 2) {
+    const [taskName, ...args] = process.argv.slice(2)
+    const task = tasksExported[taskName]
 
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    prompt: '\n👉 ',
-    completer: (input: string) => [
-      autocomplete.reduce((result, item) => {
-        if (item.startsWith(input)) {
-          if (commands.includes(item)) {
-            result.push(item)
-          } else {
-            result.push(`${item} `)
-          }
-        }
+    console.log(`👉 ${taskName} ${args.join(' ')}`)
 
-        return result
-      }, [] as string[]),
-      input,
-    ],
-  })
-
-  rl.once('SIGINT', async () => {
-    console.log('/quit')
+    await runTask(task, args)
     await stopThreadPool()
-    console.log('👋 bye')
-    process.exit()
-  })
+  // REPL
+  } else {
+    const commands = ['/memory', '/debug', '/quit']
+    let isInDebugMode = false
 
-  while (true) {
-    rl.prompt()
+    console.log(`📋 tasks: ${taskNames.join(', ')}`)
+    console.log(`🤖 commands: ${commands.join(', ')}`)
 
-    let input = await once<string>(rl, 'line')
+    const autocomplete = taskNames.concat(commands)
 
-    input = input.trim()
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+      prompt: '\n👉 ',
+      completer: (input: string) => [
+        autocomplete.reduce((result, item) => {
+          if (item.startsWith(input)) {
+            if (commands.includes(item)) {
+              result.push(item)
+            } else {
+              result.push(`${item} `)
+            }
+          }
 
-    if (input.length === 0) {
-      continue
-    }
+          return result
+        }, [] as string[]),
+        input,
+      ],
+    })
 
-    if (input === '/memory') {
-      for (const [key, value] of iterateObjectEntries(process.memoryUsage())) {
-        console.log(`🔘 ${key}: ${roundBytes(value)}MB`)
-      }
-
-      continue
-    }
-
-    if (input === '/debug') {
-      if (!isInDebugMode) {
-        // https://github.com/nodejs/node/issues/34799
-        inspector.open()
-        console.log('🕵️  attach to the debugger via VSCode or chrome://inspect/')
-        inspector.waitForDebugger()
-        console.log('ℹ️  run /debug again to exit')
-
-        isInDebugMode = true
-      } else {
-        inspector.close()
-        isInDebugMode = false
-      }
-
-      continue
-    }
-
-    if (input === '/quit') {
-      rl.close()
+    rl.once('SIGINT', async () => {
+      console.log('/quit')
       await stopThreadPool()
       console.log('👋 bye')
+      process.exit()
+    })
 
-      break
-    }
+    while (true) {
+      rl.prompt()
 
-    const [taskName, ...args] = input.split(' ')
+      let input = await once<string>(rl, 'line')
 
-    if (!autocomplete.includes(taskName)) {
-      console.error(`❓ unknown: ${taskName}`)
+      input = input.trim()
 
-      continue
-    }
-
-    const task = tasksExported[taskName]
-    const it = task(...args)
-
-    const endTimeMs = startTimeMs()
-
-    try {
-      await drainAsync(it)
-    } catch (err) {
-      if (isString(err?.message)) {
-        console.error(`${red('\nerror:')} ${err.message}`)
-
-        if (isString(err.stack)) {
-          console.error(`\n${red(cleanupStack(err.stack))}`)
-        }
-      } else if (err !== null) {
-        console.error(err)
+      if (input.length === 0) {
+        continue
       }
-    } finally {
-      const tookMs = endTimeMs()
 
-      console.log(`⏱  time: ${tookMs}ms`)
+      if (input === '/memory') {
+        for (const [key, value] of iterateObjectEntries(process.memoryUsage())) {
+          console.log(`🔘 ${key}: ${roundBytes(value)}MB`)
+        }
+
+        continue
+      }
+
+      if (input === '/debug') {
+        if (!isInDebugMode) {
+        // https://github.com/nodejs/node/issues/34799
+          inspector.open()
+          console.log('🕵️  attach to the debugger via VSCode or chrome://inspect/')
+          inspector.waitForDebugger()
+          console.log('ℹ️  run /debug again to exit')
+
+          isInDebugMode = true
+        } else {
+          inspector.close()
+
+          isInDebugMode = false
+        }
+
+        continue
+      }
+
+      if (input === '/quit') {
+        rl.close()
+        await stopThreadPool()
+        console.log('👋 bye')
+
+        break
+      }
+
+      const [taskName, ...args] = input.split(' ')
+
+      if (!autocomplete.includes(taskName)) {
+        console.error(`❓ unknown: ${taskName}`)
+
+        continue
+      }
+
+      const task = tasksExported[taskName]
+
+      await runTask(task, args)
     }
   }
 } catch (err) {
