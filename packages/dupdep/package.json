@@ -21,7 +21,7 @@
     "iterama": "^0.6.1",
     "itobj": "^0.1.0",
     "pkgu": "^0.2.0",
-    "semver": "^7.3.2"
+    "semver": "^7.3.4"
   },
   "devDependencies": {
     "@mock/fs": "^0.2.0",
