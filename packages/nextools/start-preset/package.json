@@ -84,7 +84,7 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.1",
-    "@types/node-fetch": "^2.5.4"
+    "@types/node-fetch": "^2.5.8"
   },
   "fixdeps": {
     "ignoredPackages": [

@@ -52,6 +52,6 @@
     ]
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.5.4"
+    "@types/node-fetch": "^2.5.8"
   }
 }
