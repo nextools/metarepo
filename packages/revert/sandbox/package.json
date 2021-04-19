@@ -39,7 +39,7 @@
     "autoprops": "^4.0.2",
     "funcom": "^0.2.0",
     "leven": "^3.1.0",
-    "nanoid": "^3.1.11",
+    "nanoid": "^3.1.20",
     "query-string": "^6.13.1",
     "react-dom": "16.13.1",
     "redux": "^4.0.5",

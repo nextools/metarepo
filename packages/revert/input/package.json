@@ -16,7 +16,7 @@
     "@revert/color": "^0.1.1",
     "@revert/layout": "^0.2.2",
     "@revert/text": "^0.3.4",
-    "nanoid": "^3.1.12",
+    "nanoid": "^3.1.20",
     "refun": "^3.1.0",
     "tsfn": "^2.2.0"
   },

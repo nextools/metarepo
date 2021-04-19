@@ -21,7 +21,7 @@
   "dependencies": {
     "@mock/require": "^0.2.2",
     "get-caller-file": "^2.0.5",
-    "nanoid": "^3.1.12",
+    "nanoid": "^3.1.20",
     "tsfn": "^2.2.0"
   },
   "devDependencies": {
