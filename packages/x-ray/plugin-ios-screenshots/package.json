@@ -14,7 +14,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.13.8",
     "@rebox/ios": "^6.0.4",
     "@x-ray/core": "^0.2.2",
     "@x-ray/native-screenshots-app": "^4.0.1",

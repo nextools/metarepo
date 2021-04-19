@@ -24,7 +24,7 @@
     "@auto/slack": "^0.2.0",
     "@auto/tag": "^0.2.1",
     "@auto/telegram": "^0.2.0",
-    "@babel/core": "^7.8.0",
+    "@babel/core": "^7.13.8",
     "@babel/register": "^7.8.0",
     "@nextools/babel-config": "^0.3.0",
     "@nextools/browsers-list": "^0.2.0",

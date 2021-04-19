@@ -14,7 +14,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.13.8",
     "@rebox/android": "^4.0.5",
     "@x-ray/core": "^0.2.2",
     "@x-ray/ui": "^3.2.1",
