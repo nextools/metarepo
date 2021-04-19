@@ -13,7 +13,7 @@
     "@babel/parser": "^7.3.1",
     "@babel/runtime": "^7.4.3",
     "@babel/traverse": "^7.2.3",
-    "@babel/types": "^7.3.0",
+    "@babel/types": "^7.13.0",
     "fast-glob": "^3.0.3",
     "p-all": "^3.0.0",
     "pifs": "^2.0.0",
