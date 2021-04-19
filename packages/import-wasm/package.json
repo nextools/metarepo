@@ -19,7 +19,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@babel/runtime": "^7.8.0",
+    "@babel/runtime": "^7.13.8",
     "get-caller-file": "^2.0.5"
   },
   "devDependencies": {

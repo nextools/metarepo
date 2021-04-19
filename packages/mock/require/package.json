@@ -18,7 +18,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@babel/runtime": "^7.4.2",
+    "@babel/runtime": "^7.13.8",
     "@mock/utils": "^0.2.1",
     "get-caller-file": "^2.0.5"
   },

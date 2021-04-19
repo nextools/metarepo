@@ -13,7 +13,7 @@
     "node": ">=12.13.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.0",
+    "@babel/runtime": "^7.13.8",
     "@rebox/web": "^4.0.0",
     "dleet": "^2.0.1",
     "puppeteer-core": "^5.2.1",

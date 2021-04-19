@@ -17,7 +17,7 @@
     "android/**/*": "android/"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.3",
+    "@babel/runtime": "^7.13.8",
     "@rebox/native-utils": "^4.0.5",
     "dirdir": "^0.1.0",
     "move-file": "^2.0.0",

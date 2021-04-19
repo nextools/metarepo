@@ -12,7 +12,7 @@
     "node": ">=12.13.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.3",
+    "@babel/runtime": "^7.13.8",
     "big-integer": "^1.6.44",
     "iterama": "^0.6.1",
     "sha.js": "^2.4.11",

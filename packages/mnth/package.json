@@ -21,7 +21,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@babel/runtime": "^7.8.0"
+    "@babel/runtime": "^7.13.8"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",

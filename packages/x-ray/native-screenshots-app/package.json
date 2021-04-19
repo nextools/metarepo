@@ -10,7 +10,7 @@
     "node": ">=12.13.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.3",
+    "@babel/runtime": "^7.13.8",
     "nanoid": "^3.1.4",
     "react": "16.13.1",
     "react-native": "0.63.4",

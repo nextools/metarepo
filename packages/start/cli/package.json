@@ -19,7 +19,7 @@
     "node": ">=12.13.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.2",
+    "@babel/runtime": "^7.13.8",
     "tsfn": "^2.2.0"
   },
   "devDependencies": {
