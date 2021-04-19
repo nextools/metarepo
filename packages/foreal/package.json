@@ -23,7 +23,7 @@
     "@types/react": "^16.9.49",
     "@types/tape": "^4.2.34",
     "react": "16.13.1",
-    "tape": "^5.0.0"
+    "tape": "^5.2.0"
   },
   "dependencies": {
     "@rebox/web": "^4.0.0",

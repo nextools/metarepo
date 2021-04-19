@@ -17,7 +17,7 @@
     "@types/tape": "^4.2.34",
     "nanoid": "^3.1.12",
     "ramdsk": "^0.1.1",
-    "tape": "^5.0.0"
+    "tape": "^5.2.0"
   },
   "dependencies": {
     "pifs": "^2.0.0"

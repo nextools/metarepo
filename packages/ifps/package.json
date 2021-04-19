@@ -22,7 +22,7 @@
     "@types/tape": "^4.2.34",
     "funcom": "^0.2.0",
     "iterama": "^0.6.1",
-    "tape": "^5.0.0"
+    "tape": "^5.2.0"
   },
   "dependencies": {
     "globl": "^0.3.0"

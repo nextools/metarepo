@@ -20,7 +20,7 @@
     "@mock/fs": "^0.2.0",
     "@mock/require": "^0.2.2",
     "@types/tape": "^4.2.34",
-    "tape": "^5.0.0"
+    "tape": "^5.2.0"
   },
   "dependencies": {
     "nanoid": "^3.1.12",

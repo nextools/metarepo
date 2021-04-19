@@ -18,7 +18,7 @@
   "sideEffects": false,
   "devDependencies": {
     "@types/tape": "^4.2.34",
-    "tape": "^5.0.0"
+    "tape": "^5.2.0"
   },
   "dependencies": {
     "@mock/require": "^0.2.2",

@@ -24,7 +24,7 @@
     "@types/tape": "^4.2.34",
     "@types/to-absolute-glob": "^2.0.0",
     "spyfn": "^2.0.0",
-    "tape": "^5.0.1"
+    "tape": "^5.2.0"
   },
   "dependencies": {
     "funcom": "^0.2.0",

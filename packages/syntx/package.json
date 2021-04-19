@@ -14,7 +14,7 @@
   "sideEffects": false,
   "devDependencies": {
     "@types/react": "^16.9.6",
-    "tape": "^5.0.0",
+    "tape": "^5.2.0",
     "react": "16.13.1"
   },
   "dependencies": {

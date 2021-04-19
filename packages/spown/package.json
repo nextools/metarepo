@@ -22,7 +22,7 @@
     "@types/signal-exit": "^3.0.0",
     "@types/tape": "^4.2.34",
     "spyfn": "^2.0.0",
-    "tape": "^5.0.0"
+    "tape": "^5.2.0"
   },
   "dependencies": {
     "cross-spawn": "^7.0.3",

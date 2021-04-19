@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",
-    "tape": "^5.0.0",
+    "tape": "^5.2.0",
     "unchunk": "^0.2.0"
   }
 }

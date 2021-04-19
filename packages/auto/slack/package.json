@@ -25,6 +25,6 @@
     "@types/node-fetch": "^2.5.4",
     "@types/tape": "^4.2.34",
     "spyfn": "^2.0.0",
-    "tape": "^5.0.0"
+    "tape": "^5.2.0"
   }
 }

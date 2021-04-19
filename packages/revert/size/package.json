@@ -26,7 +26,7 @@
     "react-native": "0.63.4",
     "react-test-renderer": "16.13.1",
     "spyfn": "^2.0.0",
-    "tape": "^5.0.0"
+    "tape": "^5.2.0"
   },
   "peerDependencies": {
     "react": "16.13.1",
