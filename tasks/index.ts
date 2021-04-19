@@ -1,3 +1,4 @@
+export * from './task-app'
 export * from './task-build'
 export * from './task-lint'
 export * from './task-tsc'

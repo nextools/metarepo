@@ -1,33 +1,18 @@
 import path from 'path'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
-import { isError, isUndefined } from 'tsfn'
+import { isUndefined } from 'tsfn'
 import type { TJsonValue } from 'typeon'
 import Webpack from 'webpack'
-import type { Configuration as TWebpackConfig, Stats } from 'webpack'
+import type { Configuration as TWebpackConfig } from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
-import type { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
+// import type { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
 import { getBabelConfigRun } from './get-babel-config'
-import { WatchPlugin } from './watch-plugin'
+import { resolve } from './resolve'
+// import { WatchPlugin } from './watch-plugin'
 
 const excludeNodeModulesRegExp = /[\\/]node_modules[\\/]/
-
-const statsOptions: Stats.ToStringOptionsObject = {
-  colors: true,
-  assets: true,
-  assetsSort: '!size',
-  builtAt: false,
-  children: false,
-  entrypoints: false,
-  errors: true,
-  errorDetails: true,
-  excludeAssets: [/\.js\.map$/],
-  hash: false,
-  modules: false,
-  performance: true,
-  timings: false,
-  version: false,
-  warnings: true,
-}
+const HOST = '127.0.0.1'
+const PORT = 3000
 
 export type TRunWebAppOptions = {
   entryPointPath: string,
@@ -39,10 +24,24 @@ export type TRunWebAppOptions = {
   shouldOpenBrowser?: boolean,
 }
 
-export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<void>> => {
+export const runWebApp = async (options: TRunWebAppOptions): Promise<() => Promise<void>> => {
+  const entryPointPath = path.resolve(options.entryPointPath)
+  const htmlTemplatePath = path.resolve(options.htmlTemplatePath)
+  const [
+    loaderPath,
+    babelLoaderPath,
+    fileLoaderPath,
+    rawLoaderPath,
+  ] = await Promise.all([
+    resolve('./loader.cjs'),
+    resolve('babel-loader'),
+    resolve('file-loader'),
+    resolve('raw-loader'),
+  ])
+
   const config: TWebpackConfig = {
     mode: 'development',
-    entry: path.resolve(options.entryPointPath),
+    entry: entryPointPath,
     output: {
       chunkFilename: '[name].[chunkhash].js',
       publicPath: '/',
@@ -62,11 +61,28 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
         '.json',
       ],
     },
+    stats: {
+      colors: true,
+      assets: true,
+      assetsSort: '!size',
+      builtAt: false,
+      children: false,
+      entrypoints: false,
+      errors: true,
+      errorDetails: true,
+      excludeAssets: [/\.js\.map$/],
+      hash: false,
+      modules: false,
+      performance: true,
+      timings: false,
+      version: false,
+      warnings: true,
+    },
     module: {
       rules: [
         {
-          test: path.resolve(options.entryPointPath),
-          loader: require.resolve('./loader.js'),
+          test: entryPointPath,
+          loader: loaderPath,
           options: {
             props: options.props ?? {},
           },
@@ -74,7 +90,7 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
         {
           test: /\.(ts|js)x?$/,
           exclude: excludeNodeModulesRegExp,
-          loader: require.resolve('babel-loader'),
+          loader: babelLoaderPath,
           options: {
             ...getBabelConfigRun(options.browsersList),
             cacheDirectory: true,
@@ -83,7 +99,7 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
         {
           test: /\.(gif|jpg|jpeg|tiff|png)$/,
           // exclude: excludeNodeModulesRegExp,
-          loader: require.resolve('file-loader'),
+          loader: fileLoaderPath,
           options: {
             name: '[name].[hash].[ext]',
             outputPath: 'images',
@@ -92,7 +108,7 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
         {
           test: /\.mp4$/,
           // exclude: excludeNodeModulesRegExp,
-          loader: require.resolve('file-loader'),
+          loader: fileLoaderPath,
           options: {
             name: '[name].[hash].[ext]',
             outputPath: 'videos',
@@ -100,7 +116,8 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
         },
         {
           test: /\.(md|txt)$/,
-          loader: require.resolve('raw-loader'),
+          // exclude: excludeNodeModulesRegExp,
+          loader: rawLoaderPath,
         },
       ],
     },
@@ -119,21 +136,17 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
     },
     plugins: [
       new HTMLWebpackPlugin({
-        template: path.resolve(options.htmlTemplatePath),
+        template: htmlTemplatePath,
       }),
-      new WatchPlugin(),
+      // new WatchPlugin(),
     ],
   }
   const compiler = Webpack(config)
-  const { host, port, ...devConfig }: TWebpackDevConfig = {
-    host: '127.0.0.1',
-    port: 3000,
-    contentBase: isUndefined(options.assetsPath) ? false : path.resolve(options.assetsPath),
-  }
+  // @ts-expect-error Webpack Dev Server external type doesn't match Webpack builtin type
   const server = new WebpackDevServer(compiler, {
-    ...devConfig,
+    contentBase: isUndefined(options.assetsPath) ? false : path.resolve(options.assetsPath),
     open: options.shouldOpenBrowser,
-    stats: options.isQuiet === true ? 'errors-only' : statsOptions,
+    stats: options.isQuiet === true ? 'errors-only' : config.stats,
     noInfo: options.isQuiet,
     watchOptions: {
       ignored: excludeNodeModulesRegExp,
@@ -148,11 +161,7 @@ export const runWebApp = (options: TRunWebAppOptions): Promise<() => Promise<voi
     })
 
     server
-      .listen(port, host, (error) => {
-        if (isError(error)) {
-          reject(error)
-        }
-      })
+      .listen(PORT, HOST)
       .on('error', reject)
   })
 }

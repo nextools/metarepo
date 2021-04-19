@@ -1,6 +1,6 @@
-import { getOptions } from 'loader-utils'
+const { getOptions } = require('loader-utils')
 
-export default function(src) {
+module.exports = function(src) {
   // eslint-disable-next-line no-invalid-this
   const options = getOptions(this)
   const props = JSON.stringify(options.props)

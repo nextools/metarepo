@@ -1,14 +1,16 @@
 import path from 'path'
+// @ts-expect-error
+import StatoscopeWebpackPlugin from '@statoscope/ui-webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-// @ts-ignore
-import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin'
+import { HwpInlineRuntimeChunkPlugin } from 'hwp-inline-runtime-chunk-plugin'
+import { map } from 'iterama'
 import TerserPlugin from 'terser-webpack-plugin'
-import { isObject } from 'tsfn'
+import { isObject, isUndefined } from 'tsfn'
 import type { TJsonValue } from 'typeon'
 import webpack from 'webpack'
-import type { Configuration as WebpackConfig, Stats } from 'webpack'
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import type { Configuration as WebpackConfig } from 'webpack'
 import { getBabelConfigBuildRelease } from './get-babel-config'
+import { resolve } from './resolve'
 
 const nodeModulesRegExp = /[\\/]node_modules[\\/]/
 
@@ -29,36 +31,35 @@ export type TBuildWebAppReleaseOptions = {
   shouldGenerateBundleAnalyzerReport?: boolean,
 }
 
-const statsOptions: Stats.ToStringOptionsObject = {
-  colors: true,
-  assets: true,
-  assetsSort: '!size',
-  builtAt: false,
-  children: false,
-  entrypoints: false,
-  errors: true,
-  errorDetails: true,
-  excludeAssets: [/\.js\.map$/],
-  hash: false,
-  modules: false,
-  performance: true,
-  timings: false,
-  version: false,
-  warnings: true,
-}
-
-export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
+export const buildWebAppRelease = async (userOptions: TBuildWebAppReleaseOptions): Promise<Iterable<string>> => {
   const options = {
     isQuiet: false,
     shouldGenerateSourceMaps: true,
     shouldGenerateBundleAnalyzerReport: true,
     ...userOptions,
   }
+  const entryPointPath = path.resolve(options.entryPointPath)
+  const outputPath = path.resolve(options.outputPath)
+  const htmlTemplatePath = path.resolve(options.htmlTemplatePath)
+  const [
+    coreJsPath,
+    loaderPath,
+    babelLoaderPath,
+    fileLoaderPath,
+    rawLoaderPath,
+  ] = await Promise.all([
+    resolve('core-js'),
+    resolve('./loader.cjs'),
+    resolve('babel-loader'),
+    resolve('file-loader'),
+    resolve('raw-loader'),
+  ])
+
   const config: WebpackConfig = {
     mode: 'production',
-    entry: path.resolve(options.entryPointPath),
+    entry: entryPointPath,
     output: {
-      path: path.resolve(options.outputPath),
+      path: outputPath,
       filename: 'js/[name].[chunkhash].js',
       chunkFilename: 'js/[name].[chunkhash].js',
       pathinfo: false,
@@ -76,15 +77,32 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
         '.json',
       ],
       alias: {
-        'core-js': path.dirname(require.resolve('core-js')),
+        'core-js': path.dirname(coreJsPath),
       },
+    },
+    stats: {
+      colors: true,
+      assets: true,
+      assetsSort: '!size',
+      builtAt: false,
+      children: false,
+      entrypoints: false,
+      errors: true,
+      errorDetails: true,
+      hash: false,
+      modules: false,
+      performance: false,
+      relatedAssets: false,
+      timings: false,
+      version: false,
+      warnings: true,
     },
     devtool: options.shouldGenerateSourceMaps ? 'source-map' : false,
     module: {
       rules: [
         {
-          test: path.resolve(options.entryPointPath),
-          loader: require.resolve('./loader.js'),
+          test: entryPointPath,
+          loader: loaderPath,
           options: {
             props: options.props ?? {},
           },
@@ -92,7 +110,7 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
         {
           test: /\.(ts|js)x?$/,
           exclude: nodeModulesRegExp,
-          loader: 'babel-loader',
+          loader: babelLoaderPath,
           options: {
             ...getBabelConfigBuildRelease(options.browsersList),
             cacheDirectory: false,
@@ -101,7 +119,7 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
         {
           test: /\.(gif|jpg|jpeg|tiff|png)$/,
           // exclude: nodeModulesRegExp,
-          loader: require.resolve('file-loader'),
+          loader: fileLoaderPath,
           options: {
             name: '[name].[hash].[ext]',
             outputPath: 'images',
@@ -110,7 +128,7 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
         {
           test: /\.mp4$/,
           // exclude: nodeModulesRegExp,
-          loader: require.resolve('file-loader'),
+          loader: fileLoaderPath,
           options: {
             name: '[name].[hash].[ext]',
             outputPath: 'videos',
@@ -118,7 +136,8 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
         },
         {
           test: /\.(md|txt)$/,
-          loader: require.resolve('raw-loader'),
+          // exclude: nodeModulesRegExp,
+          loader: rawLoaderPath,
         },
       ],
     },
@@ -129,23 +148,18 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
       minimize: true,
       minimizer: [
         new TerserPlugin({
-          cache: true,
           parallel: true,
-          sourceMap: true,
           extractComments: true,
           terserOptions: {
-            ecma: 8,
             output: {
               comments: false,
               beautify: false,
             },
-            warnings: false,
           },
         }),
       ],
-      runtimeChunk: {
-        name: 'runtime',
-      },
+      moduleIds: 'deterministic',
+      runtimeChunk: 'single',
       splitChunks: {
         cacheGroups: {
           default: false,
@@ -168,9 +182,11 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
     plugins: [
       new HtmlWebpackPlugin({
         inject: true,
-        template: path.resolve(options.htmlTemplatePath),
+        template: htmlTemplatePath,
       }),
-      new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime/]),
+      new HwpInlineRuntimeChunkPlugin({
+        removeSourceMap: true,
+      }),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production'),
       }),
@@ -179,10 +195,9 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
 
   if (options.shouldGenerateBundleAnalyzerReport) {
     config.plugins!.push(
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        openAnalyzer: false,
-        logLevel: 'silent',
+      new StatoscopeWebpackPlugin({
+        saveTo: path.resolve(options.outputPath, 'report.html'),
+        open: false,
       })
     )
   }
@@ -197,23 +212,32 @@ export const buildWebAppRelease = (userOptions: TBuildWebAppReleaseOptions) => {
     )
   }
 
-  return new Promise<void>((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     webpack(config, (err, stats) => {
       if (err !== null) {
         return reject(err)
       }
 
-      const hasErrors = stats.hasErrors()
+      if (isUndefined(stats)) {
+        return reject('Unable to get build stats')
+      }
 
-      if (!options.isQuiet || hasErrors) {
-        console.log(stats.toString(statsOptions))
+      const hasErrors = stats.hasErrors()
+      const hasWarnings = stats.hasWarnings()
+
+      if (!options.isQuiet || hasErrors || hasWarnings) {
+        console.log(stats.toString(config.stats))
       }
 
       if (hasErrors) {
         return reject(null)
       }
 
-      resolve()
+      const emittedAssets = map(
+        (emittedAsset: string) => path.join(options.outputPath, emittedAsset)
+      )(stats.compilation.emittedAssets.values())
+
+      resolve(emittedAssets)
     })
   })
 }

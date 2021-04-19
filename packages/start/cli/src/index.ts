@@ -54,13 +54,7 @@ try {
   // REPL
   } else {
     const commands = ['/memory', '/debug', '/quit']
-    let isInDebugMode = false
-
-    console.log(`📋 tasks: ${taskNames.join(', ')}`)
-    console.log(`🤖 commands: ${commands.join(', ')}`)
-
     const autocomplete = taskNames.concat(commands)
-
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
@@ -80,6 +74,7 @@ try {
         input,
       ],
     })
+    let isInDebugMode = false
 
     rl.once('SIGINT', async () => {
       console.log('/quit')
@@ -87,6 +82,9 @@ try {
       console.log('👋 bye')
       process.exit()
     })
+
+    console.log(`📋 tasks: ${taskNames.join(', ')}`)
+    console.log(`🤖 commands: ${commands.join(', ')}`)
 
     while (true) {
       rl.prompt()
