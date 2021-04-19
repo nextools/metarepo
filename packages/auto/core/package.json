@@ -27,14 +27,14 @@
     "p-all": "^3.0.0",
     "pifs": "^2.0.0",
     "pkgu": "^0.2.0",
-    "prompts": "^2.3.1",
+    "prompts": "^2.4.0",
     "semver": "^7.0.0",
     "spown": "^0.1.2",
     "tsfn": "^2.2.0"
   },
   "devDependencies": {
     "@mock/require": "^0.2.2",
-    "@types/prompts": "^2.0.4",
+    "@types/prompts": "^2.0.9",
     "@types/semver": "^7.0.0",
     "@types/tape": "^4.2.34",
     "memfs": "^3.0.3",
