@@ -27,7 +27,7 @@
     "metro-react-native-babel-preset": "0.59.0"
   },
   "devDependencies": {
-    "@types/babel__core": "^7.1.6"
+    "@types/babel__core": "^7.1.12"
   },
   "fixdeps": {
     "ignoredPackages": [

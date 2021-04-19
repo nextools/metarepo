@@ -83,7 +83,7 @@
     "yupg": "^0.1.2"
   },
   "devDependencies": {
-    "@types/babel__core": "^7.1.1",
+    "@types/babel__core": "^7.1.12",
     "@types/node-fetch": "^2.5.4"
   },
   "fixdeps": {
