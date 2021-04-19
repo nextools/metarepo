@@ -23,7 +23,7 @@
     "@x-ray/core": "^0.2.2",
     "@x-ray/serialize-react-tree": "^2.0.0",
     "@x-ray/ui": "^3.2.1",
-    "enhanced-resolve": "^5.0.0",
+    "enhanced-resolve": "^5.7.0",
     "funcom": "^0.2.0",
     "iterama": "^0.6.1",
     "piall": "^0.2.1",
