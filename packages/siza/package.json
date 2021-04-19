@@ -34,7 +34,7 @@
     "@types/memory-fs": "^0.3.2",
     "@types/tape": "^4.2.34",
     "@types/terser-webpack-plugin": "^4.0.0",
-    "@types/webpack": "^4.41.6",
+    "@types/webpack": "^4.41.26",
     "tape": "^5.0.0"
   },
   "fixdeps": {
