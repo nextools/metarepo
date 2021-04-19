@@ -1784,12 +1784,12 @@
     "@types/node" "*"
     source-map "^0.6.0"
 
-"@types/compression-webpack-plugin@^6.0.0":
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/@types/compression-webpack-plugin/-/compression-webpack-plugin-6.0.4.tgz#a0578f14c5a34c07d9feec84efa312f4ab277c04"
-  integrity sha512-ZyO7hXMsgWELlYW5Cu+WrGsI55iRH3y7GX5d3jCjEAs40nVqd57G+1VtkhUUPcUWZevMENrXPlc1/vLOVF4FBQ==
+"@types/compression-webpack-plugin@^6.0.4":
+  version "6.0.5"
+  resolved "https://registry.yarnpkg.com/@types/compression-webpack-plugin/-/compression-webpack-plugin-6.0.5.tgz#41b9bb243767c0062080d2ec046d1f44f3412c0a"
+  integrity sha512-rSgj+OtTFYS0PfbtyyujPUdHHIyg/Kj0+gUcQn2pU/yZdu3egEdX4Vz0yYCOMI2F21IJjwbDtYb/KQg7tUfpwA==
   dependencies:
-    "@types/webpack" "*"
+    "@types/webpack" "^4"
 
 "@types/connect-history-api-fallback@*":
   version "1.3.3"
@@ -2204,6 +2204,11 @@
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.6.tgz#a9ca4b70a18b270ccb2bc0aaafefd1d486b7ea74"
   integrity sha512-W+bw9ds02rAQaMvaLYxAbJ6cvguW/iJXNT6lTssS1ps6QdrMKttqEAMEG/b5CR8TZl3/L7/lH0ZV5nNR1LXikA==
 
+"@types/tapable@^1":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.7.tgz#545158342f949e8fd3bfd813224971ecddc3fac4"
+  integrity sha512-0VBprVqfgFD7Ehb2vd8Lh9TG3jP98gvr8rgehQqzztZNI7o8zS8Ad4jyZneKELphpuE212D8J70LnSNQSyO6bQ==
+
 "@types/tape@^4.2.34":
   version "4.13.0"
   resolved "https://registry.yarnpkg.com/@types/tape/-/tape-4.13.0.tgz#7a3f656f78a7eeee962fe4c8bedf016061e2d0ea"
@@ -2280,6 +2285,18 @@
     "@types/anymatch" "*"
     "@types/node" "*"
     "@types/tapable" "*"
+    "@types/uglify-js" "*"
+    "@types/webpack-sources" "*"
+    source-map "^0.6.0"
+
+"@types/webpack@^4":
+  version "4.41.27"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.27.tgz#f47da488c8037e7f1b2dbf2714fbbacb61ec0ffc"
+  integrity sha512-wK/oi5gcHi72VMTbOaQ70VcDxSQ1uX8S2tukBK9ARuGXrYM/+u4ou73roc7trXDNmCxCoerE8zruQqX/wuHszA==
+  dependencies:
+    "@types/anymatch" "*"
+    "@types/node" "*"
+    "@types/tapable" "^1"
     "@types/uglify-js" "*"
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
