@@ -26,7 +26,7 @@
     "@types/react": "^17.0.2",
     "@types/react-native": "^0.63.0",
     "autoprops": "^4.0.2",
-    "foreal": "^0.1.1",
+    "foreal": "^0.2.0",
     "react": "17.0.1",
     "react-native": "0.64.0",
     "syntx": "^2.0.0",
