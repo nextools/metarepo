@@ -40,7 +40,7 @@
     "funcom": "^0.2.0",
     "leven": "^3.1.0",
     "nanoid": "^3.1.11",
-    "query-string": "^6.13.1",
+    "query-string": "^7.0.0",
     "react-dom": "17.0.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
