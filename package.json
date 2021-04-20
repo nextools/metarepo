@@ -73,7 +73,7 @@
     "@revert/color": "*",
     "@start/plugin": "*",
     "@types/node": "^14.0.0",
-    "@types/react-native": "^0.63.2",
+    "@types/react-native": "^0.64.0",
     "@types/ws": "^7.2.6",
     "eslint": "^7.0.0",
     "graphiq": "*",
