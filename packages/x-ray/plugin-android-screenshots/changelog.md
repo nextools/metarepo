@@ -1,3 +1,9 @@
+## v0.5.0
+
+* 💥 switch to React v17
+
+* ♻️ update dependencies `@rebox/android`, `@x-ray/core`, `@x-ray/ui`
+
 ## v0.4.0
 
 * 🌱 add dependencyNames to androidScreenshots() options

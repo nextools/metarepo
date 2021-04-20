@@ -1,3 +1,7 @@
+## v0.4.0
+
+* 💥 switch to new React JSX transform
+
 ## v0.3.0
 
 * 🌱 add `babelConfigNodeESMBuild`

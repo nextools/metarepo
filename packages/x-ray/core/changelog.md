@@ -1,3 +1,9 @@
+## v0.3.0
+
+* 💥 switch to React v17
+
+* ♻️ update dependencies `@rebox/web`
+
 ## v0.2.2
 
 * 🐞 bump `@rebox/web`

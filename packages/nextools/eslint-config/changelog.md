@@ -1,3 +1,9 @@
+## v0.7.0
+
+* 💥 switch to React v17
+
+* 💥 don't require React in JSX scope
+
 ## v0.6.1
 
 * 🐞 separate entire plugins + rules by file globs

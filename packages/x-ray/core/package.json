@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/core",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "X-Ray Core",
   "keywords": [],
   "main": "src/index.ts",
