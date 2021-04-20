@@ -1,6 +1,6 @@
 import { Layout, Layout_Item, Layout_Spacer } from '@revert/layout'
 import type { TComponentBlockquote } from 'mdown'
-import React, { Children } from 'react'
+import { Children } from 'react'
 import { component, mapContext, startWithType } from 'refun'
 import { MarkdownPrimitivesContext } from './MarkdownPrimitivesContext'
 import { MarkdownThemeContext } from './MarkdownThemeContext'

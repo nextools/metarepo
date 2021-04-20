@@ -1,4 +1,3 @@
-import React from 'react'
 import { Linking, TouchableWithoutFeedback } from 'react-native'
 import { component, mapHandlers, startWithType } from 'refun'
 import type { TLink } from './types'

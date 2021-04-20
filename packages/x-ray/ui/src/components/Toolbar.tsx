@@ -1,6 +1,5 @@
 import { PrimitiveButton as Button } from '@revert/button'
 import { PrimitiveSize as Size } from '@revert/size'
-import React from 'react'
 import { startWithType, component, mapHandlers, mapState, mapWithProps, mapContext, mapWithPropsMemo } from 'refun'
 import { actionAddFilter, actionRemoveFilter, actionResetFilter } from '../actions'
 import {

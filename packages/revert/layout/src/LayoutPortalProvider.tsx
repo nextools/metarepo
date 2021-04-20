@@ -1,5 +1,4 @@
 import { PrimitiveBlock } from '@revert/block'
-import React from 'react'
 import { component, startWithType, mapState } from 'refun'
 import type { TLayoutPortalContext } from './LayoutPortalContext'
 import { LayoutPortalContext } from './LayoutPortalContext'

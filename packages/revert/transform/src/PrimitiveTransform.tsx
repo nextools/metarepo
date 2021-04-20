@@ -1,4 +1,3 @@
-import React from 'react'
 import type { CSSProperties } from 'react'
 import { component, startWithType, mapWithProps, mapContext } from 'refun'
 import { isNumber } from 'tsfn'

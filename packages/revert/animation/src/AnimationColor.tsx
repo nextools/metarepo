@@ -1,4 +1,3 @@
-import React from 'react'
 import { component, startWithType, mapDefaultProps, mapWithPropsMemo } from 'refun'
 import { Animation } from './Animation'
 import { easeColor } from './ease-color'

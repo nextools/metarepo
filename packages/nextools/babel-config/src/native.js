@@ -9,6 +9,10 @@ exports.babelConfigReactNativeBuild = {
   ],
   plugins: [
     [
+      require.resolve('@babel/plugin-transform-react-jsx'),
+      { runtime: 'automatic' },
+    ],
+    [
       require.resolve('@babel/plugin-transform-runtime'),
       { regenerator: false },
     ],

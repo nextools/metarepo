@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Ref, HTMLProps, CSSProperties, ReactNode, SyntheticEvent, MouseEvent } from 'react'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isUndefined, isNumber, isFunction } from 'tsfn'

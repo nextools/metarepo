@@ -1,5 +1,4 @@
 import { LayoutContext } from '@revert/layout'
-import React from 'react'
 import { startWithType, component, mapContext } from 'refun'
 import { PrimitiveLinearGradient } from './PrimitiveLinearGradient'
 import type { TLinearGradient } from './types'

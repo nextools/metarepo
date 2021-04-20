@@ -1,7 +1,6 @@
 import { Layout, Layout_Item, LayoutContext, LAYOUT_SIZE_FIT } from '@revert/layout'
 import { Scroll } from '@revert/scroll'
 import leven from 'leven'
-import React from 'react'
 import { startWithType, mapState, mapHandlers, mapContext, pureComponent } from 'refun'
 import { mapMetaStoreState } from '../../store-meta'
 import { SYMBOL_NAVIGATION_SIDEBAR } from '../../symbols'

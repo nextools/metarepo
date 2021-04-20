@@ -1,6 +1,5 @@
 import { PrimitiveText as Text } from '@revert/text'
 import { diffArrays } from 'diff'
-import React from 'react'
 import { component, startWithType, mapState, onUpdateAsync } from 'refun'
 import { actionError } from '../actions'
 import { apiLoadSnapshot } from '../api'

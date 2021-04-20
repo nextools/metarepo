@@ -24,8 +24,6 @@ const getAppPage: (options: TGetAppPageOptions) => Promise<Page>
 
 ```tsx
 // App.tsx
-import React from 'react'
-
 export const App = () => (
   <h1>hi</h1>
 )

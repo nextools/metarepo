@@ -1,4 +1,3 @@
-import React from 'react'
 import type { HTMLProps, CSSProperties } from 'react'
 import { component, startWithType, mapProps } from 'refun'
 import { isNumber, UNDEFINED } from 'tsfn'

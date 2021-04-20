@@ -1,4 +1,3 @@
-import React from 'react'
 import type { MouseEvent, ReactNode, CSSProperties } from 'react'
 import { component, startWithType, mapHandlers, mapProps } from 'refun'
 import type { TRect } from '../../types'

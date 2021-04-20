@@ -36,7 +36,7 @@ const markdownToReact: (makrdown: string, config: TMarkdownToReactConfig) => Rea
 ```
 
 ```tsx
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { markdownToReact } from 'mdown'
 

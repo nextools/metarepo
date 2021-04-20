@@ -1,5 +1,4 @@
 import { Scroll } from '@revert/scroll'
-import React from 'react'
 import { startWithType, pureComponent, mapWithPropsMemo } from 'refun'
 import { mapMetaStoreState } from '../../store-meta'
 import { SYMBOL_SOURCE_IMPORTS } from '../../symbols'

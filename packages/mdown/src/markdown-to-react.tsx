@@ -1,5 +1,4 @@
 import marked from 'marked'
-import React from 'react'
 import type { ReactNode } from 'react'
 import type { TMarkdownToReactConfig, TToken } from './types'
 

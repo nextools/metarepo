@@ -28,13 +28,13 @@
     "iterama": "^0.6.1",
     "piall": "^0.2.1",
     "pifs": "^2.0.0",
-    "react": "16.13.1",
+    "react": "17.0.1",
     "tarmap": "^0.2.0",
     "typeon": "^2.0.0",
     "workerama": "^0.4.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.6"
+    "@types/react": "^17.0.2"
   },
   "fixdeps": {
     "ignoredPackages": [

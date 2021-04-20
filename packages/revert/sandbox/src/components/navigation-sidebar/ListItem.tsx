@@ -1,5 +1,5 @@
 import { Button } from '@revert/button'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { startWithType, mapHovered, mapPressed, mapKeyboardFocused, pureComponent, mapContext, mapWithProps, mapHandlers } from 'refun'
 import type { TMapKeyboardFocused, TMapHovered, TMapPressed } from 'refun'
 import { Background } from '../background'

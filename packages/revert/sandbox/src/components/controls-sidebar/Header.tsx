@@ -1,6 +1,5 @@
 import { Block } from '@revert/block'
 import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
-import React from 'react'
 import { startWithType, mapContext, mapHandlers, pureComponent } from 'refun'
 import { mapContextOverride } from '../../map/map-context-override'
 import { mapMetaStoreState } from '../../store-meta'

@@ -1,6 +1,5 @@
 import { Button } from '@revert/button'
 import { PrimitiveSize as Size } from '@revert/size'
-import React from 'react'
 import { component, startWithType, mapState, mapContext, mapWithPropsMemo } from 'refun'
 import type { TOmitKey } from 'tsfn'
 import {

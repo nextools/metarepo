@@ -1,7 +1,7 @@
 import { Layout, Layout_Item } from '@revert/layout'
 import type { TComponentListItem } from 'mdown'
 import type { ReactNode, ReactElement } from 'react'
-import React, { isValidElement, Children } from 'react'
+import { isValidElement, Children } from 'react'
 import type { TComponent } from 'refun'
 import { isFunction } from 'tsfn'
 import { Paragraph } from './Paragraph'

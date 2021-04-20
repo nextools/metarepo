@@ -8,8 +8,7 @@ module.exports = {
   },
   settings: {
     react: {
-      pragma: 'React',
-      version: '16',
+      version: '17',
     },
   },
   rules: {
@@ -30,7 +29,6 @@ module.exports = {
     'react/no-unknown-property': 2,
     'react/no-unsafe': 2,
     'react/no-unused-state': 2,
-    'react/react-in-jsx-scope': 2,
     'react/self-closing-comp': 2,
     'react/style-prop-object': 2,
     'react/void-dom-elements-no-children': 2,
@@ -58,7 +56,6 @@ module.exports = {
       afterOpening: 'never',
       beforeClosing: 'never',
     }],
-    'react/jsx-uses-react': 2,
     'react/jsx-uses-vars': 2,
     'react/jsx-wrap-multilines': [2, {
       declaration: 'parens-new-line',

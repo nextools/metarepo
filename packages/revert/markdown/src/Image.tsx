@@ -1,6 +1,5 @@
 import { PrimitiveImage } from '@revert/image'
 import type { TComponentImage } from 'mdown'
-import React from 'react'
 import type { TComponent } from 'refun'
 import { SYMBOL_MARKDOWN_IMAGE } from './symbols'
 

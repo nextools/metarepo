@@ -1,7 +1,7 @@
 import { Layout, Layout_Item } from '@revert/layout'
 import { PrimitiveTextAlign } from '@revert/text-align'
 import type { TComponentTable, TComponentTableCell, TComponentTableHeaderCell, TComponentTableRow } from 'mdown'
-import React, { Children, Fragment } from 'react'
+import { Children, Fragment } from 'react'
 import { component, mapContext, startWithType } from 'refun'
 import { MarkdownPrimitivesContext } from './MarkdownPrimitivesContext'
 import { MarkdownThemeContext } from './MarkdownThemeContext'

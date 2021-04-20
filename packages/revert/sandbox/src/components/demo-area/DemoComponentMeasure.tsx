@@ -1,6 +1,5 @@
 import { PrimitiveTransform } from '@revert/transform'
 import type { CSSProperties } from 'react'
-import React from 'react'
 import { component, mapRef, mapWithPropsMemo, startWithType } from 'refun'
 import { UNDEFINED } from 'tsfn'
 import { onLayout } from '../on-layout'

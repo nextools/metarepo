@@ -1,5 +1,4 @@
 import { Size } from '@revert/size'
-import React from 'react'
 import { component, startWithType, mapStateRef, mapHandlers } from 'refun'
 import { isNumber } from 'tsfn'
 import { PrimitiveImage } from './PrimitiveImage'

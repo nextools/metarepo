@@ -1,6 +1,5 @@
 import { PrimitiveButton as Button } from '@revert/button'
 import { PrimitiveSize as Size } from '@revert/size'
-import React from 'react'
 import { startWithType, component, mapHandlers, mapWithProps } from 'refun'
 import { COLOR_BLUE, COLOR_WHITE, BORDER_SIZE_SMAL } from '../config'
 import type { TRect } from '../types'

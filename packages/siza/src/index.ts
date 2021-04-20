@@ -76,6 +76,9 @@ export const getBundleSize = (userOptions: TGetBuildReleaseStatsOptions): Promis
         '.tsx',
         '.json',
       ],
+      alias: {
+        'core-js': path.dirname(require.resolve('core-js')),
+      },
     },
     devtool: false,
     module: {
@@ -157,6 +160,7 @@ export const getBundleSize = (userOptions: TGetBuildReleaseStatsOptions): Promis
       new CompressionPlugin({
         filename: '[name][ext].gz',
         cache: false,
+        minRatio: Infinity,
       }),
     ],
   }

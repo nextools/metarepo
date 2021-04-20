@@ -1,5 +1,4 @@
 import { colorToString } from '@revert/color'
-import React from 'react'
 import { TextInput } from 'react-native'
 import type { TextStyle, KeyboardType } from 'react-native'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'

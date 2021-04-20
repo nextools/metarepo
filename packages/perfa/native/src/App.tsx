@@ -1,7 +1,6 @@
 // @ts-ignore
 // eslint-disable-next-line
 import { App as TargetApp } from '__PERFA_TARGET_APP_PATH__'
-import React from 'react'
 import { getUsedMemory } from 'react-native-device-info'
 import MessageQueue from 'react-native/Libraries/BatchedBridge/MessageQueue'
 import { SERVER_HOST, SERVER_PORT } from './constants'

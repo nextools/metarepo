@@ -1,4 +1,3 @@
-import React from 'react'
 import { View, TouchableWithoutFeedback } from 'react-native'
 import type { GestureResponderEvent } from 'react-native'
 import { component, startWithType, mapHandlers } from 'refun'

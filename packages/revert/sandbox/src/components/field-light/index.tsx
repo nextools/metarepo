@@ -1,7 +1,6 @@
 import { Block } from '@revert/block'
 import { LayoutContext } from '@revert/layout'
 import { PrimitiveSize } from '@revert/size'
-import React from 'react'
 import { pureComponent, startWithType, mapState, mapContext, mapWithProps, mapFocused } from 'refun'
 import type { TMapFocused } from 'refun'
 import { isString } from 'tsfn'

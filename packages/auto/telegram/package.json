@@ -26,5 +26,10 @@
     "@types/tape": "^4.2.34",
     "spyfn": "^2.0.0",
     "tape": "^5.0.0"
+  },
+  "fixdeps": {
+    "ignoredPackages": [
+      "react"
+    ]
   }
 }

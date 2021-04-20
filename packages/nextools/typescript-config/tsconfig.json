@@ -5,7 +5,7 @@
     "noEmit": true,
     "pretty": true,
     "lib": ["esnext", "dom"],
-    "jsx": "react",
+    "jsx": "react-jsx",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",

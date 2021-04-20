@@ -48,7 +48,10 @@ exports.babelConfigNodeBuild = {
     {
       test: /\.(ts|js)x$/,
       presets: [
-        require.resolve('@babel/preset-react'),
+        [
+          require.resolve('@babel/preset-react'),
+          { runtime: 'automatic' },
+        ],
       ],
     },
   ],
@@ -134,7 +137,10 @@ exports.babelConfigNodeRegister = {
     {
       test: /\.(ts|js)x$/,
       presets: [
-        require.resolve('@babel/preset-react'),
+        [
+          require.resolve('@babel/preset-react'),
+          { runtime: 'automatic' },
+        ],
       ],
     },
   ],

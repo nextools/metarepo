@@ -1,6 +1,5 @@
 import { Layout, Layout_Item } from '@revert/layout'
 import type { TCommonComponentConfig } from 'autoprops'
-import React from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import type { TAnyObject } from 'tsfn'
 import { SYMBOL_COMPONENT_CONTROLS_BLOCK } from '../../symbols'

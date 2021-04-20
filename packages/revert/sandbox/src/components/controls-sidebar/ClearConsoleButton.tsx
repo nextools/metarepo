@@ -1,5 +1,4 @@
 import { Layout, Layout_Item } from '@revert/layout'
-import React from 'react'
 import { component, startWithType } from 'refun'
 import { consoleClear } from '../../store-console'
 import { ButtonIcon } from '../button-icon'

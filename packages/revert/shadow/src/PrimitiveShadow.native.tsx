@@ -1,5 +1,4 @@
 import { colorToString } from '@revert/color'
-import React from 'react'
 import { View } from 'react-native'
 import type { ViewProps, ViewStyle } from 'react-native'
 import { component, startWithType, mapProps } from 'refun'

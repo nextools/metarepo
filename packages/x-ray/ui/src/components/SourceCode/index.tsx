@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { component, startWithType } from 'refun'
 import type { TLineElement } from 'syntx'
 import type { TJsonValue } from 'typeon'

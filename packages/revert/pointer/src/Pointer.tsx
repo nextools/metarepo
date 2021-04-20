@@ -1,4 +1,3 @@
-import React from 'react'
 import type { HTMLProps, MouseEvent, CSSProperties } from 'react'
 import { component, startWithType, mapProps, mapHandlers, onLayout, mapRef } from 'refun'
 import { isFunction } from 'tsfn'

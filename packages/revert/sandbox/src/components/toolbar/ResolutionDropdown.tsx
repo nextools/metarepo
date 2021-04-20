@@ -1,4 +1,3 @@
-import React from 'react'
 import { startWithType, mapHandlers, mapWithProps, pureComponent } from 'refun'
 import { getObjectKeys } from 'tsfn'
 import { resolutions } from '../../resolutions'

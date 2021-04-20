@@ -1,6 +1,6 @@
 import { Layout_Item, Layout, LAYOUT_SIZE_FIT, Layout_Resize } from '@revert/layout'
 import { TextThemeContext } from '@revert/text'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { startWithType, pureComponent, mapContext } from 'refun'
 import { isFunction } from 'tsfn'
 import { mapContextOverride } from '../../map/map-context-override'

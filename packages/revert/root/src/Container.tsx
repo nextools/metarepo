@@ -1,4 +1,3 @@
-import React from 'react'
 import type { CSSProperties } from 'react'
 import { component, startWithType, mapWithProps } from 'refun'
 import type { TDimensions } from './types'

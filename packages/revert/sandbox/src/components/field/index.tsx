@@ -3,7 +3,6 @@ import { PrimitiveBlock, Block } from '@revert/block'
 import type { TPrimitiveInput } from '@revert/input'
 import { PrimitiveInput } from '@revert/input'
 import { PrimitiveText } from '@revert/text'
-import React from 'react'
 import {
   pureComponent,
   startWithType,

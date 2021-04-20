@@ -1,5 +1,5 @@
 import I from 'big-integer'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import test from 'tape'
 import { serializeProps } from '../src/serialize-props'
 import type { TCommonComponentConfig } from '../src/types'

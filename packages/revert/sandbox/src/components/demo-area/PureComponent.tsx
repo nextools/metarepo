@@ -1,4 +1,3 @@
-import React from 'react'
 import { pureComponent, startWithType } from 'refun'
 import type { TComponentWrapper } from '../plugin-provider'
 

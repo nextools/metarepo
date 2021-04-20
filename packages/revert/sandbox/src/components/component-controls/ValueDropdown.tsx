@@ -1,5 +1,4 @@
 import type { TOption } from '@revert/select'
-import React from 'react'
 import { startWithType, mapHandlers, mapWithProps, pureComponent, mapState, mapWithPropsMemo, mapDebouncedHandlerTimeout, mapDefaultProps } from 'refun'
 import { SYMBOL_DROPDOWN } from '../../symbols'
 import { Dropdown } from '../dropdown'

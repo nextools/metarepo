@@ -1,7 +1,7 @@
 import { AnimationValue, easeInOutCubic } from '@revert/animation'
 import { PrimitiveSize as Size } from '@revert/size'
 import { pipe } from 'funcom'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { component, startWithType, mapWithProps, mapState, mapSafeTimeout, mapHandlers, mapRef, onChange } from 'refun'
 import { DIFF_TIMEOUT, BORDER_SIZE, COLOR_GREEN, COLOR_DARK_GREY, COLOR_RED, COLOR_LIGHT_GREEN, COLOR_LIGHT_RED } from '../config'
 import type { TScreenshotGridItem, TRect } from '../types'

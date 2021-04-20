@@ -1,7 +1,6 @@
 import { Background } from '@revert/background'
 import { Layout_Item, Layout } from '@revert/layout'
 import { Root } from '@revert/root'
-import React from 'react'
 import {
   component,
   mapDebouncedHandlerTimeout,

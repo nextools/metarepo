@@ -1,6 +1,6 @@
 import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
 import type { TComponentList } from 'mdown'
-import React, { Children } from 'react'
+import { Children } from 'react'
 import { component, mapContext, startWithType } from 'refun'
 import { MarkdownPrimitivesContext } from './MarkdownPrimitivesContext'
 import { SYMBOL_MARKDOWN_LIST } from './symbols'

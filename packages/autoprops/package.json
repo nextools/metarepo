@@ -20,10 +20,10 @@
   },
   "devDependencies": {
     "@mock/require": "^0.2.2",
-    "@types/react": "^16.9.6",
+    "@types/react": "^17.0.2",
     "@types/sha.js": "^2.4.0",
     "@types/tape": "^4.2.34",
-    "react": "16.13.1",
+    "react": "17.0.1",
     "tape": "^5.0.0"
   }
 }

@@ -1,5 +1,4 @@
 import { Layout, Layout_Item, LayoutContext, LAYOUT_SIZE_FIT } from '@revert/layout'
-import React from 'react'
 import { pureComponent, startWithType, mapContext, mapWithProps } from 'refun'
 import type { TLine } from 'syntx'
 import { ThemeContext } from '../theme-context'

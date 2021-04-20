@@ -1,6 +1,5 @@
 import { PrimitiveText } from '@revert/text'
 import type { TPrimitiveText } from '@revert/text'
-import React from 'react'
 import type { FC } from 'react'
 import { LINE_HEIGHT } from './constants'
 
