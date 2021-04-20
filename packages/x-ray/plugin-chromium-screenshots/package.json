@@ -28,7 +28,7 @@
     "pifs": "^2.0.0",
     "pixelmatch": "^5.1.0",
     "pngjs": "^5.0.0",
-    "puppeteer-core": "^5.0.0",
+    "puppeteer-core": "^8.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "tarmap": "^0.2.0",
