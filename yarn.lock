@@ -182,7 +182,7 @@
     browserslist "^4.14.5"
     semver "^6.3.0"
 
-"@babel/helper-create-class-features-plugin@^7.13.0":
+"@babel/helper-create-class-features-plugin@^7.12.13", "@babel/helper-create-class-features-plugin@^7.13.0":
   version "7.13.11"
   resolved "https://registry.yarnpkg.com/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.13.11.tgz#30d30a005bca2c953f5653fc25091a492177f4f6"
   integrity sha512-ays0I7XYq9xbjCSvT+EvysLgfc3tOkwCULHjrnscGT3A9qD4sk3wXnJ3of0MAWsWGjdinFvajHU2smYuqXKMrw==
@@ -355,7 +355,7 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.12.11.tgz#c9a1f021917dcb5ccf0d4e453e399022981fc9ed"
   integrity sha512-np/lG3uARFybkoHokJUmf1QfEvRVCPbmQeUQpKow5cQ3xWrV9i3rUHodKDJPQfTVX61qKi+UdYk8kik84n7XOw==
 
-"@babel/helper-validator-option@^7.12.17":
+"@babel/helper-validator-option@^7.12.16", "@babel/helper-validator-option@^7.12.17":
   version "7.12.17"
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-option/-/helper-validator-option-7.12.17.tgz#d1fbf012e1a79b7eebbfdc6d270baaf8d9eb9831"
   integrity sha512-TopkMDmLzq8ngChwRlyjR6raKD6gMSae4JdYDB8bByKreQgG0RBTuKe9LRxW3wFtUnjxOPRKBDwEH6Mg5KeDfw==
@@ -995,7 +995,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.12.13"
 
-"@babel/plugin-transform-typescript@^7.13.0", "@babel/plugin-transform-typescript@^7.5.0":
+"@babel/plugin-transform-typescript@^7.12.16", "@babel/plugin-transform-typescript@^7.13.0", "@babel/plugin-transform-typescript@^7.5.0":
   version "7.13.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.13.0.tgz#4a498e1f3600342d2a9e61f60131018f55774853"
   integrity sha512-elQEwluzaU8R8dbVuW2Q2Y8Nznf7hnjM7+DSCd14Lo5fF63C9qNLbwZYbmZrtV9/ySpSUpkRpQXvJb6xyu4hCQ==
@@ -1574,12 +1574,12 @@
   resolved "https://registry.yarnpkg.com/@haul-bundler/basic-bundle-webpack-plugin/-/basic-bundle-webpack-plugin-0.19.0.tgz#4860780e479c69fd6f800805eda2a491287b4ea0"
   integrity sha512-0t7vJ+OI5YyPUU5LGW2fFyMa5Si+WDfliUnRhBgvqY4+O3tY+nUTsa71qZhAK7oVHyaGow2Era343MHsTKDpIA==
 
-"@haul-bundler/cli@^0.22.1":
-  version "0.22.1"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/cli/-/cli-0.22.1.tgz#cff0a588b8e7b923a3869e8807f3f8e9a695b5d3"
-  integrity sha512-CrDNAlzXlOt3tVMT/hlV9D5OFMxu0XTOlE8VfjaueEgyXZHfKapJh0zrtwBX+xImVbYkyaAAM4KlkiB3juLhUQ==
+"@haul-bundler/cli@^0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@haul-bundler/cli/-/cli-0.23.0.tgz#2a0b9288f94f48ca98d9a33e7a4e0f864bfba7e6"
+  integrity sha512-/SxL2IiGeqJQSLSXrD/Lebl8kp5dEtICCv6DJTdR+/GWcPndlkYYq8Y7q6iBDEyduGr4EOZWtIePt2ORW2MCvw==
   dependencies:
-    "@haul-bundler/core" "^0.22.1"
+    "@haul-bundler/core" "^0.23.0"
     "@haul-bundler/core-legacy" "^0.18.0"
     ansi-fragments "^0.2.1"
     cpx "^1.5.0"
@@ -1606,10 +1606,10 @@
     mkdirp "^0.5.1"
     ws "^7.2.1"
 
-"@haul-bundler/core@^0.22.1":
-  version "0.22.1"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/core/-/core-0.22.1.tgz#5e6e2de4be7b202afe1040b88404e53805d572a2"
-  integrity sha512-xcZZO1WZyrBwicnSG0767WsqQGESGv3WRwJfwitiHzKC7u9qv7CXzK/qIhg8vcBvrjt11YXmqNDEK6EOAhNEfw==
+"@haul-bundler/core@^0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@haul-bundler/core/-/core-0.23.0.tgz#b25535fe8b671b8e097cbbf346b6343bda162c9a"
+  integrity sha512-zaXM9SxOWIy3PI48JKpYgYk/7ECTgwI0nbZ3w0NEzUU2Tw3Ee2U625a8SfX9kIdBy9pFpTWRZ9xHkxbsWGvb+Q==
   dependencies:
     "@babel/core" "7.4.0"
     "@babel/plugin-proposal-class-properties" "^7.7.0"
@@ -1653,16 +1653,6 @@
     webpack-sources "^1.4.3"
     wrap-ansi "^6.2.0"
     ws "^7.2.1"
-
-"@haul-bundler/preset-0.60@^0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/preset-0.60/-/preset-0.60-0.18.0.tgz#9b15127e3c21119eb516b94f74a95fc9b3e4d2d1"
-  integrity sha512-SK8fueSw+HdHPFVKtEjvCXbW1nPrQyx2QY+1/RP7jaKz8/lGQhJsLHFQVNO4bo3PQxXtvkMBsHdqEEV7Ha22TA==
-  dependencies:
-    babel-loader "^8.0.6"
-    case-sensitive-paths-webpack-plugin "^2.2.0"
-    is-ci "^2.0.0"
-    terser-webpack-plugin "^2.3.2"
 
 "@istanbuljs/schema@^0.1.2":
   version "0.1.3"
