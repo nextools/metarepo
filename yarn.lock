@@ -2184,10 +2184,10 @@
     "@types/node" "*"
     "@types/webpack" "*"
 
-"@types/marked@^1.1.0":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-1.2.2.tgz#1f858a0e690247ecf3b2eef576f98f86e8d960d4"
-  integrity sha512-wLfw1hnuuDYrFz97IzJja0pdVsC0oedtS4QsKH1/inyW9qkLQbXgMUqEQT0MVtUBx3twjWeInUfjQbhBVLECXw==
+"@types/marked@^2.0.0":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-2.0.2.tgz#33a15106383f6e42cd6bdd38093e6b19904e29e1"
+  integrity sha512-P4zanhCQKs4tiWPPBGpB7lHflgFCP9DFGNI5YtpW9MALKoy2qs9rHNWJ+z55cegD9uCfnmsKuaosq9FNvbxrOw==
 
 "@types/memory-fs@^0.3.2":
   version "0.3.2"
@@ -8002,10 +8002,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@^1.1.1:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-1.2.9.tgz#53786f8b05d4c01a2a5a76b7d1ec9943d29d72dc"
-  integrity sha512-H8lIX2SvyitGX+TRdtS06m1jHMijKN/XjfH6Ooii9fvxMlh8QdqBfBDkGUpMWH2kQNrtixjzYUa3SH8ROTgRRw==
+marked@^2.0.0:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-2.0.3.tgz#3551c4958c4da36897bda2a16812ef1399c8d6b0"
+  integrity sha512-5otztIIcJfPc2qGTN8cVtOJEjNJZ0jwa46INMagrYfk0EvqtRuEHLsEe0LrFS0/q+ZRKT0+kXK7P2T1AN5lWRA==
 
 math-random@^1.0.1:
   version "1.0.4"
