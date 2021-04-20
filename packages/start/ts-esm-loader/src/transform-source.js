@@ -17,13 +17,12 @@ export const transformSource = (source, context, defaultTransformSource) => {
       compact: false,
       inputSourceMap: false,
       sourceMaps: 'inline',
+      targets: { node: 'current' },
       presets: [
         [
           babelPresetEnv,
           {
-            targets: { node: 'current' },
             shippedProposals: true,
-            ignoreBrowserslistConfig: true,
             modules: false,
           },
         ],

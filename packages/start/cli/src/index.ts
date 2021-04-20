@@ -37,23 +37,23 @@ try {
   const tasksFilePath = await import.meta.resolve(packageJson.start.tasks, `file://${process.cwd()}/`)
   const tasksExported = await import(tasksFilePath) as TTasks
   const taskNames = Object.keys(tasksExported)
-  const threadCount = cpus().length
-  const stopThreadPool = await startThreadPool({ threadCount })
-
-  console.log(`🧵 treads: ${threadCount}`)
 
   // CLI
   if (process.argv.length > 2) {
     const [taskName, ...args] = process.argv.slice(2)
     const task = tasksExported[taskName]
 
-    console.log(`👉 ${taskName} ${args.join(' ')}`)
-
     await runTask(task, args)
-    await stopThreadPool()
   // REPL
   } else {
+    const threadCount = cpus().length
+    const stopThreadPool = await startThreadPool({ threadCount })
     const commands = ['/memory', '/debug', '/quit']
+
+    console.log(`🧵 treads: ${threadCount}`)
+    console.log(`📋 tasks: ${taskNames.join(', ')}`)
+    console.log(`🤖 commands: ${commands.join(', ')}`)
+
     const autocomplete = taskNames.concat(commands)
     const rl = readline.createInterface({
       input: process.stdin,
@@ -82,9 +82,6 @@ try {
       console.log('👋 bye')
       process.exit()
     })
-
-    console.log(`📋 tasks: ${taskNames.join(', ')}`)
-    console.log(`🤖 commands: ${commands.join(', ')}`)
 
     while (true) {
       rl.prompt()

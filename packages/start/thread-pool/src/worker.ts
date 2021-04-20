@@ -31,12 +31,13 @@ while (true) {
       const transformed = await transformAsync(taskString, {
         babelrc: false,
         compact: true,
+        // @ts-expect-error
+        targets: { node: 'current' },
         presets: [
           [
             babelPresetEnv,
             {
-              targets: { node: 'current' },
-              ignoreBrowserslistConfig: true,
+              shippedProposals: true,
               modules: false,
             },
           ],

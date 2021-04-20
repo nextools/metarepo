@@ -1,9 +1,10 @@
+import { cpus } from 'os'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { Worker } from 'worker_threads'
 import { pipe } from 'funcom'
 import getCallerFile from 'get-caller-file'
-import { groupByAsync, map, mapAsync, range, ungroupAsync } from 'iterama'
+import { finallyAsync, groupByAsync, map, mapAsync, range, ungroupAsync } from 'iterama'
 import { piAllAsync } from 'piall'
 import type { TJsonValue } from 'typeon'
 import { once } from 'wans'
@@ -18,8 +19,12 @@ const DEFAULT_GROUP_TYPE = 'serial'
 let workers: Worker[] = []
 const busyWorkers = new Set<number>()
 const queueResolvers: (() => void)[] = []
+let isThreadPoolStarted = false
+let stopThreadPoolPromise: null | Promise<() => Promise<void>> = null
 
 export const startThreadPool = async (options: TStartPoolOptions): Promise<() => Promise<void>> => {
+  isThreadPoolStarted = true
+
   const workerPath = await resolve('./worker-wrapper.mjs')
 
   workers = await Promise.all(
@@ -46,60 +51,73 @@ export const startThreadPool = async (options: TStartPoolOptions): Promise<() =>
 }
 
 export const mapThreadPool = <T, R>(taskFn: (arg: any) => (it: AsyncIterable<T>) => AsyncIterable<R>, args: TJsonValue[], options?: TPipePoolOptions) => {
-  if (workers.length === 0) {
-    throw new Error('Start thread pool first')
-  }
-
   const taskString = taskFn.toString()
   const callerDir = fileURLToPath(path.dirname(getCallerFile()))
   const groupBy = options?.groupBy ?? DEFAULT_GROUP_BY
   const groupType = options?.groupType ?? DEFAULT_GROUP_TYPE
 
-  return (it: AsyncIterable<T>): AsyncIterable<R> => {
-    const workerize = async (group: T[]): Promise<R[]> => {
-      if (busyWorkers.size === workers.length) {
-        await new Promise<void>((resolve) => {
-          queueResolvers.push(resolve)
+  return (it: AsyncIterable<T>): AsyncIterable<R> => ({
+    async *[Symbol.asyncIterator]() {
+      if (!isThreadPoolStarted) {
+        stopThreadPoolPromise = startThreadPool({ threadCount: cpus().length })
+      }
+
+      if (stopThreadPoolPromise !== null) {
+        await stopThreadPoolPromise
+      }
+
+      const workerize = async (group: T[]): Promise<R[]> => {
+        if (busyWorkers.size === workers.length) {
+          await new Promise<void>((resolve) => {
+            queueResolvers.push(resolve)
+          })
+        }
+
+        const worker = workers.find((worker) => !busyWorkers.has(worker.threadId))!
+
+        busyWorkers.add(worker.threadId)
+
+        const messageFromWorker = await sendAndReceiveOnWorker<TMessageToWorkerTask<T[]>, TMessageFromWorker<R[]>>(worker, {
+          type: 'TASK',
+          value: {
+            taskString,
+            args,
+            callerDir,
+            group,
+            groupBy,
+            groupType,
+          },
         })
+
+        busyWorkers.delete(worker.threadId)
+
+        if (queueResolvers.length > 0) {
+          const queueResolver = queueResolvers.shift()!
+
+          queueResolver()
+        }
+
+        if (messageFromWorker.type === 'ERROR') {
+          throw messageFromWorker.value
+        }
+
+        return messageFromWorker.value
       }
 
-      const worker = workers.find((worker) => !busyWorkers.has(worker.threadId))!
+      yield* pipe(
+        startWithTypeAsync<T>(),
+        groupByAsync(groupBy),
+        mapAsync(workerize),
+        piAllAsync(workers.length),
+        ungroupAsync,
+        finallyAsync(async () => {
+          if (stopThreadPoolPromise !== null && busyWorkers.size === 0) {
+            const stopThreadPool = await stopThreadPoolPromise
 
-      busyWorkers.add(worker.threadId)
-
-      const messageFromWorker = await sendAndReceiveOnWorker<TMessageToWorkerTask<T[]>, TMessageFromWorker<R[]>>(worker, {
-        type: 'TASK',
-        value: {
-          taskString,
-          args,
-          callerDir,
-          group,
-          groupBy,
-          groupType,
-        },
-      })
-
-      busyWorkers.delete(worker.threadId)
-
-      if (queueResolvers.length > 0) {
-        const queueResolver = queueResolvers.shift()!
-
-        queueResolver()
-      }
-
-      if (messageFromWorker.type === 'ERROR') {
-        throw messageFromWorker.value
-      }
-
-      return messageFromWorker.value
-    }
-
-    return pipe(
-      startWithTypeAsync<T>(),
-      groupByAsync(groupBy),
-      mapAsync(workerize),
-      piAllAsync(workers.length),
-      ungroupAsync
-    )(it)
-  }
+            await stopThreadPool()
+          }
+        })
+      )(it)
+    },
+  })
 }

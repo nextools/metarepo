@@ -1,7 +1,6 @@
 import type { TransformOptions } from '@babel/core'
 // @ts-expect-error
 import babelPluginSyntaxTopLevelAwait from '@babel/plugin-syntax-top-level-await'
-// @ts-expect-error
 import babelPresetEnv from '@babel/preset-env'
 // @ts-expect-error
 import babelPresetReact from '@babel/preset-react'
@@ -15,13 +14,13 @@ export const babelConfigBuildNode: TransformOptions = {
   babelrc: false,
   compact: false,
   sourceMaps: false,
+  // @ts-expect-error
+  targets: { node: NODE_VERSION },
   presets: [
     [
       babelPresetEnv,
       {
-        targets: { node: NODE_VERSION },
         shippedProposals: true,
-        ignoreBrowserslistConfig: true,
         modules: false,
       },
     ],
@@ -51,15 +50,15 @@ export const babelConfigBuildWeb: TransformOptions = {
   babelrc: false,
   compact: false,
   sourceMaps: false,
+  // @ts-expect-error
+  targets: {
+    browsers: 'last 2 Chrome versions',
+  },
   presets: [
     [
       babelPresetEnv,
       {
-        targets: {
-          browsers: 'last 2 Chrome versions',
-        },
         shippedProposals: true,
-        ignoreBrowserslistConfig: true,
         modules: false,
       },
     ],
