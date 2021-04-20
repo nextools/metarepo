@@ -16,7 +16,7 @@
   "dependencies": {
     "@rebox/android": "^5.0.0",
     "@rebox/ios": "^7.0.0",
-    "react-native-device-info": "^6.0.1",
+    "react-native-device-info": "^8.0.0",
     "react-native": "0.64.0",
     "react": "17.0.1",
     "tsfn": "^2.2.0"
