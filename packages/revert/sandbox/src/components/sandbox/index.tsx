@@ -1,6 +1,6 @@
 import { Layout, Layout_Item, Layout_Resize } from '@revert/layout'
 import { RootContext } from '@revert/root'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { component, startWithType, mapWithProps, mapContext } from 'refun'
 import { mapStoreState } from '../../store'
 import { Background } from '../background'

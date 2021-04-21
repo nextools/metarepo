@@ -4,7 +4,6 @@ import {
   PrimitiveBackground as RevertPrimitiveBackground,
 } from '@revert/background'
 import type { TPrimitiveBackground } from '@revert/background'
-import React from 'react'
 import { component, mapDefaultProps, startWithType } from 'refun'
 
 export const PrimitiveBackground = component(

@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/plugin-chromium-screenshots",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Check Chromium screenshots with X-Ray",
   "keywords": [],
   "main": "src/index.ts",
@@ -20,17 +20,17 @@
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
     "@babel/register": "^7.8.6",
-    "@x-ray/core": "^0.2.2",
-    "@x-ray/ui": "^3.2.1",
+    "@x-ray/core": "^0.3.0",
+    "@x-ray/ui": "^4.0.0",
     "funcom": "^0.2.0",
     "iterama": "^0.6.1",
-    "piall": "^0.2.0",
+    "piall": "^0.2.1",
     "pifs": "^2.0.0",
     "pixelmatch": "^5.1.0",
     "pngjs": "^5.0.0",
     "puppeteer-core": "^5.0.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
     "tarmap": "^0.2.0",
     "tsfn": "^2.2.0",
     "typeon": "^2.0.0",
@@ -40,8 +40,8 @@
   "devDependencies": {
     "@types/pngjs": "^3.4.1",
     "@types/puppeteer-core": "^5.0.0",
-    "@types/react": "^16.9.6",
-    "@types/react-dom": "^16.9.6"
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1"
   },
   "fixdeps": {
     "ignoredPackages": [

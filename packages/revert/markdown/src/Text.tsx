@@ -1,5 +1,4 @@
 import type { TComponentText } from 'mdown'
-import React from 'react'
 import { component, mapContext, startWithType } from 'refun'
 import { MarkdownPrimitivesContext } from './MarkdownPrimitivesContext'
 import { SYMBOL_MARKDOWN_TEXT } from './symbols'

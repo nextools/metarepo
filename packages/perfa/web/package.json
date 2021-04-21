@@ -1,6 +1,6 @@
 {
   "name": "@perfa/web",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Measure React app performance using dockerized Chromium",
   "keywords": [],
   "main": "src/index.ts",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.8.0",
-    "@rebox/web": "^4.0.0",
+    "@rebox/web": "^5.0.0",
     "dleet": "^2.0.1",
     "puppeteer-core": "^5.2.1",
     "tmpa": "^0.1.0",

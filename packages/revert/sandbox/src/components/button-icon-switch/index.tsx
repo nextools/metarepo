@@ -3,7 +3,6 @@ import { Checkbox } from '@revert/checkbox'
 import { Layout, Layout_Item } from '@revert/layout'
 import { Size } from '@revert/size'
 import { TextThemeContext } from '@revert/text'
-import React from 'react'
 import type { ReactNode } from 'react'
 import {
   mapDefaultProps,

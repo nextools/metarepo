@@ -1,5 +1,4 @@
 import { PrimitiveBlock } from '@revert/block'
-import React from 'react'
 import { Switch } from 'react-native'
 import type { ViewStyle } from 'react-native'
 import { component, startWithType, mapDefaultProps } from 'refun'

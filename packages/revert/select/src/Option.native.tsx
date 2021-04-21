@@ -1,4 +1,3 @@
-import React from 'react'
 import type { FC } from 'react'
 import { Picker } from 'react-native'
 import type { TOption } from './types'

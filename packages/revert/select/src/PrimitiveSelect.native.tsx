@@ -1,4 +1,3 @@
-import React from 'react'
 import { Picker } from 'react-native'
 import type { TextStyle } from 'react-native'
 import { component, mapWithProps, startWithType } from 'refun'

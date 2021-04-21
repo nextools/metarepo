@@ -1,6 +1,5 @@
 import { LayoutPortalProvider } from '@revert/layout'
 import { Root } from '@revert/root'
-import React from 'react'
 import { component, startWithType, onChange } from 'refun'
 import { AlertProvider } from './components/alert-provider'
 import { ImportPackageNameProvider } from './components/import-package-name-provider'

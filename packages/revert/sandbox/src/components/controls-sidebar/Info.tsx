@@ -1,7 +1,6 @@
 import { Layout, Layout_Item } from '@revert/layout'
 import { Link } from '@revert/link'
 import { Scroll } from '@revert/scroll'
-import React from 'react'
 import { startWithType, mapContext, pureComponent } from 'refun'
 import { isString, isUndefined } from 'tsfn'
 import { mapMetaStoreState } from '../../store-meta'

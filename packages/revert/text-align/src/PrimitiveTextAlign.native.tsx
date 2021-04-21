@@ -1,4 +1,3 @@
-import React from 'react'
 import { Text } from 'react-native'
 import type { TextStyle } from 'react-native'
 import { component, mapWithPropsMemo, startWithType } from 'refun'

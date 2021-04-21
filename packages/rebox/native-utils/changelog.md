@@ -1,3 +1,11 @@
+## v5.0.0
+
+* 💥 bump Haul deps
+
+* 💥 upgrade to React Native v0.64.0
+
+* 💥 switch to React v17
+
 ## v4.0.5
 
 * 🐞 update `react-native` to v0.63.4

@@ -1,5 +1,4 @@
 import type { FC } from 'react'
-import React from 'react'
 import { StoreContextFactory } from 'refun'
 import { store } from './store'
 

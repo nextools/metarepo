@@ -1,3 +1,9 @@
+## v4.0.0
+
+* 💥 switch to React v17
+
+* ♻️ update dependencies `@x-ray/core`
+
 ## v3.2.1
 
 * 🐞 remove save image

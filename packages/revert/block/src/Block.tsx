@@ -1,5 +1,4 @@
 import { LayoutContext } from '@revert/layout'
-import React from 'react'
 import { component, startWithType, mapContext, mapWithProps, mapDefaultProps, onLayout } from 'refun'
 import { PrimitiveBlock } from './PrimitiveBlock'
 import type { TBlock } from './types'

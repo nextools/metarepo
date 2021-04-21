@@ -1,3 +1,9 @@
+## v0.2.0
+
+* 💥 support only React 17+
+
+* ♻️ update dependencies `foreal`
+
 ## v0.1.4
 
 * 🐞 fix missing `axe-rules.json` in `build/` folder

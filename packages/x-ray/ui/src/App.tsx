@@ -1,5 +1,4 @@
 import { PrimitiveRoot } from '@revert/root'
-import React from 'react'
 import type { FC } from 'react'
 import { Main } from './components/Main'
 import { RenderMetaContext } from './context/RenderMeta'

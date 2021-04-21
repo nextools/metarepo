@@ -1,3 +1,11 @@
+## v0.3.0
+
+* 💥 switch to new React JSX transform
+
+* 💥 switch to React v17
+
+* ♻️ update dependencies `@x-ray/core`, `@x-ray/ui`
+
 ## v0.2.0
 
 * 💥 drop Node.js v10

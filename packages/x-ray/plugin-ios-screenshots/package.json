@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/plugin-ios-screenshots",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Check iOS screenshots with X-Ray",
   "keywords": [],
   "main": "src/index.ts",
@@ -15,14 +15,14 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/core": "^7.9.0",
-    "@rebox/ios": "^6.0.4",
-    "@x-ray/core": "^0.2.2",
-    "@x-ray/native-screenshots-app": "^4.0.1",
-    "@x-ray/ui": "^3.2.1",
+    "@rebox/ios": "^7.0.0",
+    "@x-ray/core": "^0.3.0",
+    "@x-ray/native-screenshots-app": "^5.0.0",
+    "@x-ray/ui": "^4.0.0",
     "pifs": "^2.0.0",
     "pixelmatch": "^5.1.0",
     "pngjs": "^5.0.0",
-    "react": "16.13.1",
+    "react": "17.0.1",
     "rsolve": "^0.2.1",
     "tarmap": "^0.2.0",
     "typeon": "^2.0.0",
@@ -31,7 +31,7 @@
   "devDependencies": {
     "@types/pixelmatch": "^5.1.0",
     "@types/pngjs": "^3.4.1",
-    "@types/react": "^16.9.6"
+    "@types/react": "^17.0.2"
   },
   "fixdeps": {
     "ignoredPackages": [

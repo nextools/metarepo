@@ -4,7 +4,6 @@ import {
   PrimitiveBorder as RevertPrimitiveBorder,
 } from '@revert/border'
 import type { TPrimitiveBorder } from '@revert/border'
-import React from 'react'
 import { component, mapDefaultProps, startWithType } from 'refun'
 
 export const PrimitiveBorder = component(

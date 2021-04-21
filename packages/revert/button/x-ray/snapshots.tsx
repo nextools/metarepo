@@ -1,5 +1,4 @@
 import { mapPropsIterable } from 'autoprops'
-import React from 'react'
 import { serializeComponent } from 'syntx'
 import { Component, config } from './meta'
 

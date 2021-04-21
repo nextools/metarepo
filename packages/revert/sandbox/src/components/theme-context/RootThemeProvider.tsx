@@ -1,5 +1,4 @@
 import { MarkdownThemeContext } from '@revert/markdown'
-import React from 'react'
 import { component, startWithType, mapContext } from 'refun'
 import { mapContextOverride } from '../../map/map-context-override'
 import { CheckmarkThemeContext } from './CheckmarkThemeContext'

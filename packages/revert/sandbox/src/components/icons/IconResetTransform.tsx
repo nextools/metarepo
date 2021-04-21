@@ -1,4 +1,3 @@
-import React from 'react'
 import { component, startWithType, mapContext } from 'refun'
 import { SYMBOL_ICON } from '../../symbols'
 import { Icon } from '../icon'

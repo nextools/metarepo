@@ -1,3 +1,9 @@
+## v7.0.0
+
+* 💥 upgrade to React Native v0.64.0
+
+* ♻️ update dependencies `@rebox/native-utils`
+
 ## v6.0.4
 
 * 🐞 remove unnecessary logs

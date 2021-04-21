@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import type { FC } from 'react'
 import { GRAPH_OFFSET } from '../constants'
 import { Tooltip } from './Tooltip'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Text, View } from 'react-native'
 import type { LayoutChangeEvent, ViewStyle } from 'react-native'
 import { component, mapHandlers, startWithType, mapWithPropsMemo } from 'refun'

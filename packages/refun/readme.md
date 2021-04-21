@@ -12,7 +12,6 @@ A collection of React Hook-enabled functions that compose harmoniously with each
 ## Usage example (with TypeScript)
 
 ```tsx
-import React from 'react'
 import {
   component,
   mapDefaultProps,
@@ -147,7 +146,6 @@ The purpose of this component is to prevent a re-render from happening when the 
 > Note that this function is meant to be used to avoid pointless re renders of complex trees, which is a concern that should be treated at the high level, in an app for example, rather than in small presentational components. Memoization comes with a cost, and React is already providing optimizations via reconciliation, so the type of optimizations that `pureComponent` does, similar to the old `shouldComponentUpdate`, is to be reserved for cases where there is a clear need for optimization.
 
 ```tsx
-import React from 'react'
 import { mapReducer, pureComponent, startWithType } from 'refun'
 import AComplexHeader from './AComplexHeader'
 import AnExpensiveToComputeSidebar from './AnExpensiveToComputeSidebar'
@@ -193,7 +191,7 @@ This function receives a React Context object as created by the `React.createCon
 For example:
 
 ```tsx
-import React, { createContext } from 'react'
+import { createContext } from 'react'
 import { component, mapContext, startWithType } from 'refun'
 
 type TThemeContext = {
@@ -247,7 +245,6 @@ ran       ---------y--------z------
 Notice how the timeout initially set for `x` is simply cancelled and overridden with a new timeout of 3 seconds for `y`.
 
 ```tsx
-import React from 'react'
 import { component, mapHandlers, mapDebouncedHandlerTimeout, startWithType } from 'refun'
 
 type TButton = {
@@ -303,7 +300,6 @@ const mapDefaultProps: <P>(defaultProps: P) => // ...
 This function sets some default prop values based on the object that is passed into it. Alternative to using the static `defaultProps` component property. The advantage of using it is that the props passed in will be type checked.
 
 ```tsx
-import React from 'react'
 import { component, mapDefaultProps, startWithType } from 'refun'
 
 type TMessage = {
@@ -329,7 +325,6 @@ Signature: Not callable.
 This function sets the `isFocused` prop to `true` when the `onFocus` handler is called and to `false` when `onBlur` is called.
 
 ```tsx
-import React from 'react'
 import { component, mapFocused, startWithType, TMapFocused } from 'refun'
 
 type TButton = {
@@ -386,7 +381,6 @@ const Input = ({ onChange, value }) => {
 …it allows you to do:
 
 ```tsx
-import React from 'react'
 import { component, mapHandlers, startWithType } from 'refun'
 
 type TInput = {
@@ -427,7 +421,6 @@ Note that `onPointerEnter` and `onPointerLeave` are synthetic event names meant 
 …and each platform will have their own corresponding mapping.
 
 ```tsx
-import React from 'react'
 import { component, mapHovered, startWithType, TMapHovered } from 'refun'
 
 type TButton = {
@@ -473,7 +466,6 @@ Note that `onPressIn` and `onPointerLeave` are synthetic event names meant to ab
 …and each platform will have their own corresponding mapping.
 
 ```tsx
-import React from 'react'
 import { component, mapKeyboardFocused, startWithType, TMapKeyboardFocused } from 'refun'
 
 type TButton = {
@@ -519,7 +511,6 @@ Note that `onPressIn` and `onPressOut` are synthetic event names meant to abstra
 …and each platform will have their own corresponding mapping.
 
 ```tsx
-import React from 'react'
 import { component, mapPressed, startWithType, TMapPressed } from 'refun'
 
 type TButton = {
@@ -560,7 +551,6 @@ const mapProps: <P, R>(getFn: (props: P) => R) => // ...
 This function takes a handler that receives all props and returns new props.
 
 ```tsx
-import React from 'react'
 import { component, mapProps, startWithType } from 'refun'
 
 type TButton = {
@@ -594,7 +584,6 @@ Refs are useful to store derived values that do not support shallow comparison, 
 For example you can use it to capture the `ref` to a DOM element and inspect it:
 
 ```tsx
-import React from 'react'
 import { component, mapRef, onMount, startWithType } from 'refun'
 
 type TButton = {
@@ -640,7 +629,6 @@ Why you ask? Animations. Animations can be done in React by continuously updatin
 > `mapSafeRequestAnimationFrame` does the cleanup for you.
 
 ```tsx
-import React from 'react'
 import {
   component,
   mapState,
@@ -728,7 +716,6 @@ This function allows you to configure time outs that should only be executed whi
 > `mapSafeTimeout` does the cleanup for you.
 
 ```tsx
-import React from 'react'
 import {
   component,
   mapHandlers,
@@ -842,7 +829,6 @@ This function allows you to set up a stateful prop and a function for updating t
 Note in the example how the `OverridableInternalCounter` sets the `["counter"]` as the last argument of `mapState`. This will cause `mapState` to watch for incoming changes to the `counter` prop and use them to update the `internalCounter` prop, accordingly to the function in the third argument `({ counter }) => counter`. In the case of `InternalCounter`, the array in the last argument is empty (`[]`) and then `mapState` does not watch for changes, which causes the external prop `counter` value to be ignored once updated, effectively working as an initial value only for `internalCounter`.
 
 ```tsx
-import React from 'react'
 import { component, mapState, startWithType } from 'refun'
 
 type TCounter = {
@@ -907,7 +893,6 @@ This function allows you to set up a stateful prop and a function for updating t
 Note in the example how the `OverridableInternalCounter` sets the `["counter"]` as the last argument of `mapState`. This will cause `mapState` to watch for incoming changes to the `counter` prop and use them to update the `internalCounter` prop, accordingly to the function in the third argument `({ counter }) => counter`. In the case of `InternalCounter`, the array in the last argument is empty (`[]`) and then `mapState` does not watch for changes, which causes the external prop `counter` value to be ignored once updated, effectively working as an initial value only for `internalCounter`.
 
 ```tsx
-import React from 'react'
 import { component, mapStateRef, onMount, startWithType } from 'refun'
 
 type TGetValue = {
@@ -974,7 +959,6 @@ ran       ------y-----------x------
 Notice how the timeout initially configured for `x` is respected and the execution happens 3 seconds after the event for `x` is received, but `y` is run instead.
 
 ```tsx
-import React from 'react'
 import {
   component,
   mapThrottledHandlerTimeout,
@@ -1018,7 +1002,6 @@ Why you ask? Pretty much the same reasons that are true for [`mapThrottledHandle
 > You might wonder why there is not `mapDebouncedHandlerAnimationFrame` if there is a `mapDebouncedHandlerTimeout`. The reason is that the behavior of that function would be identical to this one, so it's skipped.
 
 ```tsx
-import React from 'react'
 import {
   component,
   mapThrottledHandlerAnimationFrame,
@@ -1076,7 +1059,6 @@ This function allows you to expand the props passed in to a component with more 
 If the returned props have the same name as incoming props, they will override the incoming props.
 
 ```tsx
-import React from 'react'
 import {
   component,
   mapFocused,
@@ -1128,7 +1110,6 @@ This function does the same as [`mapWithProps`](#mapWithProps) and it memoizes t
 An example use case in which this can prove useful is if you were to be calculating the Fibonacci number of an input, which is known to be expensive for large numbers:
 
 ```tsx
-import React from 'react'
 import { component, mapWithPropsMemo, startWithType } from 'refun'
 
 const inefficientFibonacci = position =>
@@ -1172,7 +1153,6 @@ This function calls the passed in callback when the component is updated, sendin
 For example:
 
 ```tsx
-import React from 'react'
 import { component, onChange, startWithType } from 'refun'
 
 type TButton = {
@@ -1206,7 +1186,6 @@ This function calls the passed in callback when the component is updated, sendin
 For example:
 
 ```tsx
-import React from 'react'
 import { component, onLayout, startWithType } from 'refun'
 
 type TButton = {
@@ -1241,7 +1220,6 @@ This function calls the passed in callback when the component is mounted and upd
 For example:
 
 ```tsx
-import React from 'react'
 import { component, onUpdate, startWithType } from 'refun'
 
 type TButton = {
@@ -1285,7 +1263,6 @@ This is `onUpdate` variant that properly handles asynchronous behavior.
 For example:
 
 ```tsx
-import React from 'react'
 import { component, onUpdateAsync, startWithType } from 'refun'
 
 type TComponent = {
@@ -1330,7 +1307,6 @@ This function is simply a way of setting up the initial type in the [`component`
 It's purpose is entirely for types, and in runtime it's a no-op.
 
 ```tsx
-import React from 'react'
 import { component, startWithType } from 'refun'
 
 type TButton = {
@@ -1349,7 +1325,6 @@ export default component(
 Once this is fixed in TypeScript this function will be redundant and it will be possible to pass the generic directly into `component`:
 
 ```tsx
-import React from 'react'
 import { component } from 'refun'
 
 type TButton = {
@@ -1394,7 +1369,6 @@ The way this function works is that it receives a Redux Store object, and return
 Check the example below for a full use case.
 
 ```tsx
-import React from 'react'
 import { createStore } from "redux"
 import { component, pureComponent, StoreContextFactory, mapHandlers, startWithType } from 'refun'
 
@@ -1509,7 +1483,6 @@ If you are going to use information coming from the Synthetic Event, consider ex
 If you are not going to use _any_ information coming from the Event—such as in the example for [`mapDebouncedHandlerTimeout`](#mapDebouncedHandlerTimeout)—then you will not be affected by this issue.
 
 ```tsx
-import React from 'react'
 import {
   component,
   mapThrottledHandlerTimeout,

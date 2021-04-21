@@ -1,6 +1,6 @@
 {
   "name": "@rebox/ios",
-  "version": "6.0.4",
+  "version": "7.0.0",
   "description": "Set of helpers to deal with React Native applications on iOS",
   "keywords": [
     "react",
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@rebox/native-utils": "^4.0.5",
+    "@rebox/native-utils": "^5.0.0",
     "copie": "^2.0.0",
     "dirdir": "^0.1.0",
     "dleet": "^2.0.1",

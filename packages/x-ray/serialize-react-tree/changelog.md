@@ -1,3 +1,7 @@
+## v3.0.0
+
+* 💥 switch to React v17
+
 ## v2.0.0
 
 * 💥 drop Node.js v10

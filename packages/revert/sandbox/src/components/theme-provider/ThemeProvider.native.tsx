@@ -1,4 +1,3 @@
-import React from 'react'
 import { component, startWithType, mapDefaultProps } from 'refun'
 import { ThemeContext } from '../theme-context'
 import { defaultIcons } from './default-icons'

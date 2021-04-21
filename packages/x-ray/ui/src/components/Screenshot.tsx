@@ -1,4 +1,3 @@
-import React from 'react'
 import { startWithType, component, mapHandlers, mapState, onUpdateAsync } from 'refun'
 import { actionError } from '../actions'
 import { apiLoadScreenshot } from '../api'

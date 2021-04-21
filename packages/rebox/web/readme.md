@@ -49,7 +49,7 @@ const runWebApp: (options: TRunWebAppOptions) => Promise<() => Promise<void>>
 
 ```ts
 // App.tsx
-import React, { FC } from 'react'
+import { FC } from 'react'
 
 export type TApp = {
   color: string

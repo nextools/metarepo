@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import type { ReactNode } from 'react'
 import { component, startWithType, mapDefaultProps, mapContext, mapStateRef, mapHandlers } from 'refun'
 import { isFunction } from 'tsfn'

@@ -1,5 +1,5 @@
 import type { TListItems } from '@x-ray/core'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { component, startWithType, mapHandlers, onUpdate, mapState } from 'refun'
 import { actionLoadList, actionSave, actionTab } from '../../actions'
 import { COL_SPACE, COLOR_LIGHT_GREY, COLOR_DM_BLACK } from '../../config'

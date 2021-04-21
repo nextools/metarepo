@@ -1,6 +1,5 @@
 import type { TColor } from '@revert/color'
 import { PrimitiveText } from '@revert/text'
-import React from 'react'
 import type { ReactText, FC } from 'react'
 
 export type TText = {

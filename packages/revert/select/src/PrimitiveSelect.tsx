@@ -1,4 +1,3 @@
-import React from 'react'
 import type { CSSProperties } from 'react'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import type { TSelect } from './types'

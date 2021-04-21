@@ -1,5 +1,4 @@
 import { Root } from '@revert/root'
-import React from 'react'
 import { component, startWithType, onChange } from 'refun'
 import { PluginProvider } from './components/plugin-provider'
 import { Sandbox } from './components/sandbox'

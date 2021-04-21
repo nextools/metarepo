@@ -1,5 +1,4 @@
 import { Layout, Layout_Item, LayoutContext, LAYOUT_SIZE_FIT } from '@revert/layout'
-import React from 'react'
 import { pureComponent, startWithType, mapContext, mapWithProps, mapHandlers, mapState } from 'refun'
 import type { TLine } from 'syntx'
 import { mapMetaStoreState } from '../../store-meta'

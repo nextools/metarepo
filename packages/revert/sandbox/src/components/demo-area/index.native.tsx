@@ -1,7 +1,6 @@
 import { PrimitiveBlock, Block } from '@revert/block'
 import { LayoutContext } from '@revert/layout'
 import { PrimitiveTransform } from '@revert/transform'
-import React from 'react'
 import {
   mapWithProps,
   startWithType,

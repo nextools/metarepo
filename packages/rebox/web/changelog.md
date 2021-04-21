@@ -1,3 +1,9 @@
+## v5.0.0
+
+* 💥 switch to new React JSX transform
+
+* 💥 switch to React v17
+
 ## v4.0.0
 
 * 💥 use built-in `core-js` version in `buildWebAppRelease`

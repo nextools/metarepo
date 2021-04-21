@@ -1,5 +1,4 @@
 import { TransformContext } from '@revert/transform'
-import React from 'react'
 import { create, act } from 'react-test-renderer'
 import type { ReactTestRenderer } from 'react-test-renderer'
 import { createSpy, getSpyCalls } from 'spyfn'

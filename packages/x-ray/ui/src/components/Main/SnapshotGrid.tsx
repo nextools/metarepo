@@ -1,7 +1,6 @@
 import { PrimitiveBorder as Border } from '@revert/border'
 import type { TListItems } from '@x-ray/core'
 import bsc from 'bsc'
-import React from 'react'
 import type { ReactNode } from 'react'
 import { pureComponent, startWithType, mapHandlers, mapWithPropsMemo } from 'refun'
 import { isUndefined } from 'tsfn'

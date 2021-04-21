@@ -1,6 +1,5 @@
 import { TextThemeContext } from '@revert/text'
 import type { TComponentEm } from 'mdown'
-import React from 'react'
 import { component, startWithType } from 'refun'
 import { mapContextOverride } from './map-context-override'
 import { SYMBOL_MARKDOWN_EM } from './symbols'

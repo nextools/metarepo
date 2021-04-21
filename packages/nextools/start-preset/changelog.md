@@ -1,3 +1,11 @@
+## v0.9.0
+
+* ♻️ update dependencies `@rebox/android`, `@rebox/ios`, `@nextools/babel-config`, `@rebox/web`, `@x-ray/plugin-chromium-screenshots`, `@x-ray/plugin-react-snapshots`, `@x-ray/plugin-react-native-snapshots`, `@x-ray/core`, `@x-ray/plugin-android-screenshots`, `@x-ray/plugin-ios-screenshots`
+
+## v0.8.1
+
+* 🐞 more lazy imports
+
 ## v0.8.0
 
 * 🌱 build `module` type packages using new `buildNodeESM` task

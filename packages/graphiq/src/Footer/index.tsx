@@ -1,6 +1,5 @@
 import { Layout, Layout_Item, LAYOUT_SIZE_FIT } from '@revert/layout'
 import { Scroll } from '@revert/scroll'
-import React from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import type { TGraphEntry } from '../types'
 import { GraphControlButton } from './GraphControlButton'

@@ -1,7 +1,6 @@
 import { AnimationColor } from '@revert/animation'
 import { PrimitiveBorder } from '@revert/border'
 import type { TPrimitiveBorder } from '@revert/border'
-import React from 'react'
 import type { FC } from 'react'
 
 export type TBorder = TPrimitiveBorder & {

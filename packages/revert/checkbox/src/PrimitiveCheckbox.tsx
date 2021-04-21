@@ -1,5 +1,4 @@
 import { PrimitiveBlock } from '@revert/block'
-import React from 'react'
 import type { CSSProperties } from 'react'
 import { component, startWithType, mapDefaultProps, mapWithPropsMemo, mapHandlers } from 'refun'
 import type { TPrimitiveCheckbox } from './types'

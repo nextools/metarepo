@@ -1,3 +1,15 @@
+## v0.3.0
+
+* 💥 use built-in `core-js` version
+
+* 💥 switch to `babel-plugin-polyfill-corejs3` with browsers list
+
+* 💥 switch to new React JSX transform
+
+* 💥 switch to React v17
+
+* 🐞 fix processing all assets in edge cases
+
 ## v0.2.2
 
 * 🐞 upgrade `compression-webpack-plugin` to v6

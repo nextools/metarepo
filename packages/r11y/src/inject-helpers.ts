@@ -7,7 +7,7 @@ export const injectHelpers = async (page: Page): Promise<void> => {
     const getReactName = (el: Node) => {
       let reactName = null as string | null
 
-      const key = Object.keys(el).find((key) => key.startsWith('__reactInternalInstance$'))
+      const key = Object.keys(el).find((key) => key.startsWith('__reactFiber$'))
 
       if (typeof key === 'string') {
         const { elementType } = (el as any)[key].return

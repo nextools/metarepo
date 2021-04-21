@@ -1,4 +1,3 @@
-import React from 'react'
 import type { FC } from 'react'
 import { PluginContext } from './PluginContext'
 import type { TComponentPlugin, TPopoverPlugin } from './types'

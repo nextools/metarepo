@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react'
 import { ReFps } from 'refps'
 
 export const App = () => (

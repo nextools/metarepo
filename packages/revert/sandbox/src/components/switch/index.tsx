@@ -2,7 +2,6 @@ import { AnimationValue } from '@revert/animation'
 import { PrimitiveBlock, Block } from '@revert/block'
 import { Checkbox } from '@revert/checkbox'
 import { PrimitiveTransform } from '@revert/transform'
-import React from 'react'
 import {
   mapWithProps,
   startWithType,

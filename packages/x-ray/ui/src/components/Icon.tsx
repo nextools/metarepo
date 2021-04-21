@@ -2,7 +2,6 @@ import { AnimationColor } from '@revert/animation'
 import type { TColor } from '@revert/color'
 import { colorToString } from '@revert/color'
 import { Surface, Shape } from '@revert/svg'
-import React from 'react'
 import { component, startWithType, mapDefaultProps } from 'refun'
 import { COLOR_BLACK } from '../config'
 

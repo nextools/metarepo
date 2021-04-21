@@ -1,7 +1,6 @@
 import type { ReadStream, Dirent, Stats } from 'fs'
 import type { Transform } from 'stream'
 import plugin from '@start/plugin'
-import binaryExtensions from 'binary-extensions'
 
 const TEMPLATES_PATH = './tasks/pkg/'
 
@@ -28,6 +27,7 @@ export type TReplacers = {
 export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
   plugin('template', ({ logPath, logMessage }) => async () => {
     const { isString, isDefined } = await import('tsfn')
+    const { default: binaryExtensions } = await import('binary-extensions')
 
     if (!isString(packagePath)) {
       throw '<package path> argument is required'

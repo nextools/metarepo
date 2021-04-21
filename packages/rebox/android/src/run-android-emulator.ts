@@ -34,7 +34,7 @@ export const runAndroidEmulator = async (options: TRunAndroidEmulatorOptions): P
       'avd.ini.encoding=UTF-8',
       `path=${reboxAvdPath}`,
       'path.rel=avd/rebox.avd',
-      'target=android-28',
+      'target=android-29',
     ].join('\n')
 
     await writeFile(reboxIniPath, reboxIniData)
@@ -61,7 +61,7 @@ export const runAndroidEmulator = async (options: TRunAndroidEmulatorOptions): P
       'hw.sensors.proximity=yes',
       'hw.trackBall=no',
       'hw.keyboard=yes',
-      'image.sysdir.1=system-images/android-28/google_apis/x86/',
+      'image.sysdir.1=system-images/android-29/google_apis/x86/',
       'tag.display=Google APIs',
       'tag.id=google_apis',
     ].join('\n')

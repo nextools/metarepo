@@ -1,6 +1,6 @@
 {
   "name": "piall",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "`Promise.all` and `Promise.allSettled` with concurrency option and async iterable result",
   "keywords": [
     "promise",
@@ -22,7 +22,8 @@
   "sideEffects": false,
   "devDependencies": {
     "@types/tape": "^4.2.34",
-    "tape": "^5.0.0",
-    "spyfn": "^2.0.0"
+    "iterama": "^0.6.1",
+    "spyfn": "^2.0.0",
+    "tape": "^5.0.0"
   }
 }

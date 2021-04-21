@@ -1,6 +1,5 @@
 import { TextThemeContext } from '@revert/text'
 import type { TComponentStrong } from 'mdown'
-import React from 'react'
 import { component, mapContext, startWithType } from 'refun'
 import { MarkdownThemeContext } from './MarkdownThemeContext'
 import { mapContextOverride } from './map-context-override'

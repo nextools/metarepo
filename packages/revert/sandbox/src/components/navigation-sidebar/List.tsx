@@ -1,5 +1,4 @@
 import { Layout, Layout_Item, LayoutContext } from '@revert/layout'
-import React from 'react'
 import { startWithType, component, mapContext } from 'refun'
 import { mapMetaStoreState, setComponentKey } from '../../store-meta'
 import { ThemeContext } from '../theme-context'

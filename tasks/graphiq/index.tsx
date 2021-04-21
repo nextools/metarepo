@@ -2,7 +2,6 @@ import type { TColor } from '@revert/color'
 import { rgba } from '@revert/color'
 import { App as GraphsApp } from 'graphiq'
 import type { TApp } from 'graphiq'
-import React from 'react'
 import { getObjectEntries, isDefined } from 'tsfn'
 import { data } from './data'
 

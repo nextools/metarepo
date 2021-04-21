@@ -1,5 +1,4 @@
 import { LayoutContext } from '@revert/layout'
-import React from 'react'
 import type { CSSProperties } from 'react'
 import { component, startWithType, mapContext, mapDefaultProps, mapHandlers, mapWithProps, onLayout, mapStateRef, mapRef } from 'refun'
 import { isNumber, isFunction } from 'tsfn'

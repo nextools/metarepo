@@ -1,5 +1,5 @@
 import { colorToString } from '@revert/color'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import type { FC } from 'react'
 import { Animate } from '../Animate'
 import type { TGraphColors } from '../types'

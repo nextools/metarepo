@@ -1,5 +1,4 @@
 import { colorToString } from '@revert/color'
-import React from 'react'
 import { Text as NativeText } from 'react-native'
 import type { TextProps, TextStyle } from 'react-native'
 import { component, mapWithProps, startWithType } from 'refun'

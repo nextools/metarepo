@@ -1,6 +1,5 @@
 import { PrimitiveBlock } from '@revert/block'
 import { Surface, Group, Shape } from '@revert/svg'
-import React from 'react'
 import { startWithType, mapWithProps, pureComponent, mapWithPropsMemo } from 'refun'
 import * as Colors from './colors'
 import type { TCanvasGrid } from './types'

@@ -1,5 +1,5 @@
 /* eslint-disable no-invalid-this */
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { View } from 'react-native'
 import ViewShot from 'react-native-view-shot'
 import { ImageContext } from './image-context'

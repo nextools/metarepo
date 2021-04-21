@@ -1,4 +1,3 @@
-import React from 'react'
 import { component, startWithType, mapState, onUpdateAsync } from 'refun'
 import { isUndefined } from 'tsfn'
 import { ThemeContext } from '../theme-context'

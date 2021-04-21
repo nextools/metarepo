@@ -1,5 +1,5 @@
 import { RootContext } from '@revert/root'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { createPortal } from 'react-dom'
 import { component, mapContext, mapHandlers, mapStateRef, mapWithPropsMemo, startWithType } from 'refun'
 import { isString } from 'tsfn'

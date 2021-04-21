@@ -1,6 +1,6 @@
 import path from 'path'
 import { AssetResolver, ASSET_LOADER_PATH } from '@haul-bundler/core'
-import { makeConfig, withPolyfills } from '@haul-bundler/preset-0.60'
+import { makeConfig, withPolyfills } from './haul-preset-0.64'
 import { WatchPlugin } from './watch-plugin'
 
 const appPath = path.resolve(process.env.REBOX_ENTRY_POINT)
@@ -23,6 +23,7 @@ export default makeConfig({
             test: /\.(js|ts)x?$/,
             include: [
               path.resolve('node_modules/react-native/'),
+              path.resolve('node_modules/@react-native'),
               path.resolve('node_modules/metro/'),
               path.resolve('node_modules/react-devtools-core/'),
               path.resolve('node_modules/react-native-svg/'),
@@ -52,6 +53,10 @@ export default makeConfig({
                     require.resolve('metro-react-native-babel-preset'),
                   ],
                   plugins: [
+                    [
+                      require.resolve('@babel/plugin-transform-react-jsx'),
+                      { runtime: 'automatic' },
+                    ],
                     require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
                     require.resolve('@babel/plugin-proposal-optional-chaining'),
                     require.resolve('@babel/plugin-syntax-bigint'),
@@ -87,7 +92,7 @@ export default makeConfig({
 
         if (process.env.NODE_ENV === 'production') {
           config.plugins = config.plugins.filter((plugin) => {
-            if (!plugin.constructor) {
+            if (typeof plugin.constructor !== 'function') {
               return true
             }
 

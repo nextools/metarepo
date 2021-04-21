@@ -1,3 +1,9 @@
+## v5.0.0
+
+* 💥 upgrade to React Native v0.64.0
+
+* 💥 switch to React v17
+
 ## v4.0.1
 
 * 🐞 explicitly publish missing changes

@@ -1,5 +1,4 @@
 import { LayoutInteractiveContext } from '@revert/layout'
-import React from 'react'
 import { component, mapContext, mapWithProps, startWithType } from 'refun'
 import { Background } from '../background'
 import { ThemeContext } from '../theme-context'

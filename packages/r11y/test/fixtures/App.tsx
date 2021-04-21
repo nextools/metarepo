@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Field = () => (
   <input style={{ opacity: 0.1 }} value="input"/>
 )
