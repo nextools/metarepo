@@ -4,23 +4,24 @@ import type { TPlugin } from './types'
 
 export type TReporterName = keyof ReportOptions
 
+export type TTest = () => void | Promise<void>
+
 export type TTestFile = {
-  tests: Iterable<() => void | Promise<void>>,
+  tests: Iterable<TTest>,
   target: string,
 }
 
-export const test = (): TPlugin<string, CoverageMapData> => async function* (it) {
+export const test = (concurrency: number = 8): TPlugin<string, CoverageMapData> => async function* (it) {
   const { resolve, join, dirname } = await import('path')
   const { fileURLToPath } = await import('url')
   const { pipe } = await import('funcom')
-  const { drainAsync, mapAsync, ungroupAsync } = await import('iterama')
+  const { drainAsync, map, forEachAsync, mapAsync, ungroupAsync } = await import('iterama')
   const { default: picomatch } = await import('picomatch')
   const { piAll } = await import('piall')
   const { startCollectingCoverage } = await import('./coverage')
   const { default: v8toIstanbul } = await import('v8-to-istanbul')
 
   const transpiledSourcesKey = '@@start-transpiled-sources'
-  const piAlled = piAll(8)
   const globl = global as any
 
   yield* pipe(
@@ -34,7 +35,26 @@ export const test = (): TPlugin<string, CoverageMapData> => async function* (it)
       // `a/b/c/test/foo.ts` + `../src/f*.ts` -> /a/b/c/src/f*.ts
       const isMatch = picomatch(join(dirname(testFileFullPath), target))
 
-      await drainAsync(piAlled(tests))
+      let testCount = 0
+
+      try {
+        await pipe(
+          map((test: TTest) => async () => {
+            await test()
+          }),
+          piAll(concurrency),
+          forEachAsync(() => {
+            testCount++
+          }),
+          drainAsync
+        )(tests)
+
+        console.log(`✅ ${testFilePath}: ${testCount}`)
+      } catch (err) {
+        console.log(`❌ ${testFilePath}`)
+
+        throw err
+      }
 
       const v8Coverages = await stopCollectingCoverage()
       const istanbulCoverages = new Map<string, CoverageMapData>()

@@ -1,3 +1,7 @@
+import { deepStrictEqual } from 'assert'
+import { createSpy, getSpyCalls } from 'spyfn'
+import { piAll } from '../src/pi-all'
+
 const waitFor = async (ticks: number[], index: number): Promise<void> => {
   for (let i = 0; i < ticks[index]; i++) {
     await Promise.resolve()
@@ -6,10 +10,6 @@ const waitFor = async (ticks: number[], index: number): Promise<void> => {
 
 export const tests = [
   async () => {
-    const { deepStrictEqual } = await import('assert')
-    const { piAll } = await import('../src/pi-all')
-    const { createSpy, getSpyCalls } = await import('spyfn')
-
     const resultSpy = createSpy(() => {})
     const promiseSpy = createSpy(async ({ args, index }) => {
       await waitFor([3, 1, 2], index)

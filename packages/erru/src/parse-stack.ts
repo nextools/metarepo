@@ -3,6 +3,8 @@ import type { TStackFrame } from './types'
 const matchers = [
   // Object.[Symbol.asyncIterator] (file:///Users/foo/bar.ts:7:11) -> /Users/foo/bar.ts:16:11
   /^(?<fnName>.+?)\s\(.+?\)\s+->\s(?<location>.+?):(?<line>\d+):(?<column>\d+)$/,
+  // async Object.eval [as value] (eval at <anonymous> (file:///Users/foo/bar.ts:56:14), <anonymous>:5:112)
+  /^(?<fnName>.+?)\s\(.+\((?<location>.+?):(?<line>\d+):(?<column>\d+)\),.+$/,
   // Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:72:12)
   /^(?<fnName>.+?)\s\((?<location>.+?):(?<line>\d+):(?<column>\d+)\)$/,
   // file:///Users/foo/bar.ts:17:10 -> /Users/foo/bar.ts:12:10
