@@ -1,4 +1,4 @@
-import type { TTask } from './types'
+import type { TTask } from '@start/types'
 
 export const ci: TTask<any, any> = async function* () {
   const { concatAsync } = await import('iterama')

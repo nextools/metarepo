@@ -1,4 +1,4 @@
-import type { TMaybeInputPlugin } from './types'
+import type { TMaybeInputPlugin } from '@start/types'
 
 export const find = (globs: string | string[]): TMaybeInputPlugin<any, string> => async function* (it) {
   const { matchGlobs } = await import('iva')

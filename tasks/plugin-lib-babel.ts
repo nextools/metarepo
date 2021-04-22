@@ -1,12 +1,11 @@
 import type { TransformOptions } from '@babel/core'
-import type { TFile, TPlugin } from './types'
+import type { TFile, TPlugin } from '@start/types'
 
 export const babel = (userOptions?: TransformOptions): TPlugin<TFile, TFile> => async function* (it) {
   const { transformAsync } = await import('@babel/core')
   const { isObject, isString, isNull } = await import('tsfn')
-  const { mapAsync } = await import('iterama')
 
-  yield* mapAsync(async (file: TFile) => {
+  for await (const file of it) {
     const options: TransformOptions = {
       ...userOptions,
       ast: false,
@@ -19,19 +18,17 @@ export const babel = (userOptions?: TransformOptions): TPlugin<TFile, TFile> => 
 
     if (!isNull(transformed) && isString(transformed.code) && transformed.code.length > 0) {
       if ((options.sourceMaps === true || isString(options.sourceMaps)) && isObject(transformed.map)) {
-        return {
+        yield {
           path: file.path,
           data: transformed.code,
           map: transformed.map,
         }
-      }
-
-      return {
-        path: file.path,
-        data: transformed.code,
+      } else {
+        yield {
+          path: file.path,
+          data: transformed.code,
+        }
       }
     }
-
-    return file
-  })(it)
+  }
 }

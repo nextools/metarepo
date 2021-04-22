@@ -1,6 +1,6 @@
+import type { TPlugin, TTask } from '@start/types'
 import type { TPackageJson } from 'pkgu'
 import type { TStringObject } from 'tsfn'
-import type { TPlugin, TTask } from './types'
 
 type TPackageJsonNextools = TPackageJson & {
   buildAssets: TStringObject,

@@ -1,12 +1,11 @@
-import type { TPlugin } from './types'
+import type { TPlugin } from '@start/types'
 
 export const remove: TPlugin<string, string> = async function* (it) {
-  const { mapAsync } = await import('iterama')
   const { default: dleet } = await import('dleet')
 
-  yield* mapAsync(async (path: string) => {
+  for await (const path of it) {
     await dleet(path)
 
-    return path
-  })(it)
+    yield path
+  }
 }

@@ -1,5 +1,5 @@
+import type { TTask } from '@start/types'
 import type { CoverageMapData } from 'istanbul-lib-coverage'
-import type { TTask } from './types'
 
 export const test: TTask<string, CoverageMapData> = async function* (pkg = '*') {
   const { pipe } = await import('funcom')

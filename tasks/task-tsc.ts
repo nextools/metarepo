@@ -1,4 +1,4 @@
-import type { TTask } from './types'
+import type { TTask } from '@start/types'
 
 export const tsc: TTask<any, any> = async function* () {
   const { typescriptCheck } = await import('./plugin-lib-typescript-check')

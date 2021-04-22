@@ -32,6 +32,6 @@
     "tape": "^5.0.0"
   },
   "peerDependencies": {
-    "react": "^16.13.1"
+    "react": "^17.0.1"
   }
 }

@@ -1,4 +1,4 @@
-import type { TMaybeInputPlugin } from './types'
+import type { TMaybeInputPlugin } from '@start/types'
 
 export const watch = (globs: string | string[]): TMaybeInputPlugin<any, string> => async function* (it) {
   const { watch } = await import('wotch')

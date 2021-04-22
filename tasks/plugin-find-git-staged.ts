@@ -1,8 +1,8 @@
-import type { TMaybeInputPlugin } from './types'
+import type { TMaybeInputPlugin } from '@start/types'
 
 export const findGitStaged = (): TMaybeInputPlugin<any, string> => async function* (it) {
   const { isAsyncIterable } = await import('tsfn')
-  const { drainAsync, mapAsync } = await import('iterama')
+  const { drainAsync } = await import('iterama')
   const { spawnChildProcessStream } = await import('spown')
   const { lineStream } = await import('stroki')
 
@@ -13,7 +13,7 @@ export const findGitStaged = (): TMaybeInputPlugin<any, string> => async functio
   const childProcess = spawnChildProcessStream('git diff --cached --name-only --diff-filter=ACM')
   const lines = childProcess.stdout!.pipe(lineStream())
 
-  yield* mapAsync((line: Buffer) => {
-    return line.toString('utf8').trim()
-  })(lines)
+  for await (const line of lines) {
+    yield line.toString('utf8').trim()
+  }
 }

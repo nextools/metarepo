@@ -1,4 +1,4 @@
-import type { TFile, TPlugin, TTask } from './types'
+import type { TFile, TPlugin, TTask } from '@start/types'
 
 const buildIt = (outDir: string): TPlugin<string, TFile> => async function* (it) {
   const { pipe } = await import('funcom')

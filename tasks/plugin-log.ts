@@ -1,4 +1,4 @@
-import type { TPlugin } from './types'
+import type { TPlugin } from '@start/types'
 
 export const log = (name: string): TPlugin<any, any> => async function* (it) {
   const { forEachAsync } = await import('iterama')

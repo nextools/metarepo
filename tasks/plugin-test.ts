@@ -1,6 +1,6 @@
+import type { TPlugin } from '@start/types'
 import type { CoverageMapData } from 'istanbul-lib-coverage'
 import type { ReportOptions } from 'istanbul-reports'
-import type { TPlugin } from './types'
 
 export type TReporterName = keyof ReportOptions
 
@@ -15,7 +15,7 @@ export const test = (concurrency: number = 8): TPlugin<string, CoverageMapData> 
   const { resolve, join, dirname } = await import('path')
   const { fileURLToPath } = await import('url')
   const { pipe } = await import('funcom')
-  const { drainAsync, map, forEachAsync, mapAsync, ungroupAsync } = await import('iterama')
+  const { drainAsync, forEachAsync } = await import('iterama')
   const { default: picomatch } = await import('picomatch')
   const { piAll } = await import('piall')
   const { startCollectingCoverage } = await import('./coverage')
@@ -24,71 +24,63 @@ export const test = (concurrency: number = 8): TPlugin<string, CoverageMapData> 
   const transpiledSourcesKey = '@@start-transpiled-sources'
   const globl = global as any
 
-  yield* pipe(
-    mapAsync(async (testFilePath: string) => {
-      // trigger @start/ts-esm-loader to collect transpiled code with inlined source maps
-      globl[transpiledSourcesKey] = {}
+  for await (const testFilePath of it) {
+    // trigger @start/ts-esm-loader to collect transpiled code with inlined source maps
+    globl[transpiledSourcesKey] = {}
 
-      const testFileFullPath = resolve(testFilePath)
-      const stopCollectingCoverage = await startCollectingCoverage()
-      const { tests, target } = await import(`${testFileFullPath}?nocache=${Date.now()}`) as TTestFile
-      // `a/b/c/test/foo.ts` + `../src/f*.ts` -> /a/b/c/src/f*.ts
-      const isMatch = picomatch(join(dirname(testFileFullPath), target))
+    const testFileFullPath = resolve(testFilePath)
+    const stopCollectingCoverage = await startCollectingCoverage()
+    const { tests, target } = await import(`${testFileFullPath}?nocache=${Date.now()}`) as TTestFile
+    // `a/b/c/test/foo.ts` + `../src/f*.ts` -> /a/b/c/src/f*.ts
+    const isMatch = picomatch(join(dirname(testFileFullPath), target))
+    let testCount = 0
 
-      let testCount = 0
+    try {
+      await pipe(
+        piAll(concurrency),
+        forEachAsync(() => {
+          testCount++
+        }),
+        drainAsync
+      )(tests)
 
-      try {
-        await pipe(
-          map((test: TTest) => async () => {
-            await test()
-          }),
-          piAll(concurrency),
-          forEachAsync(() => {
-            testCount++
-          }),
-          drainAsync
-        )(tests)
+      console.log(`✅ ${testFilePath}: ${testCount}`)
+    } catch (err) {
+      console.log(`❌ ${testFilePath}`)
+      throw err
+    }
 
-        console.log(`✅ ${testFilePath}: ${testCount}`)
-      } catch (err) {
-        console.log(`❌ ${testFilePath}`)
+    const v8Coverages = await stopCollectingCoverage()
+    const istanbulCoverages = new Map<string, CoverageMapData>()
 
-        throw err
+    for (const v8Coverage of v8Coverages) {
+      // skip internal modules
+      if (!v8Coverage.url.startsWith('file://')) {
+        continue
       }
 
-      const v8Coverages = await stopCollectingCoverage()
-      const istanbulCoverages = new Map<string, CoverageMapData>()
+      const sourceFilePath = fileURLToPath(v8Coverage.url)
 
-      for (const v8Coverage of v8Coverages) {
-        // skip internal modules
-        if (!v8Coverage.url.startsWith('file://')) {
-          continue
-        }
-
-        const sourceFilePath = fileURLToPath(v8Coverage.url)
-
-        if (!isMatch(sourceFilePath)) {
-          continue
-        }
-
-        // get transpiled by @start/ts-esm-loader code
-        const transpiledSource = globl[transpiledSourcesKey][sourceFilePath] as string
-        const converter = v8toIstanbul(sourceFilePath, 0, { source: transpiledSource })
-
-        await converter.load()
-
-        converter.applyCoverage(v8Coverage.functions)
-        // TODO: should we merge same paths insead of replacing it?
-        istanbulCoverages.set(testFilePath, converter.toIstanbul())
+      if (!isMatch(sourceFilePath)) {
+        continue
       }
 
-      // never happened
-      delete globl[transpiledSourcesKey]
+      // get transpiled by @start/ts-esm-loader code
+      const transpiledSource = globl[transpiledSourcesKey][sourceFilePath] as string
+      const converter = v8toIstanbul(sourceFilePath, 0, { source: transpiledSource })
 
-      return istanbulCoverages.values()
-    }),
-    ungroupAsync
-  )(it)
+      await converter.load()
+
+      converter.applyCoverage(v8Coverage.functions)
+      // TODO: should we merge same paths insead of replacing it?
+      istanbulCoverages.set(testFilePath, converter.toIstanbul())
+    }
+
+    // never happened
+    delete globl[transpiledSourcesKey]
+
+    yield* istanbulCoverages.values()
+  }
 }
 
 export const reportCoverage = (coverageDir: string, reporterNames: TReporterName[] = ['html']): TPlugin<CoverageMapData, CoverageMapData> => async function* (it) {

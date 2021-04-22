@@ -1,5 +1,5 @@
+import type { TFile, TPlugin } from '@start/types'
 import type { ESLint } from 'eslint'
-import type { TFile, TPlugin } from './types'
 
 export const eslintCheck = (options?: ESLint.Options): TPlugin<string, ESLint.LintResult> => async function* (it) {
   const { ESLint } = await import('eslint')

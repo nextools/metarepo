@@ -1,4 +1,4 @@
-import type { TNoInputPlugin } from './types'
+import type { TNoInputPlugin } from '@start/types'
 
 export const typescriptCheck: TNoInputPlugin<string> = async function* () {
   const { dirname } = await import('path')

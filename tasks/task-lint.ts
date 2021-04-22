@@ -1,5 +1,5 @@
+import type { TTask } from '@start/types'
 import type { ESLint } from 'eslint'
-import type { TTask } from './types'
 
 export const lint: TTask<string, ESLint.LintResult> = async function* (pkg = '*') {
   const { pipe } = await import('funcom')

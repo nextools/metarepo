@@ -1,15 +1,14 @@
-import type { TFile, TPlugin } from './types'
+import type { TFile, TPlugin } from '@start/types'
 
 export const read: TPlugin<string, TFile> = async function* (it) {
   const { readFile } = await import('fs/promises')
-  const { mapAsync } = await import('iterama')
 
-  yield* mapAsync(async (filePath: string) => {
+  for await (const filePath of it) {
     const data = await readFile(filePath, 'utf8')
 
-    return {
+    yield {
       path: filePath,
       data,
     }
-  })(it)
+  }
 }
