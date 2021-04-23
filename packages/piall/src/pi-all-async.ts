@@ -1,13 +1,13 @@
 import type { TMaybePromise } from './types'
 
-export const piAllAsync = (concurrency: number = Infinity) => <T>(iterable: AsyncIterable<TMaybePromise<T>>): AsyncIterable<T> => {
+export const piAllAsync = (concurrency: number = Infinity) => <T>(iterable: AsyncIterable<() => TMaybePromise<T>>): AsyncIterable<T> => {
   if ((!Number.isSafeInteger(concurrency) && concurrency !== Infinity) || concurrency < 1) {
     throw new TypeError('`concurrency` argument must be a number >= 1')
   }
 
   return {
     async *[Symbol.asyncIterator]() {
-      const pool = new Set<TMaybePromise<T>>()
+      const pool = new Set<() => TMaybePromise<T>>()
       const iterator = iterable[Symbol.asyncIterator]()
       const results = [] as T[]
       let resolveYieldPromise = null as ((value: T) => void) | null
@@ -18,13 +18,13 @@ export const piAllAsync = (concurrency: number = Infinity) => <T>(iterable: Asyn
       let error: any
       let nextPromise: Promise<void>
 
-      const run = async (value: TMaybePromise<T>): Promise<void> => {
+      const run = async (resultFn: () => TMaybePromise<T>): Promise<void> => {
         try {
-          pool.add(value)
+          pool.add(resultFn)
 
-          const result = await value
+          const result = await resultFn()
 
-          pool.delete(value)
+          pool.delete(resultFn)
 
           // yield doesn't wait for promise to be resolved
           if (resolveYieldPromise === null) {
@@ -43,7 +43,7 @@ export const piAllAsync = (concurrency: number = Infinity) => <T>(iterable: Asyn
           // resolve yield promise
           _resolve(result)
         } catch (err) {
-          pool.delete(value)
+          pool.delete(resultFn)
 
           if (rejectYieldPromise === null) {
             hasError = true

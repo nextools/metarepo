@@ -30,7 +30,7 @@
     "dirdir": "^0.1.0",
     "fast-glob": "^3.0.0",
     "is-ci": "^2.0.0",
-    "metro-react-native-babel-preset": "0.59.0",
+    "metro-react-native-babel-preset": "0.64.0",
     "node-fetch": "^2.6.0",
     "portu": "^0.2.0",
     "raw-loader": "^4.0.1",

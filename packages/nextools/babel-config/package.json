@@ -3,39 +3,34 @@
   "version": "0.4.0",
   "description": "",
   "keywords": [],
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "src/index.ts",
+  "type": "module",
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=12.22.0"
   },
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-export-namespace-from": "^7.8.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.8.0",
-    "@babel/plugin-proposal-private-methods": "^7.8.3",
-    "@babel/plugin-syntax-bigint": "^7.8.0",
-    "@babel/plugin-transform-destructuring": "^7.8.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.8.0",
-    "@babel/plugin-transform-react-jsx": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.0",
-    "@babel/preset-env": "^7.8.0",
-    "@babel/preset-react": "^7.8.0",
-    "@babel/preset-typescript": "^7.8.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
+    "@babel/plugin-syntax-top-level-await": "^7.12.13",
+    "@babel/plugin-transform-destructuring": "^7.13.17",
+    "@babel/plugin-transform-react-jsx": "^7.13.12",
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7.13.13",
+    "@babel/preset-typescript": "^7.13.0",
     "@nextools/browsers-list": "^0.2.0",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
-    "metro-react-native-babel-preset": "0.59.0"
+    "metro-react-native-babel-preset": "0.64.0"
   },
   "devDependencies": {
-    "@types/babel__core": "^7.1.6"
+    "@types/babel__core": "^7.1.14",
+    "@types/babel__plugin-transform-runtime": "^7.9.1",
+    "@types/babel__preset-env": "^7.9.1"
   },
   "fixdeps": {
     "ignoredPackages": [
       "@babel/core",
-      "@babel/preset-env",
-      "@babel/preset-react",
-      "@babel/preset-typescript",
       "@types/babel__core"
     ]
   }

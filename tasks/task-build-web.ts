@@ -4,7 +4,7 @@ const buildIt = (outDir: string): TPlugin<string, TFile> => async function* (it)
   const { pipe } = await import('funcom')
   const { read } = await import('./plugin-read')
   const { babel } = await import('./plugin-lib-babel')
-  const { babelConfigBuildWeb } = await import('./babel-config')
+  const { babelConfigBuildWeb } = await import('@nextools/babel-config')
   const { rename } = await import('./plugin-rename')
   const { replaceExt } = await import('ekst')
   const { write } = await import('./plugin-write')
@@ -25,13 +25,18 @@ export const buildWeb: TTask<string, TFile> = async function* (pkg) {
   const { mapThreadPool } = await import('@start/thread-pool')
 
   const outDir = `packages/${pkg}/build/web/`
+  const extensions = '{js,jsx,ts,tsx,mjs,cjs}'
 
   yield* pipe(
     find(outDir),
     remove,
-    find(`packages/${pkg}/src/**/*.ts`),
-    // buildIt(outDir)
-    mapThreadPool(buildIt, [outDir], { groupBy: 8 }),
+    find([
+      `packages/${pkg}/src/**/*.${extensions}`,
+      `!packages/${pkg}/src/**/*.{native,ios,android}.${extensions}`,
+      `!packages/${pkg}/src/**/*.d.ts`,
+    ]),
+    // buildIt(outDir),
+    mapThreadPool(buildIt, [outDir], { groupBy: 4 }),
     log('web')
   )()
 }

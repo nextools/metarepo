@@ -1,11 +1,14 @@
 import type { TransformOptions } from '@babel/core'
 // @ts-expect-error
 import babelPluginSyntaxTopLevelAwait from '@babel/plugin-syntax-top-level-await'
+import babelPluginTransformRuntime from '@babel/plugin-transform-runtime'
 import babelPresetEnv from '@babel/preset-env'
 // @ts-expect-error
 import babelPresetReact from '@babel/preset-react'
 // @ts-expect-error
 import babelPresetTypeScript from '@babel/preset-typescript'
+// @ts-expect-error
+import babelPluginTransformInlineEnvironmentVariables from 'babel-plugin-transform-inline-environment-variables'
 import { babelPluginExt } from './babel-plugin-ext'
 
 const NODE_VERSION = '12.22.0'
@@ -27,7 +30,12 @@ export const babelConfigBuildNode: TransformOptions = {
   ],
   plugins: [
     babelPluginExt,
+    babelPluginTransformRuntime,
     babelPluginSyntaxTopLevelAwait,
+    [
+      babelPluginTransformInlineEnvironmentVariables,
+      { include: ['BABEL_ENV'] },
+    ],
   ],
   overrides: [
     {
@@ -40,44 +48,9 @@ export const babelConfigBuildNode: TransformOptions = {
       test: /\.(ts|js)x$/,
       presets: [
         babelPresetReact,
+        { runtime: 'automatic' },
       ],
     },
   ],
   shouldPrintComment: (val: string) => val.startsWith('#'),
-}
-
-export const babelConfigBuildWeb: TransformOptions = {
-  babelrc: false,
-  compact: false,
-  sourceMaps: false,
-  // @ts-expect-error
-  targets: {
-    browsers: 'last 2 Chrome versions',
-  },
-  presets: [
-    [
-      babelPresetEnv,
-      {
-        shippedProposals: true,
-        modules: false,
-      },
-    ],
-  ],
-  plugins: [
-    babelPluginExt,
-  ],
-  overrides: [
-    {
-      test: /\.(ts|tsx)$/,
-      presets: [
-        babelPresetTypeScript,
-      ],
-    },
-    {
-      test: /\.(ts|js)x$/,
-      presets: [
-        babelPresetReact,
-      ],
-    },
-  ],
 }
