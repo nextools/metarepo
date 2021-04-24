@@ -62,6 +62,7 @@
     "packages/tsfn",
     "packages/typeon",
     "packages/unchunk",
+    "packages/v8cov",
     "packages/wans",
     "packages/wotch",
     "packages/weslint",

@@ -18,7 +18,7 @@ export const test = (concurrency: number = 8): TPlugin<string, CoverageMapData> 
   const { drainAsync, forEachAsync } = await import('iterama')
   const { default: picomatch } = await import('picomatch')
   const { piAll } = await import('piall')
-  const { startCollectingCoverage } = await import('./coverage')
+  const { startCollectingCoverage } = await import('v8cov')
   const { default: v8toIstanbul } = await import('v8-to-istanbul')
 
   const transpiledSourcesKey = '@@start-transpiled-sources'

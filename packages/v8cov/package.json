@@ -1,0 +1,17 @@
+{
+  "name": "v8cov",
+  "version": "0.0.0",
+  "description": "Collect V8 coverage on the go",
+  "keywords": [],
+  "main": "src/index.ts",
+  "type": "module",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.22.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false
+}
