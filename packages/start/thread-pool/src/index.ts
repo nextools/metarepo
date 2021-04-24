@@ -25,7 +25,7 @@ let stopThreadPoolPromise: null | Promise<() => Promise<void>> = null
 export const startThreadPool = async (options: TStartPoolOptions): Promise<() => Promise<void>> => {
   isThreadPoolStarted = true
 
-  const workerPath = await resolve('./worker-wrapper.mjs')
+  const workerPath = await resolve('./worker-wrapper.js')
 
   workers = await Promise.all(
     map(async () => {

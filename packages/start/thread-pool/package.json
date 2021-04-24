@@ -18,6 +18,7 @@
     "node": ">=12.17.0"
   },
   "dependencies": {
+    "@babel/types": "^7.13.17",
     "@babel/core": "^7.13.8",
     "@babel/preset-env": "^7.13.8",
     "enhanced-resolve": "^5.7.0",
@@ -27,5 +28,8 @@
     "piall": "^0.2.0",
     "wans": "^0.0.0",
     "worku": "^0.0.0"
+  },
+  "devDependencies": {
+    "@types/babel__preset-env": "^7.9.1"
   }
 }

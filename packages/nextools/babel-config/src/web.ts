@@ -9,6 +9,7 @@ import babelPresetEnv from '@babel/preset-env'
 import babelPresetReact from '@babel/preset-react'
 // @ts-expect-error
 import babelPresetTypeScript from '@babel/preset-typescript'
+import { babelPluginShake } from '@nextools/babel-plugin-shake'
 import { browsersList } from '@nextools/browsers-list'
 import { babelPluginExt } from './babel-plugin-ext'
 
@@ -31,6 +32,7 @@ export const babelConfigBuildWeb: TransformOptions = {
   ],
   plugins: [
     babelPluginExt,
+    babelPluginShake,
     babelPluginTransformRuntime,
     [
       babelPluginProposalObjectRestSpread,

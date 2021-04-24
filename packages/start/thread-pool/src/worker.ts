@@ -1,13 +1,11 @@
 import { parentPort } from 'worker_threads'
 import { transformAsync } from '@babel/core'
-// @ts-ignore
 import babelPresetEnv from '@babel/preset-env'
 import { pipe } from 'funcom'
 import { map, toArrayAsync } from 'iterama'
 import type { TJsonValue } from 'typeon'
 import { receiveOnPort, sendToPort } from 'worku'
-// @ts-ignore
-import babelPluginImports from './babel-plugin.mjs'
+import { babelPluginImports } from './babel-plugin'
 import type { TMessageFromWorkerDone, TMessageFromWorkerError, TMessageToWorker } from './types'
 
 const cache = new Map()

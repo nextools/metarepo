@@ -26,11 +26,11 @@ export const build: TTask<string, any> = async function* (pkg) {
   if (objectHas(packageJson, 'main')) {
     tasks.add(buildNode)
 
-    // if (isFilePathTS(packageJson.main)) {
-    //   tasks.add(buildTypes)
-    // } else {
-    //   tasks.add(copyTypes)
-    // }
+    if (isFilePathTS(packageJson.main)) {
+      tasks.add(buildTypes)
+    } else {
+      tasks.add(copyTypes)
+    }
   }
 
   if (objectHas(packageJson, 'browser')) {

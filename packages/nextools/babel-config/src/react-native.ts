@@ -6,6 +6,7 @@ import babelPluginTransformDestructuring from '@babel/plugin-transform-destructu
 // @ts-expect-error
 import babelPluginTransformReactJsx from '@babel/plugin-transform-react-jsx'
 import babelPluginTransformRuntime from '@babel/plugin-transform-runtime'
+import { babelPluginShake } from '@nextools/babel-plugin-shake'
 // @ts-expect-error
 import metroReactNativeBabelPreset from 'metro-react-native-babel-preset'
 import { babelPluginExt } from './babel-plugin-ext'
@@ -19,6 +20,7 @@ export const babelConfigBuildReactNative: TransformOptions = {
   ],
   plugins: [
     babelPluginExt,
+    babelPluginShake,
     babelPluginTransformRuntime,
     [
       babelPluginTransformReactJsx,

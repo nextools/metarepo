@@ -19,6 +19,8 @@
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
+    "@babel/types": "^7.13.17",
+    "@nextools/babel-plugin-shake": "^0.0.0",
     "@nextools/browsers-list": "^0.2.0",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "metro-react-native-babel-preset": "0.64.0"
