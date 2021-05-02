@@ -41,6 +41,7 @@
     "packages/rebox/*",
     "packages/refps",
     "packages/refun",
+    "packages/rega",
     "packages/revert/*",
     "packages/rn-fonts",
     "packages/rndi",

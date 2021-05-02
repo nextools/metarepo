@@ -1,0 +1,25 @@
+{
+  "name": "rega",
+  "version": "0.0.0",
+  "description": "Localhost service registry and dependency queue manager",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "nextools/metarepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "dleet": "^2.0.1",
+    "pifs": "^2.0.0",
+    "portu": "^0.2.0",
+    "unchunk": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/tape": "^4.2.34",
+    "tape": "^5.0.0"
+  }
+}
