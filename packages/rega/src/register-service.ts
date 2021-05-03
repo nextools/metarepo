@@ -3,11 +3,11 @@ import http from 'http'
 import type { IncomingMessage } from 'http'
 import { unchunkJson } from 'unchunk'
 import { getSocketPath } from './get-socket-path'
-import type { TRegisterOptions } from './types'
+import type { TRegisterServiceOptions } from './types'
 
 type TRegisterService = {
-  <T extends string>(options: TRegisterOptions & { depNames: T[] }): Promise<{ port: number, deps: { [k in T]: number } }>,
-  (options: TRegisterOptions): Promise<{ port: number }>,
+  <T extends string>(options: TRegisterServiceOptions & { depNames: T[] }): Promise<{ port: number, deps: { [k in T]: number } }>,
+  (options: TRegisterServiceOptions): Promise<{ port: number }>,
 }
 
 export const registerService: TRegisterService = async (options: any) => {
@@ -16,6 +16,7 @@ export const registerService: TRegisterService = async (options: any) => {
 
   const req = http.request({
     method: 'POST',
+    path: '/register',
     socketPath,
     headers: {
       'Content-Type': 'application/json',

@@ -1,4 +1,4 @@
-export type TRegisterOptions = {
+export type TRegisterServiceOptions = {
   name: string,
   fromPort: number,
   toPort: number,
@@ -9,7 +9,7 @@ export type TDeps = {
   [k: string]: number,
 }
 
-export type TRegisterResult = {
+export type TRegisterServiceResult = {
   port: number,
   deps?: TDeps,
 }
