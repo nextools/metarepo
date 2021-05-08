@@ -16,6 +16,7 @@
     "dleet": "^2.0.1",
     "pifs": "^2.0.0",
     "portu": "^0.2.0",
+    "sleap": "^0.1.0",
     "unchunk": "^0.2.0"
   },
   "devDependencies": {
