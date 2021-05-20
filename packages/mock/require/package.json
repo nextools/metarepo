@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",
-    "@types/get-caller-file": "^1.0.0",
+    "@types/get-caller-file": "^2.0.0",
     "tape": "^5.0.0"
   },
   "fixdeps": {

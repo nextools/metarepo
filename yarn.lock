@@ -2054,10 +2054,12 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
-"@types/get-caller-file@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@types/get-caller-file/-/get-caller-file-1.0.0.tgz#50805a80bed3bcd3d58f2cc2046c2f3c5d6bc91c"
-  integrity sha512-LKjVkuAyxzYAz2Ek0AX8cm9Kyjw+5eHVqUZwQiquWYwnDDdQcCabqkxPvlIf7/sEbY6jPuKgsmKPDGLV4owkPg==
+"@types/get-caller-file@^2.0.0":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@types/get-caller-file/-/get-caller-file-2.0.2.tgz#aba134e3496b31a81462cfdaaa3300bcb148fd99"
+  integrity sha512-BicvU5YWi8w///ck0zvldsFdQNRJsBGx4I4aS98W+OVLs34YFeyNtFNMMoR8gw6Q4xg630vBh/J11RW3vWRxsQ==
+  dependencies:
+    get-caller-file "*"
 
 "@types/glob@^7.1.1":
   version "7.1.3"
@@ -6101,7 +6103,7 @@ gensync@^1.0.0-beta.2:
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
-get-caller-file@^2.0.1, get-caller-file@^2.0.5:
+get-caller-file@*, get-caller-file@^2.0.1, get-caller-file@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
