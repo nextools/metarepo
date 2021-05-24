@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import { spawn } from 'child_process'
-import { once } from 'events'
 import { program } from 'commander'
 import { version } from '../package.json'
 import { registerService } from './register-service'
@@ -12,9 +11,9 @@ type TSignalMap = {
 }
 
 const signals: TSignalMap = {
-  'SIGHUP': 1,
-  'SIGINT': 2,
-  'SIGTERM': 15,
+  SIGHUP: 1,
+  SIGINT: 2,
+  SIGTERM: 15,
 }
 
 program.version(version)
