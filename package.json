@@ -36,6 +36,7 @@
     "packages/pifs",
     "packages/pkgu",
     "packages/portu",
+    "packages/portz",
     "packages/r11y",
     "packages/ramdsk",
     "packages/rebox/*",
