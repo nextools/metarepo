@@ -1,6 +1,6 @@
 {
   "name": "portz",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Localhost service port registry and dependency queue manager",
   "keywords": [],
   "main": "src/index.ts",
@@ -14,6 +14,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@babel/runtime": "^7.14.0",
     "commander": "^7.2.0",
     "dleet": "^2.0.1",
     "pifs": "^2.0.0",

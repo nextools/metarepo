@@ -69,11 +69,20 @@ await stopServer()
 
 ### CLI
 
+```json
+{
+  "scripts": {
+    "foo": "echo $PORT",
+    "bar": "echo $PORT $PORT_FOO"
+  }
+}
+```
+
 ```sh
 portz start --range 3000:4000
 ```
 
 ```sh
-portz register --name foo -- echo $PORT
-portz register --name bar --deps foo -- echo $PORT $PORT_FOO
+portz register --name foo -- npm run foo
+portz register --name bar --deps foo -- npm run bar
 ```

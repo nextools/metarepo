@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { spawn } from 'child_process'
 import { once } from 'events'
 import { program } from 'commander'
@@ -5,6 +6,16 @@ import { version } from '../package.json'
 import { registerService } from './register-service'
 import { startServer } from './start-server'
 import { unregisterService } from './unregister-service'
+
+type TSignalMap = {
+  [k in NodeJS.Signals]?: number
+}
+
+const signals: TSignalMap = {
+  'SIGHUP': 1,
+  'SIGINT': 2,
+  'SIGTERM': 15,
+}
 
 program.version(version)
 
@@ -41,7 +52,23 @@ program
       },
     })
 
-    await once(childProcess, 'close')
+    childProcess.on('error', async (err) => {
+      console.error(err)
+      await unregisterService(name)
+      process.exit(1)
+    })
+
+    const kill = async (signal: NodeJS.Signals) => {
+      await unregisterService(name)
+      console.log('\nbye')
+      // https://github.com/npm/cli/issues/1591
+      // https://nodejs.org/api/process.html#process_exit_codes
+      process.exit(128 + signals[signal]!)
+    }
+
+    process.on('SIGTERM', kill)
+    process.on('SIGINT', kill)
+    process.on('SIGHUP', kill)
   })
 
 program
@@ -60,16 +87,23 @@ program
       toPort: range[1],
     })
 
-    process.once('SIGINT', async () => {
+    const kill = async (signal: NodeJS.Signals) => {
       await stopServer()
       console.log('\nbye')
-    })
+      // https://github.com/npm/cli/issues/1591
+      // https://nodejs.org/api/process.html#process_exit_codes
+      process.exit(128 + signals[signal]!)
+    }
+
+    process.on('SIGTERM', kill)
+    process.on('SIGINT', kill)
+    process.on('SIGHUP', kill)
 
     console.log('portz server is up and ready')
   })
 
 program
-  .parseAsync(process.argv.slice(2))
+  .parseAsync(process.argv)
   .catch((err) => {
     console.error(err)
     process.exit(1)
