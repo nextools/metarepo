@@ -1,6 +1,6 @@
 {
   "name": "portz",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Service port registry and dependency queue manager",
   "keywords": [],
   "main": "src/index.ts",
