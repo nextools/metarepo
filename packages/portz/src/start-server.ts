@@ -6,11 +6,11 @@ import { sleep } from 'sleap'
 import { unchunkJson, unchunkString } from 'unchunk'
 import { getFreePort } from './get-free-port'
 import { getSocketPath } from './get-socket-path'
-import type { TDeps, TExecutors, TRegisterServiceOptions, TRegisterServiceResult } from './types'
+import type { TDepsMap, TExecutors, TRegisterServiceOptions, TRegisterServiceResult, TStartServerOptions } from './types'
 
 const RETRY_TIMEOUT = 250
 
-export const startServer = async (): Promise<() => Promise<void>> => {
+export const startServer = async (options: TStartServerOptions): Promise<() => Promise<void>> => {
   const registry = new Map<string, number>()
   const depsQueue = new Map<string, TExecutors>()
   const concurrencyQueue = new Map<string, Promise<number>>()
@@ -20,29 +20,29 @@ export const startServer = async (): Promise<() => Promise<void>> => {
 
     try {
       if (pathname === '/register') {
-        const { name, deps: depNames, fromPort, toPort } = await unchunkJson<TRegisterServiceOptions>(req)
+        const { name, deps } = await unchunkJson<TRegisterServiceOptions>(req)
 
         if (registry.has(name)) {
           throw new Error(`Service "${name}" is already registered`)
         }
 
-        const deps: TDeps = {}
+        const depsMap: TDepsMap = {}
 
         // wait for dependencies
-        if (Array.isArray(depNames)) {
-          for (const depName of depNames) {
-            if (registry.has(depName)) {
-              deps[depName] = registry.get(depName)!
+        if (Array.isArray(deps)) {
+          for (const dep of deps) {
+            if (registry.has(dep)) {
+              depsMap[dep] = registry.get(dep)!
             } else {
-              if (!depsQueue.has(depName)) {
-                depsQueue.set(depName, new Set())
+              if (!depsQueue.has(dep)) {
+                depsQueue.set(dep, new Set())
               }
 
               const depPort = await new Promise<number>((resolve, reject) => {
-                depsQueue.get(depName)!.add([resolve, reject])
+                depsQueue.get(dep)!.add([resolve, reject])
               })
 
-              deps[depName] = depPort
+              depsMap[dep] = depPort
             }
           }
         }
@@ -58,7 +58,7 @@ export const startServer = async (): Promise<() => Promise<void>> => {
           }
 
           const skipPorts = Array.from(registry.values())
-          const portPromise = getFreePort(fromPort, toPort, skipPorts)
+          const portPromise = getFreePort(options.fromPort, options.toPort, skipPorts)
 
           concurrencyQueue.set(name, portPromise)
 
@@ -71,8 +71,8 @@ export const startServer = async (): Promise<() => Promise<void>> => {
 
           const result: TRegisterServiceResult = { port }
 
-          if (Array.isArray(depNames)) {
-            result.deps = deps
+          if (Array.isArray(deps)) {
+            result.deps = depsMap
           }
 
           res.writeHead(200, { 'Content-Type': 'application/json' })
@@ -145,13 +145,18 @@ export const startServer = async (): Promise<() => Promise<void>> => {
 
   const socketPath = await getSocketPath()
 
-  await dleet(socketPath)
   server.listen(socketPath)
   await once(server, 'listening')
 
   return async () => {
-    registry.clear()
+    for (const executors of depsQueue.values()) {
+      for (const executor of executors) {
+        executor[1](new Error('Server has been stopped'))
+      }
+    }
+
     depsQueue.clear()
+    registry.clear()
     concurrencyQueue.clear()
     server.close()
     await once(server, 'close')

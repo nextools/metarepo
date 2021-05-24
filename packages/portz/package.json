@@ -1,9 +1,10 @@
 {
-  "name": "rega",
+  "name": "portz",
   "version": "0.0.0",
-  "description": "Localhost service registry and dependency queue manager",
+  "description": "Localhost service port registry and dependency queue manager",
   "keywords": [],
   "main": "src/index.ts",
+  "bin": "src/cli.ts",
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
@@ -13,6 +14,7 @@
     "access": "public"
   },
   "dependencies": {
+    "commander": "^7.2.0",
     "dleet": "^2.0.1",
     "pifs": "^2.0.0",
     "portu": "^0.2.0",

@@ -36,12 +36,12 @@
     "packages/pifs",
     "packages/pkgu",
     "packages/portu",
+    "packages/portz",
     "packages/r11y",
     "packages/ramdsk",
     "packages/rebox/*",
     "packages/refps",
     "packages/refun",
-    "packages/rega",
     "packages/revert/*",
     "packages/rn-fonts",
     "packages/rndi",
@@ -87,6 +87,8 @@
     "ws": "^7.3.1"
   },
   "scripts": {
+    "service": "echo $PORT",
+    "app": "echo $PORT $PORT_SERVICE",
     "start": "packages/nextools/start-preset/src/cli/index.js"
   },
   "start": {

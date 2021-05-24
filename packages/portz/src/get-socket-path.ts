@@ -11,7 +11,7 @@ export const getSocketPath = async () => {
 
   const tmpDir = await realpath(tmpdir())
 
-  socketPath = path.join(tmpDir, 'nextools-rega.sock')
+  socketPath = path.join(tmpDir, 'portz.sock')
 
   return socketPath
 }

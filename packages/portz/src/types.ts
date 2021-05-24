@@ -1,17 +1,20 @@
-export type TRegisterServiceOptions = {
-  name: string,
+export type TStartServerOptions = {
   fromPort: number,
   toPort: number,
+}
+
+export type TRegisterServiceOptions = {
+  name: string,
   deps?: string[],
 }
 
-export type TDeps = {
+export type TDepsMap = {
   [k: string]: number,
 }
 
 export type TRegisterServiceResult = {
   port: number,
-  deps?: TDeps,
+  deps?: TDepsMap,
 }
 
 export type TResolver = (port: number) => void

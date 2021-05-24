@@ -19,21 +19,13 @@ const startOnPort = async (port: number): Promise<() => Promise<void>> => {
   }
 }
 
-test('rega: concurrency queue', async (t) => {
-  const stopServer = await startServer()
+test('portz: concurrency queue', async (t) => {
+  const stopServer = await startServer({ fromPort: 3000, toPort: 4000 })
 
   try {
     const [foo, bar] = await Promise.all([
-      registerService({
-        name: 'foo',
-        fromPort: 3000,
-        toPort: 4000,
-      }),
-      registerService({
-        name: 'bar',
-        fromPort: 3000,
-        toPort: 4000,
-      }),
+      registerService({ name: 'foo' }),
+      registerService({ name: 'bar' }),
     ])
 
     t.deepEqual(
@@ -52,31 +44,24 @@ test('rega: concurrency queue', async (t) => {
   }
 })
 
-test('rega: deps queue', async (t) => {
-  const stopServer = await startServer()
+test('portz: deps queue', async (t) => {
+  const stopServer = await startServer({
+    fromPort: 3000,
+    toPort: 4000,
+  })
 
   try {
     const fooP = registerService({
       name: 'foo',
-      fromPort: 3000,
-      toPort: 4000,
       deps: ['bar'],
     })
-    const barP = registerService({
-      name: 'bar',
-      fromPort: 3000,
-      toPort: 4000,
-    })
+    const barP = registerService({ name: 'bar' })
     const bazP = registerService({
       name: 'baz',
-      fromPort: 3000,
-      toPort: 4000,
       deps: ['foo', 'bar'],
     })
     const quxP = registerService({
       name: 'qux',
-      fromPort: 3000,
-      toPort: 4000,
       deps: ['foo', 'bar'],
     })
 
@@ -146,21 +131,15 @@ test('rega: deps queue', async (t) => {
   }
 })
 
-test('rega: already registered error', async (t) => {
-  const stopServer = await startServer()
+test('portz: already registered error', async (t) => {
+  const stopServer = await startServer({
+    fromPort: 3000,
+    toPort: 4000,
+  })
 
   try {
-    await registerService({
-      name: 'foo',
-      fromPort: 3000,
-      toPort: 4000,
-    })
-
-    await registerService({
-      name: 'foo',
-      fromPort: 3000,
-      toPort: 4000,
-    })
+    await registerService({ name: 'foo' })
+    await registerService({ name: 'foo' })
 
     t.fail('should not get here')
   } catch (err) {
@@ -174,27 +153,16 @@ test('rega: already registered error', async (t) => {
   }
 })
 
-test('rega: no port error', async (t) => {
-  const stopServer = await startServer()
+test('portz: no port error', async (t) => {
+  const stopServer = await startServer({
+    fromPort: 3000,
+    toPort: 3001,
+  })
 
   try {
-    await registerService({
-      name: 'foo',
-      fromPort: 3000,
-      toPort: 3001,
-    })
-
-    await registerService({
-      name: 'bar',
-      fromPort: 3000,
-      toPort: 3001,
-    })
-
-    await registerService({
-      name: 'baz',
-      fromPort: 3000,
-      toPort: 3001,
-    })
+    await registerService({ name: 'foo' })
+    await registerService({ name: 'bar' })
+    await registerService({ name: 'baz' })
 
     t.fail('should not get here')
   } catch (err) {

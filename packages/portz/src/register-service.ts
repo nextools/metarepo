@@ -6,7 +6,7 @@ import { getSocketPath } from './get-socket-path'
 import type { TRegisterServiceOptions } from './types'
 
 type TRegisterService = {
-  <T extends string>(options: TRegisterServiceOptions & { depNames: T[] }): Promise<{ port: number, deps: { [k in T]: number } }>,
+  <T extends string>(options: TRegisterServiceOptions & { deps: T[] }): Promise<{ port: number, deps: { [k in T]: number } }>,
   (options: TRegisterServiceOptions): Promise<{ port: number }>,
 }
 
