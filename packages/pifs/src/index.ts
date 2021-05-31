@@ -24,7 +24,9 @@ export const lstat = promisify(fs.lstat)
 export const mkdir = promisify(fs.mkdir)
 export const mkdtemp = promisify(fs.mkdtemp)
 export const open = promisify(fs.open)
+export const opendir = promisify(fs.opendir)
 export const read = promisify(fs.read)
+export const readv = promisify(fs.readv)
 export const readdir = promisify(fs.readdir)
 export const readFile = promisify(fs.readFile)
 export const readlink = promisify(fs.readlink)
@@ -40,7 +42,9 @@ export const utimes = promisify(fs.utimes)
 export const watch = fs.watch
 export const watchFile = fs.watchFile
 export const write = promisify(fs.write)
+export const writev = promisify(fs.writev)
 export const writeFile = promisify(fs.writeFile)
+export const Dir = fs.Dir
 export const Dirent = fs.Dirent
 export const Stats = fs.Stats
 export const ReadStream = fs.ReadStream
@@ -70,7 +74,9 @@ export default {
   mkdir,
   mkdtemp,
   open,
+  opendir,
   read,
+  readv,
   readdir,
   readFile,
   readlink,
@@ -86,7 +92,9 @@ export default {
   watch,
   watchFile,
   write,
+  writev,
   writeFile,
+  Dir,
   Dirent,
   Stats,
   ReadStream,
