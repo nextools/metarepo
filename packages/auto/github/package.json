@@ -18,7 +18,7 @@
   "dependencies": {
     "@auto/core": "^0.3.4",
     "node-fetch": "^2.6.0",
-    "p-all": "^3.0.0",
+    "p-all": "^4.0.0",
     "tsfn": "^2.2.0"
   },
   "devDependencies": {

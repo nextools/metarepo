@@ -24,7 +24,7 @@
     "dleet": "^2.0.1",
     "escape-string-regexp": "^4.0.0",
     "fast-glob": "^3.0.0",
-    "p-all": "^3.0.0",
+    "p-all": "^4.0.0",
     "pifs": "^2.0.0",
     "pkgu": "^0.2.0",
     "prompts": "^2.3.1",
