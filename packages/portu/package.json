@@ -8,6 +8,7 @@
     "check-port"
   ],
   "main": "src/index.ts",
+  "bin": "src/cli.ts",
   "repository": "nextools/metarepo",
   "license": "MIT",
   "engines": {
