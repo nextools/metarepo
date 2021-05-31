@@ -16,7 +16,7 @@
     "@babel/runtime": "^7.8.0",
     "@rebox/web": "^5.0.0",
     "dleet": "^2.0.1",
-    "puppeteer-core": "^5.2.1",
+    "puppeteer-core": "^10.0.0",
     "tmpa": "^0.1.0",
     "tsfn": "^2.2.0",
     "xrom": "^3.0.2"
