@@ -21,7 +21,7 @@
     "@x-ray/ui": "^4.0.0",
     "pifs": "^2.0.0",
     "pixelmatch": "^5.1.0",
-    "pngjs": "^5.0.0",
+    "pngjs": "^6.0.0",
     "react": "17.0.1",
     "rsolve": "^0.2.1",
     "tarmap": "^0.2.0",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@types/pixelmatch": "^5.1.0",
-    "@types/pngjs": "^3.4.1",
+    "@types/pngjs": "^6.0.0",
     "@types/react": "^17.0.2"
   },
   "fixdeps": {
