@@ -37,7 +37,7 @@
     "react": "17.0.1",
     "react-native": "0.64.0",
     "spown": "^0.1.2",
-    "terser-webpack-plugin": "^4.0.0",
+    "terser-webpack-plugin": "^5.0.0",
     "tsfn": "^2.2.0",
     "webpack": "^4.30.0"
   },
