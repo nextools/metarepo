@@ -38,7 +38,7 @@
   "devDependencies": {
     "@types/babel__core": "^7.1.7",
     "@types/html-webpack-plugin": "^3.2.0",
-    "@types/loader-utils": "2.0.1",
+    "@types/loader-utils": "2.0.3",
     "@types/terser-webpack-plugin": "^4.0.0",
     "@types/webpack": "^4.4.31",
     "@types/webpack-bundle-analyzer": "^3.0.0",
