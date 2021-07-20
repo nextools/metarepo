@@ -35,7 +35,7 @@
     "portu": "^0.3.0",
     "raw-loader": "^4.0.1",
     "react": "17.0.1",
-    "react-native": "0.64.0",
+    "react-native": "0.64.1",
     "spown": "^0.1.2",
     "terser-webpack-plugin": "^4.0.0",
     "tsfn": "^2.2.0",
