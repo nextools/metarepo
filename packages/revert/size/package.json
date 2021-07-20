@@ -23,13 +23,13 @@
     "@types/react-native": "^0.64.0",
     "@types/tape": "^4.2.34",
     "react": "17.0.1",
-    "react-native": "0.64.0",
+    "react-native": "0.64.1",
     "react-test-renderer": "17.0.1",
     "spyfn": "^2.0.0",
     "tape": "^5.0.0"
   },
   "peerDependencies": {
     "react": "17.0.1",
-    "react-native": "0.64.0"
+    "react-native": "0.64.1"
   }
 }
