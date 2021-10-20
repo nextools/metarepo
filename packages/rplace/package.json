@@ -19,7 +19,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "replace-string": "^3.0.0"
+    "replace-string": "^4.0.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",
