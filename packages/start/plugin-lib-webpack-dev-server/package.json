@@ -21,12 +21,12 @@
     "@start/plugin": "^2.0.0",
     "tsfn": "^2.2.0",
     "webpack": "^4.29.6",
-    "webpack-dev-server": "^3.2.1"
+    "webpack-dev-server": "^4.0.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",
     "@types/webpack": "^4.4.27",
-    "@types/webpack-dev-server": "^3.1.5",
+    "@types/webpack-dev-server": "^4.0.0",
     "tape": "^5.0.0"
   }
 }

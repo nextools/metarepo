@@ -33,7 +33,7 @@
     "typeon": "^2.0.0",
     "webpack": "^4.30.0",
     "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-dev-server": "^3.3.1"
+    "webpack-dev-server": "^4.0.0"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.7",
@@ -42,7 +42,7 @@
     "@types/terser-webpack-plugin": "^4.0.0",
     "@types/webpack": "^4.4.31",
     "@types/webpack-bundle-analyzer": "^3.0.0",
-    "@types/webpack-dev-server": "^3.1.5"
+    "@types/webpack-dev-server": "^4.0.0"
   },
   "fixdeps": {
     "ignoredPackages": [
