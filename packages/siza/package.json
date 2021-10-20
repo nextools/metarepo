@@ -19,7 +19,7 @@
     "@babel/runtime": "^7.8.4",
     "babel-loader": "^8.0.6",
     "babel-plugin-polyfill-corejs3": "^0.1.0",
-    "compression-webpack-plugin": "^6.0.0",
+    "compression-webpack-plugin": "^9.0.0",
     "core-js": "^3.1.4",
     "file-loader": "^6.0.0",
     "memfs": "^3.1.1",
@@ -31,7 +31,7 @@
     "webpack": "^4.41.6"
   },
   "devDependencies": {
-    "@types/compression-webpack-plugin": "^6.0.0",
+    "@types/compression-webpack-plugin": "^9.0.0",
     "@types/memory-fs": "^0.3.2",
     "@types/tape": "^4.2.34",
     "@types/terser-webpack-plugin": "^4.0.0",
