@@ -69,7 +69,7 @@
     "globby": "^11.0.0",
     "move-path": "^2.0.0",
     "nanomatch": "^1.2.13",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.0.0",
     "pifs": "^2.0.0",
     "pkgu": "^0.2.0",
     "prompts": "^2.1.0",
@@ -84,7 +84,7 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.1",
-    "@types/node-fetch": "^2.5.4"
+    "@types/node-fetch": "^3.0.0"
   },
   "fixdeps": {
     "ignoredPackages": [

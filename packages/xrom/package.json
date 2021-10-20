@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.8.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.0.0",
     "sleap": "^0.1.0",
     "spown": "^0.1.2",
     "tsfn": "^2.2.0"
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.5.4"
+    "@types/node-fetch": "^3.0.0"
   },
   "fixdeps": {
     "ignoredPackages": [

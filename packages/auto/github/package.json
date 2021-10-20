@@ -17,13 +17,13 @@
   },
   "dependencies": {
     "@auto/core": "^0.3.4",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.0.0",
     "p-all": "^3.0.0",
     "tsfn": "^2.2.0"
   },
   "devDependencies": {
     "@mock/require": "^0.2.2",
-    "@types/node-fetch": "^2.5.4",
+    "@types/node-fetch": "^3.0.0",
     "@types/tape": "^4.2.34",
     "spyfn": "^2.0.0",
     "tape": "^5.0.0"

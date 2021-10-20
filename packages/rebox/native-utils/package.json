@@ -31,7 +31,7 @@
     "fast-glob": "^3.0.0",
     "is-ci": "^2.0.0",
     "metro-react-native-babel-preset": "0.59.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.0.0",
     "portu": "^0.3.0",
     "raw-loader": "^4.0.1",
     "react": "17.0.1",
@@ -55,6 +55,6 @@
     ]
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.5.4"
+    "@types/node-fetch": "^3.0.0"
   }
 }

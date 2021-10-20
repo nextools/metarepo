@@ -19,7 +19,7 @@
     "@types/unzipper": "^0.10.3"
   },
   "dependencies": {
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.0.0",
     "sleap": "^0.1.0",
     "unzipper": "^0.10.11"
   }
