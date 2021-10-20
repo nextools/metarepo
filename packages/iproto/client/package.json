@@ -18,7 +18,7 @@
   "devDependencies": {
     "@mock/require": "^0.2.2",
     "@types/tape": "^4.2.34",
-    "@types/ws": "^7.2.7",
+    "@types/ws": "^8.0.0",
     "iterama": "^0.6.1",
     "portu": "^0.3.0",
     "rndi": "^0.2.0",
@@ -27,6 +27,6 @@
   "dependencies": {
     "isomorphic-ws": "^4.0.1",
     "typeon": "^2.0.0",
-    "ws": "^7.3.1"
+    "ws": "^8.0.0"
   }
 }
