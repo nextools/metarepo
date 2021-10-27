@@ -87,7 +87,8 @@
     "ws": "^7.3.1"
   },
   "scripts": {
-    "start": "packages/nextools/start-preset/src/cli/index.js"
+    "start": "packages/nextools/start-preset/src/cli/index.js",
+    "postinstall": "perl -pi -e \"s/'React'/'React-Core'/g\" ./node_modules/react-native-svg/RNSVG.podspec ./node_modules/react-native-view-shot/react-native-view-shot.podspec && perl -pi -e \"s|}.*node_modules/react-native/cli.js|}/../../../../../node_modules/react-native/cli.js|g\" ./node_modules/react-native/react.gradle"
   },
   "start": {
     "file": "tasks/",

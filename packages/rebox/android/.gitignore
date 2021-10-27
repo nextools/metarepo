@@ -4,6 +4,7 @@
 .gradle
 local.properties
 *.iml
+*.hprof
 buck-out/
 \.buckd/
 *.keystore
