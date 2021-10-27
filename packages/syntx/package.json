@@ -13,8 +13,8 @@
   },
   "sideEffects": false,
   "devDependencies": {
-    "@types/react": "^17.0.2",
-    "react": "17.0.1",
+    "@types/react": "^17.0.31",
+    "react": "17.0.2",
     "tape": "^5.0.0"
   },
   "dependencies": {
