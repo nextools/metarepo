@@ -31,7 +31,6 @@ export const buildIosAppDebug = async (options: TBuildIosAppDebugOptions): Promi
   })
 
   await dleet(derivedDataPath)
-  await makeDir(derivedDataPath)
 
   await spawnChildProcess(
     `xcodebuild -workspace ${path.join(options.projectPath, 'rebox.xcworkspace')} -scheme rebox -configuration Debug CODE_SIGN_IDENTITY= CODE_SIGNING_ALLOWED=NO -destination "generic/platform=${options.platformName},OS=${options.iOSVersion}" clean build CONFIGURATION_BUILD_DIR=${derivedDataPath}`,

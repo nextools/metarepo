@@ -21,7 +21,7 @@ function resolvePolyfill(name) {
 const polyfills = [
   resolvePolyfill('console'),
   resolvePolyfill('error-guard'),
-  resolvePolyfill('Object.es7'),
+  resolvePolyfill('Object.es8'),
 ]
 
 exports.withPolyfills = withPolyfillsFactory(polyfills)

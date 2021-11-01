@@ -1,6 +1,6 @@
 import path from 'path'
 import { AssetResolver, ASSET_LOADER_PATH } from '@haul-bundler/core'
-import { makeConfig, withPolyfills } from './haul-preset-0.64'
+import { makeConfig, withPolyfills } from './haul-preset-0.66'
 import { WatchPlugin } from './watch-plugin'
 
 const appPath = path.resolve(process.env.REBOX_ENTRY_POINT)

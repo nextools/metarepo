@@ -1,5 +1,5 @@
 use_frameworks!
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 target 'rebox' do
   # Pods for rebox
@@ -21,6 +21,7 @@ target 'rebox' do
   pod 'React-RCTVibration', :path => "../../../react-native/Libraries/Vibration"
   pod 'React-Core/RCTWebSocket', :path => "../../../react-native/"
   pod 'React-Core/DevSupport', :path => "../../../react-native/"
+  pod 'React-logger', :path => "../../../react-native/ReactCommon/logger"
   pod 'React-cxxreact', :path => "../../../react-native/ReactCommon/cxxreact"
   pod 'React-jsi', :path => "../../../react-native/ReactCommon/jsi"
   pod 'React-jsiexecutor', :path => "../../../react-native/ReactCommon/jsiexecutor"
@@ -32,6 +33,7 @@ target 'rebox' do
   pod 'Yoga', :path => "../../../react-native/ReactCommon/yoga", :modular_headers => true
   pod 'DoubleConversion', :podspec => "../../../react-native/third-party-podspecs/DoubleConversion.podspec"
   pod 'glog', :podspec => "../../../react-native/third-party-podspecs/glog.podspec"
+  pod 'boost', :podspec => "../../../react-native/third-party-podspecs/boost.podspec"
   pod 'RCT-Folly', :podspec => "../../../react-native/third-party-podspecs/RCT-Folly.podspec"
   # REBOX
 
@@ -44,6 +46,7 @@ end
 # https://github.com/software-mansion/react-native-screens/issues/842
 post_install do |installer|
   react_native_post_install(installer)
+  __apply_Xcode_12_5_M1_post_install_workaround(installer)
 
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|

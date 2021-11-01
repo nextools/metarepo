@@ -18,15 +18,15 @@
     "refun": "^3.1.0"
   },
   "devDependencies": {
-    "@types/react": "^17.0.2",
-    "@types/react-native": "^0.64.0",
+    "@types/react": "^17.0.31",
+    "@types/react-native": "^0.65.9",
     "autoprops": "^4.0.2",
-    "react": "17.0.1",
-    "react-native": "0.64.0",
+    "react": "17.0.2",
+    "react-native": "0.66.1",
     "syntx": "^2.0.0"
   },
   "peerDependencies": {
-    "react": "17.0.1",
-    "react-native": "0.64.0"
+    "react": "17.0.2",
+    "react-native": "0.66.1"
   }
 }
