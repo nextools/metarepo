@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
-    "commander": "^7.2.0",
+    "commander": "^9.0.0",
     "dleet": "^2.0.1",
     "pifs": "^2.0.0",
     "portu": "^0.3.0",
