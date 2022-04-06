@@ -14,6 +14,7 @@ $ yarn add xrom
 type TRunBrowserOptions = {
   browser: 'chromium' | 'firefox',
   version: string,
+  dockerUrlRoot?: string
   port?: number,
   fontsDir?: string,
   mountVolumes?: {
@@ -38,4 +39,20 @@ import puppeteer from 'puppeteer-core'
 
 const { browserWSEndpoint } = await runBrowser({ browser: 'chromium' })
 const browser = await puppeteer.connect({ browserWSEndpoint })
+```
+
+
+### Overriding the docker root url to another set of browser images
+Incase you want to use your own or some other set of docker images of chromium and/or firefox.
+
+
+Make sure the final link which is evaluated as `${dockerUrlRoot}/${browser}:${version}` points to a valid public docker image
+
+```js
+const { browserWSEndpoint, closeBrowser } = await runBrowser({
+  dockerUrlRoot: 'ghcr.io/shenato/docker-browser',
+  browser: 'chromium',
+  version: opts.chromiumVersion,
+  fontsDir: opts.fontsDir,
+})
 ```

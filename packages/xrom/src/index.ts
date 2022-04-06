@@ -8,6 +8,7 @@ import { getDebuggerUrl } from './get-debugger-url'
 export type TRunBrowserOptions = {
   browser: 'chromium' | 'firefox',
   version: string,
+  dockerUrlRoot?: string
   port?: number,
   fontsDir?: string,
   mountVolumes?: {
@@ -52,15 +53,17 @@ export const runBrowser = async (options: TRunBrowserOptions): Promise<TRunBrows
     cmd += ` -v ${path.resolve(opts.fontsDir)}:/home/chromium/.fonts:delegated,ro`
   }
 
-  if (isNumber(options.cpus)) {
-    cmd += ` --cpus=${options.cpus}`
+  if (isNumber(opts.cpus)) {
+    cmd += ` --cpus=${opts.cpus}`
   }
 
-  if (isArray(options.cpusetCpus)) {
-    cmd += ` --cpuset-cpus=${options.cpusetCpus.join(',')}`
+  if (isArray(opts.cpusetCpus)) {
+    cmd += ` --cpuset-cpus=${opts.cpusetCpus.join(',')}`
   }
+  
+  const dockerImageURL = `${opts.dockerUrlRoot || 'nextools'}/${opts.browser}:${opts.version}`
 
-  cmd += ` --name ${containerName} nextools/${opts.browser}:${opts.version}`
+  cmd += ` --name ${containerName} ${dockerImageURL}`
 
   await spawnChildProcess(cmd, { stdout: null })
 
