@@ -43,7 +43,7 @@ const browser = await puppeteer.connect({ browserWSEndpoint })
 
 
 ### Overriding the docker root url to another set of browser images
-Incase you want to use your own or some other set of docker images of chromium and/or firefox.
+You can override the root URL to use some other set of docker images of Chromium and/or Firefox.
 
 
 Make sure the final link which is evaluated as `${dockerUrlRoot}/${browser}:${version}` points to a valid public docker image
