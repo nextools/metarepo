@@ -21,7 +21,7 @@
     "tsfn": "^2.2.0"
   },
   "devDependencies": {
-    "@types/react": "^17.0.2",
+    "@types/react": "^18.0.0",
     "@types/react-native": "^0.64.0",
     "autoprops": "^4.0.2",
     "react": "17.0.1",

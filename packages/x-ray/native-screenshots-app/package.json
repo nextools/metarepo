@@ -17,6 +17,6 @@
     "react-native-view-shot": "^3.0.2"
   },
   "devDependencies": {
-    "@types/react": "^17.0.2"
+    "@types/react": "^18.0.0"
   }
 }
