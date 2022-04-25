@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:jammy
 
 # fix `debconf: unable to initialize frontend: Dialog`
 ENV DEBIAN_FRONTEND=noninteractive
