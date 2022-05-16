@@ -24,16 +24,16 @@
     "@revert/color": "^0.1.1",
     "@revert/text": "^0.3.4",
     "@types/react": "^17.0.2",
-    "@types/react-native": "^0.64.0",
+    "@types/react-native": "^0.67.0",
     "autoprops": "^4.0.2",
     "foreal": "^0.2.0",
     "react": "17.0.1",
-    "react-native": "0.64.0",
+    "react-native": "0.68.2",
     "syntx": "^2.0.0",
     "tape": "^5.0.1"
   },
   "peerDependencies": {
     "react": "17.0.1",
-    "react-native": "0.64.0"
+    "react-native": "0.68.2"
   }
 }
