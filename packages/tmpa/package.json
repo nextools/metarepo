@@ -23,7 +23,7 @@
     "tape": "^5.0.0"
   },
   "dependencies": {
-    "nanoid": "^3.1.12",
+    "nanoid": "^4.0.0",
     "pifs": "^2.0.0"
   }
 }
